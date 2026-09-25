@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apuntes AWS — Estudio para certificaciones</title>
+<meta name="description" content="Apuntes personales y preguntas de práctica originales para preparar certificaciones de AWS (Solutions Architect Associate y Professional, AI Practitioner), organizados por servicio y categoría. Proyecto educativo sin fines comerciales.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Apuntes AWS — Estudio para certificaciones">
+<meta property="og:description" content="Apuntes por servicio y preguntas de práctica originales para certificaciones de AWS. Proyecto personal y educativo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#certificaciones">Certificaciones</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<header class="hero" id="top">
+  <div class="container">
+    <span class="eyebrow">Proyecto personal · Educativo · Sin fines comerciales</span>
+    <h1>Apuntes para certificaciones <span class="gradient-text">AWS</span></h1>
+    <p class="hero-desc">
+      Mis notas de estudio de los servicios de AWS que entran en las guías oficiales de examen,
+      organizadas por servicio, categoría y certificación, con preguntas de práctica originales
+      para repasar. Se irán completando servicio a servicio.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#catalogo">Explorar servicios →</a>
+      <a class="btn btn-secondary" href="#certificaciones">Ver certificaciones</a>
+    </div>
+  </div>
+</header>
+
+<section id="certificaciones">
+  <div class="container">
+    <div class="section-head">
+      <h2>Certificaciones</h2>
+      <p>Los servicios de cada certificación salen de la lista oficial de servicios en alcance
+        de su guía de examen. Pulsa en una para filtrar el catálogo.</p>
+    </div>
+    <div class="grid grid-4" id="cert-grid">
+      <p class="text-faint">Cargando…</p>
+    </div>
+  </div>
+</section>
+
+<section id="catalogo">
+  <div class="container">
+    <div class="section-head">
+      <h2>Catálogo de servicios</h2>
+      <p>Filtra por nombre, certificación, categoría o estado. Los servicios aún sin contenido
+        aparecen como <em>próximamente</em>.</p>
+    </div>
+
+    <form class="filters" id="filtros" role="search" onsubmit="return false">
+      <div class="filter-row">
+        <label class="field">
+          <span class="field-label">Buscar servicio</span>
+          <input class="input" type="search" id="f-q" placeholder="Ej.: S3, Lambda, Bedrock…" autocomplete="off">
+        </label>
+        <label class="field">
+          <span class="field-label">Categoría</span>
+          <select class="select" id="f-cat">
+            <option value="">Todas las categorías</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="field-label">Estado</span>
+          <select class="select" id="f-estado">
+            <option value="">Todos</option>
+            <option value="publicado">Solo publicados</option>
+            <option value="pendiente">Solo próximamente</option>
+          </select>
+        </label>
+      </div>
+      <div class="field">
+        <span class="field-label" id="f-cert-label">Certificación (puedes elegir varias)</span>
+        <div class="chips" id="f-cert" role="group" aria-labelledby="f-cert-label"></div>
+      </div>
+      <div class="filters-foot">
+        <p class="result-count" id="resultados" aria-live="polite"></p>
+        <button class="btn btn-secondary btn-sm" type="button" id="f-limpiar">Limpiar filtros</button>
+      </div>
+    </form>
+
+    <div class="service-grid" id="service-grid"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="assets/nav.js" defer></script>
+<script src="assets/datos.js" defer></script>
+<script src="assets/catalogo.js" defer></script>
+</body>
+</html>

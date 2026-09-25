@@ -1,0 +1,160 @@
+<!doctype html>
+<!--
+  PLANTILLA DE PÁGINA DE SERVICIO
+  Uso (Fase 2, ver PLAN.md y CLAUDE.md):
+    1. Copiar a servicios/<id>.html (mismo nivel de carpeta, así que las rutas ../ siguen valiendo).
+    2. Sustituir todo lo marcado con [[…]] y borrar este comentario y la meta robots noindex.
+    3. data-quiz="<id>" debe coincidir con data/preguntas/<id>.json.
+    4. Cambiar "estado" a "publicado" y rellenar "resumen" en data/servicios.json.
+  Reglas: redactar con palabras propias; lo literal va en <blockquote> con <cite> y enlace.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[[Nombre del servicio]] — Apuntes AWS</title>
+<meta name="description" content="[[Resumen de una frase del servicio]] Apuntes y preguntas de práctica para [[códigos de certificación]].">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/[[id]].html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <!-- 1. Cabecera -->
+    <div class="service-head">
+      <h1>[[Amazon Ejemplo]]</h1>
+      <p class="full-name">[[Nombre completo, si difiere]]</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong>
+          <a href="../index.html?cat=[[id-categoria]]#catalogo">[[Categoría]] <span class="cat-en">([[Category]])</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo">SAP-C02</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+      <!-- Aviso opcional: solo si el servicio está discontinuado o cerrado a nuevos clientes. -->
+      <div class="callout callout-warn"><strong>Aviso:</strong> [[Estado del servicio y qué lo sustituye]]</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>[[2–3 frases con palabras propias.]]</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>[[Concepto]]:</strong> [[explicación]].</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>[[Caso de uso]]</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>[[Situación en la que otra opción encaja mejor, y cuál]]</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>[[Este servicio]]</th><th>[[Alternativa]]</th></tr></thead>
+          <tbody><tr><td>[[…]]</td><td>[[…]]</td><td>[[…]]</td></tr></tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>[[Cómo se cobra (dimensiones de facturación), sin cifras.]]</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>[[Cifrado, control de acceso, aislamiento de red, multi-AZ/multi-región…]]</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li>Si el enunciado dice <strong>"[[palabra clave]]"</strong>, piensa en [[…]].</li>
+      </ul>
+
+      <!-- Cita literal (solo si es imprescindible): -->
+      <blockquote>
+        <p>"[[Texto literal breve]]"</p>
+        <cite>— <a href="[[URL]]" target="_blank" rel="noopener">[[Título de la página]], documentación de AWS</a></cite>
+      </blockquote>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="ejemplo"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="[[URL]]" target="_blank" rel="noopener">[[Título]]</a> — documentación de AWS (consultada el [[dd/mm/aaaa]]).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<!-- 11. Pie común -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

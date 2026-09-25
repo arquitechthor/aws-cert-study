@@ -10,9 +10,10 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** Fase 0 completada (salvo 0.9, programada para el 27/10/2026). Siguiente: **Fase 1**.
-- **Próximo paso:** tarea 1.1 (licencia CC BY-SA 4.0). Antes, reiniciar Claude Code en
-  `aws-cert-study/` y aprobar el MCP `aws-knowledge` de `.mcp.json`.
+- **Fase en curso:** Fases 0 y 1 completadas (salvo 0.9, programada para el 27/10/2026).
+  Siguiente: **Fase 2**, empezando por la cola "Prioridad 0" (`iam`).
+- **Próximo paso:** abrir Claude Code dentro de `aws-cert-study/`, aprobar el MCP
+  `aws-knowledge` de `.mcp.json` y rellenar el primer servicio siguiendo el flujo de `CLAUDE.md`.
 - **Última actualización:** 2026-09-25
 
 ---
@@ -195,28 +196,34 @@ Objetivo: tener el catálogo completo de servicios y categorías de las 3 certif
 
 Objetivo: el sitio navegable en GitHub Pages, con todos los servicios en "Próximamente".
 
-- [ ] **1.1** Sustituir `LICENSE` por el texto de CC BY-SA 4.0 y actualizar `README.md`.
-- [ ] **1.2** `styles.css`: copiar variables y componentes base de `kopi-web` y añadir los
+- [x] **1.1** Sustituir `LICENSE` por el texto de CC BY-SA 4.0 y actualizar `README.md`.
+- [x] **1.2** `styles.css`: copiar variables y componentes base de `kopi-web` y añadir los
       estilos de filtros, chips, tarjetas de servicio y quiz.
-- [ ] **1.3** Navegación y pie comunes: enlaces a Kopi (`https://kopitools.link`), Sobre mí
+- [x] **1.3** Navegación y pie comunes: enlaces a Kopi (`https://kopitools.link`), Sobre mí
       (`https://kopitools.link/#sobre-mi`), licencia y repo. Incluir `nav.js` con el menú móvil.
-- [ ] **1.4** `index.html` + `catalogo.js`: hero breve, filtros, contador de resultados y
+- [x] **1.4** `index.html` + `catalogo.js`: hero breve, filtros, contador de resultados y
       tarjetas (nombre, categoría es/en, certificaciones, badge de estado).
-- [ ] **1.5** `servicio.html` + `servicio.js`: página genérica "Próximamente disponible" que
+- [x] **1.5** `servicio.html` + `servicio.js`: página genérica "Próximamente disponible" que
       lee `?id=`, muestra el nombre, la categoría y las certificaciones del servicio y enlaza de vuelta al catálogo.
-- [ ] **1.6** `plantillas/servicio.html` con la estructura fija de 11 secciones y `quiz.js`
+- [x] **1.6** `plantillas/servicio.html` con la estructura fija de 11 secciones y `quiz.js`
       (preguntas de opción única y múltiple, corrección, explicación, fuentes).
-- [ ] **1.7** Favicon y metadatos (`<title>`, `description`, Open Graph) en español.
-- [ ] **1.8** `CLAUDE.md` del repo: reglas del proyecto y el flujo paso a paso de "rellenar un servicio".
-- [ ] **1.9** Añadir el proyecto a la tabla de `kopi/CLAUDE.md` (workspace).
-- [ ] **1.10** Añadir `.nojekyll` y comprobar que el sitio carga y los filtros funcionan en producción.
-- [ ] **1.11** Mostrar en la tarjeta de cada certificación su estado: "Se retira el 17/11/2026"
+- [x] **1.7** Favicon y metadatos (`<title>`, `description`, Open Graph) en español.
+- [x] **1.8** `CLAUDE.md` del repo: reglas del proyecto y el flujo paso a paso de "rellenar un servicio".
+- [x] **1.9** Añadir el proyecto a la tabla de `kopi/CLAUDE.md` (workspace).
+- [x] **1.10** Añadir `.nojekyll` y comprobar que el sitio carga y los filtros funcionan en producción.
+- [x] **1.11** Mostrar en la tarjeta de cada certificación su estado: "Se retira el 17/11/2026"
       en SAP-C02 y "Guía disponible a partir del 27/10/2026" en SAP-C03.
+- [x] **1.12** Guardas legales: `aviso-legal.html` (naturaleza personal, educativa y no
+      comercial; sin afiliación con AWS; marcas e iconos; preguntas originales y NDA de los
+      exámenes; sin garantía de exactitud ni de aprobar; limitación de responsabilidad, incluidos
+      cargos en cuentas de AWS; licencia y exclusiones; solicitudes de retirada; enlaces externos;
+      privacidad: sin cookies ni analítica, `localStorage` solo local, registros de GitHub Pages;
+      cambios; contacto por GitHub Issues). Pie legal resumido en todas las páginas y aviso en el
+      `README.md`. *No es asesoramiento jurídico: si el sitio creciera o se monetizara, conviene
+      revisarlo con un profesional.*
 
-**Paso manual en GitHub (una sola vez, se puede hacer ya):** repo → Settings → Pages →
-*Build and deployment* → Source: **Deploy from a branch** → Branch: **main** / **(root)** →
-Save. El repo ya es público, que es requisito de Pages en el plan gratuito. Hasta que exista
-`index.html`, Pages mostrará el README.
+GitHub Pages quedó activado a mano (Settings → Pages → Deploy from a branch → `main` / root).
+Cada push a `main` redespliega el sitio.
 
 ## Fase 2: rellenar servicios (iterativa)
 
@@ -425,27 +432,42 @@ pertenece cada servicio. Solo depende de la Fase 1 (catálogo y estilos), no del
 Fase 2, así que puede hacerse en cualquier momento después de la Fase 1.
 
 **Reglas:**
-- Las cartas empiezan boca abajo. Cada carta muestra el **icono oficial** del servicio y su nombre.
+- Las cartas empiezan boca abajo. Cada carta es **un servicio distinto** y muestra su
+  **icono oficial** y su nombre.
 - Se voltean dos cartas por turno. Son **pareja si los dos servicios son de la misma categoría**
   (se compara con `categoria`, la principal), por ejemplo Amazon EC2 + AWS Lambda (Computación).
+- **Puede haber muchos servicios de la misma categoría en el tablero**, y una carta puede
+  emparejarse con cualquiera de ellos: no hay una pareja "correcta" única. Esto es lo que
+  sube la dificultad, porque obliga a razonar la categoría en vez de recordar un icono.
 - Al acertar, las cartas quedan descubiertas y se muestra la categoría en español e inglés.
-  Al fallar, se vuelven a tapar tras una pausa breve.
-- Al terminar: movimientos, tiempo y botón de revancha.
+  Al fallar, se vuelven a tapar tras una pausa breve y se muestran las categorías de ambas,
+  para aprender del error.
+- Al terminar: movimientos, aciertos a la primera, tiempo y botón de revancha.
 
 **Configuración:**
-- **Tamaño del tablero** configurable: 3×4 (6 parejas), 4×4 (8), 4×5 (10), 5×6 (15), 6×6 (18)
-  y personalizado (filas × columnas con total par).
-- **Filtro por certificación** (solo servicios de SAA-C03, SAP-C02, SAP-C03 o AIF-C01) y,
+- **Tamaño del tablero**: el mínimo es **6×6 (36 cartas)** y sube hasta el máximo que permitan
+  los servicios con icono del filtro elegido: 6×6 (36), 6×8 (48), 8×8 (64), 8×10 (80),
+  10×10 (100), 10×12 (120) y 12×12 (144). Solo se ofrecen los tamaños que caben en el filtro.
+  Con el catálogo completo (unos 150 servicios con icono) se llega a 10×12 o 12×12, según
+  cuántos iconos casen en la tarea 4.1. Con AIF-C01 (50 servicios) solo cabe 6×6 o 6×8.
+- **Filtro por certificación** (SAA-C03, SAP-C02, SAP-C03 o AIF-C01, o todo el catálogo) y,
   opcionalmente, por un subconjunto de categorías.
 - **Modo difícil:** solo icono, sin nombre del servicio.
-- La configuración se refleja en la URL (`memoria.html?tablero=4x4&cert=SAA-C03&dificil=1`)
-  y la última usada se recuerda en `localStorage`.
+- La configuración se refleja en la URL (`memoria.html?tablero=8x8&cert=SAA-C03&dificil=1`)
+  y la última usada se recuerda en `localStorage` (ya cubierto en la sección de privacidad
+  del aviso legal).
 
-**Generación del tablero:** se eligen N parejas, preferiblemente de categorías distintas. Si
-el filtro no da suficientes categorías (AIF-C01 solo tiene 11, así que 22 cartas como máximo
-con categorías sin repetir), se repiten categorías: cualquier par de la misma categoría es
-válido, y en ese caso se avisa en pantalla. En cada partida los dos servicios de una pareja son
-distintos y se eligen al azar, para que no se memorice siempre el mismo par.
+**Generación del tablero:** se eligen al azar N servicios distintos del filtro, con la
+condición de que **cada categoría aparezca un número par de veces**. Así el tablero siempre
+se puede vaciar por completo, sin cartas huérfanas. El tamaño máximo ofrecido es la suma, por
+categoría, de su número de servicios redondeado hacia abajo a par. En cada partida se eligen
+servicios distintos.
+
+**Tamaños grandes y móvil:** el tamaño del tablero fija el **número de cartas**, no la
+disposición. En pantallas estrechas las columnas se reducen (máximo 6 en móvil) y el tablero
+crece en vertical: **nunca desplazamiento horizontal**. Las cartas tienen un tamaño mínimo
+táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre completo en
+`aria-label`/tooltip.
 
 **Tareas:**
 - [ ] **4.1** Mapear cada servicio de `servicios.json` a su icono del paquete
@@ -454,14 +476,15 @@ distintos y se eligen al azar, para que no se memorice siempre el mismo par.
 - [ ] **4.2** Copiar solo esos SVG a `assets/iconos/<id>.svg` y añadir el campo `icono` en
       `servicios.json`. Los servicios sin icono oficial (por ejemplo Kiro, Strands Agents o
       AWS CLI, por confirmar) quedan fuera del juego.
-- [ ] **4.3** Aviso de marcas: "Amazon Web Services, AWS y los iconos de sus servicios son marcas
+- [ ] **4.3** Aviso de marcas (el aviso legal general ya existe desde la tarea 1.12): "Amazon Web Services, AWS y los iconos de sus servicios son marcas
       de Amazon.com, Inc. o sus filiales. Este sitio no está afiliado ni patrocinado por AWS."
       Va en el pie del juego y del sitio, con la excepción de licencia en `LICENSE`/`README`.
-- [ ] **4.4** `memoria.html` + `memoria.js`: tablero con CSS grid responsive (en móvil las
-      cartas bajan de tamaño; con 6×6 en pantalla estrecha se permite desplazamiento vertical,
-      nunca horizontal), animación de volteo, contador de movimientos y temporizador.
+- [ ] **4.4** `memoria.html` + `memoria.js`: tablero con CSS grid responsive (columnas
+      según el ancho, máximo 6 en móvil, solo desplazamiento vertical), animación de volteo,
+      contador de movimientos y temporizador.
 - [ ] **4.5** Panel de configuración: tamaño de tablero, certificación, categorías, modo difícil.
-- [ ] **4.6** Generador de tablero con la regla de categorías distintas y la de repetir con aviso.
+- [ ] **4.6** Generador de tablero: N servicios distintos al azar con un número par por
+      categoría; cálculo del tamaño máximo disponible para el filtro elegido.
 - [ ] **4.7** Pantalla final con resumen y, para cada pareja acertada, enlace a la página
       del servicio (o a "Próximamente" si aún está pendiente).
 - [ ] **4.8** Accesibilidad: cartas como `<button>` con `aria-label` ("Carta boca abajo" /
@@ -478,3 +501,4 @@ distintos y se eligen al azar, para que no se memorice siempre el mismo par.
 | 2026-09-25 | Plan creado. Decisiones iniciales: 3 certificaciones, GitHub Pages, CC BY-SA 4.0, nombre `aws-cert-study`. |
 | 2026-09-25 | Fase 0: repo renombrado, `.mcp.json`, guías verificadas (SAP-C02 se retira y SAP-C03 entra como certificación aparte), `servicios.json` (155), `categorias.json` (20), `certificaciones.json`, `data/fuentes/` y cola priorizada. |
 | 2026-09-25 | Añadida la Fase 4 (juego de memoria con iconos oficiales de AWS); `data/asset-package/` en `.gitignore`. |
+| 2026-09-25 | Fase 1 completada: portada con filtros, página "Próximamente", plantilla + quiz, aviso legal, licencia CC BY-SA 4.0, `CLAUDE.md`. Fase 4 revisada: tablero mínimo 6×6 y parejas por categoría con varias cartas posibles. |

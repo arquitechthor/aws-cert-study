@@ -1,0 +1,35 @@
+[
+  {
+    "id": "ejemplo-001",
+    "tipo": "unica",
+    "certificaciones": ["SAA-C03"],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Pregunta de ejemplo de la plantilla (opción única). Una aplicación debe seguir funcionando aunque falle una zona de disponibilidad. ¿Qué diseño lo consigue con menos cambios?",
+    "opciones": [
+      "Desplegar las instancias en una sola zona de disponibilidad con instancias más grandes.",
+      "Desplegar las instancias en al menos dos zonas de disponibilidad detrás de un balanceador de carga.",
+      "Programar copias de seguridad diarias de las instancias.",
+      "Aumentar el tamaño de los volúmenes de almacenamiento."
+    ],
+    "correctas": [1],
+    "explicacion": "Repartir la carga entre varias zonas de disponibilidad, con un balanceador delante, permite seguir sirviendo tráfico si una zona falla. Las copias de seguridad ayudan a recuperar datos, pero no mantienen el servicio disponible, y escalar en vertical dentro de una zona no protege frente a su caída.",
+    "fuentes": ["https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html"]
+  },
+  {
+    "id": "ejemplo-002",
+    "tipo": "multiple",
+    "certificaciones": ["SAA-C03", "SAP-C02"],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Pregunta de ejemplo de la plantilla (respuesta múltiple). ¿Qué dos prácticas reducen costes en una carga de trabajo estable y predecible?",
+    "opciones": [
+      "Comprometer un uso sostenido con un modelo de descuento por compromiso.",
+      "Mantener recursos sobredimensionados por si acaso.",
+      "Ajustar el tamaño de los recursos al uso real medido.",
+      "Duplicar el entorno en otra región sin necesidad de negocio.",
+      "Desactivar la monitorización para ahorrar en métricas."
+    ],
+    "correctas": [0, 2],
+    "explicacion": "Con uso estable, comprometerse a un consumo a cambio de descuento y ajustar el tamaño al uso real son las palancas clásicas de optimización de costes. Sobredimensionar o duplicar sin necesidad aumenta el gasto, y quitar la monitorización impide medir y optimizar.",
+    "fuentes": ["https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html"]
+  }
+]
