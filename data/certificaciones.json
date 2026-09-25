@@ -1,0 +1,60 @@
+[
+  {
+    "codigo": "SAA-C03",
+    "nombre": "AWS Certified Solutions Architect – Associate",
+    "nombreCorto": "Solutions Architect Associate",
+    "nivel": "Associate",
+    "estado": "vigente",
+    "guia": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03/solutions-architect-associate-03.html",
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 720 },
+    "dominios": [
+      { "id": 1, "nombre": "Diseñar arquitecturas seguras", "nombreEn": "Design Secure Architectures", "peso": 30 },
+      { "id": 2, "nombre": "Diseñar arquitecturas resilientes", "nombreEn": "Design Resilient Architectures", "peso": 26 },
+      { "id": 3, "nombre": "Diseñar arquitecturas de alto rendimiento", "nombreEn": "Design High-Performing Architectures", "peso": 24 },
+      { "id": 4, "nombre": "Diseñar arquitecturas con costos optimizados", "nombreEn": "Design Cost-Optimized Architectures", "peso": 20 }
+    ]
+  },
+  {
+    "codigo": "SAP-C02",
+    "nombre": "AWS Certified Solutions Architect – Professional",
+    "nombreCorto": "Solutions Architect Professional (C02)",
+    "nivel": "Professional",
+    "estado": "retirandose",
+    "ultimoDia": "2026-11-17",
+    "guia": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-professional-02/solutions-architect-professional-02.html",
+    "examen": { "preguntasPuntuadas": 65, "preguntasSinPuntuar": 10, "puntuacionMinima": 750 },
+    "dominios": [
+      { "id": 1, "nombre": "Diseñar soluciones para la complejidad organizativa", "nombreEn": "Design Solutions for Organizational Complexity", "peso": 26 },
+      { "id": 2, "nombre": "Diseñar nuevas soluciones", "nombreEn": "Design for New Solutions", "peso": 29 },
+      { "id": 3, "nombre": "Mejora continua de soluciones existentes", "nombreEn": "Continuous Improvement for Existing Solutions", "peso": 25 },
+      { "id": 4, "nombre": "Acelerar la migración y modernización de cargas de trabajo", "nombreEn": "Accelerate Workload Migration and Modernization", "peso": 20 }
+    ]
+  },
+  {
+    "codigo": "SAP-C03",
+    "nombre": "AWS Certified Solutions Architect – Professional",
+    "nombreCorto": "Solutions Architect Professional (C03)",
+    "nivel": "Professional",
+    "estado": "guia-pendiente",
+    "disponibleDesde": "2026-10-27",
+    "guia": "https://aws.amazon.com/certification/certified-solutions-architect-professional/",
+    "examen": null,
+    "dominios": []
+  },
+  {
+    "codigo": "AIF-C01",
+    "nombre": "AWS Certified AI Practitioner",
+    "nombreCorto": "AI Practitioner",
+    "nivel": "Foundational",
+    "estado": "vigente",
+    "guia": "https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01.html",
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 700 },
+    "dominios": [
+      { "id": 1, "nombre": "Fundamentos de IA y ML", "nombreEn": "Fundamentals of AI and ML", "peso": 20 },
+      { "id": 2, "nombre": "Fundamentos de IA generativa", "nombreEn": "Fundamentals of GenAI", "peso": 24 },
+      { "id": 3, "nombre": "Aplicaciones de los modelos fundacionales", "nombreEn": "Applications of Foundation Models", "peso": 28 },
+      { "id": 4, "nombre": "Directrices para una IA responsable", "nombreEn": "Guidelines for Responsible AI", "peso": 14 },
+      { "id": 5, "nombre": "Seguridad, cumplimiento y gobernanza de soluciones de IA", "nombreEn": "Security, Compliance, and Governance for AI Solutions", "peso": 14 }
+    ]
+  }
+]

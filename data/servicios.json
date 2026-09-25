@@ -1,0 +1,1767 @@
+[
+  {
+    "id": "acm",
+    "nombre": "AWS Certificate Manager (ACM)",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "amplify",
+    "nombre": "AWS Amplify",
+    "categoria": "frontend-web-movil",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "api-gateway",
+    "nombre": "Amazon API Gateway",
+    "categoria": "frontend-web-movil",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "app-runner",
+    "nombre": "AWS App Runner",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "appflow",
+    "nombre": "Amazon AppFlow",
+    "categoria": "integracion-aplicaciones",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "application-discovery-service",
+    "nombre": "AWS Application Discovery Service",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "application-migration-service",
+    "nombre": "AWS Application Migration Service",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "appstream-2-0",
+    "nombre": "Amazon AppStream 2.0",
+    "categoria": "computacion-usuarios-finales",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "appsync",
+    "nombre": "AWS AppSync",
+    "categoria": "integracion-aplicaciones",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "artifact",
+    "nombre": "AWS Artifact",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "athena",
+    "nombre": "Amazon Athena",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "audit-manager",
+    "nombre": "AWS Audit Manager",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "aurora",
+    "nombre": "Amazon Aurora",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "incluye": [
+      "Amazon Aurora Serverless"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "auto-scaling",
+    "nombre": "AWS Auto Scaling",
+    "categoria": "computacion",
+    "categoriasAdicionales": [
+      "administracion-gobernanza"
+    ],
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "backup",
+    "nombre": "AWS Backup",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "batch",
+    "nombre": "AWS Batch",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "bedrock",
+    "nombre": "Amazon Bedrock",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "bedrock-agentcore",
+    "nombre": "Amazon Bedrock AgentCore",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "budgets",
+    "nombre": "AWS Budgets",
+    "categoria": "administracion-financiera",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cli",
+    "nombre": "AWS CLI",
+    "nombreCompleto": "AWS Command Line Interface (AWS CLI)",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "client-vpn",
+    "nombre": "AWS Client VPN",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "alias": [
+      "AWS VPN"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cloudformation",
+    "nombre": "AWS CloudFormation",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cloudfront",
+    "nombre": "Amazon CloudFront",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cloudhsm",
+    "nombre": "AWS CloudHSM",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cloudtrail",
+    "nombre": "AWS CloudTrail",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cloudwatch",
+    "nombre": "Amazon CloudWatch",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "incluye": [
+      "Amazon CloudWatch Logs"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "codeartifact",
+    "nombre": "AWS CodeArtifact",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "codebuild",
+    "nombre": "AWS CodeBuild",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "codedeploy",
+    "nombre": "AWS CodeDeploy",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "codeguru",
+    "nombre": "Amazon CodeGuru",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "codepipeline",
+    "nombre": "AWS CodePipeline",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cognito",
+    "nombre": "Amazon Cognito",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "comprehend",
+    "nombre": "Amazon Comprehend",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "compute-optimizer",
+    "nombre": "AWS Compute Optimizer",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "config",
+    "nombre": "AWS Config",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "control-tower",
+    "nombre": "AWS Control Tower",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cost-and-usage-report",
+    "nombre": "AWS Cost and Usage Report",
+    "categoria": "administracion-financiera",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "cost-explorer",
+    "nombre": "AWS Cost Explorer",
+    "categoria": "administracion-financiera",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "data-exchange",
+    "nombre": "AWS Data Exchange",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "data-firehose",
+    "nombre": "Amazon Data Firehose",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "datasync",
+    "nombre": "AWS DataSync",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "detective",
+    "nombre": "Amazon Detective",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "device-farm",
+    "nombre": "AWS Device Farm",
+    "categoria": "frontend-web-movil",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "direct-connect",
+    "nombre": "AWS Direct Connect",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "directory-service",
+    "nombre": "AWS Directory Service",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "dms",
+    "nombre": "AWS DMS",
+    "nombreCompleto": "AWS Database Migration Service (AWS DMS)",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "documentdb",
+    "nombre": "Amazon DocumentDB",
+    "nombreCompleto": "Amazon DocumentDB (with MongoDB compatibility)",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "dynamodb",
+    "nombre": "Amazon DynamoDB",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "ebs",
+    "nombre": "Amazon EBS",
+    "nombreCompleto": "Amazon Elastic Block Store (Amazon EBS)",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "ec2",
+    "nombre": "Amazon EC2",
+    "nombreCompleto": "Amazon Elastic Compute Cloud (Amazon EC2)",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "ec2-auto-scaling",
+    "nombre": "Amazon EC2 Auto Scaling",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "ecr",
+    "nombre": "Amazon ECR",
+    "nombreCompleto": "Amazon Elastic Container Registry (Amazon ECR)",
+    "categoria": "contenedores",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "ecs",
+    "nombre": "Amazon ECS",
+    "nombreCompleto": "Amazon Elastic Container Service (Amazon ECS)",
+    "categoria": "contenedores",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "incluye": [
+      "Amazon ECS Anywhere"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "efs",
+    "nombre": "Amazon EFS",
+    "nombreCompleto": "Amazon Elastic File System (Amazon EFS)",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "eks",
+    "nombre": "Amazon EKS",
+    "nombreCompleto": "Amazon Elastic Kubernetes Service (Amazon EKS)",
+    "categoria": "contenedores",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "incluye": [
+      "Amazon EKS Anywhere",
+      "Amazon EKS Distro"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "elastic-beanstalk",
+    "nombre": "AWS Elastic Beanstalk",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "elastic-disaster-recovery",
+    "nombre": "AWS Elastic Disaster Recovery",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "elastic-transcoder",
+    "nombre": "Amazon Elastic Transcoder",
+    "categoria": "servicios-multimedia",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "elasticache",
+    "nombre": "Amazon ElastiCache",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "elb",
+    "nombre": "Elastic Load Balancing (ELB)",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "emr",
+    "nombre": "Amazon EMR",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "eventbridge",
+    "nombre": "Amazon EventBridge",
+    "categoria": "integracion-aplicaciones",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "fargate",
+    "nombre": "AWS Fargate",
+    "categoria": "computacion",
+    "categoriasAdicionales": [
+      "sin-servidor"
+    ],
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "firewall-manager",
+    "nombre": "AWS Firewall Manager",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "fraud-detector",
+    "nombre": "Amazon Fraud Detector",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "fsx",
+    "nombre": "Amazon FSx",
+    "nombreCompleto": "Amazon FSx (for all types)",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "global-accelerator",
+    "nombre": "AWS Global Accelerator",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "glue",
+    "nombre": "AWS Glue",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "glue-databrew",
+    "nombre": "AWS Glue DataBrew",
+    "categoria": "analisis",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "guardduty",
+    "nombre": "Amazon GuardDuty",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "health-dashboard",
+    "nombre": "AWS Health Dashboard",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iam",
+    "nombre": "AWS IAM",
+    "nombreCompleto": "AWS Identity and Access Management (IAM)",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iam-identity-center",
+    "nombre": "AWS IAM Identity Center",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "inspector",
+    "nombre": "Amazon Inspector",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iot-1-click",
+    "nombre": "AWS IoT 1-Click",
+    "categoria": "iot",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iot-core",
+    "nombre": "AWS IoT Core",
+    "categoria": "iot",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iot-device-defender",
+    "nombre": "AWS IoT Device Defender",
+    "categoria": "iot",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iot-device-management",
+    "nombre": "AWS IoT Device Management",
+    "categoria": "iot",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iot-events",
+    "nombre": "AWS IoT Events",
+    "categoria": "iot",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iot-greengrass",
+    "nombre": "AWS IoT Greengrass",
+    "categoria": "iot",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iot-sitewise",
+    "nombre": "AWS IoT SiteWise",
+    "categoria": "iot",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "iot-things-graph",
+    "nombre": "AWS IoT Things Graph",
+    "categoria": "iot",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "kendra",
+    "nombre": "Amazon Kendra",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "keyspaces",
+    "nombre": "Amazon Keyspaces",
+    "nombreCompleto": "Amazon Keyspaces (for Apache Cassandra)",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "kinesis-data-streams",
+    "nombre": "Amazon Kinesis Data Streams",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "kinesis-video-streams",
+    "nombre": "Amazon Kinesis Video Streams",
+    "categoria": "servicios-multimedia",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "kiro",
+    "nombre": "Kiro",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "kms",
+    "nombre": "AWS KMS",
+    "nombreCompleto": "AWS Key Management Service (AWS KMS)",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "lake-formation",
+    "nombre": "AWS Lake Formation",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "lambda",
+    "nombre": "AWS Lambda",
+    "categoria": "computacion",
+    "categoriasAdicionales": [
+      "sin-servidor"
+    ],
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "lex",
+    "nombre": "Amazon Lex",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "license-manager",
+    "nombre": "AWS License Manager",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "lightsail",
+    "nombre": "Amazon Lightsail",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "macie",
+    "nombre": "Amazon Macie",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "managed-blockchain",
+    "nombre": "Amazon Managed Blockchain",
+    "categoria": "blockchain",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "managed-grafana",
+    "nombre": "Amazon Managed Grafana",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "managed-service-for-apache-flink",
+    "nombre": "Amazon Managed Service for Apache Flink",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "managed-service-for-prometheus",
+    "nombre": "Amazon Managed Service for Prometheus",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "management-console",
+    "nombre": "AWS Management Console",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "migration-hub",
+    "nombre": "AWS Migration Hub",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "mq",
+    "nombre": "Amazon MQ",
+    "categoria": "integracion-aplicaciones",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "msk",
+    "nombre": "Amazon MSK",
+    "nombreCompleto": "Amazon Managed Streaming for Apache Kafka (Amazon MSK)",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "neptune",
+    "nombre": "Amazon Neptune",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "network-firewall",
+    "nombre": "AWS Network Firewall",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "nova",
+    "nombre": "Amazon Nova",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "opensearch-service",
+    "nombre": "Amazon OpenSearch Service",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "organizations",
+    "nombre": "AWS Organizations",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "outposts",
+    "nombre": "AWS Outposts",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "personalize",
+    "nombre": "Amazon Personalize",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "pinpoint",
+    "nombre": "Amazon Pinpoint",
+    "categoria": "frontend-web-movil",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "polly",
+    "nombre": "Amazon Polly",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "privatelink",
+    "nombre": "AWS PrivateLink",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "proton",
+    "nombre": "AWS Proton",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "quick",
+    "nombre": "Amazon Quick",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "alias": [
+      "Amazon QuickSight"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "ram",
+    "nombre": "AWS RAM",
+    "nombreCompleto": "AWS Resource Access Manager (AWS RAM)",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "rds",
+    "nombre": "Amazon RDS",
+    "nombreCompleto": "Amazon Relational Database Service (Amazon RDS)",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "redshift",
+    "nombre": "Amazon Redshift",
+    "categoria": "analisis",
+    "categoriasAdicionales": [
+      "base-de-datos"
+    ],
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "rekognition",
+    "nombre": "Amazon Rekognition",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "route-53",
+    "nombre": "Amazon Route 53",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "s3",
+    "nombre": "Amazon S3",
+    "nombreCompleto": "Amazon Simple Storage Service (Amazon S3)",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "s3-glacier",
+    "nombre": "Amazon S3 Glacier",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "sagemaker-ai",
+    "nombre": "Amazon SageMaker AI",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "incluye": [
+      "Amazon SageMaker JumpStart"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "savings-plans",
+    "nombre": "Savings Plans",
+    "categoria": "administracion-financiera",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "sct",
+    "nombre": "AWS SCT",
+    "nombreCompleto": "AWS Schema Conversion Tool (AWS SCT)",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "secrets-manager",
+    "nombre": "AWS Secrets Manager",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "security-hub",
+    "nombre": "AWS Security Hub",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "serverless-application-repository",
+    "nombre": "AWS Serverless Application Repository",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "service-catalog",
+    "nombre": "AWS Service Catalog",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "service-quotas",
+    "nombre": "Service Quotas",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "ses",
+    "nombre": "Amazon SES",
+    "nombreCompleto": "Amazon Simple Email Service (Amazon SES)",
+    "categoria": "aplicaciones-empresariales",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "shield",
+    "nombre": "AWS Shield",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "site-to-site-vpn",
+    "nombre": "AWS Site-to-Site VPN",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "alias": [
+      "AWS VPN"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "snow-family",
+    "nombre": "AWS Snow Family",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "sns",
+    "nombre": "Amazon SNS",
+    "nombreCompleto": "Amazon Simple Notification Service (Amazon SNS)",
+    "categoria": "integracion-aplicaciones",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "sqs",
+    "nombre": "Amazon SQS",
+    "nombreCompleto": "Amazon Simple Queue Service (Amazon SQS)",
+    "categoria": "integracion-aplicaciones",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "step-functions",
+    "nombre": "AWS Step Functions",
+    "categoria": "integracion-aplicaciones",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "storage-gateway",
+    "nombre": "AWS Storage Gateway",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "strands-agents",
+    "nombre": "Strands Agents",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "sts",
+    "nombre": "AWS STS",
+    "nombreCompleto": "AWS Security Token Service (AWS STS)",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "systems-manager",
+    "nombre": "AWS Systems Manager",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "textract",
+    "nombre": "Amazon Textract",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "timestream",
+    "nombre": "Amazon Timestream",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "transcribe",
+    "nombre": "Amazon Transcribe",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "transfer-family",
+    "nombre": "AWS Transfer Family",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "transform",
+    "nombre": "AWS Transform",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "transit-gateway",
+    "nombre": "AWS Transit Gateway",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "translate",
+    "nombre": "Amazon Translate",
+    "categoria": "machine-learning",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "trusted-advisor",
+    "nombre": "AWS Trusted Advisor",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "vmware-cloud-on-aws",
+    "nombre": "VMware Cloud on AWS",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "vpc",
+    "nombre": "Amazon VPC",
+    "nombreCompleto": "Amazon Virtual Private Cloud (Amazon VPC)",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "waf",
+    "nombre": "AWS WAF",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "wavelength",
+    "nombre": "AWS Wavelength",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "well-architected-tool",
+    "nombre": "AWS Well-Architected Tool",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02",
+      "AIF-C01"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "workspaces",
+    "nombre": "Amazon WorkSpaces",
+    "categoria": "computacion-usuarios-finales",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  },
+  {
+    "id": "x-ray",
+    "nombre": "AWS X-Ray",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": ""
+  }
+]

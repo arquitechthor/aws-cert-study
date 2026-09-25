@@ -1,0 +1,102 @@
+[
+  {
+    "id": "analisis",
+    "nombre": "Análisis",
+    "nombreEn": "Analytics"
+  },
+  {
+    "id": "integracion-aplicaciones",
+    "nombre": "Integración de aplicaciones",
+    "nombreEn": "Application Integration"
+  },
+  {
+    "id": "blockchain",
+    "nombre": "Blockchain",
+    "nombreEn": "Blockchain"
+  },
+  {
+    "id": "aplicaciones-empresariales",
+    "nombre": "Aplicaciones empresariales",
+    "nombreEn": "Business Applications"
+  },
+  {
+    "id": "administracion-financiera",
+    "nombre": "Administración financiera en la nube",
+    "nombreEn": "Cloud Financial Management"
+  },
+  {
+    "id": "computacion",
+    "nombre": "Computación",
+    "nombreEn": "Compute"
+  },
+  {
+    "id": "contenedores",
+    "nombre": "Contenedores",
+    "nombreEn": "Containers"
+  },
+  {
+    "id": "base-de-datos",
+    "nombre": "Base de datos",
+    "nombreEn": "Database"
+  },
+  {
+    "id": "herramientas-desarrolladores",
+    "nombre": "Herramientas para desarrolladores",
+    "nombreEn": "Developer Tools"
+  },
+  {
+    "id": "computacion-usuarios-finales",
+    "nombre": "Computación para usuarios finales",
+    "nombreEn": "End User Computing"
+  },
+  {
+    "id": "frontend-web-movil",
+    "nombre": "Frontend web y móvil",
+    "nombreEn": "Frontend Web and Mobile"
+  },
+  {
+    "id": "iot",
+    "nombre": "Internet de las cosas (IoT)",
+    "nombreEn": "Internet of Things (IoT)"
+  },
+  {
+    "id": "machine-learning",
+    "nombre": "Machine learning",
+    "nombreEn": "Machine Learning"
+  },
+  {
+    "id": "administracion-gobernanza",
+    "nombre": "Administración y gobernanza",
+    "nombreEn": "Management and Governance"
+  },
+  {
+    "id": "servicios-multimedia",
+    "nombre": "Servicios multimedia",
+    "nombreEn": "Media Services"
+  },
+  {
+    "id": "migracion-transferencia",
+    "nombre": "Migración y transferencia",
+    "nombreEn": "Migration and Transfer"
+  },
+  {
+    "id": "redes-entrega-contenido",
+    "nombre": "Redes y entrega de contenido",
+    "nombreEn": "Networking and Content Delivery"
+  },
+  {
+    "id": "seguridad-identidad-cumplimiento",
+    "nombre": "Seguridad, identidad y cumplimiento",
+    "nombreEn": "Security, Identity, and Compliance"
+  },
+  {
+    "id": "sin-servidor",
+    "nombre": "Sin servidor",
+    "nombreEn": "Serverless"
+  },
+  {
+    "id": "almacenamiento",
+    "nombre": "Almacenamiento",
+    "nombreEn": "Storage"
+  }
+]
