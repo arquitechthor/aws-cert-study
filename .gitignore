@@ -427,3 +427,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Paquete oficial de iconos de AWS (29 MB): solo se versionan los SVG usados, copiados a assets/iconos/
+data/asset-package/

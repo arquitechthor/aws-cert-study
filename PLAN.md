@@ -31,7 +31,9 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Categorías | 20 categorías, la unión de las usadas en las tres guías. "AWS Cost Management" (SAA) y "Cloud Financial Management" (SAP/AIF) se unifican como "Administración financiera en la nube". Cada servicio tiene una `categoria` principal (la más usada en las guías; si hay empate, la de SAP) y opcionalmente `categoriasAdicionales`. El filtro busca en ambas, así que "Sin servidor" (*Serverless*) muestra Lambda y Fargate aunque su categoría principal sea Computación. |
 | Alias y fusiones | Las guías nombran el mismo servicio de formas distintas ("Amazon S3" / "Amazon Simple Storage Service (Amazon S3)"), así que se unifican en un id. Las funcionalidades que las guías listan aparte se fusionan en su servicio (`incluye`): Aurora Serverless → Aurora, CloudWatch Logs → CloudWatch, ECS Anywhere → ECS, EKS Anywhere/Distro → EKS, SageMaker JumpStart → SageMaker AI. "AWS VPN" (SAP) cubre Site-to-Site VPN y Client VPN. "Amazon Kinesis" (SAA) → Kinesis Data Streams. Amazon QuickSight aparece como Amazon Quick (nombre actual) con alias de búsqueda. |
 | Licencia | **CC BY-SA 4.0** para todo el repo (sustituye a la GPL-3.0 inicial). |
-| Derechos de autor | Nada de copiar documentación de AWS: se resume con palabras propias y se enlaza la fuente. Si algo debe ser literal (una definición, un límite), va entre comillas o en `<blockquote>` con cita y enlace a la fuente. No se usan logos ni iconos de servicios de AWS. |
+| Derechos de autor | Nada de copiar documentación de AWS: se resume con palabras propias y se enlaza la fuente. Si algo debe ser literal (una definición, un límite), va entre comillas o en `<blockquote>` con cita y enlace a la fuente. |
+| Iconos de AWS | Se usan los **AWS Architecture Icons oficiales** (paquete del 31/07/2025 en `data/asset-package/`) **solo en el juego de memoria** (Fase 4). AWS los permite para diagramas y materiales como presentaciones y pósteres, y sus *Trademark Guidelines* aceptan el uso limitado con fines educativos y sin ánimo de lucro, pero un juego no está citado de forma explícita: es una zona gris que se asume por ser un sitio personal, educativo y no comercial. Condiciones: iconos **sin modificar** (ni recolorear ni recortar), nada que sugiera patrocinio o afiliación con AWS, aviso de marcas en el juego y en el pie, y quedan **fuera de la licencia CC BY-SA** (se indica en `LICENSE`/`README`). Si AWS lo pidiera, se retiran y el juego pasa a usar solo nombres. |
+| Paquete de iconos en git | `data/asset-package/` (29 MB, con basura de macOS) está en `.gitignore`. Solo se versionan los SVG de 64 px de los servicios del catálogo, copiados a `assets/iconos/<id>.svg`. |
 | Preguntas | Solo preguntas **originales** tipo examen. Nunca preguntas reales de examen, que están bajo NDA. |
 | Enlaces a Kopi | En la navegación y el pie: "Kopi" → `https://kopitools.link` y "Sobre mí" → `https://kopitools.link/#sobre-mi`. Más adelante "Sobre mí" pasará a una web aparte, y `kopi-web` enlazará a este sitio. |
 | Flujo git | Directo a `main`, sin pull requests (igual que el resto de proyectos kopi). |
@@ -45,6 +47,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 aws-cert-study/
 ├── index.html                # portada: buscador + filtros + tarjetas de servicios
 ├── servicio.html             # "Próximamente disponible" genérica (?id=<id>)
+├── memoria.html              # juego de memoria por categorías (Fase 4)
 ├── servicios/<id>.html       # una página por servicio publicado
 ├── data/
 │   ├── servicios.json        # catálogo: única fuente de verdad
@@ -56,6 +59,8 @@ aws-cert-study/
 │   ├── catalogo.js           # filtros, tarjetas y estado de filtros en la URL
 │   ├── servicio.js           # página genérica "Próximamente"
 │   ├── quiz.js               # renderiza y corrige preguntas
+│   ├── memoria.js            # juego de memoria (Fase 4)
+│   ├── iconos/<id>.svg       # iconos oficiales de AWS usados por el juego
 │   └── nav.js                # menú móvil
 ├── plantillas/servicio.html  # plantilla base para cada servicio
 ├── styles.css
@@ -413,6 +418,57 @@ esta lista es solo el orden de trabajo.
 - [ ] **3.6** Ampliar a más certificaciones si hace falta (el modelo ya lo permite).
 - [ ] **3.7** Tipos de pregunta "ordenar" y "emparejar" en `quiz.js` (los usa AIF-C01).
 
+## Fase 4: juego de memoria por categorías
+
+Objetivo: un juego tipo memoria (memorama) en `memoria.html` para aprender a qué categoría
+pertenece cada servicio. Solo depende de la Fase 1 (catálogo y estilos), no del contenido de la
+Fase 2, así que puede hacerse en cualquier momento después de la Fase 1.
+
+**Reglas:**
+- Las cartas empiezan boca abajo. Cada carta muestra el **icono oficial** del servicio y su nombre.
+- Se voltean dos cartas por turno. Son **pareja si los dos servicios son de la misma categoría**
+  (se compara con `categoria`, la principal), por ejemplo Amazon EC2 + AWS Lambda (Computación).
+- Al acertar, las cartas quedan descubiertas y se muestra la categoría en español e inglés.
+  Al fallar, se vuelven a tapar tras una pausa breve.
+- Al terminar: movimientos, tiempo y botón de revancha.
+
+**Configuración:**
+- **Tamaño del tablero** configurable: 3×4 (6 parejas), 4×4 (8), 4×5 (10), 5×6 (15), 6×6 (18)
+  y personalizado (filas × columnas con total par).
+- **Filtro por certificación** (solo servicios de SAA-C03, SAP-C02, SAP-C03 o AIF-C01) y,
+  opcionalmente, por un subconjunto de categorías.
+- **Modo difícil:** solo icono, sin nombre del servicio.
+- La configuración se refleja en la URL (`memoria.html?tablero=4x4&cert=SAA-C03&dificil=1`)
+  y la última usada se recuerda en `localStorage`.
+
+**Generación del tablero:** se eligen N parejas, preferiblemente de categorías distintas. Si
+el filtro no da suficientes categorías (AIF-C01 solo tiene 11, así que 22 cartas como máximo
+con categorías sin repetir), se repiten categorías: cualquier par de la misma categoría es
+válido, y en ese caso se avisa en pantalla. En cada partida los dos servicios de una pareja son
+distintos y se eligen al azar, para que no se memorice siempre el mismo par.
+
+**Tareas:**
+- [ ] **4.1** Mapear cada servicio de `servicios.json` a su icono del paquete
+      (`Architecture-Service-Icons_07312025/Arch_<Categoría>/64/Arch_<Servicio>_64.svg`) con un
+      script puntual, y revisar a mano los que no casen por nombre.
+- [ ] **4.2** Copiar solo esos SVG a `assets/iconos/<id>.svg` y añadir el campo `icono` en
+      `servicios.json`. Los servicios sin icono oficial (por ejemplo Kiro, Strands Agents o
+      AWS CLI, por confirmar) quedan fuera del juego.
+- [ ] **4.3** Aviso de marcas: "Amazon Web Services, AWS y los iconos de sus servicios son marcas
+      de Amazon.com, Inc. o sus filiales. Este sitio no está afiliado ni patrocinado por AWS."
+      Va en el pie del juego y del sitio, con la excepción de licencia en `LICENSE`/`README`.
+- [ ] **4.4** `memoria.html` + `memoria.js`: tablero con CSS grid responsive (en móvil las
+      cartas bajan de tamaño; con 6×6 en pantalla estrecha se permite desplazamiento vertical,
+      nunca horizontal), animación de volteo, contador de movimientos y temporizador.
+- [ ] **4.5** Panel de configuración: tamaño de tablero, certificación, categorías, modo difícil.
+- [ ] **4.6** Generador de tablero con la regla de categorías distintas y la de repetir con aviso.
+- [ ] **4.7** Pantalla final con resumen y, para cada pareja acertada, enlace a la página
+      del servicio (o a "Próximamente" si aún está pendiente).
+- [ ] **4.8** Accesibilidad: cartas como `<button>` con `aria-label` ("Carta boca abajo" /
+      nombre y categoría al voltear) y juego completo con teclado.
+- [ ] **4.9** Enlace al juego en la navegación y en la portada.
+- [ ] **4.10** Opcional: mejores marcas por tamaño de tablero en `localStorage`.
+
 ---
 
 ## Registro de sesiones
@@ -421,3 +477,4 @@ esta lista es solo el orden de trabajo.
 |---|---|
 | 2026-09-25 | Plan creado. Decisiones iniciales: 3 certificaciones, GitHub Pages, CC BY-SA 4.0, nombre `aws-cert-study`. |
 | 2026-09-25 | Fase 0: repo renombrado, `.mcp.json`, guías verificadas (SAP-C02 se retira y SAP-C03 entra como certificación aparte), `servicios.json` (155), `categorias.json` (20), `certificaciones.json`, `data/fuentes/` y cola priorizada. |
+| 2026-09-25 | Añadida la Fase 4 (juego de memoria con iconos oficiales de AWS); `data/asset-package/` en `.gitignore`. |
