@@ -7,8 +7,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Emite, gestiona y renueva certificados SSL/TLS para servicios de AWS como CloudFront, ELB y API Gateway."
   },
   {
     "id": "amplify",
@@ -29,8 +29,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Crea, publica y protege APIs REST, HTTP y WebSocket delante de Lambda u otros backends."
   },
   {
     "id": "app-runner",
@@ -185,8 +185,8 @@
     "certificaciones": [
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Acceso por API a modelos fundacionales de varios proveedores para crear aplicaciones de IA generativa."
   },
   {
     "id": "bedrock-agentcore",
@@ -256,8 +256,8 @@
       "SAP-C02",
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Red de entrega de contenido (CDN) que acerca contenido estático y dinámico a los usuarios con caché en el borde."
   },
   {
     "id": "cloudhsm",
@@ -294,8 +294,8 @@
     "incluye": [
       "Amazon CloudWatch Logs"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Métricas, logs, alarmas y paneles para observar y reaccionar ante el comportamiento de recursos y aplicaciones."
   },
   {
     "id": "codeartifact",
@@ -355,8 +355,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Registro, inicio de sesión y control de acceso de usuarios para aplicaciones web y móviles."
   },
   {
     "id": "comprehend",
@@ -539,8 +539,8 @@
       "SAP-C02",
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Base de datos NoSQL clave-valor y de documentos, serverless, con latencia de milisegundos a cualquier escala."
   },
   {
     "id": "ebs",
@@ -825,8 +825,8 @@
       "SAP-C02",
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Control de identidades y permisos: decide quién puede hacer qué sobre qué recurso de AWS."
   },
   {
     "id": "iam-identity-center",
@@ -1022,8 +1022,8 @@
       "SAP-C02",
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Ejecuta código en respuesta a eventos sin gestionar servidores y pagando solo por el tiempo de ejecución."
   },
   {
     "id": "lex",
@@ -1352,8 +1352,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "DNS gestionado y registro de dominios, con políticas de enrutamiento y comprobaciones de estado."
   },
   {
     "id": "s3",
@@ -1365,8 +1365,8 @@
       "SAP-C02",
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Almacenamiento de objetos duradero, escalable y barato, con clases de almacenamiento para cada patrón de acceso."
   },
   {
     "id": "s3-glacier",
@@ -1479,8 +1479,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": ""
+    "estado": "publicado",
+    "resumen": "Envío y recepción de correo electrónico a escala: transaccional, notificaciones y marketing."
   },
   {
     "id": "shield",

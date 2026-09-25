@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Bedrock — Apuntes AWS</title>
+<meta name="description" content="Acceso por API a modelos fundacionales de varios proveedores para crear aplicaciones de IA generativa. Apuntes y preguntas de práctica para AIF-C01.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/bedrock.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Bedrock — Apuntes AWS">
+<meta property="og:description" content="Acceso por API a modelos fundacionales de varios proveedores para crear aplicaciones de IA generativa.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/bedrock.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1>Amazon Bedrock</h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a href="../index.html?cat=machine-learning#catalogo">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+<h2 id="que-es">Qué es</h2>
+      <p>Amazon Bedrock es un servicio totalmente gestionado y <em>serverless</em> que da acceso por
+        API a <strong>modelos fundacionales</strong> (FM) de varios proveedores (Amazon Nova, Anthropic
+        Claude, Meta Llama, Mistral y otros). No hay infraestructura que gestionar. Además de invocar
+        modelos, ofrece herramientas para personalizarlos, conectarlos con tus datos (RAG), añadir
+        salvaguardas y evaluarlos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Invocación:</strong> APIs <code>InvokeModel</code> (formato de cada proveedor) y
+          <strong>Converse</strong> (interfaz unificada para conversaciones y uso de herramientas), con
+          respuesta en streaming.</li>
+        <li><strong>Parámetros de inferencia:</strong> <strong>temperatura</strong> y
+          <strong>top-p</strong> (más altos, más creatividad y variación; más bajos, más determinismo),
+          <strong>máximo de tokens</strong> de salida y secuencias de parada. Se cobra por
+          <strong>tokens</strong> de entrada y de salida.</li>
+        <li><strong>Knowledge Bases:</strong> RAG gestionado. Toma documentos (por ejemplo, de S3), los
+          divide, genera <em>embeddings</em>, los guarda en un almacén vectorial y recupera los fragmentos
+          relevantes para fundamentar la respuesta.</li>
+        <li><strong>Agents:</strong> descomponen una tarea en pasos y llaman a APIs o funciones Lambda
+          (grupos de acciones) y a bases de conocimiento.</li>
+        <li><strong>Guardrails:</strong> filtros de contenido dañino, temas denegados, palabras
+          bloqueadas, detección y enmascarado de datos personales, comprobaciones de fundamentación
+          contextual (contra alucinaciones) y de razonamiento automatizado. Se aplican a la entrada y a la
+          salida.</li>
+        <li><strong>Personalización de modelos:</strong> <em>fine-tuning</em> con datos etiquetados,
+          <em>continued pre-training</em> con datos sin etiquetar del dominio y <em>destilación</em> (un
+          modelo pequeño aprende de uno grande).</li>
+        <li><strong>Evaluación de modelos:</strong> automática (métricas o un modelo como juez) o humana.</li>
+        <li><strong>Inferencia entre regiones:</strong> perfiles de inferencia que reparten las peticiones
+          entre regiones de una geografía o globalmente, para ganar capacidad.</li>
+        <li><strong>Opciones de consumo:</strong> bajo demanda (con niveles Standard, Priority y Flex),
+          por lotes (más barato, asíncrono) y Provisioned Throughput (capacidad reservada, necesaria
+          típicamente para modelos personalizados).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Asistentes y chatbots que responden con la documentación de la empresa (RAG).</li>
+        <li>Resumir, clasificar o extraer información de textos y documentos.</li>
+        <li>Generar contenido: textos, código, imágenes.</li>
+        <li>Agentes que ejecutan tareas de varios pasos llamando a sistemas internos.</li>
+        <li>Generar preguntas de repaso o materiales de estudio a partir de apuntes.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si necesitas entrenar desde cero un modelo propio o usar ML clásico (regresión,
+          clasificación tabular): <strong>SageMaker AI</strong>.</li>
+        <li>Si quieres un asistente listo para usar sin desarrollar nada: <strong>Amazon Q</strong>.</li>
+        <li>Tareas que resuelve un servicio de IA específico con menos coste y más precisión: Textract
+          (extraer texto de documentos), Comprehend (sentimiento, entidades), Transcribe, Translate,
+          Rekognition…</li>
+        <li>Para ejecutar agentes en producción con memoria, identidad y herramientas gestionadas a
+          escala existe un servicio específico: Amazon Bedrock AgentCore.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción adecuada</th></tr></thead>
+          <tbody>
+            <tr><td>Que el modelo use información actual o privada sin reentrenarlo</td><td>RAG con Knowledge Bases</td></tr>
+            <tr><td>Que el modelo adopte un estilo o formato concreto con ejemplos etiquetados</td><td>Fine-tuning</td></tr>
+            <tr><td>Adaptar el modelo al vocabulario de un dominio con mucho texto sin etiquetar</td><td>Continued pre-training</td></tr>
+            <tr><td>Guiar la respuesta sin coste de entrenamiento</td><td>Ingeniería de prompts (zero-shot, few-shot, cadena de razonamiento)</td></tr>
+            <tr><td>Entrenar y desplegar modelos propios</td><td>SageMaker AI</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En bajo demanda se paga por <strong>tokens de entrada y de salida</strong> (o por imagen o
+        segundo de vídeo), con precios distintos por modelo y por nivel de servicio. La inferencia por
+        lotes es más barata. Provisioned Throughput se paga por hora según las unidades de modelo
+        reservadas. Se cobran aparte la personalización (entrenamiento y almacenamiento del modelo), los
+        Guardrails, las evaluaciones y los servicios asociados, como el almacén vectorial.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Tus prompts y respuestas <strong>no se usan para entrenar los modelos base</strong> ni se
+          comparten con los proveedores.</li>
+        <li>Cifrado en tránsito y en reposo (con claves de KMS para modelos personalizados y otros recursos).</li>
+        <li>Acceso privado desde la VPC con endpoints de interfaz (PrivateLink).</li>
+        <li>Permisos con IAM hasta el nivel de modelo; auditoría de llamadas con CloudTrail e invocaciones
+          registrables en CloudWatch o S3.</li>
+        <li>IA responsable: Guardrails, evaluación de modelos y comprobación de sesgos y toxicidad.</li>
+      </ul>
+
+      <h2 id="kopi">Así lo uso en Kopi</h2>
+      <p>Kopi usa Bedrock para <strong>generar preguntas de repaso</strong> a partir de los apuntes de
+        la sección Conocimiento. Una función Lambda envía el texto al modelo Claude Haiku con
+        <code>InvokeModel</code>, con un límite de tokens de salida, y devuelve las preguntas. El
+        identificador del modelo está en una variable de entorno, así que se puede cambiar sin tocar
+        código. Todo queda dentro de AWS, sin claves de API externas: el permiso es
+        <code>bedrock:InvokeModel</code> en el rol de ejecución. Se eligió un modelo pequeño y rápido
+        porque la tarea no necesita más y el coste por token es menor.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Datos privados o actualizados sin reentrenar"</strong>: RAG con Knowledge Bases, no fine-tuning.</li>
+        <li><strong>"Respuestas más deterministas"</strong>: bajar la temperatura.</li>
+        <li><strong>"Bloquear temas"</strong> o <strong>"ocultar datos personales"</strong>: Guardrails.</li>
+        <li><strong>"Modelo personalizado en producción"</strong>: Provisioned Throughput.</li>
+        <li><strong>"Muchas peticiones sin urgencia al menor coste"</strong>: inferencia por lotes.</li>
+        <li><strong>"¿Se usan mis datos para entrenar el modelo?"</strong>: no.</li>
+        <li><strong>"Ejecutar varios pasos y llamar a APIs"</strong>: Agents.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="bedrock"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html" target="_blank" rel="noopener">Amazon Bedrock overview</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html" target="_blank" rel="noopener">Retrieve data and generate AI responses with Amazon Bedrock Knowledge Bases</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html" target="_blank" rel="noopener">Detect and filter harmful content by using Amazon Bedrock Guardrails</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html" target="_blank" rel="noopener">Route model inference requests across AWS Regions with cross-Region inference</a>, documentación de AWS (consultada el 25/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

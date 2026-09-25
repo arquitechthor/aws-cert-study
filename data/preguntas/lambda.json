@@ -1,0 +1,137 @@
+[
+  {
+    "id": "lambda-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una función Lambda detrás de API Gateway tiene picos de latencia al principio de cada jornada por arranques en frío. El negocio exige latencia estable en horario laboral. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Configurar concurrencia aprovisionada, programada para el horario laboral.",
+      "Aumentar el tiempo máximo de ejecución a 15 minutos.",
+      "Configurar concurrencia reservada.",
+      "Mover la función fuera de la VPC."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La concurrencia aprovisionada mantiene entornos ya inicializados y se puede escalar con Application Auto Scaling según un horario. La concurrencia reservada solo garantiza y limita capacidad, sin inicializar entornos, y el tiempo máximo no influye.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html"
+    ]
+  },
+  {
+    "id": "lambda-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una función Lambda que escribe en una base de datos pequeña, compartida con otros sistemas, la satura en los picos de tráfico. ¿Cómo se limita el número de ejecuciones simultáneas de esa función?",
+    "opciones": [
+      "Configurar concurrencia reservada con el máximo deseado.",
+      "Reducir la memoria de la función.",
+      "Aumentar el tiempo máximo de ejecución.",
+      "Configurar concurrencia aprovisionada."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La concurrencia reservada actúa como tope de ejecuciones simultáneas de la función (y le garantiza esa capacidad). La memoria y el tiempo máximo no limitan la concurrencia, y la aprovisionada sirve para reducir arranques en frío.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html"
+    ]
+  },
+  {
+    "id": "lambda-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una función Lambda dentro de una subred privada de una VPC debe llamar a una API externa en internet, pero las llamadas agotan el tiempo de espera. ¿Qué falta?",
+    "opciones": [
+      "Asignar una IP elástica a la función.",
+      "Una ruta desde la subred privada a un NAT Gateway en una subred pública.",
+      "Un endpoint de VPC de tipo gateway para DynamoDB.",
+      "Activar la concurrencia aprovisionada."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las funciones en VPC no reciben IP pública. Para salir a internet desde subredes privadas necesitan un NAT Gateway (o instancia NAT) en una subred pública. Un endpoint de gateway solo da acceso privado a S3 o DynamoDB.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+    ]
+  },
+  {
+    "id": "lambda-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa quiere migrar un proceso nocturno que tarda unas 3 horas y hoy corre en un servidor. Busca un modelo sin servidores que gestionar. ¿Qué opción es viable sin rediseñar el proceso?",
+    "opciones": [
+      "Una sola función Lambda con el tiempo máximo configurado.",
+      "Una tarea de ECS en Fargate, lanzada por una regla programada de EventBridge.",
+      "Una función Lambda invocada de forma asíncrona.",
+      "Una Lambda@Edge."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Lambda está limitada a 15 minutos por invocación. Fargate ejecuta el proceso en un contenedor sin servidores que gestionar y sin límite de duración, y EventBridge lo programa.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html"
+    ]
+  },
+  {
+    "id": "lambda-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una función Lambda procesa de forma asíncrona los eventos de subida de ficheros a S3. ¿Qué dos opciones permiten conservar los eventos que siguen fallando tras los reintentos?",
+    "opciones": [
+      "Configurar una cola de mensajes fallidos (DLQ) de SQS en la función.",
+      "Configurar un destino en caso de fallo (on-failure destination).",
+      "Aumentar la memoria de la función.",
+      "Activar el versionado del bucket.",
+      "Configurar concurrencia aprovisionada."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "En invocación asíncrona, Lambda reintenta y después puede enviar el evento a una DLQ o a un destino en caso de fallo (SQS, SNS, EventBridge, Lambda o S3). Las demás opciones no guardan los eventos fallidos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/lambda-invocation.html"
+    ]
+  },
+  {
+    "id": "lambda-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa quiere generar un resumen con un modelo de Amazon Bedrock cada vez que se sube un documento a S3, sin gestionar servidores. ¿Qué arquitectura es la más sencilla?",
+    "opciones": [
+      "Una notificación de evento de S3 que invoca una función Lambda, que llama a la API de Bedrock y guarda el resumen.",
+      "Una instancia EC2 que consulta el bucket cada minuto.",
+      "Entrenar un modelo propio en SageMaker AI para cada documento.",
+      "Un clúster de EMR programado a diario."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El evento de S3 dispara Lambda al subir el documento, y Lambda llama a Bedrock sin servidores que mantener. Las demás opciones añaden infraestructura o latencia innecesarias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+    ]
+  }
+]

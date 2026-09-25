@@ -1,0 +1,115 @@
+[
+  {
+    "id": "cloudfront-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un sitio estático se sirve con CloudFront desde un bucket S3. Los usuarios no deben poder acceder a los objetos directamente por la URL de S3. ¿Qué se debe configurar?",
+    "opciones": [
+      "Hacer público el bucket y confiar en la caché de CloudFront.",
+      "Origin Access Control (OAC) en la distribución y una bucket policy que solo permita a esa distribución.",
+      "Una restricción geográfica en CloudFront.",
+      "URLs prefirmadas de S3 en todas las páginas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con OAC, CloudFront firma sus peticiones al bucket, y la bucket policy (con la condición AWS:SourceArn) solo admite esa distribución. El bucket queda privado y el acceso directo falla.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html"
+    ]
+  },
+  {
+    "id": "cloudfront-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una plataforma de cursos quiere que solo los alumnos que han pagado vean los cientos de vídeos de un curso, sin cambiar las URLs de cada vídeo. ¿Qué mecanismo de CloudFront es el adecuado?",
+    "opciones": [
+      "URLs firmadas para cada vídeo.",
+      "Cookies firmadas.",
+      "Restricción geográfica.",
+      "Una clase de precio limitada."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las cookies firmadas dan acceso a muchos ficheros sin cambiar sus URLs. Las URLs firmadas encajan mejor con ficheros individuales, y las restricciones geográficas o las clases de precio no controlan quién ha pagado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+    ]
+  },
+  {
+    "id": "cloudfront-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un juego multijugador usa UDP y necesita mejorar la latencia global y conmutar en segundos entre regiones, usando direcciones IP fijas. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "Amazon CloudFront.",
+      "AWS Global Accelerator.",
+      "Route 53 con enrutamiento por latencia.",
+      "S3 Transfer Acceleration."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Global Accelerator admite TCP y UDP, ofrece dos IP anycast estáticas y conmuta rápidamente entre endpoints regionales. CloudFront es para HTTP, y la conmutación por DNS depende del TTL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+    ]
+  },
+  {
+    "id": "cloudfront-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una web en CloudFront necesita añadir cabeceras de seguridad y redirigir URLs antiguas en cada petición, con la menor latencia y coste posibles. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Lambda@Edge en el evento de petición al origen.",
+      "CloudFront Functions en los eventos de petición y respuesta del visitante.",
+      "Una función Lambda regional detrás de API Gateway.",
+      "Reglas de AWS WAF."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CloudFront Functions está pensada para manipulaciones ligeras de cabeceras y URLs en los eventos del visitante, con latencia submilisegundo y un coste muy bajo. Lambda@Edge es más potente pero más lenta y cara, y WAF no reescribe URLs.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/edge-functions.html"
+    ]
+  },
+  {
+    "id": "cloudfront-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "¿Qué dos formas hay de que los usuarios vean inmediatamente una nueva versión de un fichero ya cacheado en CloudFront?",
+    "opciones": [
+      "Crear una invalidación de la ruta del fichero.",
+      "Publicar el fichero con un nombre nuevo versionado (por ejemplo, con un hash) y actualizar las referencias.",
+      "Reiniciar la distribución.",
+      "Cambiar la clase de precio.",
+      "Activar la restricción geográfica."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Una invalidación elimina el objeto de la caché, y un nombre versionado hace que se pida un objeto nuevo. Esto último evita invalidaciones y permite cachear mucho tiempo. Las demás opciones no afectan a la caché.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+    ]
+  }
+]

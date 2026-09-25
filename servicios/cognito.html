@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Cognito — Apuntes AWS</title>
+<meta name="description" content="Registro, inicio de sesión y control de acceso de usuarios para aplicaciones web y móviles. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cognito.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Cognito — Apuntes AWS">
+<meta property="og:description" content="Registro, inicio de sesión y control de acceso de usuarios para aplicaciones web y móviles.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cognito.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1>Amazon Cognito</h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+<h2 id="que-es">Qué es</h2>
+      <p>Amazon Cognito gestiona la identidad de los <strong>usuarios finales</strong> de tus
+        aplicaciones: registro, inicio de sesión, recuperación de contraseña, MFA y federación con
+        proveedores externos. Tras autenticar, emite <strong>tokens JWT</strong> que tu backend puede
+        validar sin mantener su propia base de datos de usuarios. También puede entregar
+        <strong>credenciales temporales de AWS</strong> para que una app acceda directamente a
+        servicios como S3.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>User pool (grupo de usuarios):</strong> directorio de usuarios y proveedor de
+          autenticación. Emite tres tokens: <strong>ID token</strong> (quién es el usuario),
+          <strong>access token</strong> (qué puede hacer, con <em>scopes</em> y grupos) y
+          <strong>refresh token</strong> (para renovar los anteriores).</li>
+        <li><strong>Identity pool (grupo de identidades):</strong> intercambia una identidad (de un
+          user pool, de Google, de SAML o incluso anónima) por <strong>credenciales temporales de
+          AWS</strong> asociadas a un rol IAM.</li>
+        <li><strong>Federación:</strong> inicio de sesión con proveedores sociales (Google, Apple,
+          Facebook, Amazon), SAML u OIDC.</li>
+        <li><strong>Grupos:</strong> agrupan usuarios; su nombre viaja en el token
+          (<code>cognito:groups</code>) y pueden asociarse a un rol IAM.</li>
+        <li><strong>Disparadores Lambda:</strong> personalizan el flujo (antes del registro, tras
+          confirmar, antes de generar el token, migración de usuarios, etc.).</li>
+        <li><strong>Managed login (antes Hosted UI):</strong> páginas de inicio de sesión alojadas por
+          Cognito, con OAuth 2.0 y OIDC.</li>
+        <li><strong>Planes de funciones:</strong> Lite, Essentials y Plus. Plus añade protección
+          frente a amenazas, como detectar contraseñas comprometidas o inicios de sesión de riesgo.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Login de una SPA o app móvil sin programar tu propio sistema de autenticación.</li>
+        <li>Proteger una API de API Gateway con un <strong>autorizador de Cognito/JWT</strong>.</li>
+        <li>Autenticación en un Application Load Balancer, que puede delegar el login en Cognito.</li>
+        <li>Que una app móvil suba ficheros directamente a S3 con credenciales temporales
+          (identity pool).</li>
+        <li>Acceso de invitados (usuarios no autenticados) con permisos muy reducidos.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para dar acceso de los empleados a la consola o a cuentas de AWS: eso es IAM Identity Center.</li>
+        <li>Para permisos entre servicios de AWS: eso son roles IAM.</li>
+        <li>Si ya tienes un proveedor de identidad completo y solo necesitas validar sus JWT, API Gateway
+          puede hacerlo directamente con un autorizador JWT sin Cognito.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>User pool</th><th>Identity pool</th><th>IAM Identity Center</th></tr></thead>
+          <tbody>
+            <tr><td>¿Para quién?</td><td>Clientes de tu app</td><td>Clientes de tu app</td><td>Empleados</td></tr>
+            <tr><td>¿Qué entrega?</td><td>Tokens JWT</td><td>Credenciales temporales de AWS</td><td>Acceso SSO a cuentas y apps</td></tr>
+            <tr><td>Uso típico</td><td>Login y autorización en tu API</td><td>Acceso directo a S3, DynamoDB…</td><td>Consola y CLI de AWS</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>usuarios activos al mes (MAU)</strong>, según el plan de funciones. Hay
+        un nivel gratuito para un número de MAU que no caduca. La federación con SAML u OIDC y el
+        envío de SMS (para MFA o verificación) tienen coste aparte. Los identity pools no tienen coste
+        propio.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las contraseñas nunca pasan por tu backend: el cliente habla con Cognito (protocolo SRP).</li>
+        <li>MFA por TOTP, SMS o correo; políticas de contraseña configurables.</li>
+        <li>En clientes públicos (SPA, móvil) no se usa secreto de cliente, sino OAuth con PKCE.</li>
+        <li>Access token de vida corta y refresh token revocable.</li>
+        <li>Es un servicio regional gestionado y replicado entre zonas de disponibilidad.</li>
+      </ul>
+
+      <h2 id="kopi">Así lo uso en Kopi</h2>
+      <p>Kopi usa un user pool con login por correo y contraseña directamente desde la web y la app
+        Android, sin Hosted UI. Tres grupos (<code>ADMIN</code>, <code>USERS</code> y
+        <code>PENDING</code>) controlan el acceso. Un disparador <em>Pre sign-up</em> evita la
+        confirmación automática, porque cada alta la aprueba un administrador a mano. API Gateway valida
+        el JWT en cada petición y las Lambdas leen el grupo del token. Los correos de verificación
+        salen por SES con dominio propio, para que no acaben en spam.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Usuarios de la aplicación"</strong> o <strong>"login social"</strong>: Cognito
+          (user pool). <strong>"Empleados"</strong> o <strong>"SSO a cuentas"</strong>: IAM Identity Center.</li>
+        <li><strong>"Acceso directo desde la app móvil a S3 o DynamoDB"</strong>: identity pool
+          (credenciales temporales), nunca claves embebidas en la app.</li>
+        <li><strong>"Usuarios invitados o no autenticados"</strong>: identity pool con identidades no autenticadas.</li>
+        <li>Un user pool <strong>no</strong> da acceso a servicios de AWS por sí solo; para eso hace
+          falta un identity pool o validar el token en tu API.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cognito"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html" target="_blank" rel="noopener">What is Amazon Cognito?</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-identity.html" target="_blank" rel="noopener">Amazon Cognito identity pools</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html" target="_blank" rel="noopener">User pool feature plans</a>, documentación de AWS (consultada el 25/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

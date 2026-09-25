@@ -51,10 +51,15 @@ horizontal scroll).
 ## Workflow: filling in a service (Phase 2)
 
 1. Research with the `aws-knowledge` MCP server (`.mcp.json`): `search_documentation`, then
-   `read_documentation` only when chunks are insufficient. Check whether the service is
-   discontinued or closed to new customers; if so, add the warning callout.
+   `read_documentation` only when chunks are insufficient. If the session did not load the MCP
+   (started outside this folder), the endpoint also answers plain JSON-RPC `tools/call` POSTs
+   without auth. Verify quotas and limits against current docs, since they change (e.g. Lambda
+   async payload is now 1 MB, S3 max object ~50 TB, ACM certs 198 days). Check whether the
+   service is discontinued or closed to new customers; if so, add the warning callout.
 2. Copy `plantillas/servicio.html` to `servicios/<id>.html` and fill in every `[[…]]`; remove
-   the template comment and the `noindex` meta.
+   the template comment and the `noindex` meta. Include the "Así lo uso en Kopi" section only
+   if Kopi uses the service (see `kopi-media-admin/documentation/servicios-aws/`), with no
+   sensitive identifiers (account ID, bucket names, distribution IDs, ARNs).
 3. Write `data/preguntas/<id>.json` with 5–15 **original** questions tagged with certification
    and domain (domain names from `certificaciones.json`).
 4. In `data/servicios.json`, set `estado` to `"publicado"` and write `resumen`.

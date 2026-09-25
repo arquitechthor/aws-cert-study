@@ -1,0 +1,137 @@
+[
+  {
+    "id": "iam-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una aplicación que se ejecuta en instancias EC2 necesita leer objetos de un bucket S3. ¿Cuál es la forma más segura de concederle acceso?",
+    "opciones": [
+      "Crear un usuario IAM y guardar sus claves de acceso en un fichero de configuración de la instancia.",
+      "Asociar a las instancias un rol IAM con permiso de lectura sobre ese bucket.",
+      "Hacer público el bucket y restringirlo por la IP de las instancias.",
+      "Usar las credenciales del usuario raíz solo en esa aplicación."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un rol asociado mediante perfil de instancia entrega credenciales temporales que se rotan solas. Las claves en ficheros pueden filtrarse, hacer público el bucket expone los datos y el usuario raíz nunca debe usarse para aplicaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ]
+  },
+  {
+    "id": "iam-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un usuario tiene una política que permite s3:* sobre todos los recursos y pertenece a un grupo con una política que deniega s3:DeleteObject en un bucket concreto. ¿Qué ocurre si intenta borrar un objeto de ese bucket?",
+    "opciones": [
+      "Se permite, porque la política del usuario es más específica que la del grupo.",
+      "Se permite, porque las políticas de grupo solo se aplican si el usuario no tiene políticas propias.",
+      "Se deniega, porque un Deny explícito prevalece sobre cualquier Allow.",
+      "Depende del orden en que se asociaron las políticas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "IAM evalúa todas las políticas aplicables juntas. Un Deny explícito en cualquiera de ellas gana siempre; el orden y la especificidad no influyen.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html"
+    ]
+  },
+  {
+    "id": "iam-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa con decenas de cuentas en AWS Organizations quiere impedir que nadie, en ninguna cuenta miembro, pueda desactivar CloudTrail, incluidos los administradores de esas cuentas. ¿Qué debe usar?",
+    "opciones": [
+      "Una política IAM en cada cuenta que deniegue cloudtrail:StopLogging.",
+      "Una SCP asociada a la raíz o a las OU que deniegue cloudtrail:StopLogging y cloudtrail:DeleteTrail.",
+      "Un límite de permisos en todos los roles de administrador.",
+      "Una regla de AWS Config que vuelva a activar CloudTrail."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Una SCP limita a todas las identidades de las cuentas miembro, incluido su usuario raíz, y no puede quitarse desde dentro de la cuenta. Las políticas IAM y los límites de permisos los puede cambiar un administrador local; Config solo detectaría o corregiría a posteriori.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html"
+    ]
+  },
+  {
+    "id": "iam-004",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "¿Qué dos medidas siguen las buenas prácticas para proteger el usuario raíz de una cuenta?",
+    "opciones": [
+      "Activar MFA en el usuario raíz.",
+      "Crear claves de acceso del usuario raíz para automatizar tareas.",
+      "Usar el usuario raíz solo para las tareas que lo requieren y trabajar a diario con otras identidades.",
+      "Compartir la contraseña del usuario raíz con todo el equipo de operaciones.",
+      "Asociar al usuario raíz una política que limite sus permisos."
+    ],
+    "correctas": [
+      0,
+      2
+    ],
+    "explicacion": "El usuario raíz debe tener MFA y usarse solo cuando es imprescindible. No debe tener claves de acceso ni compartirse, y las políticas IAM no pueden limitarlo (solo una SCP afecta al raíz de una cuenta miembro).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ]
+  },
+  {
+    "id": "iam-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un equipo de plataforma quiere que los desarrolladores puedan crear roles IAM para sus funciones Lambda, pero sin que ninguno de esos roles supere un conjunto máximo de permisos. ¿Qué mecanismo lo permite?",
+    "opciones": [
+      "Exigir, mediante condición en la política del desarrollador, que todo rol creado lleve un límite de permisos concreto.",
+      "Crear un grupo IAM para los roles de Lambda.",
+      "Usar políticas insertadas en lugar de gestionadas.",
+      "Revisar los roles cada semana con IAM Access Analyzer y borrar los excesivos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los límites de permisos fijan el máximo efectivo de un rol o usuario. Con la condición iam:PermissionsBoundary en la política del desarrollador se obliga a adjuntarlo al crear roles, lo que evita la escalada de privilegios. Los grupos no aplican a roles y la revisión periódica no lo impide.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html"
+    ]
+  },
+  {
+    "id": "iam-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una aplicación en Lambda debe invocar solo un modelo concreto de Amazon Bedrock. ¿Cómo se aplica el principio de mínimo privilegio?",
+    "opciones": [
+      "Dar al rol de la función la política gestionada de acceso total a Bedrock.",
+      "Dar al rol la acción bedrock:InvokeModel limitada al ARN de ese modelo.",
+      "Guardar las claves de un usuario administrador en una variable de entorno.",
+      "Hacer pública la función para que Bedrock pueda llamarla."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Mínimo privilegio significa conceder solo la acción necesaria (bedrock:InvokeModel) sobre el recurso concreto (el ARN del modelo) en el rol de ejecución. El acceso total es excesivo y las claves de administrador son un riesgo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ]
+  }
+]

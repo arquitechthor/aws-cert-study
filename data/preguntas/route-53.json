@@ -1,0 +1,115 @@
+[
+  {
+    "id": "route-53-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa quiere que su dominio raíz ejemplo.com apunte a una distribución de CloudFront. ¿Qué tipo de registro debe crear en Route 53?",
+    "opciones": [
+      "Un CNAME en el vértice del dominio.",
+      "Un registro alias de tipo A (y AAAA) que apunte a la distribución.",
+      "Un registro MX.",
+      "Un registro NS."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El DNS no permite un CNAME en el vértice de la zona. Un registro alias de Route 53 sí puede apuntar allí a CloudFront, y sus consultas no tienen coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-choosing-alias-non-alias.html"
+    ]
+  },
+  {
+    "id": "route-53-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación corre en una región principal y tiene un entorno de respaldo en otra. Solo si la principal falla, el tráfico debe ir al respaldo. ¿Qué configuración de Route 53 es la adecuada?",
+    "opciones": [
+      "Enrutamiento ponderado 50/50.",
+      "Enrutamiento de failover con una comprobación de estado en el registro primario.",
+      "Enrutamiento por geolocalización.",
+      "Enrutamiento simple con dos valores."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La política de failover responde con el primario mientras su comprobación de estado es correcta, y con el secundario cuando falla. Es el patrón activo-pasivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html"
+    ]
+  },
+  {
+    "id": "route-53-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Por motivos legales, los usuarios de un país concreto deben recibir una versión distinta del sitio. ¿Qué política de enrutamiento se usa?",
+    "opciones": [
+      "Latencia.",
+      "Geolocalización.",
+      "Ponderada.",
+      "Multivalor."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La geolocalización decide según la ubicación del usuario (país, continente). La de latencia elige la región más rápida, que no tiene por qué coincidir con el país.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html"
+    ]
+  },
+  {
+    "id": "route-53-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Las cargas de trabajo en varias VPC deben resolver nombres de un dominio interno alojado en los servidores DNS de un centro de datos, conectado por Direct Connect. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Una zona alojada pública con los mismos registros.",
+      "Un endpoint de salida de Route 53 Resolver con reglas de reenvío para ese dominio, compartidas con las VPC mediante AWS RAM.",
+      "Un endpoint de entrada de Route 53 Resolver.",
+      "Modificar el fichero hosts de cada instancia."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las consultas desde la VPC hacia el DNS local salen por un endpoint de salida con reglas de reenvío, que se pueden compartir entre cuentas y VPC con RAM. El endpoint de entrada sirve para el sentido contrario.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "route-53-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa migra una aplicación a una nueva plataforma y quiere enviar primero el 10 % del tráfico a la versión nueva y poder volver atrás rápidamente. ¿Qué dos elementos de Route 53 usa?",
+    "opciones": [
+      "Registros con enrutamiento ponderado (90/10).",
+      "Un TTL bajo en esos registros.",
+      "Enrutamiento por geolocalización.",
+      "Una zona alojada privada.",
+      "DNSSEC."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "El enrutamiento ponderado reparte el tráfico por porcentajes, y un TTL bajo hace que los cambios de peso se apliquen pronto al volver atrás. Las demás opciones no controlan el reparto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html"
+    ]
+  }
+]

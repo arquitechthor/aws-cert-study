@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Certificate Manager (ACM) — Apuntes AWS</title>
+<meta name="description" content="Emite, gestiona y renueva certificados SSL/TLS para servicios de AWS como CloudFront, ELB y API Gateway. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/acm.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Certificate Manager (ACM) — Apuntes AWS">
+<meta property="og:description" content="Emite, gestiona y renueva certificados SSL/TLS para servicios de AWS como CloudFront, ELB y API Gateway.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/acm.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1>AWS Certificate Manager (ACM)</h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+<h2 id="que-es">Qué es</h2>
+      <p>AWS Certificate Manager (ACM) emite y gestiona certificados SSL/TLS para dominios y los
+        despliega en servicios integrados de AWS (Elastic Load Balancing, CloudFront, API Gateway, App
+        Runner, entre otros). Los certificados públicos para estos servicios son
+        <strong>gratuitos</strong> y se <strong>renuevan automáticamente</strong>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Validación del dominio:</strong> por <strong>DNS</strong> (un registro CNAME;
+          permite la renovación automática mientras el registro exista) o por
+          <strong>correo</strong> (requiere acción en cada renovación).</li>
+        <li><strong>Certificados regionales:</strong> un certificado se usa en la región donde se crea.
+          Para <strong>CloudFront</strong>, siempre en <strong>us-east-1</strong>.</li>
+        <li><strong>Comodines y varios nombres:</strong> <code>*.ejemplo.com</code> y certificados con
+          varios nombres de dominio (SAN).</li>
+        <li><strong>Validez:</strong> los certificados públicos de ACM son de 198 días y ACM los renueva
+          solo antes de caducar.</li>
+        <li><strong>Certificados importados:</strong> de otras autoridades; ACM <strong>no los
+          renueva</strong>, y hay que vigilar su caducidad con eventos o métricas.</li>
+        <li><strong>Certificados exportables:</strong> opción de pago que permite obtener la clave privada
+          para usar el certificado fuera de los servicios integrados (EC2, contenedores, servidores
+          propios). Los certificados estándar no se pueden exportar.</li>
+        <li><strong>AWS Private CA:</strong> autoridad de certificación privada (de pago) para
+          certificados internos.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>HTTPS con dominio propio en CloudFront, un ALB o API Gateway.</li>
+        <li>Certificados comodín para varios subdominios.</li>
+        <li>Certificados privados para TLS mutuo o servicios internos (con Private CA).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si necesitas instalar el certificado directamente en un servidor web en EC2 y no quieres pagar
+          por la exportación: otra autoridad de certificación o terminar TLS en un balanceador.</li>
+        <li>Si el certificado debe usarse en otra región: hay que crearlo o importarlo en esa región.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>HTTPS público en servicios integrados, gratis y con renovación automática</td><td>Certificado público de ACM</td></tr>
+            <tr><td>Certificado público para instalar en un servidor propio</td><td>Certificado exportable de ACM (de pago) u otra CA</td></tr>
+            <tr><td>Certificados internos para servicios o dispositivos</td><td>AWS Private CA</td></tr>
+            <tr><td>Certificado ya comprado a otra CA</td><td>Importarlo en ACM (sin renovación automática)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Los certificados públicos usados con servicios integrados son gratuitos, y también importar
+        certificados. Los certificados públicos exportables se cobran al emitirse y en cada renovación.
+        AWS Private CA tiene una cuota mensual por autoridad y un precio por certificado emitido. Solo
+        pagas los recursos que los usan.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>La clave privada de los certificados estándar la protege AWS y no sale del servicio.</li>
+        <li>Renovación automática con validación DNS: evita caídas por certificados caducados.</li>
+        <li>Eventos de EventBridge y métrica de días hasta la caducidad para vigilar los certificados importados.</li>
+        <li>Permisos con IAM para solicitar, importar o borrar certificados.</li>
+      </ul>
+
+      <h2 id="kopi">Así lo uso en Kopi</h2>
+      <p>Kopi tiene dos certificados validados por DNS en Route 53: uno en <strong>us-east-1</strong>
+        para la web servida por CloudFront y otro en la región principal para el dominio propio de API
+        Gateway. Con los registros de validación en la zona, ACM los renueva sin intervención. Tener que
+        crear el certificado de CloudFront en otra región sorprende la primera vez.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Certificado para CloudFront"</strong>: ACM en <strong>us-east-1</strong>.</li>
+        <li><strong>"Renovación automática"</strong>: validación por DNS (la de correo exige acción humana).</li>
+        <li><strong>"Certificado importado caducado"</strong>: ACM no renueva los importados; hay que
+          vigilarlos con EventBridge o CloudWatch.</li>
+        <li><strong>"HTTPS en EC2 sin pagar certificados"</strong>: terminar TLS en un ALB con un
+          certificado de ACM.</li>
+        <li><strong>"Certificados internos"</strong>: AWS Private CA.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="acm"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html" target="_blank" rel="noopener">What is AWS Certificate Manager?</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/acm/latest/userguide/dns-validation.html" target="_blank" rel="noopener">AWS Certificate Manager DNS validation</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html" target="_blank" rel="noopener">Managed automation with integrated services</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/acm/latest/userguide/managed-renewal.html" target="_blank" rel="noopener">Managed certificate renewal in AWS Certificate Manager</a>, documentación de AWS (consultada el 25/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

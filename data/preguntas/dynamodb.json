@@ -1,0 +1,115 @@
+[
+  {
+    "id": "dynamodb-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación de lectura intensiva sobre DynamoDB necesita reducir la latencia de lectura de milisegundos a microsegundos sin cambiar la lógica de acceso a datos. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Amazon ElastiCache for Redis OSS con lógica de caché en la aplicación.",
+      "DynamoDB Accelerator (DAX).",
+      "Pasar la tabla a capacidad aprovisionada.",
+      "Crear un GSI."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "DAX es una caché en memoria compatible con la API de DynamoDB, con latencia de microsegundos y casi sin cambios de código. ElastiCache obliga a programar la caché, y ni la capacidad ni los índices reducen la latencia a microsegundos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+    ]
+  },
+  {
+    "id": "dynamodb-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una tabla guarda sesiones de usuario que dejan de ser útiles a las 24 horas. ¿Cuál es la forma más económica de eliminarlas?",
+    "opciones": [
+      "Una Lambda programada que hace Scan y borra los ítems antiguos.",
+      "Activar TTL con un atributo que indique la hora de caducidad.",
+      "Recrear la tabla cada día.",
+      "Usar un GSI por fecha y borrar por consulta."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "TTL elimina automáticamente los ítems caducados sin consumir capacidad de escritura. Un Scan periódico consume lecturas y escrituras, y recrear la tabla es disruptivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+    ]
+  },
+  {
+    "id": "dynamodb-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación global necesita escrituras con baja latencia desde usuarios de Europa y América, y seguir funcionando si falla una región entera. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Una tabla en us-east-1 con DAX en Europa.",
+      "DynamoDB Global Tables con réplicas en ambas regiones.",
+      "Copias de seguridad bajo demanda copiadas a la otra región.",
+      "Una réplica de lectura de la tabla en Europa."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Global Tables replica la tabla en varias regiones en modo activo-activo, con escrituras locales en cada una y continuidad si una región falla. DynamoDB no tiene réplicas de lectura como RDS, y las copias no dan escrituras locales ni una conmutación inmediata.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+    ]
+  },
+  {
+    "id": "dynamodb-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una tabla en modo aprovisionado sufre limitación de escritura (throttling) aunque el consumo total está muy por debajo de la capacidad. La clave de partición es la fecha del día. ¿Cuál es la causa más probable y la mejora adecuada?",
+    "opciones": [
+      "Falta capacidad total: duplicar las WCU.",
+      "Partición caliente: rediseñar la clave para repartir las escrituras (por ejemplo, añadir un sufijo aleatorio o usar un identificador de alta cardinalidad).",
+      "Faltan índices: crear un LSI.",
+      "La tabla es demasiado grande: archivar datos en S3."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con la fecha como clave, todas las escrituras del día van a la misma partición y superan su límite aunque la tabla tenga capacidad. Repartir la clave elimina la partición caliente; añadir capacidad total no lo resuelve.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html"
+    ]
+  },
+  {
+    "id": "dynamodb-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Unas funciones Lambda en subredes privadas acceden a DynamoDB. La empresa exige que ese tráfico no salga a internet y quiere evitar el coste de un NAT Gateway. ¿Qué dos acciones lo consiguen?",
+    "opciones": [
+      "Crear un endpoint de VPC de tipo gateway para DynamoDB.",
+      "Añadir la ruta del endpoint a las tablas de rutas de las subredes privadas.",
+      "Asignar IP públicas a las funciones Lambda.",
+      "Crear un NAT Gateway en cada zona de disponibilidad.",
+      "Activar DynamoDB Streams."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "El endpoint de gateway para DynamoDB es gratuito y se usa añadiendo su ruta a las tablas de rutas de las subredes. Así el tráfico se queda en la red de AWS sin NAT.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+    ]
+  }
+]

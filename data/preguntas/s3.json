@@ -1,0 +1,137 @@
+[
+  {
+    "id": "s3-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa guarda informes a los que se accede mucho el primer mes, casi nunca después, y que deben conservarse 7 años para auditorías con recuperación en menos de 12 horas. ¿Qué configuración es la más económica?",
+    "opciones": [
+      "Dejar todo en S3 Standard.",
+      "Una regla de ciclo de vida que mueva los objetos a Standard-IA a los 30 días y a Glacier Deep Archive después, con caducidad a los 7 años.",
+      "Guardarlos en EBS con instantáneas.",
+      "Usar S3 One Zone-IA desde el primer día."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El ciclo de vida adapta la clase al uso: Standard al principio, IA después y Deep Archive para el archivo largo, cuya recuperación estándar cabe en 12 horas. Standard es caro a largo plazo, y One Zone-IA desde el primer día no es adecuada para datos de auditoría.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+    ]
+  },
+  {
+    "id": "s3-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Unos clientes sin cuenta de AWS deben descargar un fichero privado concreto durante las próximas 2 horas. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Hacer público el bucket durante 2 horas.",
+      "Generar una URL prefirmada del objeto con una caducidad de 2 horas.",
+      "Crear un usuario IAM para cada cliente.",
+      "Copiar el fichero a un bucket público."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Una URL prefirmada da acceso temporal a un objeto concreto usando los permisos de quien la firma, sin exponer el bucket ni crear identidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html"
+    ]
+  },
+  {
+    "id": "s3-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una normativa exige que ciertos registros guardados en S3 no puedan borrarse ni modificarse durante 5 años, por nadie, incluido el usuario raíz. ¿Qué configuración lo cumple?",
+    "opciones": [
+      "Versionado con MFA Delete.",
+      "S3 Object Lock en modo compliance con retención de 5 años.",
+      "Una bucket policy que deniegue s3:DeleteObject.",
+      "Object Lock en modo governance."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "En modo compliance nadie, ni el usuario raíz, puede acortar la retención ni borrar la versión protegida. El modo governance permite saltárselo con un permiso especial, y una política o MFA Delete los puede cambiar un administrador.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+    ]
+  },
+  {
+    "id": "s3-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un bucket de datos analíticos tiene objetos con un patrón de acceso impredecible: algunos se consultan a diario y otros pasan meses sin leerse. ¿Qué clase optimiza el coste sin penalizaciones por recuperación ni trabajo manual?",
+    "opciones": [
+      "S3 Standard-IA.",
+      "S3 Intelligent-Tiering.",
+      "S3 Glacier Flexible Retrieval.",
+      "S3 One Zone-IA."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Intelligent-Tiering mueve cada objeto entre niveles según su uso real, sin cargo por recuperación. Standard-IA y One Zone-IA cobran por recuperación y Glacier no permite acceso inmediato.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
+    ]
+  },
+  {
+    "id": "s3-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere copiar automáticamente los objetos nuevos de un bucket en eu-west-1 a otro en us-east-1 para recuperación ante desastres. ¿Qué dos requisitos debe cumplir?",
+    "opciones": [
+      "Activar el versionado en ambos buckets.",
+      "Dar a S3 un rol IAM con permisos para replicar al bucket de destino.",
+      "Usar la misma clase de almacenamiento en ambos buckets.",
+      "Crear un endpoint de VPC entre regiones.",
+      "Hacer público el bucket de destino."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "La replicación entre regiones exige versionado en origen y destino y un rol IAM que S3 asume para copiar. La clase de destino puede ser distinta y no hace falta red adicional.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+    ]
+  },
+  {
+    "id": "s3-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa quiere que un asistente basado en Amazon Bedrock responda con información de sus manuales internos en PDF. ¿Dónde se guardan normalmente esos documentos como origen de datos de la base de conocimiento?",
+    "opciones": [
+      "En un bucket de Amazon S3.",
+      "En las variables de entorno de una Lambda.",
+      "En el propio modelo fundacional.",
+      "En AWS CloudTrail."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las bases de conocimiento de Bedrock usan habitualmente S3 como origen: indexan los documentos en un almacén vectorial para la generación aumentada por recuperación (RAG), sin reentrenar el modelo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+    ]
+  }
+]

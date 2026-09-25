@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon SES — Apuntes AWS</title>
+<meta name="description" content="Envío y recepción de correo electrónico a escala: transaccional, notificaciones y marketing. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/ses.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon SES — Apuntes AWS">
+<meta property="og:description" content="Envío y recepción de correo electrónico a escala: transaccional, notificaciones y marketing.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/ses.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1>Amazon SES</h1>
+      <p class="full-name">Amazon Simple Email Service (Amazon SES)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a href="../index.html?cat=aplicaciones-empresariales#catalogo">Aplicaciones empresariales <span class="cat-en">(Business Applications)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+<h2 id="que-es">Qué es</h2>
+      <p>Amazon Simple Email Service (SES) es un servicio de correo electrónico para aplicaciones.
+        Envía correos transaccionales (verificaciones, avisos, facturas) y masivos mediante API o SMTP,
+        y también puede <strong>recibir</strong> correo y procesarlo. Se encarga de la infraestructura
+        de envío, la reputación y las métricas de entrega.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Identidades verificadas:</strong> direcciones de correo o <strong>dominios</strong>
+          desde los que puedes enviar. Verificar el dominio permite usar cualquier dirección suya.</li>
+        <li><strong>Sandbox:</strong> las cuentas nuevas empiezan limitadas en cada región: solo pueden
+          enviar a destinatarios verificados, hasta 200 mensajes cada 24 horas y 1 por segundo. Hay que
+          solicitar acceso de producción.</li>
+        <li><strong>Autenticación del correo:</strong> <strong>DKIM</strong> (Easy DKIM con registros
+          CNAME), <strong>SPF</strong> (dominio MAIL FROM personalizado) y <strong>DMARC</strong>. Son
+          claves para no acabar en spam.</li>
+        <li><strong>Conjuntos de configuración:</strong> agrupan envíos para publicar eventos (entregas,
+          rebotes, quejas, aperturas, clics) en CloudWatch, Firehose, SNS o EventBridge.</li>
+        <li><strong>Reputación:</strong> AWS vigila las tasas de rebote y de quejas; si suben demasiado,
+          puede pausar el envío. La lista de supresión evita reenviar a direcciones que rebotan.</li>
+        <li><strong>Recepción:</strong> reglas de recepción que guardan el correo en S3, invocan Lambda o
+          publican en SNS.</li>
+        <li><strong>IP dedicadas</strong> (opcionales) para controlar la reputación en volúmenes altos.</li>
+        <li><strong>Disponibilidad regional:</strong> no está en todas las regiones; se puede llamar a SES
+          en otra región distinta de la del resto de la aplicación.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Correos transaccionales: confirmación de registro, restablecer contraseña, recibos.</li>
+        <li>Envío de correo de Cognito con dominio propio.</li>
+        <li>Notificaciones de una aplicación a sus usuarios o administradores.</li>
+        <li>Recibir correos entrantes y procesarlos automáticamente (tickets, adjuntos a S3).</li>
+        <li>Campañas masivas con seguimiento de rebotes y quejas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Notificaciones operativas a un equipo por varios canales (correo, SMS, push, HTTP): Amazon
+          SNS es más sencillo.</li>
+        <li>Buzones de correo corporativos para personas: SES no es un servidor de buzones.</li>
+        <li>Si no puedes gestionar rebotes y quejas: una mala reputación puede suspender el envío.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>SES</th><th>SNS</th></tr></thead>
+          <tbody>
+            <tr><td>Correo con HTML, remitente propio y dominio autenticado</td><td>Sí</td><td>No (correo básico de suscripción)</td></tr>
+            <tr><td>Publicar un mensaje a muchos suscriptores y protocolos</td><td>No</td><td>Sí (SQS, Lambda, HTTP, SMS, correo)</td></tr>
+            <tr><td>Recibir correo</td><td>Sí</td><td>No</td></tr>
+            <tr><td>Métricas de rebotes y quejas</td><td>Sí</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Pago por uso: por cada mil correos enviados o recibidos y por el volumen de datos (los
+        adjuntos cuentan). Las IP dedicadas y las funciones avanzadas de entregabilidad tienen coste
+        aparte. No hay cuota mínima.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Permisos de envío con IAM (<code>ses:SendEmail</code>) y políticas de autorización de
+          identidad para delegar el envío a otras cuentas.</li>
+        <li>TLS en el envío; DKIM, SPF y DMARC para autenticar el dominio.</li>
+        <li>Para envíos críticos se puede configurar SES en una segunda región.</li>
+      </ul>
+
+      <h2 id="kopi">Así lo uso en Kopi</h2>
+      <p>Kopi usa SES para avisar al administrador de cada alta pendiente de aprobar y para los correos
+        de verificación de Cognito. SES no estaba disponible en la región principal del proyecto, así
+        que se llama a SES en otra región (Cognito admite una identidad de SES de otra región). Al
+        principio los correos salían desde una dirección de Gmail verificada y acababan en spam, porque
+        fallaba la alineación DMARC. La solución fue verificar el <strong>dominio propio</strong> con
+        Easy DKIM, un dominio MAIL FROM con SPF y una política DMARC. Además, un fallo al enviar se
+        registra en los logs pero no interrumpe la operación principal.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Solo puede enviar a direcciones verificadas"</strong>: la cuenta sigue en el sandbox.</li>
+        <li><strong>"Los correos llegan a spam"</strong>: configurar DKIM, SPF y DMARC con un dominio verificado.</li>
+        <li><strong>"Registrar rebotes, quejas y aperturas"</strong>: conjunto de configuración con
+          destino de eventos.</li>
+        <li><strong>"Procesar correos entrantes"</strong>: reglas de recepción de SES hacia S3 o Lambda.</li>
+        <li><strong>"Notificar a un equipo por correo y SMS"</strong>: SNS, no SES.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="ses"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/ses/latest/dg/Welcome.html" target="_blank" rel="noopener">What is Amazon SES?</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html" target="_blank" rel="noopener">Request production access (Moving out of the Amazon SES sandbox)</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/ses/latest/dg/email-authentication-methods.html" target="_blank" rel="noopener">Email authentication methods</a>, documentación de AWS (consultada el 25/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

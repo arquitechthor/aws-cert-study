@@ -1,0 +1,137 @@
+[
+  {
+    "id": "cloudwatch-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un equipo quiere escalar un grupo de instancias EC2 según el uso de memoria, pero no encuentra esa métrica en CloudWatch. ¿Qué debe hacer?",
+    "opciones": [
+      "Activar la monitorización detallada de EC2.",
+      "Instalar el agente de CloudWatch en las instancias para publicar la métrica de memoria.",
+      "Activar CloudTrail.",
+      "Usar la métrica CPUUtilization como sustituta."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La memoria es una métrica del sistema operativo que el hipervisor no ve. La publica el agente de CloudWatch. La monitorización detallada solo aumenta la frecuencia de las métricas por defecto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Install-CloudWatch-Agent.html"
+    ]
+  },
+  {
+    "id": "cloudwatch-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Tras borrarse un grupo de seguridad en producción, la empresa quiere saber qué identidad lo hizo y cuándo. ¿Qué servicio lo muestra?",
+    "opciones": [
+      "CloudWatch Metrics.",
+      "AWS CloudTrail.",
+      "CloudWatch Logs Insights sobre los logs de la aplicación.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CloudTrail registra las llamadas a la API de AWS con la identidad, la hora y el origen. CloudWatch mide rendimiento y guarda logs de aplicación, pero no audita la API por sí solo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html"
+    ]
+  },
+  {
+    "id": "cloudwatch-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación escribe en sus logs la línea \"PAYMENT_FAILED\" cuando falla un pago. El equipo quiere recibir un aviso si ocurre más de 5 veces en 5 minutos. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Un filtro de métricas en el grupo de logs y una alarma de CloudWatch con notificación a SNS.",
+      "Una consulta programada de Athena.",
+      "Un evento de CloudTrail.",
+      "Revisar el panel cada hora."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El filtro de métricas convierte cada aparición del patrón en una métrica, y la alarma avisa por SNS al superar el umbral. Es nativo y casi en tiempo real.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html"
+    ]
+  },
+  {
+    "id": "cloudwatch-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una organización con muchas cuentas acumula costes crecientes de almacenamiento en CloudWatch Logs de logs de hace años que nadie consulta. Debe conservar un año por auditoría. ¿Qué medida reduce el coste?",
+    "opciones": [
+      "Fijar la retención de los grupos de logs en unos días o semanas y exportar o suscribir los logs a S3, con ciclo de vida hacia clases más baratas hasta cumplir el año.",
+      "Borrar todos los grupos de logs.",
+      "Aumentar la resolución de las métricas.",
+      "Desactivar CloudTrail."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Sin retención, los logs se guardan para siempre. Limitar la retención en CloudWatch y archivar en S3 con ciclo de vida cumple el requisito de un año con un almacenamiento mucho más barato.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html"
+    ]
+  },
+  {
+    "id": "cloudwatch-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "¿Qué dos acciones puede ejecutar directamente una alarma de CloudWatch?",
+    "opciones": [
+      "Enviar una notificación a un tema de SNS.",
+      "Ejecutar una política de escalado de un grupo de Auto Scaling.",
+      "Restaurar una base de datos desde una instantánea.",
+      "Cambiar el tipo de una instancia EC2.",
+      "Modificar una política IAM."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Las alarmas pueden notificar por SNS, ejecutar políticas de escalado y acciones de EC2 como parar, terminar, reiniciar o recuperar. Restaurar bases de datos o cambiar políticas requiere automatización adicional.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html"
+    ]
+  },
+  {
+    "id": "cloudwatch-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una empresa quiere registrar las peticiones y respuestas de su aplicación de IA en Amazon Bedrock para monitorizarlas y auditarlas. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Activar el registro de invocaciones de modelos de Bedrock hacia CloudWatch Logs (o S3).",
+      "Usar Amazon Inspector.",
+      "Activar el versionado del modelo.",
+      "Aumentar la temperatura del modelo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Bedrock puede registrar las invocaciones de modelos en CloudWatch Logs o S3 para supervisarlas y auditarlas. Inspector busca vulnerabilidades y la temperatura no tiene relación con el registro.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html"
+    ]
+  }
+]

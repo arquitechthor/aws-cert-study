@@ -10,10 +10,11 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** Fases 0 y 1 completadas (salvo 0.9, programada para el 27/10/2026).
-  Siguiente: **Fase 2**, empezando por la cola "Prioridad 0" (`iam`).
-- **Próximo paso:** abrir Claude Code dentro de `aws-cert-study/`, aprobar el MCP
-  `aws-knowledge` de `.mcp.json` y rellenar el primer servicio siguiendo el flujo de `CLAUDE.md`.
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 12 de 155: los que usa Kopi
+  (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
+  CloudWatch). La tarea 0.9 sigue programada para el 27/10/2026.
+- **Próximo paso:** seguir la cola "Prioridad 0" por el primer servicio sin marcar
+  (`organizations`, `vpc`, `ec2`…), siguiendo el flujo de `CLAUDE.md`.
 - **Última actualización:** 2026-09-25
 
 ---
@@ -134,9 +135,11 @@ dominios con su nombre en español/inglés y su peso (%).
 6. **Modelo de precios:** cómo se cobra, sin cifras.
 7. **Seguridad y alta disponibilidad.**
 8. **Trampas de examen:** palabras clave del enunciado que apuntan a este servicio.
-9. **Preguntas de práctica**, cargadas desde `data/preguntas/<id>.json`.
-10. **Fuentes:** enlaces a la documentación oficial y citas de lo que sea literal.
-11. **Pie de página** con navegación: Kopi, Sobre mí, licencia CC BY-SA 4.0.
+9. **Así lo uso en Kopi** (opcional, solo si Kopi usa el servicio): uso real y lección
+   práctica, sin identificadores sensibles (cuenta, buckets, ARN).
+10. **Preguntas de práctica**, cargadas desde `data/preguntas/<id>.json`.
+11. **Fuentes:** enlaces a la documentación oficial y citas de lo que sea literal.
+12. **Pie de página** con navegación: Kopi, Sobre mí, licencia CC BY-SA 4.0.
 
 ### Filtros de la portada
 
@@ -246,25 +249,25 @@ esta lista es solo el orden de trabajo.
 
 #### Prioridad 0: núcleo (base para todo lo demás, en este orden) (20)
 
-- [ ] `iam` AWS IAM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
+- [x] `iam` AWS IAM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `organizations` AWS Organizations — Administración y gobernanza (SAA-C03, SAP-C02)
 - [ ] `vpc` Amazon VPC — Redes y entrega de contenido (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `ec2` Amazon EC2 — Computación (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `ebs` Amazon EBS — Almacenamiento (SAA-C03, SAP-C02)
 - [ ] `elb` Elastic Load Balancing (ELB) — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `ec2-auto-scaling` Amazon EC2 Auto Scaling — Computación (SAA-C03, SAP-C02)
-- [ ] `s3` Amazon S3 — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
+- [x] `s3` Amazon S3 — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `efs` Amazon EFS — Almacenamiento (SAA-C03, SAP-C02)
 - [ ] `rds` Amazon RDS — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `aurora` Amazon Aurora — Base de datos (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `dynamodb` Amazon DynamoDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `lambda` AWS Lambda — Computación (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `route-53` Amazon Route 53 — Redes y entrega de contenido (SAA-C03, SAP-C02)
-- [ ] `cloudfront` Amazon CloudFront — Redes y entrega de contenido (SAA-C03, SAP-C02, AIF-C01)
+- [x] `dynamodb` Amazon DynamoDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
+- [x] `lambda` AWS Lambda — Computación (SAA-C03, SAP-C02, AIF-C01)
+- [x] `route-53` Amazon Route 53 — Redes y entrega de contenido (SAA-C03, SAP-C02)
+- [x] `cloudfront` Amazon CloudFront — Redes y entrega de contenido (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `sqs` Amazon SQS — Integración de aplicaciones (SAA-C03, SAP-C02)
 - [ ] `sns` Amazon SNS — Integración de aplicaciones (SAA-C03, SAP-C02)
 - [ ] `kms` AWS KMS — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `cloudwatch` Amazon CloudWatch — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
+- [x] `cloudwatch` Amazon CloudWatch — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `cloudtrail` AWS CloudTrail — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
 
 #### Prioridad 1: resto de servicios en las tres guías (SAA + SAP + AIF) (30)
@@ -332,7 +335,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `vmware-cloud-on-aws` VMware Cloud on AWS — Computación (SAA-C03)
 - [ ] `wavelength` AWS Wavelength — Computación (SAA-C03, SAP-C02)
 - [ ] `ecr` Amazon ECR — Contenedores (SAA-C03, SAP-C02)
-- [ ] `api-gateway` Amazon API Gateway — Frontend web y móvil (SAA-C03, SAP-C02)
+- [x] `api-gateway` Amazon API Gateway — Frontend web y móvil (SAA-C03, SAP-C02)
 - [ ] `amplify` AWS Amplify — Frontend web y móvil (SAA-C03, SAP-C02)
 - [ ] `device-farm` AWS Device Farm — Frontend web y móvil (SAA-C03, SAP-C02)
 - [ ] `x-ray` AWS X-Ray — Herramientas para desarrolladores (SAA-C03, SAP-C02)
@@ -351,9 +354,9 @@ esta lista es solo el orden de trabajo.
 - [ ] `privatelink` AWS PrivateLink — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `site-to-site-vpn` AWS Site-to-Site VPN — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `transit-gateway` AWS Transit Gateway — Redes y entrega de contenido (SAA-C03, SAP-C02)
-- [ ] `acm` AWS Certificate Manager (ACM) — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `acm` AWS Certificate Manager (ACM) — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [ ] `cloudhsm` AWS CloudHSM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `cognito` Amazon Cognito — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `cognito` Amazon Cognito — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [ ] `detective` Amazon Detective — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [ ] `directory-service` AWS Directory Service — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [ ] `firewall-manager` AWS Firewall Manager — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
@@ -373,7 +376,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `service-quotas` Service Quotas — Administración y gobernanza (SAP-C02)
 - [ ] `elastic-disaster-recovery` AWS Elastic Disaster Recovery — Almacenamiento (SAP-C02)
 - [ ] `managed-service-for-apache-flink` Amazon Managed Service for Apache Flink — Análisis (SAP-C02)
-- [ ] `ses` Amazon SES — Aplicaciones empresariales (SAP-C02)
+- [x] `ses` Amazon SES — Aplicaciones empresariales (SAP-C02)
 - [ ] `timestream` Amazon Timestream — Base de datos (SAP-C02)
 - [ ] `managed-blockchain` Amazon Managed Blockchain — Blockchain (SAP-C02)
 - [ ] `app-runner` AWS App Runner — Computación (SAP-C02)
@@ -408,7 +411,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `glue-databrew` AWS Glue DataBrew — Análisis (AIF-C01)
 - [ ] `kiro` Kiro — Herramientas para desarrolladores (AIF-C01)
 - [ ] `strands-agents` Strands Agents — Herramientas para desarrolladores (AIF-C01)
-- [ ] `bedrock` Amazon Bedrock — Machine learning (AIF-C01)
+- [x] `bedrock` Amazon Bedrock — Machine learning (AIF-C01)
 - [ ] `bedrock-agentcore` Amazon Bedrock AgentCore — Machine learning (AIF-C01)
 - [ ] `nova` Amazon Nova — Machine learning (AIF-C01)
 - [ ] `personalize` Amazon Personalize — Machine learning (SAP-C02, AIF-C01)
@@ -502,3 +505,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-25 | Fase 0: repo renombrado, `.mcp.json`, guías verificadas (SAP-C02 se retira y SAP-C03 entra como certificación aparte), `servicios.json` (155), `categorias.json` (20), `certificaciones.json`, `data/fuentes/` y cola priorizada. |
 | 2026-09-25 | Añadida la Fase 4 (juego de memoria con iconos oficiales de AWS); `data/asset-package/` en `.gitignore`. |
 | 2026-09-25 | Fase 1 completada: portada con filtros, página "Próximamente", plantilla + quiz, aviso legal, licencia CC BY-SA 4.0, `CLAUDE.md`. Fase 4 revisada: tablero mínimo 6×6 y parejas por categoría con varias cartas posibles. |
+| 2026-09-25 | Fase 2 iniciada: publicados los 12 servicios que usa Kopi, con sección "Así lo uso en Kopi" y 62 preguntas originales. MCP `aws-knowledge` usado por JSON-RPC desde la sesión (funciona sin autenticación); datos contrastados con la documentación actual (p. ej. carga asíncrona de Lambda de 1 MB, objetos de S3 de hasta ~50 TB, certificados de ACM de 198 días). |

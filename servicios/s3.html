@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon S3 — Apuntes AWS</title>
+<meta name="description" content="Almacenamiento de objetos duradero, escalable y barato, con clases de almacenamiento para cada patrón de acceso. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/s3.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon S3 — Apuntes AWS">
+<meta property="og:description" content="Almacenamiento de objetos duradero, escalable y barato, con clases de almacenamiento para cada patrón de acceso.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/s3.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1>Amazon S3</h1>
+      <p class="full-name">Amazon Simple Storage Service (Amazon S3)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a href="../index.html?cat=almacenamiento#catalogo">Almacenamiento <span class="cat-en">(Storage)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+<h2 id="que-es">Qué es</h2>
+      <p>Amazon Simple Storage Service (S3) guarda <strong>objetos</strong> (ficheros más sus
+        metadatos) dentro de <strong>buckets</strong>, sin límite de capacidad total. Está diseñado para
+        una durabilidad de <strong>11 nueves</strong> (99,999999999 %) y ofrece consistencia fuerte de
+        lectura tras escritura. Es la base de lagos de datos, copias de seguridad, sitios estáticos y
+        casi cualquier arquitectura en AWS.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Buckets:</strong> nombre único global, pero cada bucket vive en una región. Las
+          "carpetas" son solo prefijos de la clave del objeto.</li>
+        <li><strong>Tamaño de objeto:</strong> hasta unos 50 TB (48,8 TiB). Un solo PUT admite hasta
+          5 GB; por encima es obligatoria la <strong>carga multiparte</strong>, recomendable ya desde unos
+          100 MB. Hasta hace poco el máximo era 5 TB, y algunas preguntas antiguas usan esa cifra.</li>
+        <li><strong>Clases de almacenamiento:</strong>
+          <ul>
+            <li><strong>Standard:</strong> acceso frecuente.</li>
+            <li><strong>Intelligent-Tiering:</strong> mueve los objetos de nivel según el uso; ideal si el
+              patrón es desconocido.</li>
+            <li><strong>Standard-IA</strong> y <strong>One Zone-IA:</strong> acceso poco frecuente pero
+              inmediato. One Zone-IA guarda los datos en una sola zona de disponibilidad (más barata, menos
+              resiliente).</li>
+            <li><strong>Glacier Instant Retrieval:</strong> archivo con recuperación en milisegundos.</li>
+            <li><strong>Glacier Flexible Retrieval:</strong> archivo con recuperación de minutos a horas.</li>
+            <li><strong>Glacier Deep Archive:</strong> lo más barato; recuperación en horas.</li>
+            <li><strong>Express One Zone:</strong> latencia muy baja en una zona, para cargas intensivas.</li>
+          </ul>
+          Las clases IA y Glacier tienen <strong>duración mínima</strong> (30, 90 o 180 días) y cargo
+          por recuperación.</li>
+        <li><strong>Reglas de ciclo de vida:</strong> transicionan objetos entre clases o los caducan.</li>
+        <li><strong>Versionado:</strong> conserva versiones anteriores y protege frente a borrados y
+          sobrescrituras. Es necesario para la replicación y Object Lock.</li>
+        <li><strong>Replicación:</strong> entre regiones (CRR) o en la misma región (SRR).</li>
+        <li><strong>Object Lock:</strong> almacenamiento WORM en modo <em>governance</em> o
+          <em>compliance</em>, con retención legal.</li>
+        <li><strong>URLs prefirmadas:</strong> permiten subir o descargar un objeto concreto durante un
+          tiempo limitado sin credenciales de AWS.</li>
+        <li><strong>Notificaciones de eventos:</strong> a Lambda, SQS, SNS o EventBridge.</li>
+        <li><strong>Transfer Acceleration:</strong> acelera cargas lejanas usando la red perimetral de AWS.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Ficheros de usuarios (fotos, vídeos, documentos) subidos con URLs prefirmadas.</li>
+        <li>Lago de datos consultado con Athena, Glue o EMR.</li>
+        <li>Copias de seguridad y archivo a largo plazo con Glacier.</li>
+        <li>Sitio web estático, normalmente detrás de CloudFront.</li>
+        <li>Fuente de documentos para una base de conocimiento de Amazon Bedrock (RAG).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Como disco de un sistema operativo o de una base de datos: eso es EBS.</li>
+        <li>Como sistema de ficheros compartido con semántica POSIX: EFS o FSx.</li>
+        <li>Para datos con muchas actualizaciones pequeñas de partes de un fichero: S3 reescribe el
+          objeto entero.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>S3</th><th>EBS</th><th>EFS</th></tr></thead>
+          <tbody>
+            <tr><td>Tipo</td><td>Objetos</td><td>Bloques (disco)</td><td>Ficheros (NFS)</td></tr>
+            <tr><td>Acceso</td><td>API HTTP desde cualquier sitio</td><td>Una instancia (salvo multi-attach)</td><td>Muchas instancias a la vez</td></tr>
+            <tr><td>Alcance</td><td>Regional</td><td>Una zona de disponibilidad</td><td>Regional (o una zona)</td></tr>
+            <tr><td>Uso típico</td><td>Datos, medios, backups</td><td>Discos de EC2 y bases de datos</td><td>Contenido compartido entre servidores</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por GB almacenado al mes según la clase, por peticiones (PUT, GET, LIST…), por
+        recuperación de datos en las clases IA y Glacier, y por la transferencia de salida a internet.
+        La entrada de datos es gratuita. También cuestan la replicación, Transfer Acceleration y algunas
+        funciones de gestión. Con <em>Requester Pays</em>, quien descarga paga la transferencia.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li><strong>Block Public Access</strong> activado por defecto; las ACL están desactivadas por
+          defecto (<em>Bucket owner enforced</em>).</li>
+        <li>Acceso con políticas IAM y <strong>bucket policies</strong> (por ejemplo, exigir TLS con
+          <code>aws:SecureTransport</code> o limitar a un endpoint de VPC).</li>
+        <li>Cifrado en reposo siempre activo (SSE-S3 por defecto). También SSE-KMS, DSSE-KMS o SSE-C
+          con clave del cliente.</li>
+        <li>Las clases regionales replican en al menos tres zonas de disponibilidad; One Zone y Express
+          One Zone, en una sola.</li>
+        <li>Versionado, MFA Delete, Object Lock y replicación para protegerse frente a errores y
+          desastres.</li>
+      </ul>
+
+      <h2 id="kopi">Así lo uso en Kopi</h2>
+      <p>Kopi tiene dos usos de S3. El frontend estático está en un bucket privado que solo
+        CloudFront puede leer (OAC). Los ficheros de los usuarios van a otro bucket con claves del tipo
+        <code>media/{usuario}/{tipo}/{año}/{mes}/{uuid}</code>. El navegador sube directamente con una
+        <strong>URL prefirmada</strong> de una hora, así que ni la API ni Lambda ven el contenido. Una
+        <strong>notificación de evento</strong> dispara una Lambda con cada objeto nuevo para
+        reconciliarlo con DynamoDB. Así se registran también los ficheros que sube la aplicación de
+        escritorio directamente a S3.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Patrón de acceso desconocido o cambiante"</strong>: Intelligent-Tiering.</li>
+        <li><strong>"Datos que se pueden regenerar"</strong> y <strong>"acceso poco frecuente"</strong>:
+          One Zone-IA.</li>
+        <li><strong>"Archivo con acceso en milisegundos"</strong>: Glacier Instant Retrieval.
+          <strong>"Lo más barato posible, recuperación en horas"</strong>: Glacier Deep Archive.</li>
+        <li><strong>"WORM"</strong>, <strong>"cumplimiento normativo"</strong> o <strong>"nadie puede
+          borrar, ni el raíz"</strong>: Object Lock en modo compliance.</li>
+        <li><strong>"Compartir un objeto temporalmente sin cuenta de AWS"</strong>: URL prefirmada.</li>
+        <li>La <strong>replicación exige versionado</strong> en origen y destino, y no replica los
+          objetos existentes antes de activarla (para eso está S3 Batch Replication).</li>
+        <li>Un sitio estático en S3 solo sirve HTTP; para HTTPS con dominio propio se pone CloudFront.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="s3"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html" target="_blank" rel="noopener">What is Amazon S3?</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html" target="_blank" rel="noopener">Understanding and managing Amazon S3 storage classes</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html" target="_blank" rel="noopener">Amazon S3 multipart upload limits</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html" target="_blank" rel="noopener">Download and upload objects with presigned URLs</a>, documentación de AWS (consultada el 25/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

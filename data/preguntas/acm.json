@@ -1,0 +1,93 @@
+[
+  {
+    "id": "acm-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una aplicación en eu-west-1 se sirve a través de CloudFront con un dominio propio. El certificado de ACM creado en eu-west-1 no aparece al configurar la distribución. ¿Qué hay que hacer?",
+    "opciones": [
+      "Solicitar o importar el certificado en ACM en la región us-east-1.",
+      "Copiar el certificado a S3.",
+      "Usar validación por correo en lugar de DNS.",
+      "Crear la distribución en eu-west-1."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CloudFront solo admite certificados de ACM de la región us-east-1, sea cual sea la región del resto de la aplicación. Las distribuciones de CloudFront son globales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html"
+    ]
+  },
+  {
+    "id": "acm-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa sufrió una caída porque caducó un certificado. Quiere que los certificados de sus balanceadores se renueven solos, sin intervención. ¿Qué debe usar?",
+    "opciones": [
+      "Certificados públicos de ACM con validación por DNS.",
+      "Certificados importados en ACM.",
+      "Certificados de ACM con validación por correo.",
+      "Certificados guardados en Secrets Manager."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con validación DNS, ACM renueva automáticamente mientras el CNAME de validación siga publicado. Los importados no se renuevan y la validación por correo exige que alguien apruebe cada renovación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/acm/latest/userguide/managed-renewal.html"
+    ]
+  },
+  {
+    "id": "acm-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa tiene decenas de certificados comprados a una CA externa e importados en ACM, y quiere evitar que caduquen sin aviso. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Confiar en la renovación automática de ACM.",
+      "Una regla de EventBridge sobre los eventos de proximidad de caducidad de ACM (o una alarma sobre la métrica DaysToExpiry) que notifique por SNS.",
+      "Revisarlos manualmente cada año.",
+      "Activar CloudTrail."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "ACM no renueva los certificados importados, pero emite eventos y la métrica de días hasta la caducidad para avisar a tiempo. CloudTrail solo registra llamadas a la API.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/acm/latest/userguide/managed-renewal.html"
+    ]
+  },
+  {
+    "id": "acm-004",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una aplicación web corre en instancias EC2 detrás de un Application Load Balancer y debe servirse por HTTPS con el menor esfuerzo de gestión de certificados. ¿Qué dos pasos son los adecuados?",
+    "opciones": [
+      "Solicitar un certificado público en ACM en la región del ALB, con validación por DNS.",
+      "Configurar un listener HTTPS en el ALB con ese certificado.",
+      "Copiar la clave privada del certificado de ACM a cada instancia.",
+      "Crear el certificado en us-east-1 obligatoriamente.",
+      "Instalar un servidor de certificados propio en EC2."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "El ALB termina TLS con un certificado de ACM de su misma región, que se renueva solo. Las claves de los certificados estándar no se exportan, y la regla de us-east-1 solo aplica a CloudFront.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html"
+    ]
+  }
+]

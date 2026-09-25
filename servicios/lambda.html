@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Lambda — Apuntes AWS</title>
+<meta name="description" content="Ejecuta código en respuesta a eventos sin gestionar servidores y pagando solo por el tiempo de ejecución. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/lambda.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Lambda — Apuntes AWS">
+<meta property="og:description" content="Ejecuta código en respuesta a eventos sin gestionar servidores y pagando solo por el tiempo de ejecución.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/lambda.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1>AWS Lambda</h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a href="../index.html?cat=computacion#catalogo">Computación <span class="cat-en">(Compute)</span></a></span>
+        <span><strong>También en:</strong> <a href="../index.html?cat=sin-servidor#catalogo">Sin servidor <span class="cat-en">(Serverless)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+<h2 id="que-es">Qué es</h2>
+      <p>AWS Lambda ejecuta tu código (una <em>función</em>) cuando ocurre un evento: una petición
+        HTTP, un fichero nuevo en S3, un mensaje en una cola, una programación horaria… AWS arranca,
+        escala y apaga los entornos de ejecución por ti. No pagas por tener nada encendido: pagas por
+        invocación y por la duración, medida en milisegundos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Límites principales:</strong> hasta <strong>15 minutos</strong> por invocación,
+          memoria de <strong>128 MB a 10.240 MB</strong> (la CPU crece en proporción a la memoria),
+          almacenamiento <code>/tmp</code> de 512 MB a 10.240 MB y carga útil de <strong>6 MB</strong>
+          en invocación síncrona (petición y respuesta) y <strong>1 MB</strong> en asíncrona.</li>
+        <li><strong>Modelos de invocación:</strong>
+          <ul>
+            <li><strong>Síncrona:</strong> el llamante espera la respuesta (API Gateway, ALB, SDK).</li>
+            <li><strong>Asíncrona:</strong> Lambda encola el evento y reintenta hasta 2 veces si falla
+              (S3, SNS, EventBridge). Los fallos pueden ir a una DLQ o a un <em>destino</em>.</li>
+            <li><strong>Event source mapping:</strong> Lambda lee por lotes de SQS, Kinesis, DynamoDB
+              Streams o Kafka.</li>
+          </ul></li>
+        <li><strong>Concurrencia:</strong> número de ejecuciones simultáneas (1.000 por región por
+          defecto, ampliable). La <strong>concurrencia reservada</strong> garantiza y a la vez limita la
+          de una función. La <strong>concurrencia aprovisionada</strong> mantiene entornos preparados
+          para evitar arranques en frío.</li>
+        <li><strong>Arranque en frío (cold start):</strong> latencia extra al crear un entorno nuevo.
+          Se mitiga con concurrencia aprovisionada o con <strong>SnapStart</strong> (Java, Python y .NET).</li>
+        <li><strong>Versiones y alias:</strong> versiones inmutables; un alias puede repartir tráfico
+          entre dos versiones (despliegue canary).</li>
+        <li><strong>Capas (layers):</strong> código o dependencias compartidas, hasta 5 por función.
+          También se pueden desplegar <strong>imágenes de contenedor</strong> de hasta 10 GB.</li>
+        <li><strong>Lambda en una VPC:</strong> accede a recursos privados (RDS, ElastiCache). Para salir
+          a internet necesita un NAT Gateway; para S3 o DynamoDB, mejor endpoints de VPC.</li>
+        <li><strong>URL de función:</strong> endpoint HTTPS propio de una función, sin API Gateway.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Backends de APIs <em>serverless</em> con API Gateway.</li>
+        <li>Procesar ficheros al subirlos a S3 (miniaturas, validación, extracción de metadatos).</li>
+        <li>Consumidores de colas y flujos (SQS, Kinesis, DynamoDB Streams).</li>
+        <li>Tareas programadas con EventBridge Scheduler (sustituye a un cron en una instancia).</li>
+        <li>Automatización de operaciones: reaccionar a eventos de la cuenta (por ejemplo, etiquetar
+          recursos nuevos).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Procesos que duran más de 15 minutos: mejor ECS/Fargate, AWS Batch o dividir el trabajo con
+          Step Functions.</li>
+        <li>Cargas muy estables y continuas con uso alto de CPU: contenedores o instancias pueden salir
+          más baratos.</li>
+        <li>Aplicaciones que necesitan estado local persistente o conexiones de larga duración.</li>
+        <li>Latencia ultrabaja y predecible sin tolerar ningún arranque en frío, salvo que se pague
+          concurrencia aprovisionada.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Lambda</th><th>Fargate (ECS/EKS)</th><th>EC2</th></tr></thead>
+          <tbody>
+            <tr><td>Gestión de servidores</td><td>Ninguna</td><td>Ninguna (gestionas contenedores)</td><td>Toda (SO, parches)</td></tr>
+            <tr><td>Duración máxima</td><td>15 min</td><td>Sin límite</td><td>Sin límite</td></tr>
+            <tr><td>Modelo de cobro</td><td>Por invocación y ms</td><td>Por vCPU y memoria por segundo</td><td>Por instancia encendida</td></tr>
+            <tr><td>Mejor para</td><td>Eventos y tráfico variable</td><td>Servicios en contenedores</td><td>Control total o software legado</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por número de invocaciones y por <strong>GB-segundo</strong> (memoria configurada
+        por duración, redondeada al milisegundo). La arquitectura Arm (Graviton) es más barata que x86.
+        La concurrencia aprovisionada, el almacenamiento <code>/tmp</code> adicional y la transferencia
+        de datos se cobran aparte. El nivel gratuito mensual (1 millón de peticiones y 400.000
+        GB-segundo) no caduca.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cada función tiene un <strong>rol de ejecución</strong> con sus permisos (mínimo privilegio).</li>
+        <li>Una <strong>política basada en recurso</strong> define quién puede invocarla (S3, SNS, otra cuenta…).</li>
+        <li>Variables de entorno cifradas con KMS; para secretos, mejor Secrets Manager.</li>
+        <li>Se ejecuta en varias zonas de disponibilidad de forma automática. En una VPC conviene
+          configurar subredes de al menos dos zonas.</li>
+      </ul>
+
+      <h2 id="kopi">Así lo uso en Kopi</h2>
+      <p>Todo el backend de Kopi son funciones Lambda pequeñas en Node.js, de un solo propósito y sin
+        framework: API Gateway resuelve la ruta y cada función es un <code>handler</code>. El código
+        común vive en una <strong>capa</strong> compartida. Además de las que están detrás de la API,
+        hay funciones disparadas por eventos: el disparador de registro de Cognito y una función que
+        reacciona a cada objeto nuevo en S3 para mantener DynamoDB sincronizado. Con el tráfico de un
+        proyecto personal, el coste de Lambda cabe en el nivel gratuito.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Más de 15 minutos"</strong>: no es Lambda; piensa en Fargate, Batch o Step Functions.</li>
+        <li><strong>"Evitar arranques en frío"</strong>: concurrencia aprovisionada o SnapStart, no
+          más memoria (ayuda algo, pero no lo evita).</li>
+        <li><strong>"Una función no debe consumir toda la concurrencia"</strong> o <strong>"proteger una
+          base de datos"</strong>: concurrencia reservada.</li>
+        <li><strong>"Lambda en VPC sin salida a internet"</strong>: falta un NAT Gateway (en subred
+          pública) o un endpoint de VPC.</li>
+        <li><strong>"Muchas conexiones a RDS desde Lambda"</strong>: RDS Proxy.</li>
+        <li><strong>"Despliegue gradual"</strong>: alias con tráfico ponderado (con CodeDeploy).</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="lambda"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html" target="_blank" rel="noopener">What is AWS Lambda?</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html" target="_blank" rel="noopener">Lambda quotas</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html" target="_blank" rel="noopener">Understanding Lambda function scaling</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-invocation.html" target="_blank" rel="noopener">Understanding Lambda function invocation methods</a>, documentación de AWS (consultada el 25/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

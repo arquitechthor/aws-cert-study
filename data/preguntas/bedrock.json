@@ -1,0 +1,136 @@
+[
+  {
+    "id": "bedrock-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa quiere que un chatbot responda con la información de sus políticas internas, que cambian cada mes, sin reentrenar ningún modelo. ¿Qué enfoque es el adecuado?",
+    "opciones": [
+      "Fine-tuning del modelo cada mes.",
+      "Generación aumentada por recuperación (RAG) con una base de conocimiento de Bedrock.",
+      "Continued pre-training con las políticas.",
+      "Aumentar la temperatura del modelo."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "RAG recupera en cada consulta los fragmentos relevantes de los documentos actuales y se los da al modelo como contexto. Basta con reindexar al cambiar los documentos, sin coste de entrenamiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html"
+    ]
+  },
+  {
+    "id": "bedrock-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA generativa",
+    "enunciado": "Un equipo necesita que el modelo dé respuestas lo más consistentes y predecibles posible ante la misma pregunta. ¿Qué parámetro de inferencia debe ajustar?",
+    "opciones": [
+      "Subir la temperatura.",
+      "Bajar la temperatura.",
+      "Aumentar el máximo de tokens.",
+      "Añadir más secuencias de parada."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Una temperatura baja hace que el modelo elija los tokens más probables, con respuestas más deterministas. Subirla aumenta la variación, y el máximo de tokens solo limita la longitud.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
+    ]
+  },
+  {
+    "id": "bedrock-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Directrices para una IA responsable",
+    "enunciado": "Un asistente de atención al cliente no debe hablar de asesoramiento financiero y debe ocultar números de tarjeta que aparezcan en las conversaciones. ¿Qué funcionalidad de Bedrock lo resuelve?",
+    "opciones": [
+      "Knowledge Bases.",
+      "Guardrails, con temas denegados y filtros de información sensible.",
+      "Provisioned Throughput.",
+      "Inferencia entre regiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Guardrails permite definir temas denegados y detectar o enmascarar información personal en la entrada y la salida del modelo. Las demás funciones no controlan el contenido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html"
+    ]
+  },
+  {
+    "id": "bedrock-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "A un responsable de cumplimiento le preocupa que los prompts con datos de clientes enviados a Bedrock se usen para entrenar los modelos de los proveedores. ¿Qué es correcto?",
+    "opciones": [
+      "Bedrock comparte los prompts con el proveedor del modelo para mejorarlo.",
+      "Los prompts y respuestas no se usan para entrenar los modelos base ni se comparten con los proveedores.",
+      "Solo no se usan si se contrata Provisioned Throughput.",
+      "Hay que cifrar los prompts a mano antes de enviarlos."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Bedrock no usa los datos de entrada y salida para entrenar los modelos base ni los comparte con sus proveedores, independientemente de la opción de consumo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
+    ]
+  },
+  {
+    "id": "bedrock-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa debe clasificar cada noche un millón de reseñas con un modelo de Bedrock. El resultado se necesita al día siguiente y el objetivo es el menor coste. ¿Qué opción de consumo es la adecuada?",
+    "opciones": [
+      "Bajo demanda con nivel Priority.",
+      "Inferencia por lotes (batch).",
+      "Provisioned Throughput con compromiso de 6 meses.",
+      "Llamadas en streaming."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La inferencia por lotes procesa grandes volúmenes de forma asíncrona a menor precio que bajo demanda, y encaja cuando no se necesita respuesta inmediata. Priority es para baja latencia, y Provisioned Throughput es capacidad reservada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
+    ]
+  },
+  {
+    "id": "bedrock-006",
+    "tipo": "multiple",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "¿Qué dos técnicas adaptan un modelo fundacional de Bedrock a una tarea sin modificar sus pesos?",
+    "opciones": [
+      "Ingeniería de prompts con ejemplos (few-shot).",
+      "Generación aumentada por recuperación (RAG).",
+      "Fine-tuning.",
+      "Continued pre-training.",
+      "Destilación de modelos."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Few-shot y RAG solo cambian lo que se envía al modelo en cada petición. Fine-tuning, continued pre-training y destilación crean un modelo nuevo con pesos ajustados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
+    ]
+  }
+]

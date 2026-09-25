@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Route 53 — Apuntes AWS</title>
+<meta name="description" content="DNS gestionado y registro de dominios, con políticas de enrutamiento y comprobaciones de estado. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/route-53.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Route 53 — Apuntes AWS">
+<meta property="og:description" content="DNS gestionado y registro de dominios, con políticas de enrutamiento y comprobaciones de estado.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/route-53.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1>Amazon Route 53</h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a href="../index.html?cat=redes-entrega-contenido#catalogo">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+<h2 id="que-es">Qué es</h2>
+      <p>Amazon Route 53 es el servicio de DNS de AWS. Registra dominios, aloja sus zonas DNS y
+        responde a las consultas con <strong>políticas de enrutamiento</strong> que tienen en cuenta la
+        salud, la latencia o la ubicación del usuario. Es el único servicio de AWS con un SLA de
+        disponibilidad del 100 %.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Zonas alojadas:</strong> <em>públicas</em> (resuelven en internet) y
+          <em>privadas</em> (solo dentro de las VPC asociadas).</li>
+        <li><strong>Registros:</strong> A, AAAA, CNAME, MX, TXT, NS, SOA, CAA… con su TTL.</li>
+        <li><strong>Registro alias:</strong> extensión de Route 53 que apunta a recursos de AWS
+          (CloudFront, ALB, API Gateway, S3 web, otra entrada de la zona). Funciona en el
+          <strong>vértice del dominio</strong> (<code>ejemplo.com</code>), donde un CNAME no está
+          permitido, y las consultas a recursos de AWS son gratuitas.</li>
+        <li><strong>Políticas de enrutamiento:</strong>
+          <ul>
+            <li><strong>Simple:</strong> una respuesta, sin comprobaciones de estado.</li>
+            <li><strong>Ponderada:</strong> reparte por porcentajes (pruebas A/B, migraciones graduales).</li>
+            <li><strong>Latencia:</strong> la región con menor latencia para el usuario.</li>
+            <li><strong>Conmutación por error (failover):</strong> primario y secundario activo-pasivo.</li>
+            <li><strong>Geolocalización:</strong> según el país o continente del usuario (contenido
+              localizado, restricciones legales).</li>
+            <li><strong>Geoproximidad:</strong> según la distancia, con un sesgo configurable (Traffic Flow).</li>
+            <li><strong>Basada en IP:</strong> según rangos CIDR del cliente.</li>
+            <li><strong>Respuesta multivalor:</strong> hasta 8 registros sanos elegidos al azar (no
+              sustituye a un balanceador).</li>
+          </ul></li>
+        <li><strong>Comprobaciones de estado:</strong> de un endpoint, calculadas (combinan otras) o
+          basadas en una alarma de CloudWatch (útil para recursos privados).</li>
+        <li><strong>Route 53 Resolver:</strong> endpoints de entrada y salida para DNS híbrido entre la
+          VPC y los centros de datos propios.</li>
+        <li><strong>DNSSEC</strong> para firmar la zona.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Apuntar un dominio propio a CloudFront, un ALB o API Gateway con registros alias.</li>
+        <li>Recuperación ante desastres activo-pasivo entre regiones con failover y comprobaciones de estado.</li>
+        <li>Aplicaciones multirregión que llevan a cada usuario a la región más cercana.</li>
+        <li>Migraciones graduales con enrutamiento ponderado.</li>
+        <li>Resolución de nombres entre la red local y AWS con Resolver.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para conmutar entre regiones en segundos sin depender del TTL en caché de los clientes:
+          Global Accelerator.</li>
+        <li>Como balanceador de carga con reparto real por conexión: ELB. El DNS solo devuelve direcciones.</li>
+        <li>No es obligatorio para dominios registrados en otro proveedor, pero su integración con ACM
+          y los alias suele compensar.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Política de Route 53</th></tr></thead>
+          <tbody>
+            <tr><td>Menor latencia para el usuario</td><td>Latencia</td></tr>
+            <tr><td>Contenido según el país (idioma, legalidad)</td><td>Geolocalización</td></tr>
+            <tr><td>Mover tráfico entre regiones ajustando un sesgo</td><td>Geoproximidad</td></tr>
+            <tr><td>Enviar el 10 % a la versión nueva</td><td>Ponderada</td></tr>
+            <tr><td>Sitio de respaldo si cae el principal</td><td>Failover</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga una cuota mensual por zona alojada y por millón de consultas (las consultas alias a
+        recursos de AWS son gratuitas). Las comprobaciones de estado, Traffic Flow y los endpoints de
+        Resolver tienen coste aparte. El registro de dominios tiene un precio anual según el dominio de
+        nivel superior.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Red de servidores DNS anycast global, con SLA del 100 %.</li>
+        <li>DNSSEC para evitar la suplantación de respuestas.</li>
+        <li>Resolver DNS Firewall para filtrar dominios maliciosos desde las VPC.</li>
+        <li>Control de acceso con IAM sobre zonas y registros.</li>
+      </ul>
+
+      <h2 id="kopi">Así lo uso en Kopi</h2>
+      <p>Route 53 aloja la zona de <code>kopitools.link</code>. Tiene registros alias para la web
+        (CloudFront) y para la API (el dominio propio de API Gateway), los registros de validación DNS de
+        los certificados de ACM y los de autenticación del correo de SES: DKIM, SPF del dominio MAIL FROM
+        y DMARC. Tener la zona en Route 53 hace que ACM renueve los certificados sin tocar nada.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Dominio raíz a CloudFront o a un ALB"</strong>: registro alias, no CNAME.</li>
+        <li><strong>"País"</strong> o <strong>"cumplimiento legal"</strong>: geolocalización.
+          <strong>"Menor latencia"</strong>: latencia. No se deben confundir.</li>
+        <li><strong>"Activo-pasivo"</strong>: failover con comprobaciones de estado.</li>
+        <li><strong>"Comprobar un recurso privado"</strong>: comprobación basada en una alarma de CloudWatch.</li>
+        <li><strong>"Resolver nombres locales desde la VPC"</strong>: endpoint de salida de Resolver;
+          al revés, endpoint de entrada.</li>
+        <li>Multivalor devuelve varias IP sanas, pero <strong>no es un balanceador</strong>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="route-53"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html" target="_blank" rel="noopener">What is Amazon Route 53?</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html" target="_blank" rel="noopener">Choosing a routing policy</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-choosing-alias-non-alias.html" target="_blank" rel="noopener">Choosing between alias and non-alias records</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html" target="_blank" rel="noopener">Creating Amazon Route 53 health checks</a>, documentación de AWS (consultada el 25/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

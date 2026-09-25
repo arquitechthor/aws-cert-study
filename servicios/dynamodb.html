@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon DynamoDB — Apuntes AWS</title>
+<meta name="description" content="Base de datos NoSQL clave-valor y de documentos, serverless, con latencia de milisegundos a cualquier escala. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/dynamodb.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon DynamoDB — Apuntes AWS">
+<meta property="og:description" content="Base de datos NoSQL clave-valor y de documentos, serverless, con latencia de milisegundos a cualquier escala.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/dynamodb.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1>Amazon DynamoDB</h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a href="../index.html?cat=base-de-datos#catalogo">Base de datos <span class="cat-en">(Database)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+        </span>
+      </div>
+    </div>
+
+    <article class="doc">
+<h2 id="que-es">Qué es</h2>
+      <p>Amazon DynamoDB es una base de datos NoSQL totalmente gestionada y <em>serverless</em>, de
+        tipo clave-valor y documento. Ofrece latencia de un solo dígito de milisegundos a cualquier
+        escala, sin servidores, parches ni versiones que gestionar. A cambio, exige diseñar las tablas
+        a partir de los <strong>patrones de acceso</strong>, no de las entidades como en SQL.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Clave primaria:</strong> solo clave de partición, o clave de partición más clave de
+          ordenación. La clave de partición reparte los datos; una mala elección crea
+          <em>particiones calientes</em>.</li>
+        <li><strong>Ítems de hasta 400 KB</strong> (incluidos los nombres de los atributos). Para
+          objetos mayores, se guardan en S3 y en la tabla solo la referencia.</li>
+        <li><strong>Índices:</strong>
+          <ul>
+            <li><strong>GSI (global):</strong> otra clave de partición y de ordenación; se puede crear en
+              cualquier momento; solo lecturas eventualmente consistentes; hasta 20 por tabla por defecto.</li>
+            <li><strong>LSI (local):</strong> misma clave de partición y otra de ordenación; solo al crear
+              la tabla; admite lectura fuertemente consistente; hasta 5 por tabla.</li>
+          </ul></li>
+        <li><strong>Query vs Scan:</strong> <code>Query</code> busca por clave (eficiente);
+          <code>Scan</code> recorre toda la tabla (caro y lento). El filtro se aplica
+          <em>después</em> de leer, así que no ahorra capacidad.</li>
+        <li><strong>Modos de capacidad:</strong> <strong>bajo demanda</strong> (pago por petición, sin
+          planificar) o <strong>aprovisionado</strong> (RCU/WCU, con auto scaling y capacidad reservada).
+          1 WCU = una escritura por segundo de hasta 1 KB; 1 RCU = una lectura fuertemente consistente por
+          segundo de hasta 4 KB, o dos eventualmente consistentes.</li>
+        <li><strong>Transacciones</strong> ACID sobre varios ítems y tablas.</li>
+        <li><strong>DynamoDB Streams:</strong> registro ordenado de cambios durante 24 horas, que puede
+          disparar Lambda.</li>
+        <li><strong>DAX:</strong> caché en memoria compatible con la API, con latencias de microsegundos
+          para cargas de lectura intensiva.</li>
+        <li><strong>Global Tables:</strong> réplicas multirregión activo-activo, con consistencia eventual
+          o fuerte entre regiones (MRSC).</li>
+        <li><strong>TTL:</strong> borra ítems caducados sin coste de escritura.</li>
+        <li><strong>Copias de seguridad:</strong> bajo demanda y recuperación a un momento dado (PITR)
+          de hasta 35 días.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Backends <em>serverless</em> con Lambda: perfiles de usuario, carritos, catálogos.</li>
+        <li>Sesiones, tablas de clasificación de juegos, contadores con escalado masivo.</li>
+        <li>Datos de IoT o eventos con acceso por clave y TTL.</li>
+        <li>Metadatos de objetos guardados en S3.</li>
+        <li>Aplicaciones globales con escrituras en varias regiones (Global Tables).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Consultas ad hoc complejas, JOIN o informes analíticos: mejor una base relacional (RDS,
+          Aurora) o un almacén analítico (Redshift, Athena sobre una exportación a S3).</li>
+        <li>Ítems mayores de 400 KB, como ficheros o documentos grandes: S3.</li>
+        <li>Búsqueda de texto completo: OpenSearch.</li>
+        <li>Si no conoces los patrones de acceso de antemano.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Clave-valor a escala, serverless</td><td>DynamoDB</td></tr>
+            <tr><td>Relacional con SQL y JOIN</td><td>RDS o Aurora</td></tr>
+            <tr><td>Caché de microsegundos para DynamoDB</td><td>DAX</td></tr>
+            <tr><td>Caché general (sesiones, resultados)</td><td>ElastiCache</td></tr>
+            <tr><td>Compatibilidad con MongoDB</td><td>DocumentDB</td></tr>
+            <tr><td>Compatibilidad con Cassandra</td><td>Keyspaces</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En <strong>bajo demanda</strong> se paga por petición de lectura y escritura. En
+        <strong>aprovisionado</strong>, por la capacidad por hora (RCU y WCU), con descuentos por
+        capacidad reservada. Además se paga el almacenamiento por GB al mes (la clase Standard-IA lo
+        abarata para tablas poco consultadas), las copias de seguridad, Streams, las réplicas globales
+        y la transferencia de datos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos replicados en tres zonas de disponibilidad de la región.</li>
+        <li>Cifrado en reposo siempre activo (clave de AWS o de KMS gestionada por el cliente).</li>
+        <li>Control de acceso con IAM, incluso por ítem o atributo con condiciones
+          (<code>dynamodb:LeadingKeys</code>).</li>
+        <li>Endpoint de VPC de tipo <em>gateway</em> (gratuito) para acceder sin salir a internet.</li>
+        <li>PITR contra borrados o escrituras erróneas; Global Tables para recuperación ante desastres
+          multirregión.</li>
+      </ul>
+
+      <h2 id="kopi">Así lo uso en Kopi</h2>
+      <p>DynamoDB es la única base de datos de Kopi, en modo <strong>bajo demanda</strong>. Elegí
+        una tabla por entidad en vez de <em>single-table design</em>, porque para un proyecto
+        pequeño pesa más la legibilidad. Cada patrón de acceso (por usuario, por categoría, por tipo)
+        tiene su GSI, y la paginación usa <code>LastEvaluatedKey</code>, porque no existe un
+        <code>OFFSET</code>. Una lección real: <code>Limit</code> se aplica <strong>antes</strong> que
+        <code>FilterExpression</code>, así que una consulta con filtro puede devolver menos resultados
+        de los pedidos, o ninguno, aunque haya más.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Latencia de microsegundos"</strong> en lecturas de DynamoDB: DAX (no ElastiCache).</li>
+        <li><strong>"Tráfico impredecible"</strong> o <strong>"sin planificar capacidad"</strong>: bajo demanda.</li>
+        <li><strong>"Reaccionar a cambios en la tabla"</strong>: Streams más Lambda.</li>
+        <li><strong>"Borrar datos antiguos automáticamente y sin coste"</strong>: TTL.</li>
+        <li><strong>"Activo-activo multirregión"</strong>: Global Tables.</li>
+        <li><strong>"Consultar por otro atributo"</strong>: GSI. Si piden lectura fuertemente consistente
+          con otra clave de ordenación y la tabla es nueva: LSI.</li>
+        <li><strong>"Error de limitación (throttling) en una partición"</strong>: mala distribución de la
+          clave de partición (partición caliente).</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="dynamodb"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html" target="_blank" rel="noopener">What is Amazon DynamoDB?</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ServiceQuotas.html" target="_blank" rel="noopener">Quotas in Amazon DynamoDB</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html" target="_blank" rel="noopener">DynamoDB throughput capacity</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html" target="_blank" rel="noopener">Using Global Secondary Indexes in DynamoDB</a>, documentación de AWS (consultada el 25/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
+      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

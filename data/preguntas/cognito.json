@@ -1,0 +1,115 @@
+[
+  {
+    "id": "cognito-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una app móvil necesita que sus usuarios, tras iniciar sesión con Google, suban fotos directamente a un bucket S3 sin pasar por un backend. ¿Qué combinación es la adecuada?",
+    "opciones": [
+      "Un usuario IAM compartido cuyas claves se incluyen en la app.",
+      "Un identity pool de Cognito que federa con Google y entrega credenciales temporales con un rol que solo permite escribir en el prefijo del usuario.",
+      "Un bucket público con escritura anónima.",
+      "Un user pool de Cognito sin identity pool, ya que los JWT dan acceso a S3."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El identity pool cambia la identidad federada por credenciales temporales de AWS asociadas a un rol, que puede restringirse al prefijo de cada usuario. Los JWT de un user pool no autorizan llamadas a S3, y las claves embebidas o el bucket público son inseguros.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-identity.html"
+    ]
+  },
+  {
+    "id": "cognito-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una API REST en API Gateway debe aceptar solo peticiones de usuarios autenticados en la aplicación, con el menor esfuerzo de desarrollo. ¿Qué opción es la más adecuada?",
+    "opciones": [
+      "Un autorizador de Cognito user pool en API Gateway.",
+      "Validar usuario y contraseña en cada Lambda contra una tabla DynamoDB.",
+      "Restringir la API por dirección IP.",
+      "Usar claves de API como único mecanismo de autenticación."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El autorizador de Cognito valida el token en API Gateway antes de invocar el backend, sin código propio. Las claves de API sirven para planes de uso y cuotas, no para autenticar usuarios, y filtrar por IP no identifica usuarios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html"
+    ]
+  },
+  {
+    "id": "cognito-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migra una aplicación con su propia base de datos de usuarios a Cognito y quiere que los usuarios no tengan que restablecer la contraseña. ¿Qué característica lo permite?",
+    "opciones": [
+      "El disparador Lambda de migración de usuarios, que valida contra el sistema antiguo en el primer inicio de sesión.",
+      "Exportar los hashes de contraseña y cargarlos con la importación CSV.",
+      "Crear un identity pool que apunte a la base de datos antigua.",
+      "Configurar un autorizador JWT en API Gateway."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El disparador de migración permite autenticar al usuario contra el sistema anterior la primera vez y crearlo en el user pool con su contraseña, de forma transparente. La importación CSV no admite contraseñas y obliga a restablecerlas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html"
+    ]
+  },
+  {
+    "id": "cognito-004",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "¿Qué dos afirmaciones sobre los tokens de un user pool de Cognito son correctas?",
+    "opciones": [
+      "El ID token contiene información sobre la identidad del usuario, como su correo.",
+      "El access token sirve para autorizar llamadas a APIs y puede incluir los grupos del usuario.",
+      "El refresh token permite llamar directamente a S3.",
+      "Los tokens son credenciales temporales de IAM.",
+      "Los tokens no caducan nunca."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "El ID token describe al usuario y el access token autoriza el acceso a APIs, con scopes y grupos. El refresh token solo sirve para obtener nuevos tokens; ninguno es una credencial IAM y todos caducan.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html"
+    ]
+  },
+  {
+    "id": "cognito-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una aplicación quiere bloquear inicios de sesión sospechosos y detectar contraseñas que han aparecido en filtraciones. ¿Qué debe activar en Cognito?",
+    "opciones": [
+      "El plan Plus con protección frente a amenazas.",
+      "Un identity pool con acceso no autenticado.",
+      "AWS Shield Advanced.",
+      "Un grupo de usuarios llamado \"seguros\"."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La protección frente a amenazas del plan Plus analiza el riesgo de cada inicio de sesión y comprueba contraseñas comprometidas. Shield protege frente a DDoS, no frente al robo de credenciales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html"
+    ]
+  }
+]
