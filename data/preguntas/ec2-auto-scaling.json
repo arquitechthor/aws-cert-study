@@ -1,0 +1,112 @@
+[
+  {
+    "id": "ec2-auto-scaling-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación web detrás de un ALB (Application Load Balancer: balanceador HTTP/HTTPS) debe mantener la utilización media de CPU del grupo de Auto Scaling cerca del 50 %, añadiendo y quitando instancias según haga falta. ¿Qué política de escalado es la más sencilla?",
+    "opciones": [
+      "Seguimiento de objetivo (target tracking) con CPU media al 50 %.",
+      "Escalado programado cada hora.",
+      "Escalado simple con un solo umbral.",
+      "Capacidad fija igual al máximo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El seguimiento de objetivo crea y ajusta las alarmas por ti para mantener la métrica cerca del valor indicado. El programado no reacciona a la carga, el simple es más tosco y la capacidad fija desperdicia recursos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scale-based-on-demand.html"
+    ]
+  },
+  {
+    "id": "ec2-auto-scaling-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "En un grupo de Auto Scaling detrás de un ALB (Application Load Balancer: balanceador HTTP/HTTPS), una instancia sigue \"running\" pero la aplicación devuelve errores 500 y el grupo no la sustituye. ¿Qué cambio lo corrige?",
+    "opciones": [
+      "Activar en el grupo las comprobaciones de estado de ELB.",
+      "Aumentar la capacidad máxima.",
+      "Cambiar la política de escalado a programada.",
+      "Añadir un lifecycle hook de terminación."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Por defecto el grupo solo usa las comprobaciones de EC2, que ven la instancia en marcha; con las de ELB (Elastic Load Balancing), una instancia que falla las comprobaciones del balanceador se marca como no sana y se sustituye. Las otras opciones no detectan el fallo de la aplicación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html"
+    ]
+  },
+  {
+    "id": "ec2-auto-scaling-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una tienda tiene cada día un pico de tráfico a la misma hora y sus instancias tardan varios minutos en estar listas, así que el escalado reactivo llega tarde. ¿Qué opción ayuda más?",
+    "opciones": [
+      "Escalado predictivo, que lanza instancias antes del pico según el patrón histórico.",
+      "Reducir la capacidad mínima a 0.",
+      "Escalado simple con cooldown largo.",
+      "Quitar el balanceador de carga."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El escalado predictivo aprende los patrones diarios y semanales y aumenta la capacidad por adelantado. Reducir el mínimo o alargar el cooldown empeora el retraso y quitar el balanceador impide repartir el tráfico.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-predictive-scaling.html"
+    ]
+  },
+  {
+    "id": "ec2-auto-scaling-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Antes de terminar una instancia por reducción de capacidad, hay que copiar sus registros de la aplicación a S3 (Simple Storage Service). ¿Qué mecanismo de EC2 Auto Scaling lo permite?",
+    "opciones": [
+      "Un lifecycle hook de terminación que pausa la instancia hasta completar la copia.",
+      "Una política de escalado por pasos.",
+      "La protección frente a reducción en todas las instancias.",
+      "Un warm pool."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El lifecycle hook de terminación deja la instancia en espera mientras un script o función hace la copia y luego continúa la terminación. Las políticas no ejecutan acciones, la protección impediría reducir y el warm pool sirve para escalar más rápido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html"
+    ]
+  },
+  {
+    "id": "ec2-auto-scaling-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una flota sin estado debe minimizar el coste, pero siempre con al menos 4 instancias bajo demanda para la carga base, y el resto en Spot con varios tipos de instancia para reducir interrupciones. ¿Qué configuración lo consigue en un solo grupo?",
+    "opciones": [
+      "Un grupo de Auto Scaling con política de instancias mixtas, capacidad base bajo demanda de 4 y varios tipos de instancia para Spot.",
+      "Dos grupos independientes sin balanceador.",
+      "Solo instancias Spot de un único tipo.",
+      "Instancias reservadas para toda la capacidad máxima."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los grupos con instancias mixtas permiten fijar una base bajo demanda y completar con Spot repartido entre varios tipos, lo que reduce el coste y el riesgo de interrupción. Un solo tipo de Spot es más frágil y reservar la capacidad máxima es caro.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html"
+    ]
+  }
+]

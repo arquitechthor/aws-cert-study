@@ -163,7 +163,7 @@
         <li><strong>"Muchas respuestas vacías y coste alto"</strong>: long polling.</li>
         <li><strong>"Un mensaje erróneo bloquea o se reintenta sin fin"</strong>: cola de mensajes fallidos (DLQ).</li>
         <li><strong>"Mensajes de varios MB"</strong>: guardar en <a href="s3.html">S3</a> y enviar la referencia (Extended Client).</li>
-        <li><strong>"Escalar los trabajadores según la cola"</strong>: <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a> con la métrica de mensajes pendientes por instancia.</li>
+        <li><strong>"Escalar los trabajadores según la cola"</strong>: <a href="ec2-auto-scaling.html">Auto Scaling</a> con la métrica de mensajes pendientes por instancia.</li>
         <li><strong>"Un evento debe llegar a varios sistemas"</strong>: <a href="sns.html">SNS</a> con varias colas suscritas (fan-out), no una sola cola.</li>
       </ul>
 

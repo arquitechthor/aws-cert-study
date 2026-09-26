@@ -81,10 +81,10 @@
           <ul>
             <li><strong>EKS Auto Mode:</strong> AWS aprovisiona, escala, parchea y actualiza los nodos, e
               incluye el balanceo de carga, el almacenamiento en bloque y la red.</li>
-            <li><strong>Grupos de nodos gestionados:</strong> instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> en un grupo de <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a>
+            <li><strong>Grupos de nodos gestionados:</strong> instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> en un grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>
               que EKS ayuda a crear y actualizar.</li>
             <li><strong>Nodos autogestionados:</strong> control total, toda la operación es tuya.</li>
-            <li><strong><a href="../servicio.html?id=fargate">Fargate</a>:</strong> cada pod en su propio entorno sin servidores (sin DaemonSets
+            <li><strong><a href="fargate.html">Fargate</a>:</strong> cada pod en su propio entorno sin servidores (sin DaemonSets
               ni GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span>).</li>
           </ul></li>
         <li><strong>Escalado:</strong> el <em>Horizontal Pod Autoscaler</em> cambia el número de pods;
@@ -117,7 +117,7 @@
         <li>Equipos pequeños sin experiencia en Kubernetes que solo quieren ejecutar contenedores:
           <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> es más sencillo y no cobra plano de control.</li>
         <li>Funciones por evento: <a href="lambda.html">Lambda</a>.</li>
-        <li>Una sola aplicación web sin necesidad de orquestar: <a href="../servicio.html?id=app-runner">App Runner</a> o <a href="../servicio.html?id=elastic-beanstalk">Elastic Beanstalk</a>.</li>
+        <li>Una sola aplicación web sin necesidad de orquestar: <a href="../servicio.html?id=app-runner">App Runner</a> o <a href="elastic-beanstalk.html">Elastic Beanstalk</a>.</li>
       </ul>
 
       <h2 id="comparativa">ECS frente a EKS</h2>
@@ -129,7 +129,7 @@
             <tr><td>Coste del plano de control</td><td>Gratis</td><td>Por hora y por clúster</td></tr>
             <tr><td>Curva de aprendizaje</td><td>Baja</td><td>Alta</td></tr>
             <tr><td>Portabilidad</td><td>Solo AWS</td><td>Cualquier Kubernetes</td></tr>
-            <tr><td>Sin servidores</td><td><a href="../servicio.html?id=fargate">Fargate</a></td><td>Fargate o Auto Mode</td></tr>
+            <tr><td>Sin servidores</td><td><a href="fargate.html">Fargate</a></td><td>Fargate o Auto Mode</td></tr>
           </tbody>
         </table>
       </div>
@@ -137,7 +137,7 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga una tarifa por hora por cada clúster (más alta si la versión está en soporte
         extendido), más la capacidad donde corren los pods: instancias <a href="ec2.html">EC2</a> y volúmenes, vCPU y memoria
-        de <a href="../servicio.html?id=fargate">Fargate</a>, o el cargo de gestión de Auto Mode sobre las instancias. Aparte, balanceadores,
+        de <a href="fargate.html">Fargate</a>, o el cargo de gestión de Auto Mode sobre las instancias. Aparte, balanceadores,
         transferencia de datos y NAT <span class="sigla">(<em>Network Address Translation</em>: traducción de direcciones de red)</span>. Spot y <a href="../servicio.html?id=savings-plans">Savings Plans</a> reducen el coste de los nodos.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
@@ -154,7 +154,7 @@
       <ul>
         <li><strong>"Kubernetes"</strong>, <strong>"Helm"</strong> o <strong>"kubectl"</strong> en el enunciado: EKS.</li>
         <li><strong>"Un pod necesita permisos de AWS"</strong>: Pod Identity o IRSA, no el rol del nodo.</li>
-        <li><strong>"Kubernetes sin gestionar nodos"</strong>: EKS Auto Mode o <a href="../servicio.html?id=fargate">Fargate</a>.</li>
+        <li><strong>"Kubernetes sin gestionar nodos"</strong>: EKS Auto Mode o <a href="fargate.html">Fargate</a>.</li>
         <li><strong>"Añadir nodos rápido y con el tipo de instancia justo"</strong>: Karpenter.</li>
         <li><strong>"Clústeres en el propio centro de datos con la misma herramienta"</strong>: EKS Anywhere.</li>
         <li><strong>"Contenedores con la menor sobrecarga operativa y sin Kubernetes"</strong>: <a href="ecs.html">ECS</a> con Fargate.</li>

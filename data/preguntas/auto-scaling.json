@@ -1,0 +1,112 @@
+[
+  {
+    "id": "auto-scaling-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Qué ventaja de la nube representa que los recursos de una aplicación aumenten automáticamente en los picos y se reduzcan cuando baja la demanda?",
+    "opciones": [
+      "Elasticidad.",
+      "Alta latencia.",
+      "Gastos de capital por adelantado.",
+      "Capacidad fija."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La elasticidad es ajustar los recursos a la demanda en cada momento, lo que Auto Scaling hace automáticamente. Las otras opciones son justo lo que la nube evita.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/plans/userguide/what-is-a-scaling-plan.html"
+    ]
+  },
+  {
+    "id": "auto-scaling-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere configurar desde un solo sitio el escalado de sus instancias EC2, sus tablas de DynamoDB y sus réplicas de Aurora. ¿Qué servicio lo permite?",
+    "opciones": [
+      "AWS Auto Scaling.",
+      "AWS Trusted Advisor.",
+      "Amazon Inspector.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS Auto Scaling permite crear planes de escalado para varios recursos de distintos servicios. Trusted Advisor da recomendaciones, Inspector busca vulnerabilidades y Artifact ofrece informes de cumplimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/plans/userguide/what-is-a-scaling-plan.html"
+    ]
+  },
+  {
+    "id": "auto-scaling-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un servicio de ECS en Fargate debe ajustar su número de tareas según la CPU media. ¿Qué mecanismo se usa?",
+    "opciones": [
+      "Service Auto Scaling de ECS, basado en Application Auto Scaling, con seguimiento de objetivo.",
+      "Un grupo de EC2 Auto Scaling.",
+      "Un plan de ahorro Savings Plans.",
+      "Un balanceador con más destinos fijos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El número de tareas de un servicio de ECS lo escala Application Auto Scaling (Service Auto Scaling). EC2 Auto Scaling escala instancias, Savings Plans es un modelo de precios y los destinos fijos no escalan.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html"
+    ]
+  },
+  {
+    "id": "auto-scaling-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un equipo configuró un plan de escalado de AWS Auto Scaling y espera que también sustituya las instancias EC2 que fallan. ¿Qué afirmación es correcta?",
+    "opciones": [
+      "La sustitución de instancias no sanas la hace el grupo de EC2 Auto Scaling, no el plan de escalado.",
+      "El plan de escalado sustituye instancias si se activa la estrategia de coste.",
+      "AWS Auto Scaling crea los grupos de instancias automáticamente.",
+      "Ningún servicio de AWS sustituye instancias no sanas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS Auto Scaling configura políticas de escalado sobre recursos existentes; mantener la salud del grupo es función de EC2 Auto Scaling. Los planes no crean grupos ni cambian este comportamiento.",
+    "fuentes": [
+      "https://aws.amazon.com/autoscaling/faqs/"
+    ]
+  },
+  {
+    "id": "auto-scaling-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una aplicación con frontal EC2, tabla de DynamoDB aprovisionada y réplicas de Aurora escala cada capa con políticas distintas y mal coordinadas, y en los picos la base de datos se satura antes que el resto. ¿Qué mejora centraliza la configuración?",
+    "opciones": [
+      "Un plan de AWS Auto Scaling sobre los recursos de la aplicación con una estrategia de optimización de disponibilidad.",
+      "Desactivar el escalado de la base de datos.",
+      "Duplicar a mano la capacidad de todas las capas.",
+      "Mover todo a una sola instancia grande."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Un plan de escalado descubre los recursos de la aplicación y aplica políticas coherentes con una estrategia común, dejando más margen si se prioriza la disponibilidad. Las demás opciones eliminan la elasticidad o crean puntos únicos de fallo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/plans/userguide/what-is-a-scaling-plan.html"
+    ]
+  }
+]

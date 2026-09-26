@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Auto Scaling — Apuntes AWS</title>
+<meta name="description" content="Configura desde un solo sitio el escalado de varios recursos de una aplicación: grupos EC2, tareas de ECS, tablas de DynamoDB y réplicas de Aurora. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/auto-scaling.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Auto Scaling — Apuntes AWS">
+<meta property="og:description" content="Configura desde un solo sitio el escalado de varios recursos de una aplicación: grupos EC2, tareas de ECS, tablas de DynamoDB y réplicas de Aurora.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/auto-scaling.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/auto-scaling.svg" alt="" width="56" height="56"><span>AWS Auto Scaling</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+        <span><strong>También en:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/autoscaling/" target="_blank" rel="noopener">Documentación de AWS Auto Scaling ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>La idea de "<a href="ec2-auto-scaling.html">Auto Scaling</a>" en AWS abarca varias piezas. <strong>AWS Auto Scaling</strong> es
+        el servicio que permite descubrir los recursos escalables de una aplicación y configurar su
+        escalado de forma conjunta con <strong>planes de escalado</strong>, eligiendo si priorizar
+        disponibilidad, coste o un equilibrio entre ambos. Por debajo se apoya en dos motores:</p>
+      <ul>
+        <li><strong>Amazon EC2 Auto Scaling:</strong> crea y mantiene grupos de instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>.</li>
+        <li><strong>Application Auto Scaling:</strong> escala otros recursos: tareas de servicios de
+          <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span>, capacidad de lectura y escritura de <a href="dynamodb.html">DynamoDB</a>, réplicas de <a href="aurora.html">Aurora</a>, Spot Fleet,
+          concurrencia aprovisionada de <a href="lambda.html">Lambda</a>, variantes de endpoints de <a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a>, etc.</li>
+      </ul>
+      <p>En la práctica, conviene saber qué motor escala cada cosa y qué tipo de política usar.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Plan de escalado:</strong> agrupa los recursos de una aplicación (por etiquetas o
+          por una pila de <a href="../servicio.html?id=cloudformation">CloudFormation</a>) y les aplica una <strong>estrategia</strong>: optimizar la
+          disponibilidad, el coste o ambas.</li>
+        <li><strong>Seguimiento de objetivo:</strong> la política que usan los planes; mantiene una
+          métrica (CPU, utilización de capacidad de <a href="dynamodb.html">DynamoDB</a>, conexiones de <a href="aurora.html">Aurora</a>…) en un valor.</li>
+        <li><strong>Escalado predictivo:</strong> para grupos <a href="ec2.html">EC2</a>, anticipa la carga según el
+          historial.</li>
+        <li><strong>Recursos compatibles:</strong> grupos de <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>, servicios de <a href="ecs.html">ECS</a>, tablas
+          e índices de DynamoDB, réplicas de Aurora y Spot Fleet.</li>
+        <li><strong>Lo que no hace:</strong> no crea grupos de Auto Scaling ni sustituye instancias no
+          sanas; eso sigue siendo cosa de EC2 Auto Scaling. Para políticas por pasos o programadas se
+          va directamente a cada servicio.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Una aplicación de tres capas cuyo frontal (grupo <a href="ec2.html">EC2</a>), servicio de contenedores (<a href="ecs.html">ECS</a>) y base
+          de datos (réplicas de <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>) deben escalar de forma coherente.</li>
+        <li>Aplicar la misma estrategia de coste o disponibilidad a todos los recursos de una pila.</li>
+        <li>Activar el escalado predictivo en los grupos EC2 de una aplicación.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si solo tienes un grupo de instancias o necesitas políticas por pasos o programadas:
+          directamente <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>.</li>
+        <li>Si solo escalas un tipo de recurso: su configuración propia (por ejemplo, el escalado
+          automático de la tabla de <a href="dynamodb.html">DynamoDB</a> o el modo bajo demanda).</li>
+        <li>Si la carga es impredecible y quieres pagar por uso sin planificar: servicios sin
+          servidores o modos bajo demanda.</li>
+      </ul>
+
+      <h2 id="comparativa">¿Qué escala cada cosa?</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Recurso</th><th>Motor</th></tr></thead>
+          <tbody>
+            <tr><td>Instancias <a href="ec2.html">EC2</a></td><td><a href="ec2-auto-scaling.html">EC2 Auto Scaling</a></td></tr>
+            <tr><td>Tareas de un servicio de <a href="ecs.html">ECS</a></td><td>Application Auto Scaling (Service Auto Scaling)</td></tr>
+            <tr><td>Capacidad aprovisionada de <a href="dynamodb.html">DynamoDB</a></td><td>Application Auto Scaling</td></tr>
+            <tr><td>Réplicas de <a href="aurora.html">Aurora</a></td><td>Application Auto Scaling</td></tr>
+            <tr><td>Varios de los anteriores con una estrategia común</td><td>AWS Auto Scaling (planes de escalado)</td></tr>
+            <tr><td>Nodos de <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span></td><td>Karpenter o Cluster Autoscaler (o EKS Auto Mode)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>AWS Auto Scaling y Application Auto Scaling no tienen coste propio. Se pagan los recursos que
+        se añaden al escalar y las alarmas de <a href="cloudwatch.html">CloudWatch</a> que se crean.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Usa roles vinculados a servicios para modificar la capacidad de cada recurso.</li>
+        <li>La estrategia "optimizar disponibilidad" deja más margen de capacidad para absorber picos.</li>
+        <li>La alta disponibilidad de cada recurso (varias zonas, sustitución de instancias) depende del
+          propio servicio escalado.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Escalar varios recursos de distintos servicios de una aplicación desde un solo sitio"</strong>: AWS Auto Scaling.</li>
+        <li><strong>"Escalar el número de tareas de <a href="ecs.html">ECS</a>"</strong> o <strong>"la capacidad de <a href="dynamodb.html">DynamoDB</a>"</strong>: Application Auto Scaling.</li>
+        <li><strong>"Sustituir instancias no sanas"</strong> o <strong>"crear un grupo"</strong>: <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>, no AWS Auto Scaling.</li>
+        <li><strong>"Escalado programado"</strong>: se configura en EC2 Auto Scaling o Application Auto Scaling; los planes solo usan seguimiento de objetivo y predictivo.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="auto-scaling"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/autoscaling/plans/userguide/what-is-a-scaling-plan.html" target="_blank" rel="noopener">What is AWS Auto Scaling?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html" target="_blank" rel="noopener">What is Application Auto Scaling?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://aws.amazon.com/autoscaling/faqs/" target="_blank" rel="noopener">AWS Auto Scaling FAQs</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

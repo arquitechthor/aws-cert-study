@@ -10,16 +10,27 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 30 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 34 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
   Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). Las preguntas de los 6
   ya publicados antes de añadir CLF-C02 y DVA-C02 aún no cubren esas dos guías. La tarea 0.9 sigue
   programada para el 27/10/2026.
-- **Próximo paso:** seguir la cola "Prioridad 0" por el primer servicio sin marcar
-  (`organizations`, `ebs`, `elb`…), siguiendo el flujo de `CLAUDE.md`. Pendiente opcional: añadir
-  preguntas de CLF-C02 y DVA-C02 a IAM, S3, Lambda, DynamoDB, CloudFront y CloudWatch.
+- **Próximo paso:** terminar las 3 categorías que se trasladaron desde Conocimiento de Kopi
+  (tópicos B, F y R, ya borrados allí el 2026-09-26). Hechas: Integración de aplicaciones (7/7) y
+  Computación 4/11 (Fargate, EC2 Auto Scaling, AWS Auto Scaling, Elastic Beanstalk). **Faltan
+  Computación:** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda ECS
+  Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
+  `serverless-application-repository`, `vmware-cloud-on-aws` (aviso: AWS dejó de revenderlo el
+  30/04/2024, se contrata con Broadcom) y `wavelength`. **Faltan Administración y gobernanza (19):**
+  `organizations`, `cloudformation`, `cdk`, `cli`, `config`, `control-tower`, `systems-manager`
+  (aviso: Change Manager e Incident Manager sin clientes nuevos desde el 07/11/2025, Application
+  Manager desde 2026), `trusted-advisor`, `well-architected-tool`, `compute-optimizer`,
+  `health-dashboard`, `license-manager`, `service-catalog` (AppRegistry sin clientes nuevos),
+  `service-quotas`, `management-console` (myApplications sin clientes nuevos), `managed-grafana`,
+  `managed-service-for-prometheus`, `appconfig` y `proton` (aviso: en retirada desde oct. 2025).
+  Después, la cola "Prioridad 0" (`ebs`, `elb`, `efs`…).
 - **Última actualización:** 2026-09-26
 
 ---
@@ -280,7 +291,7 @@ esta lista es solo el orden de trabajo.
 - [x] `ec2` Amazon EC2 — Computación (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `ebs` Amazon EBS — Almacenamiento (SAA-C03, SAP-C02)
 - [ ] `elb` Elastic Load Balancing (ELB) — Redes y entrega de contenido (SAA-C03, SAP-C02)
-- [ ] `ec2-auto-scaling` Amazon EC2 Auto Scaling — Computación (SAA-C03, SAP-C02)
+- [x] `ec2-auto-scaling` Amazon EC2 Auto Scaling — Computación (SAA-C03, SAP-C02)
 - [x] `s3` Amazon S3 — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `efs` Amazon EFS — Almacenamiento (SAA-C03, SAP-C02)
 - [x] `rds` Amazon RDS — Base de datos (SAA-C03, SAP-C02, AIF-C01)
@@ -351,10 +362,10 @@ esta lista es solo el orden de trabajo.
 - [ ] `kinesis-data-streams` Amazon Kinesis Data Streams — Análisis (SAA-C03, SAP-C02)
 - [ ] `msk` Amazon MSK — Análisis (SAA-C03, SAP-C02)
 - [ ] `keyspaces` Amazon Keyspaces — Base de datos (SAA-C03, SAP-C02)
-- [ ] `auto-scaling` AWS Auto Scaling — Computación (SAA-C03, SAP-C02)
+- [x] `auto-scaling` AWS Auto Scaling — Computación (SAA-C03, SAP-C02)
 - [ ] `batch` AWS Batch — Computación (SAA-C03, SAP-C02)
-- [ ] `elastic-beanstalk` AWS Elastic Beanstalk — Computación (SAA-C03, SAP-C02)
-- [ ] `fargate` AWS Fargate — Computación (SAA-C03, SAP-C02)
+- [x] `elastic-beanstalk` AWS Elastic Beanstalk — Computación (SAA-C03, SAP-C02)
+- [x] `fargate` AWS Fargate — Computación (SAA-C03, SAP-C02)
 - [ ] `outposts` AWS Outposts — Computación (SAA-C03, SAP-C02)
 - [ ] `serverless-application-repository` AWS Serverless Application Repository — Computación (SAA-C03)
 - [ ] `vmware-cloud-on-aws` VMware Cloud on AWS — Computación (SAA-C03)
@@ -557,3 +568,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-26 | Publicados los 11 servicios pendientes de los 17 comunes a las cinco guías (EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail, OpenSearch Service), con 99 preguntas originales. Datos contrastados con la documentación actual: Aurora hasta 256 TiB y Serverless v2 a 0 ACU, réplicas de RDS (15; 5 en Oracle/SQL Server; 3 en Db2), rotación de KMS de 90 a 2560 días, CloudTrail Lake cerrado a clientes nuevos desde el 31/05/2026, OpenSearch Serverless NextGen con escala a cero, ECS Managed Instances y EKS Auto Mode. |
 | 2026-09-26 | Filtro "Usados en Kopi" en el catálogo (campo `kopi` en `servicios.json`, 12 servicios) y marca "Kopi" en sus tarjetas. |
 | 2026-09-26 | Revisión de las 23 guías con las nuevas reglas de redacción: 270 siglas explicadas en las páginas y 202 en las preguntas, y 535 enlaces a otros servicios (a su guía o a "Próximamente"), con `scripts/revisar_texto.py` (idempotente). Insignia "Finalizado" sin el visto bueno. Botón "Exportar a Noria" en el quiz de cada servicio (un tema por servicio, enunciado y opciones, sin respuestas). |
+| 2026-09-26 | Borrados de Conocimiento de Kopi los tópicos [B], [F] y [R] del tema "Amazon Web Services" (6 recursos) con `kopi-media-admin/documentation/scripts/delete-knowledge-subtopics-aws.ps1`; su contenido pasa aquí. Publicada la categoría Integración de aplicaciones completa (SQS, SNS, EventBridge, Step Functions, AppSync, Amazon MQ, AppFlow) y 4 de Computación (Fargate, EC2 Auto Scaling, AWS Auto Scaling, Elastic Beanstalk): 34 de 164. Pausado a petición del usuario; lo pendiente está en "Próximo paso". |

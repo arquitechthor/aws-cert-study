@@ -84,9 +84,9 @@
           un balanceador, hace despliegues progresivos y escala con <em>Service Auto Scaling</em>.</li>
         <li><strong>Capacidad</strong> (mediante <em>capacity providers</em>):
           <ul>
-            <li><strong><a href="../servicio.html?id=fargate">Fargate</a></strong> (y Fargate Spot): sin servidores; pagas por la CPU y la memoria
+            <li><strong><a href="fargate.html">Fargate</a></strong> (y Fargate Spot): sin servidores; pagas por la CPU y la memoria
               de cada tarea.</li>
-            <li><strong><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></strong>: tus instancias en un grupo de <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a>; más control (GPU,
+            <li><strong><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></strong>: tus instancias en un grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>; más control (GPU,
               tipos concretos) y opciones de ahorro, pero tú las gestionas.</li>
             <li><strong>ECS Managed Instances</strong>: instancias EC2 que AWS elige, parchea y escala
               por ti, a medio camino entre las dos anteriores.</li>
@@ -125,7 +125,7 @@
           <tbody>
             <tr><td>Orquestar contenedores de la forma más sencilla en AWS</td><td>ECS</td></tr>
             <tr><td>Kubernetes estándar y su ecosistema</td><td><a href="eks.html">EKS</a></td></tr>
-            <tr><td>No gestionar servidores para los contenedores</td><td><a href="../servicio.html?id=fargate">Fargate</a> (con ECS o EKS)</td></tr>
+            <tr><td>No gestionar servidores para los contenedores</td><td><a href="fargate.html">Fargate</a> (con ECS o EKS)</td></tr>
             <tr><td>Guardar las imágenes</td><td><a href="../servicio.html?id=ecr">ECR</a></td></tr>
             <tr><td>Contenedor web desde código o imagen, sin configurar red ni balanceador</td><td><a href="../servicio.html?id=app-runner">App Runner</a></td></tr>
           </tbody>
@@ -133,7 +133,7 @@
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>ECS en sí no cobra. Pagas la capacidad: con <strong><a href="../servicio.html?id=fargate">Fargate</a></strong>, la vCPU y la memoria
+      <p>ECS en sí no cobra. Pagas la capacidad: con <strong><a href="fargate.html">Fargate</a></strong>, la vCPU y la memoria
         que pide cada tarea por segundo (Fargate Spot es mucho más barato y puede interrumpirse); con
         <strong><a href="ec2.html">EC2</a></strong>, las instancias y sus volúmenes; con <strong>Managed Instances</strong>,
         las instancias más un cargo de gestión. Aparte, balanceadores, <a href="../servicio.html?id=ecr">ECR</a>, registros y transferencia
@@ -152,7 +152,7 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Contenedores sin gestionar servidores"</strong>: <a href="../servicio.html?id=fargate">Fargate</a>.</li>
+        <li><strong>"Contenedores sin gestionar servidores"</strong>: <a href="fargate.html">Fargate</a>.</li>
         <li><strong>"La tarea no puede descargar la imagen de <a href="../servicio.html?id=ecr">ECR</a>"</strong> o <strong>"no lee el secreto"</strong>: revisa el rol de ejecución.</li>
         <li><strong>"El código del contenedor no puede escribir en <a href="s3.html">S3</a>"</strong>: revisa el rol de la tarea.</li>
         <li><strong>"Kubernetes"</strong> en el enunciado: <a href="eks.html">EKS</a>, no ECS.</li>

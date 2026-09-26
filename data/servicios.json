@@ -234,8 +234,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Configura desde un solo sitio el escalado de varios recursos de una aplicación: grupos EC2, tareas de ECS, tablas de DynamoDB y réplicas de Aurora.",
     "documentacion": "https://docs.aws.amazon.com/autoscaling/"
   },
   {
@@ -816,8 +816,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Mantiene el número adecuado de instancias EC2 en un grupo: sustituye las que fallan y añade o quita instancias según la carga o un horario.",
     "documentacion": "https://docs.aws.amazon.com/autoscaling/"
   },
   {
@@ -904,8 +904,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Despliega aplicaciones web subiendo el código: Beanstalk crea y gestiona instancias, balanceador, Auto Scaling y monitorización por ti.",
     "documentacion": "https://docs.aws.amazon.com/elastic-beanstalk/"
   },
   {
@@ -1006,8 +1006,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Motor de cómputo sin servidores para contenedores: ejecuta tareas de ECS y pods de EKS sin aprovisionar ni gestionar instancias.",
     "documentacion": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
   },
   {

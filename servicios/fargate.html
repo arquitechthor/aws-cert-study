@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Fargate — Apuntes AWS</title>
+<meta name="description" content="Motor de cómputo sin servidores para contenedores: ejecuta tareas de ECS y pods de EKS sin aprovisionar ni gestionar instancias. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/fargate.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Fargate — Apuntes AWS">
+<meta property="og:description" content="Motor de cómputo sin servidores para contenedores: ejecuta tareas de ECS y pods de EKS sin aprovisionar ni gestionar instancias.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/fargate.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/fargate.svg" alt="" width="56" height="56"><span>AWS Fargate</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+        <span><strong>También en:</strong> <a class="cat-link" href="../index.html?cat=sin-servidor#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/sin-servidor.svg" alt="" width="18" height="18">Sin servidor <span class="cat-en">(Serverless)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html" target="_blank" rel="noopener">Documentación de AWS Fargate ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Fargate ejecuta contenedores <strong>sin que tengas que gestionar servidores</strong>.
+        No es un orquestador: es la <strong>capacidad</strong> sobre la que <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> o <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span> lanzan tus
+        contenedores. Tú indicas cuánta CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> y memoria necesita cada tarea (o pod) y Fargate la
+        arranca en un entorno aislado, sin instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> que elegir, parchear ni escalar. Pagas por
+        los recursos que pide cada tarea mientras se ejecuta.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Con <a href="ecs.html">ECS</a>:</strong> se elige Fargate como <em>capacity provider</em> (o tipo de
+          lanzamiento) y cada tarea corre en su propio micro-entorno.</li>
+        <li><strong>Con <a href="eks.html">EKS</a>:</strong> un <em>perfil de Fargate</em> decide qué pods (por espacio de
+          nombres y etiquetas) corren en Fargate; cada pod tiene su propio entorno.</li>
+        <li><strong>Tamaño de tarea:</strong> combinaciones fijas de vCPU y memoria, desde 0,25 vCPU
+          hasta 16 vCPU y hasta 120 GB de memoria; Linux (x86 y Graviton/ARM) y Windows.</li>
+        <li><strong>Aislamiento:</strong> cada tarea o pod tiene su propio núcleo, red y
+          almacenamiento; no comparte máquina con otras tareas.</li>
+        <li><strong>Red:</strong> modo <code>awsvpc</code> obligatorio: cada tarea recibe su interfaz de
+          red, su IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> de la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> y su security group.</li>
+        <li><strong>Almacenamiento:</strong> 20 GiB efímeros por defecto, ampliables a
+          <strong>200 GiB</strong> (se pierden al terminar la tarea); para datos persistentes o
+          compartidos, <a href="../servicio.html?id=efs">EFS</a> <span class="sigla">(<em>Elastic File System</em>)</span>; también volúmenes <a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span> por tarea.</li>
+        <li><strong>Fargate Spot:</strong> capacidad sobrante con gran descuento; AWS puede
+          interrumpir la tarea con 2 minutos de aviso.</li>
+        <li><strong>Limitaciones:</strong> sin GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span>, sin acceso al host (no hay SSH <span class="sigla">(<em>Secure Shell</em>: acceso remoto cifrado por terminal)</span> a la máquina ni
+          contenedores privilegiados) y, en EKS, sin DaemonSets.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Microservicios y API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> en contenedores sin equipo de operaciones de servidores.</li>
+        <li>Trabajos por lotes y tareas programadas en contenedores (con Fargate Spot para abaratar).</li>
+        <li>Cargas con picos, donde pagar por tarea evita instancias ociosas.</li>
+        <li>Entornos multiinquilino que necesitan aislamiento fuerte entre tareas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Cargas con GPU o que necesitan tipos de instancia concretos: <a href="ecs.html">ECS</a> o <a href="eks.html">EKS</a> sobre <a href="ec2.html">EC2</a> (o ECS
+          Managed Instances).</li>
+        <li>Flotas grandes y estables con uso muy alto, donde instancias EC2 bien aprovechadas y con
+          <a href="../servicio.html?id=savings-plans">Savings Plans</a> salen más baratas.</li>
+        <li>Código corto por eventos sin necesidad de contenedor propio: <a href="lambda.html">Lambda</a>.</li>
+        <li>Si necesitas acceso al sistema operativo del host o agentes por nodo.</li>
+      </ul>
+
+      <h2 id="comparativa">Fargate, EC2 y Lambda para ejecutar código</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Fargate</th><th><a href="ecs.html">ECS</a>/EKS sobre <a href="ec2.html">EC2</a></th><th><a href="lambda.html">Lambda</a></th></tr></thead>
+          <tbody>
+            <tr><td>Servidores que gestionar</td><td>Ninguno</td><td>Las instancias</td><td>Ninguno</td></tr>
+            <tr><td>Duración</td><td>Sin límite</td><td>Sin límite</td><td>Hasta 15 minutos</td></tr>
+            <tr><td>Unidad de cobro</td><td>vCPU y memoria por segundo</td><td>Instancias</td><td>Invocaciones y duración</td></tr>
+            <tr><td>GPU</td><td>No</td><td>Sí</td><td>No</td></tr>
+            <tr><td>Empaquetado</td><td>Imagen de contenedor</td><td>Imagen de contenedor</td><td>Código o imagen</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por la vCPU, la memoria y el almacenamiento efímero adicional que solicita cada
+        tarea, por segundo (con un mínimo de un minuto), desde que empieza a descargar la imagen hasta
+        que termina. Graviton es más barato que x86 y Fargate Spot mucho más. Compute <a href="../servicio.html?id=savings-plans">Savings Plans</a>
+        aplica descuentos también a Fargate.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Aislamiento por tarea en su propio entorno de ejecución.</li>
+        <li>Security group por tarea y subredes privadas.</li>
+        <li>Rol de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> por tarea (<a href="ecs.html">ECS</a>) o por cuenta de servicio (<a href="eks.html">EKS</a>) para los permisos de la aplicación.</li>
+        <li>Parches del entorno de ejecución a cargo de AWS (versiones de plataforma).</li>
+        <li>Alta disponibilidad repartiendo las tareas del servicio en varias zonas.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Contenedores sin gestionar servidores"</strong> o <strong>"sin parchear instancias"</strong>: Fargate.</li>
+        <li><strong>"Contenedores con GPU"</strong>: <a href="ec2.html">EC2</a>, no Fargate.</li>
+        <li><strong>"Lotes en contenedores tolerantes a interrupciones y baratos"</strong>: Fargate Spot.</li>
+        <li><strong>"Almacenamiento compartido y persistente entre tareas"</strong>: <a href="../servicio.html?id=efs">EFS</a> montado en las tareas.</li>
+        <li><strong>"Ejecución de más de 15 minutos sin servidores"</strong>: Fargate (<a href="lambda.html">Lambda</a> no llega).</li>
+        <li><strong>"Fargate es un orquestador"</strong>: falso; se usa con <a href="ecs.html">ECS</a> o <a href="eks.html">EKS</a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="fargate"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html" target="_blank" rel="noopener">AWS Fargate for Amazon ECS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/fargate.html" target="_blank" rel="noopener">Simplify compute management with AWS Fargate (Amazon EKS)</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-storage.html" target="_blank" rel="noopener">Fargate task ephemeral storage for Amazon ECS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-capacity-providers.html" target="_blank" rel="noopener">Amazon ECS clusters for Fargate</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

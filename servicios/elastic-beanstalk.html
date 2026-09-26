@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Elastic Beanstalk — Apuntes AWS</title>
+<meta name="description" content="Despliega aplicaciones web subiendo el código: Beanstalk crea y gestiona instancias, balanceador, Auto Scaling y monitorización por ti. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/elastic-beanstalk.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Elastic Beanstalk — Apuntes AWS">
+<meta property="og:description" content="Despliega aplicaciones web subiendo el código: Beanstalk crea y gestiona instancias, balanceador, Auto Scaling y monitorización por ti.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/elastic-beanstalk.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/elastic-beanstalk.svg" alt="" width="56" height="56"><span>AWS Elastic Beanstalk</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/elastic-beanstalk/" target="_blank" rel="noopener">Documentación de AWS Elastic Beanstalk ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Elastic Beanstalk es una <strong>plataforma como servicio</strong> (PaaS) para
+        aplicaciones web y de trabajo en segundo plano. Subes el código (Java, .NET, Node.js,
+        Python, PHP, Ruby, Go) o una imagen Docker y Beanstalk aprovisiona todo lo necesario:
+        instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>, grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>, balanceador de carga, security groups y alarmas de
+        <a href="cloudwatch.html">CloudWatch</a>. Tú te ocupas de la aplicación y Beanstalk del despliegue, el escalado, la
+        monitorización y las actualizaciones de la plataforma. Los recursos siguen en tu cuenta y
+        puedes ajustarlos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Aplicación, versión y entorno:</strong> una aplicación tiene versiones del código
+          (guardadas en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>) y entornos (por ejemplo, producción y pruebas) que ejecutan una versión.</li>
+        <li><strong>Tipos de entorno:</strong> <em>servidor web</em> (atiende peticiones HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span> detrás de
+          un balanceador) y <em>trabajador</em> (procesa mensajes de una cola <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span> que Beanstalk crea y
+          lee por ti, útil para tareas largas en segundo plano).</li>
+        <li><strong>Plataformas:</strong> sistema operativo, lenguaje y servidor preparados y
+          mantenidos por AWS; las <em>actualizaciones gestionadas</em> aplican parches en una ventana de
+          mantenimiento.</li>
+        <li><strong>Políticas de despliegue:</strong>
+          <ul>
+            <li><strong>All at once:</strong> todas las instancias a la vez; rápido pero con corte.</li>
+            <li><strong>Rolling:</strong> por tandas; sin corte, con menos capacidad durante el despliegue.</li>
+            <li><strong>Rolling with additional batch:</strong> añade una tanda nueva para mantener la
+              capacidad completa.</li>
+            <li><strong>Immutable:</strong> crea instancias nuevas en un grupo temporal y las cambia
+              solo si están sanas; el rollback es inmediato.</li>
+            <li><strong>Traffic splitting:</strong> despliegue canario que envía un porcentaje del
+              tráfico a la nueva versión.</li>
+          </ul></li>
+        <li><strong>Blue/green:</strong> clonar el entorno, desplegar en el nuevo y
+          <em>intercambiar las URL <span class="sigla">(<em>Uniform Resource Locator</em>: dirección web)</span></em> (swap de CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>) para cambiar sin corte.</li>
+        <li><strong>Configuración:</strong> ficheros <code>.ebextensions</code> y
+          <code>.platform</code> en el paquete, la <a href="../servicio.html?id=cli">CLI</a> <span class="sigla">(<em>Command Line Interface</em>: línea de comandos)</span> de Beanstalk (<code>eb</code>) y opciones del
+          entorno.</li>
+        <li><strong>Base de datos:</strong> se puede crear una <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span> dentro del entorno, pero entonces
+          su ciclo de vida va ligado al entorno; en producción se recomienda una RDS independiente.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Publicar una aplicación web tradicional rápidamente, sin montar la infraestructura.</li>
+        <li>Equipos de desarrollo sin experiencia en operaciones de AWS.</li>
+        <li>Migrar aplicaciones monolíticas en lenguajes compatibles con cambios mínimos.</li>
+        <li>Procesos en segundo plano con el entorno de trabajador y su cola <a href="sqs.html">SQS</a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Arquitecturas de muchos microservicios en contenedores: <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> o <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span>.</li>
+        <li>Funciones por evento y cargas intermitentes: <a href="lambda.html">Lambda</a>.</li>
+        <li>Infraestructura compleja o reutilizable que quieres describir como código: <a href="../servicio.html?id=cloudformation">CloudFormation</a> o
+          <a href="../servicio.html?id=cdk">CDK</a>.</li>
+        <li>Una web sencilla con precio fijo mensual: <a href="../servicio.html?id=lightsail">Lightsail</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Subir código y que AWS monte la infraestructura web</td><td>Elastic Beanstalk</td></tr>
+            <tr><td>Contenedores web con pocos parámetros</td><td><a href="ecs.html">ECS</a> Express Mode</td></tr>
+            <tr><td>Web y sitios frontales con CI/CD <span class="sigla">(<em>Continuous Integration / Continuous Delivery</em>: integración y entrega continuas)</span> desde Git</td><td><a href="../servicio.html?id=amplify">Amplify</a> Hosting</td></tr>
+            <tr><td>Control total de las instancias</td><td><a href="ec2.html">EC2</a> con <a href="ec2-auto-scaling.html">Auto Scaling</a></td></tr>
+            <tr><td>Servidor sencillo a precio fijo</td><td><a href="../servicio.html?id=lightsail">Lightsail</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Elastic Beanstalk no tiene coste propio: se pagan los recursos que crea (instancias <a href="ec2.html">EC2</a>,
+        balanceador, volúmenes, base de datos, transferencia de datos) como si los hubieras creado a
+        mano.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Entornos con balanceador y <a href="ec2-auto-scaling.html">Auto Scaling</a> en varias zonas de disponibilidad.</li>
+        <li>Perfil de instancia (rol de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>) para los permisos de la aplicación y rol de servicio para
+          Beanstalk.</li>
+        <li>Actualizaciones gestionadas de la plataforma para aplicar parches de seguridad.</li>
+        <li>Despliegue en subredes privadas de una <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> y HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> con certificados de <a href="acm.html">ACM</a> <span class="sigla">(<em>AWS Certificate Manager</em>)</span> en el balanceador.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Desplegar una aplicación web sin gestionar infraestructura"</strong> y <strong>"subir el código"</strong>: Elastic Beanstalk.</li>
+        <li><strong>"Sin pérdida de capacidad y rollback rápido"</strong>: despliegue immutable.</li>
+        <li><strong>"Probar la nueva versión con un 10 % del tráfico"</strong>: traffic splitting.</li>
+        <li><strong>"Cambio instantáneo entre entornos"</strong>: blue/green con swap de URL (CNAME).</li>
+        <li><strong>"Tareas largas en segundo plano"</strong>: entorno de trabajador con cola <a href="sqs.html">SQS</a>.</li>
+        <li><strong>"Al borrar el entorno se perdió la base de datos"</strong>: la <a href="rds.html">RDS</a> estaba dentro del entorno; debe crearse aparte.</li>
+        <li><strong>"Personalizar la configuración en el paquete"</strong>: <code>.ebextensions</code>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="elastic-beanstalk"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html" target="_blank" rel="noopener">What is AWS Elastic Beanstalk?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html" target="_blank" rel="noopener">Deploying applications to Elastic Beanstalk environments</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html" target="_blank" rel="noopener">Blue/Green deployments with Elastic Beanstalk</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-tiers.html" target="_blank" rel="noopener">Elastic Beanstalk worker environments</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

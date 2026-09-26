@@ -1,0 +1,156 @@
+[
+  {
+    "id": "fargate-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere ejecutar contenedores con Amazon ECS sin aprovisionar, parchear ni escalar instancias EC2. ¿Qué opción de cómputo elige?",
+    "opciones": [
+      "AWS Fargate.",
+      "Instancias EC2 reservadas.",
+      "Hosts dedicados.",
+      "AWS Outposts."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Fargate es el cómputo sin servidores para contenedores de ECS y EKS: AWS gestiona la infraestructura. Las instancias reservadas o los hosts dedicados siguen siendo servidores que gestionar, y Outposts lleva infraestructura de AWS al centro de datos del cliente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+    ]
+  },
+  {
+    "id": "fargate-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Cómo se cobra principalmente AWS Fargate?",
+    "opciones": [
+      "Por la vCPU y la memoria que solicita cada tarea mientras se ejecuta.",
+      "Por el número de peticiones HTTP recibidas.",
+      "Por una cuota anual fija por clúster.",
+      "Por el número de imágenes guardadas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Fargate cobra por segundo la vCPU, la memoria y el almacenamiento adicional que pide cada tarea. No hay cuota por clúster ni cobro por petición, y guardar imágenes se paga en ECR (Elastic Container Registry). Siglas: HTTP (HyperText Transfer Protocol: protocolo de la web).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+    ]
+  },
+  {
+    "id": "fargate-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un proceso de transcodificación en contenedores se ejecuta cada noche, puede reanudarse si se interrumpe y el equipo no quiere gestionar servidores. ¿Qué opción es la más barata?",
+    "opciones": [
+      "Tareas de ECS en Fargate Spot.",
+      "Tareas de ECS en Fargate bajo demanda.",
+      "Una flota de instancias EC2 reservadas para 3 años.",
+      "Funciones Lambda de 15 minutos encadenadas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Fargate Spot usa capacidad sobrante con gran descuento y encaja con trabajos tolerantes a interrupciones, sin servidores que gestionar. Fargate bajo demanda es más caro, las reservadas obligan a gestionar instancias y un compromiso, y encadenar Lambdas complica el proceso.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-capacity-providers.html"
+    ]
+  },
+  {
+    "id": "fargate-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Varias tareas de ECS en Fargate deben leer y escribir los mismos ficheros, y los datos deben sobrevivir cuando las tareas terminan. ¿Qué almacenamiento se usa?",
+    "opciones": [
+      "Un sistema de ficheros de Amazon EFS montado en las tareas.",
+      "El almacenamiento efímero de Fargate ampliado a 200 GiB.",
+      "El instance store de las instancias.",
+      "Un volumen EBS compartido entre todas las tareas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EFS es un sistema de ficheros compartido y persistente que se monta en tareas de Fargate. El almacenamiento efímero se pierde al terminar la tarea, en Fargate no hay instance store accesible y un volumen EBS no se comparte entre muchas tareas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-storage.html"
+    ]
+  },
+  {
+    "id": "fargate-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un equipo quiere ejecutar en contenedores un modelo de inferencia que necesita GPU, con la mínima gestión posible. ¿Qué opción es válida?",
+    "opciones": [
+      "ECS con capacidad EC2 de instancias con GPU (o ECS Managed Instances).",
+      "ECS en Fargate con GPU.",
+      "EKS en Fargate con GPU.",
+      "Fargate Spot con GPU."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Fargate no ofrece GPU; para contenedores con GPU hay que usar instancias EC2 con GPU, gestionadas por ti o por ECS Managed Instances. Las demás opciones dependen de Fargate.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+    ]
+  },
+  {
+    "id": "fargate-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una plataforma multiinquilino ejecuta en EKS código de distintos clientes y el equipo de seguridad exige que los pods de un cliente no compartan núcleo del sistema operativo con los de otros. ¿Qué opción lo facilita con la menor operación?",
+    "opciones": [
+      "Ejecutar esos pods en Fargate mediante perfiles de Fargate.",
+      "Usar un grupo de nodos gestionados compartido.",
+      "Ejecutarlos como DaemonSet.",
+      "Usar espacios de nombres distintos en los mismos nodos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En Fargate cada pod se ejecuta en su propio entorno aislado con su propio núcleo, sin nodos que gestionar. Un grupo de nodos compartido o los espacios de nombres no separan el núcleo, y los DaemonSets no se admiten en Fargate.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/fargate.html"
+    ]
+  },
+  {
+    "id": "fargate-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa ejecuta en Fargate un servicio estable con uso constante 24/7 y quiere reducir el coste sin volver a gestionar instancias. ¿Qué acción es la más adecuada?",
+    "opciones": [
+      "Comprar Compute Savings Plans y usar tareas Graviton si la imagen lo permite.",
+      "Pasar el servicio a Fargate Spot sin más.",
+      "Comprar instancias reservadas de EC2.",
+      "Aumentar la vCPU de cada tarea."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Compute Savings Plans descuenta el uso constante de Fargate, y las tareas Graviton son más baratas. Un servicio crítico en Spot podría interrumpirse, las reservadas de EC2 no se aplican a Fargate y más vCPU encarece.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+    ]
+  }
+]

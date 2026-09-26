@@ -1,0 +1,200 @@
+[
+  {
+    "id": "elastic-beanstalk-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un desarrollador quiere desplegar su aplicación web Python subiendo solo el código, y que AWS se ocupe de las instancias, el balanceador y el escalado. ¿Qué servicio encaja?",
+    "opciones": [
+      "AWS Elastic Beanstalk.",
+      "Amazon EC2 sin más servicios.",
+      "AWS CloudTrail.",
+      "Amazon S3 Glacier."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Elastic Beanstalk aprovisiona y gestiona la infraestructura a partir del código subido. EC2 solo da servidores que hay que configurar, CloudTrail audita llamadas a la API (Application Programming Interface: interfaz para que los programas se comuniquen) y Glacier archiva datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html"
+    ]
+  },
+  {
+    "id": "elastic-beanstalk-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Cuánto cuesta el servicio AWS Elastic Beanstalk en sí?",
+    "opciones": [
+      "Nada: se pagan solo los recursos que crea, como instancias y balanceadores.",
+      "Una cuota fija mensual por aplicación.",
+      "Un porcentaje de la factura de EC2.",
+      "Un precio por línea de código desplegada."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Beanstalk no tiene coste adicional; se pagan los recursos subyacentes como si se hubieran creado a mano. No existen las cuotas o porcentajes de las otras opciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html"
+    ]
+  },
+  {
+    "id": "elastic-beanstalk-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación en Elastic Beanstalk usa una base de datos RDS creada dentro del entorno. El equipo va a sustituir el entorno y teme perder los datos. ¿Qué diseño es el recomendado para producción?",
+    "opciones": [
+      "Crear la base de datos RDS fuera del entorno y conectar la aplicación mediante su endpoint.",
+      "Mantener la RDS dentro del entorno y no borrarlo nunca.",
+      "Usar el almacenamiento local de las instancias.",
+      "Guardar los datos en la versión de la aplicación en S3."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una RDS creada dentro del entorno comparte su ciclo de vida y se borra con él; separada, sobrevive a cambios de entorno y despliegues blue/green. El almacenamiento local es efímero y las versiones en S3 no son una base de datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html"
+    ]
+  },
+  {
+    "id": "elastic-beanstalk-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación en Elastic Beanstalk debe generar informes que tardan varios minutos sin bloquear las peticiones web. ¿Qué diseño aprovecha el servicio?",
+    "opciones": [
+      "Un entorno de trabajador que procesa mensajes de una cola SQS enviados por el entorno web.",
+      "Aumentar el timeout del balanceador a una hora.",
+      "Generar los informes en la misma petición web.",
+      "Un despliegue all at once."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El entorno de trabajador de Beanstalk lee una cola SQS y ejecuta las tareas largas en segundo plano, mientras el entorno web responde al instante. Alargar timeouts o generar en la petición bloquea a los usuarios, y la política de despliegue no tiene relación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features-managing-env-tiers.html"
+    ]
+  },
+  {
+    "id": "elastic-beanstalk-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo quiere desplegar una nueva versión en Beanstalk sin reducir la capacidad y con la opción de volver atrás al instante si las nuevas instancias fallan. ¿Qué política usa?",
+    "opciones": [
+      "Immutable.",
+      "All at once.",
+      "Rolling.",
+      "Rolling sin tanda adicional con tamaño de tanda del 100 %."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Immutable lanza instancias nuevas en un grupo temporal y solo las incorpora si están sanas; si fallan, basta con eliminarlas. All at once provoca corte, Rolling reduce la capacidad y el rollback es más lento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html"
+    ]
+  },
+  {
+    "id": "elastic-beanstalk-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo quiere enviar el 10 % del tráfico a la nueva versión durante 30 minutos y, si todo va bien, pasar al 100 %. ¿Qué política de Beanstalk lo permite?",
+    "opciones": [
+      "Traffic splitting.",
+      "All at once.",
+      "Rolling with additional batch.",
+      "Swap de CNAME inmediato."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Traffic splitting es un despliegue canario: reparte un porcentaje del tráfico a las nuevas instancias durante un tiempo de evaluación. Las demás opciones no dividen el tráfico por porcentaje.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html"
+    ]
+  },
+  {
+    "id": "elastic-beanstalk-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un desarrollador necesita instalar un paquete del sistema y definir variables en cada instancia de su entorno de Beanstalk, de forma versionada con el código. ¿Dónde lo configura?",
+    "opciones": [
+      "En ficheros de configuración dentro de la carpeta .ebextensions del paquete de la aplicación.",
+      "Conectándose por SSH a cada instancia tras el despliegue.",
+      "En un bucket de S3 aparte sin relación con la versión.",
+      "En la consola de Route 53."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": ".ebextensions permite declarar paquetes, ficheros, comandos y opciones del entorno junto al código, y se aplica en cada instancia. Configurar a mano por SSH (Secure Shell: acceso remoto cifrado por terminal) se pierde al sustituir instancias, y las otras opciones no configuran el entorno.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html"
+    ]
+  },
+  {
+    "id": "elastic-beanstalk-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa necesita actualizar la plataforma de su entorno de Beanstalk a una versión nueva del lenguaje y poder volver a la anterior en segundos si algo falla. ¿Qué estrategia es la adecuada?",
+    "opciones": [
+      "Blue/green: clonar el entorno, actualizar el nuevo, probarlo e intercambiar las URL (swap de CNAME).",
+      "Actualizar el entorno de producción directamente con all at once.",
+      "Borrar el entorno y crearlo de nuevo.",
+      "Actualizar a mano cada instancia por SSH."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con blue/green el entorno antiguo sigue intacto; si el nuevo falla, se vuelven a intercambiar las URL. Actualizar en caliente o recrear el entorno provoca cortes y un rollback lento, y los cambios manuales se pierden. Siglas: SSH (Secure Shell: acceso remoto cifrado por terminal).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html"
+    ]
+  },
+  {
+    "id": "elastic-beanstalk-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa quiere migrar rápido 20 aplicaciones web Java y .NET sencillas desde su centro de datos, con cambios mínimos y sin un equipo de operaciones dedicado. ¿Qué opción es la más adecuada?",
+    "opciones": [
+      "Elastic Beanstalk con las plataformas de Java y .NET.",
+      "Reescribir cada aplicación como funciones Lambda.",
+      "Montar un clúster de Kubernetes autogestionado.",
+      "Instalar cada aplicación a mano en EC2 sin Auto Scaling."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Beanstalk ofrece plataformas gestionadas para esos lenguajes y crea la infraestructura con escalado y monitorización, con cambios mínimos en el código. Reescribir en Lambda es lento, Kubernetes autogestionado exige operación y EC2 a mano no escala ni es resistente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html"
+    ]
+  }
+]

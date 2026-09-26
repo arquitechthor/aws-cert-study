@@ -97,7 +97,7 @@
         <li><strong>Grupos de colocación:</strong> <em>cluster</em> (misma zona, baja latencia para
           HPC <span class="sigla">(<em>High Performance Computing</em>: cómputo de alto rendimiento)</span>), <em>spread</em> (hardware distinto, máximo 7 instancias por zona) y
           <em>partition</em> (particiones aisladas para Hadoop, Cassandra o Kafka).</li>
-        <li><strong><a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a> y <a href="../servicio.html?id=elb">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>:</strong> un grupo de Auto Scaling mantiene el número deseado
+        <li><strong><a href="ec2-auto-scaling.html">Auto Scaling</a> y <a href="../servicio.html?id=elb">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>:</strong> un grupo de Auto Scaling mantiene el número deseado
           de instancias en varias zonas y un balanceador reparte el tráfico entre ellas.</li>
         <li><strong>Hibernación:</strong> guarda la <a href="../servicio.html?id=ram">RAM</a> <span class="sigla">(<em>Random Access Memory</em>: memoria)</span> en el volumen raíz EBS cifrado para arrancar
           más rápido con la memoria intacta.</li>
@@ -109,7 +109,7 @@
           <thead><tr><th>Opción</th><th>Cuándo encaja</th></tr></thead>
           <tbody>
             <tr><td>Bajo demanda</td><td>Cargas cortas, impredecibles o de prueba; sin compromiso.</td></tr>
-            <tr><td><a href="../servicio.html?id=savings-plans">Savings Plans</a> (1 o 3 años)</td><td>Uso estable; compromiso de gasto por hora. <em>Compute</em> se aplica también a <a href="../servicio.html?id=fargate">Fargate</a> y <a href="lambda.html">Lambda</a>.</td></tr>
+            <tr><td><a href="../servicio.html?id=savings-plans">Savings Plans</a> (1 o 3 años)</td><td>Uso estable; compromiso de gasto por hora. <em>Compute</em> se aplica también a <a href="fargate.html">Fargate</a> y <a href="lambda.html">Lambda</a>.</td></tr>
             <tr><td>Instancias reservadas (1 o 3 años)</td><td>Uso estable de un tipo concreto; las <em>convertibles</em> permiten cambiar de familia.</td></tr>
             <tr><td>Spot</td><td>Hasta un 90 % más barato con capacidad sobrante; AWS la recupera con 2 minutos de aviso. Solo para cargas tolerantes a interrupciones.</td></tr>
             <tr><td>Hosts dedicados</td><td>Licencias por socket o núcleo (BYOL) y requisitos de cumplimiento con visibilidad del servidor físico.</td></tr>
@@ -124,15 +124,15 @@
         <li>Aplicaciones que necesitan control del sistema operativo o software de terceros.</li>
         <li>Migraciones <em>lift-and-shift</em> de servidores locales.</li>
         <li>Cómputo de alto rendimiento (HPC) y entrenamiento de modelos con GPU.</li>
-        <li>Flotas web detrás de un balanceador con <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a>.</li>
+        <li>Flotas web detrás de un balanceador con <a href="ec2-auto-scaling.html">Auto Scaling</a>.</li>
         <li>Procesamiento por lotes barato con instancias Spot.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Código corto y dirigido por eventos: <a href="lambda.html">Lambda</a>, sin servidores que parchear.</li>
-        <li>Contenedores sin gestionar instancias: <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> o <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span> con <a href="../servicio.html?id=fargate">Fargate</a>.</li>
-        <li>Una web o una app sencilla con precio fijo mensual: <a href="../servicio.html?id=lightsail">Lightsail</a> o <a href="../servicio.html?id=elastic-beanstalk">Elastic Beanstalk</a>.</li>
+        <li>Contenedores sin gestionar instancias: <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> o <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span> con <a href="fargate.html">Fargate</a>.</li>
+        <li>Una web o una app sencilla con precio fijo mensual: <a href="../servicio.html?id=lightsail">Lightsail</a> o <a href="elastic-beanstalk.html">Elastic Beanstalk</a>.</li>
         <li>Una base de datos gestionada: <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a> en vez de instalarla en EC2.</li>
       </ul>
 
@@ -143,8 +143,8 @@
           <tbody>
             <tr><td>Control total del servidor</td><td>EC2</td></tr>
             <tr><td>Funciones por evento, hasta 15 minutos</td><td><a href="lambda.html">Lambda</a></td></tr>
-            <tr><td>Contenedores sin servidores</td><td><a href="../servicio.html?id=fargate">Fargate</a> (con <a href="ecs.html">ECS</a> o <a href="eks.html">EKS</a>)</td></tr>
-            <tr><td>Desplegar código sin montar la infraestructura</td><td><a href="../servicio.html?id=elastic-beanstalk">Elastic Beanstalk</a></td></tr>
+            <tr><td>Contenedores sin servidores</td><td><a href="fargate.html">Fargate</a> (con <a href="ecs.html">ECS</a> o <a href="eks.html">EKS</a>)</td></tr>
+            <tr><td>Desplegar código sin montar la infraestructura</td><td><a href="elastic-beanstalk.html">Elastic Beanstalk</a></td></tr>
             <tr><td>VPS <span class="sigla">(<em>Virtual Private Server</em>: servidor virtual privado)</span> sencillo a precio fijo</td><td><a href="../servicio.html?id=lightsail">Lightsail</a></td></tr>
             <tr><td>Trabajos por lotes gestionados</td><td><a href="../servicio.html?id=batch">AWS Batch</a></td></tr>
           </tbody>
@@ -161,7 +161,7 @@
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Una instancia vive en <strong>una sola zona de disponibilidad</strong>: la alta
-          disponibilidad se consigue con varias instancias en varias zonas, <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a> y un
+          disponibilidad se consigue con varias instancias en varias zonas, <a href="ec2-auto-scaling.html">Auto Scaling</a> y un
           balanceador.</li>
         <li>Recuperación automática de la instancia si falla el hardware subyacente
           (<em>auto recovery</em>).</li>

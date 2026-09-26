@@ -79,7 +79,7 @@
         <li><strong>Memoria y disco de EC2 no vienen por defecto:</strong> hace falta el
           <strong>agente de CloudWatch</strong> en la instancia (que también envía logs del sistema).</li>
         <li><strong>Alarmas:</strong> estados OK, ALARM e INSUFFICIENT_DATA. Acciones: notificar por <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>,
-          escalar con <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a>, parar, reiniciar o recuperar una instancia EC2, o abrir incidencias.
+          escalar con <a href="ec2-auto-scaling.html">Auto Scaling</a>, parar, reiniciar o recuperar una instancia EC2, o abrir incidencias.
           Las <strong>alarmas compuestas</strong> combinan varias para reducir el ruido, y la
           <strong>detección de anomalías</strong> aprende el patrón normal.</li>
         <li><strong>CloudWatch Logs:</strong> grupos y flujos de logs. La retención por defecto es
@@ -97,7 +97,7 @@
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Alertar por correo o chat cuando suben los errores o la latencia de una API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>.</li>
-        <li>Escalar un grupo de <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a> según la CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> o una métrica personalizada.</li>
+        <li>Escalar un grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a> según la CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> o una métrica personalizada.</li>
         <li>Centralizar los logs de aplicaciones y depurar con Logs Insights.</li>
         <li>Recuperar automáticamente una instancia <a href="ec2.html">EC2</a> si falla su comprobación de estado del sistema.</li>
         <li>Paneles operativos para un equipo.</li>

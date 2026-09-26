@@ -124,7 +124,7 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>Lambda</th><th><a href="../servicio.html?id=fargate">Fargate</a> (<a href="ecs.html">ECS</a>/EKS)</th><th><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>Lambda</th><th><a href="fargate.html">Fargate</a> (<a href="ecs.html">ECS</a>/EKS)</th><th><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></th></tr></thead>
           <tbody>
             <tr><td>Gestión de servidores</td><td>Ninguna</td><td>Ninguna (gestionas contenedores)</td><td>Toda (SO, parches)</td></tr>
             <tr><td>Duración máxima</td><td>15 min</td><td>Sin límite</td><td>Sin límite</td></tr>
@@ -160,7 +160,7 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Más de 15 minutos"</strong>: no es Lambda; piensa en <a href="../servicio.html?id=fargate">Fargate</a>, Batch o <a href="step-functions.html">Step Functions</a>.</li>
+        <li><strong>"Más de 15 minutos"</strong>: no es Lambda; piensa en <a href="fargate.html">Fargate</a>, Batch o <a href="step-functions.html">Step Functions</a>.</li>
         <li><strong>"Evitar arranques en frío"</strong>: concurrencia aprovisionada o SnapStart, no
           más memoria (ayuda algo, pero no lo evita).</li>
         <li><strong>"Una función no debe consumir toda la concurrencia"</strong> o <strong>"proteger una
