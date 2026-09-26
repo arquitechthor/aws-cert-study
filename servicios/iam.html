@@ -66,34 +66,34 @@
 
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
-      <p>AWS Identity and Access Management (IAM) es el sistema de permisos de AWS. Define
+      <p>AWS Identity and Access Management (<abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>) es el sistema de permisos de AWS. Define
         <strong>quién</strong> (una persona, una aplicación, un servicio) puede hacer <strong>qué
         acción</strong> sobre <strong>qué recurso</strong>, y en qué condiciones. Cada llamada a la
-        API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> de AWS se autentica y se autoriza contra IAM. Es un servicio <strong>global</strong> (no
+        <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de AWS se autentica y se autoriza contra <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>. Es un servicio <strong>global</strong> (no
         pertenece a una región) y no tiene coste.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Usuario raíz (root):</strong> la identidad con la que se crea la cuenta. Tiene
-          acceso total y no se puede limitar con políticas de IAM. Se protege con MFA <span class="sigla">(<em>Multi-Factor Authentication</em>: inicio de sesión con un segundo factor)</span>, sin claves de
+          acceso total y no se puede limitar con políticas de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>. Se protege con <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr>, sin claves de
           acceso, y solo se usa para las pocas tareas que lo exigen.</li>
         <li><strong>Usuarios y grupos:</strong> identidades de larga duración para personas o
           aplicaciones. Los grupos solo sirven para agrupar usuarios y asignarles políticas; no son
           identidades que puedan autenticarse.</li>
         <li><strong>Roles:</strong> identidades sin credenciales permanentes que se <em>asumen</em>
-          para obtener credenciales temporales (vía <a href="../servicio.html?id=sts">AWS STS</a> <span class="sigla">(<em>Security Token Service</em>)</span>). Son la forma recomendada de dar permisos a
-          servicios (<a href="ec2.html">EC2</a>, <a href="lambda.html">Lambda</a>), a otras cuentas y a usuarios federados.</li>
-        <li><strong>Políticas:</strong> documentos JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span> con <code>Effect</code> (Allow/Deny),
+          para obtener credenciales temporales (vía <a href="../servicio.html?id=sts">AWS <abbr class="sigla sigla-1" data-s="STS" data-en="Security Token Service" tabindex="0">STS<span class="sigla-exp"> (Security Token Service)</span></abbr></a>). Son la forma recomendada de dar permisos a
+          servicios (<a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, <a href="lambda.html">Lambda</a>), a otras cuentas y a usuarios federados.</li>
+        <li><strong>Políticas:</strong> documentos <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> con <code>Effect</code> (Allow/Deny),
           <code>Action</code>, <code>Resource</code> y, opcionalmente, <code>Condition</code>.
           Pueden ser gestionadas por AWS, gestionadas por el cliente o insertadas (<em>inline</em>).</li>
         <li><strong>Tipos de política:</strong> basadas en identidad (asociadas a usuario, grupo o
-          rol), basadas en recurso (en el propio recurso, como una bucket policy de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>, e incluyen
+          rol), basadas en recurso (en el propio recurso, como una bucket policy de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, e incluyen
           <code>Principal</code>), límites de permisos (<em>permissions boundaries</em>), políticas de
-          sesión, y las políticas de <a href="../servicio.html?id=organizations">AWS Organizations</a>: SCP (máximo que pueden hacer las identidades de
-          las cuentas) y RCP (máximo que se puede hacer sobre los recursos de las cuentas).</li>
+          sesión, y las políticas de <a href="../servicio.html?id=organizations">AWS Organizations</a>: <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> (máximo que pueden hacer las identidades de
+          las cuentas) y <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> (máximo que se puede hacer sobre los recursos de las cuentas).</li>
         <li><strong>Lógica de evaluación:</strong> todo empieza denegado implícitamente; un
           <code>Allow</code> lo permite; un <strong><code>Deny</code> explícito gana siempre</strong>. Con
-          SCP, límites de permisos o políticas de sesión, el permiso efectivo es la
+          <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>, límites de permisos o políticas de sesión, el permiso efectivo es la
           <strong>intersección</strong> de todos ellos.</li>
         <li><strong>Relación de confianza (<em>trust policy</em>):</strong> política basada en recurso
           del rol que dice quién puede asumirlo.</li>
@@ -103,23 +103,23 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Dar a una instancia <a href="ec2.html">EC2</a> o a una función <a href="lambda.html">Lambda</a> acceso a <a href="s3.html">S3</a> o <a href="dynamodb.html">DynamoDB</a> mediante un
-          <strong>rol</strong> (en EC2, a través de un perfil de instancia).</li>
+        <li>Dar a una instancia <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> o a una función <a href="lambda.html">Lambda</a> acceso a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="dynamodb.html">DynamoDB</a> mediante un
+          <strong>rol</strong> (en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, a través de un perfil de instancia).</li>
         <li>Acceso entre cuentas: un rol en la cuenta B que la cuenta A puede asumir.</li>
-        <li>Federación: usuarios de un proveedor de identidad corporativo (SAML <span class="sigla">(<em>Security Assertion Markup Language</em>: estándar de inicio de sesión federado)</span> u OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>) que asumen roles,
+        <li>Federación: usuarios de un proveedor de identidad corporativo (<abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr> u <abbr class="sigla sigla-1" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC<span class="sigla-exp"> (OpenID Connect: estándar de identidad sobre OAuth 2.0)</span></abbr>) que asumen roles,
           normalmente gestionado con <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
         <li>Delegar la creación de roles a desarrolladores sin riesgo de escalada, usando
           <strong>límites de permisos</strong>.</li>
-        <li>CI/CD <span class="sigla">(<em>Continuous Integration / Continuous Delivery</em>: integración y entrega continuas)</span> sin claves permanentes: GitHub Actions u otros sistemas que asumen un rol con OIDC.</li>
+        <li><abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> sin claves permanentes: GitHub Actions u otros sistemas que asumen un rol con <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para el inicio de sesión de los <strong>usuarios finales de tu aplicación</strong>: eso es
-          <a href="cognito.html">Amazon Cognito</a>, no IAM.</li>
+          <a href="cognito.html">Amazon Cognito</a>, no <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>.</li>
         <li>Para gestionar el acceso de muchas personas a muchas cuentas: mejor
           <strong><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></strong> con un proveedor de identidad, en vez de crear usuarios
-          IAM en cada cuenta.</li>
+          <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> en cada cuenta.</li>
         <li>Para guardar secretos de aplicación: eso es <a href="secrets-manager.html">AWS Secrets Manager</a> o <a href="../servicio.html?id=systems-manager">Parameter Store</a>.</li>
       </ul>
 
@@ -128,17 +128,17 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
-            <tr><td>Permisos sobre la API de AWS dentro de una cuenta</td><td>IAM (usuarios, roles, políticas)</td></tr>
-            <tr><td>Acceso de la plantilla a varias cuentas con SSO <span class="sigla">(<em>Single Sign-On</em>: un único inicio de sesión para varias aplicaciones)</span></td><td><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></td></tr>
-            <tr><td>Límite máximo para todas las cuentas de una organización</td><td>SCP y RCP de <a href="../servicio.html?id=organizations">AWS Organizations</a></td></tr>
+            <tr><td>Permisos sobre la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> de AWS dentro de una cuenta</td><td><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> (usuarios, roles, políticas)</td></tr>
+            <tr><td>Acceso de la plantilla a varias cuentas con <abbr class="sigla sigla-1" data-s="SSO" data-en="Single Sign-On" data-es="un único inicio de sesión para varias aplicaciones" tabindex="0">SSO<span class="sigla-exp"> (Single Sign-On: un único inicio de sesión para varias aplicaciones)</span></abbr></td><td><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></td></tr>
+            <tr><td>Límite máximo para todas las cuentas de una organización</td><td><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> y <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> de <a href="../servicio.html?id=organizations">AWS Organizations</a></td></tr>
             <tr><td>Registro e inicio de sesión de usuarios de una app</td><td><a href="cognito.html">Amazon Cognito</a></td></tr>
-            <tr><td>Credenciales temporales</td><td><a href="../servicio.html?id=sts">AWS STS</a> (lo usan los roles por debajo)</td></tr>
+            <tr><td>Credenciales temporales</td><td><a href="../servicio.html?id=sts">AWS <abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr></a> (lo usan los roles por debajo)</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>IAM no tiene coste: usuarios, roles, políticas y evaluaciones son gratuitos. Pagas por los
+      <p><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> no tiene coste: usuarios, roles, políticas y evaluaciones son gratuitos. Pagas por los
         servicios a los que das acceso. Algunas funciones de IAM Access Analyzer, como el análisis de
         acceso no usado, sí tienen coste.</p>
 
@@ -148,17 +148,17 @@
           recursos concretos en vez de <code>*</code>.</li>
         <li>Preferir <strong>credenciales temporales</strong> (roles) a claves de acceso de larga
           duración; si existen claves, rotarlas.</li>
-        <li><strong>MFA</strong> para el usuario raíz y para usuarios con privilegios.</li>
+        <li><strong><abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr></strong> para el usuario raíz y para usuarios con privilegios.</li>
         <li>Usar <strong>condiciones</strong> (<code>aws:SourceIp</code>, <code>aws:PrincipalOrgID</code>,
           <code>aws:SecureTransport</code>, <code>aws:MultiFactorAuthPresent</code>) para acotar.</li>
-        <li>IAM es un servicio global y replicado; los cambios de permisos pueden tardar unos
+        <li><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> es un servicio global y replicado; los cambios de permisos pueden tardar unos
           instantes en propagarse (consistencia eventual).</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
       <p>En Kopi, mi proyecto personal, todas las funciones <a href="lambda.html">Lambda</a> comparten un <strong>rol de
         ejecución</strong> limitado a las acciones que necesitan: lectura y escritura solo sobre las
-        tablas con el prefijo del proyecto, <a href="s3.html">S3</a> solo sobre el bucket de medios, unas pocas acciones
+        tablas con el prefijo del proyecto, <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> solo sobre el bucket de medios, unas pocas acciones
         administrativas de <a href="cognito.html">Cognito</a> y escribir logs. El despliegue desde GitHub Actions usa otra
         identidad, que solo puede actualizar código y configuración de funciones, subir el frontend e
         invalidar la caché de <a href="cloudfront.html">CloudFront</a>. Nunca crear ni borrar recursos. Una lección práctica:
@@ -168,9 +168,9 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Deny explícito"</strong> siempre gana, aunque otra política permita la acción.</li>
-        <li>Si una aplicación en <a href="ec2.html">EC2</a> o <a href="lambda.html">Lambda</a> necesita acceso a AWS, la respuesta es
+        <li>Si una aplicación en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> o <a href="lambda.html">Lambda</a> necesita acceso a AWS, la respuesta es
           <strong>un rol</strong>, nunca claves de acceso en el código o en variables de entorno.</li>
-        <li>Las <strong>SCP no conceden permisos</strong>: solo limitan. Tampoco afectan a la cuenta
+        <li>Las <strong><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> no conceden permisos</strong>: solo limitan. Tampoco afectan a la cuenta
           de administración de la organización.</li>
         <li><strong>"Evitar que un desarrollador se dé más permisos"</strong> apunta a límites de permisos.</li>
         <li><strong>"Acceso entre cuentas"</strong>: rol asumible con trust policy o política basada en
@@ -222,6 +222,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

@@ -63,7 +63,7 @@
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
       <p>Amazon EC2 Auto Scaling gestiona <strong>grupos de Auto Scaling</strong>: conjuntos de
-        instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> iguales que el servicio mantiene en un tamaño entre un mínimo y un máximo. Hace
+        instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> iguales que el servicio mantiene en un tamaño entre un mínimo y un máximo. Hace
         dos cosas: <strong>sustituye</strong> automáticamente las instancias que no están sanas
         (alta disponibilidad) y <strong>ajusta</strong> el número de instancias a la demanda
         (escalabilidad y ahorro). Suele trabajar junto a un balanceador de carga, que reparte el
@@ -72,19 +72,19 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Plantilla de lanzamiento (launch template):</strong> define qué instancia lanzar
-          (AMI <span class="sigla">(<em>Amazon Machine Image</em>: plantilla con el sistema operativo para arrancar instancias)</span>, tipo, security groups, rol, <em>user data</em>). Sustituye a las antiguas
+          (<abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr>, tipo, security groups, rol, <em>user data</em>). Sustituye a las antiguas
           <em>launch configurations</em>, que ya no reciben funciones nuevas.</li>
         <li><strong>Capacidad mínima, deseada y máxima:</strong> el grupo nunca baja del mínimo ni
           pasa del máximo; la deseada es la que intenta mantener ahora.</li>
         <li><strong>Varias zonas de disponibilidad:</strong> el grupo reparte las instancias entre las
           subredes de varias zonas y las reequilibra.</li>
-        <li><strong>Comprobaciones de estado:</strong> las de <a href="ec2.html">EC2</a> (la instancia funciona) y,
+        <li><strong>Comprobaciones de estado:</strong> las de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (la instancia funciona) y,
           opcionalmente, las del balanceador (la aplicación responde). Una instancia marcada como no
           sana se termina y se sustituye.</li>
         <li><strong>Políticas de escalado:</strong>
           <ul>
             <li><strong>Seguimiento de objetivo (target tracking):</strong> mantiene una métrica en un
-              valor, por ejemplo CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> media al 50 % o peticiones por instancia. La más recomendada.</li>
+              valor, por ejemplo <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> media al 50 % o peticiones por instancia. La más recomendada.</li>
             <li><strong>Por pasos (step):</strong> añade más o menos instancias según cuánto se supera
               una alarma.</li>
             <li><strong>Simple:</strong> un ajuste por alarma con periodo de espera (<em>cooldown</em>);
@@ -101,13 +101,13 @@
         <li><strong>Warm pools:</strong> instancias ya preparadas y paradas para escalar más rápido
           cuando el arranque es lento.</li>
         <li><strong>Instance refresh:</strong> sustituye las instancias por tandas para desplegar una
-          nueva AMI o plantilla.</li>
+          nueva <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> o plantilla.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Flotas web detrás de un <a href="elb.html">Application Load Balancer</a> que crecen en los picos.</li>
-        <li>Trabajadores que procesan una cola <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span> y escalan según los mensajes pendientes.</li>
+        <li>Trabajadores que procesan una cola <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a> y escalan según los mensajes pendientes.</li>
         <li>Mantener siempre al menos N instancias sanas repartidas en varias zonas.</li>
         <li>Adelantarse a picos predecibles (lunes por la mañana) con escalado predictivo o programado.</li>
       </ul>
@@ -116,7 +116,7 @@
       <ul>
         <li>Si no quieres gestionar instancias: <a href="fargate.html">Fargate</a>, <a href="lambda.html">Lambda</a> o <a href="elastic-beanstalk.html">Elastic Beanstalk</a> (que usa Auto
           Scaling por debajo).</li>
-        <li>Para escalar otros recursos (tareas de <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span>, capacidad de <a href="dynamodb.html">DynamoDB</a>, réplicas de <a href="aurora.html">Aurora</a>):
+        <li>Para escalar otros recursos (tareas de <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, capacidad de <a href="dynamodb.html">DynamoDB</a>, réplicas de <a href="aurora.html">Aurora</a>):
           Application Auto Scaling o <a href="auto-scaling.html">AWS Auto Scaling</a>.</li>
         <li>Para bases de datos con estado en instancias: es mejor un servicio gestionado.</li>
       </ul>
@@ -126,7 +126,7 @@
         <table>
           <thead><tr><th>Característica</th><th>EC2 Auto Scaling</th><th><a href="auto-scaling.html">AWS Auto Scaling</a></th></tr></thead>
           <tbody>
-            <tr><td>Qué escala</td><td>Grupos de instancias <a href="ec2.html">EC2</a></td><td>Varios recursos a la vez (grupos EC2, <a href="ecs.html">ECS</a>, <a href="dynamodb.html">DynamoDB</a>, <a href="aurora.html">Aurora</a>, Spot Fleet)</td></tr>
+            <tr><td>Qué escala</td><td>Grupos de instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></td><td>Varios recursos a la vez (grupos <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, <a href="dynamodb.html">DynamoDB</a>, <a href="aurora.html">Aurora</a>, Spot Fleet)</td></tr>
             <tr><td>Crea y gestiona el grupo</td><td>Sí</td><td>No, configura el escalado de recursos existentes</td></tr>
             <tr><td>Políticas</td><td>Todas (objetivo, pasos, simple, programada, predictiva)</td><td>Seguimiento de objetivo y predictiva mediante planes</td></tr>
             <tr><td>Sustituye instancias no sanas</td><td>Sí</td><td>No</td></tr>
@@ -135,7 +135,7 @@
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>EC2 Auto Scaling no tiene coste propio: se pagan las instancias <a href="ec2.html">EC2</a> que lanza, sus volúmenes y
+      <p>EC2 Auto Scaling no tiene coste propio: se pagan las instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> que lanza, sus volúmenes y
         las alarmas y métricas detalladas de <a href="cloudwatch.html">CloudWatch</a> que se usen.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
@@ -143,20 +143,20 @@
         <li>Instancias repartidas en varias zonas y sustitución automática de las que fallan.</li>
         <li>Comprobaciones de estado del balanceador para detectar fallos de la aplicación, no solo de
           la máquina.</li>
-        <li>Rol de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> en la plantilla de lanzamiento e IMDSv2 <span class="sigla">(<em>Instance Metadata Service versión 2</em>: con token de sesión)</span> exigido desde la plantilla.</li>
+        <li>Rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> en la plantilla de lanzamiento e <abbr class="sigla sigla-1" data-s="IMDSv2" data-en="Instance Metadata Service versión 2" data-es="con token de sesión" tabindex="0">IMDSv2<span class="sigla-exp"> (Instance Metadata Service versión 2: con token de sesión)</span></abbr> exigido desde la plantilla.</li>
         <li>Protección frente a reducción (<em>scale-in protection</em>) para instancias que no deben
           terminarse a mitad de un trabajo.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Mantener la CPU media en torno al 50 %"</strong>: política de seguimiento de objetivo.</li>
+        <li><strong>"Mantener la <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr> media en torno al 50 %"</strong>: política de seguimiento de objetivo.</li>
         <li><strong>"Picos cada lunes a las 9:00"</strong>: escalado programado o predictivo.</li>
-        <li><strong>"La instancia responde a <a href="ec2.html">EC2</a> pero la aplicación está caída y no se sustituye"</strong>: activar las comprobaciones de estado del balanceador en el grupo.</li>
+        <li><strong>"La instancia responde a <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> pero la aplicación está caída y no se sustituye"</strong>: activar las comprobaciones de estado del balanceador en el grupo.</li>
         <li><strong>"El arranque tarda 10 minutos y el escalado llega tarde"</strong>: warm pool o escalado predictivo.</li>
         <li><strong>"Ejecutar un script antes de que se termine una instancia"</strong>: lifecycle hook.</li>
         <li><strong>"Alta disponibilidad"</strong>: grupo con mínimo de 2 instancias en al menos dos zonas.</li>
-        <li><strong>"Desplegar una nueva AMI por tandas"</strong>: instance refresh.</li>
+        <li><strong>"Desplegar una nueva <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> por tandas"</strong>: instance refresh.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -204,6 +204,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

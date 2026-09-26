@@ -221,8 +221,20 @@ button.chip-kopi[aria-pressed="true"] { background: rgba(168, 85, 247, 0.16); co
 .badge-guia-pendiente { background: rgba(168, 85, 247, 0.16); color: var(--violet-strong); }
 
 .cat-en { color: var(--text-faint); font-style: italic; font-weight: 400; }
-/* Explicación de una sigla la primera vez que aparece ("RPO (Recovery Point Objective: …)"). */
-.sigla { color: var(--text-muted); font-weight: 400; }
+/* Siglas con tooltip (assets/siglas.js). La explicación de la primera aparición (.sigla-exp)
+   solo la leen los lectores de pantalla. */
+abbr.sigla { text-decoration: underline dotted; text-decoration-color: var(--text-faint); text-underline-offset: 3px; cursor: help; }
+abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; border-radius: 3px; }
+.sigla-exp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sigla-tip {
+  position: fixed; z-index: 100; max-width: min(320px, calc(100vw - 16px)); padding: 8px 10px;
+  background: var(--surface-2); color: var(--text); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  font-size: 13px; line-height: 1.45; pointer-events: none;
+}
+.sigla-tip[hidden] { display: none; }
+.sigla-tip em { color: var(--cyan-strong); }
+.sigla-tip span { display: block; color: var(--text-muted); margin-top: 2px; }
 
 /* Iconos oficiales de AWS: se muestran tal cual, sin recolorear ni recortar. */
 .cat-icon { display: inline-block; width: 18px; height: 18px; border-radius: 3px; vertical-align: -4px; margin-right: 6px; }

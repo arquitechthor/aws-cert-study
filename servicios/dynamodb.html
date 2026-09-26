@@ -68,7 +68,7 @@
       <p>Amazon DynamoDB es una base de datos NoSQL totalmente gestionada y <em>serverless</em>, de
         tipo clave-valor y documento. Ofrece latencia de un solo dígito de milisegundos a cualquier
         escala, sin servidores, parches ni versiones que gestionar. A cambio, exige diseñar las tablas
-        a partir de los <strong>patrones de acceso</strong>, no de las entidades como en SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span>.</p>
+        a partir de los <strong>patrones de acceso</strong>, no de las entidades como en <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
@@ -76,12 +76,12 @@
           ordenación. La clave de partición reparte los datos; una mala elección crea
           <em>particiones calientes</em>.</li>
         <li><strong>Ítems de hasta 400 KB</strong> (incluidos los nombres de los atributos). Para
-          objetos mayores, se guardan en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> y en la tabla solo la referencia.</li>
+          objetos mayores, se guardan en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> y en la tabla solo la referencia.</li>
         <li><strong>Índices:</strong>
           <ul>
-            <li><strong>GSI (global):</strong> otra clave de partición y de ordenación; se puede crear en
+            <li><strong><abbr class="sigla" data-s="GSI" data-en="Global Secondary Index" data-es="índice secundario global" tabindex="0">GSI</abbr> (global):</strong> otra clave de partición y de ordenación; se puede crear en
               cualquier momento; solo lecturas eventualmente consistentes; hasta 20 por tabla por defecto.</li>
-            <li><strong>LSI (local):</strong> misma clave de partición y otra de ordenación; solo al crear
+            <li><strong><abbr class="sigla" data-s="LSI" data-en="Local Secondary Index" data-es="índice secundario local" tabindex="0">LSI</abbr> (local):</strong> misma clave de partición y otra de ordenación; solo al crear
               la tabla; admite lectura fuertemente consistente; hasta 5 por tabla.</li>
           </ul></li>
         <li><strong>Query vs Scan:</strong> <code>Query</code> busca por clave (eficiente);
@@ -89,17 +89,17 @@
           <em>después</em> de leer, así que no ahorra capacidad.</li>
         <li><strong>Modos de capacidad:</strong> <strong>bajo demanda</strong> (pago por petición, sin
           planificar) o <strong>aprovisionado</strong> (RCU/WCU, con auto scaling y capacidad reservada).
-          1 WCU <span class="sigla">(<em>Write Capacity Unit</em>: unidad de capacidad de escritura)</span> = una escritura por segundo de hasta 1 KB; 1 RCU <span class="sigla">(<em>Read Capacity Unit</em>: unidad de capacidad de lectura)</span> = una lectura fuertemente consistente por
+          1 <abbr class="sigla sigla-1" data-s="WCU" data-en="Write Capacity Unit" data-es="unidad de capacidad de escritura" tabindex="0">WCU<span class="sigla-exp"> (Write Capacity Unit: unidad de capacidad de escritura)</span></abbr> = una escritura por segundo de hasta 1 KB; 1 <abbr class="sigla sigla-1" data-s="RCU" data-en="Read Capacity Unit" data-es="unidad de capacidad de lectura" tabindex="0">RCU<span class="sigla-exp"> (Read Capacity Unit: unidad de capacidad de lectura)</span></abbr> = una lectura fuertemente consistente por
           segundo de hasta 4 KB, o dos eventualmente consistentes.</li>
-        <li><strong>Transacciones</strong> ACID <span class="sigla">(atomicidad, consistencia, aislamiento y durabilidad de las transacciones)</span> sobre varios ítems y tablas.</li>
+        <li><strong>Transacciones</strong> <abbr class="sigla sigla-1" data-s="ACID" data-es="atomicidad, consistencia, aislamiento y durabilidad de las transacciones" tabindex="0">ACID<span class="sigla-exp"> (atomicidad, consistencia, aislamiento y durabilidad de las transacciones)</span></abbr> sobre varios ítems y tablas.</li>
         <li><strong>DynamoDB Streams:</strong> registro ordenado de cambios durante 24 horas, que puede
           disparar <a href="lambda.html">Lambda</a>.</li>
-        <li><strong>DAX <span class="sigla">(<em>DynamoDB Accelerator</em>: caché en memoria para DynamoDB)</span>:</strong> caché en memoria compatible con la API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>, con latencias de microsegundos
+        <li><strong><abbr class="sigla sigla-1" data-s="DAX" data-en="DynamoDB Accelerator" data-es="caché en memoria para DynamoDB" tabindex="0">DAX<span class="sigla-exp"> (DynamoDB Accelerator: caché en memoria para DynamoDB)</span></abbr>:</strong> caché en memoria compatible con la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>, con latencias de microsegundos
           para cargas de lectura intensiva.</li>
         <li><strong>Global Tables:</strong> réplicas multirregión activo-activo, con consistencia eventual
-          o fuerte entre regiones (MRSC).</li>
-        <li><strong>TTL <span class="sigla">(<em>Time To Live</em>: tiempo de vida antes de caducar)</span>:</strong> borra ítems caducados sin coste de escritura.</li>
-        <li><strong>Copias de seguridad:</strong> bajo demanda y recuperación a un momento dado (PITR)
+          o fuerte entre regiones (<abbr class="sigla" data-s="MRSC" data-en="Multi-Region Strong Consistency" data-es="consistencia fuerte entre regiones" tabindex="0">MRSC</abbr>).</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL<span class="sigla-exp"> (Time To Live: tiempo de vida antes de caducar)</span></abbr>:</strong> borra ítems caducados sin coste de escritura.</li>
+        <li><strong>Copias de seguridad:</strong> bajo demanda y recuperación a un momento dado (<abbr class="sigla" data-s="PITR" data-en="Point-In-Time Recovery" data-es="restaurar a un momento concreto" tabindex="0">PITR</abbr>)
           de hasta 35 días.</li>
       </ul>
 
@@ -107,16 +107,16 @@
       <ul>
         <li>Backends <em>serverless</em> con <a href="lambda.html">Lambda</a>: perfiles de usuario, carritos, catálogos.</li>
         <li>Sesiones, tablas de clasificación de juegos, contadores con escalado masivo.</li>
-        <li>Datos de IoT o eventos con acceso por clave y TTL.</li>
-        <li>Metadatos de objetos guardados en <a href="s3.html">S3</a>.</li>
+        <li>Datos de IoT o eventos con acceso por clave y <abbr class="sigla" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL</abbr>.</li>
+        <li>Metadatos de objetos guardados en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
         <li>Aplicaciones globales con escrituras en varias regiones (Global Tables).</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Consultas ad hoc complejas, JOIN o informes analíticos: mejor una base relacional (<a href="rds.html">RDS</a>,
-          <a href="aurora.html">Aurora</a>) o un almacén analítico (<a href="redshift.html">Redshift</a>, <a href="../servicio.html?id=athena">Athena</a> sobre una exportación a <a href="s3.html">S3</a>).</li>
-        <li>Ítems mayores de 400 KB, como ficheros o documentos grandes: S3.</li>
+        <li>Consultas ad hoc complejas, JOIN o informes analíticos: mejor una base relacional (<a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>,
+          <a href="aurora.html">Aurora</a>) o un almacén analítico (<a href="redshift.html">Redshift</a>, <a href="../servicio.html?id=athena">Athena</a> sobre una exportación a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>).</li>
+        <li>Ítems mayores de 400 KB, como ficheros o documentos grandes: <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</li>
         <li>Búsqueda de texto completo: <a href="opensearch-service.html">OpenSearch</a>.</li>
         <li>Si no conoces los patrones de acceso de antemano.</li>
       </ul>
@@ -127,8 +127,8 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Clave-valor a escala, serverless</td><td>DynamoDB</td></tr>
-            <tr><td>Relacional con SQL y JOIN</td><td><a href="rds.html">RDS</a> o <a href="aurora.html">Aurora</a></td></tr>
-            <tr><td>Caché de microsegundos para DynamoDB</td><td>DAX</td></tr>
+            <tr><td>Relacional con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> y JOIN</td><td><a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> o <a href="aurora.html">Aurora</a></td></tr>
+            <tr><td>Caché de microsegundos para DynamoDB</td><td><abbr class="sigla" data-s="DAX" data-en="DynamoDB Accelerator" data-es="caché en memoria para DynamoDB" tabindex="0">DAX</abbr></td></tr>
             <tr><td>Caché general (sesiones, resultados)</td><td><a href="elasticache.html">ElastiCache</a></td></tr>
             <tr><td>Compatibilidad con MongoDB</td><td><a href="../servicio.html?id=documentdb">DocumentDB</a></td></tr>
             <tr><td>Compatibilidad con Cassandra</td><td><a href="../servicio.html?id=keyspaces">Keyspaces</a></td></tr>
@@ -138,7 +138,7 @@
 
       <h2 id="precios">Modelo de precios</h2>
       <p>En <strong>bajo demanda</strong> se paga por petición de lectura y escritura. En
-        <strong>aprovisionado</strong>, por la capacidad por hora (RCU y WCU), con descuentos por
+        <strong>aprovisionado</strong>, por la capacidad por hora (<abbr class="sigla" data-s="RCU" data-en="Read Capacity Unit" data-es="unidad de capacidad de lectura" tabindex="0">RCU</abbr> y <abbr class="sigla" data-s="WCU" data-en="Write Capacity Unit" data-es="unidad de capacidad de escritura" tabindex="0">WCU</abbr>), con descuentos por
         capacidad reservada. Además se paga el almacenamiento por GB al mes (la clase Standard-IA lo
         abarata para tablas poco consultadas), las copias de seguridad, Streams, las réplicas globales
         y la transferencia de datos.</p>
@@ -146,11 +146,11 @@
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Datos replicados en tres zonas de disponibilidad de la región.</li>
-        <li>Cifrado en reposo siempre activo (clave de AWS o de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> gestionada por el cliente).</li>
-        <li>Control de acceso con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>, incluso por ítem o atributo con condiciones
+        <li>Cifrado en reposo siempre activo (clave de AWS o de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> gestionada por el cliente).</li>
+        <li>Control de acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>, incluso por ítem o atributo con condiciones
           (<code>dynamodb:LeadingKeys</code>).</li>
-        <li>Endpoint de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> de tipo <em>gateway</em> (gratuito) para acceder sin salir a internet.</li>
-        <li>PITR contra borrados o escrituras erróneas; Global Tables para recuperación ante desastres
+        <li>Endpoint de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> de tipo <em>gateway</em> (gratuito) para acceder sin salir a internet.</li>
+        <li><abbr class="sigla" data-s="PITR" data-en="Point-In-Time Recovery" data-es="restaurar a un momento concreto" tabindex="0">PITR</abbr> contra borrados o escrituras erróneas; Global Tables para recuperación ante desastres
           multirregión.</li>
       </ul>
 
@@ -158,20 +158,20 @@
       <p>DynamoDB es la única base de datos de Kopi, en modo <strong>bajo demanda</strong>. Elegí
         una tabla por entidad en vez de <em>single-table design</em>, porque para un proyecto
         pequeño pesa más la legibilidad. Cada patrón de acceso (por usuario, por categoría, por tipo)
-        tiene su GSI, y la paginación usa <code>LastEvaluatedKey</code>, porque no existe un
+        tiene su <abbr class="sigla" data-s="GSI" data-en="Global Secondary Index" data-es="índice secundario global" tabindex="0">GSI</abbr>, y la paginación usa <code>LastEvaluatedKey</code>, porque no existe un
         <code>OFFSET</code>. Una lección real: <code>Limit</code> se aplica <strong>antes</strong> que
         <code>FilterExpression</code>, así que una consulta con filtro puede devolver menos resultados
         de los pedidos, o ninguno, aunque haya más.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Latencia de microsegundos"</strong> en lecturas de DynamoDB: DAX (no <a href="elasticache.html">ElastiCache</a>).</li>
+        <li><strong>"Latencia de microsegundos"</strong> en lecturas de DynamoDB: <abbr class="sigla" data-s="DAX" data-en="DynamoDB Accelerator" data-es="caché en memoria para DynamoDB" tabindex="0">DAX</abbr> (no <a href="elasticache.html">ElastiCache</a>).</li>
         <li><strong>"Tráfico impredecible"</strong> o <strong>"sin planificar capacidad"</strong>: bajo demanda.</li>
         <li><strong>"Reaccionar a cambios en la tabla"</strong>: Streams más <a href="lambda.html">Lambda</a>.</li>
-        <li><strong>"Borrar datos antiguos automáticamente y sin coste"</strong>: TTL.</li>
+        <li><strong>"Borrar datos antiguos automáticamente y sin coste"</strong>: <abbr class="sigla" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL</abbr>.</li>
         <li><strong>"Activo-activo multirregión"</strong>: Global Tables.</li>
-        <li><strong>"Consultar por otro atributo"</strong>: GSI. Si piden lectura fuertemente consistente
-          con otra clave de ordenación y la tabla es nueva: LSI.</li>
+        <li><strong>"Consultar por otro atributo"</strong>: <abbr class="sigla" data-s="GSI" data-en="Global Secondary Index" data-es="índice secundario global" tabindex="0">GSI</abbr>. Si piden lectura fuertemente consistente
+          con otra clave de ordenación y la tabla es nueva: <abbr class="sigla" data-s="LSI" data-en="Local Secondary Index" data-es="índice secundario local" tabindex="0">LSI</abbr>.</li>
         <li><strong>"Error de limitación (throttling) en una partición"</strong>: mala distribución de la
           clave de partición (partición caliente).</li>
       </ul>
@@ -220,6 +220,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

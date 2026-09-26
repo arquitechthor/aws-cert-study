@@ -60,7 +60,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Referenciar el security group del ALB permite solo el tráfico que viene de sus nodos, sin depender de IP. Hacer públicas las instancias las expone, una NACL (Network Access Control List: firewall a nivel de subred) que lo deniega todo corta también al ALB y las comprobaciones de estado no son control de acceso.",
+    "explicacion": "Referenciar el security group del ALB permite solo el tráfico que viene de sus nodos, sin depender de IP. Hacer públicas las instancias las expone, una NACL que lo deniega todo corta también al ALB y las comprobaciones de estado no son control de acceso.",
     "fuentes": [
       "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
     ]

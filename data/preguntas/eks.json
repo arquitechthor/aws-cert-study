@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "EKS (Elastic Kubernetes Service) es el servicio de Kubernetes gestionado: AWS opera el plano de control y las aplicaciones siguen usando la API (Application Programming Interface: interfaz para que los programas se comuniquen) de Kubernetes. ECS (Elastic Container Service) es un orquestador propio de AWS, y Elastic Beanstalk y Lightsail no ejecutan Kubernetes.",
+    "explicacion": "EKS es el servicio de Kubernetes gestionado: AWS opera el plano de control y las aplicaciones siguen usando la API de Kubernetes. ECS es un orquestador propio de AWS, y Elastic Beanstalk y Lightsail no ejecutan Kubernetes.",
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
     ]
@@ -28,7 +28,7 @@
       "CLF-C02"
     ],
     "dominio": "Seguridad y cumplimiento",
-    "enunciado": "En Amazon EKS (Elastic Kubernetes Service), ¿qué parte opera y protege AWS según el modelo de responsabilidad compartida?",
+    "enunciado": "En Amazon EKS, ¿qué parte opera y protege AWS según el modelo de responsabilidad compartida?",
     "opciones": [
       "El plano de control de Kubernetes.",
       "Las imágenes de contenedor de la aplicación.",
@@ -38,7 +38,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "AWS gestiona y protege el plano de control (API server y etcd) en varias zonas. Las imágenes, el código y la configuración de acceso de Kubernetes son responsabilidad del cliente. Siglas: RBAC (Role-Based Access Control: permisos según el rol).",
+    "explicacion": "AWS gestiona y protege el plano de control (API server y etcd) en varias zonas. Las imágenes, el código y la configuración de acceso de Kubernetes son responsabilidad del cliente.",
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
     ]
@@ -50,7 +50,7 @@
       "AIF-C01"
     ],
     "dominio": "Fundamentos de IA y ML",
-    "enunciado": "Un equipo de ciencia de datos ya usa herramientas del ecosistema Kubernetes (como Kubeflow o Ray) para entrenar modelos y quiere ejecutarlas en AWS con GPU (Graphics Processing Unit: procesador gráfico, muy usado en ML). ¿Qué servicio encaja?",
+    "enunciado": "Un equipo de ciencia de datos ya usa herramientas del ecosistema Kubernetes (como Kubeflow o Ray) para entrenar modelos y quiere ejecutarlas en AWS con GPU. ¿Qué servicio encaja?",
     "opciones": [
       "Amazon EKS con nodos de GPU.",
       "Amazon Comprehend.",
@@ -60,7 +60,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "EKS (Elastic Kubernetes Service) ejecuta Kubernetes estándar, así que las herramientas del ecosistema funcionan, y admite nodos con GPU. Comprehend y Rekognition son servicios de IA (inteligencia artificial) ya entrenados y DataBrew prepara datos sin código.",
+    "explicacion": "EKS ejecuta Kubernetes estándar, así que las herramientas del ecosistema funcionan, y admite nodos con GPU. Comprehend y Rekognition son servicios de IA ya entrenados y DataBrew prepara datos sin código.",
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
     ]
@@ -72,7 +72,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "En un clúster de EKS (Elastic Kubernetes Service), un pod debe leer de DynamoDB, pero los demás pods del mismo nodo no. ¿Cuál es la forma recomendada de darle permisos?",
+    "enunciado": "En un clúster de EKS, un pod debe leer de DynamoDB, pero los demás pods del mismo nodo no. ¿Cuál es la forma recomendada de darle permisos?",
     "opciones": [
       "Añadir el permiso al rol de IAM del nodo.",
       "Asociar un rol de IAM a la cuenta de servicio del pod con EKS Pod Identity.",
@@ -82,7 +82,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Pod Identity (o IRSA (IAM Roles for Service Accounts: roles de IAM para cuentas de servicio de Kubernetes)) vincula un rol de IAM (Identity and Access Management) a una cuenta de servicio concreta, así solo los pods que la usan reciben esos permisos. El rol del nodo lo heredarían todos los pods, las claves de acceso son credenciales de larga duración y los security groups no conceden permisos de API (Application Programming Interface: interfaz para que los programas se comuniquen).",
+    "explicacion": "Pod Identity (o IRSA) vincula un rol de IAM a una cuenta de servicio concreta, así solo los pods que la usan reciben esos permisos. El rol del nodo lo heredarían todos los pods, las claves de acceso son credenciales de larga duración y los security groups no conceden permisos de API.",
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html"
     ]
@@ -94,7 +94,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas con costos optimizados",
-    "enunciado": "Un clúster de EKS (Elastic Kubernetes Service) tiene nodos infrautilizados porque se dimensionaron para los picos. Se quiere que los nodos se ajusten a los pods pendientes y aprovechen instancias Spot. ¿Qué solución es la adecuada?",
+    "enunciado": "Un clúster de EKS tiene nodos infrautilizados porque se dimensionaron para los picos. Se quiere que los nodos se ajusten a los pods pendientes y aprovechen instancias Spot. ¿Qué solución es la adecuada?",
     "opciones": [
       "Karpenter (o EKS Auto Mode, que lo integra).",
       "Aumentar el tamaño fijo del grupo de nodos.",
@@ -126,7 +126,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "EKS (Elastic Kubernetes Service) ofrece la API (Application Programming Interface: interfaz para que los programas se comuniquen) estándar de Kubernetes, así que los charts de Helm y los manifiestos funcionan igual. ECS (Elastic Container Service), App Runner y Elastic Beanstalk tienen sus propios formatos de despliegue.",
+    "explicacion": "EKS ofrece la API estándar de Kubernetes, así que los charts de Helm y los manifiestos funcionan igual. ECS, App Runner y Elastic Beanstalk tienen sus propios formatos de despliegue.",
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
     ]
@@ -138,7 +138,7 @@
       "DVA-C02"
     ],
     "dominio": "Seguridad",
-    "enunciado": "¿Qué DOS mecanismos permiten que el código de un pod en EKS (Elastic Kubernetes Service) obtenga credenciales temporales de AWS sin claves de larga duración? (Elige 2.)",
+    "enunciado": "¿Qué DOS mecanismos permiten que el código de un pod en EKS obtenga credenciales temporales de AWS sin claves de larga duración? (Elige 2.)",
     "opciones": [
       "EKS Pod Identity.",
       "Roles de IAM para cuentas de servicio (IRSA).",
@@ -150,7 +150,7 @@
       0,
       1
     ],
-    "explicacion": "Pod Identity e IRSA (IAM Roles for Service Accounts: roles de IAM para cuentas de servicio de Kubernetes) entregan credenciales temporales asociadas a la cuenta de servicio del pod. Las claves en un ConfigMap son de larga duración y quedan expuestas, y usar el usuario raíz o contraseñas de consola es una mala práctica grave. Siglas: IAM (Identity and Access Management).",
+    "explicacion": "Pod Identity e IRSA entregan credenciales temporales asociadas a la cuenta de servicio del pod. Las claves en un ConfigMap son de larga duración y quedan expuestas, y usar el usuario raíz o contraseñas de consola es una mala práctica grave.",
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html"
     ]
@@ -162,7 +162,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar soluciones para la complejidad organizativa",
-    "enunciado": "Una empresa con varios equipos quiere una plataforma común de Kubernetes con la mínima operación de nodos, incluidos parches, escalado y actualizaciones de la AMI (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias). ¿Qué opción es la adecuada?",
+    "enunciado": "Una empresa con varios equipos quiere una plataforma común de Kubernetes con la mínima operación de nodos, incluidos parches, escalado y actualizaciones de la AMI. ¿Qué opción es la adecuada?",
     "opciones": [
       "EKS con nodos autogestionados.",
       "EKS Auto Mode.",
@@ -172,7 +172,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "EKS Auto Mode delega en AWS el aprovisionamiento, el escalado, los parches y las actualizaciones de los nodos, además de los componentes de red, almacenamiento y balanceo. Los nodos autogestionados o kOps suponen más operación, y ECS (Elastic Container Service) no es Kubernetes. Siglas: EC2 (Elastic Compute Cloud); EKS (Elastic Kubernetes Service).",
+    "explicacion": "EKS Auto Mode delega en AWS el aprovisionamiento, el escalado, los parches y las actualizaciones de los nodos, además de los componentes de red, almacenamiento y balanceo. Los nodos autogestionados o kOps suponen más operación, y ECS no es Kubernetes.",
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/automode.html"
     ]
@@ -184,7 +184,7 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Una organización tiene varios clústeres de EKS (Elastic Kubernetes Service) en versiones de Kubernetes que ya salieron del soporte estándar y la factura del plano de control ha subido. ¿Qué acción la reduce?",
+    "enunciado": "Una organización tiene varios clústeres de EKS en versiones de Kubernetes que ya salieron del soporte estándar y la factura del plano de control ha subido. ¿Qué acción la reduce?",
     "opciones": [
       "Planificar y aplicar las actualizaciones de versión para volver al soporte estándar.",
       "Cambiar los nodos a instancias Spot.",

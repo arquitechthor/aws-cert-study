@@ -1,0 +1,735 @@
+{
+ "siglas": {
+  "ACID": {
+   "en": null,
+   "es": "atomicidad, consistencia, aislamiento y durabilidad de las transacciones"
+  },
+  "ACL": {
+   "en": "Access Control List",
+   "es": "lista de control de acceso"
+  },
+  "ACM": {
+   "en": "AWS Certificate Manager",
+   "es": null
+  },
+  "ACU": {
+   "en": "Aurora Capacity Unit",
+   "es": "unidad de capacidad de Aurora Serverless"
+  },
+  "AES-256": {
+   "en": "Advanced Encryption Standard",
+   "es": "cifrado simétrico con claves de 256 bits"
+  },
+  "ALB": {
+   "en": "Application Load Balancer",
+   "es": "balanceador HTTP/HTTPS"
+  },
+  "AMI": {
+   "en": "Amazon Machine Image",
+   "es": "plantilla con el sistema operativo para arrancar instancias"
+  },
+  "AMQP": {
+   "en": "Advanced Message Queuing Protocol",
+   "es": "protocolo estándar de mensajería"
+  },
+  "API": {
+   "en": "Application Programming Interface",
+   "es": "interfaz para que los programas se comuniquen"
+  },
+  "ARM": {
+   "en": null,
+   "es": "arquitectura de procesador de bajo consumo"
+  },
+  "ARN": {
+   "en": "Amazon Resource Name",
+   "es": "identificador único de un recurso de AWS"
+  },
+  "ASL": {
+   "en": "Amazon States Language",
+   "es": "lenguaje JSON con el que se definen los flujos de Step Functions"
+  },
+  "AZ": {
+   "en": "Availability Zone",
+   "es": "zona de disponibilidad"
+  },
+  "BI": {
+   "en": "Business Intelligence",
+   "es": "análisis de datos para el negocio"
+  },
+  "BYOL": {
+   "en": "Bring Your Own License",
+   "es": "usar tu propia licencia"
+  },
+  "CA": {
+   "en": "Certificate Authority",
+   "es": "autoridad de certificación"
+  },
+  "CAA": {
+   "en": "Certification Authority Authorization",
+   "es": "registro DNS que indica qué autoridades pueden emitir certificados"
+  },
+  "CDN": {
+   "en": "Content Delivery Network",
+   "es": "red de entrega de contenido"
+  },
+  "CI/CD": {
+   "en": "Continuous Integration / Continuous Delivery",
+   "es": "integración y entrega continuas"
+  },
+  "CIDR": {
+   "en": "Classless Inter-Domain Routing",
+   "es": "notación de rangos de IP como 10.0.0.0/16"
+  },
+  "CLB": {
+   "en": "Classic Load Balancer",
+   "es": "balanceador de la generación anterior"
+  },
+  "CLI": {
+   "en": "Command Line Interface",
+   "es": "línea de comandos"
+  },
+  "CNAME": {
+   "en": "Canonical Name",
+   "es": "registro DNS que apunta a otro nombre"
+  },
+  "CNI": {
+   "en": "Container Network Interface",
+   "es": "plugin de red de los contenedores"
+  },
+  "CORS": {
+   "en": "Cross-Origin Resource Sharing",
+   "es": "permite que una web llame a otro dominio"
+  },
+  "CPU": {
+   "en": "Central Processing Unit",
+   "es": "procesador"
+  },
+  "CRM": {
+   "en": "Customer Relationship Management",
+   "es": "software de gestión de clientes"
+  },
+  "CRR": {
+   "en": "Cross-Region Replication",
+   "es": "replicación a otra región"
+  },
+  "CSS": {
+   "en": "Cascading Style Sheets",
+   "es": "hojas de estilo de una web"
+  },
+  "CSV": {
+   "en": "Comma-Separated Values",
+   "es": "texto con valores separados por comas"
+  },
+  "CUDA": {
+   "en": "Compute Unified Device Architecture",
+   "es": "plataforma de NVIDIA para programar GPU"
+  },
+  "DAX": {
+   "en": "DynamoDB Accelerator",
+   "es": "caché en memoria para DynamoDB"
+  },
+  "DDoS": {
+   "en": "Distributed Denial of Service",
+   "es": "ataque que satura un servicio desde muchos orígenes"
+  },
+  "DKIM": {
+   "en": "DomainKeys Identified Mail",
+   "es": "firma criptográfica de los correos"
+  },
+  "DLQ": {
+   "en": "Dead-Letter Queue",
+   "es": "cola donde acaban los mensajes que fallan"
+  },
+  "DMARC": {
+   "en": "Domain-based Message Authentication, Reporting and Conformance",
+   "es": "política que indica qué hacer con correos que no se autentican"
+  },
+  "DMS": {
+   "en": "Database Migration Service",
+   "es": null
+  },
+  "DNS": {
+   "en": "Domain Name System",
+   "es": "traduce nombres de dominio a direcciones IP"
+  },
+  "DNSSEC": {
+   "en": "DNS Security Extensions",
+   "es": "firma las respuestas DNS para evitar suplantaciones"
+  },
+  "DSSE-KMS": {
+   "en": "Dual-layer Server-Side Encryption with KMS",
+   "es": "doble capa de cifrado con claves de KMS"
+  },
+  "EBS": {
+   "en": "Elastic Block Store",
+   "es": null
+  },
+  "EC2": {
+   "en": "Elastic Compute Cloud",
+   "es": null
+  },
+  "ECC": {
+   "en": "Elliptic Curve Cryptography",
+   "es": "criptografía de curva elíptica"
+  },
+  "ECPU": {
+   "en": "ElastiCache Processing Unit",
+   "es": "unidad de cómputo de ElastiCache Serverless"
+  },
+  "ECR": {
+   "en": "Elastic Container Registry",
+   "es": null
+  },
+  "ECS": {
+   "en": "Elastic Container Service",
+   "es": null
+  },
+  "EDA": {
+   "en": "Event-Driven Architecture",
+   "es": "arquitectura dirigida por eventos"
+  },
+  "EFS": {
+   "en": "Elastic File System",
+   "es": null
+  },
+  "EKS": {
+   "en": "Elastic Kubernetes Service",
+   "es": null
+  },
+  "ELB": {
+   "en": "Elastic Load Balancing",
+   "es": null
+  },
+  "EMR": {
+   "en": "Elastic MapReduce",
+   "es": null
+  },
+  "ERP": {
+   "en": "Enterprise Resource Planning",
+   "es": "software de gestión empresarial"
+  },
+  "ETA": {
+   "en": null,
+   "es": "tiempo estimado"
+  },
+  "ETL": {
+   "en": "Extract, Transform, Load",
+   "es": "extraer, transformar y cargar datos"
+  },
+  "FIFO": {
+   "en": "First In, First Out",
+   "es": "el primero en entrar es el primero en salir"
+  },
+  "FIPS": {
+   "en": "Federal Information Processing Standards",
+   "es": "normas de seguridad del gobierno de EE. UU."
+  },
+  "FM": {
+   "en": "Foundation Model",
+   "es": "modelo fundacional"
+  },
+  "GENEVE": {
+   "en": "Generic Network Virtualization Encapsulation",
+   "es": "protocolo que encapsula el tráfico hacia los appliances"
+  },
+  "GPU": {
+   "en": "Graphics Processing Unit",
+   "es": "procesador gráfico, muy usado en ML"
+  },
+  "GSI": {
+   "en": "Global Secondary Index",
+   "es": "índice secundario global"
+  },
+  "GWLB": {
+   "en": "Gateway Load Balancer",
+   "es": "balanceador para appliances de red"
+  },
+  "GWLCU": {
+   "en": "Gateway Load Balancer Capacity Unit",
+   "es": "unidad de facturación del GWLB"
+  },
+  "HDD": {
+   "en": "Hard Disk Drive",
+   "es": "disco duro magnético"
+  },
+  "HMAC": {
+   "en": "Hash-based Message Authentication Code",
+   "es": "código que verifica integridad y autenticidad"
+  },
+  "HPA": {
+   "en": "Horizontal Pod Autoscaler",
+   "es": "escala el número de pods"
+  },
+  "HPC": {
+   "en": "High Performance Computing",
+   "es": "cómputo de alto rendimiento"
+  },
+  "HSM": {
+   "en": "Hardware Security Module",
+   "es": "dispositivo físico que protege claves"
+  },
+  "HTML": {
+   "en": "HyperText Markup Language",
+   "es": "lenguaje de las páginas web"
+  },
+  "HTTP": {
+   "en": "HyperText Transfer Protocol",
+   "es": "protocolo de la web"
+  },
+  "HTTPS": {
+   "en": "HTTP Secure",
+   "es": "HTTP cifrado con TLS"
+  },
+  "IA": {
+   "en": null,
+   "es": "inteligencia artificial"
+  },
+  "IAM": {
+   "en": "Identity and Access Management",
+   "es": null
+  },
+  "IMDS": {
+   "en": "Instance Metadata Service",
+   "es": "servicio de metadatos de la instancia"
+  },
+  "IMDSv2": {
+   "en": "Instance Metadata Service versión 2",
+   "es": "con token de sesión"
+  },
+  "IOPS": {
+   "en": "Input/Output Operations Per Second",
+   "es": "operaciones de disco por segundo"
+  },
+  "IP": {
+   "en": "Internet Protocol",
+   "es": "dirección de red"
+  },
+  "IRSA": {
+   "en": "IAM Roles for Service Accounts",
+   "es": "roles de IAM para cuentas de servicio de Kubernetes"
+  },
+  "ISM": {
+   "en": "Index State Management",
+   "es": "políticas que mueven índices entre niveles"
+  },
+  "ISO": {
+   "en": "International Organization for Standardization",
+   "es": "organismo de normas internacionales"
+  },
+  "JCE": {
+   "en": "Java Cryptography Extension",
+   "es": "interfaz criptográfica de Java"
+  },
+  "JMS": {
+   "en": "Java Message Service",
+   "es": "API estándar de mensajería de Java"
+  },
+  "JS": {
+   "en": "JavaScript",
+   "es": null
+  },
+  "JSON": {
+   "en": "JavaScript Object Notation",
+   "es": "formato de datos en texto"
+  },
+  "JWT": {
+   "en": "JSON Web Token",
+   "es": "token firmado con datos del usuario"
+  },
+  "KMS": {
+   "en": "Key Management Service",
+   "es": null
+  },
+  "KPI": {
+   "en": "Key Performance Indicator",
+   "es": "indicador clave"
+  },
+  "LCU": {
+   "en": "Load Balancer Capacity Unit",
+   "es": "unidad de facturación del balanceador"
+  },
+  "LDAP": {
+   "en": "Lightweight Directory Access Protocol",
+   "es": "protocolo de directorios de usuarios"
+  },
+  "LSI": {
+   "en": "Local Secondary Index",
+   "es": "índice secundario local"
+  },
+  "MAU": {
+   "en": "Monthly Active Users",
+   "es": "usuarios activos al mes"
+  },
+  "MFA": {
+   "en": "Multi-Factor Authentication",
+   "es": "inicio de sesión con un segundo factor"
+  },
+  "ML": {
+   "en": "Machine Learning",
+   "es": "aprendizaje automático"
+  },
+  "MPP": {
+   "en": "Massively Parallel Processing",
+   "es": "procesamiento masivamente paralelo"
+  },
+  "MQTT": {
+   "en": "Message Queuing Telemetry Transport",
+   "es": "protocolo ligero de mensajería para dispositivos"
+  },
+  "MRSC": {
+   "en": "Multi-Region Strong Consistency",
+   "es": "consistencia fuerte entre regiones"
+  },
+  "MSK": {
+   "en": "Managed Streaming for Apache Kafka",
+   "es": null
+  },
+  "MX": {
+   "en": "Mail Exchange",
+   "es": "registro DNS del servidor de correo"
+  },
+  "NACL": {
+   "en": "Network Access Control List",
+   "es": "firewall a nivel de subred"
+  },
+  "NAT": {
+   "en": "Network Address Translation",
+   "es": "traducción de direcciones de red"
+  },
+  "NFS": {
+   "en": "Network File System",
+   "es": "protocolo para compartir ficheros en red"
+  },
+  "NLB": {
+   "en": "Network Load Balancer",
+   "es": "balanceador TCP/UDP"
+  },
+  "NLCU": {
+   "en": "Network Load Balancer Capacity Unit",
+   "es": "unidad de facturación del NLB"
+  },
+  "NS": {
+   "en": "Name Server",
+   "es": "registro DNS con los servidores de nombres del dominio"
+  },
+  "OAC": {
+   "en": "Origin Access Control",
+   "es": "permite que solo CloudFront lea el origen"
+  },
+  "OAI": {
+   "en": "Origin Access Identity",
+   "es": "mecanismo anterior a OAC"
+  },
+  "OCU": {
+   "en": "OpenSearch Compute Unit",
+   "es": "unidad de capacidad de OpenSearch Serverless"
+  },
+  "OIDC": {
+   "en": "OpenID Connect",
+   "es": "estándar de identidad sobre OAuth 2.0"
+  },
+  "OLAP": {
+   "en": "Online Analytical Processing",
+   "es": "consultas analíticas sobre grandes volúmenes"
+  },
+  "OLTP": {
+   "en": "Online Transaction Processing",
+   "es": "las transacciones del día a día de una aplicación"
+  },
+  "OSS": {
+   "en": "Open Source Software",
+   "es": "la versión de código abierto"
+  },
+  "OU": {
+   "en": "Organizational Unit",
+   "es": "unidad organizativa de AWS Organizations"
+  },
+  "PCI DSS": {
+   "en": "Payment Card Industry Data Security Standard",
+   "es": "norma de seguridad para datos de tarjetas"
+  },
+  "PDF": {
+   "en": "Portable Document Format",
+   "es": null
+  },
+  "PITR": {
+   "en": "Point-In-Time Recovery",
+   "es": "restaurar a un momento concreto"
+  },
+  "PKCE": {
+   "en": "Proof Key for Code Exchange",
+   "es": "protege el flujo de OAuth en apps sin secreto"
+  },
+  "PKCS": {
+   "en": "Public-Key Cryptography Standards",
+   "es": "estándares de criptografía de clave pública"
+  },
+  "POSIX": {
+   "en": "Portable Operating System Interface",
+   "es": "estándar de ficheros y permisos tipo Unix"
+  },
+  "RAG": {
+   "en": "Retrieval-Augmented Generation",
+   "es": "el modelo responde apoyándose en información recuperada de tus documentos"
+  },
+  "RAM": {
+   "en": "Random Access Memory",
+   "es": "memoria"
+  },
+  "RBAC": {
+   "en": "Role-Based Access Control",
+   "es": "permisos según el rol"
+  },
+  "RCP": {
+   "en": "Resource Control Policy",
+   "es": "política de Organizations que limita el acceso a los recursos"
+  },
+  "RCU": {
+   "en": "Read Capacity Unit",
+   "es": "unidad de capacidad de lectura"
+  },
+  "RDS": {
+   "en": "Relational Database Service",
+   "es": null
+  },
+  "REST": {
+   "en": "Representational State Transfer",
+   "es": "estilo de API sobre HTTP"
+  },
+  "RPO": {
+   "en": "Recovery Point Objective",
+   "es": "cuántos datos puedes permitirte perder"
+  },
+  "RPU": {
+   "en": "Redshift Processing Unit",
+   "es": "unidad de capacidad de Redshift Serverless"
+  },
+  "RSA": {
+   "en": "Rivest-Shamir-Adleman",
+   "es": "algoritmo de clave pública"
+  },
+  "RTO": {
+   "en": "Recovery Time Objective",
+   "es": "cuánto tiempo puedes estar sin servicio"
+  },
+  "RUM": {
+   "en": "Real User Monitoring",
+   "es": "mide la experiencia de los usuarios reales"
+  },
+  "S3": {
+   "en": "Simple Storage Service",
+   "es": null
+  },
+  "SAML": {
+   "en": "Security Assertion Markup Language",
+   "es": "estándar de inicio de sesión federado"
+  },
+  "SAN": {
+   "en": "Subject Alternative Name",
+   "es": "nombres adicionales de un certificado"
+  },
+  "SCP": {
+   "en": "Service Control Policy",
+   "es": "límite de permisos para las cuentas de una organización"
+  },
+  "SCT": {
+   "en": "Schema Conversion Tool",
+   "es": null
+  },
+  "SDK": {
+   "en": "Software Development Kit",
+   "es": "bibliotecas para programar contra AWS"
+  },
+  "SES": {
+   "en": "Simple Email Service",
+   "es": null
+  },
+  "SLA": {
+   "en": "Service Level Agreement",
+   "es": "compromiso de disponibilidad"
+  },
+  "SMS": {
+   "en": "Short Message Service",
+   "es": "mensajes de texto al móvil"
+  },
+  "SMTP": {
+   "en": "Simple Mail Transfer Protocol",
+   "es": "protocolo de envío de correo"
+  },
+  "SNI": {
+   "en": "Server Name Indication",
+   "es": "permite varios certificados en la misma IP"
+  },
+  "SNS": {
+   "en": "Simple Notification Service",
+   "es": null
+  },
+  "SO": {
+   "en": null,
+   "es": "sistema operativo"
+  },
+  "SOA": {
+   "en": "Start of Authority",
+   "es": "registro DNS con los datos de la zona"
+  },
+  "SPA": {
+   "en": "Single-Page Application",
+   "es": "web de una sola página"
+  },
+  "SPF": {
+   "en": "Sender Policy Framework",
+   "es": "lista de servidores autorizados a enviar correo del dominio"
+  },
+  "SQL": {
+   "en": "Structured Query Language",
+   "es": "lenguaje de consultas de bases de datos relacionales"
+  },
+  "SQS": {
+   "en": "Simple Queue Service",
+   "es": null
+  },
+  "SRP": {
+   "en": "Secure Remote Password",
+   "es": "protocolo de inicio de sesión sin enviar la contraseña"
+  },
+  "SRR": {
+   "en": "Same-Region Replication",
+   "es": "replicación en la misma región"
+  },
+  "SSD": {
+   "en": "Solid-State Drive",
+   "es": "disco de estado sólido"
+  },
+  "SSE-C": {
+   "en": "Server-Side Encryption with Customer-provided keys",
+   "es": "cifrado en el servidor con claves que aporta el cliente"
+  },
+  "SSE-KMS": {
+   "en": "Server-Side Encryption with KMS keys",
+   "es": "cifrado en el servidor con claves de KMS"
+  },
+  "SSE-S3": {
+   "en": "Server-Side Encryption with S3 managed keys",
+   "es": "cifrado en el servidor con claves que gestiona S3"
+  },
+  "SSE-SQS": {
+   "en": "Server-Side Encryption with SQS managed keys",
+   "es": "cifrado con claves que gestiona SQS"
+  },
+  "SSH": {
+   "en": "Secure Shell",
+   "es": "acceso remoto cifrado por terminal"
+  },
+  "SSL": {
+   "en": "Secure Sockets Layer",
+   "es": "predecesor de TLS"
+  },
+  "SSO": {
+   "en": "Single Sign-On",
+   "es": "un único inicio de sesión para varias aplicaciones"
+  },
+  "SSRF": {
+   "en": "Server-Side Request Forgery",
+   "es": "ataque que hace que el servidor haga peticiones en tu nombre"
+  },
+  "STOMP": {
+   "en": "Simple Text Oriented Messaging Protocol",
+   "es": "protocolo de mensajería basado en texto"
+  },
+  "STS": {
+   "en": "Security Token Service",
+   "es": null
+  },
+  "TCP": {
+   "en": "Transmission Control Protocol",
+   "es": "protocolo de transporte fiable"
+  },
+  "TLS": {
+   "en": "Transport Layer Security",
+   "es": "cifrado de las conexiones"
+  },
+  "TOTP": {
+   "en": "Time-based One-Time Password",
+   "es": "código temporal de una app autenticadora"
+  },
+  "TTL": {
+   "en": "Time To Live",
+   "es": "tiempo de vida antes de caducar"
+  },
+  "UDP": {
+   "en": "User Datagram Protocol",
+   "es": "protocolo de transporte sin conexión"
+  },
+  "UI": {
+   "en": "User Interface",
+   "es": "interfaz de usuario"
+  },
+  "URL": {
+   "en": "Uniform Resource Locator",
+   "es": "dirección web"
+  },
+  "UTC": {
+   "en": "Coordinated Universal Time",
+   "es": "hora universal coordinada"
+  },
+  "VPC": {
+   "en": "Virtual Private Cloud",
+   "es": null
+  },
+  "VPN": {
+   "en": "Virtual Private Network",
+   "es": "red privada virtual"
+  },
+  "VPS": {
+   "en": "Virtual Private Server",
+   "es": "servidor virtual privado"
+  },
+  "VTL": {
+   "en": "Velocity Template Language",
+   "es": "lenguaje de plantillas"
+  },
+  "WAF": {
+   "en": "Web Application Firewall",
+   "es": null
+  },
+  "WAN": {
+   "en": "Wide Area Network",
+   "es": "red de área extensa"
+  },
+  "WCU": {
+   "en": "Write Capacity Unit",
+   "es": "unidad de capacidad de escritura"
+  },
+  "WORM": {
+   "en": "Write Once, Read Many",
+   "es": "se escribe una vez y no se puede modificar"
+  },
+  "XKS": {
+   "en": "External Key Store",
+   "es": "almacén de claves externo a AWS"
+  },
+  "YAML": {
+   "en": "YAML Ain't Markup Language",
+   "es": "formato de configuración legible"
+  },
+  "k-NN": {
+   "en": "k-Nearest Neighbors",
+   "es": "búsqueda de los k vecinos más cercanos"
+  }
+ },
+ "porPagina": {
+  "RAM": {
+   "*": {
+    "en": "Resource Access Manager",
+    "es": null
+   },
+   "ec2": {
+    "en": "Random Access Memory",
+    "es": "memoria"
+   }
+  }
+ },
+ "sufijos": {
+  "NAT": " [Gg]ateway"
+ }
+}

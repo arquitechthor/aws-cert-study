@@ -66,40 +66,40 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>Amazon VPC (<em>Virtual Private Cloud</em>) es una red virtual lógicamente aislada dentro de
-        una región de AWS. Tú decides el rango de direcciones IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span>, cómo se divide en subredes, qué
-        rutas existen y qué tráfico se permite. Casi todo lo que tiene una interfaz de red (<a href="ec2.html">EC2</a>, <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>,
-        <a href="lambda.html">Lambda</a> conectada a VPC, balanceadores, contenedores) vive dentro de una VPC. Cada región trae
-        una <strong>VPC por defecto</strong> con subredes públicas para empezar rápido.</p>
+      <p>Amazon <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (<em>Virtual Private Cloud</em>) es una red virtual lógicamente aislada dentro de
+        una región de AWS. Tú decides el rango de direcciones <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr>, cómo se divide en subredes, qué
+        rutas existen y qué tráfico se permite. Casi todo lo que tiene una interfaz de red (<a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>,
+        <a href="lambda.html">Lambda</a> conectada a <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, balanceadores, contenedores) vive dentro de una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>. Cada región trae
+        una <strong><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> por defecto</strong> con subredes públicas para empezar rápido.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Bloque CIDR <span class="sigla">(<em>Classless Inter-Domain Routing</em>: notación de rangos de IP como 10.0.0.0/16)</span>:</strong> rango IPv4 de la VPC, de <code>/16</code> a <code>/28</code>,
+        <li><strong>Bloque <abbr class="sigla sigla-1" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR<span class="sigla-exp"> (Classless Inter-Domain Routing: notación de rangos de IP como 10.0.0.0/16)</span></abbr>:</strong> rango IPv4 de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, de <code>/16</code> a <code>/28</code>,
           ampliable con bloques secundarios; opcionalmente también IPv6.</li>
-        <li><strong>Subred:</strong> parte del rango de la VPC que vive en <strong>una sola zona de
+        <li><strong>Subred:</strong> parte del rango de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> que vive en <strong>una sola zona de
           disponibilidad</strong>. AWS reserva <strong>5 direcciones</strong> de cada subred.</li>
         <li><strong>Subred pública vs privada:</strong> es pública si su tabla de rutas envía
           <code>0.0.0.0/0</code> a un <strong>internet gateway</strong>. Las privadas no tienen esa ruta.</li>
-        <li><strong>NAT gateway <span class="sigla">(<em>Network Address Translation</em>: traducción de direcciones de red)</span>:</strong> permite que las instancias de subredes privadas salgan a
+        <li><strong><abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr>:</strong> permite que las instancias de subredes privadas salgan a
           internet (por ejemplo, para actualizaciones) sin aceptar conexiones entrantes. Es por zona:
           para alta disponibilidad, uno en cada zona. Para IPv6, el equivalente es el
           <em>egress-only internet gateway</em>.</li>
         <li><strong>Security groups:</strong> firewall <strong>con estado</strong> en la interfaz de
           red; solo reglas de permitir; pueden referenciar otros security groups.</li>
-        <li><strong>Network ACL <span class="sigla">(<em>Access Control List</em>: lista de control de acceso)</span>:</strong> firewall <strong>sin estado</strong> a nivel de subred;
+        <li><strong>Network <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr>:</strong> firewall <strong>sin estado</strong> a nivel de subred;
           reglas de permitir y denegar numeradas; hay que abrir también el tráfico de retorno
-          (puertos efímeros). Útil para bloquear una IP concreta.</li>
-        <li><strong>VPC endpoints:</strong> acceso privado a servicios de AWS sin pasar por internet.
-          Los de tipo <em>gateway</em> (solo <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> y <a href="dynamodb.html">DynamoDB</a>) son gratuitos y funcionan con rutas; los de
-          tipo <em>interface</em> (<a href="../servicio.html?id=privatelink">PrivateLink</a>) crean una interfaz de red con IP privada y tienen coste.</li>
-        <li><strong>VPC peering:</strong> une dos VPC (incluso de otras cuentas o regiones) de forma
+          (puertos efímeros). Útil para bloquear una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> concreta.</li>
+        <li><strong><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> endpoints:</strong> acceso privado a servicios de AWS sin pasar por internet.
+          Los de tipo <em>gateway</em> (solo <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> y <a href="dynamodb.html">DynamoDB</a>) son gratuitos y funcionan con rutas; los de
+          tipo <em>interface</em> (<a href="../servicio.html?id=privatelink">PrivateLink</a>) crean una interfaz de red con <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> privada y tienen coste.</li>
+        <li><strong><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> peering:</strong> une dos <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (incluso de otras cuentas o regiones) de forma
           privada. <strong>No es transitivo</strong> y los rangos no pueden solaparse.</li>
-        <li><strong><a href="../servicio.html?id=transit-gateway">Transit Gateway</a>:</strong> concentrador que conecta muchas VPC y redes locales en
+        <li><strong><a href="../servicio.html?id=transit-gateway">Transit Gateway</a>:</strong> concentrador que conecta muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y redes locales en
           estrella, con tablas de rutas propias.</li>
-        <li><strong>Conectividad híbrida:</strong> <a href="../servicio.html?id=site-to-site-vpn">Site-to-Site VPN</a> (túneles IPsec por internet,
+        <li><strong>Conectividad híbrida:</strong> <a href="../servicio.html?id=site-to-site-vpn">Site-to-Site <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr></a> (túneles IPsec por internet,
           rápida de montar) y <a href="../servicio.html?id=direct-connect">Direct Connect</a> (enlace dedicado, latencia estable).</li>
-        <li><strong>VPC Flow Logs:</strong> registran metadatos del tráfico IP (origen, destino,
-          puertos, aceptado o rechazado) hacia <a href="cloudwatch.html">CloudWatch</a> Logs, S3 o <a href="../servicio.html?id=data-firehose">Firehose</a>. No capturan el
+        <li><strong>VPC Flow Logs:</strong> registran metadatos del tráfico <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> (origen, destino,
+          puertos, aceptado o rechazado) hacia <a href="cloudwatch.html">CloudWatch</a> Logs, <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> o <a href="../servicio.html?id=data-firehose">Firehose</a>. No capturan el
           contenido de los paquetes.</li>
       </ul>
 
@@ -107,17 +107,17 @@
       <ul>
         <li>Arquitectura de tres capas: balanceador en subredes públicas, aplicación y base de datos
           en subredes privadas.</li>
-        <li>Aislar entornos (producción, pruebas) o equipos en VPC distintas.</li>
-        <li>Extender el centro de datos a AWS con VPN o <a href="../servicio.html?id=direct-connect">Direct Connect</a>.</li>
-        <li>Acceso privado a <a href="s3.html">S3</a> y <a href="dynamodb.html">DynamoDB</a> desde subredes sin salida a internet.</li>
+        <li>Aislar entornos (producción, pruebas) o equipos en <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> distintas.</li>
+        <li>Extender el centro de datos a AWS con <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> o <a href="../servicio.html?id=direct-connect">Direct Connect</a>.</li>
+        <li>Acceso privado a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y <a href="dynamodb.html">DynamoDB</a> desde subredes sin salida a internet.</li>
         <li>Auditar tráfico y detectar conexiones rechazadas con Flow Logs.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para inspeccionar el contenido del tráfico o filtrar por dominio: <a href="../servicio.html?id=network-firewall">Network Firewall</a> o
-          appliances de terceros con <a href="elb.html">Gateway Load Balancer</a>, no solo security groups y NACL <span class="sigla">(<em>Network Access Control List</em>: firewall a nivel de subred)</span>.</li>
-        <li>Para conectar decenas de VPC entre sí: <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> o Cloud WAN <span class="sigla">(<em>Wide Area Network</em>: red de área extensa)</span>, no una malla de peerings.</li>
+          appliances de terceros con <a href="elb.html">Gateway Load Balancer</a>, no solo security groups y <abbr class="sigla sigla-1" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL<span class="sigla-exp"> (Network Access Control List: firewall a nivel de subred)</span></abbr>.</li>
+        <li>Para conectar decenas de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> entre sí: <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> o Cloud <abbr class="sigla sigla-1" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN<span class="sigla-exp"> (Wide Area Network: red de área extensa)</span></abbr>, no una malla de peerings.</li>
         <li>Para exponer un servicio concreto a otras cuentas sin unir las redes: <a href="../servicio.html?id=privatelink">PrivateLink</a>
           (servicio de endpoint), no peering.</li>
       </ul>
@@ -125,43 +125,43 @@
       <h2 id="comparativa">Security groups frente a network ACL</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Característica</th><th>Security group</th><th>Network ACL</th></tr></thead>
+          <thead><tr><th>Característica</th><th>Security group</th><th>Network <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr></th></tr></thead>
           <tbody>
             <tr><td>Nivel</td><td>Interfaz de red (instancia)</td><td>Subred</td></tr>
             <tr><td>Estado</td><td>Con estado: la respuesta se permite sola</td><td>Sin estado: hay que permitir la vuelta</td></tr>
             <tr><td>Reglas</td><td>Solo permitir</td><td>Permitir y denegar</td></tr>
             <tr><td>Evaluación</td><td>Todas las reglas</td><td>Por orden numérico; gana la primera que coincide</td></tr>
-            <tr><td>Por defecto</td><td>Deniega la entrada y permite la salida</td><td>La NACL por defecto permite todo</td></tr>
+            <tr><td>Por defecto</td><td>Deniega la entrada y permite la salida</td><td>La <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr> por defecto permite todo</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>Crear una VPC, subredes, tablas de rutas, security groups y NACL no cuesta nada. Se paga por
-        los componentes gestionados: NAT gateways (por hora y por GB procesado), endpoints de tipo
-        interface, conexiones VPN, <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> (por adjunto y por GB), direcciones IPv4 públicas,
+      <p>Crear una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, subredes, tablas de rutas, security groups y <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr> no cuesta nada. Se paga por
+        los componentes gestionados: <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr> gateways (por hora y por GB procesado), endpoints de tipo
+        interface, conexiones <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>, <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> (por adjunto y por GB), direcciones IPv4 públicas,
         Flow Logs (según el destino) y la transferencia de datos entre zonas o regiones. Los endpoints
-        <em>gateway</em> de <a href="s3.html">S3</a> y <a href="dynamodb.html">DynamoDB</a> son gratuitos y además ahorran tráfico por el NAT.</p>
+        <em>gateway</em> de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y <a href="dynamodb.html">DynamoDB</a> son gratuitos y además ahorran tráfico por el <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr>.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Defensa en capas: NACL en la subred y security groups en cada recurso.</li>
+        <li>Defensa en capas: <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr> en la subred y security groups en cada recurso.</li>
         <li>Recursos sensibles en subredes privadas; solo balanceadores en las públicas.</li>
-        <li>Subredes en al menos dos zonas, y un NAT gateway por zona para no depender de una sola.</li>
-        <li>Políticas en los endpoints de VPC para limitar a qué buckets o recursos se accede.</li>
+        <li>Subredes en al menos dos zonas, y un <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway</abbr> por zona para no depender de una sola.</li>
+        <li>Políticas en los endpoints de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> para limitar a qué buckets o recursos se accede.</li>
         <li><em>VPC Block Public Access</em> para impedir de forma centralizada el tráfico de internet
-          en VPC que no deben tenerlo.</li>
+          en <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> que no deben tenerlo.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Instancias privadas deben descargar parches de internet"</strong>: NAT gateway en una subred pública.</li>
-        <li><strong>"Acceder a <a href="s3.html">S3</a> sin pasar por internet y sin coste"</strong>: endpoint de VPC de tipo gateway.</li>
-        <li><strong>"Bloquear una IP maliciosa concreta"</strong>: regla de denegar en la NACL (los security groups no deniegan).</li>
+        <li><strong>"Instancias privadas deben descargar parches de internet"</strong>: <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway</abbr> en una subred pública.</li>
+        <li><strong>"Acceder a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin pasar por internet y sin coste"</strong>: endpoint de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de tipo gateway.</li>
+        <li><strong>"Bloquear una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> maliciosa concreta"</strong>: regla de denegar en la <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr> (los security groups no deniegan).</li>
         <li><strong>"A conecta con B y B con C, pero A no llega a C"</strong>: el peering no es transitivo; <a href="../servicio.html?id=transit-gateway">Transit Gateway</a>.</li>
-        <li><strong>"Muchas VPC y oficinas en estrella"</strong>: Transit Gateway.</li>
+        <li><strong>"Muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y oficinas en estrella"</strong>: Transit Gateway.</li>
         <li><strong>"Diagnosticar tráfico rechazado"</strong>: VPC Flow Logs.</li>
-        <li><strong>"Conexión dedicada con latencia constante"</strong>: <a href="../servicio.html?id=direct-connect">Direct Connect</a>; <strong>"rápido y cifrado por internet"</strong>: <a href="../servicio.html?id=site-to-site-vpn">Site-to-Site VPN</a>.</li>
+        <li><strong>"Conexión dedicada con latencia constante"</strong>: <a href="../servicio.html?id=direct-connect">Direct Connect</a>; <strong>"rápido y cifrado por internet"</strong>: <a href="../servicio.html?id=site-to-site-vpn">Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -210,6 +210,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

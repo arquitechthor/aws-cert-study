@@ -6,7 +6,7 @@
       "CLF-C02"
     ],
     "dominio": "Tecnología y servicios de la nube",
-    "enunciado": "Una empresa quiere que se ejecute automáticamente una función cada vez que una instancia EC2 (Elastic Compute Cloud) cambia al estado \"stopped\". ¿Qué servicio detecta el evento y lanza la función?",
+    "enunciado": "Una empresa quiere que se ejecute automáticamente una función cada vez que una instancia EC2 cambia al estado \"stopped\". ¿Qué servicio detecta el evento y lanza la función?",
     "opciones": [
       "Amazon EventBridge.",
       "Amazon Route 53.",
@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "EC2 emite eventos de cambio de estado al bus por defecto de EventBridge, y una regla puede invocar la función. Route 53 es DNS (Domain Name System: traduce nombres de dominio a direcciones IP), Artifact da informes de cumplimiento y Lightsail ofrece servidores sencillos.",
+    "explicacion": "EC2 emite eventos de cambio de estado al bus por defecto de EventBridge, y una regla puede invocar la función. Route 53 es DNS, Artifact da informes de cumplimiento y Lightsail ofrece servidores sencillos.",
     "fuentes": [
       "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html"
     ]
@@ -140,7 +140,7 @@
       "DVA-C02"
     ],
     "dominio": "Desarrollo con servicios de AWS",
-    "enunciado": "Una aplicación debe notificar a la API REST (Representational State Transfer: estilo de API sobre HTTP) de un proveedor externo, que usa una clave de API, cada vez que llega cierto evento a un bus. ¿Qué opción evita escribir y mantener una función intermedia?",
+    "enunciado": "Una aplicación debe notificar a la API REST de un proveedor externo, que usa una clave de API, cada vez que llega cierto evento a un bus. ¿Qué opción evita escribir y mantener una función intermedia?",
     "opciones": [
       "Un destino de tipo API destination con una conexión que guarda la autenticación.",
       "Una suscripción de correo en SNS.",
@@ -150,7 +150,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Las API destinations llaman a endpoints HTTP externos directamente desde una regla, con la autenticación guardada en una conexión y con control de ritmo. Las demás opciones obligan al proveedor a cambiar o no llaman a su API. Siglas: S3 (Simple Storage Service).",
+    "explicacion": "Las API destinations llaman a endpoints HTTP externos directamente desde una regla, con la autenticación guardada en una conexión y con control de ritmo. Las demás opciones obligan al proveedor a cambiar o no llaman a su API.",
     "fuentes": [
       "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html"
     ]
@@ -184,7 +184,7 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Una empresa tiene cientos de reglas programadas de EventBridge con expresiones cron en UTC (Coordinated Universal Time: hora universal coordinada) que fallan cada cambio de horario de verano, y necesita tareas puntuales (\"recordar esto el día X a las 10:00\"). ¿Qué mejora lo resuelve?",
+    "enunciado": "Una empresa tiene cientos de reglas programadas de EventBridge con expresiones cron en UTC que fallan cada cambio de horario de verano, y necesita tareas puntuales (\"recordar esto el día X a las 10:00\"). ¿Qué mejora lo resuelve?",
     "opciones": [
       "Migrar a EventBridge Scheduler, que admite zonas horarias y programaciones puntuales.",
       "Crear una instancia EC2 con cron.",
@@ -194,7 +194,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Scheduler permite indicar la zona horaria (y así respeta el horario de verano), crear programaciones puntuales y escalar a millones de tareas. Un servidor con cron añade operación, duplicar reglas es frágil y las alarmas no programan tareas. Siglas: EC2 (Elastic Compute Cloud).",
+    "explicacion": "Scheduler permite indicar la zona horaria (y así respeta el horario de verano), crear programaciones puntuales y escalar a millones de tareas. Un servidor con cron añade operación, duplicar reglas es frágil y las alarmas no programan tareas.",
     "fuentes": [
       "https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html"
     ]

@@ -66,7 +66,7 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>Amazon RDS (<em>Relational Database Service</em>) ejecuta bases de datos relacionales sin
+      <p>Amazon <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> (<em>Relational Database Service</em>) ejecuta bases de datos relacionales sin
         que tengas que instalar el motor, aplicar parches, hacer copias de seguridad ni montar la
         replicación. Tú eliges el motor, el tamaño de la instancia y el almacenamiento; AWS se ocupa
         de la operación. A cambio, no tienes acceso al sistema operativo del servidor (salvo con
@@ -75,9 +75,9 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Motores:</strong> MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2. <a href="aurora.html">Aurora</a>
-          también se gestiona desde RDS, pero es un motor aparte con su propia arquitectura.</li>
+          también se gestiona desde <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr>, pero es un motor aparte con su propia arquitectura.</li>
         <li><strong>Multi-AZ con una instancia en espera:</strong> réplica <strong>síncrona</strong> en
-          otra zona, sin tráfico de lectura; si falla la principal, RDS cambia el DNS <span class="sigla">(<em>Domain Name System</em>: traduce nombres de dominio a direcciones IP)</span> del endpoint a la
+          otra zona, sin tráfico de lectura; si falla la principal, <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> cambia el <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> del endpoint a la
           espera en uno o dos minutos. Sirve para <strong>alta disponibilidad</strong>, no para escalar.</li>
         <li><strong>Multi-AZ DB cluster</strong> (MySQL y PostgreSQL): un escritor y <strong>dos
           instancias en espera legibles</strong> en tres zonas, con conmutación más rápida.</li>
@@ -85,15 +85,15 @@
           lecturas, en la misma región o en otra; hasta 15 en MySQL, MariaDB y PostgreSQL, y hasta 5 en
           Oracle y SQL Server. Se pueden <em>promocionar</em> a instancia independiente (útil para
           recuperación ante desastres entre regiones).</li>
-        <li><strong>Copias automáticas y PITR <span class="sigla">(<em>Point-In-Time Recovery</em>: restaurar a un momento concreto)</span>:</strong> retención de hasta <strong>35 días</strong> y
+        <li><strong>Copias automáticas y <abbr class="sigla sigla-1" data-s="PITR" data-en="Point-In-Time Recovery" data-es="restaurar a un momento concreto" tabindex="0">PITR<span class="sigla-exp"> (Point-In-Time Recovery: restaurar a un momento concreto)</span></abbr>:</strong> retención de hasta <strong>35 días</strong> y
           restauración a cualquier segundo de ese periodo. Las <strong>instantáneas manuales</strong>
           se conservan hasta que las borras. Restaurar siempre crea una <strong>instancia nueva</strong>.</li>
-        <li><strong>Almacenamiento:</strong> SSD <span class="sigla">(<em>Solid-State Drive</em>: disco de estado sólido)</span> de uso general (gp3) o de IOPS <span class="sigla">(<em>Input/Output Operations Per Second</em>: operaciones de disco por segundo)</span> aprovisionadas (io2),
+        <li><strong>Almacenamiento:</strong> <abbr class="sigla sigla-1" data-s="SSD" data-en="Solid-State Drive" data-es="disco de estado sólido" tabindex="0">SSD<span class="sigla-exp"> (Solid-State Drive: disco de estado sólido)</span></abbr> de uso general (gp3) o de <abbr class="sigla sigla-1" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS<span class="sigla-exp"> (Input/Output Operations Per Second: operaciones de disco por segundo)</span></abbr> aprovisionadas (io2),
           con <em>autoescalado de almacenamiento</em>. Cambiar el tamaño de la instancia provoca una breve
           parada.</li>
         <li><strong>RDS Proxy:</strong> agrupa y reutiliza conexiones; imprescindible con <a href="lambda.html">Lambda</a> o con
           muchas conexiones cortas, y acelera la conmutación por error.</li>
-        <li><strong>Autenticación <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span></strong> (MySQL y PostgreSQL) con tokens temporales, e
+        <li><strong>Autenticación <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a></strong> (MySQL y PostgreSQL) con tokens temporales, e
           integración con <strong><a href="secrets-manager.html">Secrets Manager</a></strong> para la contraseña maestra con rotación.</li>
         <li><strong>Blue/Green Deployments:</strong> copia sincronizada para probar actualizaciones
           de versión o de esquema y cambiar en menos de un minuto.</li>
@@ -103,8 +103,8 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Aplicaciones web y de negocio con SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span>, transacciones y JOIN.</li>
-        <li>Migrar una base de datos local sin cambiar de motor (con <a href="../servicio.html?id=dms">AWS DMS</a> <span class="sigla">(<em>Database Migration Service</em>)</span>).</li>
+        <li>Aplicaciones web y de negocio con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>, transacciones y JOIN.</li>
+        <li>Migrar una base de datos local sin cambiar de motor (con <a href="../servicio.html?id=dms">AWS <abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a>).</li>
         <li>Software comercial que exige Oracle o SQL Server, con licencia incluida o propia.</li>
         <li>Separar lecturas de informes en réplicas para no cargar la principal.</li>
       </ul>
@@ -114,9 +114,9 @@
         <li>Si necesitas más réplicas, conmutación en segundos o almacenamiento que crece solo:
           <a href="aurora.html">Aurora</a>.</li>
         <li>Acceso por clave a escala masiva o esquemas flexibles: <a href="dynamodb.html">DynamoDB</a>.</li>
-        <li>Análisis de grandes volúmenes (OLAP): <a href="redshift.html">Redshift</a> o <a href="../servicio.html?id=athena">Athena</a>.</li>
+        <li>Análisis de grandes volúmenes (<abbr class="sigla" data-s="OLAP" data-en="Online Analytical Processing" data-es="consultas analíticas sobre grandes volúmenes" tabindex="0">OLAP</abbr>): <a href="redshift.html">Redshift</a> o <a href="../servicio.html?id=athena">Athena</a>.</li>
         <li>Si necesitas acceso de administrador al sistema operativo o un motor no soportado:
-          base de datos en <a href="ec2.html">EC2</a> (o RDS Custom).</li>
+          base de datos en <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> (o RDS Custom).</li>
       </ul>
 
       <h2 id="comparativa">Multi-AZ frente a réplicas de lectura</h2>
@@ -135,19 +135,19 @@
 
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga por hora de instancia según motor, clase y despliegue (Multi-AZ cuesta más que una
-        sola zona), el almacenamiento aprovisionado por GB al mes (y las IOPS en io2), las copias de
+        sola zona), el almacenamiento aprovisionado por GB al mes (y las <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> en io2), las copias de
         seguridad que superen el tamaño de la base de datos, la transferencia de datos entre regiones y
-        extras como RDS Proxy. Hay <strong>instancias reservadas</strong> de 1 o 3 años. Oracle y SQL
-        Server pueden llevar la licencia incluida en el precio o traer la propia (BYOL). Una instancia
-        parada deja de cobrar cómputo, pero RDS la vuelve a arrancar a los 7 días.</p>
+        extras como RDS Proxy. Hay <strong>instancias reservadas</strong> de 1 o 3 años. Oracle y <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>
+        Server pueden llevar la licencia incluida en el precio o traer la propia (<abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr>). Una instancia
+        parada deja de cobrar cómputo, pero <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> la vuelve a arrancar a los 7 días.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Instancias en subredes privadas (grupo de subredes de base de datos) y acceso limitado
           por security groups.</li>
-        <li>Cifrado en reposo con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>, que <strong>se decide al crear la instancia</strong>: para
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>, que <strong>se decide al crear la instancia</strong>: para
           cifrar una existente hay que copiar una instantánea cifrándola y restaurarla.</li>
-        <li>TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> en tránsito; autenticación <a href="iam.html">IAM</a> o Kerberos según el motor.</li>
+        <li><abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> en tránsito; autenticación <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> o Kerberos según el motor.</li>
         <li>Multi-AZ para fallos de zona, réplicas entre regiones o copias de instantáneas en otra
           región para desastres regionales.</li>
         <li>Protección contra borrado (<em>deletion protection</em>).</li>
@@ -159,9 +159,9 @@
         <li><strong>"Escalar lecturas"</strong> o <strong>"informes que cargan la base de datos"</strong>: réplicas de lectura.</li>
         <li><strong>"Demasiadas conexiones desde <a href="lambda.html">Lambda</a>"</strong>: RDS Proxy.</li>
         <li><strong>"Cifrar una base de datos existente sin cifrar"</strong>: instantánea, copia cifrada y restauración.</li>
-        <li><strong>"Recuperar la base de datos a las 14:32 de ayer"</strong>: restauración a un momento dado (PITR), que crea una instancia nueva.</li>
-        <li><strong>"Acceso al sistema operativo"</strong>: RDS no lo da; RDS Custom o <a href="ec2.html">EC2</a>.</li>
-        <li><strong>"No guardar la contraseña en el código"</strong>: <a href="secrets-manager.html">Secrets Manager</a> o autenticación <a href="iam.html">IAM</a>.</li>
+        <li><strong>"Recuperar la base de datos a las 14:32 de ayer"</strong>: restauración a un momento dado (<abbr class="sigla" data-s="PITR" data-en="Point-In-Time Recovery" data-es="restaurar a un momento concreto" tabindex="0">PITR</abbr>), que crea una instancia nueva.</li>
+        <li><strong>"Acceso al sistema operativo"</strong>: <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> no lo da; RDS Custom o <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>.</li>
+        <li><strong>"No guardar la contraseña en el código"</strong>: <a href="secrets-manager.html">Secrets Manager</a> o autenticación <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -209,6 +209,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

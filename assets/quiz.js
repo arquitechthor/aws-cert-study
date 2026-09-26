@@ -13,6 +13,14 @@
   const { json, esc, cargar, leerProgreso, guardarProgreso, formatoFecha } = window.AwsDatos;
   const LETRAS = 'ABCDEFGH';
 
+  // Siglas con tooltip (assets/siglas.js y data/siglas.json). Sin glosario, texto escapado sin más.
+  let glosario = null;
+  let idActual = '';
+  function texto(t) {
+    const e = esc(t);
+    return glosario && window.AwsSiglas ? window.AwsSiglas.marcar(e, idActual, glosario) : e;
+  }
+
   function hoy() {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -91,7 +99,7 @@
       <fieldset class="quiz-question${acertada ? ' is-acertada' : ''}" data-id="${esc(p.id)}">
         <legend>
           <span class="quiz-num">Pregunta ${i + 1}</span>
-          <p class="quiz-stem">${esc(p.enunciado)}</p>
+          <p class="quiz-stem">${texto(p.enunciado)}</p>
           ${multiple ? `<p class="quiz-hint">Elige ${p.correctas.length} respuestas.</p>` : ''}
         </legend>
         ${tags ? `<div class="quiz-tags">${tags}</div>` : ''}
@@ -99,7 +107,7 @@
           ${p.opciones.map((o, j) => `
             <label class="quiz-option">
               <input type="${multiple ? 'checkbox' : 'radio'}" name="${esc(nombre)}" value="${j}">
-              <span><strong>${LETRAS[j]}.</strong> ${esc(o)}</span>
+              <span><strong>${LETRAS[j]}.</strong> ${texto(o)}</span>
             </label>`).join('')}
         </div>
         <button class="btn btn-secondary btn-sm" type="button" data-accion="comprobar">Comprobar</button>
@@ -129,7 +137,7 @@
     const fb = fs.querySelector('.quiz-feedback');
     fb.innerHTML = `
       <p class="${acierto ? 'ok' : 'ko'}">${acierto ? '✔ Correcto' : `✘ Incorrecto. Respuesta correcta: ${letras}`}</p>
-      <p>${esc(p.explicacion)}</p>
+      <p>${texto(p.explicacion)}</p>
       ${fuentes ? `<p class="text-faint">Fuentes:</p><ul>${fuentes}</ul>` : ''}`;
     fb.hidden = false;
 
@@ -154,6 +162,8 @@
     const id = cont.dataset.quiz;
     try {
       const preguntas = await json(`data/preguntas/${encodeURIComponent(id)}.json`);
+      idActual = id;
+      if (window.AwsSiglas) glosario = await window.AwsSiglas.cargarGlosario().catch(() => null);
       if (!preguntas.length) throw new Error('sin preguntas');
       const porId = new Map(preguntas.map((p) => [p.id, p]));
       let prog = progresoActual(id, preguntas);

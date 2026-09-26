@@ -62,13 +62,13 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>AWS AppSync crea y aloja dos tipos de API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> sin servidores:</p>
+      <p>AWS AppSync crea y aloja dos tipos de <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> sin servidores:</p>
       <ul>
         <li><strong>API GraphQL:</strong> GraphQL es un lenguaje de consulta en el que el cliente
           pide exactamente los campos que necesita en una sola petición, aunque vengan de varias
-          fuentes (<a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="aurora.html">Aurora</a>, <a href="opensearch-service.html">OpenSearch</a>, una API HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>…). Evita las múltiples llamadas
-          y los datos de más típicos de una API REST <span class="sigla">(<em>Representational State Transfer</em>: estilo de API sobre HTTP)</span>.</li>
-        <li><strong>API de eventos (AppSync Events):</strong> canales de publicación/suscripción en
+          fuentes (<a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="aurora.html">Aurora</a>, <a href="opensearch-service.html">OpenSearch</a>, una API <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>…). Evita las múltiples llamadas
+          y los datos de más típicos de una API <abbr class="sigla sigla-1" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST<span class="sigla-exp"> (Representational State Transfer: estilo de API sobre HTTP)</span></abbr>.</li>
+        <li><strong><abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> de eventos (AppSync Events):</strong> canales de publicación/suscripción en
           tiempo real sobre WebSocket, sin necesidad de GraphQL, para enviar actualizaciones a millones
           de clientes conectados.</li>
       </ul>
@@ -79,19 +79,19 @@
         <li><strong>Esquema GraphQL:</strong> define tipos y operaciones: <em>queries</em> (leer),
           <em>mutations</em> (escribir) y <em>subscriptions</em> (recibir cambios en tiempo real).</li>
         <li><strong>Resolvers:</strong> conectan cada campo con su fuente de datos. Se escriben en
-          JavaScript (entorno APPSYNC_JS) o en plantillas VTL <span class="sigla">(<em>Velocity Template Language</em>: lenguaje de plantillas)</span> antiguas; los <em>pipeline resolvers</em>
+          JavaScript (entorno APPSYNC_JS) o en plantillas <abbr class="sigla sigla-1" data-s="VTL" data-en="Velocity Template Language" data-es="lenguaje de plantillas" tabindex="0">VTL<span class="sigla-exp"> (Velocity Template Language: lenguaje de plantillas)</span></abbr> antiguas; los <em>pipeline resolvers</em>
           encadenan varias funciones.</li>
-        <li><strong>Fuentes de datos:</strong> <a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="aurora.html">Aurora</a> (a través de la Data API),
-          <a href="opensearch-service.html">OpenSearch</a>, <a href="eventbridge.html">EventBridge</a>, endpoints HTTP y <a href="bedrock.html">Bedrock</a>.</li>
+        <li><strong>Fuentes de datos:</strong> <a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="aurora.html">Aurora</a> (a través de la Data <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>),
+          <a href="opensearch-service.html">OpenSearch</a>, <a href="eventbridge.html">EventBridge</a>, endpoints <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> y <a href="bedrock.html">Bedrock</a>.</li>
         <li><strong>Suscripciones en tiempo real:</strong> los clientes mantienen una conexión
           WebSocket y reciben los cambios que provoca una mutación.</li>
         <li><strong>AppSync Events:</strong> canales agrupados en <em>namespaces</em>, con
           manejadores <code>OnPublish</code> y <code>OnSubscribe</code> para filtrar o transformar, y
           suscripción con comodines.</li>
-        <li><strong>Autorización:</strong> clave de API, <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>, grupos de usuarios de <a href="cognito.html">Cognito</a>, OIDC
-          (<em>OpenID Connect</em>) o un autorizador Lambda, combinables en la misma API.</li>
+        <li><strong>Autorización:</strong> clave de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>, <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>, grupos de usuarios de <a href="cognito.html">Cognito</a>, <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr>
+          (<em>OpenID Connect</em>) o un autorizador Lambda, combinables en la misma <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
         <li><strong>Caché del servidor</strong> para respuestas de consultas frecuentes y
-          <strong>API fusionadas</strong> (<em>merged APIs</em>) para unir las API de varios equipos.</li>
+          <strong><abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> fusionadas</strong> (<em>merged APIs</em>) para unir las <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> de varios equipos.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -105,9 +105,9 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>API REST sencillas o existentes con transformaciones HTTP, planes de uso y claves por
+        <li>API <abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr> sencillas o existentes con transformaciones <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>, planes de uso y claves por
           cliente: <a href="api-gateway.html">API Gateway</a>.</li>
-        <li>Mensajería entre sistemas backend: <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> o <a href="eventbridge.html">EventBridge</a>.</li>
+        <li>Mensajería entre sistemas backend: <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> o <a href="eventbridge.html">EventBridge</a>.</li>
         <li>WebSocket con rutas propias y control total de cada conexión: API Gateway WebSocket.</li>
       </ul>
 
@@ -116,7 +116,7 @@
         <table>
           <thead><tr><th>Necesidad</th><th>AppSync</th><th><a href="api-gateway.html">API Gateway</a></th></tr></thead>
           <tbody>
-            <tr><td>Estilo de API</td><td>GraphQL y eventos pub/sub</td><td>REST, HTTP y WebSocket</td></tr>
+            <tr><td>Estilo de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></td><td>GraphQL y eventos pub/sub</td><td><abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr>, <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> y WebSocket</td></tr>
             <tr><td>Varias fuentes en una sola petición</td><td>Sí, por diseño</td><td>Solo con lógica propia (por ejemplo, <a href="lambda.html">Lambda</a>)</td></tr>
             <tr><td>Tiempo real para clientes</td><td>Suscripciones y Events gestionados</td><td>WebSocket, con la gestión de conexiones a tu cargo</td></tr>
             <tr><td>Planes de uso y claves por cliente</td><td>Limitado</td><td>Sí</td></tr>
@@ -127,14 +127,14 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>En las API GraphQL se paga por millón de operaciones de consulta y mutación, y por los
         minutos de conexión y los mensajes de las suscripciones en tiempo real. En AppSync Events,
-        por operaciones de API, minutos de conexión y mensajes. La caché se cobra por hora según su
+        por operaciones de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>, minutos de conexión y mensajes. La caché se cobra por hora según su
         tamaño. Hay nivel gratuito durante los primeros meses.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Varios modos de autorización combinables y reglas por campo en el esquema.</li>
-        <li>Integración con <a href="../servicio.html?id=waf">AWS WAF</a> <span class="sigla">(<em>Web Application Firewall</em>)</span> para filtrar peticiones.</li>
-        <li>API privadas accesibles solo desde una <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> mediante endpoints de interfaz.</li>
+        <li>Integración con <a href="../servicio.html?id=waf">AWS <abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> para filtrar peticiones.</li>
+        <li><abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> privadas accesibles solo desde una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> mediante endpoints de interfaz.</li>
         <li>Servicio gestionado, regional y redundante en varias zonas; registros y métricas en <a href="cloudwatch.html">CloudWatch</a>.</li>
       </ul>
 
@@ -142,9 +142,9 @@
       <ul>
         <li><strong>"GraphQL"</strong>: AppSync.</li>
         <li><strong>"Datos en tiempo real a clientes web o móviles"</strong>: suscripciones de AppSync o AppSync Events.</li>
-        <li><strong>"Una sola llamada que combine datos de <a href="dynamodb.html">DynamoDB</a> y de una API"</strong>: resolvers de AppSync.</li>
+        <li><strong>"Una sola llamada que combine datos de <a href="dynamodb.html">DynamoDB</a> y de una <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>"</strong>: resolvers de AppSync.</li>
         <li><strong>"Sincronizar datos con modo sin conexión"</strong>: AppSync con <a href="../servicio.html?id=amplify">Amplify</a>.</li>
-        <li><strong>"Planes de uso y límites por cliente de una API REST"</strong>: <a href="api-gateway.html">API Gateway</a>, no AppSync.</li>
+        <li><strong>"Planes de uso y límites por cliente de una API <abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr>"</strong>: <a href="api-gateway.html">API Gateway</a>, no AppSync.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -191,6 +191,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

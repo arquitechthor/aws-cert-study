@@ -16,7 +16,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "RAG (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos) recupera en cada consulta los fragmentos relevantes de los documentos actuales y se los da al modelo como contexto. Basta con reindexar al cambiar los documentos, sin coste de entrenamiento.",
+    "explicacion": "RAG recupera en cada consulta los fragmentos relevantes de los documentos actuales y se los da al modelo como contexto. Basta con reindexar al cambiar los documentos, sin coste de entrenamiento.",
     "fuentes": [
       "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html"
     ]
@@ -128,7 +128,7 @@
       0,
       1
     ],
-    "explicacion": "Few-shot y RAG (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos) solo cambian lo que se envía al modelo en cada petición. Fine-tuning, continued pre-training y destilación crean un modelo nuevo con pesos ajustados.",
+    "explicacion": "Few-shot y RAG solo cambian lo que se envía al modelo en cada petición. Fine-tuning, continued pre-training y destilación crean un modelo nuevo con pesos ajustados.",
     "fuentes": [
       "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
     ]

@@ -16,7 +16,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "El DNS (Domain Name System: traduce nombres de dominio a direcciones IP) no permite un CNAME (Canonical Name: registro DNS que apunta a otro nombre) en el vértice de la zona. Un registro alias de Route 53 sí puede apuntar allí a CloudFront, y sus consultas no tienen coste. Siglas: MX (Mail Exchange: registro DNS del servidor de correo); NS (Name Server: registro DNS con los servidores de nombres del dominio).",
+    "explicacion": "El DNS no permite un CNAME en el vértice de la zona. Un registro alias de Route 53 sí puede apuntar allí a CloudFront, y sus consultas no tienen coste.",
     "fuentes": [
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-choosing-alias-non-alias.html"
     ]
@@ -73,7 +73,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar soluciones para la complejidad organizativa",
-    "enunciado": "Las cargas de trabajo en varias VPC (Virtual Private Cloud) deben resolver nombres de un dominio interno alojado en los servidores DNS (Domain Name System: traduce nombres de dominio a direcciones IP) de un centro de datos, conectado por Direct Connect. ¿Qué solución es la adecuada?",
+    "enunciado": "Las cargas de trabajo en varias VPC deben resolver nombres de un dominio interno alojado en los servidores DNS de un centro de datos, conectado por Direct Connect. ¿Qué solución es la adecuada?",
     "opciones": [
       "Una zona alojada pública con los mismos registros.",
       "Un endpoint de salida de Route 53 Resolver con reglas de reenvío para ese dominio, compartidas con las VPC mediante AWS RAM.",
@@ -83,7 +83,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Las consultas desde la VPC hacia el DNS local salen por un endpoint de salida con reglas de reenvío, que se pueden compartir entre cuentas y VPC con RAM (Resource Access Manager). El endpoint de entrada sirve para el sentido contrario.",
+    "explicacion": "Las consultas desde la VPC hacia el DNS local salen por un endpoint de salida con reglas de reenvío, que se pueden compartir entre cuentas y VPC con RAM. El endpoint de entrada sirve para el sentido contrario.",
     "fuentes": [
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html"
     ]
@@ -107,7 +107,7 @@
       0,
       1
     ],
-    "explicacion": "El enrutamiento ponderado reparte el tráfico por porcentajes, y un TTL (Time To Live: tiempo de vida antes de caducar) bajo hace que los cambios de peso se apliquen pronto al volver atrás. Las demás opciones no controlan el reparto. Siglas: DNSSEC (DNS Security Extensions: firma las respuestas DNS para evitar suplantaciones).",
+    "explicacion": "El enrutamiento ponderado reparte el tráfico por porcentajes, y un TTL bajo hace que los cambios de peso se apliquen pronto al volver atrás. Las demás opciones no controlan el reparto.",
     "fuentes": [
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html"
     ]

@@ -6,7 +6,7 @@
       "CLF-C02"
     ],
     "dominio": "Tecnología y servicios de la nube",
-    "enunciado": "Un equipo quiere recibir un correo electrónico cada vez que una alarma de CloudWatch detecte un uso de CPU (Central Processing Unit: procesador) alto. ¿Qué servicio envía esa notificación?",
+    "enunciado": "Un equipo quiere recibir un correo electrónico cada vez que una alarma de CloudWatch detecte un uso de CPU alto. ¿Qué servicio envía esa notificación?",
     "opciones": [
       "Amazon SNS.",
       "Amazon SQS.",
@@ -150,7 +150,7 @@
       0,
       1
     ],
-    "explicacion": "SNS entrega a Lambda, SQS, HTTP/HTTPS, correo, SMS, push móvil y Firehose. No escribe directamente en DynamoDB, S3 o RDS (Relational Database Service); para eso se usa una función o Firehose de por medio.",
+    "explicacion": "SNS entrega a Lambda, SQS, HTTP/HTTPS, correo, SMS, push móvil y Firehose. No escribe directamente en DynamoDB, S3 o RDS; para eso se usa una función o Firehose de por medio.",
     "fuentes": [
       "https://docs.aws.amazon.com/sns/latest/dg/welcome.html"
     ]
@@ -172,7 +172,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Las suscripciones entre cuentas se habilitan con la política del tema (quién puede suscribirse) y la política de la cola (permitir sqs:SendMessage al ARN (Amazon Resource Name: identificador único de un recurso de AWS) del tema). Compartir claves es inseguro, replicar temas no conecta los eventos y sí es posible hacerlo entre cuentas.",
+    "explicacion": "Las suscripciones entre cuentas se habilitan con la política del tema (quién puede suscribirse) y la política de la cola (permitir sqs:SendMessage al ARN del tema). Compartir claves es inseguro, replicar temas no conecta los eventos y sí es posible hacerlo entre cuentas.",
     "fuentes": [
       "https://docs.aws.amazon.com/hands-on/latest/send-fanout-event-notifications/send-fanout-event-notifications.html"
     ]

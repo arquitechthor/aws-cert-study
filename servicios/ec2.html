@@ -66,40 +66,40 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>Amazon EC2 (<em>Elastic Compute Cloud</em>) ofrece máquinas virtuales, llamadas
+      <p>Amazon <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> (<em>Elastic Compute Cloud</em>) ofrece máquinas virtuales, llamadas
         <strong>instancias</strong>, que arrancas en minutos y pagas por segundo o por hora. Es el
         servicio de cómputo más flexible de AWS: tú controlas el sistema operativo, el software y la
         red, a cambio de encargarte de parches, escalado y alta disponibilidad. En el modelo de
-        responsabilidad compartida, EC2 es <strong>IaaS</strong>: AWS protege el hardware y el
+        responsabilidad compartida, <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> es <strong>IaaS</strong>: AWS protege el hardware y el
         hipervisor; el sistema invitado es cosa tuya.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>AMI (Amazon Machine Image):</strong> plantilla con el sistema operativo y el
+        <li><strong><abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> (Amazon Machine Image):</strong> plantilla con el sistema operativo y el
           software de arranque. Es regional; para usarla en otra región hay que copiarla.</li>
-        <li><strong>Tipos de instancia</strong> por familia: uso general (M, T con créditos de CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span>),
+        <li><strong>Tipos de instancia</strong> por familia: uso general (M, T con créditos de <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr>),
           optimizadas para cómputo (C), para memoria (R, X), para almacenamiento (I, D) y aceleradas
-          con GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span> o chips propios (P, G, Inf, Trn). Las de <strong>Graviton</strong> (ARM) suelen dar
+          con <abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr> o chips propios (P, G, Inf, Trn). Las de <strong>Graviton</strong> (<abbr class="sigla" data-s="ARM" data-es="arquitectura de procesador de bajo consumo" tabindex="0">ARM</abbr>) suelen dar
           mejor relación precio-rendimiento.</li>
-        <li><strong>Almacenamiento:</strong> volúmenes <strong><a href="ebs.html">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span></strong> (persistentes, en una sola
+        <li><strong>Almacenamiento:</strong> volúmenes <strong><a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a></strong> (persistentes, en una sola
           zona de disponibilidad) o <strong>instance store</strong> (disco local muy rápido que se
           pierde al parar o terminar la instancia).</li>
         <li><strong>Security groups:</strong> firewall con estado a nivel de instancia; solo admiten
           reglas de permitir.</li>
-        <li><strong>Pares de claves y acceso:</strong> SSH <span class="sigla">(<em>Secure Shell</em>: acceso remoto cifrado por terminal)</span> con clave, o mejor <strong>Session
+        <li><strong>Pares de claves y acceso:</strong> <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr> con clave, o mejor <strong>Session
           Manager</strong> de <a href="../servicio.html?id=systems-manager">Systems Manager</a>, sin abrir el puerto 22 ni gestionar claves.</li>
-        <li><strong>Rol de <a href="iam.html">IAM</a> (perfil de instancia):</strong> la forma correcta de dar permisos a
-          una aplicación en EC2; nunca claves de acceso guardadas en la máquina.</li>
-        <li><strong>Metadatos (IMDS):</strong> la instancia consulta su propia información y las
-          credenciales temporales del rol en <code>169.254.169.254</code>. IMDSv2 <span class="sigla">(<em>Instance Metadata Service versión 2</em>: con token de sesión)</span> exige un token de
-          sesión y protege contra ataques SSRF <span class="sigla">(<em>Server-Side Request Forgery</em>: ataque que hace que el servidor haga peticiones en tu nombre)</span>.</li>
+        <li><strong>Rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> (perfil de instancia):</strong> la forma correcta de dar permisos a
+          una aplicación en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>; nunca claves de acceso guardadas en la máquina.</li>
+        <li><strong>Metadatos (<abbr class="sigla" data-s="IMDS" data-en="Instance Metadata Service" data-es="servicio de metadatos de la instancia" tabindex="0">IMDS</abbr>):</strong> la instancia consulta su propia información y las
+          credenciales temporales del rol en <code>169.254.169.254</code>. <abbr class="sigla sigla-1" data-s="IMDSv2" data-en="Instance Metadata Service versión 2" data-es="con token de sesión" tabindex="0">IMDSv2<span class="sigla-exp"> (Instance Metadata Service versión 2: con token de sesión)</span></abbr> exige un token de
+          sesión y protege contra ataques <abbr class="sigla sigla-1" data-s="SSRF" data-en="Server-Side Request Forgery" data-es="ataque que hace que el servidor haga peticiones en tu nombre" tabindex="0">SSRF<span class="sigla-exp"> (Server-Side Request Forgery: ataque que hace que el servidor haga peticiones en tu nombre)</span></abbr>.</li>
         <li><strong>User data:</strong> script que se ejecuta en el primer arranque.</li>
         <li><strong>Grupos de colocación:</strong> <em>cluster</em> (misma zona, baja latencia para
-          HPC <span class="sigla">(<em>High Performance Computing</em>: cómputo de alto rendimiento)</span>), <em>spread</em> (hardware distinto, máximo 7 instancias por zona) y
+          <abbr class="sigla sigla-1" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC<span class="sigla-exp"> (High Performance Computing: cómputo de alto rendimiento)</span></abbr>), <em>spread</em> (hardware distinto, máximo 7 instancias por zona) y
           <em>partition</em> (particiones aisladas para Hadoop, Cassandra o Kafka).</li>
-        <li><strong><a href="ec2-auto-scaling.html">Auto Scaling</a> y <a href="elb.html">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>:</strong> un grupo de Auto Scaling mantiene el número deseado
+        <li><strong><a href="ec2-auto-scaling.html">Auto Scaling</a> y <a href="elb.html"><abbr class="sigla sigla-1" data-s="ELB" data-en="Elastic Load Balancing" tabindex="0">ELB<span class="sigla-exp"> (Elastic Load Balancing)</span></abbr></a>:</strong> un grupo de Auto Scaling mantiene el número deseado
           de instancias en varias zonas y un balanceador reparte el tráfico entre ellas.</li>
-        <li><strong>Hibernación:</strong> guarda la <a href="../servicio.html?id=ram">RAM</a> <span class="sigla">(<em>Random Access Memory</em>: memoria)</span> en el volumen raíz EBS cifrado para arrancar
+        <li><strong>Hibernación:</strong> guarda la <a href="../servicio.html?id=ram"><abbr class="sigla sigla-1" data-s="RAM" data-en="Random Access Memory" data-es="memoria" tabindex="0">RAM<span class="sigla-exp"> (Random Access Memory: memoria)</span></abbr></a> en el volumen raíz <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr> cifrado para arrancar
           más rápido con la memoria intacta.</li>
       </ul>
 
@@ -112,7 +112,7 @@
             <tr><td><a href="../servicio.html?id=savings-plans">Savings Plans</a> (1 o 3 años)</td><td>Uso estable; compromiso de gasto por hora. <em>Compute</em> se aplica también a <a href="fargate.html">Fargate</a> y <a href="lambda.html">Lambda</a>.</td></tr>
             <tr><td>Instancias reservadas (1 o 3 años)</td><td>Uso estable de un tipo concreto; las <em>convertibles</em> permiten cambiar de familia.</td></tr>
             <tr><td>Spot</td><td>Hasta un 90 % más barato con capacidad sobrante; AWS la recupera con 2 minutos de aviso. Solo para cargas tolerantes a interrupciones.</td></tr>
-            <tr><td>Hosts dedicados</td><td>Licencias por socket o núcleo (BYOL) y requisitos de cumplimiento con visibilidad del servidor físico.</td></tr>
+            <tr><td>Hosts dedicados</td><td>Licencias por socket o núcleo (<abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr>) y requisitos de cumplimiento con visibilidad del servidor físico.</td></tr>
             <tr><td>Instancias dedicadas</td><td>Hardware no compartido con otras cuentas, sin control de la ubicación.</td></tr>
             <tr><td>Reservas de capacidad</td><td>Garantizar capacidad en una zona concreta, sin descuento por sí mismas.</td></tr>
           </tbody>
@@ -123,7 +123,7 @@
       <ul>
         <li>Aplicaciones que necesitan control del sistema operativo o software de terceros.</li>
         <li>Migraciones <em>lift-and-shift</em> de servidores locales.</li>
-        <li>Cómputo de alto rendimiento (HPC) y entrenamiento de modelos con GPU.</li>
+        <li>Cómputo de alto rendimiento (<abbr class="sigla" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC</abbr>) y entrenamiento de modelos con <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr>.</li>
         <li>Flotas web detrás de un balanceador con <a href="ec2-auto-scaling.html">Auto Scaling</a>.</li>
         <li>Procesamiento por lotes barato con instancias Spot.</li>
       </ul>
@@ -131,9 +131,9 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Código corto y dirigido por eventos: <a href="lambda.html">Lambda</a>, sin servidores que parchear.</li>
-        <li>Contenedores sin gestionar instancias: <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> o <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span> con <a href="fargate.html">Fargate</a>.</li>
+        <li>Contenedores sin gestionar instancias: <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> o <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a> con <a href="fargate.html">Fargate</a>.</li>
         <li>Una web o una app sencilla con precio fijo mensual: <a href="../servicio.html?id=lightsail">Lightsail</a> o <a href="elastic-beanstalk.html">Elastic Beanstalk</a>.</li>
-        <li>Una base de datos gestionada: <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a> en vez de instalarla en EC2.</li>
+        <li>Una base de datos gestionada: <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a> en vez de instalarla en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -141,11 +141,11 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
-            <tr><td>Control total del servidor</td><td>EC2</td></tr>
+            <tr><td>Control total del servidor</td><td><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></td></tr>
             <tr><td>Funciones por evento, hasta 15 minutos</td><td><a href="lambda.html">Lambda</a></td></tr>
-            <tr><td>Contenedores sin servidores</td><td><a href="fargate.html">Fargate</a> (con <a href="ecs.html">ECS</a> o <a href="eks.html">EKS</a>)</td></tr>
+            <tr><td>Contenedores sin servidores</td><td><a href="fargate.html">Fargate</a> (con <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> o <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>)</td></tr>
             <tr><td>Desplegar código sin montar la infraestructura</td><td><a href="elastic-beanstalk.html">Elastic Beanstalk</a></td></tr>
-            <tr><td>VPS <span class="sigla">(<em>Virtual Private Server</em>: servidor virtual privado)</span> sencillo a precio fijo</td><td><a href="../servicio.html?id=lightsail">Lightsail</a></td></tr>
+            <tr><td><abbr class="sigla sigla-1" data-s="VPS" data-en="Virtual Private Server" data-es="servidor virtual privado" tabindex="0">VPS<span class="sigla-exp"> (Virtual Private Server: servidor virtual privado)</span></abbr> sencillo a precio fijo</td><td><a href="../servicio.html?id=lightsail">Lightsail</a></td></tr>
             <tr><td>Trabajos por lotes gestionados</td><td><a href="../servicio.html?id=batch">AWS Batch</a></td></tr>
           </tbody>
         </table>
@@ -154,7 +154,7 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga el tiempo de ejecución de la instancia (por segundo en Linux y en la mayoría de
         sistemas, con un mínimo de 60 segundos), según tipo, región y opción de compra. Aparte se
-        pagan los volúmenes <a href="ebs.html">EBS</a> (también con la instancia parada), las instantáneas, las direcciones
+        pagan los volúmenes <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> (también con la instancia parada), las instantáneas, las direcciones
         IPv4 públicas, la transferencia de datos de salida y los extras como el balanceador. Una
         instancia <strong>parada</strong> no cobra cómputo, pero sí su almacenamiento.</p>
 
@@ -165,9 +165,9 @@
           balanceador.</li>
         <li>Recuperación automática de la instancia si falla el hardware subyacente
           (<em>auto recovery</em>).</li>
-        <li>Cifrado de volúmenes <a href="ebs.html">EBS</a> con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>; se puede activar por defecto en la región.</li>
+        <li>Cifrado de volúmenes <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>; se puede activar por defecto en la región.</li>
         <li>Instancias en subredes privadas y acceso con <a href="../servicio.html?id=systems-manager">Session Manager</a> en lugar de bastiones.</li>
-        <li>Copias con instantáneas EBS o <a href="../servicio.html?id=backup">AWS Backup</a>, y AMI para reconstruir la máquina.</li>
+        <li>Copias con instantáneas <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr> o <a href="../servicio.html?id=backup">AWS Backup</a>, y <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> para reconstruir la máquina.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
@@ -175,10 +175,10 @@
         <li><strong>"Tolerante a interrupciones"</strong> y <strong>"lo más barato"</strong>: Spot.</li>
         <li><strong>"Uso constante durante 1 o 3 años"</strong>: <a href="../servicio.html?id=savings-plans">Savings Plans</a> o instancias reservadas.</li>
         <li><strong>"Licencias por socket o núcleo"</strong>: hosts dedicados.</li>
-        <li><strong>"La aplicación necesita permisos de AWS"</strong>: rol de <a href="iam.html">IAM</a> en la instancia, nunca claves en el código.</li>
-        <li><strong>"Latencia de red mínima entre nodos HPC"</strong>: grupo de colocación <em>cluster</em>.</li>
+        <li><strong>"La aplicación necesita permisos de AWS"</strong>: rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> en la instancia, nunca claves en el código.</li>
+        <li><strong>"Latencia de red mínima entre nodos <abbr class="sigla" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC</abbr>"</strong>: grupo de colocación <em>cluster</em>.</li>
         <li><strong>"Datos temporales de altísimo rendimiento"</strong>: instance store (se pierden al parar).</li>
-        <li><strong>"Acceso sin abrir SSH"</strong>: <a href="../servicio.html?id=systems-manager">Session Manager</a>.</li>
+        <li><strong>"Acceso sin abrir <abbr class="sigla" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH</abbr>"</strong>: <a href="../servicio.html?id=systems-manager">Session Manager</a>.</li>
         <li><strong>"Parchear el sistema operativo"</strong>: responsabilidad del cliente (Systems Manager Patch Manager ayuda).</li>
       </ul>
 
@@ -226,6 +226,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

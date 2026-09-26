@@ -65,7 +65,7 @@
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
       <p>Amazon EventBridge es un servicio sin servidores para construir arquitecturas
-        <strong>dirigidas por eventos</strong>. Un <strong>evento</strong> es un JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span> que dice "ha
+        <strong>dirigidas por eventos</strong>. Un <strong>evento</strong> es un <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> que dice "ha
         pasado algo" (se creó un pedido, una instancia cambió de estado, alguien subió un fichero).
         EventBridge recibe esos eventos en un <strong>bus</strong>, los compara con
         <strong>reglas</strong> y envía los que coinciden a sus <strong>destinos</strong>. Quien emite
@@ -78,11 +78,11 @@
         <li><strong>Buses de eventos:</strong> el bus <em>por defecto</em> recibe los eventos de los
           servicios de AWS; los <em>personalizados</em>, los de tus aplicaciones; los de
           <em>socios</em>, los de proveedores SaaS (software como servicio) como Zendesk o Shopify.</li>
-        <li><strong>Reglas y patrones:</strong> una regla filtra eventos por cualquier campo del JSON
+        <li><strong>Reglas y patrones:</strong> una regla filtra eventos por cualquier campo del <abbr class="sigla" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON</abbr>
           (prefijos, números, listas, existencia…) y los envía a hasta 5 destinos. También puede
           transformar el evento antes de enviarlo (<em>input transformer</em>).</li>
-        <li><strong>Destinos:</strong> <a href="lambda.html">Lambda</a>, <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, <a href="step-functions.html">Step Functions</a>, Kinesis, <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span>, <a href="api-gateway.html">API Gateway</a>,
-          otro bus (incluso de otra cuenta o región), <em>API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> destinations</em> hacia cualquier API HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>
+        <li><strong>Destinos:</strong> <a href="lambda.html">Lambda</a>, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, <a href="step-functions.html">Step Functions</a>, Kinesis, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="api-gateway.html">API Gateway</a>,
+          otro bus (incluso de otra cuenta o región), <em><abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> destinations</em> hacia cualquier API <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>
           externa, y muchos más.</li>
         <li><strong>Tamaño de evento:</strong> hasta <strong>1 MB</strong> en la mayoría de regiones
           (antes 256 KB).</li>
@@ -93,11 +93,11 @@
         <li><strong>EventBridge Scheduler:</strong> programa millones de tareas puntuales o
           recurrentes (expresiones <code>cron</code> y <code>rate</code>, con zona horaria) que invocan
           directamente más de 200 servicios. Sustituye a las reglas programadas.</li>
-        <li><strong>EventBridge Pipes:</strong> conecta una fuente (SQS, Kinesis, <a href="dynamodb.html">DynamoDB</a> Streams,
-          <a href="../servicio.html?id=msk">MSK</a> <span class="sigla">(<em>Managed Streaming for Apache Kafka</em>)</span>…) con un destino, con filtrado, enriquecimiento y transformación opcionales, sin escribir
+        <li><strong>EventBridge Pipes:</strong> conecta una fuente (<abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>, Kinesis, <a href="dynamodb.html">DynamoDB</a> Streams,
+          <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>…) con un destino, con filtrado, enriquecimiento y transformación opcionales, sin escribir
           código de pegamento.</li>
-        <li><strong>Reintentos y DLQ <span class="sigla">(<em>Dead-Letter Queue</em>: cola donde acaban los mensajes que fallan)</span>:</strong> reintenta hasta 24 horas y, si no consigue entregar,
-          envía el evento a una cola de mensajes fallidos de SQS.</li>
+        <li><strong>Reintentos y <abbr class="sigla sigla-1" data-s="DLQ" data-en="Dead-Letter Queue" data-es="cola donde acaban los mensajes que fallan" tabindex="0">DLQ<span class="sigla-exp"> (Dead-Letter Queue: cola donde acaban los mensajes que fallan)</span></abbr>:</strong> reintenta hasta 24 horas y, si no consigue entregar,
+          envía el evento a una cola de mensajes fallidos de <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -105,17 +105,17 @@
         <li>Reaccionar a cambios en AWS: una instancia se detiene, un bucket se hace público, falla un
           despliegue.</li>
         <li>Desacoplar microservicios que publican eventos de dominio y se suscriben por reglas.</li>
-        <li>Integrar aplicaciones SaaS con tus funciones o colas sin sondear sus API.</li>
+        <li>Integrar aplicaciones SaaS con tus funciones o colas sin sondear sus <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
         <li>Tareas programadas (informes diarios, limpiezas, recordatorios) con Scheduler.</li>
         <li>Centralizar eventos de varias cuentas en una cuenta de seguridad u operaciones.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si los mensajes deben esperar a que un consumidor los recoja: <a href="sqs.html">SQS</a> (EventBridge entrega, no
+        <li>Si los mensajes deben esperar a que un consumidor los recoja: <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> (EventBridge entrega, no
           almacena salvo el archivo).</li>
-        <li>Streaming de gran volumen con orden y relectura: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk">MSK</a>.</li>
-        <li>Notificaciones a personas por SMS <span class="sigla">(<em>Short Message Service</em>: mensajes de texto al móvil)</span> o push móvil: <a href="sns.html">SNS</a>.</li>
+        <li>Streaming de gran volumen con orden y relectura: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk"><abbr class="sigla" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK</abbr></a>.</li>
+        <li>Notificaciones a personas por <abbr class="sigla sigla-1" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS<span class="sigla-exp"> (Short Message Service: mensajes de texto al móvil)</span></abbr> o push móvil: <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a>.</li>
         <li>Orquestar pasos con estado y esperas: <a href="step-functions.html">Step Functions</a> (que se puede lanzar desde
           EventBridge).</li>
       </ul>
@@ -123,13 +123,13 @@
       <h2 id="comparativa">EventBridge frente a SNS</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>EventBridge</th><th><a href="sns.html">SNS</a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>EventBridge</th><th><a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a></th></tr></thead>
           <tbody>
-            <tr><td>Eventos de servicios de AWS y SaaS</td><td>Sí, nativos</td><td>Solo los que publican en SNS</td></tr>
+            <tr><td>Eventos de servicios de AWS y SaaS</td><td>Sí, nativos</td><td>Solo los que publican en <abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></td></tr>
             <tr><td>Filtrado</td><td>Patrones sobre todo el evento</td><td>Políticas de filtrado</td></tr>
-            <tr><td>Destinos</td><td>Más de 20 servicios y API externas</td><td><a href="sqs.html">SQS</a>, <a href="lambda.html">Lambda</a>, HTTP, correo, SMS, móvil</td></tr>
+            <tr><td>Destinos</td><td>Más de 20 servicios y <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> externas</td><td><a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>, <a href="lambda.html">Lambda</a>, <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>, correo, <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr>, móvil</td></tr>
             <tr><td>Programación horaria</td><td>Sí (Scheduler)</td><td>No</td></tr>
-            <tr><td>Archivo y reproducción</td><td>Sí</td><td>Solo temas FIFO <span class="sigla">(<em>First In, First Out</em>: el primero en entrar es el primero en salir)</span></td></tr>
+            <tr><td>Archivo y reproducción</td><td>Sí</td><td>Solo temas <abbr class="sigla sigla-1" data-s="FIFO" data-en="First In, First Out" data-es="el primero en entrar es el primero en salir" tabindex="0">FIFO<span class="sigla-exp"> (First In, First Out: el primero en entrar es el primero en salir)</span></abbr></td></tr>
             <tr><td>Rendimiento y latencia</td><td>Alto, con cuotas por región</td><td>Muy alto, latencia mínima</td></tr>
           </tbody>
         </table>
@@ -138,15 +138,15 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Los eventos de servicios de AWS en el bus por defecto son gratuitos; se pagan los eventos
         personalizados y de socios publicados (por millón, cada 64 KB cuenta como uno), la entrega
-        entre cuentas, el archivo (por GB guardado y procesado), las invocaciones de API destinations,
+        entre cuentas, el archivo (por GB guardado y procesado), las invocaciones de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> destinations,
         las peticiones de Pipes y las invocaciones de Scheduler (con un nivel gratuito generoso).</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Servicio regional y redundante en varias zonas.</li>
         <li>Políticas de recursos en el bus para aceptar eventos de otras cuentas o de la organización.</li>
-        <li>Roles de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> para que EventBridge invoque los destinos.</li>
-        <li>Cifrado en reposo, con opción de clave de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> gestionada por el cliente.</li>
+        <li>Roles de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para que EventBridge invoque los destinos.</li>
+        <li>Cifrado en reposo, con opción de clave de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> gestionada por el cliente.</li>
         <li>Buses globales y replicación de eventos entre regiones con <em>global endpoints</em>.</li>
       </ul>
 
@@ -158,7 +158,7 @@
         <li><strong>"Conectar una cola con <a href="step-functions.html">Step Functions</a> sin código intermedio"</strong>: EventBridge Pipes.</li>
         <li><strong>"Reprocesar los eventos de ayer tras corregir un error"</strong>: archivo y reproducción.</li>
         <li><strong>"Centralizar eventos de todas las cuentas"</strong>: reglas que envían al bus de una cuenta central con política de recursos.</li>
-        <li><strong>"Llamar a una API HTTP de un tercero ante un evento"</strong>: API destinations.</li>
+        <li><strong>"Llamar a una API <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> de un tercero ante un evento"</strong>: <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> destinations.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -206,6 +206,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

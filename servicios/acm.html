@@ -63,42 +63,42 @@
 
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
-      <p>AWS Certificate Manager (ACM) emite y gestiona certificados SSL/TLS para dominios y los
+      <p>AWS Certificate Manager (<abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr>) emite y gestiona certificados SSL/TLS para dominios y los
         despliega en servicios integrados de AWS (<a href="elb.html">Elastic Load Balancing</a>, <a href="cloudfront.html">CloudFront</a>, <a href="api-gateway.html">API Gateway</a>, App
         Runner, entre otros). Los certificados públicos para estos servicios son
         <strong>gratuitos</strong> y se <strong>renuevan automáticamente</strong>.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Validación del dominio:</strong> por <strong>DNS <span class="sigla">(<em>Domain Name System</em>: traduce nombres de dominio a direcciones IP)</span></strong> (un registro CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>;
+        <li><strong>Validación del dominio:</strong> por <strong><abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr></strong> (un registro <abbr class="sigla sigla-1" data-s="CNAME" data-en="Canonical Name" data-es="registro DNS que apunta a otro nombre" tabindex="0">CNAME<span class="sigla-exp"> (Canonical Name: registro DNS que apunta a otro nombre)</span></abbr>;
           permite la renovación automática mientras el registro exista) o por
           <strong>correo</strong> (requiere acción en cada renovación).</li>
         <li><strong>Certificados regionales:</strong> un certificado se usa en la región donde se crea.
           Para <strong><a href="cloudfront.html">CloudFront</a></strong>, siempre en <strong>us-east-1</strong>.</li>
         <li><strong>Comodines y varios nombres:</strong> <code>*.ejemplo.com</code> y certificados con
-          varios nombres de dominio (SAN).</li>
-        <li><strong>Validez:</strong> los certificados públicos de ACM son de 198 días y ACM los renueva
+          varios nombres de dominio (<abbr class="sigla" data-s="SAN" data-en="Subject Alternative Name" data-es="nombres adicionales de un certificado" tabindex="0">SAN</abbr>).</li>
+        <li><strong>Validez:</strong> los certificados públicos de <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> son de 198 días y <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> los renueva
           solo antes de caducar.</li>
-        <li><strong>Certificados importados:</strong> de otras autoridades; ACM <strong>no los
+        <li><strong>Certificados importados:</strong> de otras autoridades; <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> <strong>no los
           renueva</strong>, y hay que vigilar su caducidad con eventos o métricas.</li>
         <li><strong>Certificados exportables:</strong> opción de pago que permite obtener la clave privada
-          para usar el certificado fuera de los servicios integrados (<a href="ec2.html">EC2</a>, contenedores, servidores
+          para usar el certificado fuera de los servicios integrados (<a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, contenedores, servidores
           propios). Los certificados estándar no se pueden exportar.</li>
-        <li><strong>AWS Private CA <span class="sigla">(<em>Certificate Authority</em>: autoridad de certificación)</span>:</strong> autoridad de certificación privada (de pago) para
+        <li><strong>AWS Private <abbr class="sigla sigla-1" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA<span class="sigla-exp"> (Certificate Authority: autoridad de certificación)</span></abbr>:</strong> autoridad de certificación privada (de pago) para
           certificados internos.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> con dominio propio en <a href="cloudfront.html">CloudFront</a>, un <a href="elb.html">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span> o <a href="api-gateway.html">API Gateway</a>.</li>
+        <li><abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> con dominio propio en <a href="cloudfront.html">CloudFront</a>, un <a href="elb.html"><abbr class="sigla sigla-1" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB<span class="sigla-exp"> (Application Load Balancer: balanceador HTTP/HTTPS)</span></abbr></a> o <a href="api-gateway.html">API Gateway</a>.</li>
         <li>Certificados comodín para varios subdominios.</li>
-        <li>Certificados privados para TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> mutuo o servicios internos (con Private CA).</li>
+        <li>Certificados privados para <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> mutuo o servicios internos (con Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>).</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si necesitas instalar el certificado directamente en un servidor web en <a href="ec2.html">EC2</a> y no quieres pagar
-          por la exportación: otra autoridad de certificación o terminar TLS en un balanceador.</li>
+        <li>Si necesitas instalar el certificado directamente en un servidor web en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> y no quieres pagar
+          por la exportación: otra autoridad de certificación o terminar <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> en un balanceador.</li>
         <li>Si el certificado debe usarse en otra región: hay que crearlo o importarlo en esa región.</li>
       </ul>
 
@@ -107,10 +107,10 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
           <tbody>
-            <tr><td>HTTPS público en servicios integrados, gratis y con renovación automática</td><td>Certificado público de ACM</td></tr>
-            <tr><td>Certificado público para instalar en un servidor propio</td><td>Certificado exportable de ACM (de pago) u otra CA</td></tr>
-            <tr><td>Certificados internos para servicios o dispositivos</td><td>AWS Private CA</td></tr>
-            <tr><td>Certificado ya comprado a otra CA</td><td>Importarlo en ACM (sin renovación automática)</td></tr>
+            <tr><td><abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> público en servicios integrados, gratis y con renovación automática</td><td>Certificado público de <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></td></tr>
+            <tr><td>Certificado público para instalar en un servidor propio</td><td>Certificado exportable de <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> (de pago) u otra <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr></td></tr>
+            <tr><td>Certificados internos para servicios o dispositivos</td><td>AWS Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr></td></tr>
+            <tr><td>Certificado ya comprado a otra <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr></td><td>Importarlo en <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> (sin renovación automática)</td></tr>
           </tbody>
         </table>
       </div>
@@ -118,32 +118,32 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Los certificados públicos usados con servicios integrados son gratuitos, y también importar
         certificados. Los certificados públicos exportables se cobran al emitirse y en cada renovación.
-        AWS Private CA tiene una cuota mensual por autoridad y un precio por certificado emitido. Solo
+        AWS Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> tiene una cuota mensual por autoridad y un precio por certificado emitido. Solo
         pagas los recursos que los usan.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>La clave privada de los certificados estándar la protege AWS y no sale del servicio.</li>
-        <li>Renovación automática con validación DNS: evita caídas por certificados caducados.</li>
+        <li>Renovación automática con validación <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr>: evita caídas por certificados caducados.</li>
         <li>Eventos de <a href="eventbridge.html">EventBridge</a> y métrica de días hasta la caducidad para vigilar los certificados importados.</li>
-        <li>Permisos con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> para solicitar, importar o borrar certificados.</li>
+        <li>Permisos con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para solicitar, importar o borrar certificados.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
-      <p>Kopi tiene dos certificados validados por DNS en <a href="route-53.html">Route 53</a>: uno en <strong>us-east-1</strong>
-        para la web servida por <a href="cloudfront.html">CloudFront</a> y otro en la región principal para el dominio propio de API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>
-        Gateway. Con los registros de validación en la zona, ACM los renueva sin intervención. Tener que
+      <p>Kopi tiene dos certificados validados por <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> en <a href="route-53.html">Route 53</a>: uno en <strong>us-east-1</strong>
+        para la web servida por <a href="cloudfront.html">CloudFront</a> y otro en la región principal para el dominio propio de <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>
+        Gateway. Con los registros de validación en la zona, <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> los renueva sin intervención. Tener que
         crear el certificado de CloudFront en otra región sorprende la primera vez.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Certificado para <a href="cloudfront.html">CloudFront</a>"</strong>: ACM en <strong>us-east-1</strong>.</li>
-        <li><strong>"Renovación automática"</strong>: validación por DNS (la de correo exige acción humana).</li>
-        <li><strong>"Certificado importado caducado"</strong>: ACM no renueva los importados; hay que
+        <li><strong>"Certificado para <a href="cloudfront.html">CloudFront</a>"</strong>: <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> en <strong>us-east-1</strong>.</li>
+        <li><strong>"Renovación automática"</strong>: validación por <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> (la de correo exige acción humana).</li>
+        <li><strong>"Certificado importado caducado"</strong>: <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> no renueva los importados; hay que
           vigilarlos con <a href="eventbridge.html">EventBridge</a> o <a href="cloudwatch.html">CloudWatch</a>.</li>
-        <li><strong>"HTTPS en <a href="ec2.html">EC2</a> sin pagar certificados"</strong>: terminar TLS en un <a href="elb.html">ALB</a> con un
-          certificado de ACM.</li>
-        <li><strong>"Certificados internos"</strong>: AWS Private CA.</li>
+        <li><strong>"<abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> sin pagar certificados"</strong>: terminar <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> en un <a href="elb.html"><abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr></a> con un
+          certificado de <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr>.</li>
+        <li><strong>"Certificados internos"</strong>: AWS Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -190,6 +190,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

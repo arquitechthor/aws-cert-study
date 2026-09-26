@@ -62,7 +62,7 @@
       0,
       1
     ],
-    "explicacion": "AppSync admite varios modos de autorización en la misma API y reglas por tipo o campo: una clave de API para lo público y Cognito para lo autenticado. Los security groups, las NACL (Network Access Control List: firewall a nivel de subred) y las políticas de bucket no autorizan operaciones de GraphQL. Siglas: S3 (Simple Storage Service).",
+    "explicacion": "AppSync admite varios modos de autorización en la misma API y reglas por tipo o campo: una clave de API para lo público y Cognito para lo autenticado. Los security groups, las NACL y las políticas de bucket no autorizan operaciones de GraphQL.",
     "fuentes": [
       "https://docs.aws.amazon.com/appsync/latest/devguide/security-authz.html"
     ]
@@ -128,7 +128,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Amplify ofrece almacenamiento local y sincronización sobre AppSync, que sirve los datos de DynamoDB por GraphQL, y Cognito autentica a los usuarios. Las otras opciones obligan a programar la sincronización o no son adecuadas para clientes móviles. Siglas: EC2 (Elastic Compute Cloud); S3 (Simple Storage Service).",
+    "explicacion": "Amplify ofrece almacenamiento local y sincronización sobre AppSync, que sirve los datos de DynamoDB por GraphQL, y Cognito autentica a los usuarios. Las otras opciones obligan a programar la sincronización o no son adecuadas para clientes móviles.",
     "fuentes": [
       "https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html"
     ]
@@ -150,7 +150,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "La caché de AppSync devuelve las respuestas repetidas sin llegar a DynamoDB durante el TTL (Time To Live: tiempo de vida antes de caducar) configurado. Cambiar la capacidad o añadir índices no reduce las lecturas repetidas y cambiar de región no tiene relación.",
+    "explicacion": "La caché de AppSync devuelve las respuestas repetidas sin llegar a DynamoDB durante el TTL configurado. Cambiar la capacidad o añadir índices no reduce las lecturas repetidas y cambiar de región no tiene relación.",
     "fuentes": [
       "https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html"
     ]

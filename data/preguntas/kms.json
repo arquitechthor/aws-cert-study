@@ -6,7 +6,7 @@
       "CLF-C02"
     ],
     "dominio": "Seguridad y cumplimiento",
-    "enunciado": "¿Qué servicio de AWS permite crear y controlar las claves que se usan para cifrar datos en servicios como S3 (Simple Storage Service) o EBS (Elastic Block Store)?",
+    "enunciado": "¿Qué servicio de AWS permite crear y controlar las claves que se usan para cifrar datos en servicios como S3 o EBS?",
     "opciones": [
       "AWS KMS.",
       "AWS Shield.",
@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "AWS KMS (Key Management Service) crea y gestiona claves criptográficas integradas con la mayoría de servicios. Shield protege frente a DDoS (Distributed Denial of Service: ataque que satura un servicio desde muchos orígenes), Inspector busca vulnerabilidades y WAF (Web Application Firewall) filtra peticiones web.",
+    "explicacion": "AWS KMS crea y gestiona claves criptográficas integradas con la mayoría de servicios. Shield protege frente a DDoS, Inspector busca vulnerabilidades y WAF filtra peticiones web.",
     "fuentes": [
       "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html"
     ]
@@ -28,7 +28,7 @@
       "CLF-C02"
     ],
     "dominio": "Seguridad y cumplimiento",
-    "enunciado": "Un auditor quiere saber quién usó una clave de KMS (Key Management Service) para descifrar datos y cuándo. ¿Dónde se consulta?",
+    "enunciado": "Un auditor quiere saber quién usó una clave de KMS para descifrar datos y cuándo. ¿Dónde se consulta?",
     "opciones": [
       "En AWS CloudTrail.",
       "En Amazon CloudWatch Metrics.",
@@ -38,7 +38,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Cada llamada a la API (Application Programming Interface: interfaz para que los programas se comuniquen) de KMS, incluido Decrypt, queda registrada en CloudTrail con la identidad y la hora. Las métricas de CloudWatch no identifican a las personas, Trusted Advisor da recomendaciones y Artifact ofrece informes de cumplimiento de AWS.",
+    "explicacion": "Cada llamada a la API de KMS, incluido Decrypt, queda registrada en CloudTrail con la identidad y la hora. Las métricas de CloudWatch no identifican a las personas, Trusted Advisor da recomendaciones y Artifact ofrece informes de cumplimiento de AWS.",
     "fuentes": [
       "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html"
     ]
@@ -50,7 +50,7 @@
       "AIF-C01"
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
-    "enunciado": "Una empresa debe demostrar que controla las claves con las que se cifran los datos de entrenamiento y los artefactos de sus modelos en SageMaker AI y S3 (Simple Storage Service), y poder revocar el acceso. ¿Qué opción cumple el requisito?",
+    "enunciado": "Una empresa debe demostrar que controla las claves con las que se cifran los datos de entrenamiento y los artefactos de sus modelos en SageMaker AI y S3, y poder revocar el acceso. ¿Qué opción cumple el requisito?",
     "opciones": [
       "Claves de KMS gestionadas por el cliente.",
       "Claves propiedad de AWS.",
@@ -60,7 +60,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Con una clave gestionada por el cliente, la empresa controla su política, puede desactivarla para revocar el acceso y audita su uso. Las claves propiedad de AWS o el cifrado por defecto no dan ese control, y un bucket público va en contra del requisito. Siglas: KMS (Key Management Service).",
+    "explicacion": "Con una clave gestionada por el cliente, la empresa controla su política, puede desactivarla para revocar el acceso y audita su uso. Las claves propiedad de AWS o el cifrado por defecto no dan ese control, y un bucket público va en contra del requisito.",
     "fuentes": [
       "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html"
     ]
@@ -72,7 +72,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Una empresa debe cifrar volúmenes EBS (Elastic Block Store) con una clave cuya rotación anual controle ella, y compartir instantáneas cifradas con otra cuenta. ¿Qué tipo de clave necesita?",
+    "enunciado": "Una empresa debe cifrar volúmenes EBS con una clave cuya rotación anual controle ella, y compartir instantáneas cifradas con otra cuenta. ¿Qué tipo de clave necesita?",
     "opciones": [
       "La clave gestionada por AWS aws/ebs.",
       "Una clave de KMS gestionada por el cliente.",
@@ -82,7 +82,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Solo las claves gestionadas por el cliente permiten controlar la rotación y editar la política para que otra cuenta use la clave y así lea las instantáneas compartidas. La clave aws/ebs no se puede compartir ni modificar, las propiedad de AWS no se ven y una clave SSH (Secure Shell: acceso remoto cifrado por terminal) no cifra volúmenes. Siglas: EC2 (Elastic Compute Cloud); KMS (Key Management Service).",
+    "explicacion": "Solo las claves gestionadas por el cliente permiten controlar la rotación y editar la política para que otra cuenta use la clave y así lea las instantáneas compartidas. La clave aws/ebs no se puede compartir ni modificar, las propiedad de AWS no se ven y una clave SSH no cifra volúmenes.",
     "fuentes": [
       "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html",
       "https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html"
@@ -95,7 +95,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas con costos optimizados",
-    "enunciado": "Un bucket con cifrado SSE-KMS (Server-Side Encryption with KMS keys: cifrado en el servidor con claves de KMS) recibe millones de escrituras al día y la factura de KMS (Key Management Service) es elevada. ¿Qué cambio la reduce sin renunciar a SSE-KMS?",
+    "enunciado": "Un bucket con cifrado SSE-KMS recibe millones de escrituras al día y la factura de KMS es elevada. ¿Qué cambio la reduce sin renunciar a SSE-KMS?",
     "opciones": [
       "Activar S3 Bucket Keys.",
       "Pasar a claves asimétricas.",
@@ -117,7 +117,7 @@
       "DVA-C02"
     ],
     "dominio": "Seguridad",
-    "enunciado": "Una aplicación debe cifrar ficheros de 50 MB con una clave de KMS (Key Management Service). ¿Cuál es el enfoque correcto?",
+    "enunciado": "Una aplicación debe cifrar ficheros de 50 MB con una clave de KMS. ¿Cuál es el enfoque correcto?",
     "opciones": [
       "Llamar a Encrypt de KMS con el fichero completo.",
       "Llamar a GenerateDataKey, cifrar el fichero localmente con la clave de datos en claro y guardar la clave de datos cifrada junto al fichero.",
@@ -139,7 +139,7 @@
       "DVA-C02"
     ],
     "dominio": "Solución de problemas y optimización",
-    "enunciado": "Una función Lambda con permiso kms:Decrypt en su rol de IAM (Identity and Access Management) recibe AccessDeniedException al descifrar con una clave gestionada por el cliente de otra cuenta. ¿Cuál es la causa más probable?",
+    "enunciado": "Una función Lambda con permiso kms:Decrypt en su rol de IAM recibe AccessDeniedException al descifrar con una clave gestionada por el cliente de otra cuenta. ¿Cuál es la causa más probable?",
     "opciones": [
       "La política de la clave no permite el uso por ese rol o esa cuenta.",
       "Lambda no puede usar KMS.",
@@ -149,7 +149,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "En KMS (Key Management Service) la política de la clave es obligatoria: para un uso entre cuentas, tanto la política de la clave como la de IAM deben permitirlo. Lambda sí puede usar KMS, la rotación no impide descifrar y la memoria no provoca un AccessDenied.",
+    "explicacion": "En KMS la política de la clave es obligatoria: para un uso entre cuentas, tanto la política de la clave como la de IAM deben permitirlo. Lambda sí puede usar KMS, la rotación no impide descifrar y la memoria no provoca un AccessDenied.",
     "fuentes": [
       "https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html"
     ]
@@ -161,7 +161,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar soluciones para la complejidad organizativa",
-    "enunciado": "Un equipo de seguridad central gestiona las claves de KMS (Key Management Service) de una organización y los equipos de aplicación solo deben poder usarlas para cifrar y descifrar a través de S3 (Simple Storage Service), sin administrarlas. ¿Qué DOS medidas lo consiguen? (Elige 2.)",
+    "enunciado": "Un equipo de seguridad central gestiona las claves de KMS de una organización y los equipos de aplicación solo deben poder usarlas para cifrar y descifrar a través de S3, sin administrarlas. ¿Qué DOS medidas lo consiguen? (Elige 2.)",
     "opciones": [
       "Separar en la política de la clave los administradores (gestión) de los usuarios (uso criptográfico).",
       "Añadir la condición kms:ViaService con el servicio S3 a los permisos de uso.",
@@ -195,7 +195,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Las claves multirregión comparten el material y el identificador de clave entre regiones, así que lo cifrado en una región se descifra con la réplica en otra. El material de una clave simétrica de KMS (Key Management Service) no se puede exportar, las gestionadas por AWS son distintas en cada región y guardar la clave en claro anula el cifrado.",
+    "explicacion": "Las claves multirregión comparten el material y el identificador de clave entre regiones, así que lo cifrado en una región se descifra con la réplica en otra. El material de una clave simétrica de KMS no se puede exportar, las gestionadas por AWS son distintas en cada región y guardar la clave en claro anula el cifrado.",
     "fuentes": [
       "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html"
     ]

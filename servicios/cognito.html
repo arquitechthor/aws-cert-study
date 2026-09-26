@@ -65,11 +65,11 @@
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
       <p>Amazon Cognito gestiona la identidad de los <strong>usuarios finales</strong> de tus
-        aplicaciones: registro, inicio de sesión, recuperación de contraseña, MFA <span class="sigla">(<em>Multi-Factor Authentication</em>: inicio de sesión con un segundo factor)</span> y federación con
-        proveedores externos. Tras autenticar, emite <strong>tokens JWT <span class="sigla">(<em>JSON Web Token</em>: token firmado con datos del usuario)</span></strong> que tu backend puede
+        aplicaciones: registro, inicio de sesión, recuperación de contraseña, <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr> y federación con
+        proveedores externos. Tras autenticar, emite <strong>tokens <abbr class="sigla sigla-1" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT<span class="sigla-exp"> (JSON Web Token: token firmado con datos del usuario)</span></abbr></strong> que tu backend puede
         validar sin mantener su propia base de datos de usuarios. También puede entregar
         <strong>credenciales temporales de AWS</strong> para que una app acceda directamente a
-        servicios como <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>.</p>
+        servicios como <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
@@ -78,26 +78,26 @@
           <strong>access token</strong> (qué puede hacer, con <em>scopes</em> y grupos) y
           <strong>refresh token</strong> (para renovar los anteriores).</li>
         <li><strong>Identity pool (grupo de identidades):</strong> intercambia una identidad (de un
-          user pool, de Google, de SAML <span class="sigla">(<em>Security Assertion Markup Language</em>: estándar de inicio de sesión federado)</span> o incluso anónima) por <strong>credenciales temporales de
-          AWS</strong> asociadas a un rol <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>.</li>
+          user pool, de Google, de <abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr> o incluso anónima) por <strong>credenciales temporales de
+          AWS</strong> asociadas a un rol <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
         <li><strong>Federación:</strong> inicio de sesión con proveedores sociales (Google, Apple,
-          Facebook, Amazon), SAML u OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>.</li>
+          Facebook, Amazon), <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr> u <abbr class="sigla sigla-1" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC<span class="sigla-exp"> (OpenID Connect: estándar de identidad sobre OAuth 2.0)</span></abbr>.</li>
         <li><strong>Grupos:</strong> agrupan usuarios; su nombre viaja en el token
-          (<code>cognito:groups</code>) y pueden asociarse a un rol IAM.</li>
+          (<code>cognito:groups</code>) y pueden asociarse a un rol <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>.</li>
         <li><strong>Disparadores <a href="lambda.html">Lambda</a>:</strong> personalizan el flujo (antes del registro, tras
           confirmar, antes de generar el token, migración de usuarios, etc.).</li>
-        <li><strong>Managed login (antes Hosted UI <span class="sigla">(<em>User Interface</em>: interfaz de usuario)</span>):</strong> páginas de inicio de sesión alojadas por
-          Cognito, con OAuth 2.0 y OIDC.</li>
+        <li><strong>Managed login (antes Hosted <abbr class="sigla sigla-1" data-s="UI" data-en="User Interface" data-es="interfaz de usuario" tabindex="0">UI<span class="sigla-exp"> (User Interface: interfaz de usuario)</span></abbr>):</strong> páginas de inicio de sesión alojadas por
+          Cognito, con OAuth 2.0 y <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr>.</li>
         <li><strong>Planes de funciones:</strong> Lite, Essentials y Plus. Plus añade protección
           frente a amenazas, como detectar contraseñas comprometidas o inicios de sesión de riesgo.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Login de una SPA <span class="sigla">(<em>Single-Page Application</em>: web de una sola página)</span> o app móvil sin programar tu propio sistema de autenticación.</li>
-        <li>Proteger una API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> de <a href="api-gateway.html">API Gateway</a> con un <strong>autorizador de Cognito/JWT</strong>.</li>
+        <li>Login de una <abbr class="sigla sigla-1" data-s="SPA" data-en="Single-Page Application" data-es="web de una sola página" tabindex="0">SPA<span class="sigla-exp"> (Single-Page Application: web de una sola página)</span></abbr> o app móvil sin programar tu propio sistema de autenticación.</li>
+        <li>Proteger una <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de <a href="api-gateway.html">API Gateway</a> con un <strong>autorizador de Cognito/JWT</strong>.</li>
         <li>Autenticación en un <a href="elb.html">Application Load Balancer</a>, que puede delegar el login en Cognito.</li>
-        <li>Que una app móvil suba ficheros directamente a <a href="s3.html">S3</a> con credenciales temporales
+        <li>Que una app móvil suba ficheros directamente a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con credenciales temporales
           (identity pool).</li>
         <li>Acceso de invitados (usuarios no autenticados) con permisos muy reducidos.</li>
       </ul>
@@ -105,9 +105,9 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para dar acceso de los empleados a la consola o a cuentas de AWS: eso es <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
-        <li>Para permisos entre servicios de AWS: eso son roles <a href="iam.html">IAM</a>.</li>
-        <li>Si ya tienes un proveedor de identidad completo y solo necesitas validar sus JWT, <a href="api-gateway.html">API Gateway</a>
-          puede hacerlo directamente con un autorizador JWT sin Cognito.</li>
+        <li>Para permisos entre servicios de AWS: eso son roles <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>.</li>
+        <li>Si ya tienes un proveedor de identidad completo y solo necesitas validar sus <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr>, <a href="api-gateway.html">API Gateway</a>
+          puede hacerlo directamente con un autorizador <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr> sin Cognito.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -116,44 +116,44 @@
           <thead><tr><th>Necesidad</th><th>User pool</th><th>Identity pool</th><th><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></th></tr></thead>
           <tbody>
             <tr><td>¿Para quién?</td><td>Clientes de tu app</td><td>Clientes de tu app</td><td>Empleados</td></tr>
-            <tr><td>¿Qué entrega?</td><td>Tokens JWT</td><td>Credenciales temporales de AWS</td><td>Acceso SSO <span class="sigla">(<em>Single Sign-On</em>: un único inicio de sesión para varias aplicaciones)</span> a cuentas y apps</td></tr>
-            <tr><td>Uso típico</td><td>Login y autorización en tu API</td><td>Acceso directo a <a href="s3.html">S3</a>, <a href="dynamodb.html">DynamoDB</a>…</td><td>Consola y <a href="../servicio.html?id=cli">CLI</a> <span class="sigla">(<em>Command Line Interface</em>: línea de comandos)</span> de AWS</td></tr>
+            <tr><td>¿Qué entrega?</td><td>Tokens <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr></td><td>Credenciales temporales de AWS</td><td>Acceso <abbr class="sigla sigla-1" data-s="SSO" data-en="Single Sign-On" data-es="un único inicio de sesión para varias aplicaciones" tabindex="0">SSO<span class="sigla-exp"> (Single Sign-On: un único inicio de sesión para varias aplicaciones)</span></abbr> a cuentas y apps</td></tr>
+            <tr><td>Uso típico</td><td>Login y autorización en tu <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></td><td>Acceso directo a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="dynamodb.html">DynamoDB</a>…</td><td>Consola y <a href="../servicio.html?id=cli"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> de AWS</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>Se paga por <strong>usuarios activos al mes (MAU)</strong>, según el plan de funciones. Hay
-        un nivel gratuito para un número de MAU que no caduca. La federación con SAML u OIDC y el
-        envío de SMS (para MFA o verificación) tienen coste aparte. Los identity pools no tienen coste
+      <p>Se paga por <strong>usuarios activos al mes (<abbr class="sigla" data-s="MAU" data-en="Monthly Active Users" data-es="usuarios activos al mes" tabindex="0">MAU</abbr>)</strong>, según el plan de funciones. Hay
+        un nivel gratuito para un número de <abbr class="sigla" data-s="MAU" data-en="Monthly Active Users" data-es="usuarios activos al mes" tabindex="0">MAU</abbr> que no caduca. La federación con <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr> u <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr> y el
+        envío de <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr> (para <abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr> o verificación) tienen coste aparte. Los identity pools no tienen coste
         propio.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Las contraseñas nunca pasan por tu backend: el cliente habla con Cognito (protocolo SRP <span class="sigla">(<em>Secure Remote Password</em>: protocolo de inicio de sesión sin enviar la contraseña)</span>).</li>
-        <li>MFA por TOTP <span class="sigla">(<em>Time-based One-Time Password</em>: código temporal de una app autenticadora)</span>, SMS o correo; políticas de contraseña configurables.</li>
-        <li>En clientes públicos (SPA, móvil) no se usa secreto de cliente, sino OAuth con PKCE <span class="sigla">(<em>Proof Key for Code Exchange</em>: protege el flujo de OAuth en apps sin secreto)</span>.</li>
+        <li>Las contraseñas nunca pasan por tu backend: el cliente habla con Cognito (protocolo <abbr class="sigla sigla-1" data-s="SRP" data-en="Secure Remote Password" data-es="protocolo de inicio de sesión sin enviar la contraseña" tabindex="0">SRP<span class="sigla-exp"> (Secure Remote Password: protocolo de inicio de sesión sin enviar la contraseña)</span></abbr>).</li>
+        <li><abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr> por <abbr class="sigla sigla-1" data-s="TOTP" data-en="Time-based One-Time Password" data-es="código temporal de una app autenticadora" tabindex="0">TOTP<span class="sigla-exp"> (Time-based One-Time Password: código temporal de una app autenticadora)</span></abbr>, <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr> o correo; políticas de contraseña configurables.</li>
+        <li>En clientes públicos (<abbr class="sigla" data-s="SPA" data-en="Single-Page Application" data-es="web de una sola página" tabindex="0">SPA</abbr>, móvil) no se usa secreto de cliente, sino OAuth con <abbr class="sigla sigla-1" data-s="PKCE" data-en="Proof Key for Code Exchange" data-es="protege el flujo de OAuth en apps sin secreto" tabindex="0">PKCE<span class="sigla-exp"> (Proof Key for Code Exchange: protege el flujo de OAuth en apps sin secreto)</span></abbr>.</li>
         <li>Access token de vida corta y refresh token revocable.</li>
         <li>Es un servicio regional gestionado y replicado entre zonas de disponibilidad.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
       <p>Kopi usa un user pool con login por correo y contraseña directamente desde la web y la app
-        Android, sin Hosted UI. Tres grupos (<code>ADMIN</code>, <code>USERS</code> y
+        Android, sin Hosted <abbr class="sigla" data-s="UI" data-en="User Interface" data-es="interfaz de usuario" tabindex="0">UI</abbr>. Tres grupos (<code>ADMIN</code>, <code>USERS</code> y
         <code>PENDING</code>) controlan el acceso. Un disparador <em>Pre sign-up</em> evita la
         confirmación automática, porque cada alta la aprueba un administrador a mano. <a href="api-gateway.html">API Gateway</a> valida
-        el JWT en cada petición y las Lambdas leen el grupo del token. Los correos de verificación
-        salen por <a href="ses.html">SES</a> <span class="sigla">(<em>Simple Email Service</em>)</span> con dominio propio, para que no acaben en spam.</p>
+        el <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr> en cada petición y las Lambdas leen el grupo del token. Los correos de verificación
+        salen por <a href="ses.html"><abbr class="sigla sigla-1" data-s="SES" data-en="Simple Email Service" tabindex="0">SES<span class="sigla-exp"> (Simple Email Service)</span></abbr></a> con dominio propio, para que no acaben en spam.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Usuarios de la aplicación"</strong> o <strong>"login social"</strong>: Cognito
-          (user pool). <strong>"Empleados"</strong> o <strong>"SSO a cuentas"</strong>: <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
-        <li><strong>"Acceso directo desde la app móvil a <a href="s3.html">S3</a> o <a href="dynamodb.html">DynamoDB</a>"</strong>: identity pool
+          (user pool). <strong>"Empleados"</strong> o <strong>"<abbr class="sigla" data-s="SSO" data-en="Single Sign-On" data-es="un único inicio de sesión para varias aplicaciones" tabindex="0">SSO</abbr> a cuentas"</strong>: <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
+        <li><strong>"Acceso directo desde la app móvil a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="dynamodb.html">DynamoDB</a>"</strong>: identity pool
           (credenciales temporales), nunca claves embebidas en la app.</li>
         <li><strong>"Usuarios invitados o no autenticados"</strong>: identity pool con identidades no autenticadas.</li>
         <li>Un user pool <strong>no</strong> da acceso a servicios de AWS por sí solo; para eso hace
-          falta un identity pool o validar el token en tu API.</li>
+          falta un identity pool o validar el token en tu <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -199,6 +199,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

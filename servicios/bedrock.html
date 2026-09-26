@@ -62,9 +62,9 @@
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
       <p>Amazon Bedrock es un servicio totalmente gestionado y <em>serverless</em> que da acceso por
-        API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> a <strong>modelos fundacionales</strong> (FM) de varios proveedores (<a href="../servicio.html?id=nova">Amazon Nova</a>, Anthropic
+        <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> a <strong>modelos fundacionales</strong> (<abbr class="sigla" data-s="FM" data-en="Foundation Model" data-es="modelo fundacional" tabindex="0">FM</abbr>) de varios proveedores (<a href="../servicio.html?id=nova">Amazon Nova</a>, Anthropic
         Claude, Meta Llama, Mistral y otros). No hay infraestructura que gestionar. Además de invocar
-        modelos, ofrece herramientas para personalizarlos, conectarlos con tus datos (RAG), añadir
+        modelos, ofrece herramientas para personalizarlos, conectarlos con tus datos (<abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr>), añadir
         salvaguardas y evaluarlos.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
@@ -76,7 +76,7 @@
           <strong>top-p</strong> (más altos, más creatividad y variación; más bajos, más determinismo),
           <strong>máximo de tokens</strong> de salida y secuencias de parada. Se cobra por
           <strong>tokens</strong> de entrada y de salida.</li>
-        <li><strong>Knowledge Bases:</strong> RAG gestionado. Toma documentos (por ejemplo, de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>), los
+        <li><strong>Knowledge Bases:</strong> <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr> gestionado. Toma documentos (por ejemplo, de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>), los
           divide, genera <em>embeddings</em>, los guarda en un almacén vectorial y recupera los fragmentos
           relevantes para fundamentar la respuesta.</li>
         <li><strong>Agents:</strong> descomponen una tarea en pasos y llaman a APIs o funciones <a href="lambda.html">Lambda</a>
@@ -98,7 +98,7 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Asistentes y chatbots que responden con la documentación de la empresa (RAG).</li>
+        <li>Asistentes y chatbots que responden con la documentación de la empresa (<abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr>).</li>
         <li>Resumir, clasificar o extraer información de textos y documentos.</li>
         <li>Generar contenido: textos, código, imágenes.</li>
         <li>Agentes que ejecutan tareas de varios pasos llamando a sistemas internos.</li>
@@ -107,10 +107,10 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si necesitas entrenar desde cero un modelo propio o usar ML <span class="sigla">(<em>Machine Learning</em>: aprendizaje automático)</span> clásico (regresión,
+        <li>Si necesitas entrenar desde cero un modelo propio o usar <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr> clásico (regresión,
           clasificación tabular): <strong><a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a></strong>.</li>
         <li>Si quieres un asistente listo para usar sin desarrollar nada: <strong><a href="../servicio.html?id=amazon-q">Amazon Q</a></strong>.</li>
-        <li>Tareas que resuelve un servicio de IA <span class="sigla">(inteligencia artificial)</span> específico con menos coste y más precisión: <a href="../servicio.html?id=textract">Textract</a>
+        <li>Tareas que resuelve un servicio de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> específico con menos coste y más precisión: <a href="../servicio.html?id=textract">Textract</a>
           (extraer texto de documentos), <a href="../servicio.html?id=comprehend">Comprehend</a> (sentimiento, entidades), <a href="../servicio.html?id=transcribe">Transcribe</a>, <a href="../servicio.html?id=translate">Translate</a>,
           <a href="../servicio.html?id=rekognition">Rekognition</a>…</li>
         <li>Para ejecutar agentes en producción con memoria, identidad y herramientas gestionadas a
@@ -122,7 +122,7 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Opción adecuada</th></tr></thead>
           <tbody>
-            <tr><td>Que el modelo use información actual o privada sin reentrenarlo</td><td>RAG con Knowledge Bases</td></tr>
+            <tr><td>Que el modelo use información actual o privada sin reentrenarlo</td><td><abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr> con Knowledge Bases</td></tr>
             <tr><td>Que el modelo adopte un estilo o formato concreto con ejemplos etiquetados</td><td>Fine-tuning</td></tr>
             <tr><td>Adaptar el modelo al vocabulario de un dominio con mucho texto sin etiquetar</td><td>Continued pre-training</td></tr>
             <tr><td>Guiar la respuesta sin coste de entrenamiento</td><td>Ingeniería de prompts (zero-shot, few-shot, cadena de razonamiento)</td></tr>
@@ -142,11 +142,11 @@
       <ul>
         <li>Tus prompts y respuestas <strong>no se usan para entrenar los modelos base</strong> ni se
           comparten con los proveedores.</li>
-        <li>Cifrado en tránsito y en reposo (con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> para modelos personalizados y otros recursos).</li>
-        <li>Acceso privado desde la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> con endpoints de interfaz (<a href="../servicio.html?id=privatelink">PrivateLink</a>).</li>
-        <li>Permisos con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> hasta el nivel de modelo; auditoría de llamadas con <a href="cloudtrail.html">CloudTrail</a> e invocaciones
-          registrables en <a href="cloudwatch.html">CloudWatch</a> o <a href="s3.html">S3</a>.</li>
-        <li>IA responsable: Guardrails, evaluación de modelos y comprobación de sesgos y toxicidad.</li>
+        <li>Cifrado en tránsito y en reposo (con claves de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> para modelos personalizados y otros recursos).</li>
+        <li>Acceso privado desde la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> con endpoints de interfaz (<a href="../servicio.html?id=privatelink">PrivateLink</a>).</li>
+        <li>Permisos con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> hasta el nivel de modelo; auditoría de llamadas con <a href="cloudtrail.html">CloudTrail</a> e invocaciones
+          registrables en <a href="cloudwatch.html">CloudWatch</a> o <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li><abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> responsable: Guardrails, evaluación de modelos y comprobación de sesgos y toxicidad.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
@@ -154,13 +154,13 @@
         la sección Conocimiento. Una función <a href="lambda.html">Lambda</a> envía el texto al modelo Claude Haiku con
         <code>InvokeModel</code>, con un límite de tokens de salida, y devuelve las preguntas. El
         identificador del modelo está en una variable de entorno, así que se puede cambiar sin tocar
-        código. Todo queda dentro de AWS, sin claves de API externas: el permiso es
+        código. Todo queda dentro de AWS, sin claves de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> externas: el permiso es
         <code>bedrock:InvokeModel</code> en el rol de ejecución. Se eligió un modelo pequeño y rápido
         porque la tarea no necesita más y el coste por token es menor.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Datos privados o actualizados sin reentrenar"</strong>: RAG con Knowledge Bases, no fine-tuning.</li>
+        <li><strong>"Datos privados o actualizados sin reentrenar"</strong>: <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr> con Knowledge Bases, no fine-tuning.</li>
         <li><strong>"Respuestas más deterministas"</strong>: bajar la temperatura.</li>
         <li><strong>"Bloquear temas"</strong> o <strong>"ocultar datos personales"</strong>: Guardrails.</li>
         <li><strong>"Modelo personalizado en producción"</strong>: Provisioned Throughput.</li>
@@ -213,6 +213,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

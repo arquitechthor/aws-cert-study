@@ -66,17 +66,17 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>Amazon ECS (<em>Elastic Container Service</em>) es el orquestador de contenedores de AWS.
-        Le dices qué imagen ejecutar, con cuánta CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> y memoria y cuántas copias quieres, y ECS las
-        arranca, las reparte, las sustituye si fallan y las conecta con balanceadores, <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> y
+      <p>Amazon <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> (<em>Elastic Container Service</em>) es el orquestador de contenedores de AWS.
+        Le dices qué imagen ejecutar, con cuánta <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> y memoria y cuántas copias quieres, y <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> las
+        arranca, las reparte, las sustituye si fallan y las conecta con balanceadores, <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> y
         <a href="cloudwatch.html">CloudWatch</a>. No hay plano de control que gestionar ni pagar: es más sencillo que Kubernetes,
         a cambio de ser específico de AWS.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Clúster:</strong> agrupación lógica de la capacidad donde corren las tareas.</li>
-        <li><strong>Definición de tarea:</strong> la "receta" en JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span>: imágenes, CPU y memoria,
-          puertos, variables, secretos, volúmenes, registros y roles de <a href="iam.html">IAM</a>. Tiene versiones
+        <li><strong>Definición de tarea:</strong> la "receta" en <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr>: imágenes, <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr> y memoria,
+          puertos, variables, secretos, volúmenes, registros y roles de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>. Tiene versiones
           (<em>revisiones</em>).</li>
         <li><strong>Tarea:</strong> una ejecución de la definición (uno o varios contenedores
           juntos). Útil para trabajos que terminan.</li>
@@ -84,17 +84,17 @@
           un balanceador, hace despliegues progresivos y escala con <em>Service Auto Scaling</em>.</li>
         <li><strong>Capacidad</strong> (mediante <em>capacity providers</em>):
           <ul>
-            <li><strong><a href="fargate.html">Fargate</a></strong> (y Fargate Spot): sin servidores; pagas por la CPU y la memoria
+            <li><strong><a href="fargate.html">Fargate</a></strong> (y Fargate Spot): sin servidores; pagas por la <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr> y la memoria
               de cada tarea.</li>
-            <li><strong><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></strong>: tus instancias en un grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>; más control (GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span>,
+            <li><strong><a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a></strong>: tus instancias en un grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>; más control (<abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr>,
               tipos concretos) y opciones de ahorro, pero tú las gestionas.</li>
-            <li><strong>ECS Managed Instances</strong>: instancias EC2 que AWS elige, parchea y escala
+            <li><strong>ECS Managed Instances</strong>: instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> que AWS elige, parchea y escala
               por ti, a medio camino entre las dos anteriores.</li>
           </ul></li>
-        <li><strong>Dos roles de IAM distintos:</strong> el <strong>rol de ejecución de la
-          tarea</strong> lo usa el agente de ECS para descargar la imagen de <a href="../servicio.html?id=ecr">ECR</a> <span class="sigla">(<em>Elastic Container Registry</em>)</span>, leer secretos y
+        <li><strong>Dos roles de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> distintos:</strong> el <strong>rol de ejecución de la
+          tarea</strong> lo usa el agente de <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> para descargar la imagen de <a href="../servicio.html?id=ecr"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>, leer secretos y
           enviar registros; el <strong>rol de la tarea</strong> lo usa tu código para llamar a otros
-          servicios (<a href="s3.html">S3</a>, <a href="dynamodb.html">DynamoDB</a>…).</li>
+          servicios (<a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a>…).</li>
         <li><strong>Red <code>awsvpc</code>:</strong> cada tarea recibe su propia interfaz de red y
           su security group (obligatorio en Fargate).</li>
         <li><strong>Despliegues:</strong> <em>rolling update</em> por defecto; blue/green con
@@ -108,12 +108,12 @@
         <li>Microservicios y APIs en contenedores detrás de un <a href="elb.html">Application Load Balancer</a>.</li>
         <li>Trabajos por lotes y tareas programadas con <a href="eventbridge.html">EventBridge</a> Scheduler.</li>
         <li>Modernizar aplicaciones monolíticas empaquetándolas en contenedores.</li>
-        <li>Procesamiento asíncrono que escala según la longitud de una cola <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>.</li>
+        <li>Procesamiento asíncrono que escala según la longitud de una cola <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si el equipo ya trabaja con Kubernetes o necesita portabilidad entre nubes: <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span>.</li>
+        <li>Si el equipo ya trabaja con Kubernetes o necesita portabilidad entre nubes: <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>.</li>
         <li>Funciones cortas por evento sin contenedor que mantener: <a href="lambda.html">Lambda</a>.</li>
         <li>Una web sencilla desde un repositorio sin configurar nada: <a href="../servicio.html?id=app-runner">App Runner</a> o <a href="../servicio.html?id=amplify">Amplify</a>.</li>
       </ul>
@@ -123,21 +123,21 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
-            <tr><td>Orquestar contenedores de la forma más sencilla en AWS</td><td>ECS</td></tr>
-            <tr><td>Kubernetes estándar y su ecosistema</td><td><a href="eks.html">EKS</a></td></tr>
-            <tr><td>No gestionar servidores para los contenedores</td><td><a href="fargate.html">Fargate</a> (con ECS o EKS)</td></tr>
-            <tr><td>Guardar las imágenes</td><td><a href="../servicio.html?id=ecr">ECR</a></td></tr>
+            <tr><td>Orquestar contenedores de la forma más sencilla en AWS</td><td><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></td></tr>
+            <tr><td>Kubernetes estándar y su ecosistema</td><td><a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a></td></tr>
+            <tr><td>No gestionar servidores para los contenedores</td><td><a href="fargate.html">Fargate</a> (con <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> o <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr>)</td></tr>
+            <tr><td>Guardar las imágenes</td><td><a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a></td></tr>
             <tr><td>Contenedor web desde código o imagen, sin configurar red ni balanceador</td><td><a href="../servicio.html?id=app-runner">App Runner</a></td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>ECS en sí no cobra. Pagas la capacidad: con <strong><a href="fargate.html">Fargate</a></strong>, la vCPU y la memoria
+      <p><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> en sí no cobra. Pagas la capacidad: con <strong><a href="fargate.html">Fargate</a></strong>, la vCPU y la memoria
         que pide cada tarea por segundo (Fargate Spot es mucho más barato y puede interrumpirse); con
-        <strong><a href="ec2.html">EC2</a></strong>, las instancias y sus volúmenes; con <strong>Managed Instances</strong>,
-        las instancias más un cargo de gestión. Aparte, balanceadores, <a href="../servicio.html?id=ecr">ECR</a>, registros y transferencia
-        de datos. Compute <a href="../servicio.html?id=savings-plans">Savings Plans</a> cubre Fargate y EC2.</p>
+        <strong><a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></strong>, las instancias y sus volúmenes; con <strong>Managed Instances</strong>,
+        las instancias más un cargo de gestión. Aparte, balanceadores, <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>, registros y transferencia
+        de datos. Compute <a href="../servicio.html?id=savings-plans">Savings Plans</a> cubre Fargate y <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
@@ -147,18 +147,18 @@
         <li>Security group por tarea con <code>awsvpc</code>, y tareas en subredes privadas.</li>
         <li>Servicios repartidos en varias zonas; el programador distribuye las tareas y sustituye
           las que fallan las comprobaciones de estado.</li>
-        <li>Escaneo de imágenes en <a href="../servicio.html?id=ecr">ECR</a> (<a href="../servicio.html?id=inspector">Amazon Inspector</a>).</li>
+        <li>Escaneo de imágenes en <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a> (<a href="../servicio.html?id=inspector">Amazon Inspector</a>).</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Contenedores sin gestionar servidores"</strong>: <a href="fargate.html">Fargate</a>.</li>
-        <li><strong>"La tarea no puede descargar la imagen de <a href="../servicio.html?id=ecr">ECR</a>"</strong> o <strong>"no lee el secreto"</strong>: revisa el rol de ejecución.</li>
-        <li><strong>"El código del contenedor no puede escribir en <a href="s3.html">S3</a>"</strong>: revisa el rol de la tarea.</li>
-        <li><strong>"Kubernetes"</strong> en el enunciado: <a href="eks.html">EKS</a>, no ECS.</li>
+        <li><strong>"La tarea no puede descargar la imagen de <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>"</strong> o <strong>"no lee el secreto"</strong>: revisa el rol de ejecución.</li>
+        <li><strong>"El código del contenedor no puede escribir en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: revisa el rol de la tarea.</li>
+        <li><strong>"Kubernetes"</strong> en el enunciado: <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>, no <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>.</li>
         <li><strong>"Tareas por lotes baratas que toleran interrupciones"</strong>: Fargate Spot.</li>
         <li><strong>"Revertir solo un despliegue fallido"</strong>: circuit breaker de despliegue.</li>
-        <li><strong>"Escalar según los mensajes pendientes en <a href="sqs.html">SQS</a>"</strong>: Service Auto Scaling con una métrica de la cola.</li>
+        <li><strong>"Escalar según los mensajes pendientes en <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>"</strong>: Service Auto Scaling con una métrica de la cola.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -206,6 +206,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

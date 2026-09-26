@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "SQS guarda los mensajes en una cola hasta que el consumidor los procesa, desacoplando la web del procesamiento. CloudFront distribuye contenido, Route 53 es DNS (Domain Name System: traduce nombres de dominio a direcciones IP) y Direct Connect es un enlace de red dedicado.",
+    "explicacion": "SQS guarda los mensajes en una cola hasta que el consumidor los procesa, desacoplando la web del procesamiento. CloudFront distribuye contenido, Route 53 es DNS y Direct Connect es un enlace de red dedicado.",
     "fuentes": [
       "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
     ]
@@ -72,7 +72,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
-    "enunciado": "Una flota de instancias EC2 (Elastic Compute Cloud) procesa trabajos de una cola SQS. En los picos la cola crece durante horas y de noche las instancias están ociosas. ¿Cómo se ajusta la flota a la carga?",
+    "enunciado": "Una flota de instancias EC2 procesa trabajos de una cola SQS. En los picos la cola crece durante horas y de noche las instancias están ociosas. ¿Cómo se ajusta la flota a la carga?",
     "opciones": [
       "Un grupo de Auto Scaling con seguimiento de objetivo sobre los mensajes pendientes por instancia.",
       "Aumentar el tiempo de visibilidad.",
@@ -162,7 +162,7 @@
       "DVA-C02"
     ],
     "dominio": "Desarrollo con servicios de AWS",
-    "enunciado": "Una aplicación necesita enviar a SQS documentos JSON (JavaScript Object Notation: formato de datos en texto) de hasta 5 MB. ¿Qué enfoque es el correcto?",
+    "enunciado": "Una aplicación necesita enviar a SQS documentos JSON de hasta 5 MB. ¿Qué enfoque es el correcto?",
     "opciones": [
       "Guardar el documento en S3 y enviar a la cola solo la referencia, por ejemplo con la biblioteca Extended Client.",
       "Subir el límite de tamaño de la cola a 5 MB.",
@@ -194,7 +194,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "En el fan-out, SNS entrega una copia a cada cola y cada sistema consume la suya con su propio ritmo y reintentos. Con una sola cola cada mensaje solo lo recibe un consumidor, las llamadas síncronas acoplan los sistemas y una cola por pedido no tiene sentido. Siglas: HTTP (HyperText Transfer Protocol: protocolo de la web).",
+    "explicacion": "En el fan-out, SNS entrega una copia a cada cola y cada sistema consume la suya con su propio ritmo y reintentos. Con una sola cola cada mensaje solo lo recibe un consumidor, las llamadas síncronas acoplan los sistemas y una cola por pedido no tiene sentido.",
     "fuentes": [
       "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
     ]

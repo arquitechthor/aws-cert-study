@@ -90,12 +90,15 @@ horizontal scroll).
 - **Spanish** for all user-facing text. Service names stay in English as AWS uses them.
   Categories are shown with the official AWS Spanish name plus the English name, e.g.
   "Computación (*Compute*)".
-- **Easy to understand first.** Expand every acronym the first time it appears on a page
-  (and in each question's statement or explanation that uses it, **unless the service page
-  already explains that acronym** — then the question uses it bare): the English expansion plus
-  a short Spanish gloss, e.g. "RPO (*Recovery Point Objective*: cuántos datos puedes perder)",
-  "OAC (*Origin Access Control*)", "SPA (*Single-Page Application*)". This question rule applies
-  to new questions; existing ones keep their expansions.
+- **Easy to understand first.** Every acronym gets a **tooltip** with its English expansion
+  and a short Spanish gloss (e.g. RPO → *Recovery Point Objective*: cuántos datos puedes
+  permitirte perder), on every occurrence, instead of an inline parenthesis. Write acronyms bare
+  in pages and questions; don't expand them in the text. Pages: `scripts/revisar_texto.py` wraps
+  them in `<abbr class="sigla" data-s data-en data-es tabindex="0">` (the first occurrence also
+  carries a screen-reader-only `.sigla-exp`). Questions stay plain text: `quiz.js` marks them at
+  render time from `data/siglas.json`, which the script exports from its glossary `G`. A new
+  acronym only needs a new entry in `G`. `assets/siglas.js` shows the tooltip on hover, focus or
+  tap (on touch devices tapping is required, accepted by the owner).
 - **Link every other AWS service mentioned** in a service page to its page on this site, even
   if it is not published yet: from `servicios/<id>.html` use `<id>.html` when that service is
   `publicado` and `../servicio.html?id=<id>` ("Próximamente") when it is `pendiente`. Link the

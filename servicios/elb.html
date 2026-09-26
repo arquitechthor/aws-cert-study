@@ -63,8 +63,8 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>Elastic Load Balancing (ELB) reparte automáticamente el tráfico entrante entre varios
-        destinos (instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>, contenedores, direcciones IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> o funciones <a href="lambda.html">Lambda</a>) repartidos en varias
+      <p>Elastic Load Balancing (<abbr class="sigla" data-s="ELB" data-en="Elastic Load Balancing" tabindex="0">ELB</abbr>) reparte automáticamente el tráfico entrante entre varios
+        destinos (instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, contenedores, direcciones <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> o funciones <a href="lambda.html">Lambda</a>) repartidos en varias
         zonas de disponibilidad. Comprueba continuamente la salud de cada destino y deja de enviar
         tráfico a los que fallan. Así una aplicación escala horizontalmente y sigue funcionando aunque
         caiga una instancia o una zona entera. Es un servicio gestionado: escala solo y AWS mantiene su
@@ -75,10 +75,10 @@
         <table>
           <thead><tr><th>Tipo</th><th>Capa</th><th>Cuándo usarlo</th></tr></thead>
           <tbody>
-            <tr><td>Application Load Balancer (ALB)</td><td>7 (HTTP/HTTPS, gRPC)</td><td>Webs y microservicios: enruta por ruta, host, cabeceras o parámetros; destinos <a href="lambda.html">Lambda</a>; autenticación con <a href="cognito.html">Cognito</a> u OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>.</td></tr>
-            <tr><td>Network Load Balancer (NLB)</td><td>4 (TCP <span class="sigla">(<em>Transmission Control Protocol</em>: protocolo de transporte fiable)</span>, UDP <span class="sigla">(<em>User Datagram Protocol</em>: protocolo de transporte sin conexión)</span>, TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span>)</td><td>Millones de peticiones por segundo con latencia mínima, IP estática por zona, conserva la IP de origen, protocolos no HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>.</td></tr>
-            <tr><td>Gateway Load Balancer (GWLB)</td><td>3 (IP, con GENEVE <span class="sigla">(<em>Generic Network Virtualization Encapsulation</em>: protocolo que encapsula el tráfico hacia los appliances)</span>)</td><td>Insertar de forma transparente appliances de terceros (firewalls, inspección) y escalarlos.</td></tr>
-            <tr><td>Classic Load Balancer (CLB)</td><td>4 y 7</td><td>Generación anterior; solo para aplicaciones heredadas.</td></tr>
+            <tr><td>Application Load Balancer (<abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr>)</td><td>7 (HTTP/HTTPS, gRPC)</td><td>Webs y microservicios: enruta por ruta, host, cabeceras o parámetros; destinos <a href="lambda.html">Lambda</a>; autenticación con <a href="cognito.html">Cognito</a> u <abbr class="sigla sigla-1" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC<span class="sigla-exp"> (OpenID Connect: estándar de identidad sobre OAuth 2.0)</span></abbr>.</td></tr>
+            <tr><td>Network Load Balancer (<abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr>)</td><td>4 (<abbr class="sigla sigla-1" data-s="TCP" data-en="Transmission Control Protocol" data-es="protocolo de transporte fiable" tabindex="0">TCP<span class="sigla-exp"> (Transmission Control Protocol: protocolo de transporte fiable)</span></abbr>, <abbr class="sigla sigla-1" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP<span class="sigla-exp"> (User Datagram Protocol: protocolo de transporte sin conexión)</span></abbr>, <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>)</td><td>Millones de peticiones por segundo con latencia mínima, <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> estática por zona, conserva la <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> de origen, protocolos no <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>.</td></tr>
+            <tr><td>Gateway Load Balancer (<abbr class="sigla" data-s="GWLB" data-en="Gateway Load Balancer" data-es="balanceador para appliances de red" tabindex="0">GWLB</abbr>)</td><td>3 (<abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>, con <abbr class="sigla sigla-1" data-s="GENEVE" data-en="Generic Network Virtualization Encapsulation" data-es="protocolo que encapsula el tráfico hacia los appliances" tabindex="0">GENEVE<span class="sigla-exp"> (Generic Network Virtualization Encapsulation: protocolo que encapsula el tráfico hacia los appliances)</span></abbr>)</td><td>Insertar de forma transparente appliances de terceros (firewalls, inspección) y escalarlos.</td></tr>
+            <tr><td>Classic Load Balancer (<abbr class="sigla" data-s="CLB" data-en="Classic Load Balancer" data-es="balanceador de la generación anterior" tabindex="0">CLB</abbr>)</td><td>4 y 7</td><td>Generación anterior; solo para aplicaciones heredadas.</td></tr>
           </tbody>
         </table>
       </div>
@@ -86,68 +86,68 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Listener:</strong> puerto y protocolo en los que escucha el balanceador (por
-          ejemplo, HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span>:443), con reglas que deciden a qué <strong>grupo de destinos</strong> va cada
+          ejemplo, <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr>:443), con reglas que deciden a qué <strong>grupo de destinos</strong> va cada
           petición.</li>
         <li><strong>Comprobaciones de estado:</strong> por grupo de destinos; un destino que falla deja
           de recibir tráfico. Con <a href="ec2-auto-scaling.html">Auto Scaling</a>, se puede además sustituir.</li>
-        <li><strong>Terminación TLS:</strong> el balanceador descifra HTTPS con un certificado de <a href="acm.html">ACM</a>
-          (<em>AWS Certificate Manager</em>) y varios certificados por listener gracias a SNI
+        <li><strong>Terminación <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr>:</strong> el balanceador descifra <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> con un certificado de <a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a>
+          (<em>AWS Certificate Manager</em>) y varios certificados por listener gracias a <abbr class="sigla" data-s="SNI" data-en="Server Name Indication" data-es="permite varios certificados en la misma IP" tabindex="0">SNI</abbr>
           (<em>Server Name Indication</em>).</li>
         <li><strong>Balanceo entre zonas (cross-zone):</strong> reparte por igual entre todos los
-          destinos de todas las zonas; activo por defecto en ALB, opcional en NLB.</li>
+          destinos de todas las zonas; activo por defecto en <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr>, opcional en <abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr>.</li>
         <li><strong>Sesiones persistentes (sticky sessions):</strong> envían al mismo usuario al mismo
           destino con una cookie; mejor evitarlas guardando las sesiones fuera (<a href="elasticache.html">ElastiCache</a>, <a href="dynamodb.html">DynamoDB</a>).</li>
         <li><strong>Connection draining (deregistration delay):</strong> deja terminar las peticiones en
           curso antes de retirar un destino.</li>
-        <li><strong>IP del cliente:</strong> el ALB la pasa en la cabecera <code>X-Forwarded-For</code>;
-          el NLB la conserva tal cual.</li>
+        <li><strong><abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> del cliente:</strong> el <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr> la pasa en la cabecera <code>X-Forwarded-For</code>;
+          el <abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr> la conserva tal cual.</li>
         <li><strong>Interno o público:</strong> un balanceador puede estar orientado a internet o ser
-          solo interno de la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
+          solo interno de la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Frente de una flota web con <a href="ec2-auto-scaling.html">Auto Scaling</a> repartida en varias zonas.</li>
-        <li>Enrutar <code>/api/*</code> a un servicio y <code>/img/*</code> a otro con un solo ALB.</li>
-        <li>Juegos, IoT (internet de las cosas) o protocolos propios sobre TCP/UDP con NLB.</li>
-        <li>Exponer un servicio a otras <a href="vpc.html">VPC</a> o cuentas con <a href="../servicio.html?id=privatelink">PrivateLink</a> detrás de un NLB.</li>
-        <li>Pasar todo el tráfico por firewalls de terceros con GWLB.</li>
+        <li>Enrutar <code>/api/*</code> a un servicio y <code>/img/*</code> a otro con un solo <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr>.</li>
+        <li>Juegos, IoT (internet de las cosas) o protocolos propios sobre TCP/UDP con <abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr>.</li>
+        <li>Exponer un servicio a otras <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> o cuentas con <a href="../servicio.html?id=privatelink">PrivateLink</a> detrás de un <abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr>.</li>
+        <li>Pasar todo el tráfico por firewalls de terceros con <abbr class="sigla" data-s="GWLB" data-en="Gateway Load Balancer" data-es="balanceador para appliances de red" tabindex="0">GWLB</abbr>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para repartir tráfico entre regiones: <a href="route-53.html">Route 53</a> (políticas de enrutamiento) o Global
           Accelerator.</li>
-        <li>Para una API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> sin servidores con límites, claves y planes de uso: <a href="api-gateway.html">API Gateway</a>.</li>
-        <li>Para cachear contenido cerca del usuario: <a href="cloudfront.html">CloudFront</a> (que puede tener el ALB como origen).</li>
+        <li>Para una <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> sin servidores con límites, claves y planes de uso: <a href="api-gateway.html">API Gateway</a>.</li>
+        <li>Para cachear contenido cerca del usuario: <a href="cloudfront.html">CloudFront</a> (que puede tener el <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr> como origen).</li>
       </ul>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>Se paga por hora de balanceador más unidades de capacidad según el uso: LCU (<em>Load Balancer
-        Capacity Units</em>) en ALB y NLCU <span class="sigla">(<em>Network Load Balancer Capacity Unit</em>: unidad de facturación del NLB)</span> en NLB, que combinan conexiones nuevas, conexiones activas,
-        bytes procesados y evaluaciones de reglas. GWLB cobra por hora y por GWLCU <span class="sigla">(<em>Gateway Load Balancer Capacity Unit</em>: unidad de facturación del GWLB)</span>. Aparte, la
+      <p>Se paga por hora de balanceador más unidades de capacidad según el uso: <abbr class="sigla" data-s="LCU" data-en="Load Balancer Capacity Unit" data-es="unidad de facturación del balanceador" tabindex="0">LCU</abbr> (<em>Load Balancer
+        Capacity Units</em>) en <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr> y <abbr class="sigla sigla-1" data-s="NLCU" data-en="Network Load Balancer Capacity Unit" data-es="unidad de facturación del NLB" tabindex="0">NLCU<span class="sigla-exp"> (Network Load Balancer Capacity Unit: unidad de facturación del NLB)</span></abbr> en <abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr>, que combinan conexiones nuevas, conexiones activas,
+        bytes procesados y evaluaciones de reglas. <abbr class="sigla" data-s="GWLB" data-en="Gateway Load Balancer" data-es="balanceador para appliances de red" tabindex="0">GWLB</abbr> cobra por hora y por <abbr class="sigla sigla-1" data-s="GWLCU" data-en="Gateway Load Balancer Capacity Unit" data-es="unidad de facturación del GWLB" tabindex="0">GWLCU<span class="sigla-exp"> (Gateway Load Balancer Capacity Unit: unidad de facturación del GWLB)</span></abbr>. Aparte, la
         transferencia de datos.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Nodos del balanceador en varias zonas; si una cae, el tráfico va a las demás.</li>
-        <li>Security groups en ALB y NLB, y en los destinos permitir solo el tráfico que viene del
+        <li>Security groups en <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr> y <abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr>, y en los destinos permitir solo el tráfico que viene del
           security group del balanceador.</li>
-        <li><a href="../servicio.html?id=waf">AWS WAF</a> (<em>Web Application Firewall</em>) sobre el ALB contra ataques web; <a href="../servicio.html?id=shield">AWS Shield</a>
-          Standard contra DDoS (<em>Distributed Denial of Service</em>) incluido.</li>
-        <li>Políticas de seguridad TLS para exigir versiones y cifrados modernos.</li>
-        <li>Registros de acceso a <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> para auditoría.</li>
+        <li><a href="../servicio.html?id=waf">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> (<em>Web Application Firewall</em>) sobre el <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr> contra ataques web; <a href="../servicio.html?id=shield">AWS Shield</a>
+          Standard contra <abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> (<em>Distributed Denial of Service</em>) incluido.</li>
+        <li>Políticas de seguridad <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> para exigir versiones y cifrados modernos.</li>
+        <li>Registros de acceso a <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> para auditoría.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Enrutar por ruta o por nombre de host"</strong>: ALB.</li>
-        <li><strong>"Latencia ultrabaja"</strong>, <strong>"TCP/UDP"</strong> o <strong>"IP estática"</strong>: NLB.</li>
-        <li><strong>"Firewalls de terceros de forma transparente"</strong>: GWLB.</li>
-        <li><strong>"La aplicación necesita la IP real del cliente"</strong> tras un ALB: cabecera <code>X-Forwarded-For</code>.</li>
-        <li><strong>"Proteger contra inyección SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span> en el balanceador"</strong>: <a href="../servicio.html?id=waf">AWS WAF</a> en el ALB.</li>
+        <li><strong>"Enrutar por ruta o por nombre de host"</strong>: <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr>.</li>
+        <li><strong>"Latencia ultrabaja"</strong>, <strong>"TCP/UDP"</strong> o <strong>"<abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> estática"</strong>: <abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr>.</li>
+        <li><strong>"Firewalls de terceros de forma transparente"</strong>: <abbr class="sigla" data-s="GWLB" data-en="Gateway Load Balancer" data-es="balanceador para appliances de red" tabindex="0">GWLB</abbr>.</li>
+        <li><strong>"La aplicación necesita la <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> real del cliente"</strong> tras un <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr>: cabecera <code>X-Forwarded-For</code>.</li>
+        <li><strong>"Proteger contra inyección <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> en el balanceador"</strong>: <a href="../servicio.html?id=waf">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> en el <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr>.</li>
         <li><strong>"Instancias que solo acepten tráfico del balanceador"</strong>: su security group referencia el del balanceador.</li>
-        <li><strong>"Varios dominios HTTPS en un solo ALB"</strong>: varios certificados con SNI.</li>
+        <li><strong>"Varios dominios <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> en un solo <abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr>"</strong>: varios certificados con <abbr class="sigla" data-s="SNI" data-en="Server Name Indication" data-es="permite varios certificados en la misma IP" tabindex="0">SNI</abbr>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -194,6 +194,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

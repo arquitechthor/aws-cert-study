@@ -60,7 +60,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "SQS es sin servidores, escala solo y se paga por uso, lo ideal para aplicaciones nuevas. Amazon MQ está pensado para migrar aplicaciones que usan protocolos estándar y obliga a dimensionar y pagar brokers por hora; un broker en EC2 (Elastic Compute Cloud) añade aún más operación.",
+    "explicacion": "SQS es sin servidores, escala solo y se paga por uso, lo ideal para aplicaciones nuevas. Amazon MQ está pensado para migrar aplicaciones que usan protocolos estándar y obliga a dimensionar y pagar brokers por hora; un broker en EC2 añade aún más operación.",
     "fuentes": [
       "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/welcome.html"
     ]
@@ -82,7 +82,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Amazon MQ para RabbitMQ mantiene el protocolo AMQP 0-9-1 y el despliegue en clúster reparte tres nodos en tres zonas. Reescribir a SQS/SNS es un cambio grande, ActiveMQ no habla AMQP 0-9-1 y una sola instancia no es resistente. Siglas: EC2 (Elastic Compute Cloud).",
+    "explicacion": "Amazon MQ para RabbitMQ mantiene el protocolo AMQP 0-9-1 y el despliegue en clúster reparte tres nodos en tres zonas. Reescribir a SQS/SNS es un cambio grande, ActiveMQ no habla AMQP 0-9-1 y una sola instancia no es resistente.",
     "fuentes": [
       "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/rabbitmq-broker-architecture.html"
     ]

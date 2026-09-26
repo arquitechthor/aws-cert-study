@@ -69,9 +69,9 @@
         escalado de forma conjunta con <strong>planes de escalado</strong>, eligiendo si priorizar
         disponibilidad, coste o un equilibrio entre ambos. Por debajo se apoya en dos motores:</p>
       <ul>
-        <li><strong>Amazon EC2 Auto Scaling:</strong> crea y mantiene grupos de instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>.</li>
+        <li><strong>Amazon EC2 Auto Scaling:</strong> crea y mantiene grupos de instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>.</li>
         <li><strong>Application Auto Scaling:</strong> escala otros recursos: tareas de servicios de
-          <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span>, capacidad de lectura y escritura de <a href="dynamodb.html">DynamoDB</a>, réplicas de <a href="aurora.html">Aurora</a>, Spot Fleet,
+          <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, capacidad de lectura y escritura de <a href="dynamodb.html">DynamoDB</a>, réplicas de <a href="aurora.html">Aurora</a>, Spot Fleet,
           concurrencia aprovisionada de <a href="lambda.html">Lambda</a>, variantes de endpoints de <a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a>, etc.</li>
       </ul>
       <p>En la práctica, conviene saber qué motor escala cada cosa y qué tipo de política usar.</p>
@@ -82,10 +82,10 @@
           por una pila de <a href="../servicio.html?id=cloudformation">CloudFormation</a>) y les aplica una <strong>estrategia</strong>: optimizar la
           disponibilidad, el coste o ambas.</li>
         <li><strong>Seguimiento de objetivo:</strong> la política que usan los planes; mantiene una
-          métrica (CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span>, utilización de capacidad de <a href="dynamodb.html">DynamoDB</a>, conexiones de <a href="aurora.html">Aurora</a>…) en un valor.</li>
-        <li><strong>Escalado predictivo:</strong> para grupos <a href="ec2.html">EC2</a>, anticipa la carga según el
+          métrica (<abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr>, utilización de capacidad de <a href="dynamodb.html">DynamoDB</a>, conexiones de <a href="aurora.html">Aurora</a>…) en un valor.</li>
+        <li><strong>Escalado predictivo:</strong> para grupos <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, anticipa la carga según el
           historial.</li>
-        <li><strong>Recursos compatibles:</strong> grupos de <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>, servicios de <a href="ecs.html">ECS</a>, tablas
+        <li><strong>Recursos compatibles:</strong> grupos de <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>, servicios de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, tablas
           e índices de DynamoDB, réplicas de Aurora y Spot Fleet.</li>
         <li><strong>Lo que no hace:</strong> no crea grupos de Auto Scaling ni sustituye instancias no
           sanas; eso sigue siendo cosa de EC2 Auto Scaling. Para políticas por pasos o programadas se
@@ -94,10 +94,10 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Una aplicación de tres capas cuyo frontal (grupo <a href="ec2.html">EC2</a>), servicio de contenedores (<a href="ecs.html">ECS</a>) y base
+        <li>Una aplicación de tres capas cuyo frontal (grupo <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>), servicio de contenedores (<a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>) y base
           de datos (réplicas de <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>) deben escalar de forma coherente.</li>
         <li>Aplicar la misma estrategia de coste o disponibilidad a todos los recursos de una pila.</li>
-        <li>Activar el escalado predictivo en los grupos EC2 de una aplicación.</li>
+        <li>Activar el escalado predictivo en los grupos <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> de una aplicación.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
@@ -115,12 +115,12 @@
         <table>
           <thead><tr><th>Recurso</th><th>Motor</th></tr></thead>
           <tbody>
-            <tr><td>Instancias <a href="ec2.html">EC2</a></td><td><a href="ec2-auto-scaling.html">EC2 Auto Scaling</a></td></tr>
-            <tr><td>Tareas de un servicio de <a href="ecs.html">ECS</a></td><td>Application Auto Scaling (Service Auto Scaling)</td></tr>
+            <tr><td>Instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></td><td><a href="ec2-auto-scaling.html">EC2 Auto Scaling</a></td></tr>
+            <tr><td>Tareas de un servicio de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a></td><td>Application Auto Scaling (Service Auto Scaling)</td></tr>
             <tr><td>Capacidad aprovisionada de <a href="dynamodb.html">DynamoDB</a></td><td>Application Auto Scaling</td></tr>
             <tr><td>Réplicas de <a href="aurora.html">Aurora</a></td><td>Application Auto Scaling</td></tr>
             <tr><td>Varios de los anteriores con una estrategia común</td><td>AWS Auto Scaling (planes de escalado)</td></tr>
-            <tr><td>Nodos de <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span></td><td>Karpenter o Cluster Autoscaler (o EKS Auto Mode)</td></tr>
+            <tr><td>Nodos de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a></td><td>Karpenter o Cluster Autoscaler (o EKS Auto Mode)</td></tr>
           </tbody>
         </table>
       </div>
@@ -140,7 +140,7 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Escalar varios recursos de distintos servicios de una aplicación desde un solo sitio"</strong>: AWS Auto Scaling.</li>
-        <li><strong>"Escalar el número de tareas de <a href="ecs.html">ECS</a>"</strong> o <strong>"la capacidad de <a href="dynamodb.html">DynamoDB</a>"</strong>: Application Auto Scaling.</li>
+        <li><strong>"Escalar el número de tareas de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>"</strong> o <strong>"la capacidad de <a href="dynamodb.html">DynamoDB</a>"</strong>: Application Auto Scaling.</li>
         <li><strong>"Sustituir instancias no sanas"</strong> o <strong>"crear un grupo"</strong>: <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>, no AWS Auto Scaling.</li>
         <li><strong>"Escalado programado"</strong>: se configura en EC2 Auto Scaling o Application Auto Scaling; los planes solo usan seguimiento de objetivo y predictivo.</li>
       </ul>
@@ -188,6 +188,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

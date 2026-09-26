@@ -236,8 +236,8 @@ def destino(sid):
 
 
 # ── Tokenización de HTML en etiquetas y texto ──────────────────────────────────────────────
-SALTAR_GLOSARIO = {'a', 'code', 'h1', 'h2', 'h3', 'cite', 'pre', 'script', 'style', 'span'}  # span: explicaciones ya insertadas
-SALTAR_ENLACE = SALTAR_GLOSARIO | {'em'}
+SALTAR_GLOSARIO = {'code', 'h1', 'h2', 'h3', 'cite', 'pre', 'script', 'style', 'abbr'}
+SALTAR_ENLACE = {'a', 'code', 'h1', 'h2', 'h3', 'cite', 'pre', 'script', 'style', 'abbr', 'em'}
 
 
 def trozos(fragmento):
@@ -261,42 +261,24 @@ def trozos(fragmento):
     return out
 
 
+SUFIJOS = {'NAT': ' [Gg]ateway'}  # "NAT gateway": la sigla abarca el nombre completo
+
+
 def sigla_rx(tok):
     # No cuenta si va seguida de una palabra en mayúscula: es parte de un nombre
     # ("API Gateway", "RDS Proxy", "IAM Identity Center", "S3 Glacier").
-    if tok in SUFIJOS:  # "NAT gateway": la explicación va tras el nombre completo
-        return re.compile(rf'(?<![\w/.-]){re.escape(tok)}(?:{SUFIJOS[tok]})?(?![\w/-])(?! [A-ZÁÉÍÓÚ])')
-    return re.compile(rf'(?<![\w/.-]){re.escape(tok)}(?![\w/-])(?! [A-ZÁÉÍÓÚ])')
+    suf = f'(?:{SUFIJOS[tok]})?' if tok in SUFIJOS else ''
+    return re.compile(rf'(?<![\w/.-]){re.escape(tok)}{suf}(?![\w/-])(?! [A-ZÁÉÍÓÚ])')
 
 
-SUFIJOS = {'NAT': ' [Gg]ateway'}
-
-
-def explicado(tok, eng, gloss, texto_total, pos_txt, txt, pos):
-    """True si la sigla ya se entiende: va entre paréntesis tras el término o ya está desplegada."""
-    antes = txt[max(0, pos - 2):pos]
-    if antes.endswith('(') and txt[pos + len(tok):pos + len(tok) + 1] == ')':
-        return True  # "término (SIGLA)": ya explicada por el término que la precede
-    siguiente = txt[pos + len(tok):pos + len(tok) + 22]
-    if siguiente.startswith(' (') or siguiente.startswith(' <span class="sigla">'):
-        return True  # ya va seguida de su explicación entre paréntesis
-    despues = txt[pos + len(tok):pos + len(tok) + 3]
-    if despues.startswith(' (') and eng and txt[pos + len(tok) + 2:pos + len(tok) + 2 + len(eng)].lower() == eng.lower():
+def explicado(tok, eng, texto_total, txt, pos, fin):
+    """True si el propio texto ya explica la sigla: "término (SIGLA)", "SIGLA (explicación)"
+    o el nombre completo en inglés aparece en la página."""
+    if txt[max(0, pos - 1):pos] == '(' and txt[fin:fin + 1] == ')':
         return True
-    for frase in filter(None, [eng]):
-        if frase.lower() in texto_total.lower():
-            return True
-    return False
-
-
-def expansion_html(eng, gloss):
-    if eng and gloss:
-        dentro = f'(<em>{html.escape(eng)}</em>: {html.escape(gloss)})'
-    elif eng:
-        dentro = f'(<em>{html.escape(eng)}</em>)'
-    else:
-        dentro = f'({html.escape(gloss)})'
-    return f' <span class="sigla">{dentro}</span>'
+    if txt[fin:fin + 2] == ' (':
+        return True
+    return bool(eng) and eng.lower() in texto_total.lower()
 
 
 def expansion_txt(eng, gloss):
@@ -312,38 +294,53 @@ def glosario_para(pagina):
     return g
 
 
+def abbr_html(texto, tok, eng, gloss, primera):
+    """Sigla con tooltip. La primera aparición de la página lleva además la explicación en un
+    <span class="sigla-exp">: oculta en pantallas con ratón (se ve el tooltip), visible en las
+    táctiles y siempre leída por los lectores de pantalla."""
+    datos = f' data-s="{html.escape(tok)}"'
+    if eng:
+        datos += f' data-en="{html.escape(eng)}"'
+    if gloss:
+        datos += f' data-es="{html.escape(gloss)}"'
+    exp = f'<span class="sigla-exp">{html.escape(expansion_txt(eng, gloss))}</span>' if primera else ''
+    clase = 'sigla sigla-1' if primera else 'sigla'
+    return f'<abbr class="{clase}"{datos} tabindex="0">{texto}{exp}</abbr>'
+
+
+VIEJA_EXPANSION = re.compile(r' <span class="sigla">\(.*?\)</span>', re.S)
+
+
 def aplicar_glosario_html(fragmento, pagina):
-    """Busca cada sigla en el texto ORIGINAL (así las explicaciones insertadas, que a veces
-    contienen otras siglas, no se vuelven a procesar) y las inserta todas al final."""
+    """Marca TODAS las apariciones de las siglas del glosario con un tooltip (<abbr>)."""
+    fragmento = VIEJA_EXPANSION.sub('', fragmento)  # migra el formato anterior (paréntesis)
     partes = trozos(fragmento)
     texto_total = html.unescape(''.join(p[1] for p in partes if p[0] == 'text'))
-    inserciones = {}  # índice de trozo -> [(posición, texto)]
-    ocupados = {}     # índice de trozo -> [(ini, fin)] de siglas ya elegidas (evita solapes)
+    g = glosario_para(pagina)
+    toks = sorted(g, key=len, reverse=True)
+    rx = re.compile('|'.join(f'(?P<t{i}>{sigla_rx(t).pattern})' for i, t in enumerate(toks)))
+    vistas = {m.group(0) for m in re.finditer(r'data-s="([^"]+)"', fragmento)}
+    vistas = {re.search(r'data-s="([^"]+)"', v).group(1) for v in vistas}
     cambios = []
-    for tok, (eng, gloss) in sorted(glosario_para(pagina).items(), key=lambda kv: -len(kv[0])):
-        rx = sigla_rx(tok)
-        for i, p in enumerate(partes):
-            if p[0] != 'text' or (SALTAR_GLOSARIO - {'a'}) & set(p[2]):
-                continue
-            m = next((m for m in rx.finditer(p[1])
-                      if not any(a <= m.start() < b for a, b in ocupados.get(i, []))), None)
-            if not m:
-                continue
-            ocupados.setdefault(i, []).append((m.start(), m.end()))
-            if 'a' in p[2]:
-                break  # dentro de un enlace (normalmente creado en una pasada anterior): ya tratada
-            sigue_span = (not p[1][m.end():].strip() and i + 1 < len(partes)
-                          and partes[i + 1][1].startswith('<span class="sigla">'))
-            if not sigue_span and not explicado(tok, eng, gloss, texto_total, 0, p[1], m.start()):
-                inserciones.setdefault(i, []).append((m.end(), expansion_html(eng, gloss)))
-                cambios.append(tok)
-            break  # solo la primera aparición (visible) de la página
-    for i, ins in inserciones.items():
-        t = partes[i][1]
-        for pos, txt in sorted(ins, reverse=True):
-            t = t[:pos] + txt + t[pos:]
-        partes[i][1] = t
-    return ''.join(p[1] for p in partes), cambios
+    for i, p in enumerate(partes):
+        if p[0] != 'text' or SALTAR_GLOSARIO & set(p[2]):
+            continue
+        txt = p[1]
+        # Texto que sigue a este trozo (tras etiquetas), para aplicar la regla "seguida de una
+        # palabra en mayúscula" también cuando la palabra está en otro trozo (<abbr>, <a>…).
+        siguiente = next((q[1] for q in partes[i + 1:] if q[0] == 'text'), '')
+
+        def marcar(m):
+            if txt[m.end():] == ' ' and re.match(r'[A-ZÁÉÍÓÚ]', siguiente):
+                return m.group(0)
+            tok = toks[int(m.lastgroup[1:])]
+            eng, gloss = g[tok]
+            primera = tok not in vistas and not explicado(tok, eng, texto_total, txt, m.start(), m.end())
+            vistas.add(tok)
+            cambios.append(tok)
+            return abbr_html(m.group(0), tok, eng, gloss, primera)
+        p[1] = rx.sub(marcar, txt)
+    return ''.join(p[1] for p in partes), sorted(set(cambios))
 
 
 def enlazar_html(fragmento, pagina):
@@ -380,78 +377,57 @@ def revisar_pagina(sid, escribir):
     t = open(ruta, encoding='utf8').read()
     ini = t.index('<article class="doc">')
     fin = t.index('<h2 id="preguntas">')
-    cuerpo, siglas = aplicar_glosario_html(t[ini:fin], sid)
-    cuerpo, enlaces = enlazar_html(cuerpo, sid)
+    # Primero los enlaces (sobre el texto limpio) y después las siglas, también dentro de enlaces.
+    cuerpo, enlaces = enlazar_html(VIEJA_EXPANSION.sub('', t[ini:fin]), sid)
+    cuerpo, siglas = aplicar_glosario_html(cuerpo, sid)
     nuevo = t[:ini] + cuerpo + t[fin:]
-    if escribir and nuevo != t:
+    if '../assets/siglas.js' not in nuevo:  # script del tooltip, antes que quiz.js
+        nuevo = nuevo.replace('<script src="../assets/quiz.js" defer></script>',
+                              '<script src="../assets/siglas.js" defer></script>\n<script src="../assets/quiz.js" defer></script>')
+    cambio = nuevo != t
+    if escribir and cambio:
         open(ruta, 'w', encoding='utf8', newline='\n').write(nuevo)
-    return siglas, enlaces
-
-
-def expandir_texto(texto, tok, eng, gloss):
-    m = sigla_rx(tok).search(texto)
-    if not m:
-        return texto, False
-    if texto[max(0, m.start() - 1):m.start()] == '(' or (eng and eng.lower() in texto.lower()):
-        return texto, True
-    return texto[:m.end()] + expansion_txt(eng, gloss) + texto[m.end():], True
+    return (siglas if cambio else []), (enlaces if cambio else [])
 
 
 def revisar_preguntas(sid, escribir):
+    """Las preguntas son texto plano: el quiz marca las siglas al pintarlas (data/siglas.json).
+    Aquí solo se quitan las explicaciones entre paréntesis que se insertaron antes."""
     ruta = os.path.join(REPO, 'data', 'preguntas', f'{sid}.json')
     if not os.path.exists(ruta):
         return 0
     qs = json.load(open(ruta, encoding='utf8'))
+    variantes = set()
+    for eng, gloss in list(G.values()) + [o for d in POR_PAGINA.values() for o in d.values()]:
+        variantes.add(expansion_txt(eng, gloss))
     n = 0
-    g = g_completo = glosario_para(sid)
-    # Las siglas que ya aparecen (y por tanto se explican) en la guía del servicio no se vuelven
-    # a explicar en sus preguntas. Las explicaciones que ya tengan las preguntas se conservan.
-    pagina = os.path.join(REPO, 'servicios', f'{sid}.html')
-    if os.path.exists(pagina):
-        t = open(pagina, encoding='utf8').read()
-        texto_guia = html.unescape(re.sub(r'<[^>]+>', ' ', t[t.index('<article class="doc">'):t.index('<h2 id="preguntas">')]))
-        g = {tok: v for tok, v in g.items() if not sigla_rx(tok).search(texto_guia)}
     for q in qs:
-        # Todo se decide sobre el texto original; las explicaciones insertadas no se reprocesan.
-        orig = {'enunciado': q['enunciado'], 'explicacion': q['explicacion']}
-        completo = ' '.join([orig['enunciado'], *q['opciones'], orig['explicacion']]).lower()
-        ins = {'enunciado': [], 'explicacion': []}
-        ocupado = {'enunciado': [], 'explicacion': []}
         for c in ('enunciado', 'explicacion'):
-            for tok2, (e2, g2) in g_completo.items():  # protege todas las explicaciones existentes
-                exp = expansion_txt(e2, g2)
-                for x in re.finditer(re.escape(exp), orig[c]):
-                    ocupado[c].append((x.start(), x.end()))
-        anexos = []
-        for tok, (eng, gloss) in sorted(g.items(), key=lambda kv: -len(kv[0])):
-            rx = sigla_rx(tok)
-            campo, m = None, None
-            for c in ('enunciado', 'explicacion'):
-                m = next((x for x in rx.finditer(orig[c]) if not any(a <= x.start() < b for a, b in ocupado[c])), None)
-                if m:
-                    campo = c
-                    break
-            if campo:
-                ocupado[campo].append((m.start(), m.end()))
-                ya = (orig[campo][max(0, m.start() - 1):m.start()] == '('
-                      or orig[campo][m.end():m.end() + 2] == ' ('
-                      or (eng and eng.lower() in completo))
-                if not ya:
-                    ins[campo].append((m.end(), expansion_txt(eng, gloss)))
-            elif (rx.search(' '.join(q['opciones'])) and not (eng and eng.lower() in completo)
-                  and f'{tok}{expansion_txt(eng, gloss)}' not in orig['explicacion']):
-                anexos.append(f'{tok}{expansion_txt(eng, gloss)}')
-        for c in ('enunciado', 'explicacion'):
-            t = orig[c]
-            for pos, txt in sorted(ins[c], reverse=True):
-                t = t[:pos] + txt + t[pos:]
-            q[c] = t
-        if anexos:
-            q['explicacion'] = q['explicacion'].rstrip() + ' Siglas: ' + '; '.join(anexos) + '.'
-        n += (q['enunciado'] != orig['enunciado']) + (q['explicacion'] != orig['explicacion'])
-    if escribir:
+            t = q[c]
+            for v in sorted(variantes, key=len, reverse=True):
+                t = t.replace(v, '')
+            t = re.sub(r' Siglas: [A-Za-z0-9/ -]+(?:; [A-Za-z0-9/ -]+)*\.$', '', t)
+            if t != q[c]:
+                q[c] = t
+                n += 1
+    if escribir and n:
         open(ruta, 'w', encoding='utf8', newline='\n').write(json.dumps(qs, indent=2, ensure_ascii=False) + '\n')
     return n
+
+
+def exportar_glosario(escribir):
+    """data/siglas.json: el glosario para el quiz (mismas reglas de detección que aquí)."""
+    datos = {
+        'siglas': {tok: {'en': eng, 'es': gloss} for tok, (eng, gloss) in sorted(G.items())},
+        'porPagina': {tok: {pag: {'en': e, 'es': s} for pag, (e, s) in ops.items()} for tok, ops in POR_PAGINA.items()},
+        'sufijos': SUFIJOS,
+    }
+    ruta = os.path.join(REPO, 'data', 'siglas.json')
+    nuevo = json.dumps(datos, indent=1, ensure_ascii=False) + '\n'
+    viejo = open(ruta, encoding='utf8').read() if os.path.exists(ruta) else ''
+    if escribir and nuevo != viejo:
+        open(ruta, 'w', encoding='utf8', newline='\n').write(nuevo)
+    return nuevo != viejo
 
 
 def reapuntar_enlaces(sid, escribir=True):
@@ -470,6 +446,8 @@ if __name__ == '__main__':
             print(f'{sid}: enlaces reapuntados a {sid}.html')
         sys.exit()
     escribir = '--escribir' in sys.argv
+    if exportar_glosario(escribir):
+        print('data/siglas.json actualizado' if escribir else 'data/siglas.json cambiaría')
     ids = [a for a in sys.argv[1:] if not a.startswith('--')] or [s['id'] for s in SERV if s['estado'] == 'publicado']
     for sid in ids:
         siglas, enlaces = revisar_pagina(sid, escribir)

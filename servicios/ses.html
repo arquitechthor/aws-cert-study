@@ -63,8 +63,8 @@
 
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
-      <p>Amazon Simple Email Service (SES) es un servicio de correo electrónico para aplicaciones.
-        Envía correos transaccionales (verificaciones, avisos, facturas) y masivos mediante API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> o SMTP <span class="sigla">(<em>Simple Mail Transfer Protocol</em>: protocolo de envío de correo)</span>,
+      <p>Amazon Simple Email Service (<abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr>) es un servicio de correo electrónico para aplicaciones.
+        Envía correos transaccionales (verificaciones, avisos, facturas) y masivos mediante <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> o <abbr class="sigla sigla-1" data-s="SMTP" data-en="Simple Mail Transfer Protocol" data-es="protocolo de envío de correo" tabindex="0">SMTP<span class="sigla-exp"> (Simple Mail Transfer Protocol: protocolo de envío de correo)</span></abbr>,
         y también puede <strong>recibir</strong> correo y procesarlo. Se encarga de la infraestructura
         de envío, la reputación y las métricas de entrega.</p>
 
@@ -75,17 +75,17 @@
         <li><strong>Sandbox:</strong> las cuentas nuevas empiezan limitadas en cada región: solo pueden
           enviar a destinatarios verificados, hasta 200 mensajes cada 24 horas y 1 por segundo. Hay que
           solicitar acceso de producción.</li>
-        <li><strong>Autenticación del correo:</strong> <strong>DKIM <span class="sigla">(<em>DomainKeys Identified Mail</em>: firma criptográfica de los correos)</span></strong> (Easy DKIM con registros
-          CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>), <strong>SPF <span class="sigla">(<em>Sender Policy Framework</em>: lista de servidores autorizados a enviar correo del dominio)</span></strong> (dominio MAIL FROM personalizado) y <strong>DMARC <span class="sigla">(<em>Domain-based Message Authentication, Reporting and Conformance</em>: política que indica qué hacer con correos que no se autentican)</span></strong>. Son
+        <li><strong>Autenticación del correo:</strong> <strong><abbr class="sigla sigla-1" data-s="DKIM" data-en="DomainKeys Identified Mail" data-es="firma criptográfica de los correos" tabindex="0">DKIM<span class="sigla-exp"> (DomainKeys Identified Mail: firma criptográfica de los correos)</span></abbr></strong> (Easy <abbr class="sigla" data-s="DKIM" data-en="DomainKeys Identified Mail" data-es="firma criptográfica de los correos" tabindex="0">DKIM</abbr> con registros
+          <abbr class="sigla sigla-1" data-s="CNAME" data-en="Canonical Name" data-es="registro DNS que apunta a otro nombre" tabindex="0">CNAME<span class="sigla-exp"> (Canonical Name: registro DNS que apunta a otro nombre)</span></abbr>), <strong><abbr class="sigla sigla-1" data-s="SPF" data-en="Sender Policy Framework" data-es="lista de servidores autorizados a enviar correo del dominio" tabindex="0">SPF<span class="sigla-exp"> (Sender Policy Framework: lista de servidores autorizados a enviar correo del dominio)</span></abbr></strong> (dominio MAIL FROM personalizado) y <strong><abbr class="sigla sigla-1" data-s="DMARC" data-en="Domain-based Message Authentication, Reporting and Conformance" data-es="política que indica qué hacer con correos que no se autentican" tabindex="0">DMARC<span class="sigla-exp"> (Domain-based Message Authentication, Reporting and Conformance: política que indica qué hacer con correos que no se autentican)</span></abbr></strong>. Son
           claves para no acabar en spam.</li>
         <li><strong>Conjuntos de configuración:</strong> agrupan envíos para publicar eventos (entregas,
-          rebotes, quejas, aperturas, clics) en <a href="cloudwatch.html">CloudWatch</a>, <a href="../servicio.html?id=data-firehose">Firehose</a>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> o <a href="eventbridge.html">EventBridge</a>.</li>
+          rebotes, quejas, aperturas, clics) en <a href="cloudwatch.html">CloudWatch</a>, <a href="../servicio.html?id=data-firehose">Firehose</a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> o <a href="eventbridge.html">EventBridge</a>.</li>
         <li><strong>Reputación:</strong> AWS vigila las tasas de rebote y de quejas; si suben demasiado,
           puede pausar el envío. La lista de supresión evita reenviar a direcciones que rebotan.</li>
-        <li><strong>Recepción:</strong> reglas de recepción que guardan el correo en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>, invocan <a href="lambda.html">Lambda</a> o
-          publican en SNS.</li>
-        <li><strong>IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> dedicadas</strong> (opcionales) para controlar la reputación en volúmenes altos.</li>
-        <li><strong>Disponibilidad regional:</strong> no está en todas las regiones; se puede llamar a SES
+        <li><strong>Recepción:</strong> reglas de recepción que guardan el correo en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, invocan <a href="lambda.html">Lambda</a> o
+          publican en <abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr>.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> dedicadas</strong> (opcionales) para controlar la reputación en volúmenes altos.</li>
+        <li><strong>Disponibilidad regional:</strong> no está en todas las regiones; se puede llamar a <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr>
           en otra región distinta de la del resto de la aplicación.</li>
       </ul>
 
@@ -94,25 +94,25 @@
         <li>Correos transaccionales: confirmación de registro, restablecer contraseña, recibos.</li>
         <li>Envío de correo de <a href="cognito.html">Cognito</a> con dominio propio.</li>
         <li>Notificaciones de una aplicación a sus usuarios o administradores.</li>
-        <li>Recibir correos entrantes y procesarlos automáticamente (tickets, adjuntos a <a href="s3.html">S3</a>).</li>
+        <li>Recibir correos entrantes y procesarlos automáticamente (tickets, adjuntos a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>).</li>
         <li>Campañas masivas con seguimiento de rebotes y quejas.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Notificaciones operativas a un equipo por varios canales (correo, SMS <span class="sigla">(<em>Short Message Service</em>: mensajes de texto al móvil)</span>, push, HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>): Amazon
-          <a href="sns.html">SNS</a> es más sencillo.</li>
-        <li>Buzones de correo corporativos para personas: SES no es un servidor de buzones.</li>
+        <li>Notificaciones operativas a un equipo por varios canales (correo, <abbr class="sigla sigla-1" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS<span class="sigla-exp"> (Short Message Service: mensajes de texto al móvil)</span></abbr>, push, <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>): Amazon
+          <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a> es más sencillo.</li>
+        <li>Buzones de correo corporativos para personas: <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr> no es un servidor de buzones.</li>
         <li>Si no puedes gestionar rebotes y quejas: una mala reputación puede suspender el envío.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>SES</th><th><a href="sns.html">SNS</a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th><abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr></th><th><a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a></th></tr></thead>
           <tbody>
-            <tr><td>Correo con HTML <span class="sigla">(<em>HyperText Markup Language</em>: lenguaje de las páginas web)</span>, remitente propio y dominio autenticado</td><td>Sí</td><td>No (correo básico de suscripción)</td></tr>
-            <tr><td>Publicar un mensaje a muchos suscriptores y protocolos</td><td>No</td><td>Sí (<a href="sqs.html">SQS</a>, <a href="lambda.html">Lambda</a>, HTTP, SMS, correo)</td></tr>
+            <tr><td>Correo con <abbr class="sigla sigla-1" data-s="HTML" data-en="HyperText Markup Language" data-es="lenguaje de las páginas web" tabindex="0">HTML<span class="sigla-exp"> (HyperText Markup Language: lenguaje de las páginas web)</span></abbr>, remitente propio y dominio autenticado</td><td>Sí</td><td>No (correo básico de suscripción)</td></tr>
+            <tr><td>Publicar un mensaje a muchos suscriptores y protocolos</td><td>No</td><td>Sí (<a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="lambda.html">Lambda</a>, <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>, <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr>, correo)</td></tr>
             <tr><td>Recibir correo</td><td>Sí</td><td>No</td></tr>
             <tr><td>Métricas de rebotes y quejas</td><td>Sí</td><td>No</td></tr>
           </tbody>
@@ -121,34 +121,34 @@
 
       <h2 id="precios">Modelo de precios</h2>
       <p>Pago por uso: por cada mil correos enviados o recibidos y por el volumen de datos (los
-        adjuntos cuentan). Las IP dedicadas y las funciones avanzadas de entregabilidad tienen coste
+        adjuntos cuentan). Las <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> dedicadas y las funciones avanzadas de entregabilidad tienen coste
         aparte. No hay cuota mínima.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Permisos de envío con <a href="iam.html">IAM</a> (<code>ses:SendEmail</code>) y políticas de autorización de
+        <li>Permisos de envío con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> (<code>ses:SendEmail</code>) y políticas de autorización de
           identidad para delegar el envío a otras cuentas.</li>
-        <li>TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> en el envío; DKIM, SPF y DMARC para autenticar el dominio.</li>
-        <li>Para envíos críticos se puede configurar SES en una segunda región.</li>
+        <li><abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> en el envío; <abbr class="sigla" data-s="DKIM" data-en="DomainKeys Identified Mail" data-es="firma criptográfica de los correos" tabindex="0">DKIM</abbr>, <abbr class="sigla" data-s="SPF" data-en="Sender Policy Framework" data-es="lista de servidores autorizados a enviar correo del dominio" tabindex="0">SPF</abbr> y <abbr class="sigla" data-s="DMARC" data-en="Domain-based Message Authentication, Reporting and Conformance" data-es="política que indica qué hacer con correos que no se autentican" tabindex="0">DMARC</abbr> para autenticar el dominio.</li>
+        <li>Para envíos críticos se puede configurar <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr> en una segunda región.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
-      <p>Kopi usa SES para avisar al administrador de cada alta pendiente de aprobar y para los correos
-        de verificación de <a href="cognito.html">Cognito</a>. SES no estaba disponible en la región principal del proyecto, así
-        que se llama a SES en otra región (Cognito admite una identidad de SES de otra región). Al
+      <p>Kopi usa <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr> para avisar al administrador de cada alta pendiente de aprobar y para los correos
+        de verificación de <a href="cognito.html">Cognito</a>. <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr> no estaba disponible en la región principal del proyecto, así
+        que se llama a <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr> en otra región (Cognito admite una identidad de <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr> de otra región). Al
         principio los correos salían desde una dirección de Gmail verificada y acababan en spam, porque
-        fallaba la alineación DMARC. La solución fue verificar el <strong>dominio propio</strong> con
-        Easy DKIM, un dominio MAIL FROM con SPF y una política DMARC. Además, un fallo al enviar se
+        fallaba la alineación <abbr class="sigla" data-s="DMARC" data-en="Domain-based Message Authentication, Reporting and Conformance" data-es="política que indica qué hacer con correos que no se autentican" tabindex="0">DMARC</abbr>. La solución fue verificar el <strong>dominio propio</strong> con
+        Easy <abbr class="sigla" data-s="DKIM" data-en="DomainKeys Identified Mail" data-es="firma criptográfica de los correos" tabindex="0">DKIM</abbr>, un dominio MAIL FROM con <abbr class="sigla" data-s="SPF" data-en="Sender Policy Framework" data-es="lista de servidores autorizados a enviar correo del dominio" tabindex="0">SPF</abbr> y una política <abbr class="sigla" data-s="DMARC" data-en="Domain-based Message Authentication, Reporting and Conformance" data-es="política que indica qué hacer con correos que no se autentican" tabindex="0">DMARC</abbr>. Además, un fallo al enviar se
         registra en los logs pero no interrumpe la operación principal.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Solo puede enviar a direcciones verificadas"</strong>: la cuenta sigue en el sandbox.</li>
-        <li><strong>"Los correos llegan a spam"</strong>: configurar DKIM, SPF y DMARC con un dominio verificado.</li>
+        <li><strong>"Los correos llegan a spam"</strong>: configurar <abbr class="sigla" data-s="DKIM" data-en="DomainKeys Identified Mail" data-es="firma criptográfica de los correos" tabindex="0">DKIM</abbr>, <abbr class="sigla" data-s="SPF" data-en="Sender Policy Framework" data-es="lista de servidores autorizados a enviar correo del dominio" tabindex="0">SPF</abbr> y <abbr class="sigla" data-s="DMARC" data-en="Domain-based Message Authentication, Reporting and Conformance" data-es="política que indica qué hacer con correos que no se autentican" tabindex="0">DMARC</abbr> con un dominio verificado.</li>
         <li><strong>"Registrar rebotes, quejas y aperturas"</strong>: conjunto de configuración con
           destino de eventos.</li>
-        <li><strong>"Procesar correos entrantes"</strong>: reglas de recepción de SES hacia <a href="s3.html">S3</a> o <a href="lambda.html">Lambda</a>.</li>
-        <li><strong>"Notificar a un equipo por correo y SMS"</strong>: <a href="sns.html">SNS</a>, no SES.</li>
+        <li><strong>"Procesar correos entrantes"</strong>: reglas de recepción de <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr> hacia <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="lambda.html">Lambda</a>.</li>
+        <li><strong>"Notificar a un equipo por correo y <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr>"</strong>: <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a>, no <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -194,6 +194,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

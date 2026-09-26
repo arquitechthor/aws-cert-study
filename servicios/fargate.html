@@ -65,35 +65,35 @@
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
       <p>AWS Fargate ejecuta contenedores <strong>sin que tengas que gestionar servidores</strong>.
-        No es un orquestador: es la <strong>capacidad</strong> sobre la que <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> o <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span> lanzan tus
-        contenedores. Tú indicas cuánta CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> y memoria necesita cada tarea (o pod) y Fargate la
-        arranca en un entorno aislado, sin instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> que elegir, parchear ni escalar. Pagas por
+        No es un orquestador: es la <strong>capacidad</strong> sobre la que <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> o <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a> lanzan tus
+        contenedores. Tú indicas cuánta <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> y memoria necesita cada tarea (o pod) y Fargate la
+        arranca en un entorno aislado, sin instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> que elegir, parchear ni escalar. Pagas por
         los recursos que pide cada tarea mientras se ejecuta.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Con <a href="ecs.html">ECS</a>:</strong> se elige Fargate como <em>capacity provider</em> (o tipo de
+        <li><strong>Con <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>:</strong> se elige Fargate como <em>capacity provider</em> (o tipo de
           lanzamiento) y cada tarea corre en su propio micro-entorno.</li>
-        <li><strong>Con <a href="eks.html">EKS</a>:</strong> un <em>perfil de Fargate</em> decide qué pods (por espacio de
+        <li><strong>Con <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>:</strong> un <em>perfil de Fargate</em> decide qué pods (por espacio de
           nombres y etiquetas) corren en Fargate; cada pod tiene su propio entorno.</li>
         <li><strong>Tamaño de tarea:</strong> combinaciones fijas de vCPU y memoria, desde 0,25 vCPU
           hasta 16 vCPU y hasta 120 GB de memoria; Linux (x86 y Graviton/ARM) y Windows.</li>
         <li><strong>Aislamiento:</strong> cada tarea o pod tiene su propio núcleo, red y
           almacenamiento; no comparte máquina con otras tareas.</li>
         <li><strong>Red:</strong> modo <code>awsvpc</code> obligatorio: cada tarea recibe su interfaz de
-          red, su IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> de la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> y su security group.</li>
+          red, su <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> de la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> y su security group.</li>
         <li><strong>Almacenamiento:</strong> 20 GiB efímeros por defecto, ampliables a
           <strong>200 GiB</strong> (se pierden al terminar la tarea); para datos persistentes o
-          compartidos, <a href="../servicio.html?id=efs">EFS</a> <span class="sigla">(<em>Elastic File System</em>)</span>; también volúmenes <a href="ebs.html">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span> por tarea.</li>
+          compartidos, <a href="../servicio.html?id=efs"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>; también volúmenes <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> por tarea.</li>
         <li><strong>Fargate Spot:</strong> capacidad sobrante con gran descuento; AWS puede
           interrumpir la tarea con 2 minutos de aviso.</li>
-        <li><strong>Limitaciones:</strong> sin GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span>, sin acceso al host (no hay SSH <span class="sigla">(<em>Secure Shell</em>: acceso remoto cifrado por terminal)</span> a la máquina ni
-          contenedores privilegiados) y, en EKS, sin DaemonSets.</li>
+        <li><strong>Limitaciones:</strong> sin <abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr>, sin acceso al host (no hay <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr> a la máquina ni
+          contenedores privilegiados) y, en <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr>, sin DaemonSets.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Microservicios y API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> en contenedores sin equipo de operaciones de servidores.</li>
+        <li>Microservicios y <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> en contenedores sin equipo de operaciones de servidores.</li>
         <li>Trabajos por lotes y tareas programadas en contenedores (con Fargate Spot para abaratar).</li>
         <li>Cargas con picos, donde pagar por tarea evita instancias ociosas.</li>
         <li>Entornos multiinquilino que necesitan aislamiento fuerte entre tareas.</li>
@@ -101,9 +101,9 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Cargas con GPU o que necesitan tipos de instancia concretos: <a href="ecs.html">ECS</a> o <a href="eks.html">EKS</a> sobre <a href="ec2.html">EC2</a> (o ECS
+        <li>Cargas con <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr> o que necesitan tipos de instancia concretos: <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> o <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> sobre <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (o <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>
           Managed Instances).</li>
-        <li>Flotas grandes y estables con uso muy alto, donde instancias EC2 bien aprovechadas y con
+        <li>Flotas grandes y estables con uso muy alto, donde instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> bien aprovechadas y con
           <a href="../servicio.html?id=savings-plans">Savings Plans</a> salen más baratas.</li>
         <li>Código corto por eventos sin necesidad de contenedor propio: <a href="lambda.html">Lambda</a>.</li>
         <li>Si necesitas acceso al sistema operativo del host o agentes por nodo.</li>
@@ -112,12 +112,12 @@
       <h2 id="comparativa">Fargate, EC2 y Lambda para ejecutar código</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Característica</th><th>Fargate</th><th><a href="ecs.html">ECS</a>/EKS sobre <a href="ec2.html">EC2</a></th><th><a href="lambda.html">Lambda</a></th></tr></thead>
+          <thead><tr><th>Característica</th><th>Fargate</th><th><a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>/EKS sobre <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></th><th><a href="lambda.html">Lambda</a></th></tr></thead>
           <tbody>
             <tr><td>Servidores que gestionar</td><td>Ninguno</td><td>Las instancias</td><td>Ninguno</td></tr>
             <tr><td>Duración</td><td>Sin límite</td><td>Sin límite</td><td>Hasta 15 minutos</td></tr>
             <tr><td>Unidad de cobro</td><td>vCPU y memoria por segundo</td><td>Instancias</td><td>Invocaciones y duración</td></tr>
-            <tr><td>GPU</td><td>No</td><td>Sí</td><td>No</td></tr>
+            <tr><td><abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr></td><td>No</td><td>Sí</td><td>No</td></tr>
             <tr><td>Empaquetado</td><td>Imagen de contenedor</td><td>Imagen de contenedor</td><td>Código o imagen</td></tr>
           </tbody>
         </table>
@@ -133,7 +133,7 @@
       <ul>
         <li>Aislamiento por tarea en su propio entorno de ejecución.</li>
         <li>Security group por tarea y subredes privadas.</li>
-        <li>Rol de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> por tarea (<a href="ecs.html">ECS</a>) o por cuenta de servicio (<a href="eks.html">EKS</a>) para los permisos de la aplicación.</li>
+        <li>Rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> por tarea (<a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>) o por cuenta de servicio (<a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>) para los permisos de la aplicación.</li>
         <li>Parches del entorno de ejecución a cargo de AWS (versiones de plataforma).</li>
         <li>Alta disponibilidad repartiendo las tareas del servicio en varias zonas.</li>
       </ul>
@@ -141,11 +141,11 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Contenedores sin gestionar servidores"</strong> o <strong>"sin parchear instancias"</strong>: Fargate.</li>
-        <li><strong>"Contenedores con GPU"</strong>: <a href="ec2.html">EC2</a>, no Fargate.</li>
+        <li><strong>"Contenedores con <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr>"</strong>: <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, no Fargate.</li>
         <li><strong>"Lotes en contenedores tolerantes a interrupciones y baratos"</strong>: Fargate Spot.</li>
-        <li><strong>"Almacenamiento compartido y persistente entre tareas"</strong>: <a href="../servicio.html?id=efs">EFS</a> montado en las tareas.</li>
+        <li><strong>"Almacenamiento compartido y persistente entre tareas"</strong>: <a href="../servicio.html?id=efs"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> montado en las tareas.</li>
         <li><strong>"Ejecución de más de 15 minutos sin servidores"</strong>: Fargate (<a href="lambda.html">Lambda</a> no llega).</li>
-        <li><strong>"Fargate es un orquestador"</strong>: falso; se usa con <a href="ecs.html">ECS</a> o <a href="eks.html">EKS</a>.</li>
+        <li><strong>"Fargate es un orquestador"</strong>: falso; se usa con <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> o <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -192,6 +192,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

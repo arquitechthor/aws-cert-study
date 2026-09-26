@@ -69,7 +69,7 @@
         dónde seguir, y el servicio lo ejecuta, guarda el estado entre pasos y te muestra cada
         ejecución en un diagrama. Así la lógica de coordinación (reintentos, ramas, tiempos de
         espera) sale del código de tus funciones y queda declarada en un solo sitio. Los flujos se
-        escriben en ASL (<em>Amazon States Language</em>, un JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span>) o se diseñan arrastrando pasos en
+        escriben en <abbr class="sigla" data-s="ASL" data-en="Amazon States Language" data-es="lenguaje JSON con el que se definen los flujos de Step Functions" tabindex="0">ASL</abbr> (<em>Amazon States Language</em>, un <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr>) o se diseñan arrastrando pasos en
         <em>Workflow Studio</em>.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
@@ -77,7 +77,7 @@
         <li><strong>Estados:</strong> <code>Task</code> (hace un trabajo), <code>Choice</code> (rama
           según una condición), <code>Parallel</code> (ramas a la vez), <code>Map</code> (repite un
           paso para cada elemento de una lista; el <em>Map distribuido</em> procesa millones de
-          objetos de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> en paralelo), <code>Wait</code>, <code>Pass</code>, <code>Succeed</code> y
+          objetos de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> en paralelo), <code>Wait</code>, <code>Pass</code>, <code>Succeed</code> y
           <code>Fail</code>.</li>
         <li><strong>Tipos de flujo</strong> (se elige al crearlo y no se puede cambiar):
           <ul>
@@ -89,7 +89,7 @@
               Logs; se paga por número y duración de ejecuciones.</li>
           </ul></li>
         <li><strong>Integraciones con servicios:</strong> llamadas directas a más de 200 servicios
-          (<a href="dynamodb.html">DynamoDB</a>, <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span>, <a href="../servicio.html?id=glue">Glue</a>, <a href="bedrock.html">Bedrock</a>…) sin una <a href="lambda.html">Lambda</a> de por medio.</li>
+          (<a href="dynamodb.html">DynamoDB</a>, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="../servicio.html?id=glue">Glue</a>, <a href="bedrock.html">Bedrock</a>…) sin una <a href="lambda.html">Lambda</a> de por medio.</li>
         <li><strong>Patrones de integración</strong> (solo en Standard los dos últimos):
           <em>petición-respuesta</em> (llama y sigue), <em>ejecutar un trabajo</em>
           (<code>.sync</code>, espera a que termine, por ejemplo un trabajo de Batch) y <em>esperar
@@ -106,16 +106,16 @@
       <ul>
         <li>Procesos de negocio con varios pasos: pedido, pago, envío y notificación.</li>
         <li>Flujos con intervención humana (aprobaciones) mediante tokens de devolución.</li>
-        <li>Canalizaciones de datos y ML (<a href="../servicio.html?id=glue">Glue</a>, <a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a>, Batch) con esperas a que terminen.</li>
-        <li>Procesar en paralelo miles de ficheros de <a href="s3.html">S3</a> con el Map distribuido.</li>
-        <li>Orquestar llamadas a modelos de <a href="bedrock.html">Bedrock</a> y pasos de validación en aplicaciones de IA <span class="sigla">(inteligencia artificial)</span>.</li>
+        <li>Canalizaciones de datos y <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> (<a href="../servicio.html?id=glue">Glue</a>, <a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a>, Batch) con esperas a que terminen.</li>
+        <li>Procesar en paralelo miles de ficheros de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con el Map distribuido.</li>
+        <li>Orquestar llamadas a modelos de <a href="bedrock.html">Bedrock</a> y pasos de validación en aplicaciones de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Una sola acción rápida disparada por un evento: una función <a href="lambda.html">Lambda</a> basta.</li>
         <li>Enrutar eventos entre servicios sin estado: <a href="eventbridge.html">EventBridge</a>.</li>
-        <li>Desacoplar productor y consumidor con una cola: <a href="sqs.html">SQS</a>.</li>
+        <li>Desacoplar productor y consumidor con una cola: <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>.</li>
         <li>Canalizaciones de datos complejas con dependencias al estilo Apache Airflow y un equipo que
           ya lo usa: Amazon MWAA (<em>Managed Workflows for Apache Airflow</em>).</li>
       </ul>
@@ -142,12 +142,12 @@
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Cada máquina de estados asume un rol de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> con los permisos justos para los servicios que
+        <li>Cada máquina de estados asume un rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> con los permisos justos para los servicios que
           llama.</li>
         <li>Servicio regional y redundante en varias zonas; el estado de las ejecuciones Standard se
           guarda de forma duradera.</li>
-        <li>Cifrado de los datos con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> gestionadas por el cliente si se necesita.</li>
-        <li>Integración con <a href="../servicio.html?id=x-ray">X-Ray</a> para trazar las ejecuciones y endpoints de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
+        <li>Cifrado de los datos con claves de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> gestionadas por el cliente si se necesita.</li>
+        <li>Integración con <a href="../servicio.html?id=x-ray">X-Ray</a> para trazar las ejecuciones y endpoints de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
@@ -156,7 +156,7 @@
         <li><strong>"Proceso que dura días"</strong> o <strong>"aprobación humana"</strong>: flujo Standard con <code>.waitForTaskToken</code>.</li>
         <li><strong>"Alto volumen de eventos cortos y barato"</strong>: flujo Express.</li>
         <li><strong>"Exactamente una vez"</strong>: Standard.</li>
-        <li><strong>"Procesar en paralelo millones de objetos de <a href="s3.html">S3</a>"</strong>: Map distribuido.</li>
+        <li><strong>"Procesar en paralelo millones de objetos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: Map distribuido.</li>
         <li><strong>"Deshacer pasos si falla uno posterior"</strong>: <code>Catch</code> hacia pasos de compensación (patrón saga).</li>
         <li><strong>"Llamar a <a href="dynamodb.html">DynamoDB</a> sin escribir una <a href="lambda.html">Lambda</a>"</strong>: integración directa con el servicio.</li>
       </ul>
@@ -206,6 +206,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

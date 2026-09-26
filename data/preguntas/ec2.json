@@ -6,7 +6,7 @@
       "CLF-C02"
     ],
     "dominio": "Seguridad y cumplimiento",
-    "enunciado": "Según el modelo de responsabilidad compartida, ¿quién debe aplicar los parches de seguridad del sistema operativo de una instancia EC2 (Elastic Compute Cloud)?",
+    "enunciado": "Según el modelo de responsabilidad compartida, ¿quién debe aplicar los parches de seguridad del sistema operativo de una instancia EC2?",
     "opciones": [
       "AWS, porque EC2 es un servicio gestionado.",
       "El cliente.",
@@ -16,7 +16,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "EC2 es infraestructura como servicio: AWS protege el hardware, la red física y el hipervisor, pero el sistema operativo invitado y todo lo que se instala encima es responsabilidad del cliente. Herramientas como Systems Manager Patch Manager lo automatizan, pero la responsabilidad no cambia. Siglas: AMI (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias).",
+    "explicacion": "EC2 es infraestructura como servicio: AWS protege el hardware, la red física y el hipervisor, pero el sistema operativo invitado y todo lo que se instala encima es responsabilidad del cliente. Herramientas como Systems Manager Patch Manager lo automatizan, pero la responsabilidad no cambia.",
     "fuentes": [
       "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
     ]
@@ -28,7 +28,7 @@
       "CLF-C02"
     ],
     "dominio": "Facturación, precios y soporte",
-    "enunciado": "Una empresa ejecuta cada noche trabajos de procesamiento que pueden reiniciarse sin problema si se interrumpen. ¿Qué opción de compra de EC2 (Elastic Compute Cloud) minimiza el coste?",
+    "enunciado": "Una empresa ejecuta cada noche trabajos de procesamiento que pueden reiniciarse sin problema si se interrumpen. ¿Qué opción de compra de EC2 minimiza el coste?",
     "opciones": [
       "Instancias bajo demanda.",
       "Instancias reservadas de 3 años.",
@@ -50,7 +50,7 @@
       "AIF-C01"
     ],
     "dominio": "Fundamentos de IA y ML",
-    "enunciado": "Un equipo quiere entrenar un modelo propio de deep learning y necesita controlar el entorno (controladores, bibliotecas y versión de CUDA (Compute Unified Device Architecture: plataforma de NVIDIA para programar GPU)). ¿Qué opción de EC2 (Elastic Compute Cloud) es la más adecuada?",
+    "enunciado": "Un equipo quiere entrenar un modelo propio de deep learning y necesita controlar el entorno (controladores, bibliotecas y versión de CUDA). ¿Qué opción de EC2 es la más adecuada?",
     "opciones": [
       "Instancias de uso general T con créditos de CPU.",
       "Instancias de computación acelerada con GPU (por ejemplo, familia P).",
@@ -60,7 +60,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "El entrenamiento de deep learning se beneficia de las GPU (Graphics Processing Unit: procesador gráfico, muy usado en ML) de las instancias de computación acelerada (familias P y G, o Trn con chips propios de AWS). Las T son para cargas ligeras con picos, las I para E/S de disco y las R para memoria; ninguna aporta la aceleración que requiere el entrenamiento. Siglas: CPU (Central Processing Unit: procesador).",
+    "explicacion": "El entrenamiento de deep learning se beneficia de las GPU de las instancias de computación acelerada (familias P y G, o Trn con chips propios de AWS). Las T son para cargas ligeras con picos, las I para E/S de disco y las R para memoria; ninguna aporta la aceleración que requiere el entrenamiento.",
     "fuentes": [
       "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
     ]
@@ -72,7 +72,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
-    "enunciado": "Una aplicación HPC (High Performance Computing: cómputo de alto rendimiento) necesita la menor latencia de red posible entre sus nodos y puede tolerar que todos estén en la misma zona de disponibilidad. ¿Qué configuración es la adecuada?",
+    "enunciado": "Una aplicación HPC necesita la menor latencia de red posible entre sus nodos y puede tolerar que todos estén en la misma zona de disponibilidad. ¿Qué configuración es la adecuada?",
     "opciones": [
       "Grupo de colocación spread.",
       "Grupo de colocación cluster.",
@@ -94,7 +94,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
-    "enunciado": "Una aplicación web en EC2 (Elastic Compute Cloud) debe seguir disponible si falla una zona de disponibilidad completa. ¿Qué DOS medidas son necesarias? (Elige 2.)",
+    "enunciado": "Una aplicación web en EC2 debe seguir disponible si falla una zona de disponibilidad completa. ¿Qué DOS medidas son necesarias? (Elige 2.)",
     "opciones": [
       "Un grupo de Auto Scaling que lance instancias en al menos dos zonas.",
       "Un Application Load Balancer con subredes en esas zonas.",
@@ -106,7 +106,7 @@
       0,
       1
     ],
-    "explicacion": "La alta disponibilidad en EC2 se consigue con varias instancias repartidas en varias zonas (Auto Scaling) y un balanceador que envíe tráfico solo a las sanas. Un grupo cluster concentra todo en una zona, una instancia grande sigue siendo un punto único de fallo y un volumen EBS (Elastic Block Store) pertenece a una sola zona.",
+    "explicacion": "La alta disponibilidad en EC2 se consigue con varias instancias repartidas en varias zonas (Auto Scaling) y un balanceador que envíe tráfico solo a las sanas. Un grupo cluster concentra todo en una zona, una instancia grande sigue siendo un punto único de fallo y un volumen EBS pertenece a una sola zona.",
     "fuentes": [
       "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
     ]
@@ -118,7 +118,7 @@
       "DVA-C02"
     ],
     "dominio": "Seguridad",
-    "enunciado": "Una aplicación en EC2 (Elastic Compute Cloud) debe leer objetos de un bucket de S3 (Simple Storage Service). ¿Cuál es la forma más segura de darle credenciales?",
+    "enunciado": "Una aplicación en EC2 debe leer objetos de un bucket de S3. ¿Cuál es la forma más segura de darle credenciales?",
     "opciones": [
       "Guardar una clave de acceso de un usuario IAM en un fichero de configuración de la instancia.",
       "Asociar a la instancia un rol de IAM con permisos de lectura sobre el bucket.",
@@ -128,7 +128,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Con un rol asociado mediante el perfil de instancia, el SDK (Software Development Kit: bibliotecas para programar contra AWS) obtiene credenciales temporales del servicio de metadatos que AWS rota automáticamente. Guardar claves en la instancia o en el user data las expone y obliga a rotarlas a mano, y un bucket público rompe el principio de mínimo privilegio. Siglas: IAM (Identity and Access Management); IP (Internet Protocol: dirección de red).",
+    "explicacion": "Con un rol asociado mediante el perfil de instancia, el SDK obtiene credenciales temporales del servicio de metadatos que AWS rota automáticamente. Guardar claves en la instancia o en el user data las expone y obliga a rotarlas a mano, y un bucket público rompe el principio de mínimo privilegio.",
     "fuentes": [
       "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html",
       "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html"
@@ -141,7 +141,7 @@
       "DVA-C02"
     ],
     "dominio": "Solución de problemas y optimización",
-    "enunciado": "Tras exigir IMDSv2 (Instance Metadata Service versión 2: con token de sesión) en una instancia, un script antiguo que hacía un simple GET a http://169.254.169.254/latest/meta-data/ empieza a recibir errores 401. ¿Qué debe cambiar?",
+    "enunciado": "Tras exigir IMDSv2 en una instancia, un script antiguo que hacía un simple GET a http://169.254.169.254/latest/meta-data/ empieza a recibir errores 401. ¿Qué debe cambiar?",
     "opciones": [
       "Abrir el puerto 80 en el security group.",
       "Obtener primero un token de sesión con una petición PUT e incluirlo en la cabecera de las consultas.",
@@ -151,7 +151,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "IMDSv2 está orientado a sesiones: hay que pedir un token con PUT y enviarlo en la cabecera X-aws-ec2-metadata-token en cada consulta. El servicio de metadatos no pasa por el security group, no se accede por la IP (Internet Protocol: dirección de red) pública y no depende de permisos de IAM (Identity and Access Management).",
+    "explicacion": "IMDSv2 está orientado a sesiones: hay que pedir un token con PUT y enviarlo en la cabecera X-aws-ec2-metadata-token en cada consulta. El servicio de metadatos no pasa por el security group, no se accede por la IP pública y no depende de permisos de IAM.",
     "fuentes": [
       "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html"
     ]
@@ -163,7 +163,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar nuevas soluciones",
-    "enunciado": "Una empresa migra un software comercial con licencia por núcleo físico y la auditoría exige demostrar en qué servidor se ejecuta. ¿Qué opción de EC2 (Elastic Compute Cloud) lo permite?",
+    "enunciado": "Una empresa migra un software comercial con licencia por núcleo físico y la auditoría exige demostrar en qué servidor se ejecuta. ¿Qué opción de EC2 lo permite?",
     "opciones": [
       "Instancias dedicadas.",
       "Hosts dedicados.",
@@ -173,7 +173,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Los hosts dedicados dan un servidor físico con visibilidad de sockets y núcleos y control de la colocación, necesarios para licencias BYOL (Bring Your Own License: usar tu propia licencia) por núcleo o socket. Las instancias dedicadas no comparten hardware pero no exponen el servidor físico, y las reservadas o las reservas de capacidad solo afectan al precio o a la disponibilidad.",
+    "explicacion": "Los hosts dedicados dan un servidor físico con visibilidad de sockets y núcleos y control de la colocación, necesarios para licencias BYOL por núcleo o socket. Las instancias dedicadas no comparten hardware pero no exponen el servidor físico, y las reservadas o las reservas de capacidad solo afectan al precio o a la disponibilidad.",
     "fuentes": [
       "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-purchasing-options.html"
     ]
@@ -185,7 +185,7 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Una flota de EC2 (Elastic Compute Cloud) tiene un uso estable, pero la empresa planea mover parte de la carga a Fargate y Lambda durante el próximo año. Quiere un descuento por compromiso que acompañe ese cambio. ¿Qué opción es la adecuada?",
+    "enunciado": "Una flota de EC2 tiene un uso estable, pero la empresa planea mover parte de la carga a Fargate y Lambda durante el próximo año. Quiere un descuento por compromiso que acompañe ese cambio. ¿Qué opción es la adecuada?",
     "opciones": [
       "Instancias reservadas estándar de 3 años.",
       "EC2 Instance Savings Plans.",

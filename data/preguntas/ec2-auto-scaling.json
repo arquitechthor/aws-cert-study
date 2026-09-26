@@ -6,7 +6,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
-    "enunciado": "Una aplicación web detrás de un ALB (Application Load Balancer: balanceador HTTP/HTTPS) debe mantener la utilización media de CPU del grupo de Auto Scaling cerca del 50 %, añadiendo y quitando instancias según haga falta. ¿Qué política de escalado es la más sencilla?",
+    "enunciado": "Una aplicación web detrás de un ALB debe mantener la utilización media de CPU del grupo de Auto Scaling cerca del 50 %, añadiendo y quitando instancias según haga falta. ¿Qué política de escalado es la más sencilla?",
     "opciones": [
       "Seguimiento de objetivo (target tracking) con CPU media al 50 %.",
       "Escalado programado cada hora.",
@@ -28,7 +28,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
-    "enunciado": "En un grupo de Auto Scaling detrás de un ALB (Application Load Balancer: balanceador HTTP/HTTPS), una instancia sigue \"running\" pero la aplicación devuelve errores 500 y el grupo no la sustituye. ¿Qué cambio lo corrige?",
+    "enunciado": "En un grupo de Auto Scaling detrás de un ALB, una instancia sigue \"running\" pero la aplicación devuelve errores 500 y el grupo no la sustituye. ¿Qué cambio lo corrige?",
     "opciones": [
       "Activar en el grupo las comprobaciones de estado de ELB.",
       "Aumentar la capacidad máxima.",
@@ -38,7 +38,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Por defecto el grupo solo usa las comprobaciones de EC2, que ven la instancia en marcha; con las de ELB (Elastic Load Balancing), una instancia que falla las comprobaciones del balanceador se marca como no sana y se sustituye. Las otras opciones no detectan el fallo de la aplicación.",
+    "explicacion": "Por defecto el grupo solo usa las comprobaciones de EC2, que ven la instancia en marcha; con las de ELB, una instancia que falla las comprobaciones del balanceador se marca como no sana y se sustituye. Las otras opciones no detectan el fallo de la aplicación.",
     "fuentes": [
       "https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html"
     ]
@@ -72,7 +72,7 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Antes de terminar una instancia por reducción de capacidad, hay que copiar sus registros de la aplicación a S3 (Simple Storage Service). ¿Qué mecanismo de EC2 Auto Scaling lo permite?",
+    "enunciado": "Antes de terminar una instancia por reducción de capacidad, hay que copiar sus registros de la aplicación a S3. ¿Qué mecanismo de EC2 Auto Scaling lo permite?",
     "opciones": [
       "Un lifecycle hook de terminación que pausa la instancia hasta completar la copia.",
       "Una política de escalado por pasos.",

@@ -64,19 +64,19 @@
 
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
-      <p>Amazon Route 53 es el servicio de DNS <span class="sigla">(<em>Domain Name System</em>: traduce nombres de dominio a direcciones IP)</span> de AWS. Registra dominios, aloja sus zonas DNS y
+      <p>Amazon Route 53 es el servicio de <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> de AWS. Registra dominios, aloja sus zonas <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> y
         responde a las consultas con <strong>políticas de enrutamiento</strong> que tienen en cuenta la
-        salud, la latencia o la ubicación del usuario. Es el único servicio de AWS con un SLA <span class="sigla">(<em>Service Level Agreement</em>: compromiso de disponibilidad)</span> de
+        salud, la latencia o la ubicación del usuario. Es el único servicio de AWS con un <abbr class="sigla sigla-1" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA<span class="sigla-exp"> (Service Level Agreement: compromiso de disponibilidad)</span></abbr> de
         disponibilidad del 100 %.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Zonas alojadas:</strong> <em>públicas</em> (resuelven en internet) y
-          <em>privadas</em> (solo dentro de las <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> asociadas).</li>
-        <li><strong>Registros:</strong> A, AAAA, CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>, MX <span class="sigla">(<em>Mail Exchange</em>: registro DNS del servidor de correo)</span>, TXT, NS <span class="sigla">(<em>Name Server</em>: registro DNS con los servidores de nombres del dominio)</span>, SOA <span class="sigla">(<em>Start of Authority</em>: registro DNS con los datos de la zona)</span>, CAA <span class="sigla">(<em>Certification Authority Authorization</em>: registro DNS que indica qué autoridades pueden emitir certificados)</span>… con su TTL <span class="sigla">(<em>Time To Live</em>: tiempo de vida antes de caducar)</span>.</li>
+          <em>privadas</em> (solo dentro de las <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> asociadas).</li>
+        <li><strong>Registros:</strong> A, AAAA, <abbr class="sigla sigla-1" data-s="CNAME" data-en="Canonical Name" data-es="registro DNS que apunta a otro nombre" tabindex="0">CNAME<span class="sigla-exp"> (Canonical Name: registro DNS que apunta a otro nombre)</span></abbr>, <abbr class="sigla sigla-1" data-s="MX" data-en="Mail Exchange" data-es="registro DNS del servidor de correo" tabindex="0">MX<span class="sigla-exp"> (Mail Exchange: registro DNS del servidor de correo)</span></abbr>, TXT, <abbr class="sigla sigla-1" data-s="NS" data-en="Name Server" data-es="registro DNS con los servidores de nombres del dominio" tabindex="0">NS<span class="sigla-exp"> (Name Server: registro DNS con los servidores de nombres del dominio)</span></abbr>, <abbr class="sigla sigla-1" data-s="SOA" data-en="Start of Authority" data-es="registro DNS con los datos de la zona" tabindex="0">SOA<span class="sigla-exp"> (Start of Authority: registro DNS con los datos de la zona)</span></abbr>, <abbr class="sigla sigla-1" data-s="CAA" data-en="Certification Authority Authorization" data-es="registro DNS que indica qué autoridades pueden emitir certificados" tabindex="0">CAA<span class="sigla-exp"> (Certification Authority Authorization: registro DNS que indica qué autoridades pueden emitir certificados)</span></abbr>… con su <abbr class="sigla sigla-1" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL<span class="sigla-exp"> (Time To Live: tiempo de vida antes de caducar)</span></abbr>.</li>
         <li><strong>Registro alias:</strong> extensión de Route 53 que apunta a recursos de AWS
-          (<a href="cloudfront.html">CloudFront</a>, <a href="elb.html">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, <a href="api-gateway.html">API Gateway</a>, <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> web, otra entrada de la zona). Funciona en el
-          <strong>vértice del dominio</strong> (<code>ejemplo.com</code>), donde un CNAME no está
+          (<a href="cloudfront.html">CloudFront</a>, <a href="elb.html"><abbr class="sigla sigla-1" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB<span class="sigla-exp"> (Application Load Balancer: balanceador HTTP/HTTPS)</span></abbr></a>, <a href="api-gateway.html">API Gateway</a>, <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> web, otra entrada de la zona). Funciona en el
+          <strong>vértice del dominio</strong> (<code>ejemplo.com</code>), donde un <abbr class="sigla" data-s="CNAME" data-en="Canonical Name" data-es="registro DNS que apunta a otro nombre" tabindex="0">CNAME</abbr> no está
           permitido, y las consultas a recursos de AWS son gratuitas.</li>
         <li><strong>Políticas de enrutamiento:</strong>
           <ul>
@@ -87,20 +87,20 @@
             <li><strong>Geolocalización:</strong> según el país o continente del usuario (contenido
               localizado, restricciones legales).</li>
             <li><strong>Geoproximidad:</strong> según la distancia, con un sesgo configurable (Traffic Flow).</li>
-            <li><strong>Basada en IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span>:</strong> según rangos CIDR <span class="sigla">(<em>Classless Inter-Domain Routing</em>: notación de rangos de IP como 10.0.0.0/16)</span> del cliente.</li>
+            <li><strong>Basada en <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr>:</strong> según rangos <abbr class="sigla sigla-1" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR<span class="sigla-exp"> (Classless Inter-Domain Routing: notación de rangos de IP como 10.0.0.0/16)</span></abbr> del cliente.</li>
             <li><strong>Respuesta multivalor:</strong> hasta 8 registros sanos elegidos al azar (no
               sustituye a un balanceador).</li>
           </ul></li>
         <li><strong>Comprobaciones de estado:</strong> de un endpoint, calculadas (combinan otras) o
           basadas en una alarma de <a href="cloudwatch.html">CloudWatch</a> (útil para recursos privados).</li>
-        <li><strong>Route 53 Resolver:</strong> endpoints de entrada y salida para DNS híbrido entre la
-          VPC y los centros de datos propios.</li>
-        <li><strong>DNSSEC <span class="sigla">(<em>DNS Security Extensions</em>: firma las respuestas DNS para evitar suplantaciones)</span></strong> para firmar la zona.</li>
+        <li><strong>Route 53 Resolver:</strong> endpoints de entrada y salida para <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> híbrido entre la
+          <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y los centros de datos propios.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="DNSSEC" data-en="DNS Security Extensions" data-es="firma las respuestas DNS para evitar suplantaciones" tabindex="0">DNSSEC<span class="sigla-exp"> (DNS Security Extensions: firma las respuestas DNS para evitar suplantaciones)</span></abbr></strong> para firmar la zona.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Apuntar un dominio propio a <a href="cloudfront.html">CloudFront</a>, un <a href="elb.html">ALB</a> o <a href="api-gateway.html">API Gateway</a> con registros alias.</li>
+        <li>Apuntar un dominio propio a <a href="cloudfront.html">CloudFront</a>, un <a href="elb.html"><abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr></a> o <a href="api-gateway.html">API Gateway</a> con registros alias.</li>
         <li>Recuperación ante desastres activo-pasivo entre regiones con failover y comprobaciones de estado.</li>
         <li>Aplicaciones multirregión que llevan a cada usuario a la región más cercana.</li>
         <li>Migraciones graduales con enrutamiento ponderado.</li>
@@ -109,10 +109,10 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Para conmutar entre regiones en segundos sin depender del TTL en caché de los clientes:
+        <li>Para conmutar entre regiones en segundos sin depender del <abbr class="sigla" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL</abbr> en caché de los clientes:
           <a href="../servicio.html?id=global-accelerator">Global Accelerator</a>.</li>
-        <li>Como balanceador de carga con reparto real por conexión: <a href="elb.html">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>. El DNS solo devuelve direcciones.</li>
-        <li>No es obligatorio para dominios registrados en otro proveedor, pero su integración con <a href="acm.html">ACM</a> <span class="sigla">(<em>AWS Certificate Manager</em>)</span>
+        <li>Como balanceador de carga con reparto real por conexión: <a href="elb.html"><abbr class="sigla sigla-1" data-s="ELB" data-en="Elastic Load Balancing" tabindex="0">ELB<span class="sigla-exp"> (Elastic Load Balancing)</span></abbr></a>. El <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> solo devuelve direcciones.</li>
+        <li>No es obligatorio para dominios registrados en otro proveedor, pero su integración con <a href="acm.html"><abbr class="sigla sigla-1" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM<span class="sigla-exp"> (AWS Certificate Manager)</span></abbr></a>
           y los alias suele compensar.</li>
       </ul>
 
@@ -138,28 +138,28 @@
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Red de servidores DNS anycast global, con SLA del 100 %.</li>
-        <li>DNSSEC para evitar la suplantación de respuestas.</li>
-        <li>Resolver DNS Firewall para filtrar dominios maliciosos desde las <a href="vpc.html">VPC</a>.</li>
-        <li>Control de acceso con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> sobre zonas y registros.</li>
+        <li>Red de servidores <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> anycast global, con <abbr class="sigla" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA</abbr> del 100 %.</li>
+        <li><abbr class="sigla" data-s="DNSSEC" data-en="DNS Security Extensions" data-es="firma las respuestas DNS para evitar suplantaciones" tabindex="0">DNSSEC</abbr> para evitar la suplantación de respuestas.</li>
+        <li>Resolver DNS Firewall para filtrar dominios maliciosos desde las <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>.</li>
+        <li>Control de acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> sobre zonas y registros.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
       <p>Route 53 aloja la zona de <code>kopitools.link</code>. Tiene registros alias para la web
-        (<a href="cloudfront.html">CloudFront</a>) y para la API (el dominio propio de <a href="api-gateway.html">API Gateway</a>), los registros de validación DNS de
-        los certificados de <a href="acm.html">ACM</a> y los de autenticación del correo de <a href="ses.html">SES</a> <span class="sigla">(<em>Simple Email Service</em>)</span>: DKIM <span class="sigla">(<em>DomainKeys Identified Mail</em>: firma criptográfica de los correos)</span>, SPF <span class="sigla">(<em>Sender Policy Framework</em>: lista de servidores autorizados a enviar correo del dominio)</span> del dominio MAIL FROM
-        y DMARC <span class="sigla">(<em>Domain-based Message Authentication, Reporting and Conformance</em>: política que indica qué hacer con correos que no se autentican)</span>. Tener la zona en Route 53 hace que ACM renueve los certificados sin tocar nada.</p>
+        (<a href="cloudfront.html">CloudFront</a>) y para la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> (el dominio propio de <a href="api-gateway.html">API Gateway</a>), los registros de validación <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> de
+        los certificados de <a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a> y los de autenticación del correo de <a href="ses.html"><abbr class="sigla sigla-1" data-s="SES" data-en="Simple Email Service" tabindex="0">SES<span class="sigla-exp"> (Simple Email Service)</span></abbr></a>: <abbr class="sigla sigla-1" data-s="DKIM" data-en="DomainKeys Identified Mail" data-es="firma criptográfica de los correos" tabindex="0">DKIM<span class="sigla-exp"> (DomainKeys Identified Mail: firma criptográfica de los correos)</span></abbr>, <abbr class="sigla sigla-1" data-s="SPF" data-en="Sender Policy Framework" data-es="lista de servidores autorizados a enviar correo del dominio" tabindex="0">SPF<span class="sigla-exp"> (Sender Policy Framework: lista de servidores autorizados a enviar correo del dominio)</span></abbr> del dominio MAIL FROM
+        y <abbr class="sigla sigla-1" data-s="DMARC" data-en="Domain-based Message Authentication, Reporting and Conformance" data-es="política que indica qué hacer con correos que no se autentican" tabindex="0">DMARC<span class="sigla-exp"> (Domain-based Message Authentication, Reporting and Conformance: política que indica qué hacer con correos que no se autentican)</span></abbr>. Tener la zona en Route 53 hace que <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> renueve los certificados sin tocar nada.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Dominio raíz a <a href="cloudfront.html">CloudFront</a> o a un <a href="elb.html">ALB</a>"</strong>: registro alias, no CNAME.</li>
+        <li><strong>"Dominio raíz a <a href="cloudfront.html">CloudFront</a> o a un <a href="elb.html"><abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr></a>"</strong>: registro alias, no <abbr class="sigla" data-s="CNAME" data-en="Canonical Name" data-es="registro DNS que apunta a otro nombre" tabindex="0">CNAME</abbr>.</li>
         <li><strong>"País"</strong> o <strong>"cumplimiento legal"</strong>: geolocalización.
           <strong>"Menor latencia"</strong>: latencia. No se deben confundir.</li>
         <li><strong>"Activo-pasivo"</strong>: failover con comprobaciones de estado.</li>
         <li><strong>"Comprobar un recurso privado"</strong>: comprobación basada en una alarma de <a href="cloudwatch.html">CloudWatch</a>.</li>
-        <li><strong>"Resolver nombres locales desde la <a href="vpc.html">VPC</a>"</strong>: endpoint de salida de Resolver;
+        <li><strong>"Resolver nombres locales desde la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>"</strong>: endpoint de salida de Resolver;
           al revés, endpoint de entrada.</li>
-        <li>Multivalor devuelve varias IP sanas, pero <strong>no es un balanceador</strong>.</li>
+        <li>Multivalor devuelve varias <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> sanas, pero <strong>no es un balanceador</strong>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -206,6 +206,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

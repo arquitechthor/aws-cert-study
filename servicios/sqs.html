@@ -65,7 +65,7 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>Amazon SQS (<em>Simple Queue Service</em>) es un servicio de colas de mensajes sin
+      <p>Amazon <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr> (<em>Simple Queue Service</em>) es un servicio de colas de mensajes sin
         servidores que gestionar. Un componente (el <strong>productor</strong>) envía mensajes a la
         cola y otro (el <strong>consumidor</strong>) los recoge cuando puede, los procesa y los
         borra. Así las dos partes quedan <strong>desacopladas</strong>: si el consumidor va lento o
@@ -76,13 +76,13 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Modelo pull:</strong> los consumidores preguntan a la cola
-          (<code>ReceiveMessage</code>); SQS no empuja los mensajes. Cada mensaje lo procesa un solo
-          consumidor (a diferencia de <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, que reparte a todos).</li>
+          (<code>ReceiveMessage</code>); <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr> no empuja los mensajes. Cada mensaje lo procesa un solo
+          consumidor (a diferencia de <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, que reparte a todos).</li>
         <li><strong>Cola estándar:</strong> rendimiento casi ilimitado, entrega <em>al menos una
           vez</em> (puede llegar algún duplicado) y orden aproximado. La aplicación debe ser
           <strong>idempotente</strong>, es decir, procesar dos veces el mismo mensaje sin efectos
           indeseados.</li>
-        <li><strong>Cola FIFO</strong> (<em>First In, First Out</em>, el nombre acaba en
+        <li><strong>Cola <abbr class="sigla" data-s="FIFO" data-en="First In, First Out" data-es="el primero en entrar es el primero en salir" tabindex="0">FIFO</abbr></strong> (<em>First In, First Out</em>, el nombre acaba en
           <code>.fifo</code>): orden estricto dentro de cada <strong>grupo de mensajes</strong>
           (<code>MessageGroupId</code>) y procesamiento exactamente una vez con deduplicación
           durante 5 minutos. Rendimiento más limitado, ampliable con el modo de alto rendimiento.</li>
@@ -91,11 +91,11 @@
           de que venza, vuelve a la cola y otro consumidor lo recibe.</li>
         <li><strong>Long polling:</strong> la llamada espera hasta 20 segundos a que llegue algo,
           en vez de volver vacía al instante. Reduce respuestas vacías y coste.</li>
-        <li><strong>Cola de mensajes fallidos (DLQ):</strong> tras un número máximo de intentos
+        <li><strong>Cola de mensajes fallidos (<abbr class="sigla" data-s="DLQ" data-en="Dead-Letter Queue" data-es="cola donde acaban los mensajes que fallan" tabindex="0">DLQ</abbr>):</strong> tras un número máximo de intentos
           (<code>maxReceiveCount</code>), el mensaje pasa a otra cola para analizarlo sin bloquear al
           resto. Se puede devolver a la cola original con <em>redrive</em>.</li>
         <li><strong>Límites:</strong> mensajes de hasta <strong>1 MiB</strong>; para cargas mayores
-          (hasta 2 GB) se guarda el contenido en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> y en la cola solo la referencia, con la biblioteca
+          (hasta 2 GB) se guarda el contenido en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> y en la cola solo la referencia, con la biblioteca
           <em>Extended Client</em>. Retención de 1 minuto a 14 días (4 días por defecto). Retraso de
           entrega de hasta 15 minutos (<em>delay queues</em>).</li>
         <li><strong>Integración con <a href="lambda.html">Lambda</a>:</strong> un <em>event source mapping</em> lee la cola por
@@ -110,18 +110,18 @@
         <li>Repartir trabajo entre una flota de instancias o contenedores que escala según los
           mensajes pendientes.</li>
         <li>Procesamiento asíncrono con <a href="lambda.html">Lambda</a> (miniaturas, correos, integraciones).</li>
-        <li>Pedidos o transacciones que deben procesarse en orden por cliente (FIFO con
+        <li>Pedidos o transacciones que deben procesarse en orden por cliente (<abbr class="sigla" data-s="FIFO" data-en="First In, First Out" data-es="el primero en entrar es el primero en salir" tabindex="0">FIFO</abbr> con
           <code>MessageGroupId</code> por cliente).</li>
-        <li>Patrón <em>fan-out</em> junto a <a href="sns.html">SNS</a>: un tema reparte cada mensaje a varias colas.</li>
+        <li>Patrón <em>fan-out</em> junto a <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a>: un tema reparte cada mensaje a varias colas.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si varios consumidores deben recibir el mismo mensaje: <a href="sns.html">SNS</a> o <a href="eventbridge.html">EventBridge</a> (o SNS delante
+        <li>Si varios consumidores deben recibir el mismo mensaje: <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a> o <a href="eventbridge.html">EventBridge</a> (o <abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr> delante
           de varias colas).</li>
         <li>Si hay que releer los datos o mantener un flujo ordenado para varios lectores:
-          <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk">MSK</a> <span class="sigla">(<em>Managed Streaming for Apache Kafka</em>)</span>.</li>
-        <li>Si migras una aplicación que usa JMS <span class="sigla">(<em>Java Message Service</em>: API estándar de mensajería de Java)</span>, AMQP <span class="sigla">(<em>Advanced Message Queuing Protocol</em>: protocolo estándar de mensajería)</span> o MQTT <span class="sigla">(<em>Message Queuing Telemetry Transport</em>: protocolo ligero de mensajería para dispositivos)</span> sin reescribirla: <a href="mq.html">Amazon MQ</a>.</li>
+          <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>.</li>
+        <li>Si migras una aplicación que usa <abbr class="sigla sigla-1" data-s="JMS" data-en="Java Message Service" data-es="API estándar de mensajería de Java" tabindex="0">JMS<span class="sigla-exp"> (Java Message Service: API estándar de mensajería de Java)</span></abbr>, <abbr class="sigla sigla-1" data-s="AMQP" data-en="Advanced Message Queuing Protocol" data-es="protocolo estándar de mensajería" tabindex="0">AMQP<span class="sigla-exp"> (Advanced Message Queuing Protocol: protocolo estándar de mensajería)</span></abbr> o <abbr class="sigla sigla-1" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT<span class="sigla-exp"> (Message Queuing Telemetry Transport: protocolo ligero de mensajería para dispositivos)</span></abbr> sin reescribirla: <a href="mq.html">Amazon MQ</a>.</li>
         <li>Para orquestar pasos con estado, esperas y ramas: <a href="step-functions.html">Step Functions</a>.</li>
       </ul>
 
@@ -130,41 +130,41 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
-            <tr><td>Cola: un consumidor por mensaje, desacoplar</td><td>SQS</td></tr>
-            <tr><td>Publicar y que lo reciban muchos suscriptores</td><td><a href="sns.html">SNS</a></td></tr>
+            <tr><td>Cola: un consumidor por mensaje, desacoplar</td><td><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></td></tr>
+            <tr><td>Publicar y que lo reciban muchos suscriptores</td><td><a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a></td></tr>
             <tr><td>Enrutar eventos por su contenido entre servicios y SaaS (software como servicio)</td><td><a href="eventbridge.html">EventBridge</a></td></tr>
             <tr><td>Streaming con varios lectores y relectura</td><td><a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a></td></tr>
-            <tr><td>Protocolos estándar (JMS, AMQP, MQTT) en una migración</td><td><a href="mq.html">Amazon MQ</a></td></tr>
+            <tr><td>Protocolos estándar (<abbr class="sigla" data-s="JMS" data-en="Java Message Service" data-es="API estándar de mensajería de Java" tabindex="0">JMS</abbr>, <abbr class="sigla" data-s="AMQP" data-en="Advanced Message Queuing Protocol" data-es="protocolo estándar de mensajería" tabindex="0">AMQP</abbr>, <abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr>) en una migración</td><td><a href="mq.html">Amazon MQ</a></td></tr>
             <tr><td>Flujos de varios pasos con estado</td><td><a href="step-functions.html">Step Functions</a></td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>Se paga por petición a la API (enviar, recibir, borrar…), contando cada bloque de 64 KB de
-        la carga como una petición, con un nivel gratuito mensual. FIFO cuesta algo más que
+      <p>Se paga por petición a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> (enviar, recibir, borrar…), contando cada bloque de 64 KB de
+        la carga como una petición, con un nivel gratuito mensual. <abbr class="sigla" data-s="FIFO" data-en="First In, First Out" data-es="el primero en entrar es el primero en salir" tabindex="0">FIFO</abbr> cuesta algo más que
         estándar. Se suma la transferencia de datos de salida. Recibir por lotes (hasta 10 mensajes)
         y usar long polling reduce mucho el número de peticiones.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Mensajes guardados de forma redundante en varias zonas de disponibilidad.</li>
-        <li>Cifrado en reposo con SSE-SQS (claves gestionadas por SQS) o con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>.</li>
-        <li>Políticas de acceso de la cola (por ejemplo, permitir solo a un tema <a href="sns.html">SNS</a> concreto enviar
-          mensajes) además de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>.</li>
-        <li>Endpoint de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> para usar SQS sin salir a internet.</li>
+        <li>Cifrado en reposo con <abbr class="sigla" data-s="SSE-SQS" data-en="Server-Side Encryption with SQS managed keys" data-es="cifrado con claves que gestiona SQS" tabindex="0">SSE-SQS</abbr> (claves gestionadas por <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>) o con claves de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>Políticas de acceso de la cola (por ejemplo, permitir solo a un tema <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a> concreto enviar
+          mensajes) además de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Endpoint de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> para usar <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr> sin salir a internet.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Desacoplar"</strong> o <strong>"absorber picos"</strong> entre componentes: SQS.</li>
-        <li><strong>"Orden estricto"</strong> o <strong>"sin duplicados"</strong>: cola FIFO.</li>
+        <li><strong>"Desacoplar"</strong> o <strong>"absorber picos"</strong> entre componentes: <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>.</li>
+        <li><strong>"Orden estricto"</strong> o <strong>"sin duplicados"</strong>: cola <abbr class="sigla" data-s="FIFO" data-en="First In, First Out" data-es="el primero en entrar es el primero en salir" tabindex="0">FIFO</abbr>.</li>
         <li><strong>"Un mensaje se procesa dos veces"</strong>: el tiempo de visibilidad es menor que lo que tarda el procesamiento; auméntalo (o amplíalo con <code>ChangeMessageVisibility</code>).</li>
         <li><strong>"Muchas respuestas vacías y coste alto"</strong>: long polling.</li>
-        <li><strong>"Un mensaje erróneo bloquea o se reintenta sin fin"</strong>: cola de mensajes fallidos (DLQ).</li>
-        <li><strong>"Mensajes de varios MB"</strong>: guardar en <a href="s3.html">S3</a> y enviar la referencia (Extended Client).</li>
+        <li><strong>"Un mensaje erróneo bloquea o se reintenta sin fin"</strong>: cola de mensajes fallidos (<abbr class="sigla" data-s="DLQ" data-en="Dead-Letter Queue" data-es="cola donde acaban los mensajes que fallan" tabindex="0">DLQ</abbr>).</li>
+        <li><strong>"Mensajes de varios MB"</strong>: guardar en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y enviar la referencia (Extended Client).</li>
         <li><strong>"Escalar los trabajadores según la cola"</strong>: <a href="ec2-auto-scaling.html">Auto Scaling</a> con la métrica de mensajes pendientes por instancia.</li>
-        <li><strong>"Un evento debe llegar a varios sistemas"</strong>: <a href="sns.html">SNS</a> con varias colas suscritas (fan-out), no una sola cola.</li>
+        <li><strong>"Un evento debe llegar a varios sistemas"</strong>: <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a> con varias colas suscritas (fan-out), no una sola cola.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -212,6 +212,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

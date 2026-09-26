@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Redshift es el almacén de datos de AWS, optimizado para consultas analíticas sobre grandes volúmenes. DynamoDB es NoSQL para aplicaciones, ElastiCache una caché y EBS (Elastic Block Store) discos de bloque.",
+    "explicacion": "Redshift es el almacén de datos de AWS, optimizado para consultas analíticas sobre grandes volúmenes. DynamoDB es NoSQL para aplicaciones, ElastiCache una caché y EBS discos de bloque.",
     "fuentes": [
       "https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html"
     ]
@@ -104,7 +104,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "La integración zero-ETL replica los cambios de Aurora a Redshift de forma continua y gestionada. La exportación nocturna tiene horas de retraso y exige mantenimiento, consultar Aurora carga la base transaccional y DynamoDB no es un almacén analítico. Siglas: CSV (Comma-Separated Values: texto con valores separados por comas).",
+    "explicacion": "La integración zero-ETL replica los cambios de Aurora a Redshift de forma continua y gestionada. La exportación nocturna tiene horas de retraso y exige mantenimiento, consultar Aurora carga la base transaccional y DynamoDB no es un almacén analítico.",
     "fuentes": [
       "https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-using.html"
     ]

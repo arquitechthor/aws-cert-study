@@ -67,7 +67,7 @@
       <p>AWS Elastic Beanstalk es una <strong>plataforma como servicio</strong> (PaaS) para
         aplicaciones web y de trabajo en segundo plano. Subes el código (Java, .NET, Node.js,
         Python, PHP, Ruby, Go) o una imagen Docker y Beanstalk aprovisiona todo lo necesario:
-        instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>, grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>, balanceador de carga, security groups y alarmas de
+        instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>, balanceador de carga, security groups y alarmas de
         <a href="cloudwatch.html">CloudWatch</a>. Tú te ocupas de la aplicación y Beanstalk del despliegue, el escalado, la
         monitorización y las actualizaciones de la plataforma. Los recursos siguen en tu cuenta y
         puedes ajustarlos.</p>
@@ -75,9 +75,9 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Aplicación, versión y entorno:</strong> una aplicación tiene versiones del código
-          (guardadas en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>) y entornos (por ejemplo, producción y pruebas) que ejecutan una versión.</li>
-        <li><strong>Tipos de entorno:</strong> <em>servidor web</em> (atiende peticiones HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span> detrás de
-          un balanceador) y <em>trabajador</em> (procesa mensajes de una cola <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span> que Beanstalk crea y
+          (guardadas en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>) y entornos (por ejemplo, producción y pruebas) que ejecutan una versión.</li>
+        <li><strong>Tipos de entorno:</strong> <em>servidor web</em> (atiende peticiones <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr> detrás de
+          un balanceador) y <em>trabajador</em> (procesa mensajes de una cola <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a> que Beanstalk crea y
           lee por ti, útil para tareas largas en segundo plano).</li>
         <li><strong>Plataformas:</strong> sistema operativo, lenguaje y servidor preparados y
           mantenidos por AWS; las <em>actualizaciones gestionadas</em> aplican parches en una ventana de
@@ -94,12 +94,12 @@
               tráfico a la nueva versión.</li>
           </ul></li>
         <li><strong>Blue/green:</strong> clonar el entorno, desplegar en el nuevo y
-          <em>intercambiar las URL <span class="sigla">(<em>Uniform Resource Locator</em>: dirección web)</span></em> (swap de CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>) para cambiar sin corte.</li>
+          <em>intercambiar las <abbr class="sigla sigla-1" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL<span class="sigla-exp"> (Uniform Resource Locator: dirección web)</span></abbr></em> (swap de <abbr class="sigla sigla-1" data-s="CNAME" data-en="Canonical Name" data-es="registro DNS que apunta a otro nombre" tabindex="0">CNAME<span class="sigla-exp"> (Canonical Name: registro DNS que apunta a otro nombre)</span></abbr>) para cambiar sin corte.</li>
         <li><strong>Configuración:</strong> ficheros <code>.ebextensions</code> y
-          <code>.platform</code> en el paquete, la <a href="../servicio.html?id=cli">CLI</a> <span class="sigla">(<em>Command Line Interface</em>: línea de comandos)</span> de Beanstalk (<code>eb</code>) y opciones del
+          <code>.platform</code> en el paquete, la <a href="../servicio.html?id=cli"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> de Beanstalk (<code>eb</code>) y opciones del
           entorno.</li>
-        <li><strong>Base de datos:</strong> se puede crear una <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span> dentro del entorno, pero entonces
-          su ciclo de vida va ligado al entorno; en producción se recomienda una RDS independiente.</li>
+        <li><strong>Base de datos:</strong> se puede crear una <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a> dentro del entorno, pero entonces
+          su ciclo de vida va ligado al entorno; en producción se recomienda una <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> independiente.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -107,12 +107,12 @@
         <li>Publicar una aplicación web tradicional rápidamente, sin montar la infraestructura.</li>
         <li>Equipos de desarrollo sin experiencia en operaciones de AWS.</li>
         <li>Migrar aplicaciones monolíticas en lenguajes compatibles con cambios mínimos.</li>
-        <li>Procesos en segundo plano con el entorno de trabajador y su cola <a href="sqs.html">SQS</a>.</li>
+        <li>Procesos en segundo plano con el entorno de trabajador y su cola <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Arquitecturas de muchos microservicios en contenedores: <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> o <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span>.</li>
+        <li>Arquitecturas de muchos microservicios en contenedores: <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> o <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>.</li>
         <li>Funciones por evento y cargas intermitentes: <a href="lambda.html">Lambda</a>.</li>
         <li>Infraestructura compleja o reutilizable que quieres describir como código: <a href="../servicio.html?id=cloudformation">CloudFormation</a> o
           <a href="../servicio.html?id=cdk">CDK</a>.</li>
@@ -125,26 +125,26 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Subir código y que AWS monte la infraestructura web</td><td>Elastic Beanstalk</td></tr>
-            <tr><td>Contenedores web con pocos parámetros</td><td><a href="ecs.html">ECS</a> Express Mode</td></tr>
-            <tr><td>Web y sitios frontales con CI/CD <span class="sigla">(<em>Continuous Integration / Continuous Delivery</em>: integración y entrega continuas)</span> desde Git</td><td><a href="../servicio.html?id=amplify">Amplify</a> Hosting</td></tr>
-            <tr><td>Control total de las instancias</td><td><a href="ec2.html">EC2</a> con <a href="ec2-auto-scaling.html">Auto Scaling</a></td></tr>
+            <tr><td>Contenedores web con pocos parámetros</td><td><a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> Express Mode</td></tr>
+            <tr><td>Web y sitios frontales con <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> desde Git</td><td><a href="../servicio.html?id=amplify">Amplify</a> Hosting</td></tr>
+            <tr><td>Control total de las instancias</td><td><a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> con <a href="ec2-auto-scaling.html">Auto Scaling</a></td></tr>
             <tr><td>Servidor sencillo a precio fijo</td><td><a href="../servicio.html?id=lightsail">Lightsail</a></td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>Elastic Beanstalk no tiene coste propio: se pagan los recursos que crea (instancias <a href="ec2.html">EC2</a>,
+      <p>Elastic Beanstalk no tiene coste propio: se pagan los recursos que crea (instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>,
         balanceador, volúmenes, base de datos, transferencia de datos) como si los hubieras creado a
         mano.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Entornos con balanceador y <a href="ec2-auto-scaling.html">Auto Scaling</a> en varias zonas de disponibilidad.</li>
-        <li>Perfil de instancia (rol de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>) para los permisos de la aplicación y rol de servicio para
+        <li>Perfil de instancia (rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>) para los permisos de la aplicación y rol de servicio para
           Beanstalk.</li>
         <li>Actualizaciones gestionadas de la plataforma para aplicar parches de seguridad.</li>
-        <li>Despliegue en subredes privadas de una <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> y HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> con certificados de <a href="acm.html">ACM</a> <span class="sigla">(<em>AWS Certificate Manager</em>)</span> en el balanceador.</li>
+        <li>Despliegue en subredes privadas de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> y <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> con certificados de <a href="acm.html"><abbr class="sigla sigla-1" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM<span class="sigla-exp"> (AWS Certificate Manager)</span></abbr></a> en el balanceador.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
@@ -152,9 +152,9 @@
         <li><strong>"Desplegar una aplicación web sin gestionar infraestructura"</strong> y <strong>"subir el código"</strong>: Elastic Beanstalk.</li>
         <li><strong>"Sin pérdida de capacidad y rollback rápido"</strong>: despliegue immutable.</li>
         <li><strong>"Probar la nueva versión con un 10 % del tráfico"</strong>: traffic splitting.</li>
-        <li><strong>"Cambio instantáneo entre entornos"</strong>: blue/green con swap de URL (CNAME).</li>
-        <li><strong>"Tareas largas en segundo plano"</strong>: entorno de trabajador con cola <a href="sqs.html">SQS</a>.</li>
-        <li><strong>"Al borrar el entorno se perdió la base de datos"</strong>: la <a href="rds.html">RDS</a> estaba dentro del entorno; debe crearse aparte.</li>
+        <li><strong>"Cambio instantáneo entre entornos"</strong>: blue/green con swap de <abbr class="sigla" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL</abbr> (<abbr class="sigla" data-s="CNAME" data-en="Canonical Name" data-es="registro DNS que apunta a otro nombre" tabindex="0">CNAME</abbr>).</li>
+        <li><strong>"Tareas largas en segundo plano"</strong>: entorno de trabajador con cola <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>.</li>
+        <li><strong>"Al borrar el entorno se perdió la base de datos"</strong>: la <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> estaba dentro del entorno; debe crearse aparte.</li>
         <li><strong>"Personalizar la configuración en el paquete"</strong>: <code>.ebextensions</code>.</li>
       </ul>
 
@@ -202,6 +202,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

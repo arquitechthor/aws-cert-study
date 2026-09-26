@@ -6,7 +6,7 @@
       "CLF-C02"
     ],
     "dominio": "Seguridad y cumplimiento",
-    "enunciado": "Un administrador necesita saber qué usuario borró una instancia de EC2 (Elastic Compute Cloud) ayer. ¿Qué servicio lo muestra?",
+    "enunciado": "Un administrador necesita saber qué usuario borró una instancia de EC2 ayer. ¿Qué servicio lo muestra?",
     "opciones": [
       "AWS CloudTrail.",
       "Amazon CloudWatch Metrics.",
@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "CloudTrail registra las llamadas a la API (Application Programming Interface: interfaz para que los programas se comuniquen), como TerminateInstances, con la identidad que las hizo. Las métricas de CloudWatch no identifican usuarios, Trusted Advisor da recomendaciones y Cost Explorer analiza costes.",
+    "explicacion": "CloudTrail registra las llamadas a la API, como TerminateInstances, con la identidad que las hizo. Las métricas de CloudWatch no identifican usuarios, Trusted Advisor da recomendaciones y Cost Explorer analiza costes.",
     "fuentes": [
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
     ]
@@ -38,7 +38,7 @@
     "correctas": [
       2
     ],
-    "explicacion": "El historial de eventos de CloudTrail guarda gratis los últimos 90 días de eventos de administración de cada región. Para conservarlos más tiempo hay que crear un trail que los entregue a S3 (Simple Storage Service).",
+    "explicacion": "El historial de eventos de CloudTrail guarda gratis los últimos 90 días de eventos de administración de cada región. Para conservarlos más tiempo hay que crear un trail que los entregue a S3.",
     "fuentes": [
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
     ]
@@ -50,7 +50,7 @@
       "AIF-C01"
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
-    "enunciado": "El equipo de gobierno de IA (inteligencia artificial) quiere auditar qué roles invocan modelos de Amazon Bedrock y cuándo, para cumplir su política interna. ¿Qué servicio lo registra?",
+    "enunciado": "El equipo de gobierno de IA quiere auditar qué roles invocan modelos de Amazon Bedrock y cuándo, para cumplir su política interna. ¿Qué servicio lo registra?",
     "opciones": [
       "AWS CloudTrail.",
       "Amazon Bedrock Guardrails.",
@@ -60,7 +60,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Las llamadas a la API (Application Programming Interface: interfaz para que los programas se comuniquen) de Bedrock quedan registradas en CloudTrail con la identidad del llamante. Guardrails filtra contenido, Clarify analiza sesgos y explicabilidad de modelos y Artifact ofrece informes de cumplimiento de AWS.",
+    "explicacion": "Las llamadas a la API de Bedrock quedan registradas en CloudTrail con la identidad del llamante. Guardrails filtra contenido, Clarify analiza sesgos y explicabilidad de modelos y Artifact ofrece informes de cumplimiento de AWS.",
     "fuentes": [
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
     ]
@@ -72,7 +72,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Una auditoría exige registrar cada vez que alguien descarga un objeto de un bucket de S3 (Simple Storage Service) con datos sensibles. ¿Qué hay que configurar?",
+    "enunciado": "Una auditoría exige registrar cada vez que alguien descarga un objeto de un bucket de S3 con datos sensibles. ¿Qué hay que configurar?",
     "opciones": [
       "Nada: CloudTrail lo registra por defecto.",
       "Eventos de datos de S3 en un trail de CloudTrail para ese bucket.",
@@ -82,7 +82,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Las lecturas de objetos (GetObject) son eventos de datos y no se registran por defecto; hay que activarlos en un trail, idealmente solo para el bucket necesario. Config registra configuraciones, no accesos, y Flow Logs no ve las operaciones de la API (Application Programming Interface: interfaz para que los programas se comuniquen) de S3. Siglas: VPC (Virtual Private Cloud).",
+    "explicacion": "Las lecturas de objetos (GetObject) son eventos de datos y no se registran por defecto; hay que activarlos en un trail, idealmente solo para el bucket necesario. Config registra configuraciones, no accesos, y Flow Logs no ve las operaciones de la API de S3.",
     "fuentes": [
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html"
     ]
@@ -128,7 +128,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "El cambio de política es un evento de administración (PutBucketPolicy) que aparece en el historial de eventos con la identidad y la hora. Las métricas no identifican usuarios y X-Ray traza peticiones de la aplicación, no cambios de configuración. Siglas: S3 (Simple Storage Service).",
+    "explicacion": "El cambio de política es un evento de administración (PutBucketPolicy) que aparece en el historial de eventos con la identidad y la hora. Las métricas no identifican usuarios y X-Ray traza peticiones de la aplicación, no cambios de configuración.",
     "fuentes": [
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
     ]
@@ -140,7 +140,7 @@
       "DVA-C02"
     ],
     "dominio": "Desarrollo con servicios de AWS",
-    "enunciado": "Una función Lambda debe ejecutarse cada vez que alguien crea un usuario de IAM (Identity and Access Management). ¿Cuál es la forma más sencilla de lograrlo?",
+    "enunciado": "Una función Lambda debe ejecutarse cada vez que alguien crea un usuario de IAM. ¿Cuál es la forma más sencilla de lograrlo?",
     "opciones": [
       "Una regla de EventBridge que filtre el evento CreateUser registrado por CloudTrail y tenga la función como destino.",
       "Una función programada que recorra los usuarios cada minuto.",
@@ -150,7 +150,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Las llamadas a la API (Application Programming Interface: interfaz para que los programas se comuniquen) registradas por CloudTrail llegan a EventBridge como eventos, y una regla puede invocar Lambda en cuanto ocurre CreateUser. Sondear es ineficiente y con retraso, procesar ficheros de S3 (Simple Storage Service) añade complejidad y una alarma de CPU (Central Processing Unit: procesador) no tiene relación.",
+    "explicacion": "Las llamadas a la API registradas por CloudTrail llegan a EventBridge como eventos, y una regla puede invocar Lambda en cuanto ocurre CreateUser. Sondear es ineficiente y con retraso, procesar ficheros de S3 añade complejidad y una alarma de CPU no tiene relación.",
     "fuentes": [
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
     ]
@@ -172,7 +172,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "El trail de organización registra todas las cuentas, se aplica a las nuevas automáticamente y las cuentas miembro no pueden modificarlo. Los trails por cuenta pueden desactivarse o faltar, Config no registra llamadas a la API (Application Programming Interface: interfaz para que los programas se comuniquen) y CloudTrail Lake ya no admite clientes nuevos (y los almacenes de cuenta no cubren cuentas nuevas).",
+    "explicacion": "El trail de organización registra todas las cuentas, se aplica a las nuevas automáticamente y las cuentas miembro no pueden modificarlo. Los trails por cuenta pueden desactivarse o faltar, Config no registra llamadas a la API y CloudTrail Lake ya no admite clientes nuevos (y los almacenes de cuenta no cubren cuentas nuevas).",
     "fuentes": [
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html",
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-service-availability-change.html"
@@ -185,7 +185,7 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Una empresa guarda años de registros de CloudTrail en S3 (Simple Storage Service) y quiere consultarlos con SQL (Structured Query Language: lenguaje de consultas de bases de datos relacionales) para investigaciones puntuales al menor coste. ¿Qué opción es la adecuada?",
+    "enunciado": "Una empresa guarda años de registros de CloudTrail en S3 y quiere consultarlos con SQL para investigaciones puntuales al menor coste. ¿Qué opción es la adecuada?",
     "opciones": [
       "Amazon Athena sobre los ficheros de CloudTrail en S3.",
       "Cargar todo en una base de datos de RDS.",
@@ -195,7 +195,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Athena consulta con SQL los ficheros en S3 sin infraestructura y cobra por datos analizados, ideal para consultas puntuales. Cargar en RDS (Relational Database Service) es caro y laborioso, buscar a mano no escala y CloudTrail Lake no admite clientes nuevos desde el 31 de mayo de 2026.",
+    "explicacion": "Athena consulta con SQL los ficheros en S3 sin infraestructura y cobra por datos analizados, ideal para consultas puntuales. Cargar en RDS es caro y laborioso, buscar a mano no escala y CloudTrail Lake no admite clientes nuevos desde el 31 de mayo de 2026.",
     "fuentes": [
       "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-service-availability-change.html"
     ]

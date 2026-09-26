@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "AppFlow tiene un conector nativo de Salesforce y programa transferencias a S3 sin código. DataSync mueve ficheros de sistemas de almacenamiento, DMS migra bases de datos y un script en EC2 (Elastic Compute Cloud) es justo el código que se quiere evitar.",
+    "explicacion": "AppFlow tiene un conector nativo de Salesforce y programa transferencias a S3 sin código. DataSync mueve ficheros de sistemas de almacenamiento, DMS migra bases de datos y un script en EC2 es justo el código que se quiere evitar.",
     "fuentes": [
       "https://docs.aws.amazon.com/appflow/latest/userguide/what-is-appflow.html"
     ]
@@ -38,7 +38,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Con proveedores compatibles como Salesforce, AppFlow puede crear flujos privados sobre PrivateLink, de modo que el tráfico no pasa por internet. Desactivar el cifrado empeora la seguridad, un NAT gateway (Network Address Translation: traducción de direcciones de red) sale a internet y la descarga manual no es una integración. Siglas: VPN (Virtual Private Network: red privada virtual).",
+    "explicacion": "Con proveedores compatibles como Salesforce, AppFlow puede crear flujos privados sobre PrivateLink, de modo que el tráfico no pasa por internet. Desactivar el cifrado empeora la seguridad, un NAT gateway sale a internet y la descarga manual no es una integración.",
     "fuentes": [
       "https://docs.aws.amazon.com/appflow/latest/userguide/private-flows.html"
     ]
@@ -60,7 +60,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "AppFlow admite disparadores por evento de Salesforce y EventBridge como destino, así el proceso arranca casi al instante sin código de sondeo. Consultar cada día añade retraso, lo manual no escala y DMS no se conecta a Salesforce. Siglas: CSV (Comma-Separated Values: texto con valores separados por comas).",
+    "explicacion": "AppFlow admite disparadores por evento de Salesforce y EventBridge como destino, así el proceso arranca casi al instante sin código de sondeo. Consultar cada día añade retraso, lo manual no escala y DMS no se conecta a Salesforce.",
     "fuentes": [
       "https://docs.aws.amazon.com/appflow/latest/userguide/flow-triggers.html"
     ]

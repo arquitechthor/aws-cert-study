@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "OpenSearch está diseñado para la búsqueda de texto completo con relevancia, coincidencias aproximadas y facetas. Redshift es un almacén de datos para análisis, RDS (Relational Database Service) es relacional y Glue hace ETL (Extract, Transform, Load: extraer, transformar y cargar datos).",
+    "explicacion": "OpenSearch está diseñado para la búsqueda de texto completo con relevancia, coincidencias aproximadas y facetas. Redshift es un almacén de datos para análisis, RDS es relacional y Glue hace ETL.",
     "fuentes": [
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
     ]
@@ -50,7 +50,7 @@
       "AIF-C01"
     ],
     "dominio": "Aplicaciones de los modelos fundacionales",
-    "enunciado": "Una Knowledge Base de Amazon Bedrock necesita un almacén de vectores sin gestionar servidores para una aplicación RAG (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos). ¿Qué opción es la adecuada?",
+    "enunciado": "Una Knowledge Base de Amazon Bedrock necesita un almacén de vectores sin gestionar servidores para una aplicación RAG. ¿Qué opción es la adecuada?",
     "opciones": [
       "Una colección de búsqueda vectorial de Amazon OpenSearch Serverless.",
       "Un bucket de S3 Glacier Deep Archive.",
@@ -60,7 +60,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "OpenSearch Serverless ofrece colecciones de búsqueda vectorial (k-NN) sin servidores y es un almacén de vectores compatible con Bedrock Knowledge Bases. Glacier es archivo en frío, Redshift sin índices vectoriales no sirve para vecinos más cercanos y SQS (Simple Queue Service) es una cola.",
+    "explicacion": "OpenSearch Serverless ofrece colecciones de búsqueda vectorial (k-NN) sin servidores y es un almacén de vectores compatible con Bedrock Knowledge Bases. Glacier es archivo en frío, Redshift sin índices vectoriales no sirve para vecinos más cercanos y SQS es una cola.",
     "fuentes": [
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html",
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/knn.html"
@@ -83,7 +83,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "UltraWarm y cold guardan datos de solo lectura respaldados en S3 (Simple Storage Service) a una fracción del coste, y las políticas ISM (Index State Management: políticas que mueven índices entre niveles) los mueven automáticamente por antigüedad. Borrar incumple el requisito, más nodos hot suben el coste y quitar réplicas pone en riesgo la disponibilidad.",
+    "explicacion": "UltraWarm y cold guardan datos de solo lectura respaldados en S3 a una fracción del coste, y las políticas ISM los mueven automáticamente por antigüedad. Borrar incumple el requisito, más nodos hot suben el coste y quitar réplicas pone en riesgo la disponibilidad.",
     "fuentes": [
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ultrawarm.html"
     ]
@@ -95,7 +95,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
-    "enunciado": "Una aplicación guarda sus datos en DynamoDB y ahora necesita búsquedas de texto completo sobre ellos, sin construir ni mantener un proceso ETL (Extract, Transform, Load: extraer, transformar y cargar datos). ¿Qué solución es la adecuada?",
+    "enunciado": "Una aplicación guarda sus datos en DynamoDB y ahora necesita búsquedas de texto completo sobre ellos, sin construir ni mantener un proceso ETL. ¿Qué solución es la adecuada?",
     "opciones": [
       "La integración zero-ETL de DynamoDB con Amazon OpenSearch Service.",
       "Operaciones Scan con FilterExpression.",
@@ -105,7 +105,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "La integración zero-ETL mantiene sincronizados los datos de DynamoDB en OpenSearch para búsquedas de texto completo. Un Scan con filtros es lento y caro, los GSI (Global Secondary Index: índice secundario global) no hacen búsqueda de texto y una exportación nocturna a Redshift ni es texto completo ni es inmediata.",
+    "explicacion": "La integración zero-ETL mantiene sincronizados los datos de DynamoDB en OpenSearch para búsquedas de texto completo. Un Scan con filtros es lento y caro, los GSI no hacen búsqueda de texto y una exportación nocturna a Redshift ni es texto completo ni es inmediata.",
     "fuentes": [
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
     ]
@@ -127,7 +127,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Firehose u OpenSearch Ingestion agrupan, reintentan y entregan los datos a OpenSearch sin código propio. Escribir desde cada invocación añade latencia y gestión de errores, y las otras dos opciones no tienen sentido. Siglas: SES (Simple Email Service).",
+    "explicacion": "Firehose u OpenSearch Ingestion agrupan, reintentan y entregan los datos a OpenSearch sin código propio. Escribir desde cada invocación añade latencia y gestión de errores, y las otras dos opciones no tienen sentido.",
     "fuentes": [
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
     ]
@@ -151,7 +151,7 @@
       0,
       1
     ],
-    "explicacion": "Fine-grained access control permite restringir por índice, documento y campo, y asignar roles de IAM (Identity and Access Management) a esos roles de OpenSearch para autenticar a cada aplicación. Los security groups funcionan a nivel de dominio, no de índice, y desactivar HTTPS (HTTP Secure: HTTP cifrado con TLS) o abrir el dominio reduce la seguridad.",
+    "explicacion": "Fine-grained access control permite restringir por índice, documento y campo, y asignar roles de IAM a esos roles de OpenSearch para autenticar a cada aplicación. Los security groups funcionan a nivel de dominio, no de índice, y desactivar HTTPS o abrir el dominio reduce la seguridad.",
     "fuentes": [
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/fgac.html"
     ]
@@ -163,7 +163,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar nuevas soluciones",
-    "enunciado": "Un asistente interno con RAG (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos) recibe consultas solo en horario laboral y el equipo no quiere pagar capacidad de búsqueda vectorial de noche ni gestionar clústeres. ¿Qué opción es la más adecuada?",
+    "enunciado": "Un asistente interno con RAG recibe consultas solo en horario laboral y el equipo no quiere pagar capacidad de búsqueda vectorial de noche ni gestionar clústeres. ¿Qué opción es la más adecuada?",
     "opciones": [
       "OpenSearch Serverless con una colección de búsqueda vectorial NextGen y mínimo de 0 OCU.",
       "Un dominio de OpenSearch con nodos reservados de 3 años.",
@@ -173,7 +173,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "La generación NextGen de OpenSearch Serverless permite bajar a cero OCU (OpenSearch Compute Unit: unidad de capacidad de OpenSearch Serverless) tras un periodo de inactividad y vuelve a escalar con la siguiente petición, sin clústeres que gestionar. Los nodos reservados pagan capacidad continua, UltraWarm no es para índices vectoriales en caliente y Memcached no ofrece búsqueda vectorial.",
+    "explicacion": "La generación NextGen de OpenSearch Serverless permite bajar a cero OCU tras un periodo de inactividad y vuelve a escalar con la siguiente petición, sin clústeres que gestionar. Los nodos reservados pagan capacidad continua, UltraWarm no es para índices vectoriales en caliente y Memcached no ofrece búsqueda vectorial.",
     "fuentes": [
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html"
     ]
@@ -195,7 +195,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Multi-AZ con espera reparte el dominio en tres zonas con una en espera, de modo que ante un fallo de zona conmuta sin reducir la capacidad. Un nodo o dos zonas sin réplicas pierden datos o capacidad, y las instantáneas sirven para restaurar, no para seguir en servicio. Siglas: S3 (Simple Storage Service).",
+    "explicacion": "Multi-AZ con espera reparte el dominio en tres zonas con una en espera, de modo que ante un fallo de zona conmuta sin reducir la capacidad. Un nodo o dos zonas sin réplicas pierden datos o capacidad, y las instantáneas sirven para restaurar, no para seguir en servicio.",
     "fuentes": [
       "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
     ]

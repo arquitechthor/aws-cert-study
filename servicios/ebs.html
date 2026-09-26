@@ -65,8 +65,8 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>Amazon EBS (<em>Elastic Block Store</em>) ofrece <strong>volúmenes de almacenamiento de
-        bloque</strong>: discos virtuales que se conectan a instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> como si fueran discos
+      <p>Amazon <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr> (<em>Elastic Block Store</em>) ofrece <strong>volúmenes de almacenamiento de
+        bloque</strong>: discos virtuales que se conectan a instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> como si fueran discos
         físicos, para el sistema operativo, bases de datos o cualquier aplicación que necesite un
         sistema de ficheros. Son <strong>persistentes</strong> (los datos siguen ahí aunque pares la
         instancia) y viven en <strong>una sola zona de disponibilidad</strong>, replicados dentro de
@@ -77,54 +77,54 @@
         <table>
           <thead><tr><th>Tipo</th><th>Características</th><th>Uso típico</th></tr></thead>
           <tbody>
-            <tr><td>gp3 (SSD <span class="sigla">(<em>Solid-State Drive</em>: disco de estado sólido)</span> de uso general)</td><td>3 000 IOPS <span class="sigla">(<em>Input/Output Operations Per Second</em>: operaciones de disco por segundo)</span> y 125 MiB/s incluidos, ampliables por separado hasta 80 000 IOPS y 2 000 MiB/s; hasta 64 TiB</td><td>La opción por defecto: arranque, aplicaciones, bases de datos medianas</td></tr>
-            <tr><td>gp2 (generación anterior)</td><td>IOPS ligadas al tamaño (3 por GiB) con ráfagas</td><td>Heredado; migrar a gp3 suele abaratar</td></tr>
-            <tr><td>io2 Block Express (SSD de IOPS aprovisionadas)</td><td>Hasta 256 000 IOPS, latencia submilisegundo, durabilidad del 99,999 %</td><td>Bases de datos críticas y de gran rendimiento</td></tr>
-            <tr><td>st1 (HDD <span class="sigla">(<em>Hard Disk Drive</em>: disco duro magnético)</span> de rendimiento)</td><td>Barato, optimizado para lecturas secuenciales grandes</td><td>Big data, registros, almacenes de datos</td></tr>
-            <tr><td>sc1 (HDD en frío)</td><td>El más barato</td><td>Datos poco consultados</td></tr>
+            <tr><td>gp3 (<abbr class="sigla sigla-1" data-s="SSD" data-en="Solid-State Drive" data-es="disco de estado sólido" tabindex="0">SSD<span class="sigla-exp"> (Solid-State Drive: disco de estado sólido)</span></abbr> de uso general)</td><td>3 000 <abbr class="sigla sigla-1" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS<span class="sigla-exp"> (Input/Output Operations Per Second: operaciones de disco por segundo)</span></abbr> y 125 MiB/s incluidos, ampliables por separado hasta 80 000 <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> y 2 000 MiB/s; hasta 64 TiB</td><td>La opción por defecto: arranque, aplicaciones, bases de datos medianas</td></tr>
+            <tr><td>gp2 (generación anterior)</td><td><abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> ligadas al tamaño (3 por GiB) con ráfagas</td><td>Heredado; migrar a gp3 suele abaratar</td></tr>
+            <tr><td>io2 Block Express (<abbr class="sigla" data-s="SSD" data-en="Solid-State Drive" data-es="disco de estado sólido" tabindex="0">SSD</abbr> de <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> aprovisionadas)</td><td>Hasta 256 000 <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr>, latencia submilisegundo, durabilidad del 99,999 %</td><td>Bases de datos críticas y de gran rendimiento</td></tr>
+            <tr><td>st1 (<abbr class="sigla sigla-1" data-s="HDD" data-en="Hard Disk Drive" data-es="disco duro magnético" tabindex="0">HDD<span class="sigla-exp"> (Hard Disk Drive: disco duro magnético)</span></abbr> de rendimiento)</td><td>Barato, optimizado para lecturas secuenciales grandes</td><td>Big data, registros, almacenes de datos</td></tr>
+            <tr><td>sc1 (<abbr class="sigla" data-s="HDD" data-en="Hard Disk Drive" data-es="disco duro magnético" tabindex="0">HDD</abbr> en frío)</td><td>El más barato</td><td>Datos poco consultados</td></tr>
           </tbody>
         </table>
       </div>
-      <p>Los HDD (st1 y sc1) no pueden ser volumen de arranque.</p>
+      <p>Los <abbr class="sigla" data-s="HDD" data-en="Hard Disk Drive" data-es="disco duro magnético" tabindex="0">HDD</abbr> (st1 y sc1) no pueden ser volumen de arranque.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Una zona de disponibilidad:</strong> un volumen solo se conecta a instancias de su
           misma zona. Para llevarlo a otra zona o región, se hace una instantánea y se restaura allí.</li>
-        <li><strong>Instantáneas (snapshots):</strong> copias incrementales guardadas en <a href="s3.html">S3</a> (solo se
+        <li><strong>Instantáneas (snapshots):</strong> copias incrementales guardadas en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> (solo se
           guardan los bloques cambiados). Se pueden copiar entre regiones, compartir con otras cuentas y
           automatizar con Data Lifecycle Manager o <a href="../servicio.html?id=backup">AWS Backup</a>. El archivo de instantáneas abarata las que
           se guardan mucho tiempo; la papelera de reciclaje protege contra borrados accidentales.</li>
         <li><strong>Multi-Attach:</strong> los io2 pueden conectarse a varias instancias Nitro de la misma
           zona a la vez (la aplicación debe gestionar la escritura concurrente).</li>
-        <li><strong>Elastic Volumes:</strong> ampliar tamaño o cambiar tipo, IOPS y rendimiento en
+        <li><strong>Elastic Volumes:</strong> ampliar tamaño o cambiar tipo, <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> y rendimiento en
           caliente, sin parar la instancia.</li>
         <li><strong>DeleteOnTermination:</strong> por defecto el volumen raíz se borra al terminar la
           instancia; los adicionales, no.</li>
         <li><strong>Instance store:</strong> disco local de algunas instancias, muy rápido pero
-          <em>efímero</em>: se pierde al parar o terminar la instancia. No es EBS.</li>
+          <em>efímero</em>: se pierde al parar o terminar la instancia. No es <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Volumen de arranque y de aplicaciones de instancias <a href="ec2.html">EC2</a>.</li>
-        <li>Bases de datos instaladas en EC2 (io2 para las más exigentes).</li>
+        <li>Volumen de arranque y de aplicaciones de instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>.</li>
+        <li>Bases de datos instaladas en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> (io2 para las más exigentes).</li>
         <li>Copias de seguridad y recuperación entre regiones con instantáneas.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Ficheros compartidos entre muchas instancias o zonas: <a href="../servicio.html?id=efs">EFS</a> (Linux) o <a href="../servicio.html?id=fsx">FSx</a> (Windows y otros).</li>
-        <li>Objetos accesibles por HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>, a escala ilimitada: <a href="s3.html">S3</a>.</li>
+        <li>Ficheros compartidos entre muchas instancias o zonas: <a href="../servicio.html?id=efs"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a> (Linux) o <a href="../servicio.html?id=fsx">FSx</a> (Windows y otros).</li>
+        <li>Objetos accesibles por <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>, a escala ilimitada: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
         <li>Datos temporales de máximo rendimiento que pueden perderse: instance store.</li>
       </ul>
 
       <h2 id="comparativa">EBS, EFS y S3</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Característica</th><th>EBS</th><th><a href="../servicio.html?id=efs">EFS</a></th><th><a href="s3.html">S3</a></th></tr></thead>
+          <thead><tr><th>Característica</th><th><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></th><th><a href="../servicio.html?id=efs"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a></th><th><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></th></tr></thead>
           <tbody>
-            <tr><td>Tipo</td><td>Bloque (disco)</td><td>Ficheros (NFS)</td><td>Objetos (API HTTP)</td></tr>
+            <tr><td>Tipo</td><td>Bloque (disco)</td><td>Ficheros (<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr>)</td><td>Objetos (API <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>)</td></tr>
             <tr><td>Acceso</td><td>Una instancia (salvo Multi-Attach)</td><td>Miles de instancias a la vez</td><td>Cualquier cliente</td></tr>
             <tr><td>Alcance</td><td>Una zona</td><td>Regional (varias zonas)</td><td>Regional</td></tr>
             <tr><td>Capacidad</td><td>Aprovisionada</td><td>Crece sola</td><td>Ilimitada</td></tr>
@@ -133,13 +133,13 @@
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>Se paga por GB aprovisionado al mes (se use o no), más las IOPS y el rendimiento aprovisionados
+      <p>Se paga por GB aprovisionado al mes (se use o no), más las <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> y el rendimiento aprovisionados
         por encima de lo incluido (gp3, io2), y por el almacenamiento de las instantáneas (en su nivel
         estándar o de archivo). Los volúmenes siguen cobrando aunque la instancia esté parada.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Cifrado con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> de volúmenes e instantáneas, transparente y sin impacto de rendimiento;
+        <li>Cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> de volúmenes e instantáneas, transparente y sin impacto de rendimiento;
           se puede activar por defecto en la región.</li>
         <li>Un volumen sin cifrar se cifra copiando una instantánea con cifrado y restaurándola.</li>
         <li>Replicación dentro de la zona; para fallos de zona o región, instantáneas copiadas a otra
@@ -151,10 +151,10 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Mover un volumen a otra zona o región"</strong>: instantánea y restauración allí.</li>
-        <li><strong>"Más IOPS sin pagar más capacidad"</strong>: gp3 (IOPS independientes del tamaño).</li>
-        <li><strong>"Base de datos con IOPS muy altas y constantes"</strong>: io2 Block Express.</li>
+        <li><strong>"Más <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> sin pagar más capacidad"</strong>: gp3 (<abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> independientes del tamaño).</li>
+        <li><strong>"Base de datos con <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> muy altas y constantes"</strong>: io2 Block Express.</li>
         <li><strong>"Lectura secuencial barata de grandes volúmenes"</strong>: st1.</li>
-        <li><strong>"Compartir ficheros entre muchas instancias"</strong>: <a href="../servicio.html?id=efs">EFS</a>, no EBS.</li>
+        <li><strong>"Compartir ficheros entre muchas instancias"</strong>: <a href="../servicio.html?id=efs"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>, no <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr>.</li>
         <li><strong>"Los datos del disco desaparecieron al parar la instancia"</strong>: era instance store.</li>
         <li><strong>"Cifrar un volumen existente"</strong>: instantánea, copia cifrada y nuevo volumen.</li>
         <li><strong>"Automatizar las instantáneas"</strong>: Data Lifecycle Manager o <a href="../servicio.html?id=backup">AWS Backup</a>.</li>
@@ -205,6 +205,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

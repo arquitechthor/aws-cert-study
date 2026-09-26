@@ -66,10 +66,10 @@
 
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
-      <p>AWS KMS (<em>Key Management Service</em>) crea, guarda y usa claves criptográficas en
-        módulos de seguridad hardware (HSM) validados, sin que el material de la clave salga nunca en
-        claro. Casi todos los servicios de AWS (<a href="s3.html">S3</a>, <a href="ebs.html">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span>, <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, <a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="secrets-manager.html">Secrets Manager</a>…) se
-        integran con KMS para el cifrado en reposo, y cada uso de una clave queda registrado en
+      <p>AWS <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> (<em>Key Management Service</em>) crea, guarda y usa claves criptográficas en
+        módulos de seguridad hardware (<abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>) validados, sin que el material de la clave salga nunca en
+        claro. Casi todos los servicios de AWS (<a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="secrets-manager.html">Secrets Manager</a>…) se
+        integran con <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> para el cifrado en reposo, y cada uso de una clave queda registrado en
         <a href="cloudtrail.html">CloudTrail</a>. Tú decides quién puede usar cada clave y para qué.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
@@ -83,15 +83,15 @@
             <li><strong>Propiedad de AWS:</strong> las usa AWS internamente en muchas cuentas; no las
               ves ni auditas.</li>
           </ul></li>
-        <li><strong>Simétricas</strong> (AES-256 <span class="sigla">(<em>Advanced Encryption Standard</em>: cifrado simétrico con claves de 256 bits)</span>, la opción por defecto, el material nunca sale de
-          KMS), <strong>asimétricas</strong> (RSA <span class="sigla">(<em>Rivest-Shamir-Adleman</em>: algoritmo de clave pública)</span> o ECC <span class="sigla">(<em>Elliptic Curve Cryptography</em>: criptografía de curva elíptica)</span>, para firmar o cifrar fuera de AWS con la clave
-          pública) y <strong>HMAC <span class="sigla">(<em>Hash-based Message Authentication Code</em>: código que verifica integridad y autenticidad)</span></strong>.</li>
-        <li><strong>Cifrado de sobre (<em>envelope encryption</em>):</strong> KMS cifra directamente
+        <li><strong>Simétricas</strong> (<abbr class="sigla sigla-1" data-s="AES-256" data-en="Advanced Encryption Standard" data-es="cifrado simétrico con claves de 256 bits" tabindex="0">AES-256<span class="sigla-exp"> (Advanced Encryption Standard: cifrado simétrico con claves de 256 bits)</span></abbr>, la opción por defecto, el material nunca sale de
+          <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr>), <strong>asimétricas</strong> (<abbr class="sigla sigla-1" data-s="RSA" data-en="Rivest-Shamir-Adleman" data-es="algoritmo de clave pública" tabindex="0">RSA<span class="sigla-exp"> (Rivest-Shamir-Adleman: algoritmo de clave pública)</span></abbr> o <abbr class="sigla sigla-1" data-s="ECC" data-en="Elliptic Curve Cryptography" data-es="criptografía de curva elíptica" tabindex="0">ECC<span class="sigla-exp"> (Elliptic Curve Cryptography: criptografía de curva elíptica)</span></abbr>, para firmar o cifrar fuera de AWS con la clave
+          pública) y <strong><abbr class="sigla sigla-1" data-s="HMAC" data-en="Hash-based Message Authentication Code" data-es="código que verifica integridad y autenticidad" tabindex="0">HMAC<span class="sigla-exp"> (Hash-based Message Authentication Code: código que verifica integridad y autenticidad)</span></abbr></strong>.</li>
+        <li><strong>Cifrado de sobre (<em>envelope encryption</em>):</strong> <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> cifra directamente
           como máximo <strong>4 KB</strong>. Para datos mayores se pide una <strong>clave de datos</strong>
           (<code>GenerateDataKey</code>): cifras los datos localmente con ella y guardas su copia
           cifrada junto a los datos. Es lo que hacen los servicios de AWS por dentro.</li>
         <li><strong>Política de clave:</strong> el control de acceso principal. Sin una política que lo
-          permita, ni siquiera un administrador de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> puede usar la clave. Las
+          permita, ni siquiera un administrador de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> puede usar la clave. Las
           <strong>concesiones (grants)</strong> dan permisos temporales y delegables.</li>
         <li><strong>Rotación automática:</strong> para claves simétricas gestionadas por el cliente,
           con periodo configurable de 90 a 2560 días (365 por defecto), y rotación bajo demanda. Las
@@ -101,24 +101,24 @@
         <li><strong>Claves multirregión:</strong> réplicas con el mismo material en varias regiones
           para cifrar en una y descifrar en otra sin volver a cifrar.</li>
         <li><strong>Almacenes de claves personalizados:</strong> respaldados por un clúster de
-          <a href="../servicio.html?id=cloudhsm">CloudHSM</a> propio o por un gestor de claves externo (XKS).</li>
+          <a href="../servicio.html?id=cloudhsm">CloudHSM</a> propio o por un gestor de claves externo (<abbr class="sigla" data-s="XKS" data-en="External Key Store" data-es="almacén de claves externo a AWS" tabindex="0">XKS</abbr>).</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Cifrado en reposo de <a href="s3.html">S3</a>, <a href="ebs.html">EBS</a>, <a href="rds.html">RDS</a>, <a href="dynamodb.html">DynamoDB</a> y demás, con claves bajo tu control.</li>
+        <li>Cifrado en reposo de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a>, <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="dynamodb.html">DynamoDB</a> y demás, con claves bajo tu control.</li>
         <li>Cumplir normativas que exigen rotación, separación de funciones y auditoría del uso.</li>
-        <li>Cifrar datos en la aplicación con el SDK <span class="sigla">(<em>Software Development Kit</em>: bibliotecas para programar contra AWS)</span> de cifrado y claves de datos.</li>
+        <li>Cifrar datos en la aplicación con el <abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr> de cifrado y claves de datos.</li>
         <li>Firmar y verificar documentos o tokens con claves asimétricas.</li>
         <li>Compartir datos cifrados con otra cuenta permitiéndole usar la clave.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si necesitas un HSM de un solo inquilino con control exclusivo y acceso por PKCS <span class="sigla">(<em>Public-Key Cryptography Standards</em>: estándares de criptografía de clave pública)</span>#11 o JCE <span class="sigla">(<em>Java Cryptography Extension</em>: interfaz criptográfica de Java)</span>:
+        <li>Si necesitas un <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> de un solo inquilino con control exclusivo y acceso por <abbr class="sigla sigla-1" data-s="PKCS" data-en="Public-Key Cryptography Standards" data-es="estándares de criptografía de clave pública" tabindex="0">PKCS<span class="sigla-exp"> (Public-Key Cryptography Standards: estándares de criptografía de clave pública)</span></abbr>#11 o <abbr class="sigla sigla-1" data-s="JCE" data-en="Java Cryptography Extension" data-es="interfaz criptográfica de Java" tabindex="0">JCE<span class="sigla-exp"> (Java Cryptography Extension: interfaz criptográfica de Java)</span></abbr>:
           <a href="../servicio.html?id=cloudhsm">CloudHSM</a>.</li>
-        <li>Para guardar contraseñas o claves de API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>: <a href="secrets-manager.html">Secrets Manager</a> (que usa KMS por debajo).</li>
-        <li>Para certificados TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span>: <a href="acm.html">AWS Certificate Manager</a>.</li>
+        <li>Para guardar contraseñas o claves de <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>: <a href="secrets-manager.html">Secrets Manager</a> (que usa <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> por debajo).</li>
+        <li>Para certificados <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>: <a href="acm.html">AWS Certificate Manager</a>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -126,10 +126,10 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
-            <tr><td>Claves gestionadas e integradas con los servicios de AWS</td><td>KMS</td></tr>
-            <tr><td>HSM dedicado bajo tu control exclusivo</td><td><a href="../servicio.html?id=cloudhsm">CloudHSM</a></td></tr>
+            <tr><td>Claves gestionadas e integradas con los servicios de AWS</td><td><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></td></tr>
+            <tr><td><abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> dedicado bajo tu control exclusivo</td><td><a href="../servicio.html?id=cloudhsm">CloudHSM</a></td></tr>
             <tr><td>Guardar y rotar secretos (contraseñas, tokens)</td><td><a href="secrets-manager.html">Secrets Manager</a></td></tr>
-            <tr><td>Certificados SSL/TLS</td><td><a href="acm.html">ACM</a></td></tr>
+            <tr><td>Certificados SSL/TLS</td><td><a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a></td></tr>
             <tr><td>Parámetros de configuración, algunos cifrados</td><td><a href="../servicio.html?id=systems-manager">Systems Manager</a> Parameter Store</td></tr>
           </tbody>
         </table>
@@ -137,14 +137,14 @@
 
       <h2 id="precios">Modelo de precios</h2>
       <p>Cada clave gestionada por el cliente tiene una cuota mensual (y cada versión rotada añade
-        coste, con un tope), y se paga por cada petición a la API (cifrar, descifrar, generar claves de
+        coste, con un tope), y se paga por cada petición a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> (cifrar, descifrar, generar claves de
         datos), con un nivel gratuito mensual. Las claves gestionadas por AWS no tienen cuota mensual,
-        pero sus peticiones sí cuentan. En <a href="s3.html">S3</a>, las <em>S3 Bucket Keys</em> reducen mucho las llamadas a
-        KMS y, por tanto, su coste.</p>
+        pero sus peticiones sí cuentan. En <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, las <em>S3 Bucket Keys</em> reducen mucho las llamadas a
+        <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> y, por tanto, su coste.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>El material de las claves nunca sale de los HSM en claro.</li>
+        <li>El material de las claves nunca sale de los <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> en claro.</li>
         <li>Políticas de clave para separar a quien administra la clave de quien la usa.</li>
         <li>Condiciones como <code>kms:ViaService</code> para permitir el uso solo a través de un servicio.</li>
         <li>Cada llamada queda registrada en <a href="cloudtrail.html">CloudTrail</a>.</li>
@@ -154,12 +154,12 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Controlar la rotación, la política o compartir la clave con otra cuenta"</strong>: clave gestionada por el cliente, no gestionada por AWS.</li>
-        <li><strong>"Cifrar un fichero de más de 4 KB con KMS"</strong>: cifrado de sobre con <code>GenerateDataKey</code>.</li>
+        <li><strong>"Cifrar un fichero de más de 4 KB con <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr>"</strong>: cifrado de sobre con <code>GenerateDataKey</code>.</li>
         <li><strong>"Borrar la clave de inmediato"</strong>: no se puede; espera de 7 a 30 días (desactivarla sí es inmediato).</li>
-        <li><strong>"HSM de un solo inquilino"</strong> o <strong>"FIPS <span class="sigla">(<em>Federal Information Processing Standards</em>: normas de seguridad del gobierno de EE. UU.)</span> 140 nivel 3 bajo control exclusivo"</strong>: <a href="../servicio.html?id=cloudhsm">CloudHSM</a>.</li>
-        <li><strong>"AccessDenied al descifrar aunque <a href="iam.html">IAM</a> lo permite"</strong>: falta el permiso en la política de la clave.</li>
+        <li><strong>"<abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> de un solo inquilino"</strong> o <strong>"<abbr class="sigla sigla-1" data-s="FIPS" data-en="Federal Information Processing Standards" data-es="normas de seguridad del gobierno de EE. UU." tabindex="0">FIPS<span class="sigla-exp"> (Federal Information Processing Standards: normas de seguridad del gobierno de EE. UU.)</span></abbr> 140 nivel 3 bajo control exclusivo"</strong>: <a href="../servicio.html?id=cloudhsm">CloudHSM</a>.</li>
+        <li><strong>"AccessDenied al descifrar aunque <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> lo permite"</strong>: falta el permiso en la política de la clave.</li>
         <li><strong>"Descifrar en otra región sin recifrar"</strong>: clave multirregión.</li>
-        <li><strong>"Demasiadas llamadas a KMS desde <a href="s3.html">S3</a>"</strong>: S3 Bucket Keys.</li>
+        <li><strong>"Demasiadas llamadas a <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> desde <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: S3 Bucket Keys.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -207,6 +207,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

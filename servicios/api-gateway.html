@@ -66,35 +66,35 @@
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
       <p>Amazon API Gateway es un servicio gestionado para exponer APIs. Recibe las peticiones de
-        los clientes y se encarga de la autenticación, CORS <span class="sigla">(<em>Cross-Origin Resource Sharing</em>: permite que una web llame a otro dominio)</span>, limitación de peticiones y enrutado
-        hacia el backend (<a href="lambda.html">Lambda</a>, un endpoint HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span> u otro servicio de AWS). No hay servidores que
+        los clientes y se encarga de la autenticación, <abbr class="sigla sigla-1" data-s="CORS" data-en="Cross-Origin Resource Sharing" data-es="permite que una web llame a otro dominio" tabindex="0">CORS<span class="sigla-exp"> (Cross-Origin Resource Sharing: permite que una web llame a otro dominio)</span></abbr>, limitación de peticiones y enrutado
+        hacia el backend (<a href="lambda.html">Lambda</a>, un endpoint <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr> u otro servicio de AWS). No hay servidores que
         mantener y escala solo.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Tipos de API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>:</strong>
+        <li><strong>Tipos de <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>:</strong>
           <ul>
-            <li><strong>REST API:</strong> la más completa, con caché, claves de API y planes de uso,
-              transformación de peticiones, validación e integración con <a href="../servicio.html?id=waf">AWS WAF</a> <span class="sigla">(<em>Web Application Firewall</em>)</span>.</li>
-            <li><strong>HTTP API:</strong> más sencilla, más barata y con menos latencia. Tiene
-              autorizador JWT <span class="sigla">(<em>JSON Web Token</em>: token firmado con datos del usuario)</span> nativo y cubre la mayoría de proxies hacia <a href="lambda.html">Lambda</a> o HTTP.</li>
-            <li><strong>WebSocket API:</strong> conexiones bidireccionales persistentes (chats,
+            <li><strong>REST <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>:</strong> la más completa, con caché, claves de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> y planes de uso,
+              transformación de peticiones, validación e integración con <a href="../servicio.html?id=waf">AWS <abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a>.</li>
+            <li><strong>HTTP <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>:</strong> más sencilla, más barata y con menos latencia. Tiene
+              autorizador <abbr class="sigla sigla-1" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT<span class="sigla-exp"> (JSON Web Token: token firmado con datos del usuario)</span></abbr> nativo y cubre la mayoría de proxies hacia <a href="lambda.html">Lambda</a> o <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>.</li>
+            <li><strong>WebSocket <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>:</strong> conexiones bidireccionales persistentes (chats,
               notificaciones en tiempo real).</li>
           </ul></li>
-        <li><strong>Tipos de endpoint (REST):</strong> <em>edge-optimized</em> (a través de la red de
-          <a href="cloudfront.html">CloudFront</a>), <em>regional</em> y <em>privado</em> (solo accesible desde una <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> mediante un
+        <li><strong>Tipos de endpoint (<abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr>):</strong> <em>edge-optimized</em> (a través de la red de
+          <a href="cloudfront.html">CloudFront</a>), <em>regional</em> y <em>privado</em> (solo accesible desde una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> mediante un
           endpoint de interfaz).</li>
         <li><strong>Etapas (stages):</strong> versiones desplegadas (dev, prod) con sus propias
-          variables, limitación y logs. Permiten despliegues canary en REST.</li>
-        <li><strong>Autorizadores:</strong> <a href="iam.html">IAM</a> (firma SigV4), <a href="cognito.html">Cognito</a> user pool o JWT, y
+          variables, limitación y logs. Permiten despliegues canary en <abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr>.</li>
+        <li><strong>Autorizadores:</strong> <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> (firma SigV4), <a href="cognito.html">Cognito</a> user pool o <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr>, y
           autorizadores Lambda (lógica propia a partir de un token o de los parámetros de la petición).</li>
         <li><strong>Limitación (throttling):</strong> cuota por cuenta y región (10.000 peticiones por
           segundo con ráfagas, en la mayoría de regiones), y límites por etapa, ruta o cliente mediante
           planes de uso.</li>
         <li><strong>Límites importantes:</strong> carga útil máxima de <strong>10 MB</strong>. El tiempo
-          máximo de integración es de 29 segundos en REST (ampliable a petición en APIs regionales y
-          privadas) y de 30 segundos en HTTP API.</li>
-        <li><strong>VPC Link:</strong> conecta la API con recursos privados de una VPC (<a href="elb.html">NLB</a>, ALB <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span> o
+          máximo de integración es de 29 segundos en <abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr> (ampliable a petición en APIs regionales y
+          privadas) y de 30 segundos en HTTP <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
+        <li><strong>VPC Link:</strong> conecta la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> con recursos privados de una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (<a href="elb.html"><abbr class="sigla sigla-1" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB<span class="sigla-exp"> (Network Load Balancer: balanceador TCP/UDP)</span></abbr></a>, <abbr class="sigla sigla-1" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB<span class="sigla-exp"> (Application Load Balancer: balanceador HTTP/HTTPS)</span></abbr> o
           Cloud Map).</li>
       </ul>
 
@@ -102,69 +102,69 @@
       <ul>
         <li>Backend <em>serverless</em>: API Gateway más <a href="lambda.html">Lambda</a> más <a href="dynamodb.html">DynamoDB</a>.</li>
         <li>Fachada única delante de microservicios en contenedores o instancias privadas.</li>
-        <li>Publicar una API para terceros con claves, cuotas y planes de uso (REST).</li>
+        <li>Publicar una <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> para terceros con claves, cuotas y planes de uso (<abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr>).</li>
         <li>Integración directa con servicios de AWS sin Lambda intermedia (por ejemplo, poner mensajes
-          en <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span> o escribir en DynamoDB).</li>
+          en <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a> o escribir en DynamoDB).</li>
         <li>Aplicaciones en tiempo real con WebSocket.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Subir o descargar ficheros grandes: superan los 10 MB. Mejor URLs prefirmadas de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>.</li>
+        <li>Subir o descargar ficheros grandes: superan los 10 MB. Mejor URLs prefirmadas de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
         <li>Procesos que tardan más que el tiempo máximo de integración: mejor un patrón asíncrono (la
-          API encola el trabajo en <a href="sqs.html">SQS</a> o <a href="step-functions.html">Step Functions</a> y el cliente consulta el estado).</li>
-        <li>Si solo necesitas un endpoint HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> para una única función <a href="lambda.html">Lambda</a>, sin autorizador ni
-          límites, una <strong>URL <span class="sigla">(<em>Uniform Resource Locator</em>: dirección web)</span> de función de Lambda</strong> puede bastar.</li>
-        <li>Para balancear tráfico hacia instancias o contenedores sin funciones de API: un Application
+          <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> encola el trabajo en <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> o <a href="step-functions.html">Step Functions</a> y el cliente consulta el estado).</li>
+        <li>Si solo necesitas un endpoint <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> para una única función <a href="lambda.html">Lambda</a>, sin autorizador ni
+          límites, una <strong><abbr class="sigla sigla-1" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL<span class="sigla-exp"> (Uniform Resource Locator: dirección web)</span></abbr> de función de Lambda</strong> puede bastar.</li>
+        <li>Para balancear tráfico hacia instancias o contenedores sin funciones de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>: un Application
           Load Balancer suele ser más adecuado.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>REST API</th><th>HTTP API</th><th><a href="elb.html">ALB</a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>REST <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></th><th>HTTP <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></th><th><a href="elb.html"><abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr></a></th></tr></thead>
           <tbody>
             <tr><td>Caché de respuestas</td><td>Sí</td><td>No</td><td>No</td></tr>
-            <tr><td>Claves de API y planes de uso</td><td>Sí</td><td>No</td><td>No</td></tr>
-            <tr><td><a href="../servicio.html?id=waf">AWS WAF</a></td><td>Sí</td><td>No (se puede poner <a href="cloudfront.html">CloudFront</a> delante)</td><td>Sí</td></tr>
-            <tr><td>Autorizador JWT nativo</td><td>Vía <a href="cognito.html">Cognito</a></td><td>Sí</td><td>Autenticación OIDC/Cognito</td></tr>
-            <tr><td>Coste</td><td>Mayor</td><td>Menor</td><td>Por hora y por uso (LCU)</td></tr>
+            <tr><td>Claves de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> y planes de uso</td><td>Sí</td><td>No</td><td>No</td></tr>
+            <tr><td><a href="../servicio.html?id=waf">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a></td><td>Sí</td><td>No (se puede poner <a href="cloudfront.html">CloudFront</a> delante)</td><td>Sí</td></tr>
+            <tr><td>Autorizador <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr> nativo</td><td>Vía <a href="cognito.html">Cognito</a></td><td>Sí</td><td>Autenticación OIDC/Cognito</td></tr>
+            <tr><td>Coste</td><td>Mayor</td><td>Menor</td><td>Por hora y por uso (<abbr class="sigla" data-s="LCU" data-en="Load Balancer Capacity Unit" data-es="unidad de facturación del balanceador" tabindex="0">LCU</abbr>)</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>Pago por uso: por millón de peticiones (HTTP API es sensiblemente más barata que REST) más la
-        transferencia de datos de salida. La caché de REST se paga por hora según su tamaño. En
+      <p>Pago por uso: por millón de peticiones (HTTP <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> es sensiblemente más barata que <abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr>) más la
+        transferencia de datos de salida. La caché de <abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr> se paga por hora según su tamaño. En
         WebSocket se paga por mensajes y por minutos de conexión.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Autorización con <a href="iam.html">IAM</a>, <a href="cognito.html">Cognito</a>/JWT o <a href="lambda.html">Lambda</a>; políticas de recurso para limitar por cuenta,
-          IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> o <a href="vpc.html">VPC</a>.</li>
-        <li><a href="../servicio.html?id=waf">AWS WAF</a> (REST) y protección de <a href="../servicio.html?id=shield">AWS Shield</a> Standard.</li>
-        <li>Certificados de <a href="acm.html">ACM</a> <span class="sigla">(<em>AWS Certificate Manager</em>)</span> para dominios propios, TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> obligatorio.</li>
+        <li>Autorización con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>, <a href="cognito.html">Cognito</a>/JWT o <a href="lambda.html">Lambda</a>; políticas de recurso para limitar por cuenta,
+          <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> o <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>.</li>
+        <li><a href="../servicio.html?id=waf">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> (<abbr class="sigla" data-s="REST" data-en="Representational State Transfer" data-es="estilo de API sobre HTTP" tabindex="0">REST</abbr>) y protección de <a href="../servicio.html?id=shield">AWS Shield</a> Standard.</li>
+        <li>Certificados de <a href="acm.html"><abbr class="sigla sigla-1" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM<span class="sigla-exp"> (AWS Certificate Manager)</span></abbr></a> para dominios propios, <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> obligatorio.</li>
         <li>Servicio regional multi-AZ; para multi-región se combinan APIs regionales con <a href="route-53.html">Route 53</a>.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
-      <p>Kopi usa una <strong>HTTP API</strong> con dominio propio y certificado de <a href="acm.html">ACM</a> como única
-        entrada al backend. El autorizador JWT valida el token de <a href="cognito.html">Cognito</a> antes de invocar ninguna
-        <a href="lambda.html">Lambda</a>, y el CORS solo admite los orígenes de la app. Elegí HTTP API porque es más barata y
-        tenía todo lo necesario. La subida de ficheros <strong>no pasa por la API</strong>: por el límite
-        de 10 MB, el navegador sube directamente a <a href="s3.html">S3</a> con una URL prefirmada. El autorizador solo
+      <p>Kopi usa una <strong>HTTP <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></strong> con dominio propio y certificado de <a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a> como única
+        entrada al backend. El autorizador <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr> valida el token de <a href="cognito.html">Cognito</a> antes de invocar ninguna
+        <a href="lambda.html">Lambda</a>, y el <abbr class="sigla" data-s="CORS" data-en="Cross-Origin Resource Sharing" data-es="permite que una web llame a otro dominio" tabindex="0">CORS</abbr> solo admite los orígenes de la app. Elegí HTTP <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> porque es más barata y
+        tenía todo lo necesario. La subida de ficheros <strong>no pasa por la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></strong>: por el límite
+        de 10 MB, el navegador sube directamente a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con una <abbr class="sigla" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL</abbr> prefirmada. El autorizador solo
         comprueba que el token es válido; que cada usuario vea solo sus datos lo comprueba cada Lambda.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Cachear respuestas"</strong>, <strong>"claves de API"</strong>, <strong>"planes
-          de uso"</strong> o <strong>"<a href="../servicio.html?id=waf">WAF</a>"</strong> en la API: REST API.</li>
-        <li><strong>"Menor coste y latencia"</strong> con JWT u OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>: HTTP API.</li>
-        <li><strong>"Tiempo real bidireccional"</strong>: WebSocket API.</li>
-        <li><strong>"Accesible solo desde la <a href="vpc.html">VPC</a>"</strong>: API privada con endpoint de interfaz.</li>
+        <li><strong>"Cachear respuestas"</strong>, <strong>"claves de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>"</strong>, <strong>"planes
+          de uso"</strong> o <strong>"<a href="../servicio.html?id=waf"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>"</strong> en la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>: REST <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
+        <li><strong>"Menor coste y latencia"</strong> con <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr> u <abbr class="sigla sigla-1" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC<span class="sigla-exp"> (OpenID Connect: estándar de identidad sobre OAuth 2.0)</span></abbr>: HTTP <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
+        <li><strong>"Tiempo real bidireccional"</strong>: WebSocket <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
+        <li><strong>"Accesible solo desde la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>"</strong>: <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> privada con endpoint de interfaz.</li>
         <li><strong>Error 429</strong>: limitación de peticiones. <strong>Error 504</strong>: se superó
           el tiempo de integración.</li>
-        <li><strong>"Ficheros grandes"</strong>: URLs prefirmadas de <a href="s3.html">S3</a>, no API Gateway.</li>
+        <li><strong>"Ficheros grandes"</strong>: URLs prefirmadas de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, no API Gateway.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -210,6 +210,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

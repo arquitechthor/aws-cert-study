@@ -67,10 +67,10 @@
       <h2 id="que-es">Qué es</h2>
       <p>Amazon Aurora es un motor relacional creado por AWS y compatible con MySQL y PostgreSQL:
         las aplicaciones y herramientas de esos motores funcionan casi sin cambios. Se gestiona desde
-        <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, pero su arquitectura es distinta: separa el cómputo (instancias) de un
+        <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, pero su arquitectura es distinta: separa el cómputo (instancias) de un
         <strong>volumen de almacenamiento compartido</strong> que guarda <strong>seis copias de los
         datos en tres zonas de disponibilidad</strong> y crece solo. Eso le da más rendimiento,
-        réplicas más baratas y conmutaciones más rápidas que RDS clásico.</p>
+        réplicas más baratas y conmutaciones más rápidas que <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> clásico.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
@@ -84,8 +84,8 @@
         <li><strong>Almacenamiento:</strong> crece automáticamente en bloques de 10 GB, hasta
           128 TiB o 256 TiB según la versión del motor; tolera perder dos copias sin afectar a
           las escrituras y tres sin afectar a las lecturas.</li>
-        <li><strong>Aurora Serverless v2:</strong> la capacidad se ajusta en unidades ACU <span class="sigla">(<em>Aurora Capacity Unit</em>: unidad de capacidad de Aurora Serverless)</span> según la
-          carga, y en las versiones compatibles puede bajar a <strong>0 ACU</strong> y pausarse
+        <li><strong>Aurora Serverless v2:</strong> la capacidad se ajusta en unidades <abbr class="sigla sigla-1" data-s="ACU" data-en="Aurora Capacity Unit" data-es="unidad de capacidad de Aurora Serverless" tabindex="0">ACU<span class="sigla-exp"> (Aurora Capacity Unit: unidad de capacidad de Aurora Serverless)</span></abbr> según la
+          carga, y en las versiones compatibles puede bajar a <strong>0 <abbr class="sigla" data-s="ACU" data-en="Aurora Capacity Unit" data-es="unidad de capacidad de Aurora Serverless" tabindex="0">ACU</abbr></strong> y pausarse
           cuando no hay actividad. Se puede mezclar con instancias aprovisionadas en el mismo clúster.</li>
         <li><strong>Aurora Global Database:</strong> un clúster principal y hasta 10 regiones
           secundarias de solo lectura con replicación por almacenamiento (normalmente menos de un
@@ -96,7 +96,7 @@
           sin restaurar una copia.</li>
         <li><strong>Modos de almacenamiento:</strong> <em>Standard</em> (pagas las operaciones de E/S)
           o <em>I/O-Optimized</em> (sin coste por E/S, para cargas intensivas).</li>
-        <li><strong>Copias y PITR <span class="sigla">(<em>Point-In-Time Recovery</em>: restaurar a un momento concreto)</span></strong> hasta 35 días, como <a href="rds.html">RDS</a>.</li>
+        <li><strong>Copias y <abbr class="sigla sigla-1" data-s="PITR" data-en="Point-In-Time Recovery" data-es="restaurar a un momento concreto" tabindex="0">PITR<span class="sigla-exp"> (Point-In-Time Recovery: restaurar a un momento concreto)</span></abbr></strong> hasta 35 días, como <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -110,8 +110,8 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si necesitas Oracle, SQL Server o Db2 tal cual: <a href="rds.html">RDS</a> para ese motor.</li>
-        <li>Bases de datos pequeñas y estables donde RDS en una sola instancia es más barato.</li>
+        <li>Si necesitas Oracle, SQL Server o Db2 tal cual: <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> para ese motor.</li>
+        <li>Bases de datos pequeñas y estables donde <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> en una sola instancia es más barato.</li>
         <li>Acceso clave-valor masivo o esquema flexible: <a href="dynamodb.html">DynamoDB</a>.</li>
         <li>Análisis de datos a gran escala: <a href="redshift.html">Redshift</a>.</li>
       </ul>
@@ -119,7 +119,7 @@
       <h2 id="comparativa">Comparativa con RDS clásico</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Característica</th><th>Aurora</th><th><a href="rds.html">RDS</a> (MySQL/PostgreSQL)</th></tr></thead>
+          <thead><tr><th>Característica</th><th>Aurora</th><th><a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> (MySQL/PostgreSQL)</th></tr></thead>
           <tbody>
             <tr><td>Copias de los datos</td><td>6 copias en 3 zonas, siempre</td><td>1 (o 2-3 con Multi-AZ)</td></tr>
             <tr><td>Réplicas de lectura</td><td>Hasta 15, sobre el mismo volumen</td><td>Hasta 15, cada una con su almacenamiento</td></tr>
@@ -140,17 +140,17 @@
       <ul>
         <li>Datos siempre replicados en tres zonas; con al menos una réplica en otra zona, la
           conmutación es automática y rápida.</li>
-        <li>Cifrado con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> decidido al crear el clúster, TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> en tránsito, autenticación <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> y
+        <li>Cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> decidido al crear el clúster, <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> en tránsito, autenticación <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> y
           contraseña gestionada con <a href="secrets-manager.html">Secrets Manager</a>.</li>
-        <li>Subredes privadas y security groups, como cualquier base de datos en <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
-        <li>Global Database para recuperación regional con RPO <span class="sigla">(<em>Recovery Point Objective</em>: cuántos datos puedes permitirte perder)</span> de segundos y RTO <span class="sigla">(<em>Recovery Time Objective</em>: cuánto tiempo puedes estar sin servicio)</span> de minutos.</li>
+        <li>Subredes privadas y security groups, como cualquier base de datos en <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
+        <li>Global Database para recuperación regional con <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr> de segundos y <abbr class="sigla sigla-1" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO<span class="sigla-exp"> (Recovery Time Objective: cuánto tiempo puedes estar sin servicio)</span></abbr> de minutos.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Compatible con MySQL/PostgreSQL, alto rendimiento y alta disponibilidad"</strong>: Aurora.</li>
         <li><strong>"Carga impredecible o intermitente"</strong> relacional: Aurora Serverless v2.</li>
-        <li><strong>"Lecturas de baja latencia en otras regiones"</strong> o <strong>"RPO de segundos entre regiones"</strong>: Global Database.</li>
+        <li><strong>"Lecturas de baja latencia en otras regiones"</strong> o <strong>"<abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> de segundos entre regiones"</strong>: Global Database.</li>
         <li><strong>"Copia rápida de producción para pruebas"</strong>: clonación.</li>
         <li><strong>"Deshacer un error sin restaurar"</strong> en Aurora MySQL: Backtrack.</li>
         <li><strong>"Enviar los informes a unas réplicas concretas"</strong>: endpoint personalizado.</li>
@@ -202,6 +202,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

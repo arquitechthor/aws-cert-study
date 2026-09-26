@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Elastic Beanstalk aprovisiona y gestiona la infraestructura a partir del código subido. EC2 solo da servidores que hay que configurar, CloudTrail audita llamadas a la API (Application Programming Interface: interfaz para que los programas se comuniquen) y Glacier archiva datos.",
+    "explicacion": "Elastic Beanstalk aprovisiona y gestiona la infraestructura a partir del código subido. EC2 solo da servidores que hay que configurar, CloudTrail audita llamadas a la API y Glacier archiva datos.",
     "fuentes": [
       "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html"
     ]
@@ -148,7 +148,7 @@
     "correctas": [
       0
     ],
-    "explicacion": ".ebextensions permite declarar paquetes, ficheros, comandos y opciones del entorno junto al código, y se aplica en cada instancia. Configurar a mano por SSH (Secure Shell: acceso remoto cifrado por terminal) se pierde al sustituir instancias, y las otras opciones no configuran el entorno.",
+    "explicacion": ".ebextensions permite declarar paquetes, ficheros, comandos y opciones del entorno junto al código, y se aplica en cada instancia. Configurar a mano por SSH se pierde al sustituir instancias, y las otras opciones no configuran el entorno.",
     "fuentes": [
       "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html"
     ]
@@ -170,7 +170,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Con blue/green el entorno antiguo sigue intacto; si el nuevo falla, se vuelven a intercambiar las URL. Actualizar en caliente o recrear el entorno provoca cortes y un rollback lento, y los cambios manuales se pierden. Siglas: SSH (Secure Shell: acceso remoto cifrado por terminal).",
+    "explicacion": "Con blue/green el entorno antiguo sigue intacto; si el nuevo falla, se vuelven a intercambiar las URL. Actualizar en caliente o recrear el entorno provoca cortes y un rollback lento, y los cambios manuales se pierden.",
     "fuentes": [
       "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html"
     ]

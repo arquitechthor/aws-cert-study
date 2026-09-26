@@ -67,22 +67,22 @@
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
       <p>AWS Lambda ejecuta tu código (una <em>función</em>) cuando ocurre un evento: una petición
-        HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>, un fichero nuevo en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>, un mensaje en una cola, una programación horaria… AWS arranca,
+        <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>, un fichero nuevo en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, un mensaje en una cola, una programación horaria… AWS arranca,
         escala y apaga los entornos de ejecución por ti. No pagas por tener nada encendido: pagas por
         invocación y por la duración, medida en milisegundos.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Límites principales:</strong> hasta <strong>15 minutos</strong> por invocación,
-          memoria de <strong>128 MB a 10.240 MB</strong> (la CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> crece en proporción a la memoria),
+          memoria de <strong>128 MB a 10.240 MB</strong> (la <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> crece en proporción a la memoria),
           almacenamiento <code>/tmp</code> de 512 MB a 10.240 MB y carga útil de <strong>6 MB</strong>
           en invocación síncrona (petición y respuesta) y <strong>1 MB</strong> en asíncrona.</li>
         <li><strong>Modelos de invocación:</strong>
           <ul>
-            <li><strong>Síncrona:</strong> el llamante espera la respuesta (<a href="api-gateway.html">API Gateway</a>, <a href="elb.html">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, SDK <span class="sigla">(<em>Software Development Kit</em>: bibliotecas para programar contra AWS)</span>).</li>
+            <li><strong>Síncrona:</strong> el llamante espera la respuesta (<a href="api-gateway.html">API Gateway</a>, <a href="elb.html"><abbr class="sigla sigla-1" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB<span class="sigla-exp"> (Application Load Balancer: balanceador HTTP/HTTPS)</span></abbr></a>, <abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr>).</li>
             <li><strong>Asíncrona:</strong> Lambda encola el evento y reintenta hasta 2 veces si falla
-              (<a href="s3.html">S3</a>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, <a href="eventbridge.html">EventBridge</a>). Los fallos pueden ir a una DLQ <span class="sigla">(<em>Dead-Letter Queue</em>: cola donde acaban los mensajes que fallan)</span> o a un <em>destino</em>.</li>
-            <li><strong>Event source mapping:</strong> Lambda lee por lotes de <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, Kinesis, <a href="dynamodb.html">DynamoDB</a>
+              (<a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, <a href="eventbridge.html">EventBridge</a>). Los fallos pueden ir a una <abbr class="sigla sigla-1" data-s="DLQ" data-en="Dead-Letter Queue" data-es="cola donde acaban los mensajes que fallan" tabindex="0">DLQ<span class="sigla-exp"> (Dead-Letter Queue: cola donde acaban los mensajes que fallan)</span></abbr> o a un <em>destino</em>.</li>
+            <li><strong>Event source mapping:</strong> Lambda lee por lotes de <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, Kinesis, <a href="dynamodb.html">DynamoDB</a>
               Streams o Kafka.</li>
           </ul></li>
         <li><strong>Concurrencia:</strong> número de ejecuciones simultáneas (1.000 por región por
@@ -95,16 +95,16 @@
           entre dos versiones (despliegue canary).</li>
         <li><strong>Capas (layers):</strong> código o dependencias compartidas, hasta 5 por función.
           También se pueden desplegar <strong>imágenes de contenedor</strong> de hasta 10 GB.</li>
-        <li><strong>Lambda en una <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>:</strong> accede a recursos privados (<a href="rds.html">RDS</a>, <a href="elasticache.html">ElastiCache</a>). Para salir
-          a internet necesita un NAT Gateway <span class="sigla">(<em>Network Address Translation</em>: traducción de direcciones de red)</span>; para S3 o DynamoDB, mejor endpoints de VPC.</li>
-        <li><strong>URL <span class="sigla">(<em>Uniform Resource Locator</em>: dirección web)</span> de función:</strong> endpoint HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> propio de una función, sin API Gateway.</li>
+        <li><strong>Lambda en una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>:</strong> accede a recursos privados (<a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="elasticache.html">ElastiCache</a>). Para salir
+          a internet necesita un <abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT Gateway<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr>; para <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> o DynamoDB, mejor endpoints de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL<span class="sigla-exp"> (Uniform Resource Locator: dirección web)</span></abbr> de función:</strong> endpoint <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> propio de una función, sin API Gateway.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Backends de APIs <em>serverless</em> con <a href="api-gateway.html">API Gateway</a>.</li>
-        <li>Procesar ficheros al subirlos a <a href="s3.html">S3</a> (miniaturas, validación, extracción de metadatos).</li>
-        <li>Consumidores de colas y flujos (<a href="sqs.html">SQS</a>, Kinesis, <a href="dynamodb.html">DynamoDB</a> Streams).</li>
+        <li>Procesar ficheros al subirlos a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> (miniaturas, validación, extracción de metadatos).</li>
+        <li>Consumidores de colas y flujos (<a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>, Kinesis, <a href="dynamodb.html">DynamoDB</a> Streams).</li>
         <li>Tareas programadas con <a href="eventbridge.html">EventBridge</a> Scheduler (sustituye a un cron en una instancia).</li>
         <li>Automatización de operaciones: reaccionar a eventos de la cuenta (por ejemplo, etiquetar
           recursos nuevos).</li>
@@ -112,9 +112,9 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Procesos que duran más de 15 minutos: mejor <a href="ecs.html">ECS</a>/Fargate, <a href="../servicio.html?id=batch">AWS Batch</a> o dividir el trabajo con
+        <li>Procesos que duran más de 15 minutos: mejor <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>/Fargate, <a href="../servicio.html?id=batch">AWS Batch</a> o dividir el trabajo con
           <a href="step-functions.html">Step Functions</a>.</li>
-        <li>Cargas muy estables y continuas con uso alto de CPU: contenedores o instancias pueden salir
+        <li>Cargas muy estables y continuas con uso alto de <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr>: contenedores o instancias pueden salir
           más baratos.</li>
         <li>Aplicaciones que necesitan estado local persistente o conexiones de larga duración.</li>
         <li>Latencia ultrabaja y predecible sin tolerar ningún arranque en frío, salvo que se pague
@@ -124,9 +124,9 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>Lambda</th><th><a href="fargate.html">Fargate</a> (<a href="ecs.html">ECS</a>/EKS)</th><th><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>Lambda</th><th><a href="fargate.html">Fargate</a> (<a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>/EKS)</th><th><a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a></th></tr></thead>
           <tbody>
-            <tr><td>Gestión de servidores</td><td>Ninguna</td><td>Ninguna (gestionas contenedores)</td><td>Toda (SO <span class="sigla">(sistema operativo)</span>, parches)</td></tr>
+            <tr><td>Gestión de servidores</td><td>Ninguna</td><td>Ninguna (gestionas contenedores)</td><td>Toda (<abbr class="sigla sigla-1" data-s="SO" data-es="sistema operativo" tabindex="0">SO<span class="sigla-exp"> (sistema operativo)</span></abbr>, parches)</td></tr>
             <tr><td>Duración máxima</td><td>15 min</td><td>Sin límite</td><td>Sin límite</td></tr>
             <tr><td>Modelo de cobro</td><td>Por invocación y ms</td><td>Por vCPU y memoria por segundo</td><td>Por instancia encendida</td></tr>
             <tr><td>Mejor para</td><td>Eventos y tráfico variable</td><td>Servicios en contenedores</td><td>Control total o software legado</td></tr>
@@ -144,18 +144,18 @@
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Cada función tiene un <strong>rol de ejecución</strong> con sus permisos (mínimo privilegio).</li>
-        <li>Una <strong>política basada en recurso</strong> define quién puede invocarla (<a href="s3.html">S3</a>, <a href="sns.html">SNS</a>, otra cuenta…).</li>
-        <li>Variables de entorno cifradas con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>; para secretos, mejor <a href="secrets-manager.html">Secrets Manager</a>.</li>
-        <li>Se ejecuta en varias zonas de disponibilidad de forma automática. En una <a href="vpc.html">VPC</a> conviene
+        <li>Una <strong>política basada en recurso</strong> define quién puede invocarla (<a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a>, otra cuenta…).</li>
+        <li>Variables de entorno cifradas con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>; para secretos, mejor <a href="secrets-manager.html">Secrets Manager</a>.</li>
+        <li>Se ejecuta en varias zonas de disponibilidad de forma automática. En una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> conviene
           configurar subredes de al menos dos zonas.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
       <p>Todo el backend de Kopi son funciones Lambda pequeñas en Node.js, de un solo propósito y sin
         framework: <a href="api-gateway.html">API Gateway</a> resuelve la ruta y cada función es un <code>handler</code>. El código
-        común vive en una <strong>capa</strong> compartida. Además de las que están detrás de la API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>,
+        común vive en una <strong>capa</strong> compartida. Además de las que están detrás de la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>,
         hay funciones disparadas por eventos: el disparador de registro de <a href="cognito.html">Cognito</a> y una función que
-        reacciona a cada objeto nuevo en <a href="s3.html">S3</a> para mantener <a href="dynamodb.html">DynamoDB</a> sincronizado. Con el tráfico de un
+        reacciona a cada objeto nuevo en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> para mantener <a href="dynamodb.html">DynamoDB</a> sincronizado. Con el tráfico de un
         proyecto personal, el coste de Lambda cabe en el nivel gratuito.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
@@ -165,9 +165,9 @@
           más memoria (ayuda algo, pero no lo evita).</li>
         <li><strong>"Una función no debe consumir toda la concurrencia"</strong> o <strong>"proteger una
           base de datos"</strong>: concurrencia reservada.</li>
-        <li><strong>"Lambda en <a href="vpc.html">VPC</a> sin salida a internet"</strong>: falta un NAT Gateway (en subred
-          pública) o un endpoint de VPC.</li>
-        <li><strong>"Muchas conexiones a <a href="rds.html">RDS</a> desde Lambda"</strong>: RDS Proxy.</li>
+        <li><strong>"Lambda en <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> sin salida a internet"</strong>: falta un <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT Gateway</abbr> (en subred
+          pública) o un endpoint de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li><strong>"Muchas conexiones a <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> desde Lambda"</strong>: RDS Proxy.</li>
         <li><strong>"Despliegue gradual"</strong>: alias con tráfico ponderado (con <a href="../servicio.html?id=codedeploy">CodeDeploy</a>).</li>
       </ul>
 
@@ -215,6 +215,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

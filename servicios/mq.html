@@ -72,48 +72,48 @@
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Protocolos:</strong> ActiveMQ habla JMS <span class="sigla">(<em>Java Message Service</em>: API estándar de mensajería de Java)</span>, AMQP <span class="sigla">(<em>Advanced Message Queuing Protocol</em>: protocolo estándar de mensajería)</span> 1.0, MQTT <span class="sigla">(<em>Message Queuing Telemetry Transport</em>: protocolo ligero de mensajería para dispositivos)</span>, STOMP <span class="sigla">(<em>Simple Text Oriented Messaging Protocol</em>: protocolo de mensajería basado en texto)</span>, OpenWire y
-          WebSocket; RabbitMQ habla AMQP 0-9-1. Por eso encaja cuando la aplicación ya usa esas
+        <li><strong>Protocolos:</strong> ActiveMQ habla <abbr class="sigla sigla-1" data-s="JMS" data-en="Java Message Service" data-es="API estándar de mensajería de Java" tabindex="0">JMS<span class="sigla-exp"> (Java Message Service: API estándar de mensajería de Java)</span></abbr>, <abbr class="sigla sigla-1" data-s="AMQP" data-en="Advanced Message Queuing Protocol" data-es="protocolo estándar de mensajería" tabindex="0">AMQP<span class="sigla-exp"> (Advanced Message Queuing Protocol: protocolo estándar de mensajería)</span></abbr> 1.0, <abbr class="sigla sigla-1" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT<span class="sigla-exp"> (Message Queuing Telemetry Transport: protocolo ligero de mensajería para dispositivos)</span></abbr>, <abbr class="sigla sigla-1" data-s="STOMP" data-en="Simple Text Oriented Messaging Protocol" data-es="protocolo de mensajería basado en texto" tabindex="0">STOMP<span class="sigla-exp"> (Simple Text Oriented Messaging Protocol: protocolo de mensajería basado en texto)</span></abbr>, OpenWire y
+          WebSocket; RabbitMQ habla <abbr class="sigla" data-s="AMQP" data-en="Advanced Message Queuing Protocol" data-es="protocolo estándar de mensajería" tabindex="0">AMQP</abbr> 0-9-1. Por eso encaja cuando la aplicación ya usa esas
           interfaces.</li>
         <li><strong>Modos de despliegue:</strong>
           <ul>
             <li><strong>Instancia única:</strong> para desarrollo y pruebas.</li>
             <li><strong>ActiveMQ activo/en espera:</strong> dos brokers en dos zonas de disponibilidad
-              con almacenamiento compartido (<a href="../servicio.html?id=efs">EFS</a>); si cae el activo, el de espera toma el control.</li>
+              con almacenamiento compartido (<a href="../servicio.html?id=efs"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>); si cae el activo, el de espera toma el control.</li>
             <li><strong>RabbitMQ en clúster:</strong> tres nodos en tres zonas detrás de un único
               endpoint, con colas replicadas (colas <em>quorum</em>).</li>
           </ul></li>
         <li><strong>Tamaño del broker:</strong> se elige un tipo de instancia (<code>mq.m5</code>,
-          <code>mq.m7g</code>…); no escala solo como <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, hay que dimensionarlo.</li>
+          <code>mq.m7g</code>…); no escala solo como <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, hay que dimensionarlo.</li>
         <li><strong>Colas y temas:</strong> los brokers ofrecen tanto colas (punto a punto) como temas
           (publicación/suscripción) con los modelos propios de cada motor (intercambios de RabbitMQ,
           destinos virtuales de ActiveMQ).</li>
         <li><strong>Acceso:</strong> brokers públicos (con endpoint accesible desde internet) o
-          privados (solo dentro de una <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>).</li>
+          privados (solo dentro de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>).</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Migrar a AWS aplicaciones Java empresariales que usan JMS.</li>
+        <li>Migrar a AWS aplicaciones Java empresariales que usan <abbr class="sigla" data-s="JMS" data-en="Java Message Service" data-es="API estándar de mensajería de Java" tabindex="0">JMS</abbr>.</li>
         <li>Llevar un clúster de RabbitMQ autogestionado a un servicio gestionado.</li>
-        <li>Integrar sistemas heredados que solo hablan AMQP, MQTT o STOMP.</li>
+        <li>Integrar sistemas heredados que solo hablan <abbr class="sigla" data-s="AMQP" data-en="Advanced Message Queuing Protocol" data-es="protocolo estándar de mensajería" tabindex="0">AMQP</abbr>, <abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr> o <abbr class="sigla" data-s="STOMP" data-en="Simple Text Oriented Messaging Protocol" data-es="protocolo de mensajería basado en texto" tabindex="0">STOMP</abbr>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Aplicaciones nuevas en la nube: <a href="sqs.html">SQS</a> y <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> escalan solos, no hay broker que dimensionar y
+        <li>Aplicaciones nuevas en la nube: <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> y <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> escalan solos, no hay broker que dimensionar y
           son más baratos para la mayoría de cargas.</li>
-        <li>Streaming de eventos con relectura y gran volumen: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk">MSK</a> <span class="sigla">(<em>Managed Streaming for Apache Kafka</em>)</span>.</li>
+        <li>Streaming de eventos con relectura y gran volumen: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>.</li>
         <li>Enrutamiento de eventos entre servicios de AWS: <a href="eventbridge.html">EventBridge</a>.</li>
-        <li>Mensajería de miles de dispositivos por MQTT: <a href="../servicio.html?id=iot-core">AWS IoT Core</a>.</li>
+        <li>Mensajería de miles de dispositivos por <abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr>: <a href="../servicio.html?id=iot-core">AWS IoT Core</a>.</li>
       </ul>
 
       <h2 id="comparativa">Amazon MQ frente a SQS/SNS</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Característica</th><th>Amazon MQ</th><th><a href="sqs.html">SQS</a> / <a href="sns.html">SNS</a></th></tr></thead>
+          <thead><tr><th>Característica</th><th>Amazon MQ</th><th><a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> / <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a></th></tr></thead>
           <tbody>
-            <tr><td>Protocolos</td><td>Estándar (JMS, AMQP, MQTT, STOMP)</td><td>API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> propia de AWS</td></tr>
+            <tr><td>Protocolos</td><td>Estándar (<abbr class="sigla" data-s="JMS" data-en="Java Message Service" data-es="API estándar de mensajería de Java" tabindex="0">JMS</abbr>, <abbr class="sigla" data-s="AMQP" data-en="Advanced Message Queuing Protocol" data-es="protocolo estándar de mensajería" tabindex="0">AMQP</abbr>, <abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr>, <abbr class="sigla" data-s="STOMP" data-en="Simple Text Oriented Messaging Protocol" data-es="protocolo de mensajería basado en texto" tabindex="0">STOMP</abbr>)</td><td><abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> propia de AWS</td></tr>
             <tr><td>Escalado</td><td>Eliges el tamaño del broker</td><td>Automático, casi ilimitado</td></tr>
             <tr><td>Operación</td><td>Gestionado, pero con broker y ventanas de mantenimiento</td><td>Sin servidores</td></tr>
             <tr><td>Mejor para</td><td>Migrar aplicaciones existentes</td><td>Aplicaciones nuevas en AWS</td></tr>
@@ -128,17 +128,17 @@
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Brokers privados dentro de la <a href="vpc.html">VPC</a>, con security groups.</li>
-        <li>Cifrado en tránsito con TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> y en reposo con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>.</li>
-        <li>Usuarios del propio broker (y LDAP <span class="sigla">(<em>Lightweight Directory Access Protocol</em>: protocolo de directorios de usuarios)</span> en ActiveMQ); <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> controla quién gestiona los brokers.</li>
+        <li>Brokers privados dentro de la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>, con security groups.</li>
+        <li>Cifrado en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> y en reposo con claves de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>Usuarios del propio broker (y <abbr class="sigla sigla-1" data-s="LDAP" data-en="Lightweight Directory Access Protocol" data-es="protocolo de directorios de usuarios" tabindex="0">LDAP<span class="sigla-exp"> (Lightweight Directory Access Protocol: protocolo de directorios de usuarios)</span></abbr> en ActiveMQ); <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> controla quién gestiona los brokers.</li>
         <li>Alta disponibilidad con activo/en espera (ActiveMQ) o clúster de tres nodos (RabbitMQ).</li>
         <li>Actualizaciones en ventanas de mantenimiento que elige el cliente.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"JMS"</strong>, <strong>"AMQP"</strong>, <strong>"STOMP"</strong>, <strong>"OpenWire"</strong> o <strong>"migrar sin cambiar el código de mensajería"</strong>: Amazon MQ.</li>
-        <li><strong>"Aplicación nueva, escalado automático, sin servidores"</strong>: <a href="sqs.html">SQS</a> o <a href="sns.html">SNS</a>, no Amazon MQ.</li>
+        <li><strong>"<abbr class="sigla" data-s="JMS" data-en="Java Message Service" data-es="API estándar de mensajería de Java" tabindex="0">JMS</abbr>"</strong>, <strong>"<abbr class="sigla" data-s="AMQP" data-en="Advanced Message Queuing Protocol" data-es="protocolo estándar de mensajería" tabindex="0">AMQP</abbr>"</strong>, <strong>"<abbr class="sigla" data-s="STOMP" data-en="Simple Text Oriented Messaging Protocol" data-es="protocolo de mensajería basado en texto" tabindex="0">STOMP</abbr>"</strong>, <strong>"OpenWire"</strong> o <strong>"migrar sin cambiar el código de mensajería"</strong>: Amazon MQ.</li>
+        <li><strong>"Aplicación nueva, escalado automático, sin servidores"</strong>: <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> o <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a>, no Amazon MQ.</li>
         <li><strong>"Alta disponibilidad de ActiveMQ"</strong>: despliegue activo/en espera en dos zonas.</li>
         <li><strong>"RabbitMQ gestionado y resistente a fallos de zona"</strong>: clúster de tres nodos.</li>
       </ul>
@@ -186,6 +186,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>

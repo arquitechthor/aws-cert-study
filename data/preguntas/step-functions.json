@@ -72,7 +72,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
-    "enunciado": "Hay que procesar 5 millones de ficheros CSV (Comma-Separated Values: texto con valores separados por comas) de un bucket de S3 con una función cada uno, con alta concurrencia y seguimiento de fallos. ¿Qué opción es la más adecuada?",
+    "enunciado": "Hay que procesar 5 millones de ficheros CSV de un bucket de S3 con una función cada uno, con alta concurrencia y seguimiento de fallos. ¿Qué opción es la más adecuada?",
     "opciones": [
       "Un estado Map en modo distribuido de Step Functions sobre el bucket.",
       "Un estado Map en línea con los 5 millones de elementos en la entrada.",
@@ -94,7 +94,7 @@
       "DVA-C02"
     ],
     "dominio": "Desarrollo con servicios de AWS",
-    "enunciado": "Un paso que llama a una API (Application Programming Interface: interfaz para que los programas se comuniquen) de pagos externa falla a veces por errores temporales. ¿Cómo debe gestionarse en la definición de la máquina de estados?",
+    "enunciado": "Un paso que llama a una API de pagos externa falla a veces por errores temporales. ¿Cómo debe gestionarse en la definición de la máquina de estados?",
     "opciones": [
       "Con un Retry con espera exponencial para esos errores y un Catch que desvíe a un paso de compensación si se agotan los intentos.",
       "Con un bucle infinito dentro de la función.",
@@ -126,7 +126,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Step Functions puede llamar directamente a la API (Application Programming Interface: interfaz para que los programas se comuniquen) de DynamoDB (y a más de 200 servicios) sin código intermedio, lo que evita una función que mantener y pagar. Las demás opciones añaden piezas innecesarias.",
+    "explicacion": "Step Functions puede llamar directamente a la API de DynamoDB (y a más de 200 servicios) sin código intermedio, lo que evita una función que mantener y pagar. Las demás opciones añaden piezas innecesarias.",
     "fuentes": [
       "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html"
     ]
@@ -172,7 +172,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "El patrón saga con Step Functions declara la compensación de cada paso y la ejecuta si algo falla más adelante. No existe una transacción de base de datos entre servicios independientes, encadenar funciones esconde la lógica de errores y una cola no deshace pasos. Siglas: FIFO (First In, First Out: el primero en entrar es el primero en salir).",
+    "explicacion": "El patrón saga con Step Functions declara la compensación de cada paso y la ejecuta si algo falla más adelante. No existe una transacción de base de datos entre servicios independientes, encadenar funciones esconde la lógica de errores y una cola no deshace pasos.",
     "fuentes": [
       "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html"
     ]
@@ -194,7 +194,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Express está pensado para alto volumen y corta duración, se cobra por ejecución y duración y acepta semántica al menos una vez, lo que encaja aquí. Más estados encarecen Standard, EC2 (Elastic Compute Cloud) añade operación y un Wait no reduce el coste.",
+    "explicacion": "Express está pensado para alto volumen y corta duración, se cobra por ejecución y duración y acepta semántica al menos una vez, lo que encaja aquí. Más estados encarecen Standard, EC2 añade operación y un Wait no reduce el coste.",
     "fuentes": [
       "https://docs.aws.amazon.com/step-functions/latest/dg/choosing-workflow-type.html"
     ]

@@ -38,7 +38,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Serverless v2 ajusta la capacidad a la carga y, con mínimo 0 ACU (Aurora Capacity Unit: unidad de capacidad de Aurora Serverless) en las versiones compatibles, se pausa sin cobrar cómputo cuando no hay actividad. Las reservadas son para uso constante, y Global Database o más réplicas aumentan el coste.",
+    "explicacion": "Serverless v2 ajusta la capacidad a la carga y, con mínimo 0 ACU en las versiones compatibles, se pausa sin cobrar cómputo cuando no hay actividad. Las reservadas son para uso constante, y Global Database o más réplicas aumentan el coste.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
     ]
@@ -126,7 +126,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "El endpoint del clúster siempre apunta a la escritora actual y se actualiza solo tras una conmutación. El endpoint de una instancia o su IP (Internet Protocol: dirección de red) dejan de ser válidos para escribir si cambia de rol, y el de lectura solo reparte entre réplicas.",
+    "explicacion": "El endpoint del clúster siempre apunta a la escritora actual y se actualiza solo tras una conmutación. El endpoint de una instancia o su IP dejan de ser válidos para escribir si cambia de rol, y el de lectura solo reparte entre réplicas.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html"
     ]
@@ -148,7 +148,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "La clonación crea un clúster nuevo que comparte las páginas de almacenamiento con el original hasta que cambian (copy-on-write), en minutos y sin copiar todos los datos. Restaurar, promocionar una réplica o exportar e importar son más lentos o duplican el almacenamiento. Siglas: S3 (Simple Storage Service).",
+    "explicacion": "La clonación crea un clúster nuevo que comparte las páginas de almacenamiento con el original hasta que cambian (copy-on-write), en minutos y sin copiar todos los datos. Restaurar, promocionar una réplica o exportar e importar son más lentos o duplican el almacenamiento.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html"
     ]
@@ -160,7 +160,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar nuevas soluciones",
-    "enunciado": "Una empresa diseña una base de datos relacional con RPO (Recovery Point Objective: cuántos datos puedes permitirte perder) de segundos y RTO (Recovery Time Objective: cuánto tiempo puedes estar sin servicio) de minutos ante la pérdida de una región, con lecturas locales en una segunda región. ¿Qué DOS elementos incluye la solución? (Elige 2.)",
+    "enunciado": "Una empresa diseña una base de datos relacional con RPO de segundos y RTO de minutos ante la pérdida de una región, con lecturas locales en una segunda región. ¿Qué DOS elementos incluye la solución? (Elige 2.)",
     "opciones": [
       "Aurora Global Database con un clúster secundario en la segunda región.",
       "Conmutación o switchover de Global Database para promover la región secundaria.",
@@ -172,7 +172,7 @@
       0,
       1
     ],
-    "explicacion": "Global Database replica con retrasos típicos de menos de un segundo (RPO de segundos) y permite promover la región secundaria en minutos, además de servir lecturas locales. Multi-AZ o una réplica en la misma región no cubren la pérdida de la región, y las instantáneas diarias dan un RPO de horas. Siglas: RDS (Relational Database Service).",
+    "explicacion": "Global Database replica con retrasos típicos de menos de un segundo (RPO de segundos) y permite promover la región secundaria en minutos, además de servir lecturas locales. Multi-AZ o una réplica en la misma región no cubren la pérdida de la región, y las instantáneas diarias dan un RPO de horas.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
     ]

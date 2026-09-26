@@ -38,7 +38,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Fargate cobra por segundo la vCPU, la memoria y el almacenamiento adicional que pide cada tarea. No hay cuota por clúster ni cobro por petición, y guardar imágenes se paga en ECR (Elastic Container Registry). Siglas: HTTP (HyperText Transfer Protocol: protocolo de la web).",
+    "explicacion": "Fargate cobra por segundo la vCPU, la memoria y el almacenamiento adicional que pide cada tarea. No hay cuota por clúster ni cobro por petición, y guardar imágenes se paga en ECR.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
     ]

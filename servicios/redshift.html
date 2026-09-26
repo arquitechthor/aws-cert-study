@@ -66,47 +66,47 @@
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
       <p>Amazon Redshift es un <strong>almacén de datos</strong> (<em>data warehouse</em>): una base de
-        datos pensada para <strong>analizar</strong> grandes volúmenes de datos con SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span>, no para las
+        datos pensada para <strong>analizar</strong> grandes volúmenes de datos con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>, no para las
         transacciones del día a día. Guarda los datos por <strong>columnas</strong> y reparte cada
-        consulta entre muchos nodos que trabajan en paralelo (MPP), así que agregaciones sobre miles de millones de filas tardan segundos. Es la
-        base típica de los informes y cuadros de mando de BI (<em>Business Intelligence</em>).</p>
+        consulta entre muchos nodos que trabajan en paralelo (<abbr class="sigla" data-s="MPP" data-en="Massively Parallel Processing" data-es="procesamiento masivamente paralelo" tabindex="0">MPP</abbr>), así que agregaciones sobre miles de millones de filas tardan segundos. Es la
+        base típica de los informes y cuadros de mando de <abbr class="sigla" data-s="BI" data-en="Business Intelligence" data-es="análisis de datos para el negocio" tabindex="0">BI</abbr> (<em>Business Intelligence</em>).</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Aprovisionado o sin servidores:</strong> en un clúster aprovisionado eliges tipo y
-          número de nodos (los RA3 separan cómputo y almacenamiento gestionado en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>); en
-          <strong>Redshift Serverless</strong> la capacidad (en RPU <span class="sigla">(<em>Redshift Processing Unit</em>: unidad de capacidad de Redshift Serverless)</span>) se ajusta sola y pagas por uso.</li>
+          número de nodos (los RA3 separan cómputo y almacenamiento gestionado en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>); en
+          <strong>Redshift Serverless</strong> la capacidad (en <abbr class="sigla sigla-1" data-s="RPU" data-en="Redshift Processing Unit" data-es="unidad de capacidad de Redshift Serverless" tabindex="0">RPU<span class="sigla-exp"> (Redshift Processing Unit: unidad de capacidad de Redshift Serverless)</span></abbr>) se ajusta sola y pagas por uso.</li>
         <li><strong>Almacenamiento columnar y compresión:</strong> se leen solo las columnas que usa la
           consulta, lo que reduce la E/S.</li>
         <li><strong>Claves de distribución y ordenación:</strong> cómo se reparten las filas entre nodos y
           cómo se ordenan en disco; bien elegidas evitan mover datos entre nodos en los JOIN.</li>
-        <li><strong>Carga de datos:</strong> el comando <code>COPY</code> desde S3 (en paralelo, mucho
-          más rápido que INSERT), la ingesta en streaming desde Kinesis o <a href="../servicio.html?id=msk">MSK</a> <span class="sigla">(<em>Managed Streaming for Apache Kafka</em>)</span>, y las integraciones
-          <strong>zero-ETL</strong> que replican automáticamente datos de <a href="aurora.html">Aurora</a>, <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span> o <a href="dynamodb.html">DynamoDB</a>.</li>
-        <li><strong>Redshift Spectrum:</strong> consulta con SQL datos que siguen en S3 (lago de datos)
+        <li><strong>Carga de datos:</strong> el comando <code>COPY</code> desde <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> (en paralelo, mucho
+          más rápido que INSERT), la ingesta en streaming desde Kinesis o <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>, y las integraciones
+          <strong>zero-ETL</strong> que replican automáticamente datos de <a href="aurora.html">Aurora</a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a> o <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li><strong>Redshift Spectrum:</strong> consulta con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> datos que siguen en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> (lago de datos)
           sin cargarlos, y los combina con las tablas del almacén.</li>
-        <li><strong>Consultas federadas:</strong> leer en vivo de bases de datos RDS o Aurora.</li>
+        <li><strong>Consultas federadas:</strong> leer en vivo de bases de datos <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> o Aurora.</li>
         <li><strong>Data sharing:</strong> compartir datos en vivo entre clústeres o cuentas sin
           copiarlos.</li>
         <li><strong>Concurrency scaling:</strong> añade capacidad temporal cuando hay muchas consultas a
           la vez.</li>
         <li><strong>Vistas materializadas</strong> y caché de resultados para acelerar consultas
-          repetidas; Redshift ML <span class="sigla">(<em>Machine Learning</em>: aprendizaje automático)</span> para crear modelos con SQL.</li>
+          repetidas; Redshift <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr> para crear modelos con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Almacén de datos corporativo para informes y cuadros de mando (con Quick u otras
-          herramientas de BI).</li>
+          herramientas de <abbr class="sigla" data-s="BI" data-en="Business Intelligence" data-es="análisis de datos para el negocio" tabindex="0">BI</abbr>).</li>
         <li>Análisis histórico de ventas, clientes o registros a gran escala.</li>
-        <li>Combinar datos del almacén con el lago de datos de <a href="s3.html">S3</a> mediante Spectrum.</li>
+        <li>Combinar datos del almacén con el lago de datos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> mediante Spectrum.</li>
         <li>Análisis casi en tiempo real de datos operativos con zero-ETL.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Transacciones de una aplicación (OLTP <span class="sigla">(<em>Online Transaction Processing</em>: las transacciones del día a día de una aplicación)</span>, muchas escrituras pequeñas): <a href="rds.html">RDS</a>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>.</li>
-        <li>Consultas puntuales sobre ficheros en <a href="s3.html">S3</a> sin mantener un almacén: <a href="../servicio.html?id=athena">Athena</a>.</li>
+        <li>Transacciones de una aplicación (<abbr class="sigla sigla-1" data-s="OLTP" data-en="Online Transaction Processing" data-es="las transacciones del día a día de una aplicación" tabindex="0">OLTP<span class="sigla-exp"> (Online Transaction Processing: las transacciones del día a día de una aplicación)</span></abbr>, muchas escrituras pequeñas): <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Consultas puntuales sobre ficheros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin mantener un almacén: <a href="../servicio.html?id=athena">Athena</a>.</li>
         <li>Búsqueda de texto o análisis de registros casi en tiempo real: <a href="opensearch-service.html">OpenSearch</a>.</li>
       </ul>
 
@@ -115,10 +115,10 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
-            <tr><td>Análisis intensivo y recurrente sobre grandes volúmenes (OLAP)</td><td>Redshift</td></tr>
-            <tr><td>Consultas SQL ocasionales sobre ficheros en <a href="s3.html">S3</a>, sin infraestructura</td><td><a href="../servicio.html?id=athena">Athena</a></td></tr>
-            <tr><td>Transacciones de una aplicación (OLTP)</td><td><a href="rds.html">RDS</a> o <a href="aurora.html">Aurora</a></td></tr>
-            <tr><td>Tablero de BI sobre esos datos</td><td><a href="../servicio.html?id=quick">Amazon Quick</a></td></tr>
+            <tr><td>Análisis intensivo y recurrente sobre grandes volúmenes (<abbr class="sigla" data-s="OLAP" data-en="Online Analytical Processing" data-es="consultas analíticas sobre grandes volúmenes" tabindex="0">OLAP</abbr>)</td><td>Redshift</td></tr>
+            <tr><td>Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> ocasionales sobre ficheros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, sin infraestructura</td><td><a href="../servicio.html?id=athena">Athena</a></td></tr>
+            <tr><td>Transacciones de una aplicación (<abbr class="sigla" data-s="OLTP" data-en="Online Transaction Processing" data-es="las transacciones del día a día de una aplicación" tabindex="0">OLTP</abbr>)</td><td><a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> o <a href="aurora.html">Aurora</a></td></tr>
+            <tr><td>Tablero de <abbr class="sigla" data-s="BI" data-en="Business Intelligence" data-es="análisis de datos para el negocio" tabindex="0">BI</abbr> sobre esos datos</td><td><a href="../servicio.html?id=quick">Amazon Quick</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -126,28 +126,28 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>En clústeres aprovisionados se paga por hora de nodo (con instancias reservadas) y por el
         almacenamiento gestionado de los RA3. En Serverless, por RPU-hora consumida mientras se ejecutan
-        consultas y por almacenamiento. Aparte: Spectrum (por datos analizados en <a href="s3.html">S3</a>), concurrency
+        consultas y por almacenamiento. Aparte: Spectrum (por datos analizados en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>), concurrency
         scaling por encima del crédito gratuito diario y las copias entre regiones.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Cifrado en reposo con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> y en tránsito con TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span>.</li>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
         <li>Despliegue en subredes privadas; <em>Enhanced VPC Routing</em> fuerza a que el tráfico de COPY
-          y UNLOAD pase por la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
+          y UNLOAD pase por la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
         <li>Permisos por usuario, rol, esquema, tabla, fila y columna; integración con <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
-        <li>Instantáneas automáticas en <a href="s3.html">S3</a>, copia a otra región y reubicación del clúster a otra zona
+        <li>Instantáneas automáticas en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, copia a otra región y reubicación del clúster a otra zona
           (RA3); despliegue Multi-AZ para clústeres RA3.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Data warehouse"</strong>, <strong>"OLAP"</strong> o <strong>"BI sobre petabytes"</strong>: Redshift.</li>
-        <li><strong>"Consultar datos de <a href="s3.html">S3</a> desde Redshift sin cargarlos"</strong>: Redshift Spectrum.</li>
-        <li><strong>"Cargar muchos datos de S3 rápido"</strong>: COPY, no INSERT fila a fila.</li>
-        <li><strong>"Analizar datos de <a href="aurora.html">Aurora</a> sin construir ETL <span class="sigla">(<em>Extract, Transform, Load</em>: extraer, transformar y cargar datos)</span>"</strong>: integración zero-ETL.</li>
+        <li><strong>"Data warehouse"</strong>, <strong>"<abbr class="sigla" data-s="OLAP" data-en="Online Analytical Processing" data-es="consultas analíticas sobre grandes volúmenes" tabindex="0">OLAP</abbr>"</strong> o <strong>"<abbr class="sigla" data-s="BI" data-en="Business Intelligence" data-es="análisis de datos para el negocio" tabindex="0">BI</abbr> sobre petabytes"</strong>: Redshift.</li>
+        <li><strong>"Consultar datos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> desde Redshift sin cargarlos"</strong>: Redshift Spectrum.</li>
+        <li><strong>"Cargar muchos datos de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> rápido"</strong>: COPY, no INSERT fila a fila.</li>
+        <li><strong>"Analizar datos de <a href="aurora.html">Aurora</a> sin construir <abbr class="sigla sigla-1" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL<span class="sigla-exp"> (Extract, Transform, Load: extraer, transformar y cargar datos)</span></abbr>"</strong>: integración zero-ETL.</li>
         <li><strong>"Carga intermitente sin gestionar el clúster"</strong>: Redshift Serverless.</li>
         <li><strong>"Compartir datos con otra cuenta sin copiarlos"</strong>: data sharing.</li>
-        <li><strong>"Consultas SQL puntuales y baratas sobre S3"</strong>: <a href="../servicio.html?id=athena">Athena</a>, no Redshift.</li>
+        <li><strong>"Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> puntuales y baratas sobre <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>"</strong>: <a href="../servicio.html?id=athena">Athena</a>, no Redshift.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -195,6 +195,7 @@
 
 <script src="../assets/nav.js" defer></script>
 <script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>
 </html>
