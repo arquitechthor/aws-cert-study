@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "La concurrencia aprovisionada mantiene entornos ya inicializados y se puede escalar con Application Auto Scaling según un horario. La concurrencia reservada solo garantiza y limita capacidad, sin inicializar entornos, y el tiempo máximo no influye.",
+    "explicacion": "La concurrencia aprovisionada mantiene entornos ya inicializados y se puede escalar con Application Auto Scaling según un horario. La concurrencia reservada solo garantiza y limita capacidad, sin inicializar entornos, y el tiempo máximo no influye. Siglas: VPC (Virtual Private Cloud).",
     "fuentes": [
       "https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html"
     ]
@@ -51,7 +51,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
-    "enunciado": "Una función Lambda dentro de una subred privada de una VPC debe llamar a una API externa en internet, pero las llamadas agotan el tiempo de espera. ¿Qué falta?",
+    "enunciado": "Una función Lambda dentro de una subred privada de una VPC (Virtual Private Cloud) debe llamar a una API (Application Programming Interface: interfaz para que los programas se comuniquen) externa en internet, pero las llamadas agotan el tiempo de espera. ¿Qué falta?",
     "opciones": [
       "Asignar una IP elástica a la función.",
       "Una ruta desde la subred privada a un NAT Gateway en una subred pública.",
@@ -61,7 +61,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Las funciones en VPC no reciben IP pública. Para salir a internet desde subredes privadas necesitan un NAT Gateway (o instancia NAT) en una subred pública. Un endpoint de gateway solo da acceso privado a S3 o DynamoDB.",
+    "explicacion": "Las funciones en VPC no reciben IP (Internet Protocol: dirección de red) pública. Para salir a internet desde subredes privadas necesitan un NAT Gateway (o instancia NAT) en una subred pública. Un endpoint de gateway solo da acceso privado a S3 (Simple Storage Service) o DynamoDB.",
     "fuentes": [
       "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
     ]
@@ -83,7 +83,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Lambda está limitada a 15 minutos por invocación. Fargate ejecuta el proceso en un contenedor sin servidores que gestionar y sin límite de duración, y EventBridge lo programa.",
+    "explicacion": "Lambda está limitada a 15 minutos por invocación. Fargate ejecuta el proceso en un contenedor sin servidores que gestionar y sin límite de duración, y EventBridge lo programa. Siglas: ECS (Elastic Container Service).",
     "fuentes": [
       "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html"
     ]
@@ -95,7 +95,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
-    "enunciado": "Una función Lambda procesa de forma asíncrona los eventos de subida de ficheros a S3. ¿Qué dos opciones permiten conservar los eventos que siguen fallando tras los reintentos?",
+    "enunciado": "Una función Lambda procesa de forma asíncrona los eventos de subida de ficheros a S3 (Simple Storage Service). ¿Qué dos opciones permiten conservar los eventos que siguen fallando tras los reintentos?",
     "opciones": [
       "Configurar una cola de mensajes fallidos (DLQ) de SQS en la función.",
       "Configurar un destino en caso de fallo (on-failure destination).",
@@ -107,7 +107,7 @@
       0,
       1
     ],
-    "explicacion": "En invocación asíncrona, Lambda reintenta y después puede enviar el evento a una DLQ o a un destino en caso de fallo (SQS, SNS, EventBridge, Lambda o S3). Las demás opciones no guardan los eventos fallidos.",
+    "explicacion": "En invocación asíncrona, Lambda reintenta y después puede enviar el evento a una DLQ (Dead-Letter Queue: cola donde acaban los mensajes que fallan) o a un destino en caso de fallo (SQS, SNS (Simple Notification Service), EventBridge, Lambda o S3). Las demás opciones no guardan los eventos fallidos.",
     "fuentes": [
       "https://docs.aws.amazon.com/lambda/latest/dg/lambda-invocation.html"
     ]
@@ -119,7 +119,7 @@
       "AIF-C01"
     ],
     "dominio": "Aplicaciones de los modelos fundacionales",
-    "enunciado": "Una empresa quiere generar un resumen con un modelo de Amazon Bedrock cada vez que se sube un documento a S3, sin gestionar servidores. ¿Qué arquitectura es la más sencilla?",
+    "enunciado": "Una empresa quiere generar un resumen con un modelo de Amazon Bedrock cada vez que se sube un documento a S3 (Simple Storage Service), sin gestionar servidores. ¿Qué arquitectura es la más sencilla?",
     "opciones": [
       "Una notificación de evento de S3 que invoca una función Lambda, que llama a la API de Bedrock y guarda el resumen.",
       "Una instancia EC2 que consulta el bucket cada minuto.",
@@ -129,7 +129,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "El evento de S3 dispara Lambda al subir el documento, y Lambda llama a Bedrock sin servidores que mantener. Las demás opciones añaden infraestructura o latencia innecesarias.",
+    "explicacion": "El evento de S3 dispara Lambda al subir el documento, y Lambda llama a Bedrock sin servidores que mantener. Las demás opciones añaden infraestructura o latencia innecesarias. Siglas: API (Application Programming Interface: interfaz para que los programas se comuniquen); EC2 (Elastic Compute Cloud); EMR (Elastic MapReduce).",
     "fuentes": [
       "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
     ]

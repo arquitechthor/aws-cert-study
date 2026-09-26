@@ -10,7 +10,7 @@
  * y así aparece en su tarjeta del catálogo.
  */
 (function () {
-  const { json, esc, leerProgreso, guardarProgreso, formatoFecha } = window.AwsDatos;
+  const { json, esc, cargar, leerProgreso, guardarProgreso, formatoFecha } = window.AwsDatos;
   const LETRAS = 'ABCDEFGH';
 
   function hoy() {
@@ -43,7 +43,42 @@
       <p class="quiz-progreso-texto${prog.finalizado ? ' ok' : ''}">${texto}</p>
       <div class="quiz-barra" role="progressbar" aria-label="Preguntas acertadas" aria-valuemin="0"
         aria-valuemax="${prog.total}" aria-valuenow="${prog.aciertos.length}"><span style="width:${pct}%"></span></div>
-      ${prog.aciertos.length ? '<button class="btn btn-secondary btn-sm" type="button" data-accion="reiniciar-progreso">Reiniciar progreso</button>' : ''}`;
+      <div class="quiz-acciones">
+        <button class="btn btn-secondary btn-sm" type="button" data-accion="exportar-noria"
+          title="Descarga un .json para importar estas preguntas como un tema en un bloque de Noria">Exportar a Noria</button>
+        ${prog.aciertos.length ? '<button class="btn btn-secondary btn-sm" type="button" data-accion="reiniciar-progreso">Reiniciar progreso</button>' : ''}
+      </div>`;
+  }
+
+  // ── Exportar a Noria ──────────────────────────────────────────────────────────────────
+  // Formato de importación de Noria (kopi-docs/importar_temas.md, el mismo que usa kopi-web):
+  // { version: 1, temas: [{ nombre, descripcion?, preguntas?: [texto] }] }. Un servicio = un
+  // tema. Noria solo guarda el texto de cada pregunta de repaso, así que se exportan el
+  // enunciado y las opciones, sin la respuesta: se comprueba aquí, en la página del servicio.
+  function textoNoria(p) {
+    let enunciado = p.enunciado;
+    if (p.tipo === 'multiple' && !/Elige \d/.test(enunciado)) enunciado += ` (Elige ${p.correctas.length}.)`;
+    return [enunciado, ...p.opciones.map((o, j) => `${LETRAS[j]}. ${o}`)].join('\n');
+  }
+
+  function nombreFichero(texto) {
+    return texto.replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  async function exportarNoria(idQuiz, preguntas) {
+    const servicio = (await cargar()).servicioPorId.get(idQuiz);
+    const nombre = servicio ? servicio.nombre : idQuiz;
+    const tema = { nombre, preguntas: preguntas.map(textoNoria) };
+    if (servicio && servicio.resumen) tema.descripcion = servicio.resumen;
+    const blob = new Blob([JSON.stringify({ version: 1, temas: [tema] }, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Noria - Apuntes AWS - ${nombreFichero(nombre)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
   }
 
   function pregunta(p, i, idQuiz, acertada) {
@@ -131,6 +166,10 @@
       cont.addEventListener('click', (ev) => {
         const btn = ev.target.closest('button[data-accion]');
         if (!btn) return;
+        if (btn.dataset.accion === 'exportar-noria') {
+          exportarNoria(id, preguntas).catch((err) => console.error(err));
+          return;
+        }
         if (btn.dataset.accion === 'reiniciar-progreso') {
           prog = { aciertos: [], total: preguntas.length, finalizado: null };
           guardar(id, prog);

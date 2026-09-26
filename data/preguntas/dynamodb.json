@@ -16,7 +16,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "DAX es una caché en memoria compatible con la API de DynamoDB, con latencia de microsegundos y casi sin cambios de código. ElastiCache obliga a programar la caché, y ni la capacidad ni los índices reducen la latencia a microsegundos.",
+    "explicacion": "DAX es una caché en memoria compatible con la API (Application Programming Interface: interfaz para que los programas se comuniquen) de DynamoDB, con latencia de microsegundos y casi sin cambios de código. ElastiCache obliga a programar la caché, y ni la capacidad ni los índices reducen la latencia a microsegundos. Siglas: GSI (Global Secondary Index: índice secundario global); OSS (Open Source Software: la versión de código abierto).",
     "fuentes": [
       "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
     ]
@@ -38,7 +38,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "TTL elimina automáticamente los ítems caducados sin consumir capacidad de escritura. Un Scan periódico consume lecturas y escrituras, y recrear la tabla es disruptivo.",
+    "explicacion": "TTL (Time To Live: tiempo de vida antes de caducar) elimina automáticamente los ítems caducados sin consumir capacidad de escritura. Un Scan periódico consume lecturas y escrituras, y recrear la tabla es disruptivo. Siglas: GSI (Global Secondary Index: índice secundario global).",
     "fuentes": [
       "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
     ]
@@ -61,7 +61,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Global Tables replica la tabla en varias regiones en modo activo-activo, con escrituras locales en cada una y continuidad si una región falla. DynamoDB no tiene réplicas de lectura como RDS, y las copias no dan escrituras locales ni una conmutación inmediata.",
+    "explicacion": "Global Tables replica la tabla en varias regiones en modo activo-activo, con escrituras locales en cada una y continuidad si una región falla. DynamoDB no tiene réplicas de lectura como RDS (Relational Database Service), y las copias no dan escrituras locales ni una conmutación inmediata. Siglas: DAX (DynamoDB Accelerator: caché en memoria para DynamoDB).",
     "fuentes": [
       "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
     ]
@@ -83,7 +83,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Con la fecha como clave, todas las escrituras del día van a la misma partición y superan su límite aunque la tabla tenga capacidad. Repartir la clave elimina la partición caliente; añadir capacidad total no lo resuelve.",
+    "explicacion": "Con la fecha como clave, todas las escrituras del día van a la misma partición y superan su límite aunque la tabla tenga capacidad. Repartir la clave elimina la partición caliente; añadir capacidad total no lo resuelve. Siglas: LSI (Local Secondary Index: índice secundario local); WCU (Write Capacity Unit: unidad de capacidad de escritura); S3 (Simple Storage Service).",
     "fuentes": [
       "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html"
     ]
@@ -95,7 +95,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Unas funciones Lambda en subredes privadas acceden a DynamoDB. La empresa exige que ese tráfico no salga a internet y quiere evitar el coste de un NAT Gateway. ¿Qué dos acciones lo consiguen?",
+    "enunciado": "Unas funciones Lambda en subredes privadas acceden a DynamoDB. La empresa exige que ese tráfico no salga a internet y quiere evitar el coste de un NAT Gateway (Network Address Translation: traducción de direcciones de red). ¿Qué dos acciones lo consiguen?",
     "opciones": [
       "Crear un endpoint de VPC de tipo gateway para DynamoDB.",
       "Añadir la ruta del endpoint a las tablas de rutas de las subredes privadas.",
@@ -107,7 +107,7 @@
       0,
       1
     ],
-    "explicacion": "El endpoint de gateway para DynamoDB es gratuito y se usa añadiendo su ruta a las tablas de rutas de las subredes. Así el tráfico se queda en la red de AWS sin NAT.",
+    "explicacion": "El endpoint de gateway para DynamoDB es gratuito y se usa añadiendo su ruta a las tablas de rutas de las subredes. Así el tráfico se queda en la red de AWS sin NAT. Siglas: VPC (Virtual Private Cloud); IP (Internet Protocol: dirección de red).",
     "fuentes": [
       "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
     ]

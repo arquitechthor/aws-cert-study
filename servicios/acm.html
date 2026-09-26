@@ -64,17 +64,17 @@
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
       <p>AWS Certificate Manager (ACM) emite y gestiona certificados SSL/TLS para dominios y los
-        despliega en servicios integrados de AWS (Elastic Load Balancing, CloudFront, API Gateway, App
+        despliega en servicios integrados de AWS (<a href="../servicio.html?id=elb">Elastic Load Balancing</a>, <a href="cloudfront.html">CloudFront</a>, <a href="api-gateway.html">API Gateway</a>, App
         Runner, entre otros). Los certificados públicos para estos servicios son
         <strong>gratuitos</strong> y se <strong>renuevan automáticamente</strong>.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Validación del dominio:</strong> por <strong>DNS</strong> (un registro CNAME;
+        <li><strong>Validación del dominio:</strong> por <strong>DNS <span class="sigla">(<em>Domain Name System</em>: traduce nombres de dominio a direcciones IP)</span></strong> (un registro CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>;
           permite la renovación automática mientras el registro exista) o por
           <strong>correo</strong> (requiere acción en cada renovación).</li>
         <li><strong>Certificados regionales:</strong> un certificado se usa en la región donde se crea.
-          Para <strong>CloudFront</strong>, siempre en <strong>us-east-1</strong>.</li>
+          Para <strong><a href="cloudfront.html">CloudFront</a></strong>, siempre en <strong>us-east-1</strong>.</li>
         <li><strong>Comodines y varios nombres:</strong> <code>*.ejemplo.com</code> y certificados con
           varios nombres de dominio (SAN).</li>
         <li><strong>Validez:</strong> los certificados públicos de ACM son de 198 días y ACM los renueva
@@ -82,22 +82,22 @@
         <li><strong>Certificados importados:</strong> de otras autoridades; ACM <strong>no los
           renueva</strong>, y hay que vigilar su caducidad con eventos o métricas.</li>
         <li><strong>Certificados exportables:</strong> opción de pago que permite obtener la clave privada
-          para usar el certificado fuera de los servicios integrados (EC2, contenedores, servidores
+          para usar el certificado fuera de los servicios integrados (<a href="ec2.html">EC2</a>, contenedores, servidores
           propios). Los certificados estándar no se pueden exportar.</li>
-        <li><strong>AWS Private CA:</strong> autoridad de certificación privada (de pago) para
+        <li><strong>AWS Private CA <span class="sigla">(<em>Certificate Authority</em>: autoridad de certificación)</span>:</strong> autoridad de certificación privada (de pago) para
           certificados internos.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>HTTPS con dominio propio en CloudFront, un ALB o API Gateway.</li>
+        <li>HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> con dominio propio en <a href="cloudfront.html">CloudFront</a>, un <a href="../servicio.html?id=elb">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span> o <a href="api-gateway.html">API Gateway</a>.</li>
         <li>Certificados comodín para varios subdominios.</li>
-        <li>Certificados privados para TLS mutuo o servicios internos (con Private CA).</li>
+        <li>Certificados privados para TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> mutuo o servicios internos (con Private CA).</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si necesitas instalar el certificado directamente en un servidor web en EC2 y no quieres pagar
+        <li>Si necesitas instalar el certificado directamente en un servidor web en <a href="ec2.html">EC2</a> y no quieres pagar
           por la exportación: otra autoridad de certificación o terminar TLS en un balanceador.</li>
         <li>Si el certificado debe usarse en otra región: hay que crearlo o importarlo en esa región.</li>
       </ul>
@@ -125,23 +125,23 @@
       <ul>
         <li>La clave privada de los certificados estándar la protege AWS y no sale del servicio.</li>
         <li>Renovación automática con validación DNS: evita caídas por certificados caducados.</li>
-        <li>Eventos de EventBridge y métrica de días hasta la caducidad para vigilar los certificados importados.</li>
-        <li>Permisos con IAM para solicitar, importar o borrar certificados.</li>
+        <li>Eventos de <a href="../servicio.html?id=eventbridge">EventBridge</a> y métrica de días hasta la caducidad para vigilar los certificados importados.</li>
+        <li>Permisos con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> para solicitar, importar o borrar certificados.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
-      <p>Kopi tiene dos certificados validados por DNS en Route 53: uno en <strong>us-east-1</strong>
-        para la web servida por CloudFront y otro en la región principal para el dominio propio de API
+      <p>Kopi tiene dos certificados validados por DNS en <a href="route-53.html">Route 53</a>: uno en <strong>us-east-1</strong>
+        para la web servida por <a href="cloudfront.html">CloudFront</a> y otro en la región principal para el dominio propio de API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>
         Gateway. Con los registros de validación en la zona, ACM los renueva sin intervención. Tener que
         crear el certificado de CloudFront en otra región sorprende la primera vez.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Certificado para CloudFront"</strong>: ACM en <strong>us-east-1</strong>.</li>
+        <li><strong>"Certificado para <a href="cloudfront.html">CloudFront</a>"</strong>: ACM en <strong>us-east-1</strong>.</li>
         <li><strong>"Renovación automática"</strong>: validación por DNS (la de correo exige acción humana).</li>
         <li><strong>"Certificado importado caducado"</strong>: ACM no renueva los importados; hay que
-          vigilarlos con EventBridge o CloudWatch.</li>
-        <li><strong>"HTTPS en EC2 sin pagar certificados"</strong>: terminar TLS en un ALB con un
+          vigilarlos con <a href="../servicio.html?id=eventbridge">EventBridge</a> o <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li><strong>"HTTPS en <a href="ec2.html">EC2</a> sin pagar certificados"</strong>: terminar TLS en un <a href="../servicio.html?id=elb">ALB</a> con un
           certificado de ACM.</li>
         <li><strong>"Certificados internos"</strong>: AWS Private CA.</li>
       </ul>

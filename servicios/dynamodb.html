@@ -68,7 +68,7 @@
       <p>Amazon DynamoDB es una base de datos NoSQL totalmente gestionada y <em>serverless</em>, de
         tipo clave-valor y documento. Ofrece latencia de un solo dígito de milisegundos a cualquier
         escala, sin servidores, parches ni versiones que gestionar. A cambio, exige diseñar las tablas
-        a partir de los <strong>patrones de acceso</strong>, no de las entidades como en SQL.</p>
+        a partir de los <strong>patrones de acceso</strong>, no de las entidades como en SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span>.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
@@ -76,7 +76,7 @@
           ordenación. La clave de partición reparte los datos; una mala elección crea
           <em>particiones calientes</em>.</li>
         <li><strong>Ítems de hasta 400 KB</strong> (incluidos los nombres de los atributos). Para
-          objetos mayores, se guardan en S3 y en la tabla solo la referencia.</li>
+          objetos mayores, se guardan en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> y en la tabla solo la referencia.</li>
         <li><strong>Índices:</strong>
           <ul>
             <li><strong>GSI (global):</strong> otra clave de partición y de ordenación; se puede crear en
@@ -89,35 +89,35 @@
           <em>después</em> de leer, así que no ahorra capacidad.</li>
         <li><strong>Modos de capacidad:</strong> <strong>bajo demanda</strong> (pago por petición, sin
           planificar) o <strong>aprovisionado</strong> (RCU/WCU, con auto scaling y capacidad reservada).
-          1 WCU = una escritura por segundo de hasta 1 KB; 1 RCU = una lectura fuertemente consistente por
+          1 WCU <span class="sigla">(<em>Write Capacity Unit</em>: unidad de capacidad de escritura)</span> = una escritura por segundo de hasta 1 KB; 1 RCU <span class="sigla">(<em>Read Capacity Unit</em>: unidad de capacidad de lectura)</span> = una lectura fuertemente consistente por
           segundo de hasta 4 KB, o dos eventualmente consistentes.</li>
-        <li><strong>Transacciones</strong> ACID sobre varios ítems y tablas.</li>
+        <li><strong>Transacciones</strong> ACID <span class="sigla">(atomicidad, consistencia, aislamiento y durabilidad de las transacciones)</span> sobre varios ítems y tablas.</li>
         <li><strong>DynamoDB Streams:</strong> registro ordenado de cambios durante 24 horas, que puede
-          disparar Lambda.</li>
-        <li><strong>DAX:</strong> caché en memoria compatible con la API, con latencias de microsegundos
+          disparar <a href="lambda.html">Lambda</a>.</li>
+        <li><strong>DAX <span class="sigla">(<em>DynamoDB Accelerator</em>: caché en memoria para DynamoDB)</span>:</strong> caché en memoria compatible con la API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>, con latencias de microsegundos
           para cargas de lectura intensiva.</li>
         <li><strong>Global Tables:</strong> réplicas multirregión activo-activo, con consistencia eventual
           o fuerte entre regiones (MRSC).</li>
-        <li><strong>TTL:</strong> borra ítems caducados sin coste de escritura.</li>
+        <li><strong>TTL <span class="sigla">(<em>Time To Live</em>: tiempo de vida antes de caducar)</span>:</strong> borra ítems caducados sin coste de escritura.</li>
         <li><strong>Copias de seguridad:</strong> bajo demanda y recuperación a un momento dado (PITR)
           de hasta 35 días.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Backends <em>serverless</em> con Lambda: perfiles de usuario, carritos, catálogos.</li>
+        <li>Backends <em>serverless</em> con <a href="lambda.html">Lambda</a>: perfiles de usuario, carritos, catálogos.</li>
         <li>Sesiones, tablas de clasificación de juegos, contadores con escalado masivo.</li>
         <li>Datos de IoT o eventos con acceso por clave y TTL.</li>
-        <li>Metadatos de objetos guardados en S3.</li>
+        <li>Metadatos de objetos guardados en <a href="s3.html">S3</a>.</li>
         <li>Aplicaciones globales con escrituras en varias regiones (Global Tables).</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Consultas ad hoc complejas, JOIN o informes analíticos: mejor una base relacional (RDS,
-          Aurora) o un almacén analítico (Redshift, Athena sobre una exportación a S3).</li>
+        <li>Consultas ad hoc complejas, JOIN o informes analíticos: mejor una base relacional (<a href="rds.html">RDS</a>,
+          <a href="aurora.html">Aurora</a>) o un almacén analítico (<a href="../servicio.html?id=redshift">Redshift</a>, <a href="../servicio.html?id=athena">Athena</a> sobre una exportación a <a href="s3.html">S3</a>).</li>
         <li>Ítems mayores de 400 KB, como ficheros o documentos grandes: S3.</li>
-        <li>Búsqueda de texto completo: OpenSearch.</li>
+        <li>Búsqueda de texto completo: <a href="opensearch-service.html">OpenSearch</a>.</li>
         <li>Si no conoces los patrones de acceso de antemano.</li>
       </ul>
 
@@ -127,11 +127,11 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Clave-valor a escala, serverless</td><td>DynamoDB</td></tr>
-            <tr><td>Relacional con SQL y JOIN</td><td>RDS o Aurora</td></tr>
+            <tr><td>Relacional con SQL y JOIN</td><td><a href="rds.html">RDS</a> o <a href="aurora.html">Aurora</a></td></tr>
             <tr><td>Caché de microsegundos para DynamoDB</td><td>DAX</td></tr>
-            <tr><td>Caché general (sesiones, resultados)</td><td>ElastiCache</td></tr>
-            <tr><td>Compatibilidad con MongoDB</td><td>DocumentDB</td></tr>
-            <tr><td>Compatibilidad con Cassandra</td><td>Keyspaces</td></tr>
+            <tr><td>Caché general (sesiones, resultados)</td><td><a href="elasticache.html">ElastiCache</a></td></tr>
+            <tr><td>Compatibilidad con MongoDB</td><td><a href="../servicio.html?id=documentdb">DocumentDB</a></td></tr>
+            <tr><td>Compatibilidad con Cassandra</td><td><a href="../servicio.html?id=keyspaces">Keyspaces</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -146,10 +146,10 @@
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Datos replicados en tres zonas de disponibilidad de la región.</li>
-        <li>Cifrado en reposo siempre activo (clave de AWS o de KMS gestionada por el cliente).</li>
-        <li>Control de acceso con IAM, incluso por ítem o atributo con condiciones
+        <li>Cifrado en reposo siempre activo (clave de AWS o de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> gestionada por el cliente).</li>
+        <li>Control de acceso con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>, incluso por ítem o atributo con condiciones
           (<code>dynamodb:LeadingKeys</code>).</li>
-        <li>Endpoint de VPC de tipo <em>gateway</em> (gratuito) para acceder sin salir a internet.</li>
+        <li>Endpoint de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> de tipo <em>gateway</em> (gratuito) para acceder sin salir a internet.</li>
         <li>PITR contra borrados o escrituras erróneas; Global Tables para recuperación ante desastres
           multirregión.</li>
       </ul>
@@ -165,9 +165,9 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Latencia de microsegundos"</strong> en lecturas de DynamoDB: DAX (no ElastiCache).</li>
+        <li><strong>"Latencia de microsegundos"</strong> en lecturas de DynamoDB: DAX (no <a href="elasticache.html">ElastiCache</a>).</li>
         <li><strong>"Tráfico impredecible"</strong> o <strong>"sin planificar capacidad"</strong>: bajo demanda.</li>
-        <li><strong>"Reaccionar a cambios en la tabla"</strong>: Streams más Lambda.</li>
+        <li><strong>"Reaccionar a cambios en la tabla"</strong>: Streams más <a href="lambda.html">Lambda</a>.</li>
         <li><strong>"Borrar datos antiguos automáticamente y sin coste"</strong>: TTL.</li>
         <li><strong>"Activo-activo multirregión"</strong>: Global Tables.</li>
         <li><strong>"Consultar por otro atributo"</strong>: GSI. Si piden lectura fuertemente consistente

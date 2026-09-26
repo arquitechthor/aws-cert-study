@@ -69,7 +69,7 @@
         abierto de Elasticsearch) y versiones antiguas de Elasticsearch, junto con
         <strong>OpenSearch Dashboards</strong> para visualizar. Sirve para tres cosas: búsqueda de
         texto completo con relevancia, análisis casi en tiempo real de registros y eventos, y
-        <strong>búsqueda vectorial</strong> para aplicaciones de IA generativa (RAG). Puedes usar
+        <strong>búsqueda vectorial</strong> para aplicaciones de IA <span class="sigla">(inteligencia artificial)</span> generativa (RAG). Puedes usar
         <strong>dominios</strong> (clústeres que dimensionas) u <strong>OpenSearch Serverless</strong>
         (colecciones que escalan solas).</p>
 
@@ -77,23 +77,23 @@
       <ul>
         <li><strong>Dominio:</strong> clúster gestionado con nodos de datos, nodos maestros dedicados
           (para estabilidad) y, opcionalmente, varias zonas de disponibilidad.</li>
-        <li><strong>Índices y shards:</strong> los documentos JSON se guardan en índices divididos en
+        <li><strong>Índices y shards:</strong> los documentos JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span> se guardan en índices divididos en
           shards primarios y réplicas repartidos entre nodos.</li>
         <li><strong>Niveles de almacenamiento:</strong> <em>hot</em> (discos de los nodos, rápido),
-          <strong>UltraWarm</strong> (datos de solo lectura respaldados en S3, mucho más barato) y
+          <strong>UltraWarm</strong> (datos de solo lectura respaldados en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>, mucho más barato) y
           <strong>cold</strong> (desacoplado del cómputo, se adjunta cuando hay que consultarlo). Las
-          políticas ISM mueven los índices entre niveles según su antigüedad.</li>
+          políticas ISM <span class="sigla">(<em>Index State Management</em>: políticas que mueven índices entre niveles)</span> mueven los índices entre niveles según su antigüedad.</li>
         <li><strong>Multi-AZ con espera (standby):</strong> tres zonas, una de ellas en espera, para
           conmutar sin pérdida de capacidad.</li>
         <li><strong>OpenSearch Serverless:</strong> colecciones de tipo búsqueda, series temporales o
-          búsqueda vectorial; la capacidad se mide en OCU y escala sola. La generación
+          búsqueda vectorial; la capacidad se mide en OCU <span class="sigla">(<em>OpenSearch Compute Unit</em>: unidad de capacidad de OpenSearch Serverless)</span> y escala sola. La generación
           <em>NextGen</em> puede bajar a cero OCU cuando no hay actividad.</li>
         <li><strong>Búsqueda vectorial (k-NN):</strong> guarda embeddings y encuentra los vecinos más
-          cercanos; es uno de los almacenes de vectores de Bedrock Knowledge Bases.</li>
+          cercanos; es uno de los almacenes de vectores de <a href="bedrock.html">Bedrock</a> Knowledge Bases.</li>
         <li><strong>Ingesta:</strong> OpenSearch Ingestion (canalizaciones gestionadas), Amazon Data
-          Firehose, integraciones <em>zero-ETL</em> con DynamoDB y S3, o suscripciones de CloudWatch Logs.</li>
+          <a href="../servicio.html?id=data-firehose">Firehose</a>, integraciones <em>zero-ETL</em> con <a href="dynamodb.html">DynamoDB</a> y S3, o suscripciones de <a href="cloudwatch.html">CloudWatch</a> Logs.</li>
         <li><strong>Seguridad detallada (<em>fine-grained access control</em>):</strong> permisos por
-          índice, documento y campo, con usuarios internos, IAM o SAML.</li>
+          índice, documento y campo, con usuarios internos, <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> o SAML <span class="sigla">(<em>Security Assertion Markup Language</em>: estándar de inicio de sesión federado)</span>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -102,15 +102,15 @@
         <li>Análisis centralizado de registros de aplicaciones y de seguridad con paneles.</li>
         <li>Observabilidad: trazas, métricas y registros en un mismo sitio.</li>
         <li>Almacén de vectores para RAG y búsqueda semántica.</li>
-        <li>Búsqueda de texto sobre datos de DynamoDB sin montar ETL.</li>
+        <li>Búsqueda de texto sobre datos de <a href="dynamodb.html">DynamoDB</a> sin montar ETL <span class="sigla">(<em>Extract, Transform, Load</em>: extraer, transformar y cargar datos)</span>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Como base de datos principal y transaccional: RDS, Aurora o DynamoDB.</li>
-        <li>Consultas SQL puntuales sobre registros en S3 sin mantener un clúster: Athena.</li>
-        <li>Almacén de datos analítico con SQL y JOIN complejos: Redshift.</li>
-        <li>Búsqueda empresarial en documentos con conectores y respuestas listas sin gestionar índices: Kendra.</li>
+        <li>Como base de datos principal y transaccional: <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Consultas SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span> puntuales sobre registros en <a href="s3.html">S3</a> sin mantener un clúster: <a href="../servicio.html?id=athena">Athena</a>.</li>
+        <li>Almacén de datos analítico con SQL y JOIN complejos: <a href="../servicio.html?id=redshift">Redshift</a>.</li>
+        <li>Búsqueda empresarial en documentos con conectores y respuestas listas sin gestionar índices: <a href="../servicio.html?id=kendra">Kendra</a>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -119,37 +119,37 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Texto completo, relevancia y paneles en tiempo casi real</td><td>OpenSearch Service</td></tr>
-            <tr><td>SQL sin servidor sobre ficheros en S3</td><td>Athena</td></tr>
-            <tr><td>Almacén de datos para BI con SQL</td><td>Redshift</td></tr>
-            <tr><td>Búsqueda empresarial gestionada con conectores</td><td>Kendra</td></tr>
-            <tr><td>Registros y consultas sin otro servicio</td><td>CloudWatch Logs Insights</td></tr>
+            <tr><td>SQL sin servidor sobre ficheros en <a href="s3.html">S3</a></td><td><a href="../servicio.html?id=athena">Athena</a></td></tr>
+            <tr><td>Almacén de datos para BI <span class="sigla">(<em>Business Intelligence</em>: análisis de datos para el negocio)</span> con SQL</td><td><a href="../servicio.html?id=redshift">Redshift</a></td></tr>
+            <tr><td>Búsqueda empresarial gestionada con conectores</td><td><a href="../servicio.html?id=kendra">Kendra</a></td></tr>
+            <tr><td>Registros y consultas sin otro servicio</td><td><a href="cloudwatch.html">CloudWatch</a> Logs Insights</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
       <p>En los dominios se paga por hora de cada nodo según su tipo (con instancias reservadas), el
-        almacenamiento EBS, UltraWarm y cold por GB, y la transferencia de datos. En Serverless se
-        pagan las OCU de indexación y de búsqueda por hora y el almacenamiento en S3 por GB. OpenSearch
+        almacenamiento <a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span>, UltraWarm y cold por GB, y la transferencia de datos. En Serverless se
+        pagan las OCU de indexación y de búsqueda por hora y el almacenamiento en <a href="s3.html">S3</a> por GB. OpenSearch
         Ingestion cobra por unidad de canalización.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Dominio dentro de una VPC (acceso privado) o público con políticas de acceso.</li>
-        <li>Cifrado en reposo con KMS, cifrado entre nodos y HTTPS obligatorio.</li>
-        <li>Fine-grained access control y autenticación con IAM, Cognito o SAML para Dashboards.</li>
-        <li>Varias zonas con réplicas o Multi-AZ con espera; instantáneas automáticas en S3.</li>
+        <li>Dominio dentro de una <a href="vpc.html">VPC</a> (acceso privado) o público con políticas de acceso.</li>
+        <li>Cifrado en reposo con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>, cifrado entre nodos y HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> obligatorio.</li>
+        <li>Fine-grained access control y autenticación con <a href="iam.html">IAM</a>, <a href="cognito.html">Cognito</a> o SAML para Dashboards.</li>
+        <li>Varias zonas con réplicas o Multi-AZ con espera; instantáneas automáticas en <a href="s3.html">S3</a>.</li>
         <li>Serverless es de alta disponibilidad por defecto.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Búsqueda de texto completo"</strong> o <strong>"búsqueda con relevancia"</strong>: OpenSearch.</li>
-        <li><strong>"Paneles casi en tiempo real sobre registros"</strong>: OpenSearch con Dashboards (ingesta con Firehose u OpenSearch Ingestion).</li>
-        <li><strong>"Consultas SQL ocasionales sobre registros en S3"</strong>: Athena, no un clúster.</li>
+        <li><strong>"Paneles casi en tiempo real sobre registros"</strong>: OpenSearch con Dashboards (ingesta con <a href="../servicio.html?id=data-firehose">Firehose</a> u OpenSearch Ingestion).</li>
+        <li><strong>"Consultas SQL ocasionales sobre registros en <a href="s3.html">S3</a>"</strong>: <a href="../servicio.html?id=athena">Athena</a>, no un clúster.</li>
         <li><strong>"Guardar meses de registros poco consultados de forma barata"</strong>: UltraWarm o cold.</li>
         <li><strong>"Almacén de vectores para RAG"</strong>: OpenSearch Serverless (búsqueda vectorial).</li>
-        <li><strong>"Buscar en los datos de DynamoDB"</strong>: integración zero-ETL con OpenSearch.</li>
+        <li><strong>"Buscar en los datos de <a href="dynamodb.html">DynamoDB</a>"</strong>: integración zero-ETL con OpenSearch.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

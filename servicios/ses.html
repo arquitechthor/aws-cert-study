@@ -64,7 +64,7 @@
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
       <p>Amazon Simple Email Service (SES) es un servicio de correo electrónico para aplicaciones.
-        Envía correos transaccionales (verificaciones, avisos, facturas) y masivos mediante API o SMTP,
+        Envía correos transaccionales (verificaciones, avisos, facturas) y masivos mediante API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> o SMTP <span class="sigla">(<em>Simple Mail Transfer Protocol</em>: protocolo de envío de correo)</span>,
         y también puede <strong>recibir</strong> correo y procesarlo. Se encarga de la infraestructura
         de envío, la reputación y las métricas de entrega.</p>
 
@@ -75,16 +75,16 @@
         <li><strong>Sandbox:</strong> las cuentas nuevas empiezan limitadas en cada región: solo pueden
           enviar a destinatarios verificados, hasta 200 mensajes cada 24 horas y 1 por segundo. Hay que
           solicitar acceso de producción.</li>
-        <li><strong>Autenticación del correo:</strong> <strong>DKIM</strong> (Easy DKIM con registros
-          CNAME), <strong>SPF</strong> (dominio MAIL FROM personalizado) y <strong>DMARC</strong>. Son
+        <li><strong>Autenticación del correo:</strong> <strong>DKIM <span class="sigla">(<em>DomainKeys Identified Mail</em>: firma criptográfica de los correos)</span></strong> (Easy DKIM con registros
+          CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>), <strong>SPF <span class="sigla">(<em>Sender Policy Framework</em>: lista de servidores autorizados a enviar correo del dominio)</span></strong> (dominio MAIL FROM personalizado) y <strong>DMARC <span class="sigla">(<em>Domain-based Message Authentication, Reporting and Conformance</em>: política que indica qué hacer con correos que no se autentican)</span></strong>. Son
           claves para no acabar en spam.</li>
         <li><strong>Conjuntos de configuración:</strong> agrupan envíos para publicar eventos (entregas,
-          rebotes, quejas, aperturas, clics) en CloudWatch, Firehose, SNS o EventBridge.</li>
+          rebotes, quejas, aperturas, clics) en <a href="cloudwatch.html">CloudWatch</a>, <a href="../servicio.html?id=data-firehose">Firehose</a>, <a href="../servicio.html?id=sns">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> o <a href="../servicio.html?id=eventbridge">EventBridge</a>.</li>
         <li><strong>Reputación:</strong> AWS vigila las tasas de rebote y de quejas; si suben demasiado,
           puede pausar el envío. La lista de supresión evita reenviar a direcciones que rebotan.</li>
-        <li><strong>Recepción:</strong> reglas de recepción que guardan el correo en S3, invocan Lambda o
+        <li><strong>Recepción:</strong> reglas de recepción que guardan el correo en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>, invocan <a href="lambda.html">Lambda</a> o
           publican en SNS.</li>
-        <li><strong>IP dedicadas</strong> (opcionales) para controlar la reputación en volúmenes altos.</li>
+        <li><strong>IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> dedicadas</strong> (opcionales) para controlar la reputación en volúmenes altos.</li>
         <li><strong>Disponibilidad regional:</strong> no está en todas las regiones; se puede llamar a SES
           en otra región distinta de la del resto de la aplicación.</li>
       </ul>
@@ -92,16 +92,16 @@
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Correos transaccionales: confirmación de registro, restablecer contraseña, recibos.</li>
-        <li>Envío de correo de Cognito con dominio propio.</li>
+        <li>Envío de correo de <a href="cognito.html">Cognito</a> con dominio propio.</li>
         <li>Notificaciones de una aplicación a sus usuarios o administradores.</li>
-        <li>Recibir correos entrantes y procesarlos automáticamente (tickets, adjuntos a S3).</li>
+        <li>Recibir correos entrantes y procesarlos automáticamente (tickets, adjuntos a <a href="s3.html">S3</a>).</li>
         <li>Campañas masivas con seguimiento de rebotes y quejas.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Notificaciones operativas a un equipo por varios canales (correo, SMS, push, HTTP): Amazon
-          SNS es más sencillo.</li>
+        <li>Notificaciones operativas a un equipo por varios canales (correo, SMS <span class="sigla">(<em>Short Message Service</em>: mensajes de texto al móvil)</span>, push, HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>): Amazon
+          <a href="../servicio.html?id=sns">SNS</a> es más sencillo.</li>
         <li>Buzones de correo corporativos para personas: SES no es un servidor de buzones.</li>
         <li>Si no puedes gestionar rebotes y quejas: una mala reputación puede suspender el envío.</li>
       </ul>
@@ -109,10 +109,10 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>SES</th><th>SNS</th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>SES</th><th><a href="../servicio.html?id=sns">SNS</a></th></tr></thead>
           <tbody>
-            <tr><td>Correo con HTML, remitente propio y dominio autenticado</td><td>Sí</td><td>No (correo básico de suscripción)</td></tr>
-            <tr><td>Publicar un mensaje a muchos suscriptores y protocolos</td><td>No</td><td>Sí (SQS, Lambda, HTTP, SMS, correo)</td></tr>
+            <tr><td>Correo con HTML <span class="sigla">(<em>HyperText Markup Language</em>: lenguaje de las páginas web)</span>, remitente propio y dominio autenticado</td><td>Sí</td><td>No (correo básico de suscripción)</td></tr>
+            <tr><td>Publicar un mensaje a muchos suscriptores y protocolos</td><td>No</td><td>Sí (<a href="../servicio.html?id=sqs">SQS</a>, <a href="lambda.html">Lambda</a>, HTTP, SMS, correo)</td></tr>
             <tr><td>Recibir correo</td><td>Sí</td><td>No</td></tr>
             <tr><td>Métricas de rebotes y quejas</td><td>Sí</td><td>No</td></tr>
           </tbody>
@@ -126,15 +126,15 @@
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Permisos de envío con IAM (<code>ses:SendEmail</code>) y políticas de autorización de
+        <li>Permisos de envío con <a href="iam.html">IAM</a> (<code>ses:SendEmail</code>) y políticas de autorización de
           identidad para delegar el envío a otras cuentas.</li>
-        <li>TLS en el envío; DKIM, SPF y DMARC para autenticar el dominio.</li>
+        <li>TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> en el envío; DKIM, SPF y DMARC para autenticar el dominio.</li>
         <li>Para envíos críticos se puede configurar SES en una segunda región.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
       <p>Kopi usa SES para avisar al administrador de cada alta pendiente de aprobar y para los correos
-        de verificación de Cognito. SES no estaba disponible en la región principal del proyecto, así
+        de verificación de <a href="cognito.html">Cognito</a>. SES no estaba disponible en la región principal del proyecto, así
         que se llama a SES en otra región (Cognito admite una identidad de SES de otra región). Al
         principio los correos salían desde una dirección de Gmail verificada y acababan en spam, porque
         fallaba la alineación DMARC. La solución fue verificar el <strong>dominio propio</strong> con
@@ -147,8 +147,8 @@
         <li><strong>"Los correos llegan a spam"</strong>: configurar DKIM, SPF y DMARC con un dominio verificado.</li>
         <li><strong>"Registrar rebotes, quejas y aperturas"</strong>: conjunto de configuración con
           destino de eventos.</li>
-        <li><strong>"Procesar correos entrantes"</strong>: reglas de recepción de SES hacia S3 o Lambda.</li>
-        <li><strong>"Notificar a un equipo por correo y SMS"</strong>: SNS, no SES.</li>
+        <li><strong>"Procesar correos entrantes"</strong>: reglas de recepción de SES hacia <a href="s3.html">S3</a> o <a href="lambda.html">Lambda</a>.</li>
+        <li><strong>"Notificar a un equipo por correo y SMS"</strong>: <a href="../servicio.html?id=sns">SNS</a>, no SES.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

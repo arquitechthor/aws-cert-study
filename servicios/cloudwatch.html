@@ -74,42 +74,42 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Métricas:</strong> series temporales agrupadas en espacios de nombres y dimensiones.
-          EC2 envía métricas cada 5 minutos por defecto, o cada minuto con la monitorización detallada.
+          <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> envía métricas cada 5 minutos por defecto, o cada minuto con la monitorización detallada.
           Las <strong>métricas personalizadas</strong> pueden tener resolución de hasta 1 segundo.</li>
         <li><strong>Memoria y disco de EC2 no vienen por defecto:</strong> hace falta el
           <strong>agente de CloudWatch</strong> en la instancia (que también envía logs del sistema).</li>
-        <li><strong>Alarmas:</strong> estados OK, ALARM e INSUFFICIENT_DATA. Acciones: notificar por SNS,
-          escalar con Auto Scaling, parar, reiniciar o recuperar una instancia EC2, o abrir incidencias.
+        <li><strong>Alarmas:</strong> estados OK, ALARM e INSUFFICIENT_DATA. Acciones: notificar por <a href="../servicio.html?id=sns">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>,
+          escalar con <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a>, parar, reiniciar o recuperar una instancia EC2, o abrir incidencias.
           Las <strong>alarmas compuestas</strong> combinan varias para reducir el ruido, y la
           <strong>detección de anomalías</strong> aprende el patrón normal.</li>
         <li><strong>CloudWatch Logs:</strong> grupos y flujos de logs. La retención por defecto es
           <strong>indefinida</strong>. Los <strong>filtros de métricas</strong> convierten patrones de
           los logs en métricas, los <strong>filtros de suscripción</strong> envían los logs en tiempo real
-          a Lambda, Firehose u OpenSearch, y <strong>Logs Insights</strong> permite consultarlos con un
-          lenguaje de consulta. También se pueden exportar a S3.</li>
+          a <a href="lambda.html">Lambda</a>, <a href="../servicio.html?id=data-firehose">Firehose</a> u <a href="opensearch-service.html">OpenSearch</a>, y <strong>Logs Insights</strong> permite consultarlos con un
+          lenguaje de consulta. También se pueden exportar a <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>.</li>
         <li><strong>Paneles (dashboards):</strong> pueden combinar métricas de varias cuentas y regiones.</li>
         <li><strong>Otras funciones:</strong> Synthetics (canarios que prueban endpoints), RUM (usuarios
           reales), Application Signals, Container Insights y Lambda Insights.</li>
-        <li>Los eventos de cambios de estado de AWS los gestiona <strong>Amazon EventBridge</strong>
+        <li>Los eventos de cambios de estado de AWS los gestiona <strong><a href="../servicio.html?id=eventbridge">Amazon EventBridge</a></strong>
           (antes CloudWatch Events).</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Alertar por correo o chat cuando suben los errores o la latencia de una API.</li>
-        <li>Escalar un grupo de Auto Scaling según la CPU o una métrica personalizada.</li>
+        <li>Alertar por correo o chat cuando suben los errores o la latencia de una API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>.</li>
+        <li>Escalar un grupo de <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a> según la CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> o una métrica personalizada.</li>
         <li>Centralizar los logs de aplicaciones y depurar con Logs Insights.</li>
-        <li>Recuperar automáticamente una instancia EC2 si falla su comprobación de estado del sistema.</li>
+        <li>Recuperar automáticamente una instancia <a href="ec2.html">EC2</a> si falla su comprobación de estado del sistema.</li>
         <li>Paneles operativos para un equipo.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para auditar <strong>quién</strong> hizo una llamada a la API de AWS: eso es
-          <strong>CloudTrail</strong>.</li>
+          <strong><a href="cloudtrail.html">CloudTrail</a></strong>.</li>
         <li>Para evaluar si la <strong>configuración</strong> de los recursos cumple unas reglas y ver su
-          historial: <strong>AWS Config</strong>.</li>
-        <li>Para trazar peticiones entre microservicios: X-Ray o Application Signals.</li>
+          historial: <strong><a href="../servicio.html?id=config">AWS Config</a></strong>.</li>
+        <li>Para trazar peticiones entre microservicios: <a href="../servicio.html?id=x-ray">X-Ray</a> o Application Signals.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -118,9 +118,9 @@
           <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
           <tbody>
             <tr><td>¿Cómo está funcionando? (rendimiento, errores)</td><td>CloudWatch</td></tr>
-            <tr><td>¿Quién hizo qué y cuándo en la API de AWS?</td><td>CloudTrail</td></tr>
-            <tr><td>¿Cómo estaba configurado un recurso y cumple las normas?</td><td>AWS Config</td></tr>
-            <tr><td>¿Por dónde pasó una petición y dónde se tardó?</td><td>X-Ray</td></tr>
+            <tr><td>¿Quién hizo qué y cuándo en la API de AWS?</td><td><a href="cloudtrail.html">CloudTrail</a></td></tr>
+            <tr><td>¿Cómo estaba configurado un recurso y cumple las normas?</td><td><a href="../servicio.html?id=config">AWS Config</a></td></tr>
+            <tr><td>¿Por dónde pasó una petición y dónde se tardó?</td><td><a href="../servicio.html?id=x-ray">X-Ray</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -133,14 +133,14 @@
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Acceso con IAM a métricas, alarmas y grupos de logs.</li>
-        <li>Grupos de logs cifrables con KMS y con protección de datos (enmascarar datos sensibles).</li>
-        <li>Endpoints de VPC de interfaz para enviar métricas y logs sin salir a internet.</li>
+        <li>Acceso con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> a métricas, alarmas y grupos de logs.</li>
+        <li>Grupos de logs cifrables con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> y con protección de datos (enmascarar datos sensibles).</li>
+        <li>Endpoints de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> de interfaz para enviar métricas y logs sin salir a internet.</li>
         <li>Observabilidad entre cuentas para centralizar la monitorización de una organización.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
-      <p>En Kopi, cada función Lambda escribe automáticamente en su grupo de logs, y es lo primero que
+      <p>En Kopi, cada función <a href="lambda.html">Lambda</a> escribe automáticamente en su grupo de logs, y es lo primero que
         miro cuando algo falla en producción. El rol de ejecución lleva los permisos de
         <code>logs:CreateLogGroup</code>, <code>CreateLogStream</code> y <code>PutLogEvents</code>. A esta
         escala no hay alarmas ni paneles. El siguiente paso natural sería una alarma sobre las métricas
@@ -149,11 +149,11 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Memoria o espacio en disco de EC2"</strong>: agente de CloudWatch (no son métricas
+        <li><strong>"Memoria o espacio en disco de <a href="ec2.html">EC2</a>"</strong>: agente de CloudWatch (no son métricas
           por defecto).</li>
-        <li><strong>"¿Quién borró el recurso?"</strong>: CloudTrail, no CloudWatch.</li>
+        <li><strong>"¿Quién borró el recurso?"</strong>: <a href="cloudtrail.html">CloudTrail</a>, no CloudWatch.</li>
         <li><strong>"Contar errores en los logs y alertar"</strong>: filtro de métricas más alarma.</li>
-        <li><strong>"Procesar logs en tiempo real"</strong>: filtro de suscripción hacia Lambda, Firehose u OpenSearch.</li>
+        <li><strong>"Procesar logs en tiempo real"</strong>: filtro de suscripción hacia <a href="lambda.html">Lambda</a>, <a href="../servicio.html?id=data-firehose">Firehose</a> u <a href="opensearch-service.html">OpenSearch</a>.</li>
         <li><strong>"Recuperar la instancia si falla el hardware"</strong>: alarma con la acción de recuperación de EC2.</li>
         <li><strong>"Métricas cada minuto en EC2"</strong>: monitorización detallada.</li>
       </ul>

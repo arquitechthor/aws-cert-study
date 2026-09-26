@@ -16,7 +16,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "El ciclo de vida adapta la clase al uso: Standard al principio, IA después y Deep Archive para el archivo largo, cuya recuperación estándar cabe en 12 horas. Standard es caro a largo plazo, y One Zone-IA desde el primer día no es adecuada para datos de auditoría.",
+    "explicacion": "El ciclo de vida adapta la clase al uso: Standard al principio, IA (inteligencia artificial) después y Deep Archive para el archivo largo, cuya recuperación estándar cabe en 12 horas. Standard es caro a largo plazo, y One Zone-IA desde el primer día no es adecuada para datos de auditoría. Siglas: EBS (Elastic Block Store).",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html"
     ]
@@ -38,7 +38,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Una URL prefirmada da acceso temporal a un objeto concreto usando los permisos de quien la firma, sin exponer el bucket ni crear identidades.",
+    "explicacion": "Una URL (Uniform Resource Locator: dirección web) prefirmada da acceso temporal a un objeto concreto usando los permisos de quien la firma, sin exponer el bucket ni crear identidades. Siglas: IAM (Identity and Access Management).",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html"
     ]
@@ -51,7 +51,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Una normativa exige que ciertos registros guardados en S3 no puedan borrarse ni modificarse durante 5 años, por nadie, incluido el usuario raíz. ¿Qué configuración lo cumple?",
+    "enunciado": "Una normativa exige que ciertos registros guardados en S3 (Simple Storage Service) no puedan borrarse ni modificarse durante 5 años, por nadie, incluido el usuario raíz. ¿Qué configuración lo cumple?",
     "opciones": [
       "Versionado con MFA Delete.",
       "S3 Object Lock en modo compliance con retención de 5 años.",
@@ -107,7 +107,7 @@
       0,
       1
     ],
-    "explicacion": "La replicación entre regiones exige versionado en origen y destino y un rol IAM que S3 asume para copiar. La clase de destino puede ser distinta y no hace falta red adicional.",
+    "explicacion": "La replicación entre regiones exige versionado en origen y destino y un rol IAM (Identity and Access Management) que S3 (Simple Storage Service) asume para copiar. La clase de destino puede ser distinta y no hace falta red adicional. Siglas: VPC (Virtual Private Cloud).",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
     ]
@@ -119,7 +119,7 @@
       "AIF-C01"
     ],
     "dominio": "Aplicaciones de los modelos fundacionales",
-    "enunciado": "Una empresa quiere que un asistente basado en Amazon Bedrock responda con información de sus manuales internos en PDF. ¿Dónde se guardan normalmente esos documentos como origen de datos de la base de conocimiento?",
+    "enunciado": "Una empresa quiere que un asistente basado en Amazon Bedrock responda con información de sus manuales internos en PDF (Portable Document Format). ¿Dónde se guardan normalmente esos documentos como origen de datos de la base de conocimiento?",
     "opciones": [
       "En un bucket de Amazon S3.",
       "En las variables de entorno de una Lambda.",
@@ -129,7 +129,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Las bases de conocimiento de Bedrock usan habitualmente S3 como origen: indexan los documentos en un almacén vectorial para la generación aumentada por recuperación (RAG), sin reentrenar el modelo.",
+    "explicacion": "Las bases de conocimiento de Bedrock usan habitualmente S3 (Simple Storage Service) como origen: indexan los documentos en un almacén vectorial para la generación aumentada por recuperación (RAG), sin reentrenar el modelo.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
     ]

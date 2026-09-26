@@ -16,7 +16,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "RDS gestiona el motor, los parches, las copias automáticas y la replicación. En EC2 esas tareas recaen en el cliente, DynamoDB no es MySQL ni relacional y Redshift es un almacén de datos para análisis.",
+    "explicacion": "RDS (Relational Database Service) gestiona el motor, los parches, las copias automáticas y la replicación. En EC2 (Elastic Compute Cloud) esas tareas recaen en el cliente, DynamoDB no es MySQL ni relacional y Redshift es un almacén de datos para análisis.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
     ]
@@ -28,7 +28,7 @@
       "CLF-C02"
     ],
     "dominio": "Conceptos de la nube",
-    "enunciado": "¿Qué ventaja de la nube representa activar Multi-AZ en una base de datos de RDS con unos pocos clics?",
+    "enunciado": "¿Qué ventaja de la nube representa activar Multi-AZ en una base de datos de RDS (Relational Database Service) con unos pocos clics?",
     "opciones": [
       "Alcance global en minutos.",
       "Alta disponibilidad sin montar ni gestionar la replicación.",
@@ -50,7 +50,7 @@
       "AIF-C01"
     ],
     "dominio": "Aplicaciones de los modelos fundacionales",
-    "enunciado": "Un equipo ya usa Amazon RDS for PostgreSQL y quiere guardar embeddings junto a sus datos para búsquedas por similitud en una aplicación RAG, sin añadir otra base de datos. ¿Qué opción lo permite?",
+    "enunciado": "Un equipo ya usa Amazon RDS (Relational Database Service) for PostgreSQL y quiere guardar embeddings junto a sus datos para búsquedas por similitud en una aplicación RAG (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos), sin añadir otra base de datos. ¿Qué opción lo permite?",
     "opciones": [
       "La extensión pgvector de PostgreSQL.",
       "Réplicas de lectura entre regiones.",
@@ -72,7 +72,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
-    "enunciado": "Una base de datos de RDS for PostgreSQL debe recuperarse automáticamente si falla su zona de disponibilidad, sin cambiar la cadena de conexión de la aplicación. ¿Qué configuración es la adecuada?",
+    "enunciado": "Una base de datos de RDS (Relational Database Service) for PostgreSQL debe recuperarse automáticamente si falla su zona de disponibilidad, sin cambiar la cadena de conexión de la aplicación. ¿Qué configuración es la adecuada?",
     "opciones": [
       "Una réplica de lectura en otra zona.",
       "Un despliegue Multi-AZ.",
@@ -94,7 +94,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Una auditoría detecta una instancia de RDS sin cifrar en producción. ¿Cómo se cifra con el menor riesgo?",
+    "enunciado": "Una auditoría detecta una instancia de RDS (Relational Database Service) sin cifrar en producción. ¿Cómo se cifra con el menor riesgo?",
     "opciones": [
       "Activar el cifrado en la instancia desde la consola.",
       "Crear una instantánea, copiarla con cifrado KMS y restaurar una instancia nueva desde la copia.",
@@ -104,7 +104,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "El cifrado en reposo de RDS solo se elige al crear la instancia; para cifrar una existente se copia una instantánea activando el cifrado y se restaura. No se puede activar sobre la marcha ni crear una réplica cifrada de una instancia sin cifrar, y TLS protege el tránsito, no el reposo.",
+    "explicacion": "El cifrado en reposo de RDS solo se elige al crear la instancia; para cifrar una existente se copia una instantánea activando el cifrado y se restaura. No se puede activar sobre la marcha ni crear una réplica cifrada de una instancia sin cifrar, y TLS (Transport Layer Security: cifrado de las conexiones) protege el tránsito, no el reposo. Siglas: KMS (Key Management Service).",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html"
     ]
@@ -116,7 +116,7 @@
       "DVA-C02"
     ],
     "dominio": "Desarrollo con servicios de AWS",
-    "enunciado": "Una API con cientos de invocaciones concurrentes de Lambda agota las conexiones de una base de datos de RDS for MySQL. ¿Qué solución requiere menos cambios?",
+    "enunciado": "Una API (Application Programming Interface: interfaz para que los programas se comuniquen) con cientos de invocaciones concurrentes de Lambda agota las conexiones de una base de datos de RDS (Relational Database Service) for MySQL. ¿Qué solución requiere menos cambios?",
     "opciones": [
       "Aumentar el tamaño de la instancia sin más.",
       "Poner RDS Proxy entre Lambda y la base de datos.",
@@ -138,7 +138,7 @@
       "DVA-C02"
     ],
     "dominio": "Seguridad",
-    "enunciado": "Un desarrollador no quiere guardar la contraseña de su base de datos de RDS for PostgreSQL en el código. ¿Qué DOS opciones son adecuadas? (Elige 2.)",
+    "enunciado": "Un desarrollador no quiere guardar la contraseña de su base de datos de RDS (Relational Database Service) for PostgreSQL en el código. ¿Qué DOS opciones son adecuadas? (Elige 2.)",
     "opciones": [
       "Guardar las credenciales en AWS Secrets Manager y leerlas en tiempo de ejecución.",
       "Usar la autenticación de base de datos de IAM con tokens temporales.",
@@ -150,7 +150,7 @@
       0,
       1
     ],
-    "explicacion": "Secrets Manager guarda y rota la contraseña, y la autenticación IAM sustituye la contraseña por tokens de corta duración. Una variable de entorno en el repositorio sigue exponiendo el secreto, y las otras dos opciones no tienen sentido.",
+    "explicacion": "Secrets Manager guarda y rota la contraseña, y la autenticación IAM (Identity and Access Management) sustituye la contraseña por tokens de corta duración. Una variable de entorno en el repositorio sigue exponiendo el secreto, y las otras dos opciones no tienen sentido. Siglas: IP (Internet Protocol: dirección de red).",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
     ]
@@ -162,7 +162,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar nuevas soluciones",
-    "enunciado": "Una aplicación en RDS for MySQL en eu-west-1 necesita un plan de recuperación ante desastres regionales con RPO de minutos y un coste contenido. ¿Qué solución es la más adecuada?",
+    "enunciado": "Una aplicación en RDS (Relational Database Service) for MySQL en eu-west-1 necesita un plan de recuperación ante desastres regionales con RPO (Recovery Point Objective: cuántos datos puedes permitirte perder) de minutos y un coste contenido. ¿Qué solución es la más adecuada?",
     "opciones": [
       "Multi-AZ en eu-west-1.",
       "Una réplica de lectura entre regiones en otra región, que se promociona si cae la principal.",
@@ -184,7 +184,7 @@
       "SAP-C02"
     ],
     "dominio": "Acelerar la migración y modernización de cargas de trabajo",
-    "enunciado": "Una empresa debe actualizar la versión principal de su RDS for PostgreSQL de producción con el mínimo tiempo de inactividad y la posibilidad de probar antes el cambio. ¿Qué opción lo facilita?",
+    "enunciado": "Una empresa debe actualizar la versión principal de su RDS (Relational Database Service) for PostgreSQL de producción con el mínimo tiempo de inactividad y la posibilidad de probar antes el cambio. ¿Qué opción lo facilita?",
     "opciones": [
       "Actualizar en caliente la instancia principal en la ventana de mantenimiento.",
       "Amazon RDS Blue/Green Deployments.",

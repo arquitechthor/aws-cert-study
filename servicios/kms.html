@@ -68,9 +68,9 @@
       <h2 id="que-es">Qué es</h2>
       <p>AWS KMS (<em>Key Management Service</em>) crea, guarda y usa claves criptográficas en
         módulos de seguridad hardware (HSM) validados, sin que el material de la clave salga nunca en
-        claro. Casi todos los servicios de AWS (S3, EBS, RDS, DynamoDB, Lambda, Secrets Manager…) se
+        claro. Casi todos los servicios de AWS (<a href="s3.html">S3</a>, <a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span>, <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, <a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="secrets-manager.html">Secrets Manager</a>…) se
         integran con KMS para el cifrado en reposo, y cada uso de una clave queda registrado en
-        CloudTrail. Tú decides quién puede usar cada clave y para qué.</p>
+        <a href="cloudtrail.html">CloudTrail</a>. Tú decides quién puede usar cada clave y para qué.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
@@ -84,14 +84,14 @@
               ves ni auditas.</li>
           </ul></li>
         <li><strong>Simétricas</strong> (AES-256, la opción por defecto, el material nunca sale de
-          KMS), <strong>asimétricas</strong> (RSA o ECC, para firmar o cifrar fuera de AWS con la clave
-          pública) y <strong>HMAC</strong>.</li>
+          KMS), <strong>asimétricas</strong> (RSA o ECC <span class="sigla">(<em>Elliptic Curve Cryptography</em>: criptografía de curva elíptica)</span>, para firmar o cifrar fuera de AWS con la clave
+          pública) y <strong>HMAC <span class="sigla">(<em>Hash-based Message Authentication Code</em>: código que verifica integridad y autenticidad)</span></strong>.</li>
         <li><strong>Cifrado de sobre (<em>envelope encryption</em>):</strong> KMS cifra directamente
           como máximo <strong>4 KB</strong>. Para datos mayores se pide una <strong>clave de datos</strong>
           (<code>GenerateDataKey</code>): cifras los datos localmente con ella y guardas su copia
           cifrada junto a los datos. Es lo que hacen los servicios de AWS por dentro.</li>
         <li><strong>Política de clave:</strong> el control de acceso principal. Sin una política que lo
-          permita, ni siquiera un administrador de IAM puede usar la clave. Las
+          permita, ni siquiera un administrador de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> puede usar la clave. Las
           <strong>concesiones (grants)</strong> dan permisos temporales y delegables.</li>
         <li><strong>Rotación automática:</strong> para claves simétricas gestionadas por el cliente,
           con periodo configurable de 90 a 2560 días (365 por defecto), y rotación bajo demanda. Las
@@ -101,24 +101,24 @@
         <li><strong>Claves multirregión:</strong> réplicas con el mismo material en varias regiones
           para cifrar en una y descifrar en otra sin volver a cifrar.</li>
         <li><strong>Almacenes de claves personalizados:</strong> respaldados por un clúster de
-          CloudHSM propio o por un gestor de claves externo (XKS).</li>
+          <a href="../servicio.html?id=cloudhsm">CloudHSM</a> propio o por un gestor de claves externo (XKS).</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Cifrado en reposo de S3, EBS, RDS, DynamoDB y demás, con claves bajo tu control.</li>
+        <li>Cifrado en reposo de <a href="s3.html">S3</a>, <a href="../servicio.html?id=ebs">EBS</a>, <a href="rds.html">RDS</a>, <a href="dynamodb.html">DynamoDB</a> y demás, con claves bajo tu control.</li>
         <li>Cumplir normativas que exigen rotación, separación de funciones y auditoría del uso.</li>
-        <li>Cifrar datos en la aplicación con el SDK de cifrado y claves de datos.</li>
+        <li>Cifrar datos en la aplicación con el SDK <span class="sigla">(<em>Software Development Kit</em>: bibliotecas para programar contra AWS)</span> de cifrado y claves de datos.</li>
         <li>Firmar y verificar documentos o tokens con claves asimétricas.</li>
         <li>Compartir datos cifrados con otra cuenta permitiéndole usar la clave.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si necesitas un HSM de un solo inquilino con control exclusivo y acceso por PKCS#11 o JCE:
-          CloudHSM.</li>
-        <li>Para guardar contraseñas o claves de API: Secrets Manager (que usa KMS por debajo).</li>
-        <li>Para certificados TLS: AWS Certificate Manager.</li>
+        <li>Si necesitas un HSM de un solo inquilino con control exclusivo y acceso por PKCS <span class="sigla">(<em>Public-Key Cryptography Standards</em>: estándares de criptografía de clave pública)</span>#11 o JCE <span class="sigla">(<em>Java Cryptography Extension</em>: interfaz criptográfica de Java)</span>:
+          <a href="../servicio.html?id=cloudhsm">CloudHSM</a>.</li>
+        <li>Para guardar contraseñas o claves de API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span>: <a href="secrets-manager.html">Secrets Manager</a> (que usa KMS por debajo).</li>
+        <li>Para certificados TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span>: <a href="acm.html">AWS Certificate Manager</a>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -127,10 +127,10 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Claves gestionadas e integradas con los servicios de AWS</td><td>KMS</td></tr>
-            <tr><td>HSM dedicado bajo tu control exclusivo</td><td>CloudHSM</td></tr>
-            <tr><td>Guardar y rotar secretos (contraseñas, tokens)</td><td>Secrets Manager</td></tr>
-            <tr><td>Certificados SSL/TLS</td><td>ACM</td></tr>
-            <tr><td>Parámetros de configuración, algunos cifrados</td><td>Systems Manager Parameter Store</td></tr>
+            <tr><td>HSM dedicado bajo tu control exclusivo</td><td><a href="../servicio.html?id=cloudhsm">CloudHSM</a></td></tr>
+            <tr><td>Guardar y rotar secretos (contraseñas, tokens)</td><td><a href="secrets-manager.html">Secrets Manager</a></td></tr>
+            <tr><td>Certificados SSL/TLS</td><td><a href="acm.html">ACM</a></td></tr>
+            <tr><td>Parámetros de configuración, algunos cifrados</td><td><a href="../servicio.html?id=systems-manager">Systems Manager</a> Parameter Store</td></tr>
           </tbody>
         </table>
       </div>
@@ -139,7 +139,7 @@
       <p>Cada clave gestionada por el cliente tiene una cuota mensual (y cada versión rotada añade
         coste, con un tope), y se paga por cada petición a la API (cifrar, descifrar, generar claves de
         datos), con un nivel gratuito mensual. Las claves gestionadas por AWS no tienen cuota mensual,
-        pero sus peticiones sí cuentan. En S3, las <em>S3 Bucket Keys</em> reducen mucho las llamadas a
+        pero sus peticiones sí cuentan. En <a href="s3.html">S3</a>, las <em>S3 Bucket Keys</em> reducen mucho las llamadas a
         KMS y, por tanto, su coste.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
@@ -147,7 +147,7 @@
         <li>El material de las claves nunca sale de los HSM en claro.</li>
         <li>Políticas de clave para separar a quien administra la clave de quien la usa.</li>
         <li>Condiciones como <code>kms:ViaService</code> para permitir el uso solo a través de un servicio.</li>
-        <li>Cada llamada queda registrada en CloudTrail.</li>
+        <li>Cada llamada queda registrada en <a href="cloudtrail.html">CloudTrail</a>.</li>
         <li>Servicio regional y altamente disponible; claves multirregión para recuperación entre regiones.</li>
       </ul>
 
@@ -156,10 +156,10 @@
         <li><strong>"Controlar la rotación, la política o compartir la clave con otra cuenta"</strong>: clave gestionada por el cliente, no gestionada por AWS.</li>
         <li><strong>"Cifrar un fichero de más de 4 KB con KMS"</strong>: cifrado de sobre con <code>GenerateDataKey</code>.</li>
         <li><strong>"Borrar la clave de inmediato"</strong>: no se puede; espera de 7 a 30 días (desactivarla sí es inmediato).</li>
-        <li><strong>"HSM de un solo inquilino"</strong> o <strong>"FIPS 140 nivel 3 bajo control exclusivo"</strong>: CloudHSM.</li>
-        <li><strong>"AccessDenied al descifrar aunque IAM lo permite"</strong>: falta el permiso en la política de la clave.</li>
+        <li><strong>"HSM de un solo inquilino"</strong> o <strong>"FIPS <span class="sigla">(<em>Federal Information Processing Standards</em>: normas de seguridad del gobierno de EE. UU.)</span> 140 nivel 3 bajo control exclusivo"</strong>: <a href="../servicio.html?id=cloudhsm">CloudHSM</a>.</li>
+        <li><strong>"AccessDenied al descifrar aunque <a href="iam.html">IAM</a> lo permite"</strong>: falta el permiso en la política de la clave.</li>
         <li><strong>"Descifrar en otra región sin recifrar"</strong>: clave multirregión.</li>
-        <li><strong>"Demasiadas llamadas a KMS desde S3"</strong>: S3 Bucket Keys.</li>
+        <li><strong>"Demasiadas llamadas a KMS desde <a href="s3.html">S3</a>"</strong>: S3 Bucket Keys.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

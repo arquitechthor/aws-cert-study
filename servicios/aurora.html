@@ -67,7 +67,7 @@
       <h2 id="que-es">Qué es</h2>
       <p>Amazon Aurora es un motor relacional creado por AWS y compatible con MySQL y PostgreSQL:
         las aplicaciones y herramientas de esos motores funcionan casi sin cambios. Se gestiona desde
-        RDS, pero su arquitectura es distinta: separa el cómputo (instancias) de un
+        <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, pero su arquitectura es distinta: separa el cómputo (instancias) de un
         <strong>volumen de almacenamiento compartido</strong> que guarda <strong>seis copias de los
         datos en tres zonas de disponibilidad</strong> y crece solo. Eso le da más rendimiento,
         réplicas más baratas y conmutaciones más rápidas que RDS clásico.</p>
@@ -84,7 +84,7 @@
         <li><strong>Almacenamiento:</strong> crece automáticamente en bloques de 10 GB, hasta
           128 TiB o 256 TiB según la versión del motor; tolera perder dos copias sin afectar a
           las escrituras y tres sin afectar a las lecturas.</li>
-        <li><strong>Aurora Serverless v2:</strong> la capacidad se ajusta en unidades ACU según la
+        <li><strong>Aurora Serverless v2:</strong> la capacidad se ajusta en unidades ACU <span class="sigla">(<em>Aurora Capacity Unit</em>: unidad de capacidad de Aurora Serverless)</span> según la
           carga, y en las versiones compatibles puede bajar a <strong>0 ACU</strong> y pausarse
           cuando no hay actividad. Se puede mezclar con instancias aprovisionadas en el mismo clúster.</li>
         <li><strong>Aurora Global Database:</strong> un clúster principal y hasta 10 regiones
@@ -96,7 +96,7 @@
           sin restaurar una copia.</li>
         <li><strong>Modos de almacenamiento:</strong> <em>Standard</em> (pagas las operaciones de E/S)
           o <em>I/O-Optimized</em> (sin coste por E/S, para cargas intensivas).</li>
-        <li><strong>Copias y PITR</strong> hasta 35 días, como RDS.</li>
+        <li><strong>Copias y PITR <span class="sigla">(<em>Point-In-Time Recovery</em>: restaurar a un momento concreto)</span></strong> hasta 35 días, como <a href="rds.html">RDS</a>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -110,16 +110,16 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si necesitas Oracle, SQL Server o Db2 tal cual: RDS para ese motor.</li>
+        <li>Si necesitas Oracle, SQL Server o Db2 tal cual: <a href="rds.html">RDS</a> para ese motor.</li>
         <li>Bases de datos pequeñas y estables donde RDS en una sola instancia es más barato.</li>
-        <li>Acceso clave-valor masivo o esquema flexible: DynamoDB.</li>
-        <li>Análisis de datos a gran escala: Redshift.</li>
+        <li>Acceso clave-valor masivo o esquema flexible: <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Análisis de datos a gran escala: <a href="../servicio.html?id=redshift">Redshift</a>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con RDS clásico</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Característica</th><th>Aurora</th><th>RDS (MySQL/PostgreSQL)</th></tr></thead>
+          <thead><tr><th>Característica</th><th>Aurora</th><th><a href="rds.html">RDS</a> (MySQL/PostgreSQL)</th></tr></thead>
           <tbody>
             <tr><td>Copias de los datos</td><td>6 copias en 3 zonas, siempre</td><td>1 (o 2-3 con Multi-AZ)</td></tr>
             <tr><td>Réplicas de lectura</td><td>Hasta 15, sobre el mismo volumen</td><td>Hasta 15, cada una con su almacenamiento</td></tr>
@@ -140,10 +140,10 @@
       <ul>
         <li>Datos siempre replicados en tres zonas; con al menos una réplica en otra zona, la
           conmutación es automática y rápida.</li>
-        <li>Cifrado con KMS decidido al crear el clúster, TLS en tránsito, autenticación IAM y
-          contraseña gestionada con Secrets Manager.</li>
-        <li>Subredes privadas y security groups, como cualquier base de datos en VPC.</li>
-        <li>Global Database para recuperación regional con RPO de segundos y RTO de minutos.</li>
+        <li>Cifrado con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> decidido al crear el clúster, TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> en tránsito, autenticación <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> y
+          contraseña gestionada con <a href="secrets-manager.html">Secrets Manager</a>.</li>
+        <li>Subredes privadas y security groups, como cualquier base de datos en <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
+        <li>Global Database para recuperación regional con RPO <span class="sigla">(<em>Recovery Point Objective</em>: cuántos datos puedes permitirte perder)</span> de segundos y RTO <span class="sigla">(<em>Recovery Time Objective</em>: cuánto tiempo puedes estar sin servicio)</span> de minutos.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>

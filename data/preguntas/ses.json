@@ -6,7 +6,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar nuevas soluciones",
-    "enunciado": "Una aplicación recién desplegada envía correos con SES, pero solo llegan a las direcciones del equipo, que están verificadas, y el resto falla. ¿Cuál es la causa más probable?",
+    "enunciado": "Una aplicación recién desplegada envía correos con SES (Simple Email Service), pero solo llegan a las direcciones del equipo, que están verificadas, y el resto falla. ¿Cuál es la causa más probable?",
     "opciones": [
       "La cuenta de SES sigue en el sandbox de esa región.",
       "Falta un endpoint de VPC para SES.",
@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "En el sandbox, SES solo permite enviar a identidades verificadas y con cuotas bajas. Hay que solicitar acceso de producción en cada región donde se envía.",
+    "explicacion": "En el sandbox, SES solo permite enviar a identidades verificadas y con cuotas bajas. Hay que solicitar acceso de producción en cada región donde se envía. Siglas: KMS (Key Management Service); VPC (Virtual Private Cloud).",
     "fuentes": [
       "https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html"
     ]
@@ -28,7 +28,7 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Los correos que envía una aplicación con SES llegan con frecuencia a la carpeta de spam. ¿Qué dos medidas mejoran la entregabilidad?",
+    "enunciado": "Los correos que envía una aplicación con SES (Simple Email Service) llegan con frecuencia a la carpeta de spam. ¿Qué dos medidas mejoran la entregabilidad?",
     "opciones": [
       "Verificar el dominio del remitente y activar Easy DKIM.",
       "Configurar un dominio MAIL FROM personalizado con SPF y publicar una política DMARC.",
@@ -40,7 +40,7 @@
       0,
       1
     ],
-    "explicacion": "Autenticar el dominio con DKIM, SPF (a través del dominio MAIL FROM) y DMARC permite que los proveedores confíen en el remitente. Enviar con una dirección de otro proveedor rompe la alineación DMARC, y desactivar la supresión perjudica la reputación.",
+    "explicacion": "Autenticar el dominio con DKIM (DomainKeys Identified Mail: firma criptográfica de los correos), SPF (a través del dominio MAIL FROM) y DMARC (Domain-based Message Authentication, Reporting and Conformance: política que indica qué hacer con correos que no se autentican) permite que los proveedores confíen en el remitente. Enviar con una dirección de otro proveedor rompe la alineación DMARC, y desactivar la supresión perjudica la reputación.",
     "fuentes": [
       "https://docs.aws.amazon.com/ses/latest/dg/email-authentication-methods.html"
     ]
@@ -62,7 +62,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "SES puede recibir correo del dominio y, con reglas de recepción, guardarlo en S3 e invocar Lambda, sin servidores de correo propios. SNS no recibe correos.",
+    "explicacion": "SES (Simple Email Service) puede recibir correo del dominio y, con reglas de recepción, guardarlo en S3 (Simple Storage Service) e invocar Lambda, sin servidores de correo propios. SNS (Simple Notification Service) no recibe correos. Siglas: EC2 (Elastic Compute Cloud).",
     "fuentes": [
       "https://docs.aws.amazon.com/ses/latest/dg/Welcome.html"
     ]
@@ -74,7 +74,7 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Un equipo necesita analizar rebotes, quejas y entregas de sus campañas de correo en SES y alertar si la tasa de rebote sube. ¿Qué configuración lo permite?",
+    "enunciado": "Un equipo necesita analizar rebotes, quejas y entregas de sus campañas de correo en SES (Simple Email Service) y alertar si la tasa de rebote sube. ¿Qué configuración lo permite?",
     "opciones": [
       "Un conjunto de configuración con destino de eventos hacia CloudWatch (y Firehose para el análisis), más una alarma de CloudWatch sobre la tasa de rebote.",
       "Activar CloudTrail en SES.",
@@ -84,7 +84,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Los conjuntos de configuración publican los eventos de envío en CloudWatch, Firehose, SNS o EventBridge, y una alarma avisa de la tasa de rebote. CloudTrail registra llamadas a la API, no eventos de entrega.",
+    "explicacion": "Los conjuntos de configuración publican los eventos de envío en CloudWatch, Firehose, SNS (Simple Notification Service) o EventBridge, y una alarma avisa de la tasa de rebote. CloudTrail registra llamadas a la API (Application Programming Interface: interfaz para que los programas se comuniquen), no eventos de entrega. Siglas: IP (Internet Protocol: dirección de red).",
     "fuentes": [
       "https://docs.aws.amazon.com/ses/latest/dg/Welcome.html"
     ]

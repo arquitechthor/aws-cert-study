@@ -70,7 +70,7 @@
         sin que tengas que instalar ni mantener su <strong>plano de control</strong> (API server,
         etcd, programador): AWS lo reparte en varias zonas de disponibilidad, lo parchea y lo escala.
         Tus aplicaciones se despliegan con las herramientas habituales de Kubernetes
-        (<code>kubectl</code>, Helm, manifiestos YAML), así que son portables a otros entornos
+        (<code>kubectl</code>, Helm, manifiestos YAML <span class="sigla">(<em>YAML Ain&#x27;t Markup Language</em>: formato de configuración legible)</span>), así que son portables a otros entornos
         Kubernetes.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
@@ -81,26 +81,26 @@
           <ul>
             <li><strong>EKS Auto Mode:</strong> AWS aprovisiona, escala, parchea y actualiza los nodos, e
               incluye el balanceo de carga, el almacenamiento en bloque y la red.</li>
-            <li><strong>Grupos de nodos gestionados:</strong> instancias EC2 en un grupo de Auto Scaling
+            <li><strong>Grupos de nodos gestionados:</strong> instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> en un grupo de <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a>
               que EKS ayuda a crear y actualizar.</li>
             <li><strong>Nodos autogestionados:</strong> control total, toda la operación es tuya.</li>
-            <li><strong>Fargate:</strong> cada pod en su propio entorno sin servidores (sin DaemonSets
-              ni GPU).</li>
+            <li><strong><a href="../servicio.html?id=fargate">Fargate</a>:</strong> cada pod en su propio entorno sin servidores (sin DaemonSets
+              ni GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span>).</li>
           </ul></li>
         <li><strong>Escalado:</strong> el <em>Horizontal Pod Autoscaler</em> cambia el número de pods;
           <strong>Karpenter</strong> (o Cluster Autoscaler) añade y quita nodos según los pods
           pendientes.</li>
         <li><strong>Permisos de los pods:</strong> <strong>EKS Pod Identity</strong> (recomendado)
-          o IRSA (roles de IAM para cuentas de servicio con OIDC) asocian un rol de IAM a una cuenta
+          o IRSA (roles de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> para cuentas de servicio con OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>) asocian un rol de IAM a una cuenta
           de servicio de Kubernetes, sin usar el rol del nodo.</li>
         <li><strong>Acceso al clúster:</strong> <em>access entries</em> de EKS vinculan usuarios y
           roles de IAM con permisos de Kubernetes (sustituyen al antiguo ConfigMap
           <code>aws-auth</code>).</li>
-        <li><strong>Complementos (add-ons):</strong> VPC CNI (cada pod recibe una IP de la VPC),
-          CoreDNS, kube-proxy, controladores de EBS o EFS, AWS Load Balancer Controller.</li>
+        <li><strong>Complementos (add-ons):</strong> <a href="vpc.html">VPC</a> CNI (cada pod recibe una IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> de la VPC <span class="sigla">(<em>Virtual Private Cloud</em>)</span>),
+          CoreDNS, kube-proxy, controladores de <a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span> o <a href="../servicio.html?id=efs">EFS</a> <span class="sigla">(<em>Elastic File System</em>)</span>, AWS Load Balancer Controller.</li>
         <li><strong>Versiones:</strong> cada versión de Kubernetes tiene soporte estándar y luego un
           soporte extendido de pago; hay que planificar las actualizaciones.</li>
-        <li><strong>EKS Anywhere</strong> y EKS en Outposts para ejecutar clústeres fuera de las
+        <li><strong>EKS Anywhere</strong> y EKS en <a href="../servicio.html?id=outposts">Outposts</a> para ejecutar clústeres fuera de las
           regiones de AWS.</li>
       </ul>
 
@@ -108,45 +108,45 @@
       <ul>
         <li>Organizaciones que ya usan Kubernetes y quieren dejar de operar el plano de control.</li>
         <li>Plataformas internas multiequipo con espacios de nombres, políticas y GitOps.</li>
-        <li>Entrenamiento e inferencia de ML con GPU y herramientas del ecosistema (Kubeflow, Ray).</li>
+        <li>Entrenamiento e inferencia de ML <span class="sigla">(<em>Machine Learning</em>: aprendizaje automático)</span> con GPU y herramientas del ecosistema (Kubeflow, Ray).</li>
         <li>Estrategias híbridas o multinube con la misma API en todas partes.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Equipos pequeños sin experiencia en Kubernetes que solo quieren ejecutar contenedores:
-          ECS es más sencillo y no cobra plano de control.</li>
-        <li>Funciones por evento: Lambda.</li>
-        <li>Una sola aplicación web sin necesidad de orquestar: App Runner o Elastic Beanstalk.</li>
+          <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> es más sencillo y no cobra plano de control.</li>
+        <li>Funciones por evento: <a href="lambda.html">Lambda</a>.</li>
+        <li>Una sola aplicación web sin necesidad de orquestar: <a href="../servicio.html?id=app-runner">App Runner</a> o <a href="../servicio.html?id=elastic-beanstalk">Elastic Beanstalk</a>.</li>
       </ul>
 
       <h2 id="comparativa">ECS frente a EKS</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Característica</th><th>ECS</th><th>EKS</th></tr></thead>
+          <thead><tr><th>Característica</th><th><a href="ecs.html">ECS</a></th><th>EKS</th></tr></thead>
           <tbody>
             <tr><td>API</td><td>Propia de AWS</td><td>Kubernetes estándar</td></tr>
             <tr><td>Coste del plano de control</td><td>Gratis</td><td>Por hora y por clúster</td></tr>
             <tr><td>Curva de aprendizaje</td><td>Baja</td><td>Alta</td></tr>
             <tr><td>Portabilidad</td><td>Solo AWS</td><td>Cualquier Kubernetes</td></tr>
-            <tr><td>Sin servidores</td><td>Fargate</td><td>Fargate o Auto Mode</td></tr>
+            <tr><td>Sin servidores</td><td><a href="../servicio.html?id=fargate">Fargate</a></td><td>Fargate o Auto Mode</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga una tarifa por hora por cada clúster (más alta si la versión está en soporte
-        extendido), más la capacidad donde corren los pods: instancias EC2 y volúmenes, vCPU y memoria
-        de Fargate, o el cargo de gestión de Auto Mode sobre las instancias. Aparte, balanceadores,
-        transferencia de datos y NAT. Spot y Savings Plans reducen el coste de los nodos.</p>
+        extendido), más la capacidad donde corren los pods: instancias <a href="ec2.html">EC2</a> y volúmenes, vCPU y memoria
+        de <a href="../servicio.html?id=fargate">Fargate</a>, o el cargo de gestión de Auto Mode sobre las instancias. Aparte, balanceadores,
+        transferencia de datos y NAT <span class="sigla">(<em>Network Address Translation</em>: traducción de direcciones de red)</span>. Spot y <a href="../servicio.html?id=savings-plans">Savings Plans</a> reducen el coste de los nodos.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Plano de control replicado en varias zonas por AWS; los nodos, repartidos en varias zonas
           por ti (o por Auto Mode).</li>
         <li>Pod Identity o IRSA para dar a cada aplicación solo sus permisos, nunca el rol del nodo.</li>
-        <li>Endpoint del API server público, privado o ambos; con acceso privado solo se llega desde la VPC.</li>
-        <li>Cifrado de los secretos de Kubernetes con una clave de KMS.</li>
+        <li>Endpoint del API server público, privado o ambos; con acceso privado solo se llega desde la <a href="vpc.html">VPC</a>.</li>
+        <li>Cifrado de los secretos de Kubernetes con una clave de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>.</li>
         <li>Security groups por pod y políticas de red de Kubernetes para aislar el tráfico.</li>
       </ul>
 
@@ -154,10 +154,10 @@
       <ul>
         <li><strong>"Kubernetes"</strong>, <strong>"Helm"</strong> o <strong>"kubectl"</strong> en el enunciado: EKS.</li>
         <li><strong>"Un pod necesita permisos de AWS"</strong>: Pod Identity o IRSA, no el rol del nodo.</li>
-        <li><strong>"Kubernetes sin gestionar nodos"</strong>: EKS Auto Mode o Fargate.</li>
+        <li><strong>"Kubernetes sin gestionar nodos"</strong>: EKS Auto Mode o <a href="../servicio.html?id=fargate">Fargate</a>.</li>
         <li><strong>"Añadir nodos rápido y con el tipo de instancia justo"</strong>: Karpenter.</li>
         <li><strong>"Clústeres en el propio centro de datos con la misma herramienta"</strong>: EKS Anywhere.</li>
-        <li><strong>"Contenedores con la menor sobrecarga operativa y sin Kubernetes"</strong>: ECS con Fargate.</li>
+        <li><strong>"Contenedores con la menor sobrecarga operativa y sin Kubernetes"</strong>: <a href="ecs.html">ECS</a> con Fargate.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

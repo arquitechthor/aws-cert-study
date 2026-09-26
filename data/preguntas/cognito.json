@@ -6,7 +6,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Una app móvil necesita que sus usuarios, tras iniciar sesión con Google, suban fotos directamente a un bucket S3 sin pasar por un backend. ¿Qué combinación es la adecuada?",
+    "enunciado": "Una app móvil necesita que sus usuarios, tras iniciar sesión con Google, suban fotos directamente a un bucket S3 (Simple Storage Service) sin pasar por un backend. ¿Qué combinación es la adecuada?",
     "opciones": [
       "Un usuario IAM compartido cuyas claves se incluyen en la app.",
       "Un identity pool de Cognito que federa con Google y entrega credenciales temporales con un rol que solo permite escribir en el prefijo del usuario.",
@@ -16,7 +16,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "El identity pool cambia la identidad federada por credenciales temporales de AWS asociadas a un rol, que puede restringirse al prefijo de cada usuario. Los JWT de un user pool no autorizan llamadas a S3, y las claves embebidas o el bucket público son inseguros.",
+    "explicacion": "El identity pool cambia la identidad federada por credenciales temporales de AWS asociadas a un rol, que puede restringirse al prefijo de cada usuario. Los JWT (JSON Web Token: token firmado con datos del usuario) de un user pool no autorizan llamadas a S3, y las claves embebidas o el bucket público son inseguros. Siglas: IAM (Identity and Access Management).",
     "fuentes": [
       "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-identity.html"
     ]
@@ -29,7 +29,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Una API REST en API Gateway debe aceptar solo peticiones de usuarios autenticados en la aplicación, con el menor esfuerzo de desarrollo. ¿Qué opción es la más adecuada?",
+    "enunciado": "Una API REST (Representational State Transfer: estilo de API sobre HTTP) en API Gateway debe aceptar solo peticiones de usuarios autenticados en la aplicación, con el menor esfuerzo de desarrollo. ¿Qué opción es la más adecuada?",
     "opciones": [
       "Un autorizador de Cognito user pool en API Gateway.",
       "Validar usuario y contraseña en cada Lambda contra una tabla DynamoDB.",
@@ -39,7 +39,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "El autorizador de Cognito valida el token en API Gateway antes de invocar el backend, sin código propio. Las claves de API sirven para planes de uso y cuotas, no para autenticar usuarios, y filtrar por IP no identifica usuarios.",
+    "explicacion": "El autorizador de Cognito valida el token en API Gateway antes de invocar el backend, sin código propio. Las claves de API (Application Programming Interface: interfaz para que los programas se comuniquen) sirven para planes de uso y cuotas, no para autenticar usuarios, y filtrar por IP (Internet Protocol: dirección de red) no identifica usuarios.",
     "fuentes": [
       "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html"
     ]
@@ -61,7 +61,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "El disparador de migración permite autenticar al usuario contra el sistema anterior la primera vez y crearlo en el user pool con su contraseña, de forma transparente. La importación CSV no admite contraseñas y obliga a restablecerlas.",
+    "explicacion": "El disparador de migración permite autenticar al usuario contra el sistema anterior la primera vez y crearlo en el user pool con su contraseña, de forma transparente. La importación CSV (Comma-Separated Values: texto con valores separados por comas) no admite contraseñas y obliga a restablecerlas. Siglas: JWT (JSON Web Token: token firmado con datos del usuario).",
     "fuentes": [
       "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html"
     ]
@@ -85,7 +85,7 @@
       0,
       1
     ],
-    "explicacion": "El ID token describe al usuario y el access token autoriza el acceso a APIs, con scopes y grupos. El refresh token solo sirve para obtener nuevos tokens; ninguno es una credencial IAM y todos caducan.",
+    "explicacion": "El ID token describe al usuario y el access token autoriza el acceso a APIs, con scopes y grupos. El refresh token solo sirve para obtener nuevos tokens; ninguno es una credencial IAM (Identity and Access Management) y todos caducan. Siglas: S3 (Simple Storage Service).",
     "fuentes": [
       "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html"
     ]

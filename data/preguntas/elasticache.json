@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "ElastiCache es la caché en memoria gestionada (Valkey, Redis OSS o Memcached). S3 Glacier es almacenamiento de archivo, EBS son discos de bloque para EC2 y Storage Gateway conecta almacenamiento local con AWS.",
+    "explicacion": "ElastiCache es la caché en memoria gestionada (Valkey, Redis OSS (Open Source Software: la versión de código abierto) o Memcached). S3 Glacier es almacenamiento de archivo, EBS (Elastic Block Store) son discos de bloque para EC2 (Elastic Compute Cloud) y Storage Gateway conecta almacenamiento local con AWS.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
     ]
@@ -72,7 +72,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
-    "enunciado": "Una aplicación web en varias instancias EC2 detrás de un balanceador pierde las sesiones de usuario cuando Auto Scaling termina una instancia. ¿Qué solución mantiene las sesiones y deja las instancias sin estado?",
+    "enunciado": "Una aplicación web en varias instancias EC2 (Elastic Compute Cloud) detrás de un balanceador pierde las sesiones de usuario cuando Auto Scaling termina una instancia. ¿Qué solución mantiene las sesiones y deja las instancias sin estado?",
     "opciones": [
       "Activar sesiones persistentes (sticky sessions) en el balanceador.",
       "Guardar las sesiones en ElastiCache.",
@@ -104,7 +104,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Valkey (o Redis OSS) con Multi-AZ promueve automáticamente una réplica de otra zona si falla la primaria. Memcached no tiene réplicas ni persistencia (ni instantáneas), y un único nodo es un punto único de fallo.",
+    "explicacion": "Valkey (o Redis OSS (Open Source Software: la versión de código abierto)) con Multi-AZ promueve automáticamente una réplica de otra zona si falla la primaria. Memcached no tiene réplicas ni persistencia (ni instantáneas), y un único nodo es un punto único de fallo.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html"
     ]
@@ -126,7 +126,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "Con lazy loading los datos solo se refrescan cuando faltan en la caché; un TTL hace que caduquen y se vuelvan a leer de la base de datos. Cambiar de motor, quitar réplicas o agrandar el nodo no afecta a la frescura de los datos.",
+    "explicacion": "Con lazy loading los datos solo se refrescan cuando faltan en la caché; un TTL (Time To Live: tiempo de vida antes de caducar) hace que caduquen y se vuelvan a leer de la base de datos. Cambiar de motor, quitar réplicas o agrandar el nodo no afecta a la frescura de los datos.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Strategies.html"
     ]
@@ -172,7 +172,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Los conjuntos ordenados de Valkey mantienen clasificaciones de forma nativa y Global Datastore replica a otras regiones con posibilidad de promoverlas. Memcached no replica, un Scan ordenado en DynamoDB es caro y lento, y RDS no está pensado para clasificaciones de latencia de microsegundos.",
+    "explicacion": "Los conjuntos ordenados de Valkey mantienen clasificaciones de forma nativa y Global Datastore replica a otras regiones con posibilidad de promoverlas. Memcached no replica, un Scan ordenado en DynamoDB es caro y lento, y RDS (Relational Database Service) no está pensado para clasificaciones de latencia de microsegundos.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
     ]
@@ -184,7 +184,7 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Un clúster de ElastiCache for Redis OSS con picos muy variables está sobredimensionado casi todo el día para aguantar los picos. ¿Qué cambio reduce el trabajo de dimensionar y el coste en horas valle?",
+    "enunciado": "Un clúster de ElastiCache for Redis OSS (Open Source Software: la versión de código abierto) con picos muy variables está sobredimensionado casi todo el día para aguantar los picos. ¿Qué cambio reduce el trabajo de dimensionar y el coste en horas valle?",
     "opciones": [
       "Migrar a ElastiCache Serverless con el motor Valkey.",
       "Comprar nodos reservados del tamaño de pico.",
@@ -194,7 +194,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "ElastiCache Serverless escala con la demanda y cobra por datos y ECPU consumidas, y Valkey tiene un precio menor que Redis OSS. Reservar el tamaño de pico mantiene el sobredimensionado, Memcached pierde funciones y desactivar Multi-AZ sacrifica disponibilidad.",
+    "explicacion": "ElastiCache Serverless escala con la demanda y cobra por datos y ECPU (ElastiCache Processing Unit: unidad de cómputo de ElastiCache Serverless) consumidas, y Valkey tiene un precio menor que Redis OSS. Reservar el tamaño de pico mantiene el sobredimensionado, Memcached pierde funciones y desactivar Multi-AZ sacrifica disponibilidad.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
     ]

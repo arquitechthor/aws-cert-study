@@ -6,7 +6,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Un sitio estático se sirve con CloudFront desde un bucket S3. Los usuarios no deben poder acceder a los objetos directamente por la URL de S3. ¿Qué se debe configurar?",
+    "enunciado": "Un sitio estático se sirve con CloudFront desde un bucket S3 (Simple Storage Service). Los usuarios no deben poder acceder a los objetos directamente por la URL (Uniform Resource Locator: dirección web) de S3. ¿Qué se debe configurar?",
     "opciones": [
       "Hacer público el bucket y confiar en la caché de CloudFront.",
       "Origin Access Control (OAC) en la distribución y una bucket policy que solo permita a esa distribución.",
@@ -51,7 +51,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
-    "enunciado": "Un juego multijugador usa UDP y necesita mejorar la latencia global y conmutar en segundos entre regiones, usando direcciones IP fijas. ¿Qué servicio es el adecuado?",
+    "enunciado": "Un juego multijugador usa UDP (User Datagram Protocol: protocolo de transporte sin conexión) y necesita mejorar la latencia global y conmutar en segundos entre regiones, usando direcciones IP (Internet Protocol: dirección de red) fijas. ¿Qué servicio es el adecuado?",
     "opciones": [
       "Amazon CloudFront.",
       "AWS Global Accelerator.",
@@ -61,7 +61,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Global Accelerator admite TCP y UDP, ofrece dos IP anycast estáticas y conmuta rápidamente entre endpoints regionales. CloudFront es para HTTP, y la conmutación por DNS depende del TTL.",
+    "explicacion": "Global Accelerator admite TCP (Transmission Control Protocol: protocolo de transporte fiable) y UDP, ofrece dos IP anycast estáticas y conmuta rápidamente entre endpoints regionales. CloudFront es para HTTP (HyperText Transfer Protocol: protocolo de la web), y la conmutación por DNS (Domain Name System: traduce nombres de dominio a direcciones IP) depende del TTL (Time To Live: tiempo de vida antes de caducar).",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
     ]
@@ -83,7 +83,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "CloudFront Functions está pensada para manipulaciones ligeras de cabeceras y URLs en los eventos del visitante, con latencia submilisegundo y un coste muy bajo. Lambda@Edge es más potente pero más lenta y cara, y WAF no reescribe URLs.",
+    "explicacion": "CloudFront Functions está pensada para manipulaciones ligeras de cabeceras y URLs en los eventos del visitante, con latencia submilisegundo y un coste muy bajo. Lambda@Edge es más potente pero más lenta y cara, y WAF (Web Application Firewall) no reescribe URLs.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/edge-functions.html"
     ]

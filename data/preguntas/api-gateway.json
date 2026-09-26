@@ -6,7 +6,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
-    "enunciado": "Una API REST devuelve un catálogo de productos que cambia pocas veces al día y recibe muchas lecturas repetidas. ¿Cómo se reduce la latencia y la carga del backend con el menor esfuerzo?",
+    "enunciado": "Una API REST (Representational State Transfer: estilo de API sobre HTTP) devuelve un catálogo de productos que cambia pocas veces al día y recibe muchas lecturas repetidas. ¿Cómo se reduce la latencia y la carga del backend con el menor esfuerzo?",
     "opciones": [
       "Activar la caché de la etapa en API Gateway con un TTL adecuado.",
       "Aumentar la memoria de la función Lambda.",
@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "La caché de etapa de las REST API sirve las respuestas repetidas sin invocar el backend. Las HTTP API no tienen caché, y más memoria o una cola no evitan las invocaciones repetidas.",
+    "explicacion": "La caché de etapa de las REST API (Application Programming Interface: interfaz para que los programas se comuniquen) sirve las respuestas repetidas sin invocar el backend. Las HTTP API no tienen caché, y más memoria o una cola no evitan las invocaciones repetidas. Siglas: TTL (Time To Live: tiempo de vida antes de caducar); SQS (Simple Queue Service).",
     "fuentes": [
       "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html"
     ]
@@ -39,7 +39,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "API Gateway admite como máximo 10 MB de carga útil. Con una URL prefirmada, S3 recibe el fichero directamente (con carga multiparte si hace falta), sin pasar por la API ni por Lambda.",
+    "explicacion": "API Gateway admite como máximo 10 MB de carga útil. Con una URL (Uniform Resource Locator: dirección web) prefirmada, S3 (Simple Storage Service) recibe el fichero directamente (con carga multiparte si hace falta), sin pasar por la API (Application Programming Interface: interfaz para que los programas se comuniquen) ni por Lambda.",
     "fuentes": [
       "https://docs.aws.amazon.com/apigateway/latest/developerguide/limits.html"
     ]
@@ -51,7 +51,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar nuevas soluciones",
-    "enunciado": "Una empresa ofrece una API pública a clientes externos con tres niveles de suscripción, cada uno con su propio límite de peticiones y cuota mensual. ¿Qué solución lo implementa de forma nativa?",
+    "enunciado": "Una empresa ofrece una API (Application Programming Interface: interfaz para que los programas se comuniquen) pública a clientes externos con tres niveles de suscripción, cada uno con su propio límite de peticiones y cuota mensual. ¿Qué solución lo implementa de forma nativa?",
     "opciones": [
       "HTTP API con un autorizador JWT distinto por nivel.",
       "REST API con claves de API asociadas a planes de uso de cada nivel.",
@@ -61,7 +61,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Los planes de uso de las REST API definen limitación y cuotas por cliente, identificado por su clave de API. Las HTTP API no tienen planes de uso, y contarlo a mano en Lambda es trabajo innecesario.",
+    "explicacion": "Los planes de uso de las REST API definen limitación y cuotas por cliente, identificado por su clave de API. Las HTTP API no tienen planes de uso, y contarlo a mano en Lambda es trabajo innecesario. Siglas: JWT (JSON Web Token: token firmado con datos del usuario); ALB (Application Load Balancer: balanceador HTTP/HTTPS).",
     "fuentes": [
       "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html"
     ]
@@ -73,7 +73,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Una API interna solo debe ser accesible desde aplicaciones dentro de una VPC, nunca desde internet. ¿Qué tipo de endpoint se debe usar?",
+    "enunciado": "Una API (Application Programming Interface: interfaz para que los programas se comuniquen) interna solo debe ser accesible desde aplicaciones dentro de una VPC (Virtual Private Cloud), nunca desde internet. ¿Qué tipo de endpoint se debe usar?",
     "opciones": [
       "Edge-optimized.",
       "Regional con restricción por IP pública.",
@@ -83,7 +83,7 @@
     "correctas": [
       2
     ],
-    "explicacion": "Las APIs privadas solo son accesibles a través de endpoints de VPC de interfaz, y la política de recurso puede limitarlas a endpoints concretos. Los demás tipos son accesibles desde internet.",
+    "explicacion": "Las APIs privadas solo son accesibles a través de endpoints de VPC de interfaz, y la política de recurso puede limitarlas a endpoints concretos. Los demás tipos son accesibles desde internet. Siglas: IP (Internet Protocol: dirección de red).",
     "fuentes": [
       "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html"
     ]
@@ -95,7 +95,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
-    "enunciado": "Una API recibe picos de tráfico que saturan una base de datos relacional detrás de Lambda. ¿Qué dos medidas protegen el backend?",
+    "enunciado": "Una API (Application Programming Interface: interfaz para que los programas se comuniquen) recibe picos de tráfico que saturan una base de datos relacional detrás de Lambda. ¿Qué dos medidas protegen el backend?",
     "opciones": [
       "Configurar la limitación de peticiones (throttling) en la etapa o ruta de API Gateway.",
       "Encolar las escrituras en SQS y procesarlas con un consumidor a ritmo controlado.",
@@ -107,7 +107,7 @@
       0,
       1
     ],
-    "explicacion": "La limitación en API Gateway rechaza el exceso de peticiones con 429 antes de que lleguen al backend, y una cola desacopla y suaviza las escrituras. Quitar límites a Lambda empeora la saturación de la base de datos.",
+    "explicacion": "La limitación en API Gateway rechaza el exceso de peticiones con 429 antes de que lleguen al backend, y una cola desacopla y suaviza las escrituras. Quitar límites a Lambda empeora la saturación de la base de datos. Siglas: SQS (Simple Queue Service).",
     "fuentes": [
       "https://docs.aws.amazon.com/apigateway/latest/developerguide/limits.html"
     ]

@@ -206,7 +206,7 @@
   }
 
   const BADGES = {
-    finalizado: ['finalizado', '✔ Finalizado'],
+    finalizado: ['finalizado', 'Finalizado'],
     publicado: ['publicado', 'Disponible'],
     pendiente: ['pendiente', 'Próximamente'],
   };

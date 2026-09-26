@@ -77,29 +77,29 @@
       <ul>
         <li><strong>AMI (Amazon Machine Image):</strong> plantilla con el sistema operativo y el
           software de arranque. Es regional; para usarla en otra región hay que copiarla.</li>
-        <li><strong>Tipos de instancia</strong> por familia: uso general (M, T con créditos de CPU),
+        <li><strong>Tipos de instancia</strong> por familia: uso general (M, T con créditos de CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span>),
           optimizadas para cómputo (C), para memoria (R, X), para almacenamiento (I, D) y aceleradas
-          con GPU o chips propios (P, G, Inf, Trn). Las de <strong>Graviton</strong> (ARM) suelen dar
+          con GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span> o chips propios (P, G, Inf, Trn). Las de <strong>Graviton</strong> (ARM) suelen dar
           mejor relación precio-rendimiento.</li>
-        <li><strong>Almacenamiento:</strong> volúmenes <strong>EBS</strong> (persistentes, en una sola
+        <li><strong>Almacenamiento:</strong> volúmenes <strong><a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span></strong> (persistentes, en una sola
           zona de disponibilidad) o <strong>instance store</strong> (disco local muy rápido que se
           pierde al parar o terminar la instancia).</li>
         <li><strong>Security groups:</strong> firewall con estado a nivel de instancia; solo admiten
           reglas de permitir.</li>
-        <li><strong>Pares de claves y acceso:</strong> SSH con clave, o mejor <strong>Session
-          Manager</strong> de Systems Manager, sin abrir el puerto 22 ni gestionar claves.</li>
-        <li><strong>Rol de IAM (perfil de instancia):</strong> la forma correcta de dar permisos a
+        <li><strong>Pares de claves y acceso:</strong> SSH <span class="sigla">(<em>Secure Shell</em>: acceso remoto cifrado por terminal)</span> con clave, o mejor <strong>Session
+          Manager</strong> de <a href="../servicio.html?id=systems-manager">Systems Manager</a>, sin abrir el puerto 22 ni gestionar claves.</li>
+        <li><strong>Rol de <a href="iam.html">IAM</a> (perfil de instancia):</strong> la forma correcta de dar permisos a
           una aplicación en EC2; nunca claves de acceso guardadas en la máquina.</li>
         <li><strong>Metadatos (IMDS):</strong> la instancia consulta su propia información y las
-          credenciales temporales del rol en <code>169.254.169.254</code>. IMDSv2 exige un token de
-          sesión y protege contra ataques SSRF.</li>
+          credenciales temporales del rol en <code>169.254.169.254</code>. IMDSv2 <span class="sigla">(<em>Instance Metadata Service versión 2</em>: con token de sesión)</span> exige un token de
+          sesión y protege contra ataques SSRF <span class="sigla">(<em>Server-Side Request Forgery</em>: ataque que hace que el servidor haga peticiones en tu nombre)</span>.</li>
         <li><strong>User data:</strong> script que se ejecuta en el primer arranque.</li>
         <li><strong>Grupos de colocación:</strong> <em>cluster</em> (misma zona, baja latencia para
-          HPC), <em>spread</em> (hardware distinto, máximo 7 instancias por zona) y
+          HPC <span class="sigla">(<em>High Performance Computing</em>: cómputo de alto rendimiento)</span>), <em>spread</em> (hardware distinto, máximo 7 instancias por zona) y
           <em>partition</em> (particiones aisladas para Hadoop, Cassandra o Kafka).</li>
-        <li><strong>Auto Scaling y ELB:</strong> un grupo de Auto Scaling mantiene el número deseado
+        <li><strong><a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a> y <a href="../servicio.html?id=elb">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>:</strong> un grupo de Auto Scaling mantiene el número deseado
           de instancias en varias zonas y un balanceador reparte el tráfico entre ellas.</li>
-        <li><strong>Hibernación:</strong> guarda la RAM en el volumen raíz EBS cifrado para arrancar
+        <li><strong>Hibernación:</strong> guarda la <a href="../servicio.html?id=ram">RAM</a> <span class="sigla">(<em>Random Access Memory</em>: memoria)</span> en el volumen raíz EBS cifrado para arrancar
           más rápido con la memoria intacta.</li>
       </ul>
 
@@ -109,7 +109,7 @@
           <thead><tr><th>Opción</th><th>Cuándo encaja</th></tr></thead>
           <tbody>
             <tr><td>Bajo demanda</td><td>Cargas cortas, impredecibles o de prueba; sin compromiso.</td></tr>
-            <tr><td>Savings Plans (1 o 3 años)</td><td>Uso estable; compromiso de gasto por hora. <em>Compute</em> se aplica también a Fargate y Lambda.</td></tr>
+            <tr><td><a href="../servicio.html?id=savings-plans">Savings Plans</a> (1 o 3 años)</td><td>Uso estable; compromiso de gasto por hora. <em>Compute</em> se aplica también a <a href="../servicio.html?id=fargate">Fargate</a> y <a href="lambda.html">Lambda</a>.</td></tr>
             <tr><td>Instancias reservadas (1 o 3 años)</td><td>Uso estable de un tipo concreto; las <em>convertibles</em> permiten cambiar de familia.</td></tr>
             <tr><td>Spot</td><td>Hasta un 90 % más barato con capacidad sobrante; AWS la recupera con 2 minutos de aviso. Solo para cargas tolerantes a interrupciones.</td></tr>
             <tr><td>Hosts dedicados</td><td>Licencias por socket o núcleo (BYOL) y requisitos de cumplimiento con visibilidad del servidor físico.</td></tr>
@@ -124,16 +124,16 @@
         <li>Aplicaciones que necesitan control del sistema operativo o software de terceros.</li>
         <li>Migraciones <em>lift-and-shift</em> de servidores locales.</li>
         <li>Cómputo de alto rendimiento (HPC) y entrenamiento de modelos con GPU.</li>
-        <li>Flotas web detrás de un balanceador con Auto Scaling.</li>
+        <li>Flotas web detrás de un balanceador con <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a>.</li>
         <li>Procesamiento por lotes barato con instancias Spot.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Código corto y dirigido por eventos: Lambda, sin servidores que parchear.</li>
-        <li>Contenedores sin gestionar instancias: ECS o EKS con Fargate.</li>
-        <li>Una web o una app sencilla con precio fijo mensual: Lightsail o Elastic Beanstalk.</li>
-        <li>Una base de datos gestionada: RDS, Aurora o DynamoDB en vez de instalarla en EC2.</li>
+        <li>Código corto y dirigido por eventos: <a href="lambda.html">Lambda</a>, sin servidores que parchear.</li>
+        <li>Contenedores sin gestionar instancias: <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span> o <a href="eks.html">EKS</a> <span class="sigla">(<em>Elastic Kubernetes Service</em>)</span> con <a href="../servicio.html?id=fargate">Fargate</a>.</li>
+        <li>Una web o una app sencilla con precio fijo mensual: <a href="../servicio.html?id=lightsail">Lightsail</a> o <a href="../servicio.html?id=elastic-beanstalk">Elastic Beanstalk</a>.</li>
+        <li>Una base de datos gestionada: <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a> en vez de instalarla en EC2.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -142,11 +142,11 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Control total del servidor</td><td>EC2</td></tr>
-            <tr><td>Funciones por evento, hasta 15 minutos</td><td>Lambda</td></tr>
-            <tr><td>Contenedores sin servidores</td><td>Fargate (con ECS o EKS)</td></tr>
-            <tr><td>Desplegar código sin montar la infraestructura</td><td>Elastic Beanstalk</td></tr>
-            <tr><td>VPS sencillo a precio fijo</td><td>Lightsail</td></tr>
-            <tr><td>Trabajos por lotes gestionados</td><td>AWS Batch</td></tr>
+            <tr><td>Funciones por evento, hasta 15 minutos</td><td><a href="lambda.html">Lambda</a></td></tr>
+            <tr><td>Contenedores sin servidores</td><td><a href="../servicio.html?id=fargate">Fargate</a> (con <a href="ecs.html">ECS</a> o <a href="eks.html">EKS</a>)</td></tr>
+            <tr><td>Desplegar código sin montar la infraestructura</td><td><a href="../servicio.html?id=elastic-beanstalk">Elastic Beanstalk</a></td></tr>
+            <tr><td>VPS <span class="sigla">(<em>Virtual Private Server</em>: servidor virtual privado)</span> sencillo a precio fijo</td><td><a href="../servicio.html?id=lightsail">Lightsail</a></td></tr>
+            <tr><td>Trabajos por lotes gestionados</td><td><a href="../servicio.html?id=batch">AWS Batch</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -154,31 +154,31 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga el tiempo de ejecución de la instancia (por segundo en Linux y en la mayoría de
         sistemas, con un mínimo de 60 segundos), según tipo, región y opción de compra. Aparte se
-        pagan los volúmenes EBS (también con la instancia parada), las instantáneas, las direcciones
+        pagan los volúmenes <a href="../servicio.html?id=ebs">EBS</a> (también con la instancia parada), las instantáneas, las direcciones
         IPv4 públicas, la transferencia de datos de salida y los extras como el balanceador. Una
         instancia <strong>parada</strong> no cobra cómputo, pero sí su almacenamiento.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Una instancia vive en <strong>una sola zona de disponibilidad</strong>: la alta
-          disponibilidad se consigue con varias instancias en varias zonas, Auto Scaling y un
+          disponibilidad se consigue con varias instancias en varias zonas, <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a> y un
           balanceador.</li>
         <li>Recuperación automática de la instancia si falla el hardware subyacente
           (<em>auto recovery</em>).</li>
-        <li>Cifrado de volúmenes EBS con KMS; se puede activar por defecto en la región.</li>
-        <li>Instancias en subredes privadas y acceso con Session Manager en lugar de bastiones.</li>
-        <li>Copias con instantáneas EBS o AWS Backup, y AMI para reconstruir la máquina.</li>
+        <li>Cifrado de volúmenes <a href="../servicio.html?id=ebs">EBS</a> con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>; se puede activar por defecto en la región.</li>
+        <li>Instancias en subredes privadas y acceso con <a href="../servicio.html?id=systems-manager">Session Manager</a> en lugar de bastiones.</li>
+        <li>Copias con instantáneas EBS o <a href="../servicio.html?id=backup">AWS Backup</a>, y AMI para reconstruir la máquina.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Tolerante a interrupciones"</strong> y <strong>"lo más barato"</strong>: Spot.</li>
-        <li><strong>"Uso constante durante 1 o 3 años"</strong>: Savings Plans o instancias reservadas.</li>
+        <li><strong>"Uso constante durante 1 o 3 años"</strong>: <a href="../servicio.html?id=savings-plans">Savings Plans</a> o instancias reservadas.</li>
         <li><strong>"Licencias por socket o núcleo"</strong>: hosts dedicados.</li>
-        <li><strong>"La aplicación necesita permisos de AWS"</strong>: rol de IAM en la instancia, nunca claves en el código.</li>
+        <li><strong>"La aplicación necesita permisos de AWS"</strong>: rol de <a href="iam.html">IAM</a> en la instancia, nunca claves en el código.</li>
         <li><strong>"Latencia de red mínima entre nodos HPC"</strong>: grupo de colocación <em>cluster</em>.</li>
         <li><strong>"Datos temporales de altísimo rendimiento"</strong>: instance store (se pierden al parar).</li>
-        <li><strong>"Acceso sin abrir SSH"</strong>: Session Manager.</li>
+        <li><strong>"Acceso sin abrir SSH"</strong>: <a href="../servicio.html?id=systems-manager">Session Manager</a>.</li>
         <li><strong>"Parchear el sistema operativo"</strong>: responsabilidad del cliente (Systems Manager Patch Manager ayuda).</li>
       </ul>
 

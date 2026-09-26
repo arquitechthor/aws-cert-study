@@ -66,8 +66,8 @@
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
       <p>AWS CloudTrail registra las acciones que se hacen en tu cuenta, ya sea desde la consola, la
-        CLI, los SDK o los propios servicios de AWS. Cada evento indica quién hizo la llamada (usuario,
-        rol, servicio), qué acción, sobre qué recurso, cuándo, desde qué IP y si tuvo éxito. Es la base
+        <a href="../servicio.html?id=cli">CLI</a> <span class="sigla">(<em>Command Line Interface</em>: línea de comandos)</span>, los SDK <span class="sigla">(<em>Software Development Kit</em>: bibliotecas para programar contra AWS)</span> o los propios servicios de AWS. Cada evento indica quién hizo la llamada (usuario,
+        rol, servicio), qué acción, sobre qué recurso, cuándo, desde qué IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> y si tuvo éxito. Es la base
         de la <strong>auditoría</strong>, la investigación de incidentes y el cumplimiento normativo.
         Está activo por defecto: el <strong>historial de eventos</strong> guarda los últimos
         <strong>90 días</strong> de eventos de administración sin configurar nada.</p>
@@ -78,24 +78,24 @@
           <ul>
             <li><strong>De administración</strong> (plano de control): crear una instancia, cambiar una
               política, iniciar sesión en la consola. Se registran por defecto.</li>
-            <li><strong>De datos</strong> (plano de datos): <code>GetObject</code> de S3, invocaciones de
-              Lambda, operaciones de elementos en DynamoDB. Son muy numerosos, <strong>no se registran
+            <li><strong>De datos</strong> (plano de datos): <code>GetObject</code> de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>, invocaciones de
+              <a href="lambda.html">Lambda</a>, operaciones de elementos en <a href="dynamodb.html">DynamoDB</a>. Son muy numerosos, <strong>no se registran
               por defecto</strong> y tienen coste.</li>
-            <li><strong>De actividad de red:</strong> llamadas a la API que pasan por un endpoint de VPC.</li>
+            <li><strong>De actividad de red:</strong> llamadas a la API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> que pasan por un endpoint de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
             <li><strong>Insights:</strong> detección de actividad inusual, como un pico anómalo de llamadas.</li>
           </ul></li>
         <li><strong>Registro (trail):</strong> envía los eventos de forma continua a un bucket de
           <strong>S3</strong> para guardarlos más allá de 90 días, y opcionalmente a
-          <strong>CloudWatch Logs</strong> para crear filtros de métricas y alarmas. Puede cubrir todas
+          <strong><a href="cloudwatch.html">CloudWatch</a> Logs</strong> para crear filtros de métricas y alarmas. Puede cubrir todas
           las regiones.</li>
         <li><strong>Registro de organización:</strong> creado en la cuenta de administración (o en una
-          administradora delegada), registra todas las cuentas de AWS Organizations y los miembros no
+          administradora delegada), registra todas las cuentas de <a href="../servicio.html?id=organizations">AWS Organizations</a> y los miembros no
           pueden desactivarlo.</li>
         <li><strong>Validación de integridad de los ficheros de registro:</strong> ficheros de
           resumen firmados que permiten demostrar que nadie modificó ni borró los registros.</li>
-        <li><strong>CloudTrail Lake:</strong> almacén de eventos consultable con SQL.
+        <li><strong>CloudTrail Lake:</strong> almacén de eventos consultable con SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span>.
           <strong>Desde el 31 de mayo de 2026 no admite clientes nuevos</strong>; quienes ya lo usaban
-          pueden seguir. Para consultar registros, la alternativa es Athena sobre los ficheros en S3 o
+          pueden seguir. Para consultar registros, la alternativa es <a href="../servicio.html?id=athena">Athena</a> sobre los ficheros en S3 o
           CloudWatch.</li>
         <li><strong>Retraso:</strong> los eventos llegan normalmente en unos minutos; CloudTrail no es
           un sistema de tiempo real.</li>
@@ -104,18 +104,18 @@
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Averiguar quién borró un recurso o cambió un security group.</li>
-        <li>Guardar pruebas de auditoría durante años para normativas (PCI DSS, ISO…).</li>
+        <li>Guardar pruebas de auditoría durante años para normativas (PCI DSS, ISO <span class="sigla">(<em>International Organization for Standardization</em>: organismo de normas internacionales)</span>…).</li>
         <li>Alertar cuando alguien usa el usuario raíz o desactiva el propio CloudTrail.</li>
-        <li>Investigar incidentes de seguridad (lo usan también GuardDuty y Detective).</li>
-        <li>Reaccionar a llamadas concretas con reglas de EventBridge.</li>
+        <li>Investigar incidentes de seguridad (lo usan también <a href="../servicio.html?id=guardduty">GuardDuty</a> y <a href="../servicio.html?id=detective">Detective</a>).</li>
+        <li>Reaccionar a llamadas concretas con reglas de <a href="../servicio.html?id=eventbridge">EventBridge</a>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Para métricas de rendimiento o registros de la aplicación: CloudWatch.</li>
-        <li>Para ver el historial de configuración de un recurso y si cumple reglas: AWS Config.</li>
-        <li>Para el tráfico de red IP: VPC Flow Logs.</li>
-        <li>Para detectar amenazas automáticamente: GuardDuty (que analiza, entre otros, los eventos de CloudTrail).</li>
+        <li>Para métricas de rendimiento o registros de la aplicación: <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li>Para ver el historial de configuración de un recurso y si cumple reglas: <a href="../servicio.html?id=config">AWS Config</a>.</li>
+        <li>Para el tráfico de red IP: <a href="vpc.html">VPC</a> Flow Logs.</li>
+        <li>Para detectar amenazas automáticamente: <a href="../servicio.html?id=guardduty">GuardDuty</a> (que analiza, entre otros, los eventos de CloudTrail).</li>
       </ul>
 
       <h2 id="comparativa">CloudTrail, Config y CloudWatch</h2>
@@ -124,25 +124,25 @@
           <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
           <tbody>
             <tr><td>¿Quién hizo este cambio y cuándo?</td><td>CloudTrail</td></tr>
-            <tr><td>¿Cómo estaba configurado el recurso el martes y cumple la norma?</td><td>AWS Config</td></tr>
-            <tr><td>¿Cuánta CPU usa y qué dicen los registros de la aplicación?</td><td>CloudWatch</td></tr>
-            <tr><td>¿Qué tráfico de red se aceptó o rechazó?</td><td>VPC Flow Logs</td></tr>
-            <tr><td>¿Hay actividad maliciosa?</td><td>GuardDuty</td></tr>
+            <tr><td>¿Cómo estaba configurado el recurso el martes y cumple la norma?</td><td><a href="../servicio.html?id=config">AWS Config</a></td></tr>
+            <tr><td>¿Cuánta CPU <span class="sigla">(<em>Central Processing Unit</em>: procesador)</span> usa y qué dicen los registros de la aplicación?</td><td><a href="cloudwatch.html">CloudWatch</a></td></tr>
+            <tr><td>¿Qué tráfico de red se aceptó o rechazó?</td><td><a href="vpc.html">VPC</a> Flow Logs</td></tr>
+            <tr><td>¿Hay actividad maliciosa?</td><td><a href="../servicio.html?id=guardduty">GuardDuty</a></td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
       <p>El historial de 90 días de eventos de administración es gratuito, y también la primera copia
-        de los eventos de administración que un trail entrega a S3. Se pagan las copias adicionales,
+        de los eventos de administración que un trail entrega a <a href="s3.html">S3</a>. Se pagan las copias adicionales,
         los eventos de datos y de actividad de red (por cada 100 000 eventos), Insights, y aparte el
-        almacenamiento en S3, CloudWatch Logs y el cifrado con KMS.</p>
+        almacenamiento en S3, <a href="cloudwatch.html">CloudWatch</a> Logs y el cifrado con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Bucket de registros en una cuenta separada (de registro o de seguridad), con política
-          restrictiva y S3 Object Lock para evitar borrados.</li>
-        <li>Cifrado de los ficheros con SSE-KMS y validación de integridad activada.</li>
+          restrictiva y <a href="s3.html">S3</a> Object Lock para evitar borrados.</li>
+        <li>Cifrado de los ficheros con SSE-KMS <span class="sigla">(<em>Server-Side Encryption with KMS keys</em>: cifrado en el servidor con claves de KMS)</span> y validación de integridad activada.</li>
         <li>Trail de organización y multirregión para no dejar regiones ni cuentas sin registrar.</li>
         <li>Alarmas cuando alguien detiene o modifica un trail.</li>
       </ul>
@@ -150,12 +150,12 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"¿Quién hizo…?"</strong> o <strong>"auditar llamadas a la API"</strong>: CloudTrail.</li>
-        <li><strong>"Guardar la auditoría más de 90 días"</strong>: un trail hacia S3.</li>
+        <li><strong>"Guardar la auditoría más de 90 días"</strong>: un trail hacia <a href="s3.html">S3</a>.</li>
         <li><strong>"Registrar quién descarga objetos de S3"</strong>: eventos de datos (no están activos por defecto).</li>
         <li><strong>"Demostrar que los registros no se han alterado"</strong>: validación de integridad.</li>
         <li><strong>"Todas las cuentas de la organización, sin que puedan desactivarlo"</strong>: trail de organización.</li>
-        <li><strong>"Alarma cuando se usa el usuario raíz"</strong>: CloudTrail hacia CloudWatch Logs con filtro de métrica, o EventBridge.</li>
-        <li><strong>"Historial de configuración de un recurso"</strong>: AWS Config, no CloudTrail.</li>
+        <li><strong>"Alarma cuando se usa el usuario raíz"</strong>: CloudTrail hacia <a href="cloudwatch.html">CloudWatch</a> Logs con filtro de métrica, o <a href="../servicio.html?id=eventbridge">EventBridge</a>.</li>
+        <li><strong>"Historial de configuración de un recurso"</strong>: <a href="../servicio.html?id=config">AWS Config</a>, no CloudTrail.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

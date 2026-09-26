@@ -6,7 +6,7 @@
       "SAA-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
-    "enunciado": "Una aplicación que se ejecuta en instancias EC2 necesita leer objetos de un bucket S3. ¿Cuál es la forma más segura de concederle acceso?",
+    "enunciado": "Una aplicación que se ejecuta en instancias EC2 (Elastic Compute Cloud) necesita leer objetos de un bucket S3 (Simple Storage Service). ¿Cuál es la forma más segura de concederle acceso?",
     "opciones": [
       "Crear un usuario IAM y guardar sus claves de acceso en un fichero de configuración de la instancia.",
       "Asociar a las instancias un rol IAM con permiso de lectura sobre ese bucket.",
@@ -16,7 +16,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Un rol asociado mediante perfil de instancia entrega credenciales temporales que se rotan solas. Las claves en ficheros pueden filtrarse, hacer público el bucket expone los datos y el usuario raíz nunca debe usarse para aplicaciones.",
+    "explicacion": "Un rol asociado mediante perfil de instancia entrega credenciales temporales que se rotan solas. Las claves en ficheros pueden filtrarse, hacer público el bucket expone los datos y el usuario raíz nunca debe usarse para aplicaciones. Siglas: IAM (Identity and Access Management); IP (Internet Protocol: dirección de red).",
     "fuentes": [
       "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
     ]
@@ -39,7 +39,7 @@
     "correctas": [
       2
     ],
-    "explicacion": "IAM evalúa todas las políticas aplicables juntas. Un Deny explícito en cualquiera de ellas gana siempre; el orden y la especificidad no influyen.",
+    "explicacion": "IAM (Identity and Access Management) evalúa todas las políticas aplicables juntas. Un Deny explícito en cualquiera de ellas gana siempre; el orden y la especificidad no influyen.",
     "fuentes": [
       "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html"
     ]
@@ -61,7 +61,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Una SCP limita a todas las identidades de las cuentas miembro, incluido su usuario raíz, y no puede quitarse desde dentro de la cuenta. Las políticas IAM y los límites de permisos los puede cambiar un administrador local; Config solo detectaría o corregiría a posteriori.",
+    "explicacion": "Una SCP (Service Control Policy: límite de permisos para las cuentas de una organización) limita a todas las identidades de las cuentas miembro, incluido su usuario raíz, y no puede quitarse desde dentro de la cuenta. Las políticas IAM (Identity and Access Management) y los límites de permisos los puede cambiar un administrador local; Config solo detectaría o corregiría a posteriori. Siglas: OU (Organizational Unit: unidad organizativa de AWS Organizations).",
     "fuentes": [
       "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html"
     ]
@@ -85,7 +85,7 @@
       0,
       2
     ],
-    "explicacion": "El usuario raíz debe tener MFA y usarse solo cuando es imprescindible. No debe tener claves de acceso ni compartirse, y las políticas IAM no pueden limitarlo (solo una SCP afecta al raíz de una cuenta miembro).",
+    "explicacion": "El usuario raíz debe tener MFA (Multi-Factor Authentication: inicio de sesión con un segundo factor) y usarse solo cuando es imprescindible. No debe tener claves de acceso ni compartirse, y las políticas IAM (Identity and Access Management) no pueden limitarlo (solo una SCP (Service Control Policy: límite de permisos para las cuentas de una organización) afecta al raíz de una cuenta miembro).",
     "fuentes": [
       "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
     ]
@@ -97,7 +97,7 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar soluciones para la complejidad organizativa",
-    "enunciado": "Un equipo de plataforma quiere que los desarrolladores puedan crear roles IAM para sus funciones Lambda, pero sin que ninguno de esos roles supere un conjunto máximo de permisos. ¿Qué mecanismo lo permite?",
+    "enunciado": "Un equipo de plataforma quiere que los desarrolladores puedan crear roles IAM (Identity and Access Management) para sus funciones Lambda, pero sin que ninguno de esos roles supere un conjunto máximo de permisos. ¿Qué mecanismo lo permite?",
     "opciones": [
       "Exigir, mediante condición en la política del desarrollador, que todo rol creado lleve un límite de permisos concreto.",
       "Crear un grupo IAM para los roles de Lambda.",
@@ -129,7 +129,7 @@
     "correctas": [
       1
     ],
-    "explicacion": "Mínimo privilegio significa conceder solo la acción necesaria (bedrock:InvokeModel) sobre el recurso concreto (el ARN del modelo) en el rol de ejecución. El acceso total es excesivo y las claves de administrador son un riesgo.",
+    "explicacion": "Mínimo privilegio significa conceder solo la acción necesaria (bedrock:InvokeModel) sobre el recurso concreto (el ARN (Amazon Resource Name: identificador único de un recurso de AWS) del modelo) en el rol de ejecución. El acceso total es excesivo y las claves de administrador son un riesgo.",
     "fuentes": [
       "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
     ]

@@ -62,7 +62,7 @@
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
       <p>Amazon Bedrock es un servicio totalmente gestionado y <em>serverless</em> que da acceso por
-        API a <strong>modelos fundacionales</strong> (FM) de varios proveedores (Amazon Nova, Anthropic
+        API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> a <strong>modelos fundacionales</strong> (FM) de varios proveedores (<a href="../servicio.html?id=nova">Amazon Nova</a>, Anthropic
         Claude, Meta Llama, Mistral y otros). No hay infraestructura que gestionar. Además de invocar
         modelos, ofrece herramientas para personalizarlos, conectarlos con tus datos (RAG), añadir
         salvaguardas y evaluarlos.</p>
@@ -76,10 +76,10 @@
           <strong>top-p</strong> (más altos, más creatividad y variación; más bajos, más determinismo),
           <strong>máximo de tokens</strong> de salida y secuencias de parada. Se cobra por
           <strong>tokens</strong> de entrada y de salida.</li>
-        <li><strong>Knowledge Bases:</strong> RAG gestionado. Toma documentos (por ejemplo, de S3), los
+        <li><strong>Knowledge Bases:</strong> RAG gestionado. Toma documentos (por ejemplo, de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>), los
           divide, genera <em>embeddings</em>, los guarda en un almacén vectorial y recupera los fragmentos
           relevantes para fundamentar la respuesta.</li>
-        <li><strong>Agents:</strong> descomponen una tarea en pasos y llaman a APIs o funciones Lambda
+        <li><strong>Agents:</strong> descomponen una tarea en pasos y llaman a APIs o funciones <a href="lambda.html">Lambda</a>
           (grupos de acciones) y a bases de conocimiento.</li>
         <li><strong>Guardrails:</strong> filtros de contenido dañino, temas denegados, palabras
           bloqueadas, detección y enmascarado de datos personales, comprobaciones de fundamentación
@@ -107,14 +107,14 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si necesitas entrenar desde cero un modelo propio o usar ML clásico (regresión,
-          clasificación tabular): <strong>SageMaker AI</strong>.</li>
-        <li>Si quieres un asistente listo para usar sin desarrollar nada: <strong>Amazon Q</strong>.</li>
-        <li>Tareas que resuelve un servicio de IA específico con menos coste y más precisión: Textract
-          (extraer texto de documentos), Comprehend (sentimiento, entidades), Transcribe, Translate,
-          Rekognition…</li>
+        <li>Si necesitas entrenar desde cero un modelo propio o usar ML <span class="sigla">(<em>Machine Learning</em>: aprendizaje automático)</span> clásico (regresión,
+          clasificación tabular): <strong><a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a></strong>.</li>
+        <li>Si quieres un asistente listo para usar sin desarrollar nada: <strong><a href="../servicio.html?id=amazon-q">Amazon Q</a></strong>.</li>
+        <li>Tareas que resuelve un servicio de IA <span class="sigla">(inteligencia artificial)</span> específico con menos coste y más precisión: <a href="../servicio.html?id=textract">Textract</a>
+          (extraer texto de documentos), <a href="../servicio.html?id=comprehend">Comprehend</a> (sentimiento, entidades), <a href="../servicio.html?id=transcribe">Transcribe</a>, <a href="../servicio.html?id=translate">Translate</a>,
+          <a href="../servicio.html?id=rekognition">Rekognition</a>…</li>
         <li>Para ejecutar agentes en producción con memoria, identidad y herramientas gestionadas a
-          escala existe un servicio específico: Amazon Bedrock AgentCore.</li>
+          escala existe un servicio específico: <a href="../servicio.html?id=bedrock-agentcore">Amazon Bedrock AgentCore</a>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -126,7 +126,7 @@
             <tr><td>Que el modelo adopte un estilo o formato concreto con ejemplos etiquetados</td><td>Fine-tuning</td></tr>
             <tr><td>Adaptar el modelo al vocabulario de un dominio con mucho texto sin etiquetar</td><td>Continued pre-training</td></tr>
             <tr><td>Guiar la respuesta sin coste de entrenamiento</td><td>Ingeniería de prompts (zero-shot, few-shot, cadena de razonamiento)</td></tr>
-            <tr><td>Entrenar y desplegar modelos propios</td><td>SageMaker AI</td></tr>
+            <tr><td>Entrenar y desplegar modelos propios</td><td><a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -142,16 +142,16 @@
       <ul>
         <li>Tus prompts y respuestas <strong>no se usan para entrenar los modelos base</strong> ni se
           comparten con los proveedores.</li>
-        <li>Cifrado en tránsito y en reposo (con claves de KMS para modelos personalizados y otros recursos).</li>
-        <li>Acceso privado desde la VPC con endpoints de interfaz (PrivateLink).</li>
-        <li>Permisos con IAM hasta el nivel de modelo; auditoría de llamadas con CloudTrail e invocaciones
-          registrables en CloudWatch o S3.</li>
+        <li>Cifrado en tránsito y en reposo (con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> para modelos personalizados y otros recursos).</li>
+        <li>Acceso privado desde la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> con endpoints de interfaz (<a href="../servicio.html?id=privatelink">PrivateLink</a>).</li>
+        <li>Permisos con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> hasta el nivel de modelo; auditoría de llamadas con <a href="cloudtrail.html">CloudTrail</a> e invocaciones
+          registrables en <a href="cloudwatch.html">CloudWatch</a> o <a href="s3.html">S3</a>.</li>
         <li>IA responsable: Guardrails, evaluación de modelos y comprobación de sesgos y toxicidad.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
       <p>Kopi usa Bedrock para <strong>generar preguntas de repaso</strong> a partir de los apuntes de
-        la sección Conocimiento. Una función Lambda envía el texto al modelo Claude Haiku con
+        la sección Conocimiento. Una función <a href="lambda.html">Lambda</a> envía el texto al modelo Claude Haiku con
         <code>InvokeModel</code>, con un límite de tokens de salida, y devuelve las preguntas. El
         identificador del modelo está en una variable de entorno, así que se puede cambiar sin tocar
         código. Todo queda dentro de AWS, sin claves de API externas: el permiso es

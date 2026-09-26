@@ -221,6 +221,8 @@ button.chip-kopi[aria-pressed="true"] { background: rgba(168, 85, 247, 0.16); co
 .badge-guia-pendiente { background: rgba(168, 85, 247, 0.16); color: var(--violet-strong); }
 
 .cat-en { color: var(--text-faint); font-style: italic; font-weight: 400; }
+/* Explicación de una sigla la primera vez que aparece ("RPO (Recovery Point Objective: …)"). */
+.sigla { color: var(--text-muted); font-weight: 400; }
 
 /* Iconos oficiales de AWS: se muestran tal cual, sin recolorear ni recortar. */
 .cat-icon { display: inline-block; width: 18px; height: 18px; border-radius: 3px; vertical-align: -4px; margin-right: 6px; }
@@ -354,6 +356,7 @@ button.chip-kopi[aria-pressed="true"] { background: rgba(168, 85, 247, 0.16); co
 }
 .quiz-progreso-texto { margin: 0; font-size: 14.5px; color: var(--text-muted); }
 .quiz-progreso-texto.ok { color: var(--cyan-strong); font-weight: 700; }
+.quiz-acciones { display: flex; flex-wrap: wrap; gap: 8px; }
 .quiz-barra { width: 100%; height: 6px; border-radius: 999px; background: var(--bg-alt); overflow: hidden; }
 .quiz-barra span { display: block; height: 100%; background: var(--gradient-brand); transition: width .3s ease; }
 .chip-ok { display: none; color: var(--green); border-color: rgba(74, 222, 128, 0.45); }

@@ -92,33 +92,33 @@
             <li><strong>Glacier Deep Archive:</strong> lo más barato; recuperación en horas.</li>
             <li><strong>Express One Zone:</strong> latencia muy baja en una zona, para cargas intensivas.</li>
           </ul>
-          Las clases IA y Glacier tienen <strong>duración mínima</strong> (30, 90 o 180 días) y cargo
+          Las clases IA <span class="sigla">(inteligencia artificial)</span> y Glacier tienen <strong>duración mínima</strong> (30, 90 o 180 días) y cargo
           por recuperación.</li>
         <li><strong>Reglas de ciclo de vida:</strong> transicionan objetos entre clases o los caducan.</li>
         <li><strong>Versionado:</strong> conserva versiones anteriores y protege frente a borrados y
           sobrescrituras. Es necesario para la replicación y Object Lock.</li>
         <li><strong>Replicación:</strong> entre regiones (CRR) o en la misma región (SRR).</li>
-        <li><strong>Object Lock:</strong> almacenamiento WORM en modo <em>governance</em> o
+        <li><strong>Object Lock:</strong> almacenamiento WORM <span class="sigla">(<em>Write Once, Read Many</em>: se escribe una vez y no se puede modificar)</span> en modo <em>governance</em> o
           <em>compliance</em>, con retención legal.</li>
         <li><strong>URLs prefirmadas:</strong> permiten subir o descargar un objeto concreto durante un
           tiempo limitado sin credenciales de AWS.</li>
-        <li><strong>Notificaciones de eventos:</strong> a Lambda, SQS, SNS o EventBridge.</li>
+        <li><strong>Notificaciones de eventos:</strong> a <a href="lambda.html">Lambda</a>, <a href="../servicio.html?id=sqs">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, <a href="../servicio.html?id=sns">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> o <a href="../servicio.html?id=eventbridge">EventBridge</a>.</li>
         <li><strong>Transfer Acceleration:</strong> acelera cargas lejanas usando la red perimetral de AWS.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Ficheros de usuarios (fotos, vídeos, documentos) subidos con URLs prefirmadas.</li>
-        <li>Lago de datos consultado con Athena, Glue o EMR.</li>
+        <li>Lago de datos consultado con <a href="../servicio.html?id=athena">Athena</a>, <a href="../servicio.html?id=glue">Glue</a> o <a href="../servicio.html?id=emr">EMR</a> <span class="sigla">(<em>Elastic MapReduce</em>)</span>.</li>
         <li>Copias de seguridad y archivo a largo plazo con Glacier.</li>
-        <li>Sitio web estático, normalmente detrás de CloudFront.</li>
-        <li>Fuente de documentos para una base de conocimiento de Amazon Bedrock (RAG).</li>
+        <li>Sitio web estático, normalmente detrás de <a href="cloudfront.html">CloudFront</a>.</li>
+        <li>Fuente de documentos para una base de conocimiento de <a href="bedrock.html">Amazon Bedrock</a> (RAG).</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Como disco de un sistema operativo o de una base de datos: eso es EBS.</li>
-        <li>Como sistema de ficheros compartido con semántica POSIX: EFS o FSx.</li>
+        <li>Como disco de un sistema operativo o de una base de datos: eso es <a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span>.</li>
+        <li>Como sistema de ficheros compartido con semántica POSIX <span class="sigla">(<em>Portable Operating System Interface</em>: estándar de ficheros y permisos tipo Unix)</span>: <a href="../servicio.html?id=efs">EFS</a> <span class="sigla">(<em>Elastic File System</em>)</span> o <a href="../servicio.html?id=fsx">FSx</a>.</li>
         <li>Para datos con muchas actualizaciones pequeñas de partes de un fichero: S3 reescribe el
           objeto entero.</li>
       </ul>
@@ -126,12 +126,12 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>S3</th><th>EBS</th><th>EFS</th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>S3</th><th><a href="../servicio.html?id=ebs">EBS</a></th><th><a href="../servicio.html?id=efs">EFS</a></th></tr></thead>
           <tbody>
             <tr><td>Tipo</td><td>Objetos</td><td>Bloques (disco)</td><td>Ficheros (NFS)</td></tr>
-            <tr><td>Acceso</td><td>API HTTP desde cualquier sitio</td><td>Una instancia (salvo multi-attach)</td><td>Muchas instancias a la vez</td></tr>
+            <tr><td>Acceso</td><td>API HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span> desde cualquier sitio</td><td>Una instancia (salvo multi-attach)</td><td>Muchas instancias a la vez</td></tr>
             <tr><td>Alcance</td><td>Regional</td><td>Una zona de disponibilidad</td><td>Regional (o una zona)</td></tr>
-            <tr><td>Uso típico</td><td>Datos, medios, backups</td><td>Discos de EC2 y bases de datos</td><td>Contenido compartido entre servidores</td></tr>
+            <tr><td>Uso típico</td><td>Datos, medios, backups</td><td>Discos de <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> y bases de datos</td><td>Contenido compartido entre servidores</td></tr>
           </tbody>
         </table>
       </div>
@@ -144,11 +144,11 @@
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li><strong>Block Public Access</strong> activado por defecto; las ACL están desactivadas por
+        <li><strong>Block Public Access</strong> activado por defecto; las ACL <span class="sigla">(<em>Access Control List</em>: lista de control de acceso)</span> están desactivadas por
           defecto (<em>Bucket owner enforced</em>).</li>
-        <li>Acceso con políticas IAM y <strong>bucket policies</strong> (por ejemplo, exigir TLS con
-          <code>aws:SecureTransport</code> o limitar a un endpoint de VPC).</li>
-        <li>Cifrado en reposo siempre activo (SSE-S3 por defecto). También SSE-KMS, DSSE-KMS o SSE-C
+        <li>Acceso con políticas <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> y <strong>bucket policies</strong> (por ejemplo, exigir TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> con
+          <code>aws:SecureTransport</code> o limitar a un endpoint de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>).</li>
+        <li>Cifrado en reposo siempre activo (SSE-S3 por defecto). También SSE-KMS <span class="sigla">(<em>Server-Side Encryption with KMS keys</em>: cifrado en el servidor con claves de KMS)</span>, DSSE-KMS <span class="sigla">(<em>Dual-layer Server-Side Encryption with KMS</em>: doble capa de cifrado con claves de KMS)</span> o SSE-C <span class="sigla">(<em>Server-Side Encryption with Customer-provided keys</em>: cifrado en el servidor con claves que aporta el cliente)</span>
           con clave del cliente.</li>
         <li>Las clases regionales replican en al menos tres zonas de disponibilidad; One Zone y Express
           One Zone, en una sola.</li>
@@ -158,11 +158,11 @@
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
       <p>Kopi tiene dos usos de S3. El frontend estático está en un bucket privado que solo
-        CloudFront puede leer (OAC). Los ficheros de los usuarios van a otro bucket con claves del tipo
+        <a href="cloudfront.html">CloudFront</a> puede leer (OAC). Los ficheros de los usuarios van a otro bucket con claves del tipo
         <code>media/{usuario}/{tipo}/{año}/{mes}/{uuid}</code>. El navegador sube directamente con una
-        <strong>URL prefirmada</strong> de una hora, así que ni la API ni Lambda ven el contenido. Una
+        <strong>URL <span class="sigla">(<em>Uniform Resource Locator</em>: dirección web)</span> prefirmada</strong> de una hora, así que ni la API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> ni <a href="lambda.html">Lambda</a> ven el contenido. Una
         <strong>notificación de evento</strong> dispara una Lambda con cada objeto nuevo para
-        reconciliarlo con DynamoDB. Así se registran también los ficheros que sube la aplicación de
+        reconciliarlo con <a href="dynamodb.html">DynamoDB</a>. Así se registran también los ficheros que sube la aplicación de
         escritorio directamente a S3.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
@@ -177,7 +177,7 @@
         <li><strong>"Compartir un objeto temporalmente sin cuenta de AWS"</strong>: URL prefirmada.</li>
         <li>La <strong>replicación exige versionado</strong> en origen y destino, y no replica los
           objetos existentes antes de activarla (para eso está S3 Batch Replication).</li>
-        <li>Un sitio estático en S3 solo sirve HTTP; para HTTPS con dominio propio se pone CloudFront.</li>
+        <li>Un sitio estático en S3 solo sirve HTTP; para HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> con dominio propio se pone <a href="cloudfront.html">CloudFront</a>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

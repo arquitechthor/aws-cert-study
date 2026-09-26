@@ -37,7 +37,11 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   site root derived from its own `<script src>`, so pages work at any depth and under the
   `/aws-cert-study/` subpath. **Always use relative paths**, never `/data/...`.
 - `assets/quiz.js`: renders `<div class="quiz" data-quiz="<id>">` from
-  `data/preguntas/<id>.json`.
+  `data/preguntas/<id>.json`, and its "Exportar a Noria" button downloads the questions as one
+  Noria topic (`{version: 1, temas: [{nombre, descripcion, preguntas}]}`, format in
+  `../kopi-docs/importar_temas.md`; statement + options, no answers).
+- `scripts/revisar_texto.py`: applies the acronym and service-link content rules (below) to
+  published pages and questions; idempotent, dry run unless `--escribir`.
 - `aviso-legal.html`: legal notice, terms, trademarks, license and privacy.
 - `data/servicios.json`, `data/categorias.json`, `data/certificaciones.json`: the catalog
   (schemas in `PLAN.md`). `data/fuentes/*.txt`: the original in-scope service lists from each
@@ -54,7 +58,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 python -m http.server 8765   # or: npx serve .   (fetch() of the JSON files fails on file://)
 ```
 
-No build, lint or test tooling. Verify changes in a browser, including at ~375px width (no
+No build, lint or test tooling (only the helper `scripts/revisar_texto.py`). Verify changes in a browser, including at ~375px width (no
 horizontal scroll).
 
 ## Workflow: filling in a service (Phase 2)
@@ -74,7 +78,10 @@ horizontal scroll).
    set `"kopi": true` in `servicios.json` so it appears under the "Usados en Kopi" filter.
 3. Write `data/preguntas/<id>.json` with 5–15 **original** questions tagged with certification
    and domain (domain names from `certificaciones.json`).
-4. In `data/servicios.json`, set `estado` to `"publicado"` and write `resumen`.
+4. In `data/servicios.json`, set `estado` to `"publicado"` and write `resumen`. Then run
+   `python scripts/revisar_texto.py --escribir <id>` (acronyms and links; add any new acronym
+   to its glossary first) and `python scripts/revisar_texto.py --publicado <id>` so other pages'
+   "Próximamente" links to it point to the new page.
 5. Serve locally, check the page and quiz, then commit and push to `main` (no PRs) and tick
    the service in the `PLAN.md` queue.
 

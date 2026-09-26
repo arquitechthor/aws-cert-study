@@ -66,7 +66,7 @@
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
       <p>Amazon ElastiCache es un almacén de datos <strong>en memoria</strong> totalmente gestionado,
-        compatible con <strong>Valkey</strong>, <strong>Redis OSS</strong> y <strong>Memcached</strong>.
+        compatible con <strong>Valkey</strong>, <strong>Redis OSS <span class="sigla">(<em>Open Source Software</em>: la versión de código abierto)</span></strong> y <strong>Memcached</strong>.
         Se coloca delante de una base de datos o de un cálculo costoso para servir los datos
         frecuentes en microsegundos, o se usa directamente como almacén rápido de sesiones, colas o
         clasificaciones. Puedes crearlo <strong>sin servidor</strong> (<em>ElastiCache Serverless</em>,
@@ -92,7 +92,7 @@
               es lento y los datos pueden quedar obsoletos.</li>
             <li><em>Write-through</em>: al escribir en la base de datos también se actualiza la caché.
               Datos siempre frescos, a costa de cachear cosas que quizá nadie lea.</li>
-            <li><strong>TTL</strong>: caducidad de las claves para limitar datos obsoletos y memoria.</li>
+            <li><strong>TTL <span class="sigla">(<em>Time To Live</em>: tiempo de vida antes de caducar)</span></strong>: caducidad de las claves para limitar datos obsoletos y memoria.</li>
           </ul></li>
         <li><strong>Global Datastore</strong> (Valkey/Redis OSS): réplicas en otras regiones para
           lecturas locales y recuperación ante desastres.</li>
@@ -100,19 +100,19 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Cachear resultados de consultas a RDS o Aurora y reducir su carga.</li>
+        <li>Cachear resultados de consultas a <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span> o <a href="aurora.html">Aurora</a> y reducir su carga.</li>
         <li>Guardar sesiones de usuario para que las instancias web no tengan estado.</li>
         <li>Clasificaciones de juegos con conjuntos ordenados.</li>
         <li>Limitación de peticiones (<em>rate limiting</em>) y contadores.</li>
-        <li>Caché semántica de respuestas de modelos de IA generativa, con búsqueda vectorial en Valkey.</li>
+        <li>Caché semántica de respuestas de modelos de IA <span class="sigla">(inteligencia artificial)</span> generativa, con búsqueda vectorial en Valkey.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Como almacén principal y duradero de datos críticos: una base de datos (o MemoryDB, que es
           duradera y compatible con Valkey/Redis OSS).</li>
-        <li>Para acelerar solo lecturas de DynamoDB sin cambiar el código: DAX.</li>
-        <li>Para contenido estático en el borde, cerca del usuario: CloudFront.</li>
+        <li>Para acelerar solo lecturas de <a href="dynamodb.html">DynamoDB</a> sin cambiar el código: DAX <span class="sigla">(<em>DynamoDB Accelerator</em>: caché en memoria para DynamoDB)</span>.</li>
+        <li>Para contenido estático en el borde, cerca del usuario: <a href="cloudfront.html">CloudFront</a>.</li>
       </ul>
 
       <h2 id="comparativa">Valkey/Redis OSS frente a Memcached</h2>
@@ -138,8 +138,8 @@
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>Solo accesible dentro de la VPC, con security groups.</li>
-        <li>Cifrado en tránsito (TLS) y en reposo con KMS; autenticación con usuarios y RBAC, AUTH o IAM
+        <li>Solo accesible dentro de la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>, con security groups.</li>
+        <li>Cifrado en tránsito (TLS) y en reposo con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>; autenticación con usuarios y RBAC <span class="sigla">(<em>Role-Based Access Control</em>: permisos según el rol)</span>, AUTH o <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>
           en Valkey/Redis OSS.</li>
         <li>Multi-AZ con réplicas en otras zonas y conmutación automática (siempre activa en modo clúster).</li>
         <li>Serverless reparte los datos en varias zonas automáticamente.</li>
@@ -148,8 +148,8 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Reducir la carga de lectura de RDS"</strong> con datos consultados a menudo: ElastiCache (o réplicas de lectura si no se puede tocar el código).</li>
-        <li><strong>"Sesiones compartidas entre instancias"</strong>: ElastiCache (o DynamoDB).</li>
+        <li><strong>"Reducir la carga de lectura de <a href="rds.html">RDS</a>"</strong> con datos consultados a menudo: ElastiCache (o réplicas de lectura si no se puede tocar el código).</li>
+        <li><strong>"Sesiones compartidas entre instancias"</strong>: ElastiCache (o <a href="dynamodb.html">DynamoDB</a>).</li>
         <li><strong>"Alta disponibilidad, persistencia o estructuras complejas"</strong>: Valkey/Redis OSS, no Memcached.</li>
         <li><strong>"Caché simple y multihilo"</strong>: Memcached.</li>
         <li><strong>"Los datos de la caché quedan obsoletos"</strong>: TTL o write-through.</li>

@@ -65,28 +65,28 @@
 
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
-      <p>Amazon CloudFront es la CDN de AWS. Distribuye el contenido desde cientos de
+      <p>Amazon CloudFront es la CDN <span class="sigla">(<em>Content Delivery Network</em>: red de entrega de contenido)</span> de AWS. Distribuye el contenido desde cientos de
         <strong>ubicaciones perimetrales</strong> (<em>edge locations</em>) de todo el mundo: cachea
         lo que puede y, para lo demás, conecta con el origen a través de la red troncal de AWS. Reduce
-        la latencia y la carga del origen, y añade HTTPS, protección frente a DDoS y control de acceso
+        la latencia y la carga del origen, y añade HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span>, protección frente a DDoS y control de acceso
         delante de tu aplicación.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Distribución:</strong> configuración con uno o varios <strong>orígenes</strong> (S3,
-          ALB, EC2, API Gateway, cualquier servidor HTTP) y <strong>comportamientos de caché</strong>
+        <li><strong>Distribución:</strong> configuración con uno o varios <strong>orígenes</strong> (<a href="s3.html">S3</a>,
+          <a href="../servicio.html?id=elb">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>, <a href="api-gateway.html">API Gateway</a>, cualquier servidor HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>) y <strong>comportamientos de caché</strong>
           por patrón de ruta (<code>/api/*</code>, <code>/img/*</code>).</li>
         <li><strong>Políticas de caché y de petición al origen:</strong> qué cabeceras, cookies y
-          parámetros forman la clave de caché y cuáles se envían al origen, y los TTL.</li>
+          parámetros forman la clave de caché y cuáles se envían al origen, y los TTL <span class="sigla">(<em>Time To Live</em>: tiempo de vida antes de caducar)</span>.</li>
         <li><strong>Invalidaciones:</strong> borran objetos de la caché antes de que caduquen (las
           primeras 1.000 rutas al mes son gratuitas). Alternativa: nombres de fichero versionados.</li>
         <li><strong>Origin Access Control (OAC):</strong> permite que un bucket S3 privado solo sea
-          accesible a través de CloudFront. Sustituye al antiguo OAI.</li>
+          accesible a través de CloudFront. Sustituye al antiguo OAI <span class="sigla">(<em>Origin Access Identity</em>: mecanismo anterior a OAC)</span>.</li>
         <li><strong>URLs y cookies firmadas:</strong> restringen el acceso a contenido privado o de pago.</li>
         <li><strong>Cómputo en el borde:</strong>
           <ul>
             <li><strong>CloudFront Functions:</strong> JavaScript ligero en eventos de
-              <em>viewer</em>, submilisegundo y muy barato (reescrituras de URL, cabeceras, redirecciones).</li>
+              <em>viewer</em>, submilisegundo y muy barato (reescrituras de URL <span class="sigla">(<em>Uniform Resource Locator</em>: dirección web)</span>, cabeceras, redirecciones).</li>
             <li><strong>Lambda@Edge:</strong> Node.js o Python en los cuatro eventos (también de
               origen), con más tiempo y acceso a red.</li>
           </ul></li>
@@ -97,25 +97,25 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Servir un sitio estático o una SPA desde S3 privado con HTTPS y dominio propio.</li>
+        <li>Servir un sitio estático o una SPA <span class="sigla">(<em>Single-Page Application</em>: web de una sola página)</span> desde <a href="s3.html">S3</a> privado con HTTPS y dominio propio.</li>
         <li>Acelerar APIs y contenido dinámico (la conexión viaja por la red de AWS).</li>
         <li>Distribución de vídeo y descargas grandes.</li>
-        <li>Proteger el origen con AWS WAF y Shield en el borde.</li>
+        <li>Proteger el origen con <a href="../servicio.html?id=waf">AWS WAF</a> <span class="sigla">(<em>Web Application Firewall</em>)</span> y <a href="../servicio.html?id=shield">Shield</a> en el borde.</li>
         <li>Contenido de pago con URLs o cookies firmadas.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Tráfico no HTTP (TCP o UDP genérico, como juegos o VoIP) o que necesita IP fijas:
-          <strong>AWS Global Accelerator</strong>.</li>
-        <li>Si solo necesitas acelerar subidas a S3 desde lejos: S3 Transfer Acceleration puede bastar.</li>
+        <li>Tráfico no HTTP (TCP o UDP <span class="sigla">(<em>User Datagram Protocol</em>: protocolo de transporte sin conexión)</span> genérico, como juegos o VoIP) o que necesita IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> fijas:
+          <strong><a href="../servicio.html?id=global-accelerator">AWS Global Accelerator</a></strong>.</li>
+        <li>Si solo necesitas acelerar subidas a <a href="s3.html">S3</a> desde lejos: S3 Transfer Acceleration puede bastar.</li>
         <li>Contenido que nunca se cachea y usuarios en la misma región que el origen: el beneficio es menor.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>CloudFront</th><th>Global Accelerator</th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>CloudFront</th><th><a href="../servicio.html?id=global-accelerator">Global Accelerator</a></th></tr></thead>
           <tbody>
             <tr><td>Protocolos</td><td>HTTP y HTTPS (incluido WebSocket)</td><td>TCP y UDP</td></tr>
             <tr><td>Caché</td><td>Sí</td><td>No</td></tr>
@@ -129,35 +129,35 @@
       <p>Pago por uso: transferencia de datos de salida a internet (según la región del usuario) y
         número de peticiones HTTP o HTTPS. La transferencia desde orígenes de AWS a CloudFront es
         gratuita. Se cobran aparte las invalidaciones por encima del cupo gratuito, las funciones en el
-        borde y funciones como la protección de origen (Origin Shield). También hay planes de precio
+        borde y funciones como la protección de origen (Origin <a href="../servicio.html?id=shield">Shield</a>). También hay planes de precio
         fijo mensual. Las clases de precio limitan las ubicaciones más caras.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>HTTPS con certificados de ACM, que deben estar en <strong>us-east-1</strong>.</li>
-        <li>AWS Shield Standard incluido; integración con AWS WAF.</li>
+        <li>HTTPS con certificados de <a href="acm.html">ACM</a> <span class="sigla">(<em>AWS Certificate Manager</em>)</span>, que deben estar en <strong>us-east-1</strong>.</li>
+        <li><a href="../servicio.html?id=shield">AWS Shield</a> Standard incluido; integración con <a href="../servicio.html?id=waf">AWS WAF</a>.</li>
         <li>OAC para que el bucket de origen no sea público.</li>
         <li>Grupos de orígenes para conmutar ante fallos; red global y redundante.</li>
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
-      <p>CloudFront sirve la web de Kopi desde un bucket S3 privado con <strong>OAC</strong>. La
+      <p>CloudFront sirve la web de Kopi desde un bucket <a href="s3.html">S3</a> privado con <strong>OAC</strong>. La
         política del bucket solo admite esa distribución concreta. Una <strong>CloudFront
         Function</strong> reescribe a <code>/index.html</code> las rutas sin extensión, para que funcione
-        el enrutado de la SPA. <code>index.html</code> no se cachea, mientras que los JS y CSS, con hash en
+        el enrutado de la SPA. <code>index.html</code> no se cachea, mientras que los JS y CSS <span class="sigla">(<em>Cascading Style Sheets</em>: hojas de estilo de una web)</span>, con hash en
         el nombre, se cachean un año. Cada despliegue solo invalida <code>index.html</code>. El
         certificado tuvo que crearse en <strong>us-east-1</strong>, aunque el resto está en otra región.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Bucket privado accesible solo a través de CloudFront"</strong>: OAC con bucket policy.</li>
-        <li><strong>"Certificado para CloudFront"</strong>: ACM en <strong>us-east-1</strong>.</li>
+        <li><strong>"Certificado para CloudFront"</strong>: <a href="acm.html">ACM</a> en <strong>us-east-1</strong>.</li>
         <li><strong>"Contenido premium solo para suscriptores"</strong>: URLs firmadas (un fichero) o
           cookies firmadas (muchos ficheros).</li>
         <li><strong>"Lógica ligera en el borde"</strong>: CloudFront Functions. Si necesita red, más
           tiempo o eventos de origen: Lambda@Edge.</li>
-        <li><strong>"Bloquear países"</strong>: restricción geográfica (o WAF para reglas más finas).</li>
-        <li><strong>"UDP"</strong>, <strong>"IP estáticas"</strong> o <strong>"no HTTP"</strong>: Global Accelerator.</li>
+        <li><strong>"Bloquear países"</strong>: restricción geográfica (o <a href="../servicio.html?id=waf">WAF</a> para reglas más finas).</li>
+        <li><strong>"UDP"</strong>, <strong>"IP estáticas"</strong> o <strong>"no HTTP"</strong>: <a href="../servicio.html?id=global-accelerator">Global Accelerator</a>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

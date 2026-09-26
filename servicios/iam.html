@@ -69,27 +69,27 @@
       <p>AWS Identity and Access Management (IAM) es el sistema de permisos de AWS. Define
         <strong>quién</strong> (una persona, una aplicación, un servicio) puede hacer <strong>qué
         acción</strong> sobre <strong>qué recurso</strong>, y en qué condiciones. Cada llamada a la
-        API de AWS se autentica y se autoriza contra IAM. Es un servicio <strong>global</strong> (no
+        API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> de AWS se autentica y se autoriza contra IAM. Es un servicio <strong>global</strong> (no
         pertenece a una región) y no tiene coste.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Usuario raíz (root):</strong> la identidad con la que se crea la cuenta. Tiene
-          acceso total y no se puede limitar con políticas de IAM. Se protege con MFA, sin claves de
+          acceso total y no se puede limitar con políticas de IAM. Se protege con MFA <span class="sigla">(<em>Multi-Factor Authentication</em>: inicio de sesión con un segundo factor)</span>, sin claves de
           acceso, y solo se usa para las pocas tareas que lo exigen.</li>
         <li><strong>Usuarios y grupos:</strong> identidades de larga duración para personas o
           aplicaciones. Los grupos solo sirven para agrupar usuarios y asignarles políticas; no son
           identidades que puedan autenticarse.</li>
         <li><strong>Roles:</strong> identidades sin credenciales permanentes que se <em>asumen</em>
-          para obtener credenciales temporales (vía AWS STS). Son la forma recomendada de dar permisos a
-          servicios (EC2, Lambda), a otras cuentas y a usuarios federados.</li>
-        <li><strong>Políticas:</strong> documentos JSON con <code>Effect</code> (Allow/Deny),
+          para obtener credenciales temporales (vía <a href="../servicio.html?id=sts">AWS STS</a> <span class="sigla">(<em>Security Token Service</em>)</span>). Son la forma recomendada de dar permisos a
+          servicios (<a href="ec2.html">EC2</a>, <a href="lambda.html">Lambda</a>), a otras cuentas y a usuarios federados.</li>
+        <li><strong>Políticas:</strong> documentos JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span> con <code>Effect</code> (Allow/Deny),
           <code>Action</code>, <code>Resource</code> y, opcionalmente, <code>Condition</code>.
           Pueden ser gestionadas por AWS, gestionadas por el cliente o insertadas (<em>inline</em>).</li>
         <li><strong>Tipos de política:</strong> basadas en identidad (asociadas a usuario, grupo o
-          rol), basadas en recurso (en el propio recurso, como una bucket policy de S3, e incluyen
+          rol), basadas en recurso (en el propio recurso, como una bucket policy de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>, e incluyen
           <code>Principal</code>), límites de permisos (<em>permissions boundaries</em>), políticas de
-          sesión, y las políticas de AWS Organizations: SCP (máximo que pueden hacer las identidades de
+          sesión, y las políticas de <a href="../servicio.html?id=organizations">AWS Organizations</a>: SCP (máximo que pueden hacer las identidades de
           las cuentas) y RCP (máximo que se puede hacer sobre los recursos de las cuentas).</li>
         <li><strong>Lógica de evaluación:</strong> todo empieza denegado implícitamente; un
           <code>Allow</code> lo permite; un <strong><code>Deny</code> explícito gana siempre</strong>. Con
@@ -103,24 +103,24 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Dar a una instancia EC2 o a una función Lambda acceso a S3 o DynamoDB mediante un
+        <li>Dar a una instancia <a href="ec2.html">EC2</a> o a una función <a href="lambda.html">Lambda</a> acceso a <a href="s3.html">S3</a> o <a href="dynamodb.html">DynamoDB</a> mediante un
           <strong>rol</strong> (en EC2, a través de un perfil de instancia).</li>
         <li>Acceso entre cuentas: un rol en la cuenta B que la cuenta A puede asumir.</li>
-        <li>Federación: usuarios de un proveedor de identidad corporativo (SAML u OIDC) que asumen roles,
-          normalmente gestionado con IAM Identity Center.</li>
+        <li>Federación: usuarios de un proveedor de identidad corporativo (SAML u OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>) que asumen roles,
+          normalmente gestionado con <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
         <li>Delegar la creación de roles a desarrolladores sin riesgo de escalada, usando
           <strong>límites de permisos</strong>.</li>
-        <li>CI/CD sin claves permanentes: GitHub Actions u otros sistemas que asumen un rol con OIDC.</li>
+        <li>CI/CD <span class="sigla">(<em>Continuous Integration / Continuous Delivery</em>: integración y entrega continuas)</span> sin claves permanentes: GitHub Actions u otros sistemas que asumen un rol con OIDC.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para el inicio de sesión de los <strong>usuarios finales de tu aplicación</strong>: eso es
-          Amazon Cognito, no IAM.</li>
+          <a href="cognito.html">Amazon Cognito</a>, no IAM.</li>
         <li>Para gestionar el acceso de muchas personas a muchas cuentas: mejor
-          <strong>IAM Identity Center</strong> con un proveedor de identidad, en vez de crear usuarios
+          <strong><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></strong> con un proveedor de identidad, en vez de crear usuarios
           IAM en cada cuenta.</li>
-        <li>Para guardar secretos de aplicación: eso es AWS Secrets Manager o Parameter Store.</li>
+        <li>Para guardar secretos de aplicación: eso es <a href="secrets-manager.html">AWS Secrets Manager</a> o <a href="../servicio.html?id=systems-manager">Parameter Store</a>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -129,10 +129,10 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Permisos sobre la API de AWS dentro de una cuenta</td><td>IAM (usuarios, roles, políticas)</td></tr>
-            <tr><td>Acceso de la plantilla a varias cuentas con SSO</td><td>IAM Identity Center</td></tr>
-            <tr><td>Límite máximo para todas las cuentas de una organización</td><td>SCP y RCP de AWS Organizations</td></tr>
-            <tr><td>Registro e inicio de sesión de usuarios de una app</td><td>Amazon Cognito</td></tr>
-            <tr><td>Credenciales temporales</td><td>AWS STS (lo usan los roles por debajo)</td></tr>
+            <tr><td>Acceso de la plantilla a varias cuentas con SSO <span class="sigla">(<em>Single Sign-On</em>: un único inicio de sesión para varias aplicaciones)</span></td><td><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></td></tr>
+            <tr><td>Límite máximo para todas las cuentas de una organización</td><td>SCP y RCP de <a href="../servicio.html?id=organizations">AWS Organizations</a></td></tr>
+            <tr><td>Registro e inicio de sesión de usuarios de una app</td><td><a href="cognito.html">Amazon Cognito</a></td></tr>
+            <tr><td>Credenciales temporales</td><td><a href="../servicio.html?id=sts">AWS STS</a> (lo usan los roles por debajo)</td></tr>
           </tbody>
         </table>
       </div>
@@ -156,19 +156,19 @@
       </ul>
 
       <h2 id="kopi">Así lo uso en Kopi</h2>
-      <p>En Kopi, mi proyecto personal, todas las funciones Lambda comparten un <strong>rol de
+      <p>En Kopi, mi proyecto personal, todas las funciones <a href="lambda.html">Lambda</a> comparten un <strong>rol de
         ejecución</strong> limitado a las acciones que necesitan: lectura y escritura solo sobre las
-        tablas con el prefijo del proyecto, S3 solo sobre el bucket de medios, unas pocas acciones
-        administrativas de Cognito y escribir logs. El despliegue desde GitHub Actions usa otra
+        tablas con el prefijo del proyecto, <a href="s3.html">S3</a> solo sobre el bucket de medios, unas pocas acciones
+        administrativas de <a href="cognito.html">Cognito</a> y escribir logs. El despliegue desde GitHub Actions usa otra
         identidad, que solo puede actualizar código y configuración de funciones, subir el frontend e
-        invalidar la caché de CloudFront. Nunca crear ni borrar recursos. Una lección práctica:
+        invalidar la caché de <a href="cloudfront.html">CloudFront</a>. Nunca crear ni borrar recursos. Una lección práctica:
         algunas acciones, como <code>lambda:ListFunctions</code>, no admiten restringir el recurso y
         exigen <code>"Resource": "*"</code>.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Deny explícito"</strong> siempre gana, aunque otra política permita la acción.</li>
-        <li>Si una aplicación en EC2 o Lambda necesita acceso a AWS, la respuesta es
+        <li>Si una aplicación en <a href="ec2.html">EC2</a> o <a href="lambda.html">Lambda</a> necesita acceso a AWS, la respuesta es
           <strong>un rol</strong>, nunca claves de acceso en el código o en variables de entorno.</li>
         <li>Las <strong>SCP no conceden permisos</strong>: solo limitan. Tampoco afectan a la cuenta
           de administración de la organización.</li>
