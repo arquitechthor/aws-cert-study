@@ -142,10 +142,13 @@
       <h2 id="kopi">Así lo uso en Kopi</h2>
       <p>En Kopi, cada función <a href="lambda.html">Lambda</a> escribe automáticamente en su grupo de logs, y es lo primero que
         miro cuando algo falla en producción. El rol de ejecución lleva los permisos de
-        <code>logs:CreateLogGroup</code>, <code>CreateLogStream</code> y <code>PutLogEvents</code>. A esta
-        escala no hay alarmas ni paneles. El siguiente paso natural sería una alarma sobre las métricas
-        <code>Errors</code> y <code>Throttles</code> de Lambda y fijar una retención de logs, que por
-        defecto no caducan nunca.</p>
+        <code>logs:CreateLogGroup</code>, <code>CreateLogStream</code> y <code>PutLogEvents</code>. Todos los
+        grupos tienen una <strong>retención de 30 días</strong>: por defecto los logs no caducan nunca, y un mes
+        basta para depurar sin acumular indefinidamente datos con identificadores de usuario. Como la
+        retención es por grupo y Lambda crea el suyo sin retención en la primera invocación, al desplegar
+        una función nueva creo antes su grupo y le fijo los 30 días. A esta escala no hay alarmas ni
+        paneles; el siguiente paso natural sería una alarma sobre las métricas <code>Errors</code> y
+        <code>Throttles</code> de Lambda.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
