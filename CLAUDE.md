@@ -83,6 +83,15 @@ horizontal scroll).
 - **Spanish** for all user-facing text. Service names stay in English as AWS uses them.
   Categories are shown with the official AWS Spanish name plus the English name, e.g.
   "Computación (*Compute*)".
+- **Easy to understand first.** Expand every acronym the first time it appears on a page
+  (and in each question's statement or explanation that uses it): the English expansion plus a
+  short Spanish gloss, e.g. "RPO (*Recovery Point Objective*: cuántos datos puedes perder)",
+  "OAC (*Origin Access Control*)", "SPA (*Single-Page Application*)".
+- **Link every other AWS service mentioned** in a service page to its page on this site, even
+  if it is not published yet: from `servicios/<id>.html` use `<id>.html` when that service is
+  `publicado` and `../servicio.html?id=<id>` ("Próximamente") when it is `pendiente`. Link the
+  first mention per section, not every occurrence. When a service gets published, update the
+  links that point to its "Próximamente" page. Question JSON is plain text (no links).
 - **No copying AWS documentation.** Summarize in your own words and link the source. Anything
   literal must be short, in `<blockquote>` with `<cite>` and a link.
 - **Never real exam questions** (they are under NDA); only original ones.
