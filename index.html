@@ -97,13 +97,21 @@
           <select class="select" id="f-estado">
             <option value="">Todos</option>
             <option value="publicado">Solo publicados</option>
+            <option value="finalizado">Solo finalizados</option>
             <option value="pendiente">Solo próximamente</option>
           </select>
         </label>
       </div>
       <div class="field">
-        <span class="field-label" id="f-cert-label">Certificación (puedes elegir varias)</span>
+        <div class="field-head">
+          <span class="field-label" id="f-cert-label">Certificación (puedes elegir varias)</span>
+          <div class="segmented" id="f-modo" role="radiogroup" aria-label="Cómo combinar varias certificaciones">
+            <button type="button" role="radio" aria-checked="true" data-modo="union">Unión</button>
+            <button type="button" role="radio" aria-checked="false" data-modo="interseccion">Intersección</button>
+          </div>
+        </div>
         <div class="chips" id="f-cert" role="group" aria-labelledby="f-cert-label"></div>
+        <p class="field-hint" id="f-modo-ayuda" aria-live="polite"></p>
       </div>
       <div class="filters-foot">
         <p class="result-count" id="resultados" aria-live="polite"></p>

@@ -20,8 +20,12 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 `kopi-web`, whose palette and base components were copied into `styles.css`).
 
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
-  filters (text, category, status, certifications). Filter state lives in the URL
-  (`?q=&cat=&estado=&cert=A,B`).
+  filters (text, category, status, certifications with union/intersection mode). Filter state
+  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=interseccion`).
+- Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store correct
+  answers per service in `localStorage` (`apuntes-aws.progreso`). `quiz.js` writes it; a
+  published service whose questions are all answered correctly shows as "Finalizado" in the
+  catalog. It is derived in the browser, never stored in `servicios.json`.
 - `servicio.html` + `assets/servicio.js`: generic "Próximamente disponible" page
   (`?id=<id>`), used for every service with `estado: "pendiente"`. It redirects to
   `servicios/<id>.html` once the service is `publicado`.
@@ -60,7 +64,8 @@ horizontal scroll).
    async payload is now 1 MB, S3 max object ~50 TB, ACM certs 198 days). Check whether the
    service is discontinued or closed to new customers; if so, add the warning callout.
 2. Copy `plantillas/servicio.html` to `servicios/<id>.html` and fill in every `[[…]]`; remove
-   the template comment and the `noindex` meta. If the service has no `"icono": true`, point the
+   the template comment and the `noindex` meta. The "Documentación oficial" link uses the
+   service's `documentacion` URL from `servicios.json`. If the service has no `"icono": true`, point the
    header icon at its category icon instead. Include the "Así lo uso en Kopi" section only
    if Kopi uses the service (see `kopi-media-admin/documentation/servicios-aws/`), with no
    sensitive identifiers (account ID, bucket names, distribution IDs, ARNs).

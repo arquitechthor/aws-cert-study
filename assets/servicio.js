@@ -3,7 +3,7 @@
  * catálogo del servicio mientras no tiene página propia; si ya está publicado, redirige a ella.
  */
 (function () {
-  const { cargar, esc, urlServicio, iconoServicio, categoriaHtml, urlCatalogo } = window.AwsDatos;
+  const { cargar, esc, urlServicio, iconoServicio, categoriaHtml, urlCatalogo, urlDocumentacion } = window.AwsDatos;
   const cont = document.getElementById('servicio');
   const id = new URLSearchParams(location.search).get('id') || '';
 
@@ -45,6 +45,11 @@
           <span class="chips">${certs.map((c) =>
             `<a class="chip chip-cert" href="${esc(urlCatalogo({ cert: c.codigo }))}" title="${esc(c.nombre)}">${esc(c.codigo)}</a>`).join('')}</span>
         </div>
+        <div class="meta-row">
+          <strong>Documentación oficial:</strong>
+          <a href="${esc(urlDocumentacion(s))}" target="_blank" rel="noopener">${s.documentacion
+            ? `Documentación de ${esc(s.nombre)} ↗` : 'Buscar en la documentación de AWS ↗'}</a>
+        </div>
         ${s.incluye && s.incluye.length ? `<div class="meta-row"><strong>Incluye:</strong> ${s.incluye.map(esc).join(', ')}</div>` : ''}
       </div>
 
@@ -53,7 +58,8 @@
         <h2>Próximamente disponible</h2>
         <p>Los apuntes y las preguntas de práctica de ${esc(s.nombre)} todavía se están preparando.
           Mientras tanto, puedes consultar la documentación oficial de AWS.</p>
-        <a class="btn btn-secondary" href="https://docs.aws.amazon.com/search/doc-search.html?searchQuery=${encodeURIComponent(s.nombre)}" target="_blank" rel="noopener">Buscar en la documentación de AWS ↗</a>
+        <a class="btn btn-secondary" href="${esc(urlDocumentacion(s))}" target="_blank" rel="noopener">${s.documentacion
+          ? 'Ir a la documentación oficial ↗' : 'Buscar en la documentación de AWS ↗'}</a>
       </div>`;
   }).catch((err) => {
     console.error(err);

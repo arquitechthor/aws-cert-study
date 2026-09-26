@@ -71,6 +71,38 @@
     return `${iconoCategoria(categoria)}${esc(categoria.nombre)} <span class="cat-en">(${esc(categoria.nombreEn)})</span>`;
   }
 
+  /** Documentación oficial del servicio; si no hay (servicio retirado), búsqueda en la de AWS. */
+  function urlDocumentacion(servicio) {
+    return servicio.documentacion
+      || `https://docs.aws.amazon.com/search/doc-search.html?searchQuery=${encodeURIComponent(servicio.nombre)}`;
+  }
+
+  /**
+   * Progreso de estudio, solo en el localStorage del navegador (ver aviso legal, privacidad):
+   * { "<idServicio>": { "aciertos": ["<idPregunta>", …], "total": 12, "finalizado": "2026-09-26" } }.
+   * Un servicio está finalizado cuando se han acertado todas sus preguntas al menos una vez.
+   */
+  const CLAVE_PROGRESO = 'apuntes-aws.progreso';
+
+  function leerProgreso() {
+    try {
+      const datos = JSON.parse(localStorage.getItem(CLAVE_PROGRESO) || '{}');
+      return datos && typeof datos === 'object' ? datos : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function guardarProgreso(id, entrada) {
+    const todo = leerProgreso();
+    if (entrada) todo[id] = entrada; else delete todo[id];
+    try { localStorage.setItem(CLAVE_PROGRESO, JSON.stringify(todo)); } catch { /* sin almacenamiento: no se guarda */ }
+  }
+
+  function estaFinalizado(id, progreso = leerProgreso()) {
+    return Boolean(progreso[id] && progreso[id].finalizado);
+  }
+
   function urlCatalogo(params) {
     const q = new URLSearchParams(params).toString();
     return url(`index.html${q ? `?${q}` : ''}#catalogo`);
@@ -81,5 +113,6 @@
     return `${d}/${m}/${a}`;
   }
 
-  window.AwsDatos = { url, json, cargar, esc, urlServicio, iconoServicio, iconoCategoria, categoriaHtml, urlCatalogo, formatoFecha };
+  window.AwsDatos = { url, json, cargar, esc, urlServicio, iconoServicio, iconoCategoria, categoriaHtml, urlCatalogo, urlDocumentacion,
+    leerProgreso, guardarProgreso, estaFinalizado, formatoFecha };
 })();

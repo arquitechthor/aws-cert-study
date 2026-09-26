@@ -213,6 +213,7 @@ button.chip[aria-pressed="true"] {
 }
 .badge-pendiente { background: rgba(148, 163, 184, 0.12); color: var(--text-faint); }
 .badge-publicado { background: rgba(74, 222, 128, 0.12); color: var(--green); }
+.badge-finalizado { background: rgba(34, 211, 238, 0.14); color: var(--cyan-strong); }
 .badge-vigente { background: rgba(74, 222, 128, 0.12); color: var(--green); }
 .badge-retirandose { background: rgba(251, 191, 36, 0.14); color: var(--amber); }
 .badge-guia-pendiente { background: rgba(168, 85, 247, 0.16); color: var(--violet-strong); }
@@ -245,6 +246,16 @@ button.chip[aria-pressed="true"] {
 .select-icono[hidden] { display: none; }
 .select.select-con-icono { padding-left: 42px; }
 .input:focus, .select:focus { outline: none; border-color: var(--cyan); }
+.field-head { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap; }
+.field-hint { font-size: 13px; color: var(--text-faint); margin: 0; }
+.segmented { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 999px; padding: 2px; background: var(--bg-alt); }
+.segmented button {
+  font: inherit; font-size: 12.5px; font-weight: 600; line-height: 1; cursor: pointer;
+  padding: 6px 12px; border: 0; border-radius: 999px; background: transparent; color: var(--text-muted);
+}
+.segmented button:hover { color: var(--text); }
+.segmented button[aria-checked="true"] { background: rgba(34, 211, 238, 0.14); color: var(--cyan-strong); }
+.segmented button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }
 .filters-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .result-count { font-size: 14px; color: var(--text-muted); margin: 0; }
 
@@ -335,6 +346,16 @@ button.chip[aria-pressed="true"] {
 .quiz-feedback .ok { color: var(--green); font-weight: 700; }
 .quiz-feedback .ko { color: var(--magenta); font-weight: 700; }
 .quiz-feedback ul { margin: 0; padding-left: 1.2em; font-size: 13.5px; }
+.quiz-progreso {
+  display: grid; gap: 10px; justify-items: start; padding: 14px 16px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.quiz-progreso-texto { margin: 0; font-size: 14.5px; color: var(--text-muted); }
+.quiz-progreso-texto.ok { color: var(--cyan-strong); font-weight: 700; }
+.quiz-barra { width: 100%; height: 6px; border-radius: 999px; background: var(--bg-alt); overflow: hidden; }
+.quiz-barra span { display: block; height: 100%; background: var(--gradient-brand); transition: width .3s ease; }
+.chip-ok { display: none; color: var(--green); border-color: rgba(74, 222, 128, 0.45); }
+.quiz-question.is-acertada .chip-ok { display: inline-flex; }
 .quiz-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
 
 /* ── Footer ──────────────────────────────────────────────── */

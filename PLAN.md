@@ -39,6 +39,8 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Preguntas | Solo preguntas **originales** tipo examen. Nunca preguntas reales de examen, que están bajo NDA. |
 | Enlaces a Kopi | En la navegación y el pie: "Kopi" → `https://kopitools.link` y "Sobre mí" → `https://kopitools.link/#sobre-mi`. Más adelante "Sobre mí" pasará a una web aparte, y `kopi-web` enlazará a este sitio. |
 | Flujo git | Directo a `main`, sin pull requests (igual que el resto de proyectos kopi). |
+| Progreso del usuario | Sin cuentas ni backend: el progreso vive en `localStorage` (clave `apuntes-aws.progreso`, un objeto por servicio con las preguntas acertadas, el total y la fecha de finalización). Un servicio publicado pasa a **Finalizado** cuando se han acertado todas sus preguntas al menos una vez; si luego se añaden preguntas, vuelve a estar en curso. "Finalizado" no es un `estado` de `servicios.json`: se calcula en el navegador. |
+| Filtro de certificaciones | Con varias marcadas, modo **Unión** (al menos una, por defecto) o **Intersección** (todas), en la URL como `modo=interseccion`. |
 | Servicios pendientes | Sin archivos vacíos: un servicio con `estado: "pendiente"` enlaza a la página genérica `servicio.html?id=<id>` ("Próximamente disponible"). Al publicarlo se crea `servicios/<id>.html`. |
 
 ---
@@ -92,7 +94,10 @@ aws-cert-study/
 }
 ```
 
-`nombreCompleto`, `categoriasAdicionales`, `incluye` y `alias` son opcionales. `icono: true`
+`nombreCompleto`, `categoriasAdicionales`, `incluye` y `alias` son opcionales.
+`documentacion` es la URL de la documentación oficial principal del servicio (comprobada con una
+petición HTTP 200 el 2026-09-26); solo falta en servicios retirados sin documentación publicada
+(`elastic-transcoder`, `iot-events`), que enlazan a la búsqueda de docs.aws.amazon.com. `icono: true`
 indica que existe `assets/iconos/servicios/<id>.svg`; si falta, se usa el icono de la categoría.
 Todas las categorías tienen icono en `assets/iconos/categorias/<id>.svg`. `resumen` se
 redacta al publicar el servicio en la Fase 2. `data/fuentes/<código>.txt` guarda la lista
@@ -515,3 +520,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-25 | Fase 1 completada: portada con filtros, página "Próximamente", plantilla + quiz, aviso legal, licencia CC BY-SA 4.0, `CLAUDE.md`. Fase 4 revisada: tablero mínimo 6×6 y parejas por categoría con varias cartas posibles. |
 | 2026-09-25 | Fase 2 iniciada: publicados los 12 servicios que usa Kopi, con sección "Así lo uso en Kopi" y 62 preguntas originales. MCP `aws-knowledge` usado por JSON-RPC desde la sesión (funciona sin autenticación); datos contrastados con la documentación actual (p. ej. carga asíncrona de Lambda de 1 MB, objetos de S3 de hasta ~50 TB, certificados de ACM de 198 días). |
 | 2026-09-26 | Iconos oficiales de AWS en el catálogo: icono de servicio y de categoría en las tarjetas, icono de la categoría elegida en el filtro y en la cabecera de las páginas de servicio (y en la plantilla). Tareas 4.1–4.3 adelantadas; decisión de iconos, aviso legal y pie actualizados. |
+| 2026-09-26 | Enlace a la documentación oficial en la cabecera de cada servicio (campo `documentacion`, 153 de 155 URLs comprobadas), estado "Finalizado" por progreso local en `localStorage` (barra de progreso en el quiz, insignia en la tarjeta, filtro "Solo finalizados") y modo Unión/Intersección en el filtro de certificaciones. |

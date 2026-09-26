@@ -1,9 +1,11 @@
 /**
  * Portada: tarjetas de certificación y catálogo de servicios con filtros. El estado de los
- * filtros vive en la URL (?q=&cat=&estado=&cert=A,B) para poder compartir vistas filtradas.
+ * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=interseccion) para poder compartir
+ * vistas filtradas. "finalizado" no es un estado del catálogo sino del progreso local del
+ * usuario (localStorage), que se superpone a "publicado".
  */
 (function () {
-  const { cargar, esc, url, urlServicio, iconoServicio, categoriaHtml, formatoFecha } = window.AwsDatos;
+  const { cargar, esc, url, urlServicio, iconoServicio, categoriaHtml, formatoFecha, leerProgreso, estaFinalizado } = window.AwsDatos;
 
   const $ = (id) => document.getElementById(id);
   const el = {
@@ -13,6 +15,8 @@
     catIcono: $('f-cat-icono'),
     estado: $('f-estado'),
     cert: $('f-cert'),
+    modo: $('f-modo'),
+    modoAyuda: $('f-modo-ayuda'),
     limpiar: $('f-limpiar'),
     resultados: $('resultados'),
     grid: $('service-grid'),
@@ -24,8 +28,21 @@
     'guia-pendiente': 'Guía pendiente',
   };
 
-  const estado = { q: '', cat: '', estado: '', certs: new Set() };
+  const MODOS = {
+    union: 'Unión: servicios que entran en al menos una de las certificaciones marcadas.',
+    interseccion: 'Intersección: servicios que entran en todas las certificaciones marcadas.',
+  };
+  const ESTADOS = ['publicado', 'finalizado', 'pendiente'];
+
+  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'union' };
   let datos = null;
+  let progreso = {};
+
+  /** Estado que ve el usuario: "finalizado" si superó todas las preguntas de un servicio publicado. */
+  function estadoDe(s) {
+    if (s.estado === 'publicado' && estaFinalizado(s.id, progreso)) return 'finalizado';
+    return s.estado;
+  }
 
   /** Minúsculas y sin tildes, para buscar "computacion" y encontrar "Computación". */
   function normalizar(texto) {
@@ -48,6 +65,7 @@
     estado.cat = p.get('cat') || '';
     estado.estado = p.get('estado') || '';
     estado.certs = new Set((p.get('cert') || '').split(',').filter(Boolean));
+    estado.modo = p.get('modo') === 'interseccion' ? 'interseccion' : 'union';
   }
 
   function escribirUrl() {
@@ -56,6 +74,7 @@
     if (estado.cat) p.set('cat', estado.cat);
     if (estado.estado) p.set('estado', estado.estado);
     if (estado.certs.size) p.set('cert', [...estado.certs].join(','));
+    if (estado.modo !== 'union') p.set('modo', estado.modo);
     const q = p.toString();
     history.replaceState(null, '', `${location.pathname}${q ? `?${q}` : ''}${location.hash}`);
   }
@@ -117,8 +136,15 @@
       sincronizarControles();
       aplicar();
     });
+    el.modo.addEventListener('click', (ev) => {
+      const btn = ev.target.closest('button[data-modo]');
+      if (!btn) return;
+      estado.modo = btn.dataset.modo;
+      sincronizarControles();
+      aplicar();
+    });
     el.limpiar.addEventListener('click', () => {
-      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set() });
+      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'union' });
       sincronizarControles();
       aplicar();
     });
@@ -131,10 +157,14 @@
     el.catIcono.hidden = !el.cat.value;
     if (el.cat.value) el.catIcono.src = url(`assets/iconos/categorias/${el.cat.value}.svg`);
     el.cat.classList.toggle('select-con-icono', Boolean(el.cat.value));
-    el.estado.value = ['publicado', 'pendiente'].includes(estado.estado) ? estado.estado : '';
+    el.estado.value = ESTADOS.includes(estado.estado) ? estado.estado : '';
     for (const chip of el.cert.querySelectorAll('button[data-cert]')) {
       chip.setAttribute('aria-pressed', String(estado.certs.has(chip.dataset.cert)));
     }
+    for (const btn of el.modo.querySelectorAll('button[data-modo]')) {
+      btn.setAttribute('aria-checked', String(btn.dataset.modo === estado.modo));
+    }
+    el.modoAyuda.textContent = MODOS[estado.modo];
   }
 
   // ── Filtrado y render ───────────────────────────────────────
@@ -143,20 +173,33 @@
     return datos.servicios.filter((s) => {
       if (q && !textoBusqueda(s).includes(q)) return false;
       if (estado.cat && s.categoria !== estado.cat && !(s.categoriasAdicionales || []).includes(estado.cat)) return false;
-      if (estado.estado && s.estado !== estado.estado) return false;
-      if (estado.certs.size && !s.certificaciones.some((c) => estado.certs.has(c))) return false;
+      if (estado.estado === 'finalizado' && estadoDe(s) !== 'finalizado') return false;
+      if (estado.estado && estado.estado !== 'finalizado' && s.estado !== estado.estado) return false;
+      if (estado.certs.size) {
+        const certs = [...estado.certs];
+        const coincide = estado.modo === 'interseccion'
+          ? certs.every((c) => s.certificaciones.includes(c))
+          : certs.some((c) => s.certificaciones.includes(c));
+        if (!coincide) return false;
+      }
       return true;
     }).sort((a, b) => claveOrden(a.nombre).localeCompare(claveOrden(b.nombre), 'es'));
   }
 
+  const BADGES = {
+    finalizado: ['finalizado', '✔ Finalizado'],
+    publicado: ['publicado', 'Disponible'],
+    pendiente: ['pendiente', 'Próximamente'],
+  };
+
   function tarjeta(s) {
     const cat = datos.categoriaPorId.get(s.categoria);
-    const publicado = s.estado === 'publicado';
+    const [clase, texto] = BADGES[estadoDe(s)] || BADGES.pendiente;
     return `
       <a class="service-card" href="${esc(urlServicio(s))}">
         <div class="service-card-head">
           <div class="service-card-title">${iconoServicio(s, cat)}<h3>${esc(s.nombre)}</h3></div>
-          <span class="badge badge-${publicado ? 'publicado' : 'pendiente'}">${publicado ? 'Disponible' : 'Próximamente'}</span>
+          <span class="badge badge-${clase}">${texto}</span>
         </div>
         <p class="service-cat cat-link">${categoriaHtml(cat)}</p>
         ${s.resumen ? `<p class="service-resumen">${esc(s.resumen)}</p>` : ''}
@@ -169,7 +212,9 @@
     const lista = filtrar();
     const total = datos.servicios.length;
     const publicados = lista.filter((s) => s.estado === 'publicado').length;
-    el.resultados.textContent = `${lista.length} de ${total} servicios · ${publicados} con contenido`;
+    const finalizados = lista.filter((s) => estadoDe(s) === 'finalizado').length;
+    el.resultados.textContent = `${lista.length} de ${total} servicios · ${publicados} con contenido`
+      + (finalizados ? ` · ${finalizados} ${finalizados === 1 ? 'finalizado' : 'finalizados'}` : '');
 
     if (lista.length) {
       el.grid.innerHTML = lista.map(tarjeta).join('');
@@ -184,11 +229,18 @@
   // ── Arranque ────────────────────────────────────────────────
   cargar().then((d) => {
     datos = d;
+    progreso = leerProgreso();
     leerUrl();
     renderCertificaciones();
     renderControles();
     sincronizarControles();
     aplicar();
+    // Al volver con "atrás" desde un servicio recién finalizado, la página puede venir de la caché.
+    window.addEventListener('pageshow', (ev) => {
+      if (!ev.persisted) return;
+      progreso = leerProgreso();
+      aplicar();
+    });
   }).catch((err) => {
     console.error(err);
     const msg = '<p class="empty-state">No se pudo cargar el catálogo. Si abriste el archivo directamente, sírvelo con <code>npx serve .</code> o <code>python -m http.server</code>.</p>';

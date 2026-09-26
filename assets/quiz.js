@@ -4,18 +4,56 @@
  *   - tipo "unica": radios, una respuesta correcta.
  *   - tipo "multiple": checkboxes, hay que marcar exactamente todas las correctas.
  * "correctas" son índices (desde 0) de "opciones". Formato completo en PLAN.md.
+ *
+ * Cada acierto se guarda en el progreso local (AwsDatos.guardarProgreso, en localStorage).
+ * Cuando todas las preguntas se han acertado al menos una vez, el servicio queda "finalizado"
+ * y así aparece en su tarjeta del catálogo.
  */
 (function () {
-  const { json, esc } = window.AwsDatos;
+  const { json, esc, leerProgreso, guardarProgreso, formatoFecha } = window.AwsDatos;
   const LETRAS = 'ABCDEFGH';
 
-  function pregunta(p, i, idQuiz) {
+  function hoy() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  /**
+   * Progreso del quiz contrastado con las preguntas actuales: si se añaden preguntas nuevas, un
+   * servicio finalizado vuelve a estar en curso hasta que se acierten también esas.
+   */
+  function progresoActual(idQuiz, preguntas) {
+    const guardado = leerProgreso()[idQuiz] || {};
+    const ids = new Set(preguntas.map((p) => p.id));
+    const aciertos = [...new Set(guardado.aciertos || [])].filter((id) => ids.has(id));
+    const completo = aciertos.length === preguntas.length;
+    return { aciertos, total: preguntas.length, finalizado: completo ? (guardado.finalizado || hoy()) : null };
+  }
+
+  function guardar(idQuiz, prog) {
+    guardarProgreso(idQuiz, prog.aciertos.length ? prog : null);
+  }
+
+  function cabecera(prog) {
+    const pct = Math.round((prog.aciertos.length / prog.total) * 100);
+    const texto = prog.finalizado
+      ? `✔ Tema finalizado el ${esc(formatoFecha(prog.finalizado))}: has acertado las ${prog.total} preguntas.`
+      : `Acertadas ${prog.aciertos.length} de ${prog.total}. Acierta todas para marcar el tema como finalizado.`;
+    return `
+      <p class="quiz-progreso-texto${prog.finalizado ? ' ok' : ''}">${texto}</p>
+      <div class="quiz-barra" role="progressbar" aria-label="Preguntas acertadas" aria-valuemin="0"
+        aria-valuemax="${prog.total}" aria-valuenow="${prog.aciertos.length}"><span style="width:${pct}%"></span></div>
+      ${prog.aciertos.length ? '<button class="btn btn-secondary btn-sm" type="button" data-accion="reiniciar-progreso">Reiniciar progreso</button>' : ''}`;
+  }
+
+  function pregunta(p, i, idQuiz, acertada) {
     const multiple = p.tipo === 'multiple';
     const nombre = `${idQuiz}-${p.id}`;
     const tags = [...(p.certificaciones || []).map((c) => `<span class="chip chip-cert">${esc(c)}</span>`),
-      p.dominio ? `<span class="chip">${esc(p.dominio)}</span>` : ''].join('');
+      p.dominio ? `<span class="chip">${esc(p.dominio)}</span>` : '',
+      '<span class="chip chip-ok">✔ Ya acertada</span>'].join('');
     return `
-      <fieldset class="quiz-question" data-id="${esc(p.id)}">
+      <fieldset class="quiz-question${acertada ? ' is-acertada' : ''}" data-id="${esc(p.id)}">
         <legend>
           <span class="quiz-num">Pregunta ${i + 1}</span>
           <p class="quiz-stem">${esc(p.enunciado)}</p>
@@ -63,6 +101,7 @@
     const btn = fs.querySelector('[data-accion]');
     btn.dataset.accion = 'reintentar';
     btn.textContent = 'Reintentar';
+    return acierto;
   }
 
   function reintentar(fs) {
@@ -82,13 +121,33 @@
       const preguntas = await json(`data/preguntas/${encodeURIComponent(id)}.json`);
       if (!preguntas.length) throw new Error('sin preguntas');
       const porId = new Map(preguntas.map((p) => [p.id, p]));
-      cont.innerHTML = preguntas.map((p, i) => pregunta(p, i, id)).join('');
+      let prog = progresoActual(id, preguntas);
+      guardar(id, prog);
+      const acertadas = new Set(prog.aciertos);
+      cont.innerHTML = `<div class="quiz-progreso" aria-live="polite">${cabecera(prog)}</div>`
+        + preguntas.map((p, i) => pregunta(p, i, id, acertadas.has(p.id))).join('');
+      const zonaProgreso = cont.querySelector('.quiz-progreso');
+
       cont.addEventListener('click', (ev) => {
         const btn = ev.target.closest('button[data-accion]');
         if (!btn) return;
+        if (btn.dataset.accion === 'reiniciar-progreso') {
+          prog = { aciertos: [], total: preguntas.length, finalizado: null };
+          guardar(id, prog);
+          cont.querySelectorAll('.quiz-question.is-acertada').forEach((fs) => fs.classList.remove('is-acertada'));
+          zonaProgreso.innerHTML = cabecera(prog);
+          return;
+        }
         const fs = btn.closest('.quiz-question');
         const p = porId.get(fs.dataset.id);
-        if (btn.dataset.accion === 'comprobar') comprobar(fs, p); else reintentar(fs);
+        if (btn.dataset.accion !== 'comprobar') { reintentar(fs); return; }
+        if (comprobar(fs, p) && !prog.aciertos.includes(p.id)) {
+          prog.aciertos.push(p.id);
+          if (prog.aciertos.length === prog.total) prog.finalizado = hoy();
+          guardar(id, prog);
+          fs.classList.add('is-acertada');
+          zonaProgreso.innerHTML = cabecera(prog);
+        }
       });
     } catch (err) {
       console.error(err);
