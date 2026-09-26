@@ -91,9 +91,11 @@ horizontal scroll).
   Categories are shown with the official AWS Spanish name plus the English name, e.g.
   "Computación (*Compute*)".
 - **Easy to understand first.** Expand every acronym the first time it appears on a page
-  (and in each question's statement or explanation that uses it): the English expansion plus a
-  short Spanish gloss, e.g. "RPO (*Recovery Point Objective*: cuántos datos puedes perder)",
-  "OAC (*Origin Access Control*)", "SPA (*Single-Page Application*)".
+  (and in each question's statement or explanation that uses it, **unless the service page
+  already explains that acronym** — then the question uses it bare): the English expansion plus
+  a short Spanish gloss, e.g. "RPO (*Recovery Point Objective*: cuántos datos puedes perder)",
+  "OAC (*Origin Access Control*)", "SPA (*Single-Page Application*)". This question rule applies
+  to new questions; existing ones keep their expansions.
 - **Link every other AWS service mentioned** in a service page to its page on this site, even
   if it is not published yet: from `servicios/<id>.html` use `<id>.html` when that service is
   `publicado` and `../servicio.html?id=<id>` ("Próximamente") when it is `pendiente`. Link the
