@@ -15,7 +15,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   CloudWatch). La tarea 0.9 sigue programada para el 27/10/2026.
 - **Próximo paso:** seguir la cola "Prioridad 0" por el primer servicio sin marcar
   (`organizations`, `vpc`, `ec2`…), siguiendo el flujo de `CLAUDE.md`.
-- **Última actualización:** 2026-09-25
+- **Última actualización:** 2026-09-26
 
 ---
 
@@ -34,8 +34,8 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Alias y fusiones | Las guías nombran el mismo servicio de formas distintas ("Amazon S3" / "Amazon Simple Storage Service (Amazon S3)"), así que se unifican en un id. Las funcionalidades que las guías listan aparte se fusionan en su servicio (`incluye`): Aurora Serverless → Aurora, CloudWatch Logs → CloudWatch, ECS Anywhere → ECS, EKS Anywhere/Distro → EKS, SageMaker JumpStart → SageMaker AI. "AWS VPN" (SAP) cubre Site-to-Site VPN y Client VPN. "Amazon Kinesis" (SAA) → Kinesis Data Streams. Amazon QuickSight aparece como Amazon Quick (nombre actual) con alias de búsqueda. |
 | Licencia | **CC BY-SA 4.0** para todo el repo (sustituye a la GPL-3.0 inicial). |
 | Derechos de autor | Nada de copiar documentación de AWS: se resume con palabras propias y se enlaza la fuente. Si algo debe ser literal (una definición, un límite), va entre comillas o en `<blockquote>` con cita y enlace a la fuente. |
-| Iconos de AWS | Se usan los **AWS Architecture Icons oficiales** (paquete del 31/07/2025 en `data/asset-package/`) **solo en el juego de memoria** (Fase 4). AWS los permite para diagramas y materiales como presentaciones y pósteres, y sus *Trademark Guidelines* aceptan el uso limitado con fines educativos y sin ánimo de lucro, pero un juego no está citado de forma explícita: es una zona gris que se asume por ser un sitio personal, educativo y no comercial. Condiciones: iconos **sin modificar** (ni recolorear ni recortar), nada que sugiera patrocinio o afiliación con AWS, aviso de marcas en el juego y en el pie, y quedan **fuera de la licencia CC BY-SA** (se indica en `LICENSE`/`README`). Si AWS lo pidiera, se retiran y el juego pasa a usar solo nombres. |
-| Paquete de iconos en git | `data/asset-package/` (29 MB, con basura de macOS) está en `.gitignore`. Solo se versionan los SVG de 64 px de los servicios del catálogo, copiados a `assets/iconos/<id>.svg`. |
+| Iconos de AWS | Se usan los **AWS Architecture Icons oficiales** (paquete del 31/07/2025 en `data/asset-package/`) **junto al nombre de cada servicio y categoría** (tarjetas del catálogo, filtro de categoría y cabecera de las páginas de servicio; ampliado el 2026-09-26) y en el juego de memoria (Fase 4). Un servicio sin icono oficial muestra el de su categoría. AWS los permite para diagramas y materiales como presentaciones y pósteres, y sus *Trademark Guidelines* aceptan el uso limitado con fines educativos y sin ánimo de lucro; ni el catálogo ni un juego están citados de forma explícita: es una zona gris que se asume por ser un sitio personal, educativo y no comercial. Condiciones: iconos **sin modificar** (ni recolorear ni recortar), nada que sugiera patrocinio o afiliación con AWS, aviso de marcas en el pie y en el aviso legal, y quedan **fuera de la licencia CC BY-SA** (se indica en `README` y en el aviso legal). Si AWS lo pidiera, se retiran y se muestran solo los nombres. |
+| Paquete de iconos en git | `data/asset-package/` (29 MB, con basura de macOS) está en `.gitignore`. Solo se versionan los SVG de 64 px de los servicios y categorías del catálogo, copiados a `assets/iconos/servicios/<id>.svg` y `assets/iconos/categorias/<id>.svg`. |
 | Preguntas | Solo preguntas **originales** tipo examen. Nunca preguntas reales de examen, que están bajo NDA. |
 | Enlaces a Kopi | En la navegación y el pie: "Kopi" → `https://kopitools.link` y "Sobre mí" → `https://kopitools.link/#sobre-mi`. Más adelante "Sobre mí" pasará a una web aparte, y `kopi-web` enlazará a este sitio. |
 | Flujo git | Directo a `main`, sin pull requests (igual que el resto de proyectos kopi). |
@@ -62,7 +62,8 @@ aws-cert-study/
 │   ├── servicio.js           # página genérica "Próximamente"
 │   ├── quiz.js               # renderiza y corrige preguntas
 │   ├── memoria.js            # juego de memoria (Fase 4)
-│   ├── iconos/<id>.svg       # iconos oficiales de AWS usados por el juego
+│   ├── iconos/servicios/<id>.svg   # iconos oficiales de AWS (servicios)
+│   ├── iconos/categorias/<id>.svg  # iconos oficiales de AWS (categorías)
 │   └── nav.js                # menú móvil
 ├── plantillas/servicio.html  # plantilla base para cada servicio
 ├── styles.css
@@ -83,6 +84,7 @@ aws-cert-study/
   "nombre": "Amazon ECS",
   "nombreCompleto": "Amazon Elastic Container Service (Amazon ECS)",
   "categoria": "contenedores",
+  "icono": true,
   "certificaciones": ["SAA-C03", "SAP-C02", "AIF-C01"],
   "incluye": ["Amazon ECS Anywhere"],
   "estado": "pendiente",
@@ -90,7 +92,9 @@ aws-cert-study/
 }
 ```
 
-`nombreCompleto`, `categoriasAdicionales`, `incluye` y `alias` son opcionales. `resumen` se
+`nombreCompleto`, `categoriasAdicionales`, `incluye` y `alias` son opcionales. `icono: true`
+indica que existe `assets/iconos/servicios/<id>.svg`; si falta, se usa el icono de la categoría.
+Todas las categorías tienen icono en `assets/iconos/categorias/<id>.svg`. `resumen` se
 redacta al publicar el servicio en la Fase 2. `data/fuentes/<código>.txt` guarda la lista
 original de cada guía, con su URL y fecha de extracción, para poder comparar cuando cambie.
 
@@ -473,13 +477,17 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 `aria-label`/tooltip.
 
 **Tareas:**
-- [ ] **4.1** Mapear cada servicio de `servicios.json` a su icono del paquete
+- [x] **4.1** Mapear cada servicio de `servicios.json` a su icono del paquete
       (`Architecture-Service-Icons_07312025/Arch_<Categoría>/64/Arch_<Servicio>_64.svg`) con un
       script puntual, y revisar a mano los que no casen por nombre.
-- [ ] **4.2** Copiar solo esos SVG a `assets/iconos/<id>.svg` y añadir el campo `icono` en
-      `servicios.json`. Los servicios sin icono oficial (por ejemplo Kiro, Strands Agents o
-      AWS CLI, por confirmar) quedan fuera del juego.
-- [ ] **4.3** Aviso de marcas (el aviso legal general ya existe desde la tarea 1.12): "Amazon Web Services, AWS y los iconos de sus servicios son marcas
+- [x] **4.2** Copiar solo esos SVG a `assets/iconos/servicios/<id>.svg` (y los 20 de categoría a
+      `assets/iconos/categorias/<id>.svg`) y añadir el campo `icono` en `servicios.json`. Hecho el
+      2026-09-26 junto con los iconos del catálogo: 145 de 155 tienen icono. Sin icono oficial en
+      el paquete del 31/07/2025, y por tanto fuera del juego: `bedrock-agentcore`, `iot-1-click`,
+      `iot-things-graph`, `kiro`, `quick`, `sct`, `service-quotas`, `strands-agents`, `sts` y
+      `vmware-cloud-on-aws`. Mapeos a mano: `snow-family` → AWS Snowball, `outposts` → AWS Outposts
+      family, `workspaces` → Amazon WorkSpaces Family.
+- [x] **4.3** Aviso de marcas (el aviso legal general ya existe desde la tarea 1.12): "Amazon Web Services, AWS y los iconos de sus servicios son marcas
       de Amazon.com, Inc. o sus filiales. Este sitio no está afiliado ni patrocinado por AWS."
       Va en el pie del juego y del sitio, con la excepción de licencia en `LICENSE`/`README`.
 - [ ] **4.4** `memoria.html` + `memoria.js`: tablero con CSS grid responsive (columnas
@@ -506,3 +514,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-25 | Añadida la Fase 4 (juego de memoria con iconos oficiales de AWS); `data/asset-package/` en `.gitignore`. |
 | 2026-09-25 | Fase 1 completada: portada con filtros, página "Próximamente", plantilla + quiz, aviso legal, licencia CC BY-SA 4.0, `CLAUDE.md`. Fase 4 revisada: tablero mínimo 6×6 y parejas por categoría con varias cartas posibles. |
 | 2026-09-25 | Fase 2 iniciada: publicados los 12 servicios que usa Kopi, con sección "Así lo uso en Kopi" y 62 preguntas originales. MCP `aws-knowledge` usado por JSON-RPC desde la sesión (funciona sin autenticación); datos contrastados con la documentación actual (p. ej. carga asíncrona de Lambda de 1 MB, objetos de S3 de hasta ~50 TB, certificados de ACM de 198 días). |
+| 2026-09-26 | Iconos oficiales de AWS en el catálogo: icono de servicio y de categoría en las tarjetas, icono de la categoría elegida en el filtro y en la cabecera de las páginas de servicio (y en la plantilla). Tareas 4.1–4.3 adelantadas; decisión de iconos, aviso legal y pie actualizados. |

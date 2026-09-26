@@ -50,10 +50,25 @@
       : url(`servicio.html?id=${encodeURIComponent(servicio.id)}`);
   }
 
-  /** "Computación (Compute)" en HTML, con el nombre en inglés atenuado. */
+  /**
+   * Iconos oficiales de AWS (assets/iconos/), sin modificar. Son decorativos (alt vacío):
+   * el nombre del servicio o de la categoría siempre va al lado.
+   */
+  function iconoCategoria(categoria, clase = 'cat-icon') {
+    if (!categoria) return '';
+    return `<img class="${clase}" src="${esc(url(`assets/iconos/categorias/${categoria.id}.svg`))}" alt="" loading="lazy">`;
+  }
+
+  /** Icono del servicio; si AWS no publica uno propio, el de su categoría. */
+  function iconoServicio(servicio, categoria, clase = 'service-icon') {
+    if (!servicio.icono) return iconoCategoria(categoria, clase);
+    return `<img class="${clase}" src="${esc(url(`assets/iconos/servicios/${servicio.id}.svg`))}" alt="" loading="lazy">`;
+  }
+
+  /** "Computación (Compute)" en HTML, con su icono y el nombre en inglés atenuado. */
   function categoriaHtml(categoria) {
     if (!categoria) return '';
-    return `${esc(categoria.nombre)} <span class="cat-en">(${esc(categoria.nombreEn)})</span>`;
+    return `${iconoCategoria(categoria)}${esc(categoria.nombre)} <span class="cat-en">(${esc(categoria.nombreEn)})</span>`;
   }
 
   function urlCatalogo(params) {
@@ -66,5 +81,5 @@
     return `${d}/${m}/${a}`;
   }
 
-  window.AwsDatos = { url, json, cargar, esc, urlServicio, categoriaHtml, urlCatalogo, formatoFecha };
+  window.AwsDatos = { url, json, cargar, esc, urlServicio, iconoServicio, iconoCategoria, categoriaHtml, urlCatalogo, formatoFecha };
 })();

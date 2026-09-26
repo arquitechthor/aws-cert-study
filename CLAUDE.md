@@ -37,7 +37,10 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   (schemas in `PLAN.md`). `data/fuentes/*.txt`: the original in-scope service lists from each
   exam guide, kept for diffing when AWS updates a guide.
 - `data/asset-package/`: official AWS Architecture Icons, **gitignored** (29 MB). Only the
-  SVGs the memory game uses get copied to `assets/iconos/<id>.svg` (Phase 4).
+  64 px SVGs in use are copied to `assets/iconos/servicios/<id>.svg` (services with
+  `"icono": true` in `servicios.json`) and `assets/iconos/categorias/<id>.svg` (all 20
+  categories). `AwsDatos.iconoServicio()` falls back to the category icon when a service has
+  none.
 
 ## Commands
 
@@ -57,7 +60,8 @@ horizontal scroll).
    async payload is now 1 MB, S3 max object ~50 TB, ACM certs 198 days). Check whether the
    service is discontinued or closed to new customers; if so, add the warning callout.
 2. Copy `plantillas/servicio.html` to `servicios/<id>.html` and fill in every `[[…]]`; remove
-   the template comment and the `noindex` meta. Include the "Así lo uso en Kopi" section only
+   the template comment and the `noindex` meta. If the service has no `"icono": true`, point the
+   header icon at its category icon instead. Include the "Así lo uso en Kopi" section only
    if Kopi uses the service (see `kopi-media-admin/documentation/servicios-aws/`), with no
    sensitive identifiers (account ID, bucket names, distribution IDs, ARNs).
 3. Write `data/preguntas/<id>.json` with 5–15 **original** questions tagged with certification
@@ -76,5 +80,7 @@ horizontal scroll).
 - **Never real exam questions** (they are under NDA); only original ones.
 - Keep the legal footer on every page, and keep `aviso-legal.html` consistent with any new
   feature (e.g. anything stored in `localStorage` must be covered by its privacy section).
-- AWS icons are used **only** in the memory game, unmodified, and are excluded from the
-  CC BY-SA 4.0 license (see `PLAN.md` decisions and `README.md`).
+- AWS icons are shown only next to the service/category name they identify (catalog cards,
+  category filter, service page header) and in the memory game; always **unmodified** (no
+  recoloring or cropping) and excluded from the CC BY-SA 4.0 license (see `PLAN.md` decisions
+  and `README.md`).

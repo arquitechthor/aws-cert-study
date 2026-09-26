@@ -49,11 +49,13 @@
 
     <!-- 1. Cabecera -->
     <div class="service-head">
-      <h1>[[Amazon Ejemplo]]</h1>
+      <!-- Icono: assets/iconos/servicios/[[id]].svg si el servicio tiene "icono": true en servicios.json;
+           si no, el de su categoría (assets/iconos/categorias/[[id-categoria]].svg). -->
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/[[id]].svg" alt="" width="56" height="56"><span>[[Amazon Ejemplo]]</span></h1>
       <p class="full-name">[[Nombre completo, si difiere]]</p>
       <div class="meta-row">
         <span><strong>Categoría:</strong>
-          <a href="../index.html?cat=[[id-categoria]]#catalogo">[[Categoría]] <span class="cat-en">([[Category]])</span></a></span>
+          <a class="cat-link" href="../index.html?cat=[[id-categoria]]#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/[[id-categoria]].svg" alt="" width="18" height="18">[[Categoría]] <span class="cat-en">([[Category]])</span></a></span>
       </div>
       <div class="meta-row">
         <strong>Certificaciones:</strong>
@@ -149,8 +151,8 @@
       Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
       seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
       por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
-      contiene preguntas reales de examen. Amazon Web Services, AWS y los nombres de sus
-      servicios son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
       <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
       · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
     </p>

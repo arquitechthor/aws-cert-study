@@ -3,6 +3,7 @@
     "id": "acm",
     "nombre": "AWS Certificate Manager (ACM)",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -14,6 +15,7 @@
     "id": "amplify",
     "nombre": "AWS Amplify",
     "categoria": "frontend-web-movil",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -25,6 +27,7 @@
     "id": "api-gateway",
     "nombre": "Amazon API Gateway",
     "categoria": "frontend-web-movil",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -36,6 +39,7 @@
     "id": "app-runner",
     "nombre": "AWS App Runner",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -46,6 +50,7 @@
     "id": "appflow",
     "nombre": "Amazon AppFlow",
     "categoria": "integracion-aplicaciones",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -57,6 +62,7 @@
     "id": "application-discovery-service",
     "nombre": "AWS Application Discovery Service",
     "categoria": "migracion-transferencia",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -67,6 +73,7 @@
     "id": "application-migration-service",
     "nombre": "AWS Application Migration Service",
     "categoria": "migracion-transferencia",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -78,6 +85,7 @@
     "id": "appstream-2-0",
     "nombre": "Amazon AppStream 2.0",
     "categoria": "computacion-usuarios-finales",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -88,6 +96,7 @@
     "id": "appsync",
     "nombre": "AWS AppSync",
     "categoria": "integracion-aplicaciones",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -98,6 +107,7 @@
     "id": "artifact",
     "nombre": "AWS Artifact",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -110,6 +120,7 @@
     "id": "athena",
     "nombre": "Amazon Athena",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -121,6 +132,7 @@
     "id": "audit-manager",
     "nombre": "AWS Audit Manager",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -131,6 +143,7 @@
     "id": "aurora",
     "nombre": "Amazon Aurora",
     "categoria": "base-de-datos",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -146,6 +159,7 @@
     "id": "auto-scaling",
     "nombre": "AWS Auto Scaling",
     "categoria": "computacion",
+    "icono": true,
     "categoriasAdicionales": [
       "administracion-gobernanza"
     ],
@@ -160,6 +174,7 @@
     "id": "backup",
     "nombre": "AWS Backup",
     "categoria": "almacenamiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -171,6 +186,7 @@
     "id": "batch",
     "nombre": "AWS Batch",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -182,6 +198,7 @@
     "id": "bedrock",
     "nombre": "Amazon Bedrock",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "AIF-C01"
     ],
@@ -202,6 +219,7 @@
     "id": "budgets",
     "nombre": "AWS Budgets",
     "categoria": "administracion-financiera",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -215,6 +233,7 @@
     "nombre": "AWS CLI",
     "nombreCompleto": "AWS Command Line Interface (AWS CLI)",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -226,6 +245,7 @@
     "id": "client-vpn",
     "nombre": "AWS Client VPN",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -240,6 +260,7 @@
     "id": "cloudformation",
     "nombre": "AWS CloudFormation",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -251,6 +272,7 @@
     "id": "cloudfront",
     "nombre": "Amazon CloudFront",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -263,6 +285,7 @@
     "id": "cloudhsm",
     "nombre": "AWS CloudHSM",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -274,6 +297,7 @@
     "id": "cloudtrail",
     "nombre": "AWS CloudTrail",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -286,6 +310,7 @@
     "id": "cloudwatch",
     "nombre": "Amazon CloudWatch",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -301,6 +326,7 @@
     "id": "codeartifact",
     "nombre": "AWS CodeArtifact",
     "categoria": "herramientas-desarrolladores",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -311,6 +337,7 @@
     "id": "codebuild",
     "nombre": "AWS CodeBuild",
     "categoria": "herramientas-desarrolladores",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -321,6 +348,7 @@
     "id": "codedeploy",
     "nombre": "AWS CodeDeploy",
     "categoria": "herramientas-desarrolladores",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -331,6 +359,7 @@
     "id": "codeguru",
     "nombre": "Amazon CodeGuru",
     "categoria": "herramientas-desarrolladores",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -341,6 +370,7 @@
     "id": "codepipeline",
     "nombre": "AWS CodePipeline",
     "categoria": "herramientas-desarrolladores",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -351,6 +381,7 @@
     "id": "cognito",
     "nombre": "Amazon Cognito",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -362,6 +393,7 @@
     "id": "comprehend",
     "nombre": "Amazon Comprehend",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -374,6 +406,7 @@
     "id": "compute-optimizer",
     "nombre": "AWS Compute Optimizer",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -385,6 +418,7 @@
     "id": "config",
     "nombre": "AWS Config",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -397,6 +431,7 @@
     "id": "control-tower",
     "nombre": "AWS Control Tower",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -408,6 +443,7 @@
     "id": "cost-and-usage-report",
     "nombre": "AWS Cost and Usage Report",
     "categoria": "administracion-financiera",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -419,6 +455,7 @@
     "id": "cost-explorer",
     "nombre": "AWS Cost Explorer",
     "categoria": "administracion-financiera",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -431,6 +468,7 @@
     "id": "data-exchange",
     "nombre": "AWS Data Exchange",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -443,6 +481,7 @@
     "id": "data-firehose",
     "nombre": "Amazon Data Firehose",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -454,6 +493,7 @@
     "id": "datasync",
     "nombre": "AWS DataSync",
     "categoria": "migracion-transferencia",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -465,6 +505,7 @@
     "id": "detective",
     "nombre": "Amazon Detective",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -476,6 +517,7 @@
     "id": "device-farm",
     "nombre": "AWS Device Farm",
     "categoria": "frontend-web-movil",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -487,6 +529,7 @@
     "id": "direct-connect",
     "nombre": "AWS Direct Connect",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -498,6 +541,7 @@
     "id": "directory-service",
     "nombre": "AWS Directory Service",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -510,6 +554,7 @@
     "nombre": "AWS DMS",
     "nombreCompleto": "AWS Database Migration Service (AWS DMS)",
     "categoria": "migracion-transferencia",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -522,6 +567,7 @@
     "nombre": "Amazon DocumentDB",
     "nombreCompleto": "Amazon DocumentDB (with MongoDB compatibility)",
     "categoria": "base-de-datos",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -534,6 +580,7 @@
     "id": "dynamodb",
     "nombre": "Amazon DynamoDB",
     "categoria": "base-de-datos",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -547,6 +594,7 @@
     "nombre": "Amazon EBS",
     "nombreCompleto": "Amazon Elastic Block Store (Amazon EBS)",
     "categoria": "almacenamiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -559,6 +607,7 @@
     "nombre": "Amazon EC2",
     "nombreCompleto": "Amazon Elastic Compute Cloud (Amazon EC2)",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -571,6 +620,7 @@
     "id": "ec2-auto-scaling",
     "nombre": "Amazon EC2 Auto Scaling",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -583,6 +633,7 @@
     "nombre": "Amazon ECR",
     "nombreCompleto": "Amazon Elastic Container Registry (Amazon ECR)",
     "categoria": "contenedores",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -595,6 +646,7 @@
     "nombre": "Amazon ECS",
     "nombreCompleto": "Amazon Elastic Container Service (Amazon ECS)",
     "categoria": "contenedores",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -611,6 +663,7 @@
     "nombre": "Amazon EFS",
     "nombreCompleto": "Amazon Elastic File System (Amazon EFS)",
     "categoria": "almacenamiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -623,6 +676,7 @@
     "nombre": "Amazon EKS",
     "nombreCompleto": "Amazon Elastic Kubernetes Service (Amazon EKS)",
     "categoria": "contenedores",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -639,6 +693,7 @@
     "id": "elastic-beanstalk",
     "nombre": "AWS Elastic Beanstalk",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -650,6 +705,7 @@
     "id": "elastic-disaster-recovery",
     "nombre": "AWS Elastic Disaster Recovery",
     "categoria": "almacenamiento",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -660,6 +716,7 @@
     "id": "elastic-transcoder",
     "nombre": "Amazon Elastic Transcoder",
     "categoria": "servicios-multimedia",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -671,6 +728,7 @@
     "id": "elasticache",
     "nombre": "Amazon ElastiCache",
     "categoria": "base-de-datos",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -683,6 +741,7 @@
     "id": "elb",
     "nombre": "Elastic Load Balancing (ELB)",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -694,6 +753,7 @@
     "id": "emr",
     "nombre": "Amazon EMR",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -706,6 +766,7 @@
     "id": "eventbridge",
     "nombre": "Amazon EventBridge",
     "categoria": "integracion-aplicaciones",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -717,6 +778,7 @@
     "id": "fargate",
     "nombre": "AWS Fargate",
     "categoria": "computacion",
+    "icono": true,
     "categoriasAdicionales": [
       "sin-servidor"
     ],
@@ -731,6 +793,7 @@
     "id": "firewall-manager",
     "nombre": "AWS Firewall Manager",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -742,6 +805,7 @@
     "id": "fraud-detector",
     "nombre": "Amazon Fraud Detector",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -753,6 +817,7 @@
     "nombre": "Amazon FSx",
     "nombreCompleto": "Amazon FSx (for all types)",
     "categoria": "almacenamiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -764,6 +829,7 @@
     "id": "global-accelerator",
     "nombre": "AWS Global Accelerator",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -775,6 +841,7 @@
     "id": "glue",
     "nombre": "AWS Glue",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -787,6 +854,7 @@
     "id": "glue-databrew",
     "nombre": "AWS Glue DataBrew",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "AIF-C01"
     ],
@@ -797,6 +865,7 @@
     "id": "guardduty",
     "nombre": "Amazon GuardDuty",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -808,6 +877,7 @@
     "id": "health-dashboard",
     "nombre": "AWS Health Dashboard",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -820,6 +890,7 @@
     "nombre": "AWS IAM",
     "nombreCompleto": "AWS Identity and Access Management (IAM)",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -832,6 +903,7 @@
     "id": "iam-identity-center",
     "nombre": "AWS IAM Identity Center",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -843,6 +915,7 @@
     "id": "inspector",
     "nombre": "Amazon Inspector",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -865,6 +938,7 @@
     "id": "iot-core",
     "nombre": "AWS IoT Core",
     "categoria": "iot",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -875,6 +949,7 @@
     "id": "iot-device-defender",
     "nombre": "AWS IoT Device Defender",
     "categoria": "iot",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -885,6 +960,7 @@
     "id": "iot-device-management",
     "nombre": "AWS IoT Device Management",
     "categoria": "iot",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -895,6 +971,7 @@
     "id": "iot-events",
     "nombre": "AWS IoT Events",
     "categoria": "iot",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -905,6 +982,7 @@
     "id": "iot-greengrass",
     "nombre": "AWS IoT Greengrass",
     "categoria": "iot",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -915,6 +993,7 @@
     "id": "iot-sitewise",
     "nombre": "AWS IoT SiteWise",
     "categoria": "iot",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -935,6 +1014,7 @@
     "id": "kendra",
     "nombre": "Amazon Kendra",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -946,6 +1026,7 @@
     "nombre": "Amazon Keyspaces",
     "nombreCompleto": "Amazon Keyspaces (for Apache Cassandra)",
     "categoria": "base-de-datos",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -957,6 +1038,7 @@
     "id": "kinesis-data-streams",
     "nombre": "Amazon Kinesis Data Streams",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -968,6 +1050,7 @@
     "id": "kinesis-video-streams",
     "nombre": "Amazon Kinesis Video Streams",
     "categoria": "servicios-multimedia",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -990,6 +1073,7 @@
     "nombre": "AWS KMS",
     "nombreCompleto": "AWS Key Management Service (AWS KMS)",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1002,6 +1086,7 @@
     "id": "lake-formation",
     "nombre": "AWS Lake Formation",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1014,6 +1099,7 @@
     "id": "lambda",
     "nombre": "AWS Lambda",
     "categoria": "computacion",
+    "icono": true,
     "categoriasAdicionales": [
       "sin-servidor"
     ],
@@ -1029,6 +1115,7 @@
     "id": "lex",
     "nombre": "Amazon Lex",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1041,6 +1128,7 @@
     "id": "license-manager",
     "nombre": "AWS License Manager",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1052,6 +1140,7 @@
     "id": "lightsail",
     "nombre": "Amazon Lightsail",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1062,6 +1151,7 @@
     "id": "macie",
     "nombre": "Amazon Macie",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1074,6 +1164,7 @@
     "id": "managed-blockchain",
     "nombre": "Amazon Managed Blockchain",
     "categoria": "blockchain",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1084,6 +1175,7 @@
     "id": "managed-grafana",
     "nombre": "Amazon Managed Grafana",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1095,6 +1187,7 @@
     "id": "managed-service-for-apache-flink",
     "nombre": "Amazon Managed Service for Apache Flink",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1105,6 +1198,7 @@
     "id": "managed-service-for-prometheus",
     "nombre": "Amazon Managed Service for Prometheus",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1116,6 +1210,7 @@
     "id": "management-console",
     "nombre": "AWS Management Console",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1127,6 +1222,7 @@
     "id": "migration-hub",
     "nombre": "AWS Migration Hub",
     "categoria": "migracion-transferencia",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1137,6 +1233,7 @@
     "id": "mq",
     "nombre": "Amazon MQ",
     "categoria": "integracion-aplicaciones",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1149,6 +1246,7 @@
     "nombre": "Amazon MSK",
     "nombreCompleto": "Amazon Managed Streaming for Apache Kafka (Amazon MSK)",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1160,6 +1258,7 @@
     "id": "neptune",
     "nombre": "Amazon Neptune",
     "categoria": "base-de-datos",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1172,6 +1271,7 @@
     "id": "network-firewall",
     "nombre": "AWS Network Firewall",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1183,6 +1283,7 @@
     "id": "nova",
     "nombre": "Amazon Nova",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "AIF-C01"
     ],
@@ -1193,6 +1294,7 @@
     "id": "opensearch-service",
     "nombre": "Amazon OpenSearch Service",
     "categoria": "analisis",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1205,6 +1307,7 @@
     "id": "organizations",
     "nombre": "AWS Organizations",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1216,6 +1319,7 @@
     "id": "outposts",
     "nombre": "AWS Outposts",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1227,6 +1331,7 @@
     "id": "personalize",
     "nombre": "Amazon Personalize",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAP-C02",
       "AIF-C01"
@@ -1238,6 +1343,7 @@
     "id": "pinpoint",
     "nombre": "Amazon Pinpoint",
     "categoria": "frontend-web-movil",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1248,6 +1354,7 @@
     "id": "polly",
     "nombre": "Amazon Polly",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1260,6 +1367,7 @@
     "id": "privatelink",
     "nombre": "AWS PrivateLink",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1271,6 +1379,7 @@
     "id": "proton",
     "nombre": "AWS Proton",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1297,6 +1406,7 @@
     "nombre": "AWS RAM",
     "nombreCompleto": "AWS Resource Access Manager (AWS RAM)",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1309,6 +1419,7 @@
     "nombre": "Amazon RDS",
     "nombreCompleto": "Amazon Relational Database Service (Amazon RDS)",
     "categoria": "base-de-datos",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1321,6 +1432,7 @@
     "id": "redshift",
     "nombre": "Amazon Redshift",
     "categoria": "analisis",
+    "icono": true,
     "categoriasAdicionales": [
       "base-de-datos"
     ],
@@ -1336,6 +1448,7 @@
     "id": "rekognition",
     "nombre": "Amazon Rekognition",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1348,6 +1461,7 @@
     "id": "route-53",
     "nombre": "Amazon Route 53",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1360,6 +1474,7 @@
     "nombre": "Amazon S3",
     "nombreCompleto": "Amazon Simple Storage Service (Amazon S3)",
     "categoria": "almacenamiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1372,6 +1487,7 @@
     "id": "s3-glacier",
     "nombre": "Amazon S3 Glacier",
     "categoria": "almacenamiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1384,6 +1500,7 @@
     "id": "sagemaker-ai",
     "nombre": "Amazon SageMaker AI",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1399,6 +1516,7 @@
     "id": "savings-plans",
     "nombre": "Savings Plans",
     "categoria": "administracion-financiera",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1421,6 +1539,7 @@
     "id": "secrets-manager",
     "nombre": "AWS Secrets Manager",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1433,6 +1552,7 @@
     "id": "security-hub",
     "nombre": "AWS Security Hub",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1444,6 +1564,7 @@
     "id": "serverless-application-repository",
     "nombre": "AWS Serverless Application Repository",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAA-C03"
     ],
@@ -1454,6 +1575,7 @@
     "id": "service-catalog",
     "nombre": "AWS Service Catalog",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1476,6 +1598,7 @@
     "nombre": "Amazon SES",
     "nombreCompleto": "Amazon Simple Email Service (Amazon SES)",
     "categoria": "aplicaciones-empresariales",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1486,6 +1609,7 @@
     "id": "shield",
     "nombre": "AWS Shield",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1497,6 +1621,7 @@
     "id": "site-to-site-vpn",
     "nombre": "AWS Site-to-Site VPN",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1511,6 +1636,7 @@
     "id": "snow-family",
     "nombre": "AWS Snow Family",
     "categoria": "migracion-transferencia",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1523,6 +1649,7 @@
     "nombre": "Amazon SNS",
     "nombreCompleto": "Amazon Simple Notification Service (Amazon SNS)",
     "categoria": "integracion-aplicaciones",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1535,6 +1662,7 @@
     "nombre": "Amazon SQS",
     "nombreCompleto": "Amazon Simple Queue Service (Amazon SQS)",
     "categoria": "integracion-aplicaciones",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1546,6 +1674,7 @@
     "id": "step-functions",
     "nombre": "AWS Step Functions",
     "categoria": "integracion-aplicaciones",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1557,6 +1686,7 @@
     "id": "storage-gateway",
     "nombre": "AWS Storage Gateway",
     "categoria": "almacenamiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1589,6 +1719,7 @@
     "id": "systems-manager",
     "nombre": "AWS Systems Manager",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1600,6 +1731,7 @@
     "id": "textract",
     "nombre": "Amazon Textract",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1612,6 +1744,7 @@
     "id": "timestream",
     "nombre": "Amazon Timestream",
     "categoria": "base-de-datos",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1622,6 +1755,7 @@
     "id": "transcribe",
     "nombre": "Amazon Transcribe",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1634,6 +1768,7 @@
     "id": "transfer-family",
     "nombre": "AWS Transfer Family",
     "categoria": "migracion-transferencia",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1645,6 +1780,7 @@
     "id": "transform",
     "nombre": "AWS Transform",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "AIF-C01"
     ],
@@ -1655,6 +1791,7 @@
     "id": "transit-gateway",
     "nombre": "AWS Transit Gateway",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1666,6 +1803,7 @@
     "id": "translate",
     "nombre": "Amazon Translate",
     "categoria": "machine-learning",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1678,6 +1816,7 @@
     "id": "trusted-advisor",
     "nombre": "AWS Trusted Advisor",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1701,6 +1840,7 @@
     "nombre": "Amazon VPC",
     "nombreCompleto": "Amazon Virtual Private Cloud (Amazon VPC)",
     "categoria": "redes-entrega-contenido",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1713,6 +1853,7 @@
     "id": "waf",
     "nombre": "AWS WAF",
     "categoria": "seguridad-identidad-cumplimiento",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1724,6 +1865,7 @@
     "id": "wavelength",
     "nombre": "AWS Wavelength",
     "categoria": "computacion",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"
@@ -1735,6 +1877,7 @@
     "id": "well-architected-tool",
     "nombre": "AWS Well-Architected Tool",
     "categoria": "administracion-gobernanza",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1747,6 +1890,7 @@
     "id": "workspaces",
     "nombre": "Amazon WorkSpaces",
     "categoria": "computacion-usuarios-finales",
+    "icono": true,
     "certificaciones": [
       "SAP-C02"
     ],
@@ -1757,6 +1901,7 @@
     "id": "x-ray",
     "nombre": "AWS X-Ray",
     "categoria": "herramientas-desarrolladores",
+    "icono": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02"

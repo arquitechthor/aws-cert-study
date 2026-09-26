@@ -3,13 +3,14 @@
  * filtros vive en la URL (?q=&cat=&estado=&cert=A,B) para poder compartir vistas filtradas.
  */
 (function () {
-  const { cargar, esc, urlServicio, categoriaHtml, formatoFecha } = window.AwsDatos;
+  const { cargar, esc, url, urlServicio, iconoServicio, categoriaHtml, formatoFecha } = window.AwsDatos;
 
   const $ = (id) => document.getElementById(id);
   const el = {
     certGrid: $('cert-grid'),
     q: $('f-q'),
     cat: $('f-cat'),
+    catIcono: $('f-cat-icono'),
     estado: $('f-estado'),
     cert: $('f-cert'),
     limpiar: $('f-limpiar'),
@@ -106,7 +107,7 @@
       `<button class="chip chip-cert" type="button" aria-pressed="false" data-cert="${esc(c.codigo)}" title="${esc(c.nombre)}">${esc(c.codigo)}</button>`).join('');
 
     el.q.addEventListener('input', () => { estado.q = el.q.value.trim(); aplicar(); });
-    el.cat.addEventListener('change', () => { estado.cat = el.cat.value; aplicar(); });
+    el.cat.addEventListener('change', () => { estado.cat = el.cat.value; sincronizarControles(); aplicar(); });
     el.estado.addEventListener('change', () => { estado.estado = el.estado.value; aplicar(); });
     el.cert.addEventListener('click', (ev) => {
       const chip = ev.target.closest('button[data-cert]');
@@ -126,6 +127,10 @@
   function sincronizarControles() {
     el.q.value = estado.q;
     el.cat.value = datos.categoriaPorId.has(estado.cat) ? estado.cat : '';
+    // Un <option> no admite imágenes: el icono de la categoría elegida se superpone al select.
+    el.catIcono.hidden = !el.cat.value;
+    if (el.cat.value) el.catIcono.src = url(`assets/iconos/categorias/${el.cat.value}.svg`);
+    el.cat.classList.toggle('select-con-icono', Boolean(el.cat.value));
     el.estado.value = ['publicado', 'pendiente'].includes(estado.estado) ? estado.estado : '';
     for (const chip of el.cert.querySelectorAll('button[data-cert]')) {
       chip.setAttribute('aria-pressed', String(estado.certs.has(chip.dataset.cert)));
@@ -150,10 +155,10 @@
     return `
       <a class="service-card" href="${esc(urlServicio(s))}">
         <div class="service-card-head">
-          <h3>${esc(s.nombre)}</h3>
+          <div class="service-card-title">${iconoServicio(s, cat)}<h3>${esc(s.nombre)}</h3></div>
           <span class="badge badge-${publicado ? 'publicado' : 'pendiente'}">${publicado ? 'Disponible' : 'Próximamente'}</span>
         </div>
-        <p class="service-cat">${categoriaHtml(cat)}</p>
+        <p class="service-cat cat-link">${categoriaHtml(cat)}</p>
         ${s.resumen ? `<p class="service-resumen">${esc(s.resumen)}</p>` : ''}
         <div class="chips">${s.certificaciones.map((c) => `<span class="chip chip-cert">${esc(c)}</span>`).join('')}</div>
       </a>`;

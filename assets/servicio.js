@@ -3,7 +3,7 @@
  * catálogo del servicio mientras no tiene página propia; si ya está publicado, redirige a ella.
  */
 (function () {
-  const { cargar, esc, urlServicio, categoriaHtml, urlCatalogo } = window.AwsDatos;
+  const { cargar, esc, urlServicio, iconoServicio, categoriaHtml, urlCatalogo } = window.AwsDatos;
   const cont = document.getElementById('servicio');
   const id = new URLSearchParams(location.search).get('id') || '';
 
@@ -32,13 +32,13 @@
 
     cont.innerHTML = `
       <div class="service-head">
-        <h1>${esc(s.nombre)}</h1>
+        <h1 class="service-title">${iconoServicio(s, cat, 'service-icon-lg')}<span>${esc(s.nombre)}</span></h1>
         ${s.nombreCompleto ? `<p class="full-name">${esc(s.nombreCompleto)}</p>` : ''}
         <div class="meta-row">
           <span><strong>Categoría:</strong>
-            <a href="${esc(urlCatalogo({ cat: s.categoria }))}">${categoriaHtml(cat)}</a></span>
+            <a class="cat-link" href="${esc(urlCatalogo({ cat: s.categoria }))}">${categoriaHtml(cat)}</a></span>
           ${adicionales.length ? `<span><strong>También en:</strong> ${adicionales.map((c) =>
-            `<a href="${esc(urlCatalogo({ cat: c.id }))}">${categoriaHtml(c)}</a>`).join(', ')}</span>` : ''}
+            `<a class="cat-link" href="${esc(urlCatalogo({ cat: c.id }))}">${categoriaHtml(c)}</a>`).join(', ')}</span>` : ''}
         </div>
         <div class="meta-row">
           <strong>Certificaciones:</strong>
