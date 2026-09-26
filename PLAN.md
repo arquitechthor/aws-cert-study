@@ -17,18 +17,20 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). Las preguntas de los 6
   ya publicados antes de añadir CLF-C02 y DVA-C02 aún no cubren esas dos guías. La tarea 0.9 sigue
   programada para el 27/10/2026.
-- **Próximo paso:** terminar las 3 categorías que se trasladaron desde Conocimiento de Kopi
-  (tópicos B, F y R, ya borrados allí el 2026-09-26). Hechas: Integración de aplicaciones (7/7) y
-  Computación 4/11 (Fargate, EC2 Auto Scaling, AWS Auto Scaling, Elastic Beanstalk). **Faltan
-  Computación:** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda ECS
-  Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
+- **Próximo paso (siguiente sesión):** la **tarea 4.11 ampliada** (campo `frase` en los 164
+  servicios, fila "En una frase:" en guías y "Próximamente", tarjetas del catálogo con la frase en
+  vez del resumen), según la decisión "Campo `frase`". Después, seguir con las guías pendientes:
+  **Computación (7):** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda
+  ECS Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
   `serverless-application-repository`, `vmware-cloud-on-aws` (aviso: AWS dejó de revenderlo el
-  30/04/2024, se contrata con Broadcom) y `wavelength`. **Faltan Administración y gobernanza (17):**
-  `organizations`, `cdk`, `cli`, `config`, `control-tower`, `trusted-advisor`, `well-architected-tool`, `compute-optimizer`,
-  `health-dashboard`, `license-manager`, `service-catalog` (AppRegistry sin clientes nuevos),
-  `service-quotas`, `management-console` (myApplications sin clientes nuevos), `managed-grafana`,
-  `managed-service-for-prometheus`, `appconfig` y `proton` (aviso: en retirada desde oct. 2025).
-  Después, la cola "Prioridad 0" (`ebs`, `elb`, `efs`…).
+  30/04/2024, se contrata con Broadcom) y `wavelength`. **Administración y gobernanza (17):**
+  `organizations`, `cdk`, `cli`, `config`, `control-tower`, `trusted-advisor`,
+  `well-architected-tool`, `compute-optimizer`, `health-dashboard`, `license-manager`,
+  `service-catalog` (AppRegistry sin clientes nuevos), `service-quotas`, `management-console`
+  (myApplications sin clientes nuevos), `managed-grafana`, `managed-service-for-prometheus`,
+  `appconfig` y `proton` (aviso: en retirada desde oct. 2025). Luego, la cola "Prioridad 0".
+- **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
+  `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
 - **Última actualización:** 2026-09-26
 
 ---
@@ -56,7 +58,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Flujo git | Directo a `main`, sin pull requests (igual que el resto de proyectos kopi). |
 | Progreso del usuario | Sin cuentas ni backend: el progreso vive en `localStorage` (clave `apuntes-aws.progreso`, un objeto por servicio con las preguntas acertadas, el total y la fecha de finalización). Un servicio publicado pasa a **Finalizado** cuando se han acertado todas sus preguntas al menos una vez; si luego se añaden preguntas, vuelve a estar en curso. "Finalizado" no es un `estado` de `servicios.json`: se calcula en el navegador. |
 | Filtro de certificaciones | Con varias marcadas, modo **Unión** (al menos una, por defecto) o **Intersección** (todas), en la URL como `modo=interseccion`. Las certificaciones con `estado: "guia-pendiente"` (SAP-C03, DVA-C03) **no salen como filtro** hasta tener guía y servicios; solo se ven en su tarjeta, y un `cert=` suyo en la URL se ignora. |
-| Frases del juego (modo funciones) | Confirmado por el usuario el 2026-09-26: campo nuevo `frase` en `servicios.json` (60–90 caracteres, sin nombre, sigla ni id del servicio, que lo distinga de sus vecinos parecidos), no el `resumen`. Ver Fase 4, tarea 4.11. |
+| Campo `frase` ("En una frase") | Confirmado por el usuario el 2026-09-26. Cada servicio del catálogo (todos, no solo los que tienen icono) tiene un campo `frase` en `servicios.json`: una frase de 60–90 caracteres, en español, con palabras propias, **sin el nombre, la sigla ni el id del servicio** y que lo distinga de sus vecinos parecidos (SQS/SNS, EBS/EFS, Athena/Redshift). Se usa en **cuatro sitios**: (1) fila **"En una frase:"** en la cabecera de cada guía, al nivel de Categoría, Certificaciones y Documentación oficial, con tooltips en sus siglas; (2) la misma fila en la página "Próximamente"; (3) las **tarjetas del catálogo**, donde **sustituye al `resumen`** para que las 164 tarjetas tengan texto; (4) las cartas de función del juego de memoria (modo funciones). El `resumen` se conserva solo para la meta description y Open Graph (ahí sí conviene nombrar el servicio). En las cartas del juego, mejor pocas siglas (no hay tooltip cómodo). Una comprobación automática rechaza frases que contengan el nombre, la sigla o el id del servicio. |
 | Servicios pendientes | Sin archivos vacíos: un servicio con `estado: "pendiente"` enlaza a la página genérica `servicio.html?id=<id>` ("Próximamente disponible"). Al publicarlo se crea `servicios/<id>.html`. |
 
 ---
@@ -566,9 +568,14 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
   Athena frente a Redshift): el juego enseña justo esas diferencias.
 
 **Tareas (modo 2):**
-- [ ] **4.11** Añadir `frase` a los servicios con icono (unos 150) en `servicios.json`, con la
-      comprobación automática de que no contienen el nombre, la sigla ni el id del servicio, y
-      revisión de las parejas que se confunden fácilmente.
+- [ ] **4.11** **(Próxima sesión.)** Campo `frase` para **todos** los servicios (unos 164) según la
+      decisión "Campo `frase`": escribir las frases; comprobación automática (sin nombre, sigla ni
+      id del servicio; 60–90 caracteres) en `scripts/`; fila "En una frase:" en la cabecera de las
+      guías publicadas (y en la plantilla y el generador de páginas) y en `servicio.html`
+      ("Próximamente"); las tarjetas del catálogo (`catalogo.js`) muestran la `frase` en lugar del
+      `resumen`; aplicar `revisar_texto.py` para que las siglas de la fila lleven tooltip (hoy el
+      script solo procesa el `<article>`: ampliarlo a esa fila); revisar a mano las parejas que se
+      confunden fácilmente.
 - [ ] **4.12** Selector de modo (categorías / funciones) en el panel de configuración y en la URL.
 - [ ] **4.13** Generador del modo funciones: N servicios al azar del filtro que tengan icono y
       `frase`, dos cartas por servicio, barajadas; tamaños 12 a 24 cartas.
@@ -625,3 +632,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-09-26 | Siglas con tooltip en lugar de paréntesis: `<abbr class="sigla">` en todas las apariciones de las guías (script `revisar_texto.py`, idempotente) y en las preguntas al pintarlas (`quiz.js` + `data/siglas.json`); se quitaron las explicaciones entre paréntesis de 240 textos de preguntas. Tooltip en `assets/siglas.js`, ajustado a la ventana (sin desplazamiento horizontal a 375 px). |
 | 2026-09-26 | Publicadas las 13 guías más mencionadas por las ya existentes: ELB, Redshift, EBS, Data Firehose, Athena, Systems Manager, Savings Plans, EFS, Kinesis Data Streams, CloudFormation, WAF, PrivateLink y Glue (47 de 164). Datos verificados: gp3 hasta 64 TiB/80 000 IOPS, cuatro tipos de Savings Plans (incluido Database), registros de Kinesis de hasta 10 MiB, Firehose con destino Iceberg. Arreglado el desbordamiento horizontal en móvil (fieldset del quiz y `.sigla-exp` dentro de tablas). |
 | 2026-09-26 | Fase 4 ampliada con un segundo modo, "funciones": emparejar cada servicio (icono y nombre) con la frase que describe lo que hace. Nuevo campo `frase` en `servicios.json` (sin el nombre ni la sigla del servicio) y tareas 4.11–4.15. |
+| 2026-09-26 | Decidido (para la próxima sesión) el campo `frase` en los 164 servicios con fila "En una frase:" en guías y "Próximamente", y como texto de las tarjetas del catálogo en lugar del resumen; tarea 4.11 ampliada. Sesión cerrada con 47 guías publicadas. |
