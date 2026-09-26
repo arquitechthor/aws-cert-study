@@ -35,6 +35,11 @@
     "nombreEn": "Containers"
   },
   {
+    "id": "habilitacion-clientes",
+    "nombre": "Habilitación de clientes",
+    "nombreEn": "Customer Enablement"
+  },
+  {
     "id": "base-de-datos",
     "nombre": "Base de datos",
     "nombreEn": "Database"

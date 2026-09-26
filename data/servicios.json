@@ -6,20 +6,45 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "publicado",
     "resumen": "Emite, gestiona y renueva certificados SSL/TLS para servicios de AWS como CloudFront, ELB y API Gateway.",
     "documentacion": "https://docs.aws.amazon.com/acm/"
   },
   {
+    "id": "amazon-q",
+    "nombre": "Amazon Q",
+    "categoria": "machine-learning",
+    "icono": true,
+    "categoriasAdicionales": [
+      "herramientas-desarrolladores"
+    ],
+    "certificaciones": [
+      "CLF-C02",
+      "DVA-C02"
+    ],
+    "incluye": [
+      "Amazon Q Developer"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://docs.aws.amazon.com/amazonq/"
+  },
+  {
     "id": "amplify",
     "nombre": "AWS Amplify",
     "categoria": "frontend-web-movil",
     "icono": true,
+    "categoriasAdicionales": [
+      "herramientas-desarrolladores"
+    ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -30,9 +55,14 @@
     "nombre": "Amazon API Gateway",
     "categoria": "frontend-web-movil",
     "icono": true,
+    "categoriasAdicionales": [
+      "redes-entrega-contenido"
+    ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "publicado",
     "resumen": "Crea, publica y protege APIs REST, HTTP y WebSocket delante de Lambda u otros backends.",
@@ -49,6 +79,18 @@
     "estado": "pendiente",
     "resumen": "",
     "documentacion": "https://docs.aws.amazon.com/apprunner/"
+  },
+  {
+    "id": "appconfig",
+    "nombre": "AWS AppConfig",
+    "categoria": "administracion-gobernanza",
+    "icono": true,
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://docs.aws.amazon.com/appconfig/"
   },
   {
     "id": "appflow",
@@ -69,7 +111,8 @@
     "categoria": "migracion-transferencia",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -82,7 +125,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -94,7 +138,8 @@
     "categoria": "computacion-usuarios-finales",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -106,7 +151,8 @@
     "categoria": "integracion-aplicaciones",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -120,7 +166,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -133,7 +180,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -159,7 +208,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "incluye": [
       "Amazon Aurora Serverless"
@@ -178,7 +229,8 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -191,7 +243,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -204,7 +257,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -241,11 +295,25 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
     "documentacion": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+  },
+  {
+    "id": "cdk",
+    "nombre": "AWS CDK",
+    "nombreCompleto": "AWS Cloud Development Kit (AWS CDK)",
+    "categoria": "administracion-gobernanza",
+    "icono": true,
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://docs.aws.amazon.com/cdk/"
   },
   {
     "id": "cli",
@@ -253,9 +321,14 @@
     "nombreCompleto": "AWS Command Line Interface (AWS CLI)",
     "categoria": "administracion-gobernanza",
     "icono": true,
+    "categoriasAdicionales": [
+      "herramientas-desarrolladores"
+    ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -268,7 +341,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "alias": [
       "AWS VPN"
@@ -284,7 +358,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -298,7 +374,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "publicado",
     "resumen": "Red de entrega de contenido (CDN) que acerca contenido estático y dinámico a los usuarios con caché en el borde.",
@@ -311,11 +389,24 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
     "documentacion": "https://docs.aws.amazon.com/cloudhsm/"
+  },
+  {
+    "id": "cloudshell",
+    "nombre": "AWS CloudShell",
+    "categoria": "herramientas-desarrolladores",
+    "icono": true,
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://docs.aws.amazon.com/cloudshell/"
   },
   {
     "id": "cloudtrail",
@@ -325,7 +416,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -339,7 +432,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "incluye": [
       "Amazon CloudWatch Logs"
@@ -354,7 +449,8 @@
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -366,7 +462,9 @@
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -378,7 +476,8 @@
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -402,7 +501,9 @@
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -415,7 +516,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "publicado",
     "resumen": "Registro, inicio de sesión y control de acceso de usuarios para aplicaciones web y móviles.",
@@ -429,7 +532,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -442,7 +546,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -456,11 +561,24 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
     "documentacion": "https://docs.aws.amazon.com/config/"
+  },
+  {
+    "id": "connect",
+    "nombre": "Amazon Connect",
+    "categoria": "aplicaciones-empresariales",
+    "icono": true,
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://docs.aws.amazon.com/connect/"
   },
   {
     "id": "control-tower",
@@ -469,7 +587,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -482,7 +601,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -496,7 +616,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -523,7 +644,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -549,7 +672,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -575,7 +699,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -588,7 +713,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -602,7 +728,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -617,7 +744,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -631,7 +759,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "publicado",
     "resumen": "Base de datos NoSQL clave-valor y de documentos, serverless, con latencia de milisegundos a cualquier escala.",
@@ -645,7 +775,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -660,7 +792,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -687,7 +821,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -702,7 +838,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "incluye": [
       "Amazon ECS Anywhere"
@@ -719,7 +857,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -734,7 +874,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "incluye": [
       "Amazon EKS Anywhere",
@@ -751,7 +893,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -763,7 +907,8 @@
     "categoria": "almacenamiento",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -789,7 +934,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -802,7 +949,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -816,7 +964,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -829,7 +978,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -845,7 +996,8 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -858,7 +1010,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -884,7 +1037,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -897,7 +1051,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -911,7 +1066,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -936,7 +1092,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -949,7 +1106,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -964,7 +1122,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "publicado",
     "resumen": "Control de identidades y permisos: decide quién puede hacer qué sobre qué recurso de AWS.",
@@ -977,7 +1137,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -991,7 +1152,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1014,7 +1176,8 @@
     "categoria": "iot",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1123,7 +1286,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1162,7 +1327,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1193,7 +1360,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "publicado",
     "resumen": "Ejecuta código en respuesta a eventos sin gestionar servidores y pagando solo por el tiempo de ejecución.",
@@ -1207,7 +1376,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1220,7 +1390,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1232,7 +1403,8 @@
     "categoria": "computacion",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1246,7 +1418,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1309,11 +1482,36 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
     "documentacion": "https://docs.aws.amazon.com/awsconsolehelpdocs/"
+  },
+  {
+    "id": "marketplace",
+    "nombre": "AWS Marketplace",
+    "categoria": "administracion-financiera",
+    "icono": true,
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://docs.aws.amazon.com/marketplace/"
+  },
+  {
+    "id": "migration-evaluator",
+    "nombre": "Migration Evaluator",
+    "categoria": "migracion-transferencia",
+    "icono": true,
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://aws.amazon.com/migration-evaluator/"
   },
   {
     "id": "migration-hub",
@@ -1321,7 +1519,8 @@
     "categoria": "migracion-transferencia",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1362,7 +1561,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1401,7 +1601,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1414,7 +1616,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1427,7 +1630,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1466,7 +1670,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1479,7 +1684,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1504,7 +1710,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "alias": [
       "Amazon QuickSight"
@@ -1521,7 +1728,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1536,7 +1744,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1553,7 +1763,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1567,7 +1778,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1580,7 +1792,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "publicado",
     "resumen": "DNS gestionado y registro de dominios, con políticas de enrutamiento y comprobaciones de estado.",
@@ -1595,7 +1809,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "publicado",
     "resumen": "Almacenamiento de objetos duradero, escalable y barato, con clases de almacenamiento para cada patrón de acceso.",
@@ -1609,7 +1825,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1623,7 +1840,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "incluye": [
       "Amazon SageMaker JumpStart"
@@ -1651,7 +1869,8 @@
     "nombreCompleto": "AWS Schema Conversion Tool (AWS SCT)",
     "categoria": "migracion-transferencia",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1665,7 +1884,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1678,7 +1899,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1703,7 +1925,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1714,7 +1937,8 @@
     "nombre": "Service Quotas",
     "categoria": "administracion-gobernanza",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1727,7 +1951,8 @@
     "categoria": "aplicaciones-empresariales",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "publicado",
     "resumen": "Envío y recepción de correo electrónico a escala: transaccional, notificaciones y marketing.",
@@ -1740,7 +1965,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1753,7 +1979,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "alias": [
       "AWS VPN"
@@ -1783,7 +2010,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1797,7 +2026,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1810,7 +2041,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1823,7 +2056,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1846,11 +2080,24 @@
     "nombreCompleto": "AWS Security Token Service (AWS STS)",
     "categoria": "seguridad-identidad-cumplimiento",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
     "documentacion": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html"
+  },
+  {
+    "id": "support",
+    "nombre": "AWS Support",
+    "categoria": "habilitacion-clientes",
+    "icono": true,
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://docs.aws.amazon.com/awssupport/latest/user/getting-started.html"
   },
   {
     "id": "systems-manager",
@@ -1859,7 +2106,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1873,7 +2122,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1899,7 +2149,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1937,7 +2188,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1951,7 +2203,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1965,7 +2218,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -1991,7 +2245,9 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -2004,7 +2260,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -2031,7 +2289,8 @@
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
-      "AIF-C01"
+      "AIF-C01",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
@@ -2043,11 +2302,23 @@
     "categoria": "computacion-usuarios-finales",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02"
     ],
     "estado": "pendiente",
     "resumen": "",
     "documentacion": "https://docs.aws.amazon.com/workspaces/"
+  },
+  {
+    "id": "workspaces-secure-browser",
+    "nombre": "Amazon WorkSpaces Secure Browser",
+    "categoria": "computacion-usuarios-finales",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "documentacion": "https://docs.aws.amazon.com/workspaces-web/"
   },
   {
     "id": "x-ray",
@@ -2056,7 +2327,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C02",
+      "CLF-C02",
+      "DVA-C02"
     ],
     "estado": "pendiente",
     "resumen": "",

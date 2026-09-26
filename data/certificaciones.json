@@ -1,5 +1,36 @@
 [
   {
+    "codigo": "CLF-C02",
+    "nombre": "AWS Certified Cloud Practitioner",
+    "nombreCorto": "Cloud Practitioner",
+    "nivel": "Foundational",
+    "estado": "vigente",
+    "guia": "https://docs.aws.amazon.com/aws-certification/latest/cloud-practitioner-02/cloud-practitioner-02.html",
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 700 },
+    "dominios": [
+      { "id": 1, "nombre": "Conceptos de la nube", "nombreEn": "Cloud Concepts", "peso": 24 },
+      { "id": 2, "nombre": "Seguridad y cumplimiento", "nombreEn": "Security and Compliance", "peso": 30 },
+      { "id": 3, "nombre": "Tecnología y servicios de la nube", "nombreEn": "Cloud Technology and Services", "peso": 34 },
+      { "id": 4, "nombre": "Facturación, precios y soporte", "nombreEn": "Billing, Pricing, and Support", "peso": 12 }
+    ]
+  },
+  {
+    "codigo": "AIF-C01",
+    "nombre": "AWS Certified AI Practitioner",
+    "nombreCorto": "AI Practitioner",
+    "nivel": "Foundational",
+    "estado": "vigente",
+    "guia": "https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01.html",
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 700 },
+    "dominios": [
+      { "id": 1, "nombre": "Fundamentos de IA y ML", "nombreEn": "Fundamentals of AI and ML", "peso": 20 },
+      { "id": 2, "nombre": "Fundamentos de IA generativa", "nombreEn": "Fundamentals of GenAI", "peso": 24 },
+      { "id": 3, "nombre": "Aplicaciones de los modelos fundacionales", "nombreEn": "Applications of Foundation Models", "peso": 28 },
+      { "id": 4, "nombre": "Directrices para una IA responsable", "nombreEn": "Guidelines for Responsible AI", "peso": 14 },
+      { "id": 5, "nombre": "Seguridad, cumplimiento y gobernanza de soluciones de IA", "nombreEn": "Security, Compliance, and Governance for AI Solutions", "peso": 14 }
+    ]
+  },
+  {
     "codigo": "SAA-C03",
     "nombre": "AWS Certified Solutions Architect – Associate",
     "nombreCorto": "Solutions Architect Associate",
@@ -13,6 +44,33 @@
       { "id": 3, "nombre": "Diseñar arquitecturas de alto rendimiento", "nombreEn": "Design High-Performing Architectures", "peso": 24 },
       { "id": 4, "nombre": "Diseñar arquitecturas con costos optimizados", "nombreEn": "Design Cost-Optimized Architectures", "peso": 20 }
     ]
+  },
+  {
+    "codigo": "DVA-C02",
+    "nombre": "AWS Certified Developer – Associate",
+    "nombreCorto": "Developer Associate (C02)",
+    "nivel": "Associate",
+    "estado": "retirandose",
+    "ultimoDia": "2026-12-01",
+    "guia": "https://docs.aws.amazon.com/aws-certification/latest/developer-associate-02/developer-associate-02.html",
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 720 },
+    "dominios": [
+      { "id": 1, "nombre": "Desarrollo con servicios de AWS", "nombreEn": "Development with AWS Services", "peso": 32 },
+      { "id": 2, "nombre": "Seguridad", "nombreEn": "Security", "peso": 26 },
+      { "id": 3, "nombre": "Implementación", "nombreEn": "Deployment", "peso": 24 },
+      { "id": 4, "nombre": "Solución de problemas y optimización", "nombreEn": "Troubleshooting and Optimization", "peso": 18 }
+    ]
+  },
+  {
+    "codigo": "DVA-C03",
+    "nombre": "AWS Certified Developer – Associate",
+    "nombreCorto": "Developer Associate (C03)",
+    "nivel": "Associate",
+    "estado": "guia-pendiente",
+    "disponibleDesde": "2026-10-27",
+    "guia": "https://aws.amazon.com/certification/certified-developer-associate/",
+    "examen": null,
+    "dominios": []
   },
   {
     "codigo": "SAP-C02",
@@ -40,21 +98,5 @@
     "guia": "https://aws.amazon.com/certification/certified-solutions-architect-professional/",
     "examen": null,
     "dominios": []
-  },
-  {
-    "codigo": "AIF-C01",
-    "nombre": "AWS Certified AI Practitioner",
-    "nombreCorto": "AI Practitioner",
-    "nivel": "Foundational",
-    "estado": "vigente",
-    "guia": "https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01.html",
-    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 700 },
-    "dominios": [
-      { "id": 1, "nombre": "Fundamentos de IA y ML", "nombreEn": "Fundamentals of AI and ML", "peso": 20 },
-      { "id": 2, "nombre": "Fundamentos de IA generativa", "nombreEn": "Fundamentals of GenAI", "peso": 24 },
-      { "id": 3, "nombre": "Aplicaciones de los modelos fundacionales", "nombreEn": "Applications of Foundation Models", "peso": 28 },
-      { "id": 4, "nombre": "Directrices para una IA responsable", "nombreEn": "Guidelines for Responsible AI", "peso": 14 },
-      { "id": 5, "nombre": "Seguridad, cumplimiento y gobernanza de soluciones de IA", "nombreEn": "Security, Compliance, and Governance for AI Solutions", "peso": 14 }
-    ]
   }
 ]

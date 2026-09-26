@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 12 de 155: los que usa Kopi
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 12 de 164: los que usa Kopi
   (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch). La tarea 0.9 sigue programada para el 27/10/2026.
 - **Próximo paso:** seguir la cola "Prioridad 0" por el primer servicio sin marcar
@@ -27,10 +27,11 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Estilo | Paleta y componentes de `kopi-web/styles.css` (`--cyan`, `--violet`, `--magenta`, `--gradient-brand`), **copiados** porque los repos son independientes. |
 | Hosting | Solo GitHub Pages (`arquitechthor.github.io/aws-cert-study/`). Sin dominio propio ni Route 53. |
 | Nombre del repo | `aws-cert-study` (antes `knowledgement-aws`). |
-| Certificaciones | **SAA-C03** (Solutions Architect – Associate), **SAP-C02** y **SAP-C03** (Solutions Architect – Professional) y **AIF-C01** (AI Practitioner). Verificado el 2026-09-25 con las guías oficiales. |
+| Certificaciones | **CLF-C02** (Cloud Practitioner), **AIF-C01** (AI Practitioner), **SAA-C03** (Solutions Architect – Associate), **DVA-C02** y **DVA-C03** (Developer – Associate) y **SAP-C02** y **SAP-C03** (Solutions Architect – Professional). Verificado el 2026-09-25 (SAA, SAP, AIF) y el 2026-09-26 (CLF, DVA) con las guías oficiales. En `certificaciones.json` van ordenadas por nivel. |
+| DVA-C02 vs DVA-C03 | Igual que SAP: **certificaciones distintas**. DVA-C02 se retira (último día 01/12/2026) y DVA-C03 abre el registro el 27/10/2026, con `estado: "guia-pendiente"` y sin servicios hasta la tarea 0.9. CLF-C02 sigue vigente sin nueva versión anunciada (solo se retiran sus versiones en italiano y alemán tras el 31/12/2026). |
 | SAP-C02 vs SAP-C03 | Son **certificaciones distintas** en el catálogo: una persona presenta SAP-C02 (último día 17/11/2026) y otra SAP-C03 (registro desde el 27/10/2026, sin guía publicada aún). SAP-C03 aparece en `certificaciones.json` con `estado: "guia-pendiente"` y sin servicios hasta la tarea 0.9. |
 | Idioma | Español. Los nombres de servicio van en inglés, como los usa AWS. Las categorías usan la **traducción oficial de AWS** (guías en `es_es`) **con su nombre en inglés** como referencia, por ejemplo "Computación (*Compute*)". |
-| Categorías | 20 categorías, la unión de las usadas en las tres guías. "AWS Cost Management" (SAA) y "Cloud Financial Management" (SAP/AIF) se unifican como "Administración financiera en la nube". Cada servicio tiene una `categoria` principal (la más usada en las guías; si hay empate, la de SAP) y opcionalmente `categoriasAdicionales`. El filtro busca en ambas, así que "Sin servidor" (*Serverless*) muestra Lambda y Fargate aunque su categoría principal sea Computación. |
+| Categorías | 21 categorías, la unión de las usadas en las guías ("Habilitación de clientes" (*Customer Enablement*) entró con CLF-C02, solo para AWS Support). "AWS Cost Management" (SAA) y "Cloud Financial Management" (SAP/AIF) se unifican como "Administración financiera en la nube". Cada servicio tiene una `categoria` principal (la más usada en las guías; si hay empate, la de SAP) y opcionalmente `categoriasAdicionales`. El filtro busca en ambas, así que "Sin servidor" (*Serverless*) muestra Lambda y Fargate aunque su categoría principal sea Computación. |
 | Alias y fusiones | Las guías nombran el mismo servicio de formas distintas ("Amazon S3" / "Amazon Simple Storage Service (Amazon S3)"), así que se unifican en un id. Las funcionalidades que las guías listan aparte se fusionan en su servicio (`incluye`): Aurora Serverless → Aurora, CloudWatch Logs → CloudWatch, ECS Anywhere → ECS, EKS Anywhere/Distro → EKS, SageMaker JumpStart → SageMaker AI. "AWS VPN" (SAP) cubre Site-to-Site VPN y Client VPN. "Amazon Kinesis" (SAA) → Kinesis Data Streams. Amazon QuickSight aparece como Amazon Quick (nombre actual) con alias de búsqueda. |
 | Licencia | **CC BY-SA 4.0** para todo el repo (sustituye a la GPL-3.0 inicial). |
 | Derechos de autor | Nada de copiar documentación de AWS: se resume con palabras propias y se enlaza la fuente. Si algo debe ser literal (una definición, un límite), va entre comillas o en `<blockquote>` con cita y enlace a la fuente. |
@@ -200,9 +201,17 @@ Objetivo: tener el catálogo completo de servicios y categorías de las 3 certif
       que comparten SAA y SAP, luego los de AIF) y volcarlo en la cola de la Fase 2 de este fichero.
       *Hecho: núcleo primero y después por número de guías. Lo exclusivo de SAP va antes que lo
       de AIF por la fecha límite de SAP-C02.*
-- [ ] **0.9** **A partir del 27/10/2026:** descargar la guía SAP-C03, guardar su lista en
-      `data/fuentes/SAP-C03.txt`, añadir `SAP-C03` a los servicios que corresponda (y crear los nuevos),
-      completar sus dominios en `certificaciones.json` y añadir a la cola los servicios nuevos.
+- [ ] **0.9** **A partir del 27/10/2026:** descargar las guías SAP-C03 y DVA-C03, guardar sus listas en
+      `data/fuentes/SAP-C03.txt` y `DVA-C03.txt`, añadir `SAP-C03`/`DVA-C03` a los servicios que
+      corresponda (y crear los nuevos), completar sus dominios y examen en `certificaciones.json`,
+      cambiar su `estado` a `"vigente"` y añadir a la cola los servicios nuevos.
+- [x] **0.10** Añadir CLF-C02 y DVA-C02 (y DVA-C03 como pendiente de guía).
+      *Hecho el 2026-09-26: `data/fuentes/CLF-C02.txt` (111 servicios, 19 categorías) y
+      `DVA-C02.txt` (47, 10), dominios y examen en `certificaciones.json`, 9 servicios nuevos (164
+      en total) y la categoría "Habilitación de clientes". Nombres genéricos de las guías: "Amazon
+      Kinesis" → Kinesis Data Streams + Data Firehose (como en SAA), "AWS VPN" → Site-to-Site VPN +
+      Client VPN, "Amazon Q Developer" → Amazon Q. Los chips de certificación y la meta
+      description de las páginas ya publicadas se regeneraron desde `servicios.json`.*
 
 ## Fase 1: esqueleto publicado
 
@@ -426,6 +435,21 @@ esta lista es solo el orden de trabajo.
 - [ ] `personalize` Amazon Personalize — Machine learning (SAP-C02, AIF-C01)
 - [ ] `transform` AWS Transform — Machine learning (AIF-C01)
 
+#### Prioridad 5: nuevos con CLF-C02 y DVA-C02 (9)
+
+Primero los de DVA-C02 por su fecha límite (01/12/2026). Las certificaciones entre paréntesis del
+resto de la cola son las de cuando se creó; las actuales están en `servicios.json`.
+
+- [ ] `amazon-q` Amazon Q — Machine learning (CLF-C02, DVA-C02)
+- [ ] `appconfig` AWS AppConfig — Administración y gobernanza (DVA-C02)
+- [ ] `cdk` AWS CDK — Administración y gobernanza (DVA-C02)
+- [ ] `cloudshell` AWS CloudShell — Herramientas para desarrolladores (DVA-C02)
+- [ ] `connect` Amazon Connect — Aplicaciones empresariales (CLF-C02)
+- [ ] `marketplace` AWS Marketplace — Administración financiera en la nube (CLF-C02)
+- [ ] `migration-evaluator` Migration Evaluator — Migración y transferencia (CLF-C02)
+- [ ] `support` AWS Support — Habilitación de clientes (CLF-C02)
+- [ ] `workspaces-secure-browser` Amazon WorkSpaces Secure Browser — Computación para usuarios finales (CLF-C02)
+
 ## Fase 3: extras (opcional)
 
 - [ ] **3.1** Simulacro por certificación: mezcla preguntas de todos los servicios, con
@@ -521,3 +545,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-25 | Fase 2 iniciada: publicados los 12 servicios que usa Kopi, con sección "Así lo uso en Kopi" y 62 preguntas originales. MCP `aws-knowledge` usado por JSON-RPC desde la sesión (funciona sin autenticación); datos contrastados con la documentación actual (p. ej. carga asíncrona de Lambda de 1 MB, objetos de S3 de hasta ~50 TB, certificados de ACM de 198 días). |
 | 2026-09-26 | Iconos oficiales de AWS en el catálogo: icono de servicio y de categoría en las tarjetas, icono de la categoría elegida en el filtro y en la cabecera de las páginas de servicio (y en la plantilla). Tareas 4.1–4.3 adelantadas; decisión de iconos, aviso legal y pie actualizados. |
 | 2026-09-26 | Enlace a la documentación oficial en la cabecera de cada servicio (campo `documentacion`, 153 de 155 URLs comprobadas), estado "Finalizado" por progreso local en `localStorage` (barra de progreso en el quiz, insignia en la tarjeta, filtro "Solo finalizados") y modo Unión/Intersección en el filtro de certificaciones. |
+| 2026-09-26 | Añadidas CLF-C02 (Cloud Practitioner) y DVA-C02 (Developer – Associate, se retira el 01/12/2026), más DVA-C03 como pendiente de guía: fuentes, dominios, 9 servicios nuevos (164), categoría "Habilitación de clientes", chips de las páginas publicadas regenerados. Tarea 0.10. |

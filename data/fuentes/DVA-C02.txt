@@ -1,0 +1,59 @@
+# Servicios en alcance de DVA-C02 (extraído el 2026-09-26)
+# Fuente: https://docs.aws.amazon.com/aws-certification/latest/developer-associate-02/dva-02-in-scope-services.html
+## Analytics
+- Amazon Athena
+- Amazon Kinesis
+- Amazon OpenSearch Service
+## Application Integration
+- AWS AppSync
+- Amazon EventBridge
+- Amazon Simple Notification Service (Amazon SNS)
+- Amazon Simple Queue Service (Amazon SQS)
+- AWS Step Functions
+## Compute
+- Amazon EC2
+- AWS Elastic Beanstalk
+- AWS Lambda
+## Containers
+- Amazon Elastic Container Registry (Amazon ECR)
+- Amazon Elastic Container Service (Amazon ECS)
+- Amazon Elastic Kubernetes Service (Amazon EKS)
+## Database
+- Amazon Aurora
+- Amazon DynamoDB
+- Amazon ElastiCache
+- Amazon RDS
+## Developer Tools
+- AWS Amplify
+- AWS CloudShell
+- AWS CodeArtifact
+- AWS CodeBuild
+- AWS CodeDeploy
+- AWS CodePipeline
+- AWS X-Ray
+- Amazon Q Developer
+## Management and Governance
+- AWS AppConfig
+- AWS Cloud Development Kit (AWS CDK)
+- AWS CloudFormation
+- AWS CloudTrail
+- Amazon CloudWatch
+- AWS Command Line Interface (AWS CLI)
+- AWS Systems Manager
+## Networking and Content Delivery
+- Amazon API Gateway
+- Amazon CloudFront
+- Elastic Load Balancing
+- Amazon Route 53
+- Amazon VPC
+## Security, Identity, and Compliance
+- Amazon Cognito
+- AWS Identity and Access Management (IAM)
+- AWS Key Management Service (AWS KMS)
+- AWS Secrets Manager
+- AWS Security Token Service (AWS STS)
+- AWS WAF
+## Storage
+- Amazon Elastic Block Store (Amazon EBS)
+- Amazon Elastic File System (Amazon EFS)
+- Amazon S3

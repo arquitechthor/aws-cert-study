@@ -5,8 +5,9 @@ preguntas de práctica originales. Sitio estático publicado con GitHub Pages:
 
 **https://arquitechthor.github.io/aws-cert-study/**
 
-Certificaciones cubiertas: Solutions Architect – Associate (SAA-C03), Solutions Architect –
-Professional (SAP-C02 y SAP-C03) y AI Practitioner (AIF-C01).
+Certificaciones cubiertas: Cloud Practitioner (CLF-C02), AI Practitioner (AIF-C01), Solutions
+Architect – Associate (SAA-C03), Developer – Associate (DVA-C02 y DVA-C03) y Solutions Architect –
+Professional (SAP-C02 y SAP-C03).
 
 ## Aviso
 
