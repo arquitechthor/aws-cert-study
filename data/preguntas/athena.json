@@ -1,0 +1,113 @@
+[
+  {
+    "id": "athena-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un analista quiere hacer consultas SQL sobre ficheros CSV guardados en S3 sin cargar los datos en una base de datos ni gestionar servidores. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon Athena.",
+      "Amazon RDS.",
+      "Amazon EC2.",
+      "AWS Snowball."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Athena consulta con SQL los datos directamente en S3 y sin servidores. RDS obligaría a cargarlos en una base de datos, EC2 es cómputo que hay que gestionar y Snowball sirve para transferir datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/athena/latest/ug/what-is.html"
+    ]
+  },
+  {
+    "id": "athena-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Las consultas de Athena sobre años de registros en JSON son lentas y caras, aunque casi todas filtran por fecha. ¿Qué cambio es el más eficaz?",
+    "opciones": [
+      "Convertir los datos a Parquet y particionarlos por fecha.",
+      "Guardarlos sin comprimir para leer más rápido.",
+      "Pasar el bucket a S3 Glacier Deep Archive.",
+      "Crear un grupo de trabajo nuevo sin límites."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Parquet es un formato de columnas comprimido y las particiones por fecha hacen que Athena solo lea los ficheros de las fechas pedidas: menos datos analizados, menos coste y menos tiempo. Sin comprimir se lee más, Glacier Deep Archive no se puede consultar directamente y un grupo de trabajo no reduce los datos leídos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/athena/latest/ug/performance-tuning.html",
+      "https://docs.aws.amazon.com/athena/latest/ug/partitions.html"
+    ]
+  },
+  {
+    "id": "athena-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "El equipo de seguridad necesita investigar de vez en cuando qué llamadas a la API hizo un usuario en los últimos 6 meses, a partir de los registros de CloudTrail guardados en S3. ¿Qué solución es la más sencilla y barata?",
+    "opciones": [
+      "Consultar los registros con Athena.",
+      "Cargarlos a diario en un clúster de Redshift.",
+      "Descargarlos y buscarlos a mano.",
+      "Copiarlos a volúmenes EBS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Athena consulta los registros de CloudTrail directamente en S3 y solo cobra cuando se consulta, ideal para investigaciones puntuales. Un clúster de Redshift cuesta aunque no se use y las otras opciones no escalan.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/athena/latest/ug/what-is.html"
+    ]
+  },
+  {
+    "id": "athena-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una aplicación lanza consultas de Athena con el SDK. ¿Cómo obtiene el resultado?",
+    "opciones": [
+      "StartQueryExecution devuelve un identificador; se consulta el estado y, al terminar, se leen los resultados con GetQueryResults (o del fichero en S3).",
+      "La llamada devuelve siempre el resultado de inmediato.",
+      "Los resultados llegan por correo electrónico.",
+      "Hay que leerlos de un volumen EBS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las consultas de Athena son asíncronas: se inician, se comprueba su estado y después se leen los resultados, que además se guardan en S3. No se devuelven al instante ni llegan por correo o EBS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/athena/latest/ug/what-is.html"
+    ]
+  },
+  {
+    "id": "athena-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Varios equipos usan Athena en la misma cuenta y uno de ellos lanzó consultas que analizaron decenas de TB por error. ¿Cómo se evita que vuelva a pasar y se separan los costes?",
+    "opciones": [
+      "Un grupo de trabajo por equipo con límites de datos analizados por consulta y etiquetas de coste.",
+      "Prohibir Athena y usar solo Redshift.",
+      "Dar a todos acceso de administrador.",
+      "Borrar los resultados de las consultas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los grupos de trabajo permiten fijar límites de datos por consulta, separar la ubicación de resultados y etiquetar el coste por equipo. Prohibir el servicio o dar más permisos no resuelve el control, y borrar resultados no evita el coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/athena/latest/ug/workgroups-manage-queries-control-costs.html"
+    ]
+  }
+]

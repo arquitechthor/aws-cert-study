@@ -79,7 +79,7 @@
           <ul>
             <li><strong>Instancia única:</strong> para desarrollo y pruebas.</li>
             <li><strong>ActiveMQ activo/en espera:</strong> dos brokers en dos zonas de disponibilidad
-              con almacenamiento compartido (<a href="../servicio.html?id=efs"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>); si cae el activo, el de espera toma el control.</li>
+              con almacenamiento compartido (<a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>); si cae el activo, el de espera toma el control.</li>
             <li><strong>RabbitMQ en clúster:</strong> tres nodos en tres zonas detrás de un único
               endpoint, con colas replicadas (colas <em>quorum</em>).</li>
           </ul></li>
@@ -103,7 +103,7 @@
       <ul>
         <li>Aplicaciones nuevas en la nube: <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> y <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> escalan solos, no hay broker que dimensionar y
           son más baratos para la mayoría de cargas.</li>
-        <li>Streaming de eventos con relectura y gran volumen: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>.</li>
+        <li>Streaming de eventos con relectura y gran volumen: <a href="kinesis-data-streams.html">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>.</li>
         <li>Enrutamiento de eventos entre servicios de AWS: <a href="eventbridge.html">EventBridge</a>.</li>
         <li>Mensajería de miles de dispositivos por <abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr>: <a href="../servicio.html?id=iot-core">AWS IoT Core</a>.</li>
       </ul>

@@ -89,7 +89,7 @@
               Logs; se paga por número y duración de ejecuciones.</li>
           </ul></li>
         <li><strong>Integraciones con servicios:</strong> llamadas directas a más de 200 servicios
-          (<a href="dynamodb.html">DynamoDB</a>, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="../servicio.html?id=glue">Glue</a>, <a href="bedrock.html">Bedrock</a>…) sin una <a href="lambda.html">Lambda</a> de por medio.</li>
+          (<a href="dynamodb.html">DynamoDB</a>, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="glue.html">Glue</a>, <a href="bedrock.html">Bedrock</a>…) sin una <a href="lambda.html">Lambda</a> de por medio.</li>
         <li><strong>Patrones de integración</strong> (solo en Standard los dos últimos):
           <em>petición-respuesta</em> (llama y sigue), <em>ejecutar un trabajo</em>
           (<code>.sync</code>, espera a que termine, por ejemplo un trabajo de Batch) y <em>esperar
@@ -106,7 +106,7 @@
       <ul>
         <li>Procesos de negocio con varios pasos: pedido, pago, envío y notificación.</li>
         <li>Flujos con intervención humana (aprobaciones) mediante tokens de devolución.</li>
-        <li>Canalizaciones de datos y <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> (<a href="../servicio.html?id=glue">Glue</a>, <a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a>, Batch) con esperas a que terminen.</li>
+        <li>Canalizaciones de datos y <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> (<a href="glue.html">Glue</a>, <a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a>, Batch) con esperas a que terminen.</li>
         <li>Procesar en paralelo miles de ficheros de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con el Map distribuido.</li>
         <li>Orquestar llamadas a modelos de <a href="bedrock.html">Bedrock</a> y pasos de validación en aplicaciones de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr>.</li>
       </ul>
@@ -130,7 +130,7 @@
             <tr><td>Ritmo de inicio</td><td>Miles por segundo</td><td>Más de 100 000 por segundo</td></tr>
             <tr><td>Precio</td><td>Por transición de estado</td><td>Por ejecución y duración</td></tr>
             <tr><td>.sync y waitForTaskToken</td><td>Sí</td><td>No</td></tr>
-            <tr><td>Uso típico</td><td>Procesos largos y auditables</td><td>Eventos de alto volumen, IoT (internet de las cosas), streaming</td></tr>
+            <tr><td>Uso típico</td><td>Procesos largos y auditables</td><td>Eventos de alto volumen, <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr> (internet de las cosas), streaming</td></tr>
           </tbody>
         </table>
       </div>

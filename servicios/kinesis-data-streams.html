@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Kinesis Data Streams — Apuntes AWS</title>
+<meta name="description" content="Flujos de datos en tiempo real: ingiere millones de eventos por segundo, los guarda de 24 horas a 365 días y varios consumidores los leen en orden. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/kinesis-data-streams.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Kinesis Data Streams — Apuntes AWS">
+<meta property="og:description" content="Flujos de datos en tiempo real: ingiere millones de eventos por segundo, los guarda de 24 horas a 365 días y varios consumidores los leen en orden.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/kinesis-data-streams.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/kinesis-data-streams.svg" alt="" width="56" height="56"><span>Amazon Kinesis Data Streams</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/streams/latest/dev/introduction.html" target="_blank" rel="noopener">Documentación de Amazon Kinesis Data Streams ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Kinesis Data Streams captura y guarda <strong>flujos de datos en tiempo real</strong>:
+        clics de una web, telemetría de dispositivos, registros de aplicaciones o transacciones. Los
+        productores escriben registros en un <strong>stream</strong> y uno o varios
+        <strong>consumidores</strong> los leen en orden, cada uno a su ritmo, en milisegundos. A
+        diferencia de una cola, los datos no desaparecen al leerlos: se conservan durante el periodo
+        de retención y se pueden <strong>volver a leer</strong>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Shard:</strong> unidad de capacidad de un stream: 1 MB/s o 1 000 registros por
+          segundo de escritura y 2 MB/s de lectura.</li>
+        <li><strong>Modos de capacidad:</strong> <em>bajo demanda</em> (escala solo, sin gestionar
+          shards) o <em>aprovisionado</em> (eliges el número de shards y lo cambias con resharding).</li>
+        <li><strong>Clave de partición:</strong> decide a qué shard va cada registro; los registros con
+          la misma clave van al mismo shard y se leen <strong>en orden</strong>. Una clave poco variada
+          crea shards calientes.</li>
+        <li><strong>Tamaño de registro:</strong> 1 MiB por defecto, ampliable hasta 10 MiB para
+          registros grandes ocasionales.</li>
+        <li><strong>Retención:</strong> 24 horas por defecto, ampliable hasta 365 días.</li>
+        <li><strong>Consumidores:</strong> <a href="lambda.html">Lambda</a>, aplicaciones con la <abbr class="sigla" data-s="KCL" data-en="Kinesis Client Library" data-es="biblioteca para escribir consumidores de Kinesis" tabindex="0">KCL</abbr> (<em>Kinesis Client
+          Library</em>), <a href="../servicio.html?id=managed-service-for-apache-flink">Amazon Managed Service for Apache Flink</a> para análisis en streaming, Amazon Data
+          <a href="data-firehose.html">Firehose</a> para entregar a <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o <a href="redshift.html">Redshift</a>. Con <em>enhanced fan-out</em> cada consumidor tiene
+          sus propios 2 MB/s por shard.</li>
+        <li><strong>Productores:</strong> <abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr>, <abbr class="sigla" data-s="KPL" data-en="Kinesis Producer Library" data-es="biblioteca para escribir productores de Kinesis" tabindex="0">KPL</abbr> (<em>Kinesis Producer Library</em>), agente de
+          Kinesis o servicios de AWS.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Analítica en tiempo real de clics, juegos o redes sociales.</li>
+        <li>Telemetría de dispositivos <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr> (internet de las cosas) y vehículos.</li>
+        <li>Centralizar registros y eventos para varios consumidores (alertas, archivo, análisis).</li>
+        <li>Captura de cambios de bases de datos para procesarlos en orden.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Solo cargar datos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="redshift.html">Redshift</a> u <a href="opensearch-service.html">OpenSearch</a> sin procesarlos en tiempo real: Amazon Data
+          <a href="data-firehose.html">Firehose</a> directamente.</li>
+        <li>Desacoplar tareas donde cada mensaje lo procesa un solo trabajador y se borra: <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>.</li>
+        <li>Si el equipo ya usa Apache Kafka y quiere su <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>: <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Kinesis Data Streams, Firehose y SQS</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Kinesis Data Streams</th><th><a href="data-firehose.html">Data Firehose</a></th><th><a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a></th></tr></thead>
+          <tbody>
+            <tr><td>Latencia</td><td>Milisegundos</td><td>Segundos (con búfer)</td><td>Milisegundos</td></tr>
+            <tr><td>Consumidores</td><td>Varios, cada uno lee todo</td><td>Destino gestionado</td><td>Uno por mensaje</td></tr>
+            <tr><td>Relectura</td><td>Sí, dentro de la retención</td><td>No</td><td>No</td></tr>
+            <tr><td>Orden</td><td>Por clave de partición</td><td>No aplica</td><td>Solo en <abbr class="sigla sigla-1" data-s="FIFO" data-en="First In, First Out" data-es="el primero en entrar es el primero en salir" tabindex="0">FIFO<span class="sigla-exp"> (First In, First Out: el primero en entrar es el primero en salir)</span></abbr></td></tr>
+            <tr><td>Gestión</td><td>Shards o bajo demanda</td><td>Sin servidores</td><td>Sin servidores</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En modo aprovisionado se paga por hora de shard y por unidades de datos escritos; en bajo
+        demanda, por hora de stream y por GB escrito y leído. La retención ampliada, el enhanced fan-out
+        y los registros grandes tienen coste adicional.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos replicados en tres zonas de disponibilidad.</li>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> y endpoint de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> para no salir a internet.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Tiempo real"</strong>, <strong>"varios consumidores"</strong> o <strong>"volver a leer los datos"</strong>: Kinesis Data Streams.</li>
+        <li><strong>"Cargar en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="redshift.html">Redshift</a> casi en tiempo real sin código"</strong>: <a href="data-firehose.html">Firehose</a>.</li>
+        <li><strong>"ProvisionedThroughputExceeded"</strong>: más shards, modo bajo demanda o mejor clave de partición.</li>
+        <li><strong>"Orden por cliente"</strong>: clave de partición igual al identificador del cliente.</li>
+        <li><strong>"Cada consumidor necesita su propio rendimiento"</strong>: enhanced fan-out.</li>
+        <li><strong>"Guardar los datos una semana para reprocesar"</strong>: ampliar la retención.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="kinesis-data-streams"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/streams/latest/dev/introduction.html" target="_blank" rel="noopener">What is Amazon Kinesis Data Streams?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html" target="_blank" rel="noopener">Choose the data stream capacity mode</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/streams/latest/dev/large-records.html" target="_blank" rel="noopener">Handle large records</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/streams/latest/dev/enhanced-consumers.html" target="_blank" rel="noopener">Develop enhanced fan-out consumers with dedicated throughput</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -106,7 +106,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Transacciones de una aplicación (<abbr class="sigla sigla-1" data-s="OLTP" data-en="Online Transaction Processing" data-es="las transacciones del día a día de una aplicación" tabindex="0">OLTP<span class="sigla-exp"> (Online Transaction Processing: las transacciones del día a día de una aplicación)</span></abbr>, muchas escrituras pequeñas): <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>.</li>
-        <li>Consultas puntuales sobre ficheros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin mantener un almacén: <a href="../servicio.html?id=athena">Athena</a>.</li>
+        <li>Consultas puntuales sobre ficheros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin mantener un almacén: <a href="athena.html">Athena</a>.</li>
         <li>Búsqueda de texto o análisis de registros casi en tiempo real: <a href="opensearch-service.html">OpenSearch</a>.</li>
       </ul>
 
@@ -116,7 +116,7 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Análisis intensivo y recurrente sobre grandes volúmenes (<abbr class="sigla" data-s="OLAP" data-en="Online Analytical Processing" data-es="consultas analíticas sobre grandes volúmenes" tabindex="0">OLAP</abbr>)</td><td>Redshift</td></tr>
-            <tr><td>Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> ocasionales sobre ficheros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, sin infraestructura</td><td><a href="../servicio.html?id=athena">Athena</a></td></tr>
+            <tr><td>Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> ocasionales sobre ficheros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, sin infraestructura</td><td><a href="athena.html">Athena</a></td></tr>
             <tr><td>Transacciones de una aplicación (<abbr class="sigla" data-s="OLTP" data-en="Online Transaction Processing" data-es="las transacciones del día a día de una aplicación" tabindex="0">OLTP</abbr>)</td><td><a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> o <a href="aurora.html">Aurora</a></td></tr>
             <tr><td>Tablero de <abbr class="sigla" data-s="BI" data-en="Business Intelligence" data-es="análisis de datos para el negocio" tabindex="0">BI</abbr> sobre esos datos</td><td><a href="../servicio.html?id=quick">Amazon Quick</a></td></tr>
           </tbody>
@@ -147,7 +147,7 @@
         <li><strong>"Analizar datos de <a href="aurora.html">Aurora</a> sin construir <abbr class="sigla sigla-1" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL<span class="sigla-exp"> (Extract, Transform, Load: extraer, transformar y cargar datos)</span></abbr>"</strong>: integración zero-ETL.</li>
         <li><strong>"Carga intermitente sin gestionar el clúster"</strong>: Redshift Serverless.</li>
         <li><strong>"Compartir datos con otra cuenta sin copiarlos"</strong>: data sharing.</li>
-        <li><strong>"Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> puntuales y baratas sobre <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>"</strong>: <a href="../servicio.html?id=athena">Athena</a>, no Redshift.</li>
+        <li><strong>"Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> puntuales y baratas sobre <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>"</strong>: <a href="athena.html">Athena</a>, no Redshift.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

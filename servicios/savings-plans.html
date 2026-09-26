@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savings Plans — Apuntes AWS</title>
+<meta name="description" content="Modelo de precios con descuento a cambio de comprometer un gasto por hora durante 1 o 3 años, en cómputo, bases de datos o SageMaker AI. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/savings-plans.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Savings Plans — Apuntes AWS">
+<meta property="og:description" content="Modelo de precios con descuento a cambio de comprometer un gasto por hora durante 1 o 3 años, en cómputo, bases de datos o SageMaker AI.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/savings-plans.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/savings-plans.svg" alt="" width="56" height="56"><span>Savings Plans</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-financiera#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="18" height="18">Administración financiera en la nube <span class="cat-en">(Cloud Financial Management)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/savingsplans/" target="_blank" rel="noopener">Documentación de Savings Plans ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Savings Plans es un <strong>modelo de precios</strong>, no un servicio que se despliega. Te
+        comprometes a gastar una cantidad fija por hora (por ejemplo, 10 dólares/hora) durante
+        <strong>1 o 3 años</strong> y, a cambio, AWS aplica automáticamente un descuento sobre el
+        precio bajo demanda del uso que cubre ese compromiso. Lo que supere el compromiso se paga a
+        precio normal. Es más flexible que las instancias reservadas porque no te ata a un tipo de
+        instancia concreto (según el plan).</p>
+
+      <h2 id="tipos">Tipos de Savings Plans</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Qué cubre</th><th>Flexibilidad</th></tr></thead>
+          <tbody>
+            <tr><td>Compute Savings Plans</td><td><a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, <a href="fargate.html">Fargate</a> y <a href="lambda.html">Lambda</a></td><td>Máxima: cualquier familia, tamaño, región, sistema operativo o servicio de cómputo.</td></tr>
+            <tr><td>EC2 Instance Savings Plans</td><td>Una familia de instancias en una región</td><td>Menor, pero con el mayor descuento; libre en tamaño, sistema operativo y zona.</td></tr>
+            <tr><td>Database Savings Plans</td><td><a href="aurora.html">Aurora</a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a>, <a href="elasticache.html">ElastiCache</a>, <a href="../servicio.html?id=documentdb">DocumentDB</a>, <a href="../servicio.html?id=neptune">Neptune</a>, <a href="../servicio.html?id=keyspaces">Keyspaces</a>, <a href="../servicio.html?id=timestream">Timestream</a>, <a href="../servicio.html?id=dms"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a> y <a href="opensearch-service.html">OpenSearch</a></td><td>Entre motores, familias, tamaños y regiones, incluido el uso sin servidores.</td></tr>
+            <tr><td><a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a> Savings Plans</td><td>Uso de instancias de SageMaker AI</td><td>Entre tipos de instancia y regiones de SageMaker AI.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Compromiso en dinero por hora</strong>, no en instancias.</li>
+        <li><strong>Opciones de pago:</strong> todo por adelantado, parte por adelantado o nada por
+          adelantado; cuanto más adelantas y más largo el plazo, mayor descuento.</li>
+        <li><strong>Recomendaciones:</strong> <a href="../servicio.html?id=cost-explorer">Cost Explorer</a> propone el compromiso según el uso histórico
+          y muestra la utilización y la cobertura de los planes.</li>
+        <li><strong>Organizaciones:</strong> el descuento se comparte entre las cuentas de AWS
+          <a href="../servicio.html?id=organizations">Organizations</a> con facturación unificada (se puede restringir).</li>
+        <li><strong>Frente a instancias reservadas:</strong> las reservadas se comprometen a una
+          configuración concreta y, en el caso zonal, reservan capacidad; Savings Plans no reserva
+          capacidad (para eso existen las reservas de capacidad bajo demanda).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Cargas estables 24/7 (web, bases de datos, microservicios) que seguirán al menos un año.</li>
+        <li>Empresas que modernizan de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> a <a href="fargate.html">Fargate</a> o <a href="lambda.html">Lambda</a> y quieren conservar el descuento.</li>
+        <li>Flotas de bases de datos que cambian de motor o de región.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Cargas cortas, experimentales o impredecibles: bajo demanda.</li>
+        <li>Trabajos tolerantes a interrupciones: Spot, mucho más barato.</li>
+        <li>Si necesitas garantizar capacidad en una zona: reservas de capacidad.</li>
+      </ul>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>No tiene coste propio: es un descuento. Compute Savings Plans llega hasta en torno a un 66 %
+        sobre el bajo demanda; <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> Instance Savings Plans, hasta un 72 %; Database Savings Plans, hasta
+        un 35 %. El compromiso se paga aunque no se use.</p>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Uso estable de 1 o 3 años con flexibilidad para cambiar de familia, región o pasar a <a href="fargate.html">Fargate</a>/Lambda"</strong>: Compute Savings Plans.</li>
+        <li><strong>"Máximo descuento y la familia de instancias no cambiará"</strong>: <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> Instance Savings Plans (o instancias reservadas estándar).</li>
+        <li><strong>"Descuento para <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="aurora.html">Aurora</a> y <a href="dynamodb.html">DynamoDB</a> a la vez"</strong>: Database Savings Plans.</li>
+        <li><strong>"Garantizar capacidad"</strong>: Savings Plans no la garantiza; reservas de capacidad.</li>
+        <li><strong>"Qué compromiso comprar"</strong>: recomendaciones de <a href="../servicio.html?id=cost-explorer">Cost Explorer</a>.</li>
+        <li><strong>"Trabajos interrumpibles baratos"</strong>: Spot, no Savings Plans.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="savings-plans"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html" target="_blank" rel="noopener">What are Savings Plans?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html" target="_blank" rel="noopener">Savings Plans types</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://aws.amazon.com/savingsplans/faqs/" target="_blank" rel="noopener">Savings Plans FAQ</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

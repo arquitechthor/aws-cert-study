@@ -68,6 +68,10 @@
    "en": "Certification Authority Authorization",
    "es": "registro DNS que indica qué autoridades pueden emitir certificados"
   },
+  "CAPTCHA": {
+   "en": null,
+   "es": "prueba para distinguir personas de bots"
+  },
   "CDN": {
    "en": "Content Delivery Network",
    "es": "red de entrega de contenido"
@@ -87,6 +91,10 @@
   "CLI": {
    "en": "Command Line Interface",
    "es": "línea de comandos"
+  },
+  "CMS": {
+   "en": "Content Management System",
+   "es": "gestor de contenidos web"
   },
   "CNAME": {
    "en": "Canonical Name",
@@ -119,6 +127,10 @@
   "CSV": {
    "en": "Comma-Separated Values",
    "es": "texto con valores separados por comas"
+  },
+  "CTAS": {
+   "en": "CREATE TABLE AS SELECT",
+   "es": "crear una tabla a partir de una consulta"
   },
   "CUDA": {
    "en": "Compute Unified Device Architecture",
@@ -155,6 +167,10 @@
   "DNSSEC": {
    "en": "DNS Security Extensions",
    "es": "firma las respuestas DNS para evitar suplantaciones"
+  },
+  "DPU": {
+   "en": "Data Processing Unit",
+   "es": "unidad de capacidad de Glue"
   },
   "DSSE-KMS": {
    "en": "Dual-layer Server-Side Encryption with KMS",
@@ -316,6 +332,14 @@
    "en": "International Organization for Standardization",
    "es": "organismo de normas internacionales"
   },
+  "IaC": {
+   "en": "Infrastructure as Code",
+   "es": "infraestructura como código"
+  },
+  "IoT": {
+   "en": "Internet of Things",
+   "es": "internet de las cosas: dispositivos conectados"
+  },
   "JCE": {
    "en": "Java Cryptography Extension",
    "es": "interfaz criptográfica de Java"
@@ -336,6 +360,10 @@
    "en": "JSON Web Token",
    "es": "token firmado con datos del usuario"
   },
+  "KCL": {
+   "en": "Kinesis Client Library",
+   "es": "biblioteca para escribir consumidores de Kinesis"
+  },
   "KMS": {
    "en": "Key Management Service",
    "es": null
@@ -343,6 +371,10 @@
   "KPI": {
    "en": "Key Performance Indicator",
    "es": "indicador clave"
+  },
+  "KPL": {
+   "en": "Kinesis Producer Library",
+   "es": "biblioteca para escribir productores de Kinesis"
   },
   "LCU": {
    "en": "Load Balancer Capacity Unit",
@@ -436,6 +468,10 @@
    "en": "Online Transaction Processing",
    "es": "las transacciones del día a día de una aplicación"
   },
+  "ORC": {
+   "en": "Optimized Row Columnar",
+   "es": "formato de fichero por columnas"
+  },
   "OSS": {
    "en": "Open Source Software",
    "es": "la versión de código abierto"
@@ -444,6 +480,10 @@
    "en": "Organizational Unit",
    "es": "unidad organizativa de AWS Organizations"
   },
+  "OWASP": {
+   "en": "Open Worldwide Application Security Project",
+   "es": "fundación que publica los riesgos web más comunes"
+  },
   "PCI DSS": {
    "en": "Payment Card Industry Data Security Standard",
    "es": "norma de seguridad para datos de tarjetas"
@@ -451,6 +491,10 @@
   "PDF": {
    "en": "Portable Document Format",
    "es": null
+  },
+  "PII": {
+   "en": "Personally Identifiable Information",
+   "es": "datos personales identificables"
   },
   "PITR": {
    "en": "Point-In-Time Recovery",
@@ -520,6 +564,10 @@
    "en": "Simple Storage Service",
    "es": null
   },
+  "SAM": {
+   "en": "Serverless Application Model",
+   "es": "extensión de CloudFormation para aplicaciones sin servidores"
+  },
   "SAML": {
    "en": "Security Assertion Markup Language",
    "es": "estándar de inicio de sesión federado"
@@ -547,6 +595,10 @@
   "SLA": {
    "en": "Service Level Agreement",
    "es": "compromiso de disponibilidad"
+  },
+  "SMB": {
+   "en": "Server Message Block",
+   "es": "protocolo de ficheros compartidos de Windows"
   },
   "SMS": {
    "en": "Short Message Service",
@@ -623,6 +675,10 @@
   "SSL": {
    "en": "Secure Sockets Layer",
    "es": "predecesor de TLS"
+  },
+  "SSM": {
+   "en": "Systems Manager",
+   "es": "nombre corto de AWS Systems Manager y de su agente"
   },
   "SSO": {
    "en": "Single Sign-On",
@@ -708,6 +764,10 @@
    "en": "External Key Store",
    "es": "almacén de claves externo a AWS"
   },
+  "XSS": {
+   "en": "Cross-Site Scripting",
+   "es": "inyección de scripts en una web"
+  },
   "YAML": {
    "en": "YAML Ain't Markup Language",
    "es": "formato de configuración legible"
@@ -726,6 +786,16 @@
    "ec2": {
     "en": "Random Access Memory",
     "es": "memoria"
+   }
+  },
+  "IA": {
+   "*": {
+    "en": null,
+    "es": "inteligencia artificial"
+   },
+   "efs": {
+    "en": "Infrequent Access",
+    "es": "clase para ficheros poco usados"
    }
   }
  },

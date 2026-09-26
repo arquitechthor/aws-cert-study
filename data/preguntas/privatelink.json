@@ -1,0 +1,112 @@
+[
+  {
+    "id": "privatelink-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa quiere que sus aplicaciones en subredes privadas usen servicios de AWS sin que el tráfico pase por internet. ¿Qué tecnología lo permite?",
+    "opciones": [
+      "AWS PrivateLink (endpoints de VPC).",
+      "Un internet gateway.",
+      "Amazon CloudFront.",
+      "AWS Global Accelerator."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "PrivateLink crea endpoints con IP privadas en la VPC para llegar a los servicios por la red de AWS. El internet gateway sale a internet, y CloudFront y Global Accelerator mejoran el acceso público.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html"
+    ]
+  },
+  {
+    "id": "privatelink-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Unas funciones Lambda en subredes privadas sin NAT deben leer secretos de Secrets Manager. ¿Qué solución es la adecuada sin cambiar el código?",
+    "opciones": [
+      "Un endpoint de VPC de interfaz para Secrets Manager con DNS privado activado.",
+      "Un endpoint gateway para Secrets Manager.",
+      "Un internet gateway en las subredes privadas.",
+      "Un VPC peering con AWS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El endpoint de interfaz da acceso privado y, con DNS privado, el nombre habitual del servicio resuelve a sus IP privadas. Los endpoints gateway solo existen para S3 y DynamoDB, un internet gateway expone las subredes y no hay peering con AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html"
+    ]
+  },
+  {
+    "id": "privatelink-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Unas instancias privadas leen muchos datos de S3 en la misma región a través de un NAT gateway. ¿Qué opción es la más barata para acceder de forma privada?",
+    "opciones": [
+      "Un endpoint gateway de S3.",
+      "Un endpoint de interfaz de S3 en cada zona.",
+      "Mantener el NAT gateway.",
+      "Un Transit Gateway."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El endpoint gateway de S3 es gratuito y evita el procesamiento del NAT. El endpoint de interfaz cobra por hora y por GB (útil sobre todo desde redes locales), y el NAT o Transit Gateway añaden coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html"
+    ]
+  },
+  {
+    "id": "privatelink-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un proveedor SaaS en AWS quiere que 300 clientes accedan a su API de forma privada desde sus propias VPC, muchas con rangos de IP que se solapan, sin dar acceso a su red. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Publicar la API como servicio de endpoint de PrivateLink detrás de un NLB y que cada cliente cree un endpoint de interfaz.",
+      "Un VPC peering con cada cliente.",
+      "Un Transit Gateway compartido con todos los clientes.",
+      "Exponer la API en internet con una lista de IP."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "PrivateLink expone solo el servicio, admite rangos solapados y escala a muchos consumidores. El peering y Transit Gateway conectan redes enteras y no admiten rangos solapados, y exponer en internet contradice el requisito.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-share-your-services.html"
+    ]
+  },
+  {
+    "id": "privatelink-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una auditoría exige que, a través del endpoint de S3 de una VPC, solo se pueda acceder a los buckets de la empresa, para evitar la exfiltración de datos a buckets ajenos. ¿Qué control lo consigue?",
+    "opciones": [
+      "Una política de endpoint que permita solo los buckets (o la organización) de la empresa.",
+      "Un security group en las instancias.",
+      "Desactivar el DNS privado.",
+      "Un bucket de registro en otra región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las políticas de endpoint limitan qué recursos se pueden usar a través del endpoint, por ejemplo solo los buckets de la organización. Los security groups no filtran por bucket, el DNS privado no controla permisos y un bucket de registro no bloquea nada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html"
+    ]
+  }
+]

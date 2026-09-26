@@ -1,0 +1,90 @@
+[
+  {
+    "id": "glue-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS ofrece ETL (extraer, transformar y cargar) sin servidores y un catálogo de datos central?",
+    "opciones": [
+      "AWS Glue.",
+      "Amazon Lightsail.",
+      "AWS Shield.",
+      "Amazon Connect."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Glue ofrece trabajos de ETL sin servidores y el Data Catalog. Lightsail son servidores sencillos, Shield protege frente a DDoS y Connect es un centro de contacto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html"
+    ]
+  },
+  {
+    "id": "glue-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un equipo de ML necesita limpiar y transformar grandes volúmenes de datos en S3 antes de entrenar un modelo, sin gestionar servidores. ¿Qué servicio es adecuado para esa preparación?",
+    "opciones": [
+      "AWS Glue.",
+      "Amazon Polly.",
+      "Amazon Rekognition.",
+      "AWS Budgets."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Glue prepara y transforma datos con trabajos de ETL sin servidores (y DataBrew lo permite sin código). Polly sintetiza voz, Rekognition analiza imágenes y Budgets controla costes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html"
+    ]
+  },
+  {
+    "id": "glue-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Cada día llegan a S3 ficheros nuevos con columnas que a veces cambian, y los analistas los consultan con Athena. ¿Cómo se mantienen actualizadas las definiciones de las tablas automáticamente?",
+    "opciones": [
+      "Un crawler de Glue programado que actualice el Data Catalog.",
+      "Editar a mano el esquema cada día.",
+      "Copiar los ficheros a EBS.",
+      "Crear una tabla nueva por fichero en RDS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El crawler infiere el esquema y crea o actualiza tablas y particiones en el catálogo que usa Athena. Hacerlo a mano no escala y copiar a EBS o RDS no sirve para Athena.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html"
+    ]
+  },
+  {
+    "id": "glue-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un trabajo de Glue que se ejecuta cada hora vuelve a procesar todos los ficheros del bucket, aunque solo llegan unos pocos nuevos, y su coste crece sin parar. ¿Qué cambio lo corrige?",
+    "opciones": [
+      "Activar los job bookmarks para procesar solo los datos nuevos.",
+      "Aumentar las DPU del trabajo.",
+      "Ejecutarlo cada minuto.",
+      "Pasar el bucket a S3 Glacier."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los job bookmarks guardan el estado de lo ya procesado para que cada ejecución solo trate lo nuevo. Más DPU o más ejecuciones aumentan el coste, y Glacier impide leer los datos directamente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html"
+    ]
+  }
+]

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS PrivateLink — Apuntes AWS</title>
+<meta name="description" content="Conectividad privada a servicios de AWS, de terceros o propios mediante endpoints de interfaz en tu VPC, sin internet, NAT ni peering. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/privatelink.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS PrivateLink — Apuntes AWS">
+<meta property="og:description" content="Conectividad privada a servicios de AWS, de terceros o propios mediante endpoints de interfaz en tu VPC, sin internet, NAT ni peering.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/privatelink.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/privatelink.svg" alt="" width="56" height="56"><span>AWS PrivateLink</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/vpc/latest/privatelink/" target="_blank" rel="noopener">Documentación de AWS PrivateLink ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS PrivateLink permite acceder a un servicio <strong>como si estuviera dentro de tu
+        <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></strong>: se crea un <strong>endpoint de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de tipo interface</strong>, que es una interfaz
+        de red con una <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> privada en tus subredes, y el tráfico va por la red de AWS sin pasar por
+        internet, sin <abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr>, sin internet gateway y sin unir redes con peering. Sirve para tres
+        cosas: usar servicios de AWS (<a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>, <a href="secrets-manager.html">Secrets Manager</a>, <a href="bedrock.html">Bedrock</a>…), usar servicios de terceros
+        del Marketplace y publicar tus propios servicios a otras <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> o cuentas.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Endpoint de interfaz (consumidor):</strong> una interfaz de red por zona en tus
+          subredes, con security group y, opcionalmente, <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> privado para que el nombre habitual del
+          servicio resuelva a la <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> privada sin cambiar el código.</li>
+        <li><strong>Servicio de endpoint (proveedor):</strong> publicas tu aplicación detrás de un
+          <a href="elb.html">Network Load Balancer</a> (o Gateway Load Balancer) y decides qué cuentas pueden conectarse y si
+          apruebas cada conexión.</li>
+        <li><strong>Unidireccional:</strong> el consumidor inicia las conexiones hacia el servicio; no da
+          acceso a toda la red del otro lado. Por eso los rangos de <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> pueden solaparse.</li>
+        <li><strong>Endpoints gateway</strong> (solo <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> y <a href="dynamodb.html">DynamoDB</a>): funcionan con rutas, son gratuitos
+          y no son PrivateLink; <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> admite también endpoints de interfaz para accesos desde tu centro de
+          datos.</li>
+        <li><strong>Políticas de endpoint:</strong> limitan qué acciones o recursos se pueden usar a
+          través del endpoint.</li>
+        <li><strong>Acceso desde local:</strong> los endpoints de interfaz son alcanzables por Direct
+          Connect o <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Subredes privadas sin salida a internet que usan servicios de AWS.</li>
+        <li>Ofrecer un servicio interno (SaaS) a cientos de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> de clientes o de otras cuentas.</li>
+        <li>Cumplir normativas que prohíben que el tráfico pase por internet.</li>
+        <li>Conectar con servicios de socios del Marketplace de forma privada.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si dos <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> deben comunicarse en ambos sentidos con muchos recursos: <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> peering o Transit
+          Gateway.</li>
+        <li>Para <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="dynamodb.html">DynamoDB</a> desde la misma región: el endpoint gateway es gratuito.</li>
+        <li>Para salir a internet: <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway</abbr>.</li>
+      </ul>
+
+      <h2 id="comparativa">PrivateLink, peering y Transit Gateway</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>PrivateLink</th><th><a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> peering</th><th><a href="../servicio.html?id=transit-gateway">Transit Gateway</a></th></tr></thead>
+          <tbody>
+            <tr><td>Alcance</td><td>Un servicio concreto</td><td>Toda la red entre dos <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></td><td>Muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y redes</td></tr>
+            <tr><td>Rangos solapados</td><td>Sí</td><td>No</td><td>No</td></tr>
+            <tr><td>Sentido</td><td>Del consumidor al servicio</td><td>Ambos</td><td>Según rutas</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por hora de cada endpoint de interfaz en cada zona y por GB procesado. El proveedor
+        paga su balanceador. Los endpoints gateway de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y <a href="dynamodb.html">DynamoDB</a> no tienen coste.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Tráfico siempre en la red de AWS; nunca expuesto a internet.</li>
+        <li>Security groups en los endpoints y políticas de endpoint para el mínimo privilegio.</li>
+        <li>El proveedor aprueba o rechaza conexiones y limita quién puede conectarse.</li>
+        <li>Un endpoint por zona para alta disponibilidad.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Acceder a un servicio de AWS sin internet desde una subred privada"</strong>: endpoint de interfaz (o gateway para <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y <a href="dynamodb.html">DynamoDB</a>).</li>
+        <li><strong>"Exponer un servicio a otras cuentas con rangos de <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> solapados"</strong>: PrivateLink con un <a href="elb.html"><abbr class="sigla" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB</abbr></a>.</li>
+        <li><strong>"Sin cambiar el código"</strong>: activar el <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> privado del endpoint.</li>
+        <li><strong>"<abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> desde la misma región al menor coste"</strong>: endpoint gateway, no de interfaz.</li>
+        <li><strong>"Solo acceso a un bucket concreto a través del endpoint"</strong>: política del endpoint.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="privatelink"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html" target="_blank" rel="noopener">What is AWS PrivateLink?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/privatelink/create-interface-endpoint.html" target="_blank" rel="noopener">Access an AWS service using an interface VPC endpoint</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-share-your-services.html" target="_blank" rel="noopener">Share your services through AWS PrivateLink</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html" target="_blank" rel="noopener">Control access to VPC endpoints using endpoint policies</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

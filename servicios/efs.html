@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon EFS — Apuntes AWS</title>
+<meta name="description" content="Sistema de ficheros compartido NFS, elástico y sin servidores, que miles de instancias, contenedores y funciones pueden montar a la vez. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/efs.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon EFS — Apuntes AWS">
+<meta property="og:description" content="Sistema de ficheros compartido NFS, elástico y sin servidores, que miles de instancias, contenedores y funciones pueden montar a la vez.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/efs.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/efs.svg" alt="" width="56" height="56"><span>Amazon EFS</span></h1>
+      <p class="full-name">Amazon Elastic File System (Amazon EFS)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=almacenamiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/almacenamiento.svg" alt="" width="18" height="18">Almacenamiento <span class="cat-en">(Storage)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/efs/" target="_blank" rel="noopener">Documentación de Amazon EFS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon <abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr> (<em>Elastic File System</em>) es un <strong>sistema de ficheros
+        compartido</strong> para Linux, accesible por <abbr class="sigla sigla-1" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS<span class="sigla-exp"> (Network File System: protocolo para compartir ficheros en red)</span></abbr>. Muchas instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, contenedores de <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> o
+        <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a> y funciones <a href="lambda.html">Lambda</a> pueden montarlo a la vez y ver los mismos ficheros, desde varias zonas de
+        disponibilidad. <strong>Crece y se reduce solo</strong> según lo que guardas: no hay que
+        aprovisionar capacidad y se paga por lo usado.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Regional o de una zona:</strong> el tipo regional guarda los datos en varias zonas
+          (alta disponibilidad); el de una zona es más barato para datos que se pueden regenerar.</li>
+        <li><strong>Destinos de montaje:</strong> una interfaz de red por zona en la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>, protegida con
+          security groups (puerto 2049).</li>
+        <li><strong>Clases de almacenamiento:</strong> Standard, Infrequent Access (<abbr class="sigla" data-s="IA" data-en="Infrequent Access" data-es="clase para ficheros poco usados" tabindex="0">IA</abbr>) y Archive, con
+          políticas de ciclo de vida que mueven los ficheros poco usados a las más baratas.</li>
+        <li><strong>Modos de rendimiento:</strong> <em>Elastic throughput</em> (recomendado: escala solo
+          con la carga), <em>Provisioned</em> (fijas el rendimiento) y <em>Bursting</em> (ligado al tamaño
+          con créditos).</li>
+        <li><strong>Puntos de acceso:</strong> entradas a un directorio concreto con un usuario y grupo
+          <abbr class="sigla sigla-1" data-s="POSIX" data-en="Portable Operating System Interface" data-es="estándar de ficheros y permisos tipo Unix" tabindex="0">POSIX<span class="sigla-exp"> (Portable Operating System Interface: estándar de ficheros y permisos tipo Unix)</span></abbr> fijados, útiles para dar a cada aplicación su espacio.</li>
+        <li><strong>Replicación</strong> a otra región o zona y copias con <a href="../servicio.html?id=backup">AWS Backup</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Contenido compartido de una flota web (subidas de usuarios, <abbr class="sigla sigla-1" data-s="CMS" data-en="Content Management System" data-es="gestor de contenidos web" tabindex="0">CMS<span class="sigla-exp"> (Content Management System: gestor de contenidos web)</span></abbr>).</li>
+        <li>Almacenamiento persistente compartido para contenedores de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> o <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> y para <a href="lambda.html">Lambda</a>.</li>
+        <li>Directorios de usuario y entornos de desarrollo compartidos.</li>
+        <li>Flujos de análisis o <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr> que leen los mismos ficheros desde muchas máquinas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Servidores Windows (<abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr>): <a href="../servicio.html?id=fsx">FSx</a> for Windows File Server.</li>
+        <li><abbr class="sigla sigla-1" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC<span class="sigla-exp"> (High Performance Computing: cómputo de alto rendimiento)</span></abbr> con rendimiento extremo: FSx for Lustre.</li>
+        <li>Disco de una sola instancia o base de datos: <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>.</li>
+        <li>Objetos accesibles por <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr> a escala ilimitada: <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por GB-mes almacenado en cada clase (Standard más caro, <abbr class="sigla" data-s="IA" data-en="Infrequent Access" data-es="clase para ficheros poco usados" tabindex="0">IA</abbr> y Archive mucho más
+        baratos), más las lecturas y escrituras en <abbr class="sigla" data-s="IA" data-en="Infrequent Access" data-es="clase para ficheros poco usados" tabindex="0">IA</abbr> y Archive y, según el modo, el rendimiento
+        aprovisionado o elástico. Sin capacidad mínima.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos replicados en varias zonas (tipo regional).</li>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> (se elige al crearlo) y en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
+        <li>Security groups en los destinos de montaje, políticas del sistema de ficheros con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> y
+          permisos <abbr class="sigla" data-s="POSIX" data-en="Portable Operating System Interface" data-es="estándar de ficheros y permisos tipo Unix" tabindex="0">POSIX</abbr>.</li>
+        <li>Replicación entre regiones para recuperación ante desastres.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Ficheros compartidos entre muchas instancias Linux de varias zonas"</strong>: <abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr>.</li>
+        <li><strong>"Windows"</strong> o <strong>"<abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr>"</strong>: <a href="../servicio.html?id=fsx">FSx</a> for Windows, no <abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr>.</li>
+        <li><strong>"Reducir el coste de ficheros que casi no se usan"</strong>: ciclo de vida a <abbr class="sigla" data-s="IA" data-en="Infrequent Access" data-es="clase para ficheros poco usados" tabindex="0">IA</abbr> o Archive.</li>
+        <li><strong>"Almacenamiento persistente para <a href="fargate.html">Fargate</a> o <a href="lambda.html">Lambda</a>"</strong>: <abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr>.</li>
+        <li><strong>"No se puede montar"</strong>: revisa el security group del destino de montaje (<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr>, puerto 2049).</li>
+        <li><strong>"Rendimiento impredecible sin planificar"</strong>: Elastic throughput.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="efs"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html" target="_blank" rel="noopener">What is Amazon Elastic File System?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/efs/latest/ug/lifecycle-management-efs.html" target="_blank" rel="noopener">Managing storage lifecycle for Amazon EFS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/efs/latest/ug/performance.html" target="_blank" rel="noopener">Amazon EFS performance specifications</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/efs/latest/ug/efs-access-points.html" target="_blank" rel="noopener">Working with Amazon EFS access points</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -91,7 +91,7 @@
         <li><strong>Búsqueda vectorial (<abbr class="sigla" data-s="k-NN" data-en="k-Nearest Neighbors" data-es="búsqueda de los k vecinos más cercanos" tabindex="0">k-NN</abbr>):</strong> guarda embeddings y encuentra los vecinos más
           cercanos; es uno de los almacenes de vectores de <a href="bedrock.html">Bedrock</a> Knowledge Bases.</li>
         <li><strong>Ingesta:</strong> OpenSearch Ingestion (canalizaciones gestionadas), Amazon Data
-          <a href="../servicio.html?id=data-firehose">Firehose</a>, integraciones <em>zero-ETL</em> con <a href="dynamodb.html">DynamoDB</a> y <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, o suscripciones de <a href="cloudwatch.html">CloudWatch</a> Logs.</li>
+          <a href="data-firehose.html">Firehose</a>, integraciones <em>zero-ETL</em> con <a href="dynamodb.html">DynamoDB</a> y <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, o suscripciones de <a href="cloudwatch.html">CloudWatch</a> Logs.</li>
         <li><strong>Seguridad detallada (<em>fine-grained access control</em>):</strong> permisos por
           índice, documento y campo, con usuarios internos, <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> o <abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr>.</li>
       </ul>
@@ -108,7 +108,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Como base de datos principal y transaccional: <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>.</li>
-        <li>Consultas <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> puntuales sobre registros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin mantener un clúster: <a href="../servicio.html?id=athena">Athena</a>.</li>
+        <li>Consultas <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> puntuales sobre registros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin mantener un clúster: <a href="athena.html">Athena</a>.</li>
         <li>Almacén de datos analítico con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> y JOIN complejos: <a href="redshift.html">Redshift</a>.</li>
         <li>Búsqueda empresarial en documentos con conectores y respuestas listas sin gestionar índices: <a href="../servicio.html?id=kendra">Kendra</a>.</li>
       </ul>
@@ -119,7 +119,7 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Texto completo, relevancia y paneles en tiempo casi real</td><td>OpenSearch Service</td></tr>
-            <tr><td><abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> sin servidor sobre ficheros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></td><td><a href="../servicio.html?id=athena">Athena</a></td></tr>
+            <tr><td><abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> sin servidor sobre ficheros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></td><td><a href="athena.html">Athena</a></td></tr>
             <tr><td>Almacén de datos para <abbr class="sigla sigla-1" data-s="BI" data-en="Business Intelligence" data-es="análisis de datos para el negocio" tabindex="0">BI<span class="sigla-exp"> (Business Intelligence: análisis de datos para el negocio)</span></abbr> con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr></td><td><a href="redshift.html">Redshift</a></td></tr>
             <tr><td>Búsqueda empresarial gestionada con conectores</td><td><a href="../servicio.html?id=kendra">Kendra</a></td></tr>
             <tr><td>Registros y consultas sin otro servicio</td><td><a href="cloudwatch.html">CloudWatch</a> Logs Insights</td></tr>
@@ -145,8 +145,8 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Búsqueda de texto completo"</strong> o <strong>"búsqueda con relevancia"</strong>: OpenSearch.</li>
-        <li><strong>"Paneles casi en tiempo real sobre registros"</strong>: OpenSearch con Dashboards (ingesta con <a href="../servicio.html?id=data-firehose">Firehose</a> u OpenSearch Ingestion).</li>
-        <li><strong>"Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> ocasionales sobre registros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: <a href="../servicio.html?id=athena">Athena</a>, no un clúster.</li>
+        <li><strong>"Paneles casi en tiempo real sobre registros"</strong>: OpenSearch con Dashboards (ingesta con <a href="data-firehose.html">Firehose</a> u OpenSearch Ingestion).</li>
+        <li><strong>"Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> ocasionales sobre registros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: <a href="athena.html">Athena</a>, no un clúster.</li>
         <li><strong>"Guardar meses de registros poco consultados de forma barata"</strong>: UltraWarm o cold.</li>
         <li><strong>"Almacén de vectores para <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr>"</strong>: OpenSearch Serverless (búsqueda vectorial).</li>
         <li><strong>"Buscar en los datos de <a href="dynamodb.html">DynamoDB</a>"</strong>: integración zero-ETL con OpenSearch.</li>

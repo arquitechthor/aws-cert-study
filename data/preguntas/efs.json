@@ -1,0 +1,112 @@
+[
+  {
+    "id": "efs-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Varias instancias EC2 Linux de distintas zonas de disponibilidad deben leer y escribir los mismos ficheros. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "Amazon EFS.",
+      "Amazon EBS.",
+      "Instance store.",
+      "Amazon S3 Glacier."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EFS es un sistema de ficheros compartido que muchas instancias de varias zonas montan a la vez. Un volumen EBS pertenece a una zona y a una instancia (salvo Multi-Attach en la misma zona), el instance store es local y efímero y Glacier es de archivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html"
+    ]
+  },
+  {
+    "id": "efs-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un sistema de ficheros EFS de 50 TB tiene la mayoría de ficheros sin abrir desde hace meses, pero deben seguir disponibles. ¿Qué cambio reduce el coste?",
+    "opciones": [
+      "Una política de ciclo de vida que mueva a Infrequent Access y Archive los ficheros no usados.",
+      "Pasar a Provisioned throughput.",
+      "Copiarlo todo a EBS.",
+      "Borrar los ficheros antiguos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El ciclo de vida de EFS mueve los ficheros poco usados a clases más baratas y siguen accesibles en el mismo sistema de ficheros. El modo de rendimiento no reduce el almacenamiento, EBS no es compartido y borrar incumple el requisito.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/efs/latest/ug/lifecycle-management-efs.html"
+    ]
+  },
+  {
+    "id": "efs-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una carga con picos muy irregulares sobre EFS sufre limitaciones de rendimiento con el modo Bursting, aunque el sistema de ficheros es pequeño. ¿Qué modo es el adecuado sin tener que prever la carga?",
+    "opciones": [
+      "Elastic throughput.",
+      "Mantener Bursting y añadir ficheros de relleno.",
+      "Cambiar a la clase Infrequent Access.",
+      "Montarlo en una sola zona."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Elastic throughput escala el rendimiento con la carga y se paga por el uso. En Bursting el rendimiento depende del tamaño, por eso se añadían ficheros de relleno, algo que ya no hace falta. IA y el tipo de una zona no mejoran el rendimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+    ]
+  },
+  {
+    "id": "efs-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Varias funciones Lambda necesitan compartir un modelo de 5 GB en ficheros y guardar resultados persistentes. ¿Qué opción lo permite?",
+    "opciones": [
+      "Montar un sistema de ficheros EFS en las funciones (conectadas a la VPC) mediante un punto de acceso.",
+      "Guardarlo en /tmp de cada función de forma permanente.",
+      "Incluirlo en las variables de entorno.",
+      "Usar un volumen EBS compartido."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Lambda puede montar EFS mediante un punto de acceso, con almacenamiento compartido y persistente entre invocaciones y funciones. /tmp es efímero y por entorno, las variables de entorno tienen un límite muy pequeño y EBS no se monta en Lambda.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/efs/latest/ug/efs-access-points.html"
+    ]
+  },
+  {
+    "id": "efs-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación Linux con ficheros compartidos en EFS necesita un plan de recuperación ante la pérdida de la región, con un RPO de minutos. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Replicación de EFS a un sistema de ficheros en otra región.",
+      "Copias semanales en cinta.",
+      "Un segundo destino de montaje en la misma región.",
+      "Pasar a la clase Archive."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La replicación de EFS mantiene una copia en otra región con un retraso normalmente de minutos. Las copias semanales dan un RPO de días, otro destino de montaje sigue en la misma región y la clase Archive no protege frente a desastres.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html"
+    ]
+  }
+]

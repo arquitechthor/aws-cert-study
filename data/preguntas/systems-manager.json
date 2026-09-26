@@ -1,0 +1,134 @@
+[
+  {
+    "id": "systems-manager-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un equipo quiere aplicar automáticamente los parches del sistema operativo a cientos de instancias EC2. ¿Qué servicio de AWS lo facilita?",
+    "opciones": [
+      "AWS Systems Manager (Patch Manager).",
+      "Amazon Inspector.",
+      "AWS Artifact.",
+      "Amazon Macie."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Patch Manager de Systems Manager aplica parches según líneas base y ventanas de mantenimiento. Inspector detecta vulnerabilidades pero no parchea, Artifact da informes de cumplimiento y Macie descubre datos sensibles.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager.html"
+    ]
+  },
+  {
+    "id": "systems-manager-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa quiere eliminar su bastión y cerrar el puerto 22, pero los administradores deben seguir abriendo una terminal en las instancias privadas, con cada sesión auditada. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Session Manager de Systems Manager, con el agente y un rol de IAM en las instancias.",
+      "Una VPN Site-to-Site para cada administrador.",
+      "IP públicas en las instancias con SSH limitado por IP.",
+      "Compartir las claves SSH en un bucket de S3."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Session Manager abre sesiones sin puertos entrantes ni claves y las registra. Una VPN no elimina SSH, las IP públicas exponen las instancias y compartir claves es inseguro.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html"
+    ]
+  },
+  {
+    "id": "systems-manager-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Unas instancias en subredes privadas sin salida a internet no aparecen como gestionadas en Systems Manager, aunque tienen el agente y el rol correcto. ¿Qué falta?",
+    "opciones": [
+      "Endpoints de VPC de interfaz para SSM (ssm, ssmmessages y ec2messages).",
+      "Un endpoint gateway de DynamoDB.",
+      "Una IP elástica en cada instancia.",
+      "Una regla de NACL que bloquee el puerto 443."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El agente necesita llegar a los endpoints del servicio; sin internet, se usan endpoints de VPC de interfaz para SSM. El endpoint de DynamoDB no aplica, las IP elásticas no sirven sin internet y bloquear el 443 impide la conexión.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html"
+    ]
+  },
+  {
+    "id": "systems-manager-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una aplicación necesita leer la URL de un servicio externo y una clave cifrada, cambiables sin redesplegar, con el menor coste y sin rotación automática. ¿Dónde se guardan?",
+    "opciones": [
+      "En Parameter Store, la clave como SecureString.",
+      "En el código fuente.",
+      "En una tabla de Redshift.",
+      "En el user data de las instancias."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Parameter Store guarda configuración y valores cifrados con KMS, y su nivel estándar es gratuito. Ponerlos en el código obliga a redesplegar y los expone, Redshift no es un almacén de configuración y el user data solo se lee al arrancar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html"
+    ]
+  },
+  {
+    "id": "systems-manager-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo necesita ejecutar un script de actualización en 300 instancias etiquetadas como \"web\", de 20 en 20, deteniéndose si fallan más de 5. ¿Qué capacidad de Systems Manager lo permite?",
+    "opciones": [
+      "Run Command con objetivo por etiquetas, control de concurrencia y umbral de errores.",
+      "Parameter Store.",
+      "Inventory.",
+      "Session Manager en cada instancia a mano."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Run Command ejecuta comandos en instancias elegidas por etiquetas, con concurrencia y umbral de errores configurables. Parameter Store guarda valores, Inventory recoge datos y hacerlo a mano no escala.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html"
+    ]
+  },
+  {
+    "id": "systems-manager-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa con servidores en AWS y en su centro de datos quiere un único proceso de parcheo y un informe de cumplimiento conjunto. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Registrar los servidores locales como nodos híbridos de Systems Manager y usar Patch Manager para todos.",
+      "Mantener dos herramientas separadas.",
+      "Migrar primero todos los servidores a EC2.",
+      "Usar AWS Artifact."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Systems Manager gestiona también servidores locales mediante activaciones híbridas, así que Patch Manager parchea e informa de todos juntos. Mantener dos herramientas no unifica, migrar primero no es necesario y Artifact no parchea.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager.html"
+    ]
+  }
+]

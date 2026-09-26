@@ -1,0 +1,90 @@
+[
+  {
+    "id": "savings-plans-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa tiene un uso de cómputo estable para los próximos 3 años, pero planea mover cargas de EC2 a Fargate y cambiar de familia de instancias. ¿Qué opción ofrece descuento con esa flexibilidad?",
+    "opciones": [
+      "Compute Savings Plans.",
+      "EC2 Instance Savings Plans.",
+      "Instancias reservadas estándar.",
+      "Instancias Spot."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Compute Savings Plans se aplica a EC2 de cualquier familia y región, a Fargate y a Lambda. Los EC2 Instance Savings Plans y las reservadas estándar se atan a una familia o configuración, y Spot no es un compromiso sino capacidad interrumpible.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
+    ]
+  },
+  {
+    "id": "savings-plans-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa ejecuta varias bases de datos (RDS for PostgreSQL, Aurora y DynamoDB) con uso estable y quiere un descuento que se mantenga si migra de RDS a Aurora. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Database Savings Plans.",
+      "Compute Savings Plans.",
+      "Instancias Spot.",
+      "Reservas de capacidad bajo demanda."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Database Savings Plans cubre RDS, Aurora, DynamoDB y otras bases de datos, con flexibilidad entre motores, familias y regiones. Compute Savings Plans no cubre bases de datos, Spot no existe para RDS y las reservas de capacidad no dan descuento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
+    ]
+  },
+  {
+    "id": "savings-plans-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una organización con 30 cuentas quiere comprar Savings Plans pero no sabe qué compromiso por hora le conviene. ¿Qué herramienta usa?",
+    "opciones": [
+      "Las recomendaciones de Savings Plans de AWS Cost Explorer, en la cuenta de administración.",
+      "AWS Trusted Advisor de cada cuenta por separado.",
+      "AWS Artifact.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cost Explorer analiza el uso histórico de toda la organización y recomienda el compromiso por hora, plazo y forma de pago. Artifact e Inspector no tratan costes, y revisar cuenta a cuenta no aprovecha que el descuento se comparte.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html"
+    ]
+  },
+  {
+    "id": "savings-plans-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación crítica necesita asegurarse de que habrá instancias disponibles en una zona concreta durante un evento, además de reducir costes a largo plazo. ¿Qué combinación es correcta?",
+    "opciones": [
+      "Reservas de capacidad bajo demanda para garantizar la capacidad y Savings Plans para el descuento.",
+      "Solo Savings Plans, que también reservan capacidad.",
+      "Solo instancias Spot.",
+      "Solo EC2 Instance Savings Plans sin reservas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Savings Plans aplica descuentos pero no reserva capacidad; las reservas de capacidad la garantizan y se pueden combinar con el descuento de Savings Plans. Spot puede interrumpirse y ninguna opción de solo Savings Plans asegura la capacidad.",
+    "fuentes": [
+      "https://aws.amazon.com/savingsplans/faqs/"
+    ]
+  }
+]

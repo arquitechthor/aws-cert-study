@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Athena — Apuntes AWS</title>
+<meta name="description" content="Consultas SQL sin servidores directamente sobre ficheros en S3: sin cargar datos ni gestionar infraestructura, pagando por los datos analizados. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/athena.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Athena — Apuntes AWS">
+<meta property="og:description" content="Consultas SQL sin servidores directamente sobre ficheros en S3: sin cargar datos ni gestionar infraestructura, pagando por los datos analizados.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/athena.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/athena.svg" alt="" width="56" height="56"><span>Amazon Athena</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/athena/" target="_blank" rel="noopener">Documentación de Amazon Athena ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Athena permite <strong>consultar con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> datos que están en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a></strong> (<abbr class="sigla sigla-1" data-s="CSV" data-en="Comma-Separated Values" data-es="texto con valores separados por comas" tabindex="0">CSV<span class="sigla-exp"> (Comma-Separated Values: texto con valores separados por comas)</span></abbr>, <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr>,
+        Parquet, <abbr class="sigla sigla-1" data-s="ORC" data-en="Optimized Row Columnar" data-es="formato de fichero por columnas" tabindex="0">ORC<span class="sigla-exp"> (Optimized Row Columnar: formato de fichero por columnas)</span></abbr>, Avro, tablas Iceberg) sin cargarlos en ninguna base de datos y sin servidores que
+        gestionar. Defines una tabla que describe dónde están los ficheros y su estructura, lanzas la
+        consulta y pagas por los datos que lee. Está basado en los motores de código abierto Trino y
+        Presto, y también ejecuta Apache Spark.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Catálogo de datos de <a href="glue.html">Glue</a>:</strong> guarda las definiciones de tablas (esquema y
+          ubicación en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>); los <em>crawlers</em> de Glue pueden crearlas automáticamente.</li>
+        <li><strong>Pago por datos analizados:</strong> reducir lo que se lee reduce el coste y el
+          tiempo: formatos de columnas (Parquet, <abbr class="sigla" data-s="ORC" data-en="Optimized Row Columnar" data-es="formato de fichero por columnas" tabindex="0">ORC</abbr>), compresión, <strong>particiones</strong> (por
+          fecha, por ejemplo) y leer solo las columnas necesarias.</li>
+        <li><strong>Grupos de trabajo (workgroups):</strong> separan equipos, fijan dónde se guardan
+          los resultados y ponen límites de datos analizados por consulta.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="CTAS" data-en="CREATE TABLE AS SELECT" data-es="crear una tabla a partir de una consulta" tabindex="0">CTAS<span class="sigla-exp"> (CREATE TABLE AS SELECT: crear una tabla a partir de una consulta)</span></abbr>:</strong> crear una tabla nueva, por ejemplo en
+          Parquet y particionada, a partir de una consulta.</li>
+        <li><strong>Consultas federadas:</strong> con conectores <a href="lambda.html">Lambda</a>, consultar también <a href="dynamodb.html">DynamoDB</a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>,
+          <a href="cloudwatch.html">CloudWatch</a> Logs u otras fuentes.</li>
+        <li><strong>Tablas Iceberg:</strong> admiten inserciones, actualizaciones, borrados y "viaje en
+          el tiempo" sobre el lago de datos.</li>
+        <li><strong>Capacidad aprovisionada:</strong> opción de pagar por capacidad dedicada para
+          cargas constantes.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Consultas puntuales sobre registros en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>: <a href="cloudtrail.html">CloudTrail</a>, <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> Flow Logs, <a href="elb.html"><abbr class="sigla sigla-1" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB<span class="sigla-exp"> (Application Load Balancer: balanceador HTTP/HTTPS)</span></abbr></a>, <a href="cloudfront.html">CloudFront</a>.</li>
+        <li>Análisis de un lago de datos en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> sin montar un almacén de datos.</li>
+        <li>Informes con <a href="../servicio.html?id=quick">Amazon Quick</a> sobre datos de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</li>
+        <li>Explorar datos antes de decidir si merece la pena cargarlos en <a href="redshift.html">Redshift</a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Consultas complejas, muy frecuentes y con muchos usuarios concurrentes: <a href="redshift.html">Redshift</a>.</li>
+        <li>Transacciones de una aplicación: <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Búsqueda de texto o paneles en tiempo real: <a href="opensearch-service.html">OpenSearch</a>.</li>
+      </ul>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por TB de datos analizados por cada consulta (con un mínimo por consulta), o por
+        capacidad aprovisionada si se elige. Aparte, el almacenamiento en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> de datos y resultados y
+        las llamadas a <a href="glue.html">Glue</a>. Particionar, comprimir y usar formatos de columnas puede reducir el coste
+        en un orden de magnitud.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Sin servidores y redundante en varias zonas.</li>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> y permisos detallados por tabla o columna con <a href="../servicio.html?id=lake-formation">Lake Formation</a>.</li>
+        <li>Resultados cifrados en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con <abbr class="sigla sigla-1" data-s="SSE-S3" data-en="Server-Side Encryption with S3 managed keys" data-es="cifrado en el servidor con claves que gestiona S3" tabindex="0">SSE-S3<span class="sigla-exp"> (Server-Side Encryption with S3 managed keys: cifrado en el servidor con claves que gestiona S3)</span></abbr> o <abbr class="sigla sigla-1" data-s="SSE-KMS" data-en="Server-Side Encryption with KMS keys" data-es="cifrado en el servidor con claves de KMS" tabindex="0">SSE-KMS<span class="sigla-exp"> (Server-Side Encryption with KMS keys: cifrado en el servidor con claves de KMS)</span></abbr>.</li>
+        <li>Endpoint de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> para consultar sin salir a internet.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"<abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> sobre datos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin infraestructura"</strong> o <strong>"consultas puntuales"</strong>: Athena.</li>
+        <li><strong>"Analizar los registros de <a href="cloudtrail.html">CloudTrail</a> o <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> Flow Logs"</strong>: Athena sobre <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</li>
+        <li><strong>"Consultas lentas y caras"</strong>: Parquet u <abbr class="sigla" data-s="ORC" data-en="Optimized Row Columnar" data-es="formato de fichero por columnas" tabindex="0">ORC</abbr>, compresión y particiones.</li>
+        <li><strong>"Limitar el gasto de un equipo en consultas"</strong>: límites en su grupo de trabajo.</li>
+        <li><strong>"Crear las tablas automáticamente"</strong>: crawler de <a href="glue.html">Glue</a> y su catálogo.</li>
+        <li><strong>"Data warehouse con muchos usuarios y cargas constantes"</strong>: <a href="redshift.html">Redshift</a>, no Athena.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="athena"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/athena/latest/ug/what-is.html" target="_blank" rel="noopener">What is Amazon Athena?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/athena/latest/ug/performance-tuning.html" target="_blank" rel="noopener">Optimize Athena performance</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/athena/latest/ug/partitions.html" target="_blank" rel="noopener">Partition your data</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/athena/latest/ug/workgroups-manage-queries-control-costs.html" target="_blank" rel="noopener">Use workgroups to control query access and costs</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

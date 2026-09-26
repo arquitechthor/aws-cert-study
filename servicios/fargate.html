@@ -84,7 +84,7 @@
           red, su <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> de la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> y su security group.</li>
         <li><strong>Almacenamiento:</strong> 20 GiB efímeros por defecto, ampliables a
           <strong>200 GiB</strong> (se pierden al terminar la tarea); para datos persistentes o
-          compartidos, <a href="../servicio.html?id=efs"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>; también volúmenes <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> por tarea.</li>
+          compartidos, <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>; también volúmenes <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> por tarea.</li>
         <li><strong>Fargate Spot:</strong> capacidad sobrante con gran descuento; AWS puede
           interrumpir la tarea con 2 minutos de aviso.</li>
         <li><strong>Limitaciones:</strong> sin <abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr>, sin acceso al host (no hay <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr> a la máquina ni
@@ -104,7 +104,7 @@
         <li>Cargas con <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr> o que necesitan tipos de instancia concretos: <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> o <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> sobre <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (o <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>
           Managed Instances).</li>
         <li>Flotas grandes y estables con uso muy alto, donde instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> bien aprovechadas y con
-          <a href="../servicio.html?id=savings-plans">Savings Plans</a> salen más baratas.</li>
+          <a href="savings-plans.html">Savings Plans</a> salen más baratas.</li>
         <li>Código corto por eventos sin necesidad de contenedor propio: <a href="lambda.html">Lambda</a>.</li>
         <li>Si necesitas acceso al sistema operativo del host o agentes por nodo.</li>
       </ul>
@@ -126,7 +126,7 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga por la vCPU, la memoria y el almacenamiento efímero adicional que solicita cada
         tarea, por segundo (con un mínimo de un minuto), desde que empieza a descargar la imagen hasta
-        que termina. Graviton es más barato que x86 y Fargate Spot mucho más. Compute <a href="../servicio.html?id=savings-plans">Savings Plans</a>
+        que termina. Graviton es más barato que x86 y Fargate Spot mucho más. Compute <a href="savings-plans.html">Savings Plans</a>
         aplica descuentos también a Fargate.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
@@ -143,7 +143,7 @@
         <li><strong>"Contenedores sin gestionar servidores"</strong> o <strong>"sin parchear instancias"</strong>: Fargate.</li>
         <li><strong>"Contenedores con <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr>"</strong>: <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, no Fargate.</li>
         <li><strong>"Lotes en contenedores tolerantes a interrupciones y baratos"</strong>: Fargate Spot.</li>
-        <li><strong>"Almacenamiento compartido y persistente entre tareas"</strong>: <a href="../servicio.html?id=efs"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> montado en las tareas.</li>
+        <li><strong>"Almacenamiento compartido y persistente entre tareas"</strong>: <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> montado en las tareas.</li>
         <li><strong>"Ejecución de más de 15 minutos sin servidores"</strong>: Fargate (<a href="lambda.html">Lambda</a> no llega).</li>
         <li><strong>"Fargate es un orquestador"</strong>: falso; se usa con <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> o <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>.</li>
       </ul>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Glue — Apuntes AWS</title>
+<meta name="description" content="Integración de datos sin servidores: catálogo de datos, crawlers que descubren esquemas y trabajos ETL con Spark o Python para preparar datos del lago. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/glue.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Glue — Apuntes AWS">
+<meta property="og:description" content="Integración de datos sin servidores: catálogo de datos, crawlers que descubren esquemas y trabajos ETL con Spark o Python para preparar datos del lago.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/glue.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/glue.svg" alt="" width="56" height="56"><span>AWS Glue</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/glue/" target="_blank" rel="noopener">Documentación de AWS Glue ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Glue es un servicio de <strong>integración de datos</strong> sin servidores. Sirve para
+        descubrir qué datos tienes, catalogarlos y transformarlos (<abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr>) para dejarlos listos para el
+        análisis o el <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>. Su pieza más transversal es el <strong>catálogo de datos</strong>: un registro
+        central de tablas (esquema y ubicación) que usan <a href="athena.html">Athena</a>, <a href="redshift.html">Redshift</a> Spectrum, <a href="../servicio.html?id=emr"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a> y Lake
+        Formation. Los trabajos de <abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr> corren sobre Apache Spark o Python sin clústeres que gestionar.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Catálogo de datos (Data Catalog):</strong> bases de datos y tablas con su esquema,
+          formato y ubicación en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> u otras fuentes; compatible con el metastore de Apache Hive.</li>
+        <li><strong>Crawlers:</strong> recorren <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> o bases de datos, infieren el esquema y crean o
+          actualizan las tablas y particiones del catálogo.</li>
+        <li><strong>Trabajos <abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr>:</strong> Spark (lotes o streaming) o Python shell; se escriben en
+          código o se diseñan visualmente con Glue Studio. Se pagan por DPU-hora.</li>
+        <li><strong>Job bookmarks:</strong> recuerdan qué datos ya se procesaron para que cada
+          ejecución solo trate los nuevos.</li>
+        <li><strong>Desencadenadores y flujos de trabajo:</strong> programar trabajos o encadenarlos.</li>
+        <li><strong><a href="../servicio.html?id=glue-databrew">Glue DataBrew</a>:</strong> preparación visual de datos sin código para analistas.</li>
+        <li><strong>Calidad de datos:</strong> reglas para validar los datos en el catálogo o en los
+          trabajos.</li>
+        <li><strong>Detección de datos sensibles:</strong> identifica <abbr class="sigla sigla-1" data-s="PII" data-en="Personally Identifiable Information" data-es="datos personales identificables" tabindex="0">PII<span class="sigla-exp"> (Personally Identifiable Information: datos personales identificables)</span></abbr> en los trabajos para
+          enmascararla.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Catalogar un lago de datos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> para consultarlo con <a href="athena.html">Athena</a>.</li>
+        <li>Convertir datos <abbr class="sigla sigla-1" data-s="CSV" data-en="Comma-Separated Values" data-es="texto con valores separados por comas" tabindex="0">CSV<span class="sigla-exp"> (Comma-Separated Values: texto con valores separados por comas)</span></abbr> o <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> a Parquet, limpiarlos y particionarlos.</li>
+        <li>Mover y transformar datos entre bases de datos, <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> y <a href="redshift.html">Redshift</a>.</li>
+        <li>Preparar conjuntos de datos para entrenar modelos de <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Solo copiar datos de aplicaciones SaaS sin transformar: <a href="appflow.html">AppFlow</a>.</li>
+        <li>Migrar o replicar una base de datos: <a href="../servicio.html?id=dms"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a>.</li>
+        <li>Entregar streaming a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin transformaciones complejas: <a href="data-firehose.html">Firehose</a>.</li>
+        <li>Si necesitas control total del clúster de big data: <a href="../servicio.html?id=emr"><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></a>.</li>
+      </ul>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Los trabajos <abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr> y los crawlers se pagan por DPU-hora, facturada por segundo; el catálogo por
+        objetos guardados (con un primer millón gratuito) y peticiones; DataBrew por sesión y trabajo.
+        La ejecución flexible (<em>Flex</em>) abarata trabajos que no son urgentes.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Roles de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para que los trabajos accedan a los datos.</li>
+        <li>Cifrado del catálogo, de los registros y de los datos con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>Permisos detallados sobre el catálogo con <a href="../servicio.html?id=lake-formation">Lake Formation</a>.</li>
+        <li>Conexiones a fuentes dentro de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Descubrir el esquema de los datos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> automáticamente"</strong>: crawler de Glue.</li>
+        <li><strong>"Catálogo central para <a href="athena.html">Athena</a>, <a href="../servicio.html?id=emr"><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></a> y <a href="redshift.html">Redshift</a> Spectrum"</strong>: Glue Data Catalog.</li>
+        <li><strong>"<abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr> sin servidores"</strong>: trabajos de Glue.</li>
+        <li><strong>"Procesar solo los datos nuevos en cada ejecución"</strong>: job bookmarks.</li>
+        <li><strong>"Preparar datos sin código"</strong>: <a href="../servicio.html?id=glue-databrew">Glue DataBrew</a>.</li>
+        <li><strong>"Migrar una base de datos"</strong>: <a href="../servicio.html?id=dms"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a>, no Glue.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="glue"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html" target="_blank" rel="noopener">What is AWS Glue?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html" target="_blank" rel="noopener">Using crawlers to populate the Data Catalog</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html" target="_blank" rel="noopener">Tracking processed data using job bookmarks</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "cloudformation-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere crear entornos idénticos a partir de ficheros de texto versionados, en lugar de configurar los recursos a mano. ¿Qué servicio lo permite?",
+    "opciones": [
+      "AWS CloudFormation.",
+      "AWS Trusted Advisor.",
+      "Amazon CloudWatch.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CloudFormation crea y gestiona recursos a partir de plantillas (infraestructura como código). Trusted Advisor da recomendaciones, CloudWatch monitoriza y Artifact ofrece informes de cumplimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "cloudformation-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Al borrar una pila de CloudFormation de pruebas se borró también su base de datos RDS con datos importantes. ¿Cómo se evita en adelante?",
+    "opciones": [
+      "Añadir DeletionPolicy: Snapshot (o Retain) al recurso de la base de datos.",
+      "Crear la base de datos a mano fuera de cualquier pila y documentarlo.",
+      "Desactivar la reversión automática.",
+      "Usar un change set al borrar."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "DeletionPolicy indica qué hacer con el recurso al borrar la pila: conservarlo o guardar una instantánea. Crearlo a mano pierde las ventajas de la infraestructura como código, la reversión no afecta al borrado y los change sets son para actualizaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html"
+    ]
+  },
+  {
+    "id": "cloudformation-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Antes de actualizar una pila de producción, un desarrollador quiere saber si el cambio sustituirá (y por tanto recreará) alguna instancia o base de datos. ¿Qué usa?",
+    "opciones": [
+      "Un conjunto de cambios (change set) y revisar la columna de reemplazo.",
+      "La detección de desviaciones.",
+      "Una pila anidada.",
+      "StackSets."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Un change set muestra qué recursos se añadirán, modificarán o reemplazarán antes de ejecutar la actualización. La detección de desviaciones compara con cambios manuales, y las pilas anidadas o StackSets organizan despliegues.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html"
+    ]
+  },
+  {
+    "id": "cloudformation-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una plantilla necesita la contraseña maestra de una base de datos y el equipo no quiere que aparezca en la plantilla ni en el repositorio. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Una referencia dinámica a un secreto de Secrets Manager (o que RDS gestione la contraseña).",
+      "Un parámetro con valor por defecto igual a la contraseña.",
+      "Escribirla en Outputs.",
+      "Ponerla en un comentario de la plantilla."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las referencias dinámicas leen el valor de Secrets Manager en el despliegue, sin guardarlo en la plantilla. Un valor por defecto, un Output o un comentario dejan la contraseña visible.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "cloudformation-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización quiere desplegar el mismo rol de auditoría y la misma configuración de AWS Config en todas sus cuentas, incluidas las que se creen en el futuro, en tres regiones. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "StackSets de CloudFormation con permisos gestionados por el servicio y despliegue automático en la unidad organizativa.",
+      "Una pila creada a mano en cada cuenta.",
+      "Una pila anidada en la cuenta de administración.",
+      "Un script que se ejecute cada mes."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "StackSets despliega la misma plantilla en muchas cuentas y regiones y, con la integración de Organizations, en las cuentas nuevas automáticamente. Hacerlo a mano o con scripts no escala y una pila anidada vive en una sola cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/what-is-cfnstacksets.html"
+    ]
+  },
+  {
+    "id": "cloudformation-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Los equipos cambian recursos de producción desde la consola y las pilas de CloudFormation ya no reflejan la realidad. ¿Qué primer paso ayuda a detectarlo?",
+    "opciones": [
+      "Ejecutar la detección de desviaciones (drift) en las pilas.",
+      "Borrar y recrear todas las pilas.",
+      "Desactivar la consola para todos.",
+      "Crear más Outputs."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La detección de desviaciones compara la configuración real con la de la plantilla y señala los recursos modificados. Recrear las pilas puede destruir cambios necesarios, bloquear la consola es drástico y los Outputs no detectan nada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
+    ]
+  }
+]

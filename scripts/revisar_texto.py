@@ -168,6 +168,21 @@ G = {
     'GWLCU': ('Gateway Load Balancer Capacity Unit', 'unidad de facturación del GWLB'),
     'SNI': ('Server Name Indication', 'permite varios certificados en la misma IP'),
     'HDD': ('Hard Disk Drive', 'disco duro magnético'),
+    'SAM': ('Serverless Application Model', 'extensión de CloudFormation para aplicaciones sin servidores'),
+    'DPU': ('Data Processing Unit', 'unidad de capacidad de Glue'),
+    'PII': ('Personally Identifiable Information', 'datos personales identificables'),
+    'SSM': ('Systems Manager', 'nombre corto de AWS Systems Manager y de su agente'),
+    'IaC': ('Infrastructure as Code', 'infraestructura como código'),
+    'OWASP': ('Open Worldwide Application Security Project', 'fundación que publica los riesgos web más comunes'),
+    'XSS': ('Cross-Site Scripting', 'inyección de scripts en una web'),
+    'CAPTCHA': (None, 'prueba para distinguir personas de bots'),
+    'CMS': ('Content Management System', 'gestor de contenidos web'),
+    'SMB': ('Server Message Block', 'protocolo de ficheros compartidos de Windows'),
+    'CTAS': ('CREATE TABLE AS SELECT', 'crear una tabla a partir de una consulta'),
+    'KCL': ('Kinesis Client Library', 'biblioteca para escribir consumidores de Kinesis'),
+    'KPL': ('Kinesis Producer Library', 'biblioteca para escribir productores de Kinesis'),
+    'ORC': ('Optimized Row Columnar', 'formato de fichero por columnas'),
+    'IoT': ('Internet of Things', 'internet de las cosas: dispositivos conectados'),
     'OLTP': ('Online Transaction Processing', 'las transacciones del día a día de una aplicación'),
     'RPU': ('Redshift Processing Unit', 'unidad de capacidad de Redshift Serverless'),
     'MPP': ('Massively Parallel Processing', 'procesamiento masivamente paralelo'),
@@ -188,7 +203,10 @@ G = {
     'SCT': ('Schema Conversion Tool', None),
 }
 # RAM es la memoria en EC2 y el servicio AWS RAM en el resto de páginas.
-POR_PAGINA = {'RAM': {'*': ('Resource Access Manager', None), 'ec2': G['RAM']}}
+POR_PAGINA = {
+    'RAM': {'*': ('Resource Access Manager', None), 'ec2': G['RAM']},
+    'IA': {'*': G['IA'], 'efs': ('Infrequent Access', 'clase para ficheros poco usados')},
+}
 
 # ── Índice de nombres de servicio -> id ──────────────────────────────────────────────────
 ARRIESGADOS = {'Config', 'Backup', 'Batch', 'Support', 'Connect', 'Transform', 'Quick', 'Budgets',

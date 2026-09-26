@@ -76,7 +76,7 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Tema y suscripciones:</strong> un tema puede tener muchas suscripciones de
-          distintos tipos: colas <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, funciones <a href="lambda.html">Lambda</a>, endpoints HTTP/HTTPS, <a href="../servicio.html?id=data-firehose">Amazon Data Firehose</a>,
+          distintos tipos: colas <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, funciones <a href="lambda.html">Lambda</a>, endpoints HTTP/HTTPS, <a href="data-firehose.html">Amazon Data Firehose</a>,
           correo electrónico, <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr> y notificaciones push a móviles.</li>
         <li><strong>Fan-out:</strong> publicar una vez en un tema con varias colas <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr> suscritas para
           que cada sistema reciba su copia y la procese a su ritmo. Es el patrón <abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr> + <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr> más
@@ -95,7 +95,7 @@
           configurando el atributo <code>MaximumMessageSize</code> del tema (para suscripciones <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>,
           Lambda y Firehose). Para más, se guarda el contenido en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> y se envía la referencia.</li>
         <li><strong>Origen de eventos de AWS:</strong> muchos servicios publican en <abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr> (alarmas de
-          <a href="cloudwatch.html">CloudWatch</a>, notificaciones de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, eventos de <a href="../servicio.html?id=cloudformation">CloudFormation</a>…).</li>
+          <a href="cloudwatch.html">CloudWatch</a>, notificaciones de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, eventos de <a href="cloudformation.html">CloudFormation</a>…).</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -113,7 +113,7 @@
           horaria: <a href="eventbridge.html">EventBridge</a>.</li>
         <li>Campañas de marketing por correo con plantillas y seguimiento: <a href="ses.html"><abbr class="sigla sigla-1" data-s="SES" data-en="Simple Email Service" tabindex="0">SES<span class="sigla-exp"> (Simple Email Service)</span></abbr></a> (y la mensajería al
           usuario final de AWS End User Messaging para <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr> a gran escala).</li>
-        <li>Streaming con relectura de datos: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a>.</li>
+        <li>Streaming con relectura de datos: <a href="kinesis-data-streams.html">Kinesis Data Streams</a>.</li>
       </ul>
 
       <h2 id="comparativa">SNS, SQS y EventBridge</h2>

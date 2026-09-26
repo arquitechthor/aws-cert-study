@@ -186,8 +186,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Consultas SQL sin servidores directamente sobre ficheros en S3: sin cargar datos ni gestionar infraestructura, pagando por los datos analizados.",
     "documentacion": "https://docs.aws.amazon.com/athena/"
   },
   {
@@ -365,8 +365,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Infraestructura como código: describes tus recursos de AWS en plantillas YAML o JSON y CloudFormation los crea, actualiza y borra como una unidad.",
     "documentacion": "https://docs.aws.amazon.com/cloudformation/"
   },
   {
@@ -654,8 +654,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Entrega flujos de datos casi en tiempo real a S3, Redshift, OpenSearch, tablas Iceberg o terceros, sin servidores ni código, con transformación opcional.",
     "documentacion": "https://docs.aws.amazon.com/firehose/"
   },
   {
@@ -868,8 +868,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Sistema de ficheros compartido NFS, elástico y sin servidores, que miles de instancias, contenedores y funciones pueden montar a la vez.",
     "documentacion": "https://docs.aws.amazon.com/efs/"
   },
   {
@@ -1076,8 +1076,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Integración de datos sin servidores: catálogo de datos, crawlers que descubren esquemas y trabajos ETL con Spark o Python para preparar datos del lago.",
     "documentacion": "https://docs.aws.amazon.com/glue/"
   },
   {
@@ -1298,8 +1298,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Flujos de datos en tiempo real: ingiere millones de eventos por segundo, los guarda de 24 horas a 365 días y varios consumidores los leen en orden.",
     "documentacion": "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
   },
   {
@@ -1696,8 +1696,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Conectividad privada a servicios de AWS, de terceros o propios mediante endpoints de interfaz en tu VPC, sin internet, NAT ni peering.",
     "documentacion": "https://docs.aws.amazon.com/vpc/latest/privatelink/"
   },
   {
@@ -1870,8 +1870,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Modelo de precios con descuento a cambio de comprometer un gasto por hora durante 1 o 3 años, en cómputo, bases de datos o SageMaker AI.",
     "documentacion": "https://docs.aws.amazon.com/savingsplans/"
   },
   {
@@ -2122,8 +2122,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Operación centralizada de servidores y aplicaciones: acceso sin SSH, parches, comandos remotos, inventario y parámetros de configuración, en AWS y en local.",
     "documentacion": "https://docs.aws.amazon.com/systems-manager/"
   },
   {
@@ -2276,8 +2276,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Firewall de aplicaciones web: filtra peticiones HTTP hacia CloudFront, ALB, API Gateway y otros, frente a inyecciones, bots y abusos.",
     "documentacion": "https://docs.aws.amazon.com/waf/"
   },
   {

@@ -137,12 +137,12 @@
         que pide cada tarea por segundo (Fargate Spot es mucho más barato y puede interrumpirse); con
         <strong><a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></strong>, las instancias y sus volúmenes; con <strong>Managed Instances</strong>,
         las instancias más un cargo de gestión. Aparte, balanceadores, <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>, registros y transferencia
-        de datos. Compute <a href="../servicio.html?id=savings-plans">Savings Plans</a> cubre Fargate y <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>.</p>
+        de datos. Compute <a href="savings-plans.html">Savings Plans</a> cubre Fargate y <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Un rol de tarea por servicio, con mínimo privilegio.</li>
-        <li>Secretos inyectados desde <a href="secrets-manager.html">Secrets Manager</a> o <a href="../servicio.html?id=systems-manager">Parameter Store</a> en la definición de tarea, no
+        <li>Secretos inyectados desde <a href="secrets-manager.html">Secrets Manager</a> o <a href="systems-manager.html">Parameter Store</a> en la definición de tarea, no
           en la imagen ni en variables en claro.</li>
         <li>Security group por tarea con <code>awsvpc</code>, y tareas en subredes privadas.</li>
         <li>Servicios repartidos en varias zonas; el programador distribuye las tareas y sustituye

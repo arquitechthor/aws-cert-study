@@ -114,7 +114,7 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Ficheros compartidos entre muchas instancias o zonas: <a href="../servicio.html?id=efs"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a> (Linux) o <a href="../servicio.html?id=fsx">FSx</a> (Windows y otros).</li>
+        <li>Ficheros compartidos entre muchas instancias o zonas: <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a> (Linux) o <a href="../servicio.html?id=fsx">FSx</a> (Windows y otros).</li>
         <li>Objetos accesibles por <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>, a escala ilimitada: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
         <li>Datos temporales de máximo rendimiento que pueden perderse: instance store.</li>
       </ul>
@@ -122,7 +122,7 @@
       <h2 id="comparativa">EBS, EFS y S3</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Característica</th><th><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></th><th><a href="../servicio.html?id=efs"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a></th><th><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></th></tr></thead>
+          <thead><tr><th>Característica</th><th><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></th><th><a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a></th><th><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></th></tr></thead>
           <tbody>
             <tr><td>Tipo</td><td>Bloque (disco)</td><td>Ficheros (<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr>)</td><td>Objetos (API <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>)</td></tr>
             <tr><td>Acceso</td><td>Una instancia (salvo Multi-Attach)</td><td>Miles de instancias a la vez</td><td>Cualquier cliente</td></tr>
@@ -154,7 +154,7 @@
         <li><strong>"Más <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> sin pagar más capacidad"</strong>: gp3 (<abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> independientes del tamaño).</li>
         <li><strong>"Base de datos con <abbr class="sigla" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS</abbr> muy altas y constantes"</strong>: io2 Block Express.</li>
         <li><strong>"Lectura secuencial barata de grandes volúmenes"</strong>: st1.</li>
-        <li><strong>"Compartir ficheros entre muchas instancias"</strong>: <a href="../servicio.html?id=efs"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>, no <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr>.</li>
+        <li><strong>"Compartir ficheros entre muchas instancias"</strong>: <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>, no <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr>.</li>
         <li><strong>"Los datos del disco desaparecieron al parar la instancia"</strong>: era instance store.</li>
         <li><strong>"Cifrar un volumen existente"</strong>: instantánea, copia cifrada y nuevo volumen.</li>
         <li><strong>"Automatizar las instantáneas"</strong>: Data Lifecycle Manager o <a href="../servicio.html?id=backup">AWS Backup</a>.</li>

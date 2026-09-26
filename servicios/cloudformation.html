@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CloudFormation — Apuntes AWS</title>
+<meta name="description" content="Infraestructura como código: describes tus recursos de AWS en plantillas YAML o JSON y CloudFormation los crea, actualiza y borra como una unidad. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cloudformation.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CloudFormation — Apuntes AWS">
+<meta property="og:description" content="Infraestructura como código: describes tus recursos de AWS en plantillas YAML o JSON y CloudFormation los crea, actualiza y borra como una unidad.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cloudformation.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/cloudformation.svg" alt="" width="56" height="56"><span>AWS CloudFormation</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cloudformation/" target="_blank" rel="noopener">Documentación de AWS CloudFormation ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS CloudFormation implementa <strong>infraestructura como código</strong> (<abbr class="sigla" data-s="IaC" data-en="Infrastructure as Code" data-es="infraestructura como código" tabindex="0">IaC</abbr>): en lugar de
+        crear recursos a mano en la consola, los describes en una <strong>plantilla</strong> (<abbr class="sigla sigla-1" data-s="YAML" data-en="YAML Ain&#x27;t Markup Language" data-es="formato de configuración legible" tabindex="0">YAML<span class="sigla-exp"> (YAML Ain&#x27;t Markup Language: formato de configuración legible)</span></abbr> o
+        <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr>) y CloudFormation los crea en el orden correcto, gestionando las dependencias. El conjunto
+        de recursos creados a partir de una plantilla es una <strong>pila</strong> (<em>stack</em>): se
+        actualiza y se borra como una unidad. Así los entornos son repetibles, versionables en Git y
+        revisables como cualquier otro código.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Secciones de una plantilla:</strong> <code>Resources</code> (la única obligatoria),
+          <code>Parameters</code> (valores de entrada), <code>Mappings</code> (tablas de valores, por
+          ejemplo <abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr> por región), <code>Conditions</code>, <code>Outputs</code> (valores de salida,
+          exportables a otras pilas) y <code>Transform</code> (por ejemplo, <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr>).</li>
+        <li><strong>Funciones intrínsecas:</strong> <code>!Ref</code>, <code>!GetAtt</code>,
+          <code>!Sub</code>, <code>!ImportValue</code>, <code>!If</code>…</li>
+        <li><strong>Conjuntos de cambios (change sets):</strong> muestran qué se va a crear, modificar o
+          <em>reemplazar</em> antes de aplicar una actualización.</li>
+        <li><strong>Reversión automática:</strong> si falla la creación o la actualización, la pila
+          vuelve al estado anterior.</li>
+        <li><strong>Protección:</strong> <em>DeletionPolicy</em> (<code>Retain</code> o
+          <code>Snapshot</code>) para conservar datos al borrar, protección de terminación de la pila y
+          políticas de pila que impiden actualizar ciertos recursos.</li>
+        <li><strong>Detección de desviaciones (drift):</strong> descubre recursos modificados a mano
+          fuera de CloudFormation.</li>
+        <li><strong>StackSets:</strong> despliegan la misma pila en muchas cuentas y regiones, por
+          ejemplo en toda una organización.</li>
+        <li><strong>Pilas anidadas</strong> para reutilizar componentes, y <strong>recursos
+          personalizados</strong> (con <a href="lambda.html">Lambda</a>) para lo que no esté soportado.</li>
+        <li><strong>Herramientas encima:</strong> <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> (<em>Serverless Application Model</em>) simplifica
+          aplicaciones sin servidores; el <a href="../servicio.html?id=cdk">CDK</a> genera plantillas desde lenguajes de programación.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Crear entornos idénticos de desarrollo, pruebas y producción.</li>
+        <li>Recuperación ante desastres: recrear la infraestructura en otra región.</li>
+        <li>Desplegar controles comunes en todas las cuentas de una organización con StackSets.</li>
+        <li>Canalizaciones de <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> que despliegan infraestructura revisada en Git.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si prefieres definir la infraestructura con un lenguaje de programación: el <a href="../servicio.html?id=cdk">CDK</a> (que por
+          debajo usa CloudFormation) o Terraform.</li>
+        <li>Para configurar el software dentro de los servidores: <a href="systems-manager.html">Systems Manager</a> o herramientas de
+          configuración.</li>
+        <li>Para desplegar solo una web sencilla sin gestionar la infraestructura: <a href="elastic-beanstalk.html">Elastic Beanstalk</a>.</li>
+      </ul>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>CloudFormation no tiene coste para los recursos de AWS: se pagan los recursos que crea. Solo se
+        cobran las operaciones con extensiones de terceros (registro de CloudFormation) por encima del
+        nivel gratuito.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Rol de servicio de CloudFormation: las pilas se crean con sus permisos, no con los del usuario.</li>
+        <li>Nunca poner secretos en la plantilla: referencias dinámicas a <a href="secrets-manager.html">Secrets Manager</a> o <a href="systems-manager.html">Parameter Store</a>.</li>
+        <li>Revisar los change sets y usar políticas de pila y DeletionPolicy en los recursos con datos.</li>
+        <li>Validación con reglas (CloudFormation Guard, Hooks) antes de desplegar.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Infraestructura repetible como código"</strong>: CloudFormation.</li>
+        <li><strong>"Ver qué cambiará antes de actualizar"</strong>: change set.</li>
+        <li><strong>"Conservar la base de datos al borrar la pila"</strong>: DeletionPolicy Retain o Snapshot.</li>
+        <li><strong>"Misma pila en 50 cuentas y 3 regiones"</strong>: StackSets.</li>
+        <li><strong>"Alguien cambió un recurso a mano"</strong>: detección de desviaciones.</li>
+        <li><strong>"Compartir el ID de la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> con otra pila"</strong>: Outputs con Export e <code>!ImportValue</code>.</li>
+        <li><strong>"Mismo modelo para cada región con distinta <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr>"</strong>: Mappings.</li>
+        <li><strong>"Contraseña en la plantilla"</strong>: referencia dinámica a <a href="secrets-manager.html">Secrets Manager</a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cloudformation"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html" target="_blank" rel="noopener">What is AWS CloudFormation?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html" target="_blank" rel="noopener">Update CloudFormation stacks using change sets</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/what-is-cfnstacksets.html" target="_blank" rel="noopener">Managing stacks across accounts and Regions with StackSets</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-attribute-deletionpolicy.html" target="_blank" rel="noopener">DeletionPolicy attribute</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

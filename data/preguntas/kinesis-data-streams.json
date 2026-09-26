@@ -1,0 +1,156 @@
+[
+  {
+    "id": "kinesis-data-streams-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere recoger en tiempo real los clics de su web para que varias aplicaciones los analicen a la vez. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "Amazon Kinesis Data Streams.",
+      "Amazon S3 Glacier.",
+      "AWS Snowball.",
+      "Amazon Lightsail."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Kinesis Data Streams ingiere flujos de datos en tiempo real que varios consumidores pueden leer. Glacier archiva datos, Snowball los transfiere físicamente y Lightsail ofrece servidores sencillos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
+    ]
+  },
+  {
+    "id": "kinesis-data-streams-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Tres aplicaciones distintas deben procesar los mismos eventos de telemetría en tiempo real, y hay que poder volver a procesar los de los últimos 3 días si hay un error. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Kinesis Data Streams con retención ampliada y un consumidor por aplicación.",
+      "Una cola SQS compartida por las tres aplicaciones.",
+      "Amazon SNS con suscripciones de correo.",
+      "Guardar los eventos en EBS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En Kinesis cada consumidor lee todos los registros y la retención (hasta 365 días) permite volver a procesarlos. En SQS cada mensaje lo procesa un solo consumidor y se borra, SNS no guarda los mensajes y EBS no es un servicio de streaming.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
+    ]
+  },
+  {
+    "id": "kinesis-data-streams-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Los eventos de cada dispositivo deben procesarse en el orden en que se generan. ¿Cómo se garantiza en Kinesis Data Streams?",
+    "opciones": [
+      "Usando el identificador del dispositivo como clave de partición.",
+      "Usando una clave de partición aleatoria.",
+      "Activando enhanced fan-out.",
+      "Ampliando la retención."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los registros con la misma clave de partición van al mismo shard y se leen en orden. Una clave aleatoria reparte los eventos de un dispositivo entre shards, y el fan-out o la retención no afectan al orden.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
+    ]
+  },
+  {
+    "id": "kinesis-data-streams-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un productor recibe ProvisionedThroughputExceededException al escribir en un stream aprovisionado, y casi todos los registros usan la misma clave de partición. ¿Qué cambio lo soluciona mejor?",
+    "opciones": [
+      "Usar claves de partición con más variedad para repartir la carga entre shards (y añadir shards o pasar a bajo demanda si hace falta).",
+      "Reducir la retención a 24 horas.",
+      "Activar el cifrado con KMS.",
+      "Añadir más consumidores."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Si casi todo va a la misma clave, un único shard recibe la carga y supera su límite de escritura; repartir las claves (y añadir capacidad) lo resuelve. La retención, el cifrado y los consumidores no influyen en la capacidad de escritura.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html"
+    ]
+  },
+  {
+    "id": "kinesis-data-streams-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Cinco consumidores leen del mismo stream y se ralentizan porque comparten los 2 MB/s de lectura de cada shard. ¿Qué opción da a cada uno su propio rendimiento?",
+    "opciones": [
+      "Registrarlos como consumidores de enhanced fan-out.",
+      "Aumentar el tamaño máximo de registro.",
+      "Pasar a una cola SQS.",
+      "Reducir el número de shards."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con enhanced fan-out cada consumidor registrado recibe 2 MB/s por shard dedicados mediante push. El tamaño de registro no cambia la lectura, SQS no permite varios lectores del mismo mensaje y menos shards empeoran el problema.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/streams/latest/dev/enhanced-consumers.html"
+    ]
+  },
+  {
+    "id": "kinesis-data-streams-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa gestiona a mano el número de shards de un stream cuyo tráfico cambia mucho a lo largo del día, y sufre limitaciones en los picos. ¿Qué mejora requiere menos operación?",
+    "opciones": [
+      "Cambiar el stream al modo de capacidad bajo demanda.",
+      "Programar una función que duplique los shards cada hora.",
+      "Migrar a una instancia EC2 con Kafka.",
+      "Reducir la retención."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El modo bajo demanda escala la capacidad automáticamente con el tráfico, sin gestionar shards. Programar cambios es frágil, Kafka en EC2 añade operación y la retención no afecta a la capacidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/streams/latest/dev/how-do-i-size-a-stream.html"
+    ]
+  },
+  {
+    "id": "kinesis-data-streams-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un flujo de telemetría suele enviar registros de 200 KB, pero algunas veces necesita enviar registros de 6 MB, y hoy los divide en trozos. ¿Qué opción lo simplifica?",
+    "opciones": [
+      "Aumentar el tamaño máximo de registro del stream (hasta 10 MiB) para admitir esos registros ocasionales.",
+      "Enviar esos registros por correo electrónico.",
+      "Usar SQS, que admite 6 MB por mensaje.",
+      "Crear un stream por cada registro grande."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Kinesis Data Streams admite registros de hasta 10 MiB configurando el tamaño máximo del stream, pensado para registros grandes ocasionales. SQS admite hasta 1 MiB y las otras opciones no tienen sentido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/streams/latest/dev/large-records.html"
+    ]
+  }
+]

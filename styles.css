@@ -223,7 +223,7 @@ button.chip-kopi[aria-pressed="true"] { background: rgba(168, 85, 247, 0.16); co
 .cat-en { color: var(--text-faint); font-style: italic; font-weight: 400; }
 /* Siglas con tooltip (assets/siglas.js). La explicación de la primera aparición (.sigla-exp)
    solo la leen los lectores de pantalla. */
-abbr.sigla { text-decoration: underline dotted; text-decoration-color: var(--text-faint); text-underline-offset: 3px; cursor: help; }
+abbr.sigla { position: relative; /* contiene .sigla-exp dentro de las tablas con scroll */ text-decoration: underline dotted; text-decoration-color: var(--text-faint); text-underline-offset: 3px; cursor: help; }
 abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; border-radius: 3px; }
 .sigla-exp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .sigla-tip {
@@ -309,7 +309,7 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 }
 .coming-soon .coming-icon { font-size: 40px; margin-bottom: 12px; }
 
-.doc { max-width: 820px; }
+.doc { max-width: 820px; overflow-wrap: break-word; } /* palabras largas (nombres de error, API) no desbordan en móvil */
 .doc h2 { font-size: 22px; margin: 40px 0 12px; }
 .doc h3 { font-size: 17px; margin: 24px 0 10px; }
 .doc p, .doc li { color: var(--text-muted); font-size: 15.5px; }
@@ -338,6 +338,7 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 /* ── Quiz ────────────────────────────────────────────────── */
 .quiz { display: grid; gap: 16px; }
 .quiz-question {
+  min-width: 0; /* un fieldset crece por defecto hasta su palabra más larga */
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 20px; margin: 0;
 }

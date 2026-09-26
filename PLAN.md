@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 37 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 47 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -23,10 +23,8 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   Computación:** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda ECS
   Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
   `serverless-application-repository`, `vmware-cloud-on-aws` (aviso: AWS dejó de revenderlo el
-  30/04/2024, se contrata con Broadcom) y `wavelength`. **Faltan Administración y gobernanza (19):**
-  `organizations`, `cloudformation`, `cdk`, `cli`, `config`, `control-tower`, `systems-manager`
-  (aviso: Change Manager e Incident Manager sin clientes nuevos desde el 07/11/2025, Application
-  Manager desde 2026), `trusted-advisor`, `well-architected-tool`, `compute-optimizer`,
+  30/04/2024, se contrata con Broadcom) y `wavelength`. **Faltan Administración y gobernanza (17):**
+  `organizations`, `cdk`, `cli`, `config`, `control-tower`, `trusted-advisor`, `well-architected-tool`, `compute-optimizer`,
   `health-dashboard`, `license-manager`, `service-catalog` (AppRegistry sin clientes nuevos),
   `service-quotas`, `management-console` (myApplications sin clientes nuevos), `managed-grafana`,
   `managed-service-for-prometheus`, `appconfig` y `proton` (aviso: en retirada desde oct. 2025).
@@ -293,7 +291,7 @@ esta lista es solo el orden de trabajo.
 - [x] `elb` Elastic Load Balancing (ELB) — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [x] `ec2-auto-scaling` Amazon EC2 Auto Scaling — Computación (SAA-C03, SAP-C02)
 - [x] `s3` Amazon S3 — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `efs` Amazon EFS — Almacenamiento (SAA-C03, SAP-C02)
+- [x] `efs` Amazon EFS — Almacenamiento (SAA-C03, SAP-C02)
 - [x] `rds` Amazon RDS — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [x] `aurora` Amazon Aurora — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [x] `dynamodb` Amazon DynamoDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
@@ -316,7 +314,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `s3-glacier` Amazon S3 Glacier — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `data-exchange` AWS Data Exchange — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `emr` Amazon EMR — Análisis (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `glue` AWS Glue — Análisis (SAA-C03, SAP-C02, AIF-C01)
+- [x] `glue` AWS Glue — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `lake-formation` AWS Lake Formation — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [x] `opensearch-service` Amazon OpenSearch Service — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `quick` Amazon Quick — Análisis (SAA-C03, SAP-C02, AIF-C01)
@@ -342,9 +340,9 @@ esta lista es solo el orden de trabajo.
 #### Prioridad 2: SAA-C03 + SAP-C02 (64)
 
 - [ ] `cost-and-usage-report` AWS Cost and Usage Report — Administración financiera en la nube (SAA-C03, SAP-C02)
-- [ ] `savings-plans` Savings Plans — Administración financiera en la nube (SAA-C03, SAP-C02)
+- [x] `savings-plans` Savings Plans — Administración financiera en la nube (SAA-C03, SAP-C02)
 - [ ] `cli` AWS CLI — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `cloudformation` AWS CloudFormation — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `cloudformation` AWS CloudFormation — Administración y gobernanza (SAA-C03, SAP-C02)
 - [ ] `compute-optimizer` AWS Compute Optimizer — Administración y gobernanza (SAA-C03, SAP-C02)
 - [ ] `control-tower` AWS Control Tower — Administración y gobernanza (SAA-C03, SAP-C02)
 - [ ] `health-dashboard` AWS Health Dashboard — Administración y gobernanza (SAA-C03, SAP-C02)
@@ -353,13 +351,13 @@ esta lista es solo el orden de trabajo.
 - [ ] `managed-service-for-prometheus` Amazon Managed Service for Prometheus — Administración y gobernanza (SAA-C03, SAP-C02)
 - [ ] `management-console` AWS Management Console — Administración y gobernanza (SAA-C03, SAP-C02)
 - [ ] `service-catalog` AWS Service Catalog — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `systems-manager` AWS Systems Manager — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `systems-manager` AWS Systems Manager — Administración y gobernanza (SAA-C03, SAP-C02)
 - [ ] `backup` AWS Backup — Almacenamiento (SAA-C03, SAP-C02)
 - [ ] `fsx` Amazon FSx — Almacenamiento (SAA-C03, SAP-C02)
 - [ ] `storage-gateway` AWS Storage Gateway — Almacenamiento (SAA-C03, SAP-C02)
-- [ ] `athena` Amazon Athena — Análisis (SAA-C03, SAP-C02)
-- [ ] `data-firehose` Amazon Data Firehose — Análisis (SAA-C03, SAP-C02)
-- [ ] `kinesis-data-streams` Amazon Kinesis Data Streams — Análisis (SAA-C03, SAP-C02)
+- [x] `athena` Amazon Athena — Análisis (SAA-C03, SAP-C02)
+- [x] `data-firehose` Amazon Data Firehose — Análisis (SAA-C03, SAP-C02)
+- [x] `kinesis-data-streams` Amazon Kinesis Data Streams — Análisis (SAA-C03, SAP-C02)
 - [ ] `msk` Amazon MSK — Análisis (SAA-C03, SAP-C02)
 - [ ] `keyspaces` Amazon Keyspaces — Base de datos (SAA-C03, SAP-C02)
 - [x] `auto-scaling` AWS Auto Scaling — Computación (SAA-C03, SAP-C02)
@@ -387,7 +385,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `client-vpn` AWS Client VPN — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `direct-connect` AWS Direct Connect — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `global-accelerator` AWS Global Accelerator — Redes y entrega de contenido (SAA-C03, SAP-C02)
-- [ ] `privatelink` AWS PrivateLink — Redes y entrega de contenido (SAA-C03, SAP-C02)
+- [x] `privatelink` AWS PrivateLink — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `site-to-site-vpn` AWS Site-to-Site VPN — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `transit-gateway` AWS Transit Gateway — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [x] `acm` AWS Certificate Manager (ACM) — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
@@ -402,7 +400,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `ram` AWS RAM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [ ] `security-hub` AWS Security Hub — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [ ] `shield` AWS Shield — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `waf` AWS WAF — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `waf` AWS WAF — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [ ] `elastic-transcoder` Amazon Elastic Transcoder — Servicios multimedia (SAA-C03, SAP-C02)
 - [ ] `kinesis-video-streams` Amazon Kinesis Video Streams — Servicios multimedia (SAA-C03, SAP-C02)
 
@@ -570,3 +568,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-26 | Revisión de las 23 guías con las nuevas reglas de redacción: 270 siglas explicadas en las páginas y 202 en las preguntas, y 535 enlaces a otros servicios (a su guía o a "Próximamente"), con `scripts/revisar_texto.py` (idempotente). Insignia "Finalizado" sin el visto bueno. Botón "Exportar a Noria" en el quiz de cada servicio (un tema por servicio, enunciado y opciones, sin respuestas). |
 | 2026-09-26 | Borrados de Conocimiento de Kopi los tópicos [B], [F] y [R] del tema "Amazon Web Services" (6 recursos) con `kopi-media-admin/documentation/scripts/delete-knowledge-subtopics-aws.ps1`; su contenido pasa aquí. Publicada la categoría Integración de aplicaciones completa (SQS, SNS, EventBridge, Step Functions, AppSync, Amazon MQ, AppFlow) y 4 de Computación (Fargate, EC2 Auto Scaling, AWS Auto Scaling, Elastic Beanstalk): 34 de 164. Pausado a petición del usuario; lo pendiente está en "Próximo paso". |
 | 2026-09-26 | Siglas con tooltip en lugar de paréntesis: `<abbr class="sigla">` en todas las apariciones de las guías (script `revisar_texto.py`, idempotente) y en las preguntas al pintarlas (`quiz.js` + `data/siglas.json`); se quitaron las explicaciones entre paréntesis de 240 textos de preguntas. Tooltip en `assets/siglas.js`, ajustado a la ventana (sin desplazamiento horizontal a 375 px). |
+| 2026-09-26 | Publicadas las 13 guías más mencionadas por las ya existentes: ELB, Redshift, EBS, Data Firehose, Athena, Systems Manager, Savings Plans, EFS, Kinesis Data Streams, CloudFormation, WAF, PrivateLink y Glue (47 de 164). Datos verificados: gp3 hasta 64 TiB/80 000 IOPS, cuatro tipos de Savings Plans (incluido Database), registros de Kinesis de hasta 10 MiB, Firehose con destino Iceberg. Arreglado el desbordamiento horizontal en móvil (fieldset del quiz y `.sigla-exp` dentro de tablas). |

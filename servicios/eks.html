@@ -97,7 +97,7 @@
           roles de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> con permisos de Kubernetes (sustituyen al antiguo ConfigMap
           <code>aws-auth</code>).</li>
         <li><strong>Complementos (add-ons):</strong> <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> <abbr class="sigla" data-s="CNI" data-en="Container Network Interface" data-es="plugin de red de los contenedores" tabindex="0">CNI</abbr> (cada pod recibe una <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>),
-          CoreDNS, kube-proxy, controladores de <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> o <a href="../servicio.html?id=efs"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>, AWS Load Balancer Controller.</li>
+          CoreDNS, kube-proxy, controladores de <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> o <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>, AWS Load Balancer Controller.</li>
         <li><strong>Versiones:</strong> cada versión de Kubernetes tiene soporte estándar y luego un
           soporte extendido de pago; hay que planificar las actualizaciones.</li>
         <li><strong>EKS Anywhere</strong> y <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr> en <a href="../servicio.html?id=outposts">Outposts</a> para ejecutar clústeres fuera de las
@@ -138,7 +138,7 @@
       <p>Se paga una tarifa por hora por cada clúster (más alta si la versión está en soporte
         extendido), más la capacidad donde corren los pods: instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> y volúmenes, vCPU y memoria
         de <a href="fargate.html">Fargate</a>, o el cargo de gestión de Auto Mode sobre las instancias. Aparte, balanceadores,
-        transferencia de datos y <abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr>. Spot y <a href="../servicio.html?id=savings-plans">Savings Plans</a> reducen el coste de los nodos.</p>
+        transferencia de datos y <abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr>. Spot y <a href="savings-plans.html">Savings Plans</a> reducen el coste de los nodos.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>

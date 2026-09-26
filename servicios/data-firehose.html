@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Data Firehose — Apuntes AWS</title>
+<meta name="description" content="Entrega flujos de datos casi en tiempo real a S3, Redshift, OpenSearch, tablas Iceberg o terceros, sin servidores ni código, con transformación opcional. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/data-firehose.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Data Firehose — Apuntes AWS">
+<meta property="og:description" content="Entrega flujos de datos casi en tiempo real a S3, Redshift, OpenSearch, tablas Iceberg o terceros, sin servidores ni código, con transformación opcional.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/data-firehose.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/data-firehose.svg" alt="" width="56" height="56"><span>Amazon Data Firehose</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/firehose/" target="_blank" rel="noopener">Documentación de Amazon Data Firehose ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Data Firehose (antes Kinesis Data Firehose) es la forma más sencilla de
+        <strong>cargar datos en streaming</strong> en un destino. Recibe registros de tus
+        aplicaciones o de otros servicios, los agrupa en un búfer, opcionalmente los transforma,
+        comprime o convierte de formato, y los entrega a <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="redshift.html">Redshift</a>, <a href="opensearch-service.html">OpenSearch</a>, tablas Apache
+        Iceberg, Snowflake, Splunk o un endpoint <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>. Es sin servidores: escala solo y no hay nada
+        que programar para la entrega.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Fuentes:</strong> escritura directa por <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> o <abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr>, un stream de Kinesis Data
+          Streams, un clúster de <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>, <a href="cloudwatch.html">CloudWatch</a> Logs, <a href="waf.html">AWS <abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a>, eventos de <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr> y otras.</li>
+        <li><strong>Búfer:</strong> los datos se agrupan por tamaño o por tiempo antes de entregarse;
+          con <em>zero buffering</em> la entrega llega en unos segundos. Por eso es "casi en tiempo
+          real", no milisegundos.</li>
+        <li><strong>Transformación:</strong> una función <a href="lambda.html">Lambda</a> puede modificar o filtrar cada lote;
+          conversión de <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> a Parquet u <abbr class="sigla" data-s="ORC" data-en="Optimized Row Columnar" data-es="formato de fichero por columnas" tabindex="0">ORC</abbr> (formatos de columnas) con el esquema de <a href="glue.html">Glue</a>; compresión
+          y particionado dinámico de las claves de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li><strong>Destinos Iceberg:</strong> escribe directamente en tablas Apache Iceberg o en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>
+          Tables, con inserciones, actualizaciones y borrados.</li>
+        <li><strong>Registros fallidos</strong> y copia de seguridad de los datos originales en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</li>
+        <li><strong><a href="redshift.html">Redshift</a>:</strong> Firehose deja los datos en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> y lanza un COPY por ti.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Enviar registros de aplicaciones o de <a href="cloudwatch.html">CloudWatch</a> Logs a un lago de datos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li>Cargar eventos en <a href="redshift.html">Redshift</a> u <a href="opensearch-service.html">OpenSearch</a> para cuadros de mando casi en tiempo real.</li>
+        <li>Guardar en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> como Parquet los datos de un stream de Kinesis para consultarlos con <a href="athena.html">Athena</a>.</li>
+        <li>Enviar datos de seguridad a Splunk u otras herramientas externas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Latencia de milisegundos, varios consumidores o relectura: <a href="kinesis-data-streams.html">Kinesis Data Streams</a>.</li>
+        <li>Transformaciones complejas por lotes: <a href="glue.html">Glue</a>.</li>
+        <li>Análisis en streaming con estado (ventanas, agregaciones): Amazon Managed Service for Apache
+          Flink.</li>
+      </ul>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por GB ingerido (redondeado a bloques de 5 KB por registro), más la conversión de
+        formato, el particionado dinámico y la entrega a una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> si se usan. Sin coste por hora ni
+        capacidad que aprovisionar.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Servicio sin servidores y redundante en varias zonas.</li>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>; rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para escribir en los destinos.</li>
+        <li>Entrega a destinos dentro de una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> (por ejemplo, <a href="opensearch-service.html">OpenSearch</a> privado).</li>
+        <li>Registros que fallan guardados en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> para no perder datos.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Cargar datos en streaming en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="redshift.html">Redshift</a> u <a href="opensearch-service.html">OpenSearch</a> con el mínimo esfuerzo"</strong>: Firehose.</li>
+        <li><strong>"Casi en tiempo real"</strong> (segundos): Firehose; <strong>"tiempo real"</strong> (milisegundos): <a href="kinesis-data-streams.html">Kinesis Data Streams</a>.</li>
+        <li><strong>"Convertir a Parquet antes de guardar en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>"</strong>: conversión de formato de Firehose.</li>
+        <li><strong>"Transformar cada registro antes de entregarlo"</strong>: función <a href="lambda.html">Lambda</a> de transformación.</li>
+        <li><strong>"Firehose no permite volver a leer ni tener varios consumidores"</strong>: para eso, Kinesis Data Streams delante.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="data-firehose"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html" target="_blank" rel="noopener">What is Amazon Data Firehose?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/firehose/latest/dev/data-transformation.html" target="_blank" rel="noopener">Transform source data in Amazon Data Firehose</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/firehose/latest/dev/record-format-conversion.html" target="_blank" rel="noopener">Convert input data format in Amazon Data Firehose</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/firehose/latest/dev/apache-iceberg-destination.html" target="_blank" rel="noopener">Deliver data to Apache Iceberg Tables with Amazon Data Firehose</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

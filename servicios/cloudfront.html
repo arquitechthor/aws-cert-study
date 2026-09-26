@@ -100,7 +100,7 @@
         <li>Servir un sitio estático o una <abbr class="sigla sigla-1" data-s="SPA" data-en="Single-Page Application" data-es="web de una sola página" tabindex="0">SPA<span class="sigla-exp"> (Single-Page Application: web de una sola página)</span></abbr> desde <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> privado con <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> y dominio propio.</li>
         <li>Acelerar APIs y contenido dinámico (la conexión viaja por la red de AWS).</li>
         <li>Distribución de vídeo y descargas grandes.</li>
-        <li>Proteger el origen con <a href="../servicio.html?id=waf">AWS <abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> y <a href="../servicio.html?id=shield">Shield</a> en el borde.</li>
+        <li>Proteger el origen con <a href="waf.html">AWS <abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> y <a href="../servicio.html?id=shield">Shield</a> en el borde.</li>
         <li>Contenido de pago con URLs o cookies firmadas.</li>
       </ul>
 
@@ -120,7 +120,7 @@
             <tr><td>Protocolos</td><td><abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> y <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> (incluido WebSocket)</td><td><abbr class="sigla" data-s="TCP" data-en="Transmission Control Protocol" data-es="protocolo de transporte fiable" tabindex="0">TCP</abbr> y <abbr class="sigla" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP</abbr></td></tr>
             <tr><td>Caché</td><td>Sí</td><td>No</td></tr>
             <tr><td><abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> estáticas</td><td>No (<abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr>)</td><td>Sí, dos <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> anycast</td></tr>
-            <tr><td>Uso típico</td><td>Web, APIs, medios</td><td>Juegos, IoT, conmutación rápida entre regiones</td></tr>
+            <tr><td>Uso típico</td><td>Web, APIs, medios</td><td>Juegos, <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr>, conmutación rápida entre regiones</td></tr>
           </tbody>
         </table>
       </div>
@@ -135,7 +135,7 @@
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li><abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> con certificados de <a href="acm.html"><abbr class="sigla sigla-1" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM<span class="sigla-exp"> (AWS Certificate Manager)</span></abbr></a>, que deben estar en <strong>us-east-1</strong>.</li>
-        <li><a href="../servicio.html?id=shield">AWS Shield</a> Standard incluido; integración con <a href="../servicio.html?id=waf">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>.</li>
+        <li><a href="../servicio.html?id=shield">AWS Shield</a> Standard incluido; integración con <a href="waf.html">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>.</li>
         <li><abbr class="sigla" data-s="OAC" data-en="Origin Access Control" data-es="permite que solo CloudFront lea el origen" tabindex="0">OAC</abbr> para que el bucket de origen no sea público.</li>
         <li>Grupos de orígenes para conmutar ante fallos; red global y redundante.</li>
       </ul>
@@ -156,7 +156,7 @@
           cookies firmadas (muchos ficheros).</li>
         <li><strong>"Lógica ligera en el borde"</strong>: CloudFront Functions. Si necesita red, más
           tiempo o eventos de origen: Lambda@Edge.</li>
-        <li><strong>"Bloquear países"</strong>: restricción geográfica (o <a href="../servicio.html?id=waf"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> para reglas más finas).</li>
+        <li><strong>"Bloquear países"</strong>: restricción geográfica (o <a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> para reglas más finas).</li>
         <li><strong>"<abbr class="sigla" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP</abbr>"</strong>, <strong>"<abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> estáticas"</strong> o <strong>"no <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>"</strong>: <a href="../servicio.html?id=global-accelerator">Global Accelerator</a>.</li>
       </ul>
 

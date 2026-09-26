@@ -109,7 +109,7 @@
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Ficheros de usuarios (fotos, vídeos, documentos) subidos con URLs prefirmadas.</li>
-        <li>Lago de datos consultado con <a href="../servicio.html?id=athena">Athena</a>, <a href="../servicio.html?id=glue">Glue</a> o <a href="../servicio.html?id=emr"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a>.</li>
+        <li>Lago de datos consultado con <a href="athena.html">Athena</a>, <a href="glue.html">Glue</a> o <a href="../servicio.html?id=emr"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a>.</li>
         <li>Copias de seguridad y archivo a largo plazo con Glacier.</li>
         <li>Sitio web estático, normalmente detrás de <a href="cloudfront.html">CloudFront</a>.</li>
         <li>Fuente de documentos para una base de conocimiento de <a href="bedrock.html">Amazon Bedrock</a> (<abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr>).</li>
@@ -118,7 +118,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Como disco de un sistema operativo o de una base de datos: eso es <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>.</li>
-        <li>Como sistema de ficheros compartido con semántica <abbr class="sigla sigla-1" data-s="POSIX" data-en="Portable Operating System Interface" data-es="estándar de ficheros y permisos tipo Unix" tabindex="0">POSIX<span class="sigla-exp"> (Portable Operating System Interface: estándar de ficheros y permisos tipo Unix)</span></abbr>: <a href="../servicio.html?id=efs"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a> o <a href="../servicio.html?id=fsx">FSx</a>.</li>
+        <li>Como sistema de ficheros compartido con semántica <abbr class="sigla sigla-1" data-s="POSIX" data-en="Portable Operating System Interface" data-es="estándar de ficheros y permisos tipo Unix" tabindex="0">POSIX<span class="sigla-exp"> (Portable Operating System Interface: estándar de ficheros y permisos tipo Unix)</span></abbr>: <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a> o <a href="../servicio.html?id=fsx">FSx</a>.</li>
         <li>Para datos con muchas actualizaciones pequeñas de partes de un fichero: <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> reescribe el
           objeto entero.</li>
       </ul>
@@ -126,7 +126,7 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></th><th><a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a></th><th><a href="../servicio.html?id=efs"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></th><th><a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a></th><th><a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a></th></tr></thead>
           <tbody>
             <tr><td>Tipo</td><td>Objetos</td><td>Bloques (disco)</td><td>Ficheros (<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr>)</td></tr>
             <tr><td>Acceso</td><td>API <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr> desde cualquier sitio</td><td>Una instancia (salvo multi-attach)</td><td>Muchas instancias a la vez</td></tr>

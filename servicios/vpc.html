@@ -91,7 +91,7 @@
           (puertos efímeros). Útil para bloquear una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> concreta.</li>
         <li><strong><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> endpoints:</strong> acceso privado a servicios de AWS sin pasar por internet.
           Los de tipo <em>gateway</em> (solo <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> y <a href="dynamodb.html">DynamoDB</a>) son gratuitos y funcionan con rutas; los de
-          tipo <em>interface</em> (<a href="../servicio.html?id=privatelink">PrivateLink</a>) crean una interfaz de red con <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> privada y tienen coste.</li>
+          tipo <em>interface</em> (<a href="privatelink.html">PrivateLink</a>) crean una interfaz de red con <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> privada y tienen coste.</li>
         <li><strong><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> peering:</strong> une dos <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (incluso de otras cuentas o regiones) de forma
           privada. <strong>No es transitivo</strong> y los rangos no pueden solaparse.</li>
         <li><strong><a href="../servicio.html?id=transit-gateway">Transit Gateway</a>:</strong> concentrador que conecta muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y redes locales en
@@ -99,7 +99,7 @@
         <li><strong>Conectividad híbrida:</strong> <a href="../servicio.html?id=site-to-site-vpn">Site-to-Site <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr></a> (túneles IPsec por internet,
           rápida de montar) y <a href="../servicio.html?id=direct-connect">Direct Connect</a> (enlace dedicado, latencia estable).</li>
         <li><strong>VPC Flow Logs:</strong> registran metadatos del tráfico <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> (origen, destino,
-          puertos, aceptado o rechazado) hacia <a href="cloudwatch.html">CloudWatch</a> Logs, <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> o <a href="../servicio.html?id=data-firehose">Firehose</a>. No capturan el
+          puertos, aceptado o rechazado) hacia <a href="cloudwatch.html">CloudWatch</a> Logs, <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> o <a href="data-firehose.html">Firehose</a>. No capturan el
           contenido de los paquetes.</li>
       </ul>
 
@@ -118,7 +118,7 @@
         <li>Para inspeccionar el contenido del tráfico o filtrar por dominio: <a href="../servicio.html?id=network-firewall">Network Firewall</a> o
           appliances de terceros con <a href="elb.html">Gateway Load Balancer</a>, no solo security groups y <abbr class="sigla sigla-1" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL<span class="sigla-exp"> (Network Access Control List: firewall a nivel de subred)</span></abbr>.</li>
         <li>Para conectar decenas de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> entre sí: <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> o Cloud <abbr class="sigla sigla-1" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN<span class="sigla-exp"> (Wide Area Network: red de área extensa)</span></abbr>, no una malla de peerings.</li>
-        <li>Para exponer un servicio concreto a otras cuentas sin unir las redes: <a href="../servicio.html?id=privatelink">PrivateLink</a>
+        <li>Para exponer un servicio concreto a otras cuentas sin unir las redes: <a href="privatelink.html">PrivateLink</a>
           (servicio de endpoint), no peering.</li>
       </ul>
 

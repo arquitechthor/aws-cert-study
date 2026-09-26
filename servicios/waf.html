@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS WAF — Apuntes AWS</title>
+<meta name="description" content="Firewall de aplicaciones web: filtra peticiones HTTP hacia CloudFront, ALB, API Gateway y otros, frente a inyecciones, bots y abusos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/waf.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS WAF — Apuntes AWS">
+<meta property="og:description" content="Firewall de aplicaciones web: filtra peticiones HTTP hacia CloudFront, ALB, API Gateway y otros, frente a inyecciones, bots y abusos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/waf.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/waf.svg" alt="" width="56" height="56"><span>AWS WAF</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/waf/" target="_blank" rel="noopener">Documentación de AWS WAF ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS <abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr> es un <strong>firewall de aplicaciones web</strong>: inspecciona cada petición <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr> o
+        <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> que llega a tu aplicación (cabeceras, cuerpo, parámetros, <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> de origen, país) y decide si
+        permitirla, bloquearla, contarla o exigir una prueba como un <abbr class="sigla sigla-1" data-s="CAPTCHA" data-es="prueba para distinguir personas de bots" tabindex="0">CAPTCHA<span class="sigla-exp"> (prueba para distinguir personas de bots)</span></abbr>. Protege frente a ataques de
+        la capa de aplicación, como inyección <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> o <abbr class="sigla sigla-1" data-s="XSS" data-en="Cross-Site Scripting" data-es="inyección de scripts en una web" tabindex="0">XSS<span class="sigla-exp"> (Cross-Site Scripting: inyección de scripts en una web)</span></abbr>, y frente a bots y abusos. Se asocia a
+        <a href="cloudfront.html">CloudFront</a>, <a href="elb.html">Application Load Balancer</a>, <a href="api-gateway.html">API Gateway</a>, <a href="appsync.html">AppSync</a>, <a href="cognito.html">Cognito</a> y <a href="../servicio.html?id=app-runner">App Runner</a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Web <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr>:</strong> el conjunto de reglas que se asocia a un recurso, con una acción
+          por defecto (permitir o bloquear).</li>
+        <li><strong>Reglas:</strong> por condición de la petición: listas de <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>, países
+          (geocoincidencia), cadenas o expresiones regulares, tamaño, inyección <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>, <abbr class="sigla" data-s="XSS" data-en="Cross-Site Scripting" data-es="inyección de scripts en una web" tabindex="0">XSS</abbr>…</li>
+        <li><strong>Reglas basadas en frecuencia (rate-based):</strong> bloquean una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> (u otra clave)
+          que supera un número de peticiones en una ventana de tiempo. Útiles contra fuerza bruta y <abbr class="sigla sigla-1" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS<span class="sigla-exp"> (Distributed Denial of Service: ataque que satura un servicio desde muchos orígenes)</span></abbr>
+          de capa 7.</li>
+        <li><strong>Grupos de reglas gestionadas:</strong> conjuntos mantenidos por AWS (riesgos
+          comunes del OWASP Top 10, <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> con mala reputación, entradas conocidamente maliciosas) o por
+          vendedores del Marketplace.</li>
+        <li><strong>Bot Control y prevención de fraude</strong> en el inicio de sesión y la creación de
+          cuentas.</li>
+        <li><strong>Registro:</strong> envía los registros de peticiones a <a href="cloudwatch.html">CloudWatch</a> Logs, <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o
+          <a href="data-firehose.html">Firehose</a> para analizarlas.</li>
+        <li><strong>Gestión centralizada:</strong> <a href="../servicio.html?id=firewall-manager">AWS Firewall Manager</a> aplica las mismas Web <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> en
+          todas las cuentas de una organización.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Proteger una web o <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> pública frente a inyección <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>, <abbr class="sigla" data-s="XSS" data-en="Cross-Site Scripting" data-es="inyección de scripts en una web" tabindex="0">XSS</abbr> y otras amenazas comunes.</li>
+        <li>Limitar el número de peticiones por <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> para frenar fuerza bruta o scraping.</li>
+        <li>Bloquear o permitir tráfico por país.</li>
+        <li>Parchear virtualmente una vulnerabilidad mientras se corrige el código.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Ataques <abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de red y transporte (capas 3 y 4): <a href="../servicio.html?id=shield">AWS Shield</a> (Standard incluido, Advanced de
+          pago).</li>
+        <li>Filtrar tráfico que no es <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> o inspeccionar el tráfico de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>: <a href="../servicio.html?id=network-firewall">AWS Network Firewall</a>.</li>
+        <li>Controlar el acceso entre recursos dentro de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>: security groups y <abbr class="sigla sigla-1" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL<span class="sigla-exp"> (Network Access Control List: firewall a nivel de subred)</span></abbr>.</li>
+      </ul>
+
+      <h2 id="comparativa">WAF, Shield y Network Firewall</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Ataques web (capa 7): inyección <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>, <abbr class="sigla" data-s="XSS" data-en="Cross-Site Scripting" data-es="inyección de scripts en una web" tabindex="0">XSS</abbr>, bots, límites por <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr></td><td>AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></td></tr>
+            <tr><td><abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de red y transporte</td><td><a href="../servicio.html?id=shield">AWS Shield</a></td></tr>
+            <tr><td>Filtrado con estado de todo el tráfico de una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a></td><td><a href="../servicio.html?id=network-firewall">AWS Network Firewall</a></td></tr>
+            <tr><td>Aplicar reglas en toda la organización</td><td><a href="../servicio.html?id=firewall-manager">AWS Firewall Manager</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por cada Web <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> al mes, por cada regla al mes y por millón de peticiones
+        inspeccionadas; los grupos de reglas gestionadas avanzados (Bot Control, prevención de fraude) y
+        los del Marketplace tienen cargos adicionales.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Servicio gestionado; asociado a <a href="cloudfront.html">CloudFront</a>, se aplica en las ubicaciones de borde de todo el mundo.</li>
+        <li>Empezar las reglas nuevas en modo "contar" para no bloquear tráfico legítimo.</li>
+        <li>Registros para investigar peticiones bloqueadas y ajustar las reglas.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Inyección <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>"</strong>, <strong>"<abbr class="sigla" data-s="XSS" data-en="Cross-Site Scripting" data-es="inyección de scripts en una web" tabindex="0">XSS</abbr>"</strong> o <strong>"capa 7"</strong>: AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr>.</li>
+        <li><strong>"Una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> hace miles de peticiones por minuto"</strong>: regla basada en frecuencia.</li>
+        <li><strong>"Bloquear un país"</strong>: regla de geocoincidencia (o la restricción geográfica de <a href="cloudfront.html">CloudFront</a>).</li>
+        <li><strong>"<abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de capas 3 y 4"</strong>: <a href="../servicio.html?id=shield">Shield</a>, no <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr>.</li>
+        <li><strong>"Mismas reglas en todas las cuentas"</strong>: <a href="../servicio.html?id=firewall-manager">Firewall Manager</a>.</li>
+        <li><strong>"Dónde se asocia"</strong>: CloudFront, <a href="elb.html"><abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr></a>, <a href="api-gateway.html">API Gateway</a>, <a href="appsync.html">AppSync</a>, <a href="cognito.html">Cognito</a>, <a href="../servicio.html?id=app-runner">App Runner</a>; no a un <abbr class="sigla sigla-1" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB<span class="sigla-exp"> (Network Load Balancer: balanceador TCP/UDP)</span></abbr> ni a una instancia <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="waf"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html" target="_blank" rel="noopener">AWS WAF</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-rate-based.html" target="_blank" rel="noopener">Using rate-based rule statements in AWS WAF</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups.html" target="_blank" rel="noopener">AWS Managed Rules for AWS WAF</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/waf/latest/developerguide/fms-chapter.html" target="_blank" rel="noopener">AWS Firewall Manager</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

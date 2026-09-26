@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Systems Manager — Apuntes AWS</title>
+<meta name="description" content="Operación centralizada de servidores y aplicaciones: acceso sin SSH, parches, comandos remotos, inventario y parámetros de configuración, en AWS y en local. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/systems-manager.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Systems Manager — Apuntes AWS">
+<meta property="og:description" content="Operación centralizada de servidores y aplicaciones: acceso sin SSH, parches, comandos remotos, inventario y parámetros de configuración, en AWS y en local.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/systems-manager.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/systems-manager.svg" alt="" width="56" height="56"><span>AWS Systems Manager</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/systems-manager/" target="_blank" rel="noopener">Documentación de AWS Systems Manager ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> Dos capacidades de Systems Manager, <strong>Change Manager</strong> e <strong>Incident Manager</strong>, no admiten clientes nuevos desde el 07/11/2025, y <strong>Application Manager</strong> tampoco desde 2026. Quienes ya las usaban pueden seguir; el resto de capacidades siguen plenamente disponibles.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Systems Manager (<abbr class="sigla" data-s="SSM" data-en="Systems Manager" data-es="nombre corto de AWS Systems Manager y de su agente" tabindex="0">SSM</abbr>) reúne herramientas para <strong>operar flotas de servidores</strong>
+        (instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, servidores en tu centro de datos y máquinas virtuales de otras nubes) desde un
+        solo sitio: conectarte a ellos sin abrir puertos, aplicarles parches, ejecutar comandos en
+        cientos a la vez, conocer su software instalado y guardar parámetros de configuración. Funciona
+        mediante el <strong>agente de <abbr class="sigla" data-s="SSM" data-en="Systems Manager" data-es="nombre corto de AWS Systems Manager y de su agente" tabindex="0">SSM</abbr></strong>, instalado en muchas <abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr> de AWS, y un rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> que
+        le da permisos.</p>
+
+      <h2 id="conceptos">Capacidades más preguntadas</h2>
+      <ul>
+        <li><strong>Session Manager:</strong> abre una terminal en la instancia desde la consola o la
+          <a href="../servicio.html?id=cli"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> <strong>sin <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr>, sin puerto 22 abierto, sin bastión y sin claves</strong>; cada sesión queda
+          registrada en <a href="cloudtrail.html">CloudTrail</a> y, si se quiere, grabada en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o <a href="cloudwatch.html">CloudWatch</a> Logs.</li>
+        <li><strong>Run Command:</strong> ejecuta scripts o comandos en muchas instancias a la vez,
+          elegidas por etiquetas, con control de concurrencia y errores.</li>
+        <li><strong>Patch Manager:</strong> aplica parches del sistema operativo según líneas base de
+          parches y ventanas de mantenimiento, e informa del cumplimiento.</li>
+        <li><strong>Parameter Store:</strong> guarda configuración y secretos (tipo
+          <code>SecureString</code>, cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>) en una jerarquía de nombres; el nivel estándar es
+          gratuito. Sin rotación automática (para eso, <a href="secrets-manager.html">Secrets Manager</a>).</li>
+        <li><strong>Automation:</strong> runbooks (documentos) para tareas repetitivas, como crear una
+          <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> parcheada o reiniciar un servicio; se pueden lanzar como remedio de <a href="../servicio.html?id=config">AWS Config</a>.</li>
+        <li><strong>Inventory y State Manager:</strong> recogen el software instalado y mantienen un
+          estado deseado (agentes instalados, configuración).</li>
+        <li><strong>Fleet Manager:</strong> gestionar los servidores desde la consola (ficheros,
+          registros, usuarios).</li>
+        <li><strong>Nodos híbridos:</strong> servidores locales o de otras nubes registrados mediante
+          activaciones.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Eliminar los bastiones y el acceso <abbr class="sigla" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH</abbr> a instancias privadas.</li>
+        <li>Parchear miles de servidores cada mes y demostrarlo en auditorías.</li>
+        <li>Centralizar la configuración de las aplicaciones (<abbr class="sigla sigla-1" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL<span class="sigla-exp"> (Uniform Resource Locator: dirección web)</span></abbr>, indicadores, secretos simples).</li>
+        <li>Automatizar tareas de operación y remediaciones.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Secretos que deben rotarse automáticamente: <a href="secrets-manager.html">Secrets Manager</a>.</li>
+        <li>Infraestructura como código: <a href="cloudformation.html">CloudFormation</a> o <a href="../servicio.html?id=cdk">CDK</a>.</li>
+        <li>Si no quieres gestionar servidores en absoluto: <a href="lambda.html">Lambda</a>, <a href="fargate.html">Fargate</a> o servicios gestionados.</li>
+      </ul>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Muchas capacidades no tienen coste adicional para instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (Session Manager, Run Command,
+        Patch Manager, Inventory, Parameter Store estándar). Se pagan los parámetros avanzados y sus
+        llamadas, los pasos de Automation por encima del nivel gratuito, los nodos locales en el nivel
+        avanzado y servicios asociados como los registros.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> a cada instancia o documento, sin credenciales en los servidores.</li>
+        <li>Sesiones auditadas en <a href="cloudtrail.html">CloudTrail</a> y registradas en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="cloudwatch.html">CloudWatch</a> Logs.</li>
+        <li>Endpoints de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> para usar <abbr class="sigla" data-s="SSM" data-en="Systems Manager" data-es="nombre corto de AWS Systems Manager y de su agente" tabindex="0">SSM</abbr> desde subredes sin salida a internet.</li>
+        <li>SecureString cifrados con <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Acceder a instancias privadas sin bastión ni <abbr class="sigla" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH</abbr>"</strong>: Session Manager.</li>
+        <li><strong>"Aplicar parches a una flota"</strong>: Patch Manager con ventanas de mantenimiento.</li>
+        <li><strong>"Ejecutar un comando en 500 instancias"</strong>: Run Command.</li>
+        <li><strong>"Configuración centralizada y barata"</strong>: Parameter Store; <strong>"con rotación"</strong>: <a href="secrets-manager.html">Secrets Manager</a>.</li>
+        <li><strong>"La instancia no aparece en <abbr class="sigla" data-s="SSM" data-en="Systems Manager" data-es="nombre corto de AWS Systems Manager y de su agente" tabindex="0">SSM</abbr>"</strong>: falta el agente, el rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> o la salida a los endpoints de <abbr class="sigla" data-s="SSM" data-en="Systems Manager" data-es="nombre corto de AWS Systems Manager y de su agente" tabindex="0">SSM</abbr>.</li>
+        <li><strong>"Remediar automáticamente un recurso no conforme"</strong>: regla de <a href="../servicio.html?id=config">AWS Config</a> con un runbook de Automation.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="systems-manager"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html" target="_blank" rel="noopener">What is AWS Systems Manager?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html" target="_blank" rel="noopener">AWS Systems Manager Session Manager</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager.html" target="_blank" rel="noopener">AWS Systems Manager Patch Manager</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html" target="_blank" rel="noopener">AWS Systems Manager Parameter Store</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "data-firehose-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere enviar de forma continua los registros de sus aplicaciones a S3 sin gestionar servidores ni escribir código de entrega. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "Amazon Data Firehose.",
+      "Amazon EBS.",
+      "AWS Direct Connect.",
+      "Amazon Route 53."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Firehose recibe los datos y los entrega a S3 de forma gestionada y sin servidores. EBS son discos, Direct Connect un enlace de red y Route 53 un servicio DNS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html"
+    ]
+  },
+  {
+    "id": "data-firehose-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Los analistas consultan con Athena los eventos que un stream envía a S3 en JSON, y las consultas son lentas y caras. ¿Qué cambio en la ingesta ayuda más?",
+    "opciones": [
+      "Configurar Firehose para convertir los registros a Parquet antes de escribirlos en S3.",
+      "Guardar los eventos en EBS.",
+      "Pasar el bucket a S3 Glacier Deep Archive.",
+      "Enviar los eventos por correo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Parquet es un formato de columnas comprimido, así que Athena lee menos datos: consultas más rápidas y baratas. Firehose hace la conversión con el esquema de Glue. Las demás opciones impiden o empeoran las consultas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/firehose/latest/dev/record-format-conversion.html"
+    ]
+  },
+  {
+    "id": "data-firehose-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un stream de Kinesis Data Streams alimenta a una aplicación en tiempo real, y además hay que guardar todos los datos en S3 sin escribir código de consumidor. ¿Qué se añade?",
+    "opciones": [
+      "Un flujo de Firehose con el stream como fuente y S3 como destino.",
+      "Una segunda aplicación con la KCL escrita a mano.",
+      "Una cola SQS suscrita al stream.",
+      "Una réplica del stream en otra región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Firehose puede leer de un stream de Kinesis y entregar a S3 de forma gestionada. Escribir un consumidor con la KCL es justo el código que se quiere evitar, SQS no se suscribe a streams y una réplica no guarda en S3.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html"
+    ]
+  },
+  {
+    "id": "data-firehose-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Antes de guardar los eventos en S3, hay que eliminar un campo con datos personales de cada registro. ¿Cómo se hace con Firehose?",
+    "opciones": [
+      "Con una función Lambda de transformación de datos asociada al flujo.",
+      "Editando los objetos de S3 a mano después.",
+      "Con una política de ciclo de vida de S3.",
+      "Activando el cifrado con KMS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Firehose puede invocar una función Lambda para transformar cada lote antes de entregarlo. Editar después deja los datos personales guardados un tiempo, el ciclo de vida mueve o borra objetos y el cifrado no elimina campos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/firehose/latest/dev/data-transformation.html"
+    ]
+  },
+  {
+    "id": "data-firehose-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un desarrollador ve que los datos tardan hasta 5 minutos en aparecer en S3 desde Firehose y necesita que lleguen en segundos. ¿Qué ajusta?",
+    "opciones": [
+      "Reducir el intervalo del búfer (hasta usar zero buffering).",
+      "Aumentar el tamaño del búfer al máximo.",
+      "Activar la copia de seguridad en S3.",
+      "Cambiar la región del bucket."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Firehose entrega cuando se llena el búfer o vence su intervalo; reducir el intervalo, o usar zero buffering, adelanta la entrega. Un búfer mayor la retrasa y las otras opciones no influyen.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/firehose/latest/dev/what-is-this-service.html"
+    ]
+  },
+  {
+    "id": "data-firehose-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere que los cambios de pedidos que llegan en streaming se reflejen en tablas Apache Iceberg en S3 (con inserciones, actualizaciones y borrados) consultables por varios motores, con la mínima operación. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Firehose con destino tablas Iceberg (o S3 Tables) usando el catálogo de Glue.",
+      "Un clúster de EMR que reescribe todo el lago cada hora.",
+      "Guardar cada evento como un fichero JSON suelto.",
+      "Una base de datos RDS con copias diarias."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Firehose escribe directamente en tablas Iceberg, aplica inserciones, actualizaciones y borrados y se integra con el catálogo de Glue, sin servidores. EMR añade operación, los JSON sueltos no admiten actualizaciones y RDS no es un lago de datos abierto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/firehose/latest/dev/apache-iceberg-destination.html"
+    ]
+  }
+]
