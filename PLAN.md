@@ -477,11 +477,14 @@ resto de la cola son las de cuando se creó; las actuales están en `servicios.j
 - [ ] **3.6** Ampliar a más certificaciones si hace falta (el modelo ya lo permite).
 - [ ] **3.7** Tipos de pregunta "ordenar" y "emparejar" en `quiz.js` (los usa AIF-C01).
 
-## Fase 4: juego de memoria por categorías
+## Fase 4: juego de memoria (modos categorías y funciones)
 
-Objetivo: un juego tipo memoria (memorama) en `memoria.html` para aprender a qué categoría
-pertenece cada servicio. Solo depende de la Fase 1 (catálogo y estilos), no del contenido de la
+Objetivo: un juego tipo memoria (memorama) en `memoria.html` con dos modos: **categorías**
+(aprender a qué categoría pertenece cada servicio) y **funciones** (aprender qué hace cada
+servicio). Los dos comparten tablero, filtros, accesibilidad y pantalla final. Solo depende de la Fase 1 (catálogo y estilos), no del contenido de la
 Fase 2, así que puede hacerse en cualquier momento después de la Fase 1.
+
+### Modo 1: categorías
 
 **Reglas:**
 - Las cartas empiezan boca abajo. Cada carta es **un servicio distinto** y muestra su
@@ -521,7 +524,58 @@ crece en vertical: **nunca desplazamiento horizontal**. Las cartas tienen un tam
 táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre completo en
 `aria-label`/tooltip.
 
-**Tareas:**
+### Modo 2: funciones (servicio ↔ qué hace)
+
+Idea: emparejar cada servicio con la frase que describe lo que hace. Se juega igual (cartas boca
+abajo, dos por turno), pero hay **dos tipos de carta**:
+
+- **Carta de servicio:** icono oficial y nombre del servicio.
+- **Carta de función:** una sola frase con lo que hace el servicio, sin nombrarlo, por ejemplo
+  "Colas de mensajes para desacoplar componentes que procesan a su ritmo" (SQS).
+
+**Reglas:**
+- Cada servicio del tablero aporta **una carta de servicio y una de función**; la única pareja
+  correcta es un servicio con **su** frase (a diferencia del modo 1, aquí sí hay una pareja única).
+- Dos cartas del mismo tipo nunca son pareja: si se voltean dos servicios o dos frases, se tapan.
+- Las dos caras se distinguen a simple vista (color o marca de tipo) para no confundirlas.
+- Al acertar, las cartas quedan descubiertas y la de servicio enlaza a su guía (o a
+  "Próximamente"). Al fallar, se muestra brevemente a qué servicio pertenecía la frase volteada,
+  para aprender del error.
+- Pantalla final como en el modo 1 (movimientos, aciertos a la primera, tiempo, revancha) y la
+  lista de parejas con su frase, para repasar.
+
+**Configuración:**
+- **Tamaño del tablero más pequeño** que en el modo 1, porque las frases necesitan espacio:
+  12, 16, 20 o 24 cartas (6 a 12 servicios). En móvil, las cartas de función ocupan el ancho de
+  una columna doble si hace falta; nunca desplazamiento horizontal.
+- **Filtros** iguales al modo 1: certificación y categorías (con una sola categoría el juego se
+  vuelve difícil, porque las funciones se parecen).
+- **Modo difícil:** la carta de servicio solo muestra el icono, sin nombre.
+- En la URL: `memoria.html?modo=funciones&tablero=16&cert=DVA-C02&dificil=1`.
+
+**De dónde sale la frase:** un campo nuevo `frase` en `servicios.json`, no el `resumen`, porque:
+el resumen solo existe en los servicios publicados (el juego no debe depender de la Fase 2), a
+veces nombra el propio servicio y es algo largo para una carta. Reglas de redacción de `frase`:
+- Una frase de 60 a 90 caracteres, en español y con palabras propias.
+- **Sin el nombre del servicio, sin su sigla y sin palabras que lo delaten** (por ejemplo, no
+  decir "cola" en SQS si otra frase del tablero también habla de colas; mejor centrarse en lo que
+  la distingue). Una comprobación automática rechaza frases que contengan el nombre, la sigla o
+  el id del servicio.
+- Que distinga el servicio de sus vecinos más parecidos (SQS frente a SNS, EBS frente a EFS,
+  Athena frente a Redshift): el juego enseña justo esas diferencias.
+
+**Tareas (modo 2):**
+- [ ] **4.11** Añadir `frase` a los servicios con icono (unos 150) en `servicios.json`, con la
+      comprobación automática de que no contienen el nombre, la sigla ni el id del servicio, y
+      revisión de las parejas que se confunden fácilmente.
+- [ ] **4.12** Selector de modo (categorías / funciones) en el panel de configuración y en la URL.
+- [ ] **4.13** Generador del modo funciones: N servicios al azar del filtro que tengan icono y
+      `frase`, dos cartas por servicio, barajadas; tamaños 12 a 24 cartas.
+- [ ] **4.14** Diseño de las dos caras (servicio y función) legible a 375 px y en modo difícil.
+- [ ] **4.15** Accesibilidad del modo 2: `aria-label` con el tipo de carta ("Servicio: Amazon SQS"
+      / "Función: …") y juego completo con teclado.
+
+**Tareas (comunes y modo 1):**
 - [x] **4.1** Mapear cada servicio de `servicios.json` a su icono del paquete
       (`Architecture-Service-Icons_07312025/Arch_<Categoría>/64/Arch_<Servicio>_64.svg`) con un
       script puntual, y revisar a mano los que no casen por nombre.
@@ -569,3 +623,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-26 | Borrados de Conocimiento de Kopi los tópicos [B], [F] y [R] del tema "Amazon Web Services" (6 recursos) con `kopi-media-admin/documentation/scripts/delete-knowledge-subtopics-aws.ps1`; su contenido pasa aquí. Publicada la categoría Integración de aplicaciones completa (SQS, SNS, EventBridge, Step Functions, AppSync, Amazon MQ, AppFlow) y 4 de Computación (Fargate, EC2 Auto Scaling, AWS Auto Scaling, Elastic Beanstalk): 34 de 164. Pausado a petición del usuario; lo pendiente está en "Próximo paso". |
 | 2026-09-26 | Siglas con tooltip en lugar de paréntesis: `<abbr class="sigla">` en todas las apariciones de las guías (script `revisar_texto.py`, idempotente) y en las preguntas al pintarlas (`quiz.js` + `data/siglas.json`); se quitaron las explicaciones entre paréntesis de 240 textos de preguntas. Tooltip en `assets/siglas.js`, ajustado a la ventana (sin desplazamiento horizontal a 375 px). |
 | 2026-09-26 | Publicadas las 13 guías más mencionadas por las ya existentes: ELB, Redshift, EBS, Data Firehose, Athena, Systems Manager, Savings Plans, EFS, Kinesis Data Streams, CloudFormation, WAF, PrivateLink y Glue (47 de 164). Datos verificados: gp3 hasta 64 TiB/80 000 IOPS, cuatro tipos de Savings Plans (incluido Database), registros de Kinesis de hasta 10 MiB, Firehose con destino Iceberg. Arreglado el desbordamiento horizontal en móvil (fieldset del quiz y `.sigla-exp` dentro de tablas). |
+| 2026-09-26 | Fase 4 ampliada con un segundo modo, "funciones": emparejar cada servicio (icono y nombre) con la frase que describe lo que hace. Nuevo campo `frase` en `servicios.json` (sin el nombre ni la sigla del servicio) y tareas 4.11–4.15. |
