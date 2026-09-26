@@ -21,7 +21,8 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
   filters (text, category, status, certifications with union/intersection mode). Filter state
-  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=interseccion`).
+  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=interseccion`). Certifications with
+  `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
 - Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store correct
   answers per service in `localStorage` (`apuntes-aws.progreso`). `quiz.js` writes it; a
   published service whose questions are all answered correctly shows as "Finalizado" in the
@@ -42,7 +43,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   exam guide, kept for diffing when AWS updates a guide.
 - `data/asset-package/`: official AWS Architecture Icons, **gitignored** (29 MB). Only the
   64 px SVGs in use are copied to `assets/iconos/servicios/<id>.svg` (services with
-  `"icono": true` in `servicios.json`) and `assets/iconos/categorias/<id>.svg` (all 20
+  `"icono": true` in `servicios.json`) and `assets/iconos/categorias/<id>.svg` (all 21
   categories). `AwsDatos.iconoServicio()` falls back to the category icon when a service has
   none.
 

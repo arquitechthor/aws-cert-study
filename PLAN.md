@@ -41,7 +41,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Enlaces a Kopi | En la navegación y el pie: "Kopi" → `https://kopitools.link` y "Sobre mí" → `https://kopitools.link/#sobre-mi`. Más adelante "Sobre mí" pasará a una web aparte, y `kopi-web` enlazará a este sitio. |
 | Flujo git | Directo a `main`, sin pull requests (igual que el resto de proyectos kopi). |
 | Progreso del usuario | Sin cuentas ni backend: el progreso vive en `localStorage` (clave `apuntes-aws.progreso`, un objeto por servicio con las preguntas acertadas, el total y la fecha de finalización). Un servicio publicado pasa a **Finalizado** cuando se han acertado todas sus preguntas al menos una vez; si luego se añaden preguntas, vuelve a estar en curso. "Finalizado" no es un `estado` de `servicios.json`: se calcula en el navegador. |
-| Filtro de certificaciones | Con varias marcadas, modo **Unión** (al menos una, por defecto) o **Intersección** (todas), en la URL como `modo=interseccion`. |
+| Filtro de certificaciones | Con varias marcadas, modo **Unión** (al menos una, por defecto) o **Intersección** (todas), en la URL como `modo=interseccion`. Las certificaciones con `estado: "guia-pendiente"` (SAP-C03, DVA-C03) **no salen como filtro** hasta tener guía y servicios; solo se ven en su tarjeta, y un `cert=` suyo en la URL se ignora. |
 | Servicios pendientes | Sin archivos vacíos: un servicio con `estado: "pendiente"` enlaza a la página genérica `servicio.html?id=<id>` ("Próximamente disponible"). Al publicarlo se crea `servicios/<id>.html`. |
 
 ---
@@ -546,3 +546,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-26 | Iconos oficiales de AWS en el catálogo: icono de servicio y de categoría en las tarjetas, icono de la categoría elegida en el filtro y en la cabecera de las páginas de servicio (y en la plantilla). Tareas 4.1–4.3 adelantadas; decisión de iconos, aviso legal y pie actualizados. |
 | 2026-09-26 | Enlace a la documentación oficial en la cabecera de cada servicio (campo `documentacion`, 153 de 155 URLs comprobadas), estado "Finalizado" por progreso local en `localStorage` (barra de progreso en el quiz, insignia en la tarjeta, filtro "Solo finalizados") y modo Unión/Intersección en el filtro de certificaciones. |
 | 2026-09-26 | Añadidas CLF-C02 (Cloud Practitioner) y DVA-C02 (Developer – Associate, se retira el 01/12/2026), más DVA-C03 como pendiente de guía: fuentes, dominios, 9 servicios nuevos (164), categoría "Habilitación de clientes", chips de las páginas publicadas regenerados. Tarea 0.10. |
+| 2026-09-26 | Las certificaciones con la guía pendiente (SAP-C03, DVA-C03) dejan de aparecer en el filtro de certificaciones; siguen en las tarjetas. |

@@ -58,13 +58,22 @@
     return normalizar([s.id, s.nombre, s.nombreCompleto, ...(s.alias || []), ...(s.incluye || [])].filter(Boolean).join(' '));
   }
 
+  /**
+   * Una certificación con la guía pendiente todavía no tiene servicios asignados: solo aparece
+   * en su tarjeta, no como filtro.
+   */
+  function esFiltrable(cert) {
+    return Boolean(cert) && cert.estado !== 'guia-pendiente';
+  }
+
   // ── Estado <-> URL ──────────────────────────────────────────
   function leerUrl() {
     const p = new URLSearchParams(location.search);
     estado.q = p.get('q') || '';
     estado.cat = p.get('cat') || '';
     estado.estado = p.get('estado') || '';
-    estado.certs = new Set((p.get('cert') || '').split(',').filter(Boolean));
+    // Solo certificaciones filtrables: se ignoran códigos desconocidos o con la guía pendiente.
+    estado.certs = new Set((p.get('cert') || '').split(',').filter((c) => esFiltrable(datos.certPorCodigo.get(c))));
     estado.modo = p.get('modo') === 'interseccion' ? 'interseccion' : 'union';
   }
 
@@ -122,7 +131,7 @@
     el.cat.insertAdjacentHTML('beforeend', cats.map((c) =>
       `<option value="${esc(c.id)}">${esc(c.nombre)} (${esc(c.nombreEn)})</option>`).join(''));
 
-    el.cert.innerHTML = datos.certificaciones.map((c) =>
+    el.cert.innerHTML = datos.certificaciones.filter(esFiltrable).map((c) =>
       `<button class="chip chip-cert" type="button" aria-pressed="false" data-cert="${esc(c.codigo)}" title="${esc(c.nombre)}">${esc(c.codigo)}</button>`).join('');
 
     el.q.addEventListener('input', () => { estado.q = el.q.value.trim(); aplicar(); });
@@ -220,10 +229,7 @@
       el.grid.innerHTML = lista.map(tarjeta).join('');
       return;
     }
-    const pendiente = [...estado.certs].map((c) => datos.certPorCodigo.get(c)).find((c) => c && c.estado === 'guia-pendiente');
-    el.grid.innerHTML = `<p class="empty-state">${pendiente
-      ? `La lista de servicios de ${esc(pendiente.codigo)} se añadirá cuando AWS publique su guía (a partir del ${esc(formatoFecha(pendiente.disponibleDesde))}).`
-      : 'No hay servicios que coincidan con estos filtros.'}</p>`;
+    el.grid.innerHTML = '<p class="empty-state">No hay servicios que coincidan con estos filtros.</p>';
   }
 
   // ── Arranque ────────────────────────────────────────────────
