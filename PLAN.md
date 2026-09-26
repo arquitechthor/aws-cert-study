@@ -43,7 +43,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Iconos de AWS | Se usan los **AWS Architecture Icons oficiales** (paquete del 31/07/2025 en `data/asset-package/`) **junto al nombre de cada servicio y categoría** (tarjetas del catálogo, filtro de categoría y cabecera de las páginas de servicio; ampliado el 2026-09-26) y en el juego de memoria (Fase 4). Un servicio sin icono oficial muestra el de su categoría. AWS los permite para diagramas y materiales como presentaciones y pósteres, y sus *Trademark Guidelines* aceptan el uso limitado con fines educativos y sin ánimo de lucro; ni el catálogo ni un juego están citados de forma explícita: es una zona gris que se asume por ser un sitio personal, educativo y no comercial. Condiciones: iconos **sin modificar** (ni recolorear ni recortar), nada que sugiera patrocinio o afiliación con AWS, aviso de marcas en el pie y en el aviso legal, y quedan **fuera de la licencia CC BY-SA** (se indica en `README` y en el aviso legal). Si AWS lo pidiera, se retiran y se muestran solo los nombres. |
 | Paquete de iconos en git | `data/asset-package/` (29 MB, con basura de macOS) está en `.gitignore`. Solo se versionan los SVG de 64 px de los servicios y categorías del catálogo, copiados a `assets/iconos/servicios/<id>.svg` y `assets/iconos/categorias/<id>.svg`. |
 | Preguntas | Solo preguntas **originales** tipo examen. Nunca preguntas reales de examen, que están bajo NDA. |
-| Enlaces a Kopi | En la navegación y el pie: "Kopi" → `https://kopitools.link` y "Sobre mí" → `https://arquitechthor.github.io/arquitechthor/` (web personal aparte, repo `arquitechthor`). `kopi-web` y la web personal enlazan a este sitio. |
+| Enlaces a Kopi | En la navegación y el pie: "Kopi" → `https://kopitools.link` y "Sobre mí" → `https://arquitechthor.github.io/` (web personal aparte, repo `arquitechthor.github.io`). `kopi-web` y la web personal enlazan a este sitio. |
 | Flujo git | Directo a `main`, sin pull requests (igual que el resto de proyectos kopi). |
 | Progreso del usuario | Sin cuentas ni backend: el progreso vive en `localStorage` (clave `apuntes-aws.progreso`, un objeto por servicio con las preguntas acertadas, el total y la fecha de finalización). Un servicio publicado pasa a **Finalizado** cuando se han acertado todas sus preguntas al menos una vez; si luego se añaden preguntas, vuelve a estar en curso. "Finalizado" no es un `estado` de `servicios.json`: se calcula en el navegador. |
 | Filtro de certificaciones | Con varias marcadas, modo **Unión** (al menos una, por defecto) o **Intersección** (todas), en la URL como `modo=interseccion`. Las certificaciones con `estado: "guia-pendiente"` (SAP-C03, DVA-C03) **no salen como filtro** hasta tener guía y servicios; solo se ven en su tarjeta, y un `cert=` suyo en la URL se ignora. |
@@ -228,7 +228,7 @@ Objetivo: el sitio navegable en GitHub Pages, con todos los servicios en "Próxi
 - [x] **1.2** `styles.css`: copiar variables y componentes base de `kopi-web` y añadir los
       estilos de filtros, chips, tarjetas de servicio y quiz.
 - [x] **1.3** Navegación y pie comunes: enlaces a Kopi (`https://kopitools.link`), Sobre mí
-      (`https://kopitools.link/#sobre-mi`, luego `https://arquitechthor.github.io/arquitechthor/` — ver 3.5), licencia y repo. Incluir `nav.js` con el menú móvil.
+      (`https://kopitools.link/#sobre-mi`, luego `https://arquitechthor.github.io/` — ver 3.5), licencia y repo. Incluir `nav.js` con el menú móvil.
 - [x] **1.4** `index.html` + `catalogo.js`: hero breve, filtros, contador de resultados y
       tarjetas (nombre, categoría es/en, certificaciones, badge de estado).
 - [x] **1.5** `servicio.html` + `servicio.js`: página genérica "Próximamente disponible" que
@@ -464,7 +464,7 @@ resto de la cola son las de cuando se creó; las actuales están en `servicios.j
 - [ ] **3.2** Progreso personal en `localStorage`: servicios estudiados, preguntas falladas y repaso.
 - [ ] **3.3** `sitemap.xml` + `robots.txt`.
 - [ ] **3.4** Enlace a este sitio desde `kopi-web` (en otro repo).
-- [x] **3.5** Cambiar "Sobre mí" a la futura web independiente cuando exista. → `https://arquitechthor.github.io/arquitechthor/` (26/09/2026).
+- [x] **3.5** Cambiar "Sobre mí" a la futura web independiente cuando exista. → `https://arquitechthor.github.io/` (26/09/2026).
 - [ ] **3.6** Ampliar a más certificaciones si hace falta (el modelo ya lo permite).
 - [ ] **3.7** Tipos de pregunta "ordenar" y "emparejar" en `quiz.js` (los usa AIF-C01).
 
