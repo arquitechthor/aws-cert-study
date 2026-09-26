@@ -1,0 +1,202 @@
+[
+  {
+    "id": "elasticache-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS proporciona una caché en memoria gestionada para mejorar el rendimiento de las aplicaciones?",
+    "opciones": [
+      "Amazon ElastiCache.",
+      "Amazon S3 Glacier.",
+      "Amazon EBS.",
+      "AWS Storage Gateway."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "ElastiCache es la caché en memoria gestionada (Valkey, Redis OSS o Memcached). S3 Glacier es almacenamiento de archivo, EBS son discos de bloque para EC2 y Storage Gateway conecta almacenamiento local con AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
+    ]
+  },
+  {
+    "id": "elasticache-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "Una aplicación tiene lentitud porque repite las mismas consultas a su base de datos. ¿Qué práctica de diseño aborda el problema?",
+    "opciones": [
+      "Añadir una capa de caché en memoria con ElastiCache.",
+      "Guardar las copias de seguridad en otra región.",
+      "Usar instancias Spot para la base de datos.",
+      "Activar CloudTrail."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una caché sirve los resultados repetidos desde memoria y evita consultas a la base de datos, lo que mejora la eficiencia del rendimiento. Las copias, Spot o CloudTrail no reducen la latencia de las consultas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
+    ]
+  },
+  {
+    "id": "elasticache-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un chatbot con un modelo fundacional recibe muchas preguntas casi idénticas y el coste de inferencia crece. ¿Qué técnica reduce las llamadas al modelo?",
+    "opciones": [
+      "Una caché semántica en ElastiCache for Valkey que devuelva respuestas ya generadas para preguntas similares.",
+      "Aumentar la temperatura del modelo.",
+      "Hacer fine-tuning del modelo con cada pregunta.",
+      "Aumentar el número máximo de tokens de salida."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una caché semántica guarda las preguntas como vectores y reutiliza la respuesta si llega una suficientemente parecida, evitando nuevas inferencias. La temperatura cambia la aleatoriedad, el fine-tuning no evita llamadas y más tokens aumentan el coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
+    ]
+  },
+  {
+    "id": "elasticache-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación web en varias instancias EC2 detrás de un balanceador pierde las sesiones de usuario cuando Auto Scaling termina una instancia. ¿Qué solución mantiene las sesiones y deja las instancias sin estado?",
+    "opciones": [
+      "Activar sesiones persistentes (sticky sessions) en el balanceador.",
+      "Guardar las sesiones en ElastiCache.",
+      "Guardar las sesiones en el instance store.",
+      "Usar instancias más grandes."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Guardar las sesiones en un almacén externo como ElastiCache hace que cualquier instancia pueda atender a cualquier usuario y que terminar una instancia no pierda datos. Las sticky sessions siguen perdiendo la sesión si la instancia desaparece, y el instance store es local y efímero.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
+    ]
+  },
+  {
+    "id": "elasticache-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una caché de ElastiCache es crítica: si cae, la base de datos se satura. Debe sobrevivir a la caída de un nodo o de una zona. ¿Qué configuración es la adecuada?",
+    "opciones": [
+      "Memcached con más nodos.",
+      "Valkey con réplicas en otra zona y Multi-AZ con conmutación automática.",
+      "Un único nodo grande de Valkey.",
+      "Memcached con instantáneas diarias."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Valkey (o Redis OSS) con Multi-AZ promueve automáticamente una réplica de otra zona si falla la primaria. Memcached no tiene réplicas ni persistencia (ni instantáneas), y un único nodo es un punto único de fallo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html"
+    ]
+  },
+  {
+    "id": "elasticache-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador implementa lazy loading con ElastiCache y observa que los usuarios ven precios desactualizados durante horas. ¿Qué cambio lo mitiga sin cachear todo el catálogo?",
+    "opciones": [
+      "Añadir un TTL a las claves cacheadas.",
+      "Pasar a Memcached.",
+      "Desactivar las réplicas.",
+      "Aumentar el tamaño del nodo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con lazy loading los datos solo se refrescan cuando faltan en la caché; un TTL hace que caduquen y se vuelvan a leer de la base de datos. Cambiar de motor, quitar réplicas o agrandar el nodo no afecta a la frescura de los datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Strategies.html"
+    ]
+  },
+  {
+    "id": "elasticache-007",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "¿Qué DOS afirmaciones sobre la estrategia write-through son correctas? (Elige 2.)",
+    "opciones": [
+      "Los datos de la caché nunca quedan obsoletos respecto a las escrituras de la aplicación.",
+      "Cada escritura tiene la penalización de escribir en dos sitios.",
+      "Solo se cachean los datos que alguien ha leído.",
+      "El primer acceso a un dato siempre falla en la caché.",
+      "Elimina la necesidad de la base de datos."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "En write-through la caché se actualiza a la vez que la base de datos, así que está al día, pero cada escritura cuesta dos operaciones y se pueden cachear datos que nadie lee. Cachear solo lo leído y fallar en el primer acceso son rasgos de lazy loading, y la base de datos sigue siendo la fuente de verdad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Strategies.html"
+    ]
+  },
+  {
+    "id": "elasticache-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un juego multijugador global necesita clasificaciones en tiempo real con lecturas locales en tres regiones y capacidad de recuperación si cae la región principal. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "ElastiCache for Memcached en cada región, sincronizado por la aplicación.",
+      "ElastiCache for Valkey con conjuntos ordenados y Global Datastore.",
+      "DynamoDB con Scan ordenados.",
+      "Amazon RDS con réplicas entre regiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los conjuntos ordenados de Valkey mantienen clasificaciones de forma nativa y Global Datastore replica a otras regiones con posibilidad de promoverlas. Memcached no replica, un Scan ordenado en DynamoDB es caro y lento, y RDS no está pensado para clasificaciones de latencia de microsegundos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
+    ]
+  },
+  {
+    "id": "elasticache-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un clúster de ElastiCache for Redis OSS con picos muy variables está sobredimensionado casi todo el día para aguantar los picos. ¿Qué cambio reduce el trabajo de dimensionar y el coste en horas valle?",
+    "opciones": [
+      "Migrar a ElastiCache Serverless con el motor Valkey.",
+      "Comprar nodos reservados del tamaño de pico.",
+      "Pasar a Memcached con más nodos.",
+      "Desactivar Multi-AZ."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "ElastiCache Serverless escala con la demanda y cobra por datos y ECPU consumidas, y Valkey tiene un precio menor que Redis OSS. Reservar el tamaño de pico mantiene el sobredimensionado, Memcached pierde funciones y desactivar Multi-AZ sacrifica disponibilidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html"
+    ]
+  }
+]

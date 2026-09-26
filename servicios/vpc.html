@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon VPC — Apuntes AWS</title>
+<meta name="description" content="Tu red privada y aislada dentro de AWS: rangos de IP, subredes, tablas de rutas, gateways y firewalls para tus recursos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/vpc.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon VPC — Apuntes AWS">
+<meta property="og:description" content="Tu red privada y aislada dentro de AWS: rangos de IP, subredes, tablas de rutas, gateways y firewalls para tus recursos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/vpc.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/vpc.svg" alt="" width="56" height="56"><span>Amazon VPC</span></h1>
+      <p class="full-name">Amazon Virtual Private Cloud (Amazon VPC)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/vpc/" target="_blank" rel="noopener">Documentación de Amazon VPC ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon VPC (<em>Virtual Private Cloud</em>) es una red virtual lógicamente aislada dentro de
+        una región de AWS. Tú decides el rango de direcciones IP, cómo se divide en subredes, qué
+        rutas existen y qué tráfico se permite. Casi todo lo que tiene una interfaz de red (EC2, RDS,
+        Lambda conectada a VPC, balanceadores, contenedores) vive dentro de una VPC. Cada región trae
+        una <strong>VPC por defecto</strong> con subredes públicas para empezar rápido.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Bloque CIDR:</strong> rango IPv4 de la VPC, de <code>/16</code> a <code>/28</code>,
+          ampliable con bloques secundarios; opcionalmente también IPv6.</li>
+        <li><strong>Subred:</strong> parte del rango de la VPC que vive en <strong>una sola zona de
+          disponibilidad</strong>. AWS reserva <strong>5 direcciones</strong> de cada subred.</li>
+        <li><strong>Subred pública vs privada:</strong> es pública si su tabla de rutas envía
+          <code>0.0.0.0/0</code> a un <strong>internet gateway</strong>. Las privadas no tienen esa ruta.</li>
+        <li><strong>NAT gateway:</strong> permite que las instancias de subredes privadas salgan a
+          internet (por ejemplo, para actualizaciones) sin aceptar conexiones entrantes. Es por zona:
+          para alta disponibilidad, uno en cada zona. Para IPv6, el equivalente es el
+          <em>egress-only internet gateway</em>.</li>
+        <li><strong>Security groups:</strong> firewall <strong>con estado</strong> en la interfaz de
+          red; solo reglas de permitir; pueden referenciar otros security groups.</li>
+        <li><strong>Network ACL:</strong> firewall <strong>sin estado</strong> a nivel de subred;
+          reglas de permitir y denegar numeradas; hay que abrir también el tráfico de retorno
+          (puertos efímeros). Útil para bloquear una IP concreta.</li>
+        <li><strong>VPC endpoints:</strong> acceso privado a servicios de AWS sin pasar por internet.
+          Los de tipo <em>gateway</em> (solo S3 y DynamoDB) son gratuitos y funcionan con rutas; los de
+          tipo <em>interface</em> (PrivateLink) crean una interfaz de red con IP privada y tienen coste.</li>
+        <li><strong>VPC peering:</strong> une dos VPC (incluso de otras cuentas o regiones) de forma
+          privada. <strong>No es transitivo</strong> y los rangos no pueden solaparse.</li>
+        <li><strong>Transit Gateway:</strong> concentrador que conecta muchas VPC y redes locales en
+          estrella, con tablas de rutas propias.</li>
+        <li><strong>Conectividad híbrida:</strong> Site-to-Site VPN (túneles IPsec por internet,
+          rápida de montar) y Direct Connect (enlace dedicado, latencia estable).</li>
+        <li><strong>VPC Flow Logs:</strong> registran metadatos del tráfico IP (origen, destino,
+          puertos, aceptado o rechazado) hacia CloudWatch Logs, S3 o Firehose. No capturan el
+          contenido de los paquetes.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Arquitectura de tres capas: balanceador en subredes públicas, aplicación y base de datos
+          en subredes privadas.</li>
+        <li>Aislar entornos (producción, pruebas) o equipos en VPC distintas.</li>
+        <li>Extender el centro de datos a AWS con VPN o Direct Connect.</li>
+        <li>Acceso privado a S3 y DynamoDB desde subredes sin salida a internet.</li>
+        <li>Auditar tráfico y detectar conexiones rechazadas con Flow Logs.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para inspeccionar el contenido del tráfico o filtrar por dominio: Network Firewall o
+          appliances de terceros con Gateway Load Balancer, no solo security groups y NACL.</li>
+        <li>Para conectar decenas de VPC entre sí: Transit Gateway o Cloud WAN, no una malla de peerings.</li>
+        <li>Para exponer un servicio concreto a otras cuentas sin unir las redes: PrivateLink
+          (servicio de endpoint), no peering.</li>
+      </ul>
+
+      <h2 id="comparativa">Security groups frente a network ACL</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Security group</th><th>Network ACL</th></tr></thead>
+          <tbody>
+            <tr><td>Nivel</td><td>Interfaz de red (instancia)</td><td>Subred</td></tr>
+            <tr><td>Estado</td><td>Con estado: la respuesta se permite sola</td><td>Sin estado: hay que permitir la vuelta</td></tr>
+            <tr><td>Reglas</td><td>Solo permitir</td><td>Permitir y denegar</td></tr>
+            <tr><td>Evaluación</td><td>Todas las reglas</td><td>Por orden numérico; gana la primera que coincide</td></tr>
+            <tr><td>Por defecto</td><td>Deniega la entrada y permite la salida</td><td>La NACL por defecto permite todo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Crear una VPC, subredes, tablas de rutas, security groups y NACL no cuesta nada. Se paga por
+        los componentes gestionados: NAT gateways (por hora y por GB procesado), endpoints de tipo
+        interface, conexiones VPN, Transit Gateway (por adjunto y por GB), direcciones IPv4 públicas,
+        Flow Logs (según el destino) y la transferencia de datos entre zonas o regiones. Los endpoints
+        <em>gateway</em> de S3 y DynamoDB son gratuitos y además ahorran tráfico por el NAT.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Defensa en capas: NACL en la subred y security groups en cada recurso.</li>
+        <li>Recursos sensibles en subredes privadas; solo balanceadores en las públicas.</li>
+        <li>Subredes en al menos dos zonas, y un NAT gateway por zona para no depender de una sola.</li>
+        <li>Políticas en los endpoints de VPC para limitar a qué buckets o recursos se accede.</li>
+        <li><em>VPC Block Public Access</em> para impedir de forma centralizada el tráfico de internet
+          en VPC que no deben tenerlo.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Instancias privadas deben descargar parches de internet"</strong>: NAT gateway en una subred pública.</li>
+        <li><strong>"Acceder a S3 sin pasar por internet y sin coste"</strong>: endpoint de VPC de tipo gateway.</li>
+        <li><strong>"Bloquear una IP maliciosa concreta"</strong>: regla de denegar en la NACL (los security groups no deniegan).</li>
+        <li><strong>"A conecta con B y B con C, pero A no llega a C"</strong>: el peering no es transitivo; Transit Gateway.</li>
+        <li><strong>"Muchas VPC y oficinas en estrella"</strong>: Transit Gateway.</li>
+        <li><strong>"Diagnosticar tráfico rechazado"</strong>: VPC Flow Logs.</li>
+        <li><strong>"Conexión dedicada con latencia constante"</strong>: Direct Connect; <strong>"rápido y cifrado por internet"</strong>: Site-to-Site VPN.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="vpc"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html" target="_blank" rel="noopener">What is Amazon VPC?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/subnet-sizing.html" target="_blank" rel="noopener">Subnet CIDR blocks</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/infrastructure-security.html" target="_blank" rel="noopener">Infrastructure security in Amazon VPC</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html" target="_blank" rel="noopener">NAT gateways</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html" target="_blank" rel="noopener">Gateway endpoints</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html" target="_blank" rel="noopener">VPC peering basics</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

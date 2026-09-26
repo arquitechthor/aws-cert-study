@@ -1,0 +1,202 @@
+[
+  {
+    "id": "rds-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere una base de datos MySQL sin ocuparse de las copias de seguridad ni de los parches del motor. ¿Qué servicio encaja?",
+    "opciones": [
+      "MySQL instalado en Amazon EC2.",
+      "Amazon RDS for MySQL.",
+      "Amazon DynamoDB.",
+      "Amazon Redshift."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "RDS gestiona el motor, los parches, las copias automáticas y la replicación. En EC2 esas tareas recaen en el cliente, DynamoDB no es MySQL ni relacional y Redshift es un almacén de datos para análisis.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "rds-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Qué ventaja de la nube representa activar Multi-AZ en una base de datos de RDS con unos pocos clics?",
+    "opciones": [
+      "Alcance global en minutos.",
+      "Alta disponibilidad sin montar ni gestionar la replicación.",
+      "Pasar de gastos operativos a gastos de capital.",
+      "Eliminar por completo la responsabilidad de seguridad del cliente."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Multi-AZ mantiene una copia síncrona en otra zona y conmuta automáticamente, algo que en local exigiría hardware y trabajo propio. No tiene que ver con el alcance global, la nube cambia gastos de capital por operativos (no al revés) y el cliente sigue siendo responsable de sus datos y accesos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html"
+    ]
+  },
+  {
+    "id": "rds-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un equipo ya usa Amazon RDS for PostgreSQL y quiere guardar embeddings junto a sus datos para búsquedas por similitud en una aplicación RAG, sin añadir otra base de datos. ¿Qué opción lo permite?",
+    "opciones": [
+      "La extensión pgvector de PostgreSQL.",
+      "Réplicas de lectura entre regiones.",
+      "RDS Proxy.",
+      "Performance Insights."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "pgvector añade a PostgreSQL un tipo de dato vectorial e índices para búsquedas por similitud, así que la misma base de datos sirve de almacén de vectores. Las réplicas, RDS Proxy y Performance Insights no aportan búsqueda vectorial.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "rds-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una base de datos de RDS for PostgreSQL debe recuperarse automáticamente si falla su zona de disponibilidad, sin cambiar la cadena de conexión de la aplicación. ¿Qué configuración es la adecuada?",
+    "opciones": [
+      "Una réplica de lectura en otra zona.",
+      "Un despliegue Multi-AZ.",
+      "Copias automáticas con 35 días de retención.",
+      "Una réplica de lectura en otra región."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Multi-AZ mantiene una réplica síncrona en otra zona y, ante un fallo, apunta el mismo endpoint a la nueva principal. Las réplicas de lectura son asíncronas y su promoción es manual y con otro endpoint, y las copias sirven para restaurar, no para conmutar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html"
+    ]
+  },
+  {
+    "id": "rds-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una auditoría detecta una instancia de RDS sin cifrar en producción. ¿Cómo se cifra con el menor riesgo?",
+    "opciones": [
+      "Activar el cifrado en la instancia desde la consola.",
+      "Crear una instantánea, copiarla con cifrado KMS y restaurar una instancia nueva desde la copia.",
+      "Crear una réplica de lectura cifrada de la instancia sin cifrar.",
+      "Activar TLS en las conexiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El cifrado en reposo de RDS solo se elige al crear la instancia; para cifrar una existente se copia una instantánea activando el cifrado y se restaura. No se puede activar sobre la marcha ni crear una réplica cifrada de una instancia sin cifrar, y TLS protege el tránsito, no el reposo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html"
+    ]
+  },
+  {
+    "id": "rds-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una API con cientos de invocaciones concurrentes de Lambda agota las conexiones de una base de datos de RDS for MySQL. ¿Qué solución requiere menos cambios?",
+    "opciones": [
+      "Aumentar el tamaño de la instancia sin más.",
+      "Poner RDS Proxy entre Lambda y la base de datos.",
+      "Crear réplicas de lectura y repartir todas las escrituras entre ellas.",
+      "Reducir la concurrencia reservada de la función a 1."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "RDS Proxy mantiene un grupo de conexiones compartido y lo reutiliza entre invocaciones, evitando abrir una conexión por cada ejecución de Lambda. Más tamaño solo retrasa el problema, las réplicas no aceptan escrituras y limitar la concurrencia a 1 hunde el rendimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html"
+    ]
+  },
+  {
+    "id": "rds-007",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Un desarrollador no quiere guardar la contraseña de su base de datos de RDS for PostgreSQL en el código. ¿Qué DOS opciones son adecuadas? (Elige 2.)",
+    "opciones": [
+      "Guardar las credenciales en AWS Secrets Manager y leerlas en tiempo de ejecución.",
+      "Usar la autenticación de base de datos de IAM con tokens temporales.",
+      "Guardar la contraseña en una variable de entorno sin cifrar en el repositorio.",
+      "Hacer pública la base de datos y limitarla por IP.",
+      "Poner la contraseña en el nombre del endpoint."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Secrets Manager guarda y rota la contraseña, y la autenticación IAM sustituye la contraseña por tokens de corta duración. Una variable de entorno en el repositorio sigue exponiendo el secreto, y las otras dos opciones no tienen sentido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "rds-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación en RDS for MySQL en eu-west-1 necesita un plan de recuperación ante desastres regionales con RPO de minutos y un coste contenido. ¿Qué solución es la más adecuada?",
+    "opciones": [
+      "Multi-AZ en eu-west-1.",
+      "Una réplica de lectura entre regiones en otra región, que se promociona si cae la principal.",
+      "Instantáneas manuales semanales copiadas a otra región.",
+      "Un segundo despliegue Multi-AZ en la misma región."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Una réplica asíncrona en otra región mantiene los datos con pocos segundos o minutos de retraso y se promociona a principal en un desastre regional. Multi-AZ solo protege frente a fallos de zona, y las instantáneas semanales dan un RPO de días.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html"
+    ]
+  },
+  {
+    "id": "rds-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa debe actualizar la versión principal de su RDS for PostgreSQL de producción con el mínimo tiempo de inactividad y la posibilidad de probar antes el cambio. ¿Qué opción lo facilita?",
+    "opciones": [
+      "Actualizar en caliente la instancia principal en la ventana de mantenimiento.",
+      "Amazon RDS Blue/Green Deployments.",
+      "Restaurar una instantánea en la nueva versión y cambiar la aplicación a mano.",
+      "Crear una réplica de lectura en la misma versión."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Blue/Green crea un entorno de pruebas sincronizado con producción donde se aplica la nueva versión; tras validarlo, el cambio de entorno se completa normalmente en menos de un minuto. Actualizar en caliente implica una parada más larga, restaurar una instantánea pierde los cambios posteriores y una réplica en la misma versión no prueba nada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html"
+    ]
+  }
+]

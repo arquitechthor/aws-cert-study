@@ -1,0 +1,202 @@
+[
+  {
+    "id": "aurora-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS es una base de datos relacional compatible con MySQL y PostgreSQL diseñada por AWS para ofrecer alto rendimiento y disponibilidad?",
+    "opciones": [
+      "Amazon Aurora.",
+      "Amazon DynamoDB.",
+      "Amazon Neptune.",
+      "Amazon ElastiCache."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Aurora es el motor relacional de AWS compatible con MySQL y PostgreSQL. DynamoDB es NoSQL clave-valor, Neptune es una base de datos de grafos y ElastiCache es una caché en memoria.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html"
+    ]
+  },
+  {
+    "id": "aurora-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una base de datos relacional de un entorno de pruebas solo se usa unas horas a la semana. ¿Qué opción reduce el coste de cómputo cuando no se usa?",
+    "opciones": [
+      "Aurora con instancias reservadas de 3 años.",
+      "Aurora Serverless v2 con capacidad mínima de 0 ACU.",
+      "Aurora Global Database.",
+      "Aurora con 15 réplicas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Serverless v2 ajusta la capacidad a la carga y, con mínimo 0 ACU en las versiones compatibles, se pausa sin cobrar cómputo cuando no hay actividad. Las reservadas son para uso constante, y Global Database o más réplicas aumentan el coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html"
+    ]
+  },
+  {
+    "id": "aurora-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una Knowledge Base de Amazon Bedrock necesita un almacén de vectores y la empresa ya estandarizó en PostgreSQL gestionado. ¿Qué opción de Aurora encaja?",
+    "opciones": [
+      "Aurora PostgreSQL con la extensión pgvector.",
+      "Aurora MySQL con Backtrack.",
+      "Aurora Global Database sin extensiones.",
+      "Un endpoint personalizado de lectura."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Aurora PostgreSQL con pgvector es uno de los almacenes de vectores que admite Bedrock Knowledge Bases. Backtrack, Global Database y los endpoints no aportan búsqueda por similitud.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html"
+    ]
+  },
+  {
+    "id": "aurora-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación global en Aurora MySQL necesita lecturas de baja latencia en Asia y Europa y poder recuperarse en minutos si cae la región principal. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Réplicas de Aurora en otras zonas de la misma región.",
+      "Aurora Global Database con clústeres secundarios en las otras regiones.",
+      "Copias automáticas copiadas a otras regiones.",
+      "Un endpoint personalizado por región."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Global Database replica a regiones secundarias a nivel de almacenamiento, normalmente en menos de un segundo, sirve lecturas locales y permite promover una región secundaria. Las réplicas en la misma región no cubren un fallo regional y restaurar copias es lento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
+    ]
+  },
+  {
+    "id": "aurora-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "En un clúster de Aurora, los informes pesados ralentizan las réplicas que atienden a la aplicación web. ¿Cómo se separan sin crear otra base de datos?",
+    "opciones": [
+      "Mandar los informes al endpoint del clúster.",
+      "Crear un endpoint personalizado con réplicas dedicadas a informes.",
+      "Activar Backtrack.",
+      "Pasar al modo I/O-Optimized."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un endpoint personalizado agrupa un subconjunto de réplicas, así los informes van a unas y la web al resto. El endpoint del clúster apunta a la escritora, y Backtrack o el modo de almacenamiento no separan cargas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html"
+    ]
+  },
+  {
+    "id": "aurora-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador quiere que su aplicación envíe las escrituras a la instancia correcta aunque cambie la escritora tras una conmutación. ¿A qué endpoint debe conectar las escrituras?",
+    "opciones": [
+      "Al endpoint de la instancia que hoy es escritora.",
+      "Al endpoint del clúster (cluster endpoint).",
+      "Al endpoint de lectura (reader endpoint).",
+      "A la IP privada de la escritora."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El endpoint del clúster siempre apunta a la escritora actual y se actualiza solo tras una conmutación. El endpoint de una instancia o su IP dejan de ser válidos para escribir si cambia de rol, y el de lectura solo reparte entre réplicas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html"
+    ]
+  },
+  {
+    "id": "aurora-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo necesita una copia de la base de datos de producción de Aurora para probar una migración de esquema, en minutos y sin duplicar el almacenamiento. ¿Qué función usa?",
+    "opciones": [
+      "Restaurar la última instantánea.",
+      "Clonación de Aurora.",
+      "Crear una réplica de Aurora y promocionarla.",
+      "Exportar a S3 e importar."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La clonación crea un clúster nuevo que comparte las páginas de almacenamiento con el original hasta que cambian (copy-on-write), en minutos y sin copiar todos los datos. Restaurar, promocionar una réplica o exportar e importar son más lentos o duplican el almacenamiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html"
+    ]
+  },
+  {
+    "id": "aurora-008",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa diseña una base de datos relacional con RPO de segundos y RTO de minutos ante la pérdida de una región, con lecturas locales en una segunda región. ¿Qué DOS elementos incluye la solución? (Elige 2.)",
+    "opciones": [
+      "Aurora Global Database con un clúster secundario en la segunda región.",
+      "Conmutación o switchover de Global Database para promover la región secundaria.",
+      "Multi-AZ de RDS en la región principal únicamente.",
+      "Instantáneas diarias copiadas a la segunda región.",
+      "Una réplica de lectura en la misma región."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Global Database replica con retrasos típicos de menos de un segundo (RPO de segundos) y permite promover la región secundaria en minutos, además de servir lecturas locales. Multi-AZ o una réplica en la misma región no cubren la pérdida de la región, y las instantáneas diarias dan un RPO de horas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html"
+    ]
+  },
+  {
+    "id": "aurora-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un clúster de Aurora PostgreSQL con carga de E/S muy intensiva tiene una factura en la que las operaciones de E/S superan una cuarta parte del gasto de la base de datos. ¿Qué cambio lo optimiza?",
+    "opciones": [
+      "Pasar la configuración de almacenamiento a Aurora I/O-Optimized.",
+      "Añadir más réplicas.",
+      "Mover el clúster a Serverless v2 con máximo alto.",
+      "Activar Backtrack."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "I/O-Optimized elimina el cobro por operación de E/S a cambio de un precio mayor de instancia y almacenamiento, y compensa cuando la E/S pesa mucho en la factura. Más réplicas o Serverless no reducen el coste de E/S, y Backtrack solo existe en Aurora MySQL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html"
+    ]
+  }
+]

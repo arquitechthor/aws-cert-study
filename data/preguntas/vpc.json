@@ -1,0 +1,202 @@
+[
+  {
+    "id": "vpc-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué componente de AWS permite crear una red virtual aislada donde lanzar recursos con un rango de IP propio?",
+    "opciones": [
+      "AWS Direct Connect.",
+      "Amazon VPC.",
+      "Amazon Route 53.",
+      "Amazon CloudFront."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Amazon VPC define una red lógicamente aislada con su rango de IP, subredes y rutas. Direct Connect es un enlace dedicado entre tu centro de datos y AWS, Route 53 es DNS y CloudFront es una red de entrega de contenido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+    ]
+  },
+  {
+    "id": "vpc-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué afirmación describe correctamente un security group?",
+    "opciones": [
+      "Es un firewall sin estado que se aplica a toda la subred.",
+      "Es un firewall con estado que se aplica a las interfaces de red de los recursos.",
+      "Permite reglas de denegar para bloquear IP concretas.",
+      "Filtra el tráfico por nombre de dominio."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los security groups actúan a nivel de interfaz de red, tienen estado (la respuesta a una conexión permitida sale sola) y solo admiten reglas de permitir. Lo que funciona a nivel de subred, sin estado y con reglas de denegar es la network ACL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/infrastructure-security.html"
+    ]
+  },
+  {
+    "id": "vpc-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una aplicación de IA generativa en subredes privadas invoca Amazon Bedrock y la política de la empresa prohíbe que ese tráfico salga a internet. ¿Qué solución lo cumple?",
+    "opciones": [
+      "Un NAT gateway en una subred pública.",
+      "Un endpoint de VPC de tipo interface (AWS PrivateLink) para Bedrock.",
+      "Un internet gateway con una NACL restrictiva.",
+      "Un peering con una VPC de AWS."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un endpoint de tipo interface crea una IP privada en tu VPC para llegar a la API de Bedrock por la red de AWS, sin internet. El NAT gateway y el internet gateway sacan el tráfico a internet, y no existe un peering con \"una VPC de AWS\" para acceder a los servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+    ]
+  },
+  {
+    "id": "vpc-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Unas instancias EC2 en subredes privadas necesitan descargar actualizaciones de internet, pero no deben ser accesibles desde internet. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Asignarles IP públicas y restringir el security group.",
+      "Un NAT gateway en una subred pública y una ruta 0.0.0.0/0 hacia él desde las subredes privadas.",
+      "Un endpoint de VPC de tipo gateway.",
+      "Un internet gateway asociado a las subredes privadas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El NAT gateway, colocado en una subred pública, permite conexiones salientes desde las subredes privadas y no admite conexiones iniciadas desde internet. Las IP públicas o una ruta al internet gateway harían las subredes públicas, y los endpoints gateway solo dan acceso a S3 y DynamoDB.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
+    ]
+  },
+  {
+    "id": "vpc-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Unas instancias en subredes privadas copian muchos terabytes al mes a S3 a través de un NAT gateway y la factura de procesamiento del NAT es alta. ¿Qué cambio reduce el coste sin exponer las instancias?",
+    "opciones": [
+      "Sustituir el NAT gateway por una instancia NAT más grande.",
+      "Añadir un endpoint de VPC de tipo gateway para S3 en las tablas de rutas de las subredes privadas.",
+      "Mover las instancias a subredes públicas.",
+      "Activar S3 Transfer Acceleration."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El endpoint gateway de S3 es gratuito y hace que el tráfico hacia S3 vaya por la red de AWS sin pasar por el NAT, con lo que desaparece el coste de procesamiento. Una instancia NAT exige gestión, las subredes públicas exponen las instancias y Transfer Acceleration añade coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html"
+    ]
+  },
+  {
+    "id": "vpc-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una función Lambda conectada a una VPC, en subredes privadas, no consigue llamar a una API pública externa y la petición agota el tiempo. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Lambda no admite conexiones HTTPS salientes.",
+      "Las subredes privadas no tienen una ruta a un NAT gateway.",
+      "Falta un endpoint de VPC para la API externa.",
+      "La función necesita más memoria."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Una función conectada a una VPC usa las rutas de sus subredes; sin un NAT gateway (u otra salida) no puede llegar a internet. Lambda sí admite conexiones salientes, un endpoint de VPC solo sirve para servicios de AWS o de PrivateLink, y la memoria no provoca un timeout de red.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
+    ]
+  },
+  {
+    "id": "vpc-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un desarrollador sospecha que unas conexiones a su base de datos se están rechazando en la red. ¿Qué herramienta le muestra si el tráfico se aceptó o se rechazó?",
+    "opciones": [
+      "AWS CloudTrail.",
+      "VPC Flow Logs.",
+      "AWS X-Ray.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "VPC Flow Logs registra cada flujo de tráfico IP con la acción ACCEPT o REJECT, ideal para diagnosticar reglas de security groups o NACL. CloudTrail registra llamadas a la API, X-Ray traza peticiones dentro de la aplicación e Inspector busca vulnerabilidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+    ]
+  },
+  {
+    "id": "vpc-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización con 60 VPC en varias cuentas y dos centros de datos quiere conectividad entre todas con enrutamiento centralizado y sin gestionar una malla de conexiones. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "VPC peering entre cada par de VPC.",
+      "AWS Transit Gateway compartido con AWS RAM, con adjuntos de VPC y de VPN o Direct Connect.",
+      "Un endpoint de PrivateLink en cada VPC.",
+      "Una VPN Site-to-Site por cada VPC."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Transit Gateway actúa como concentrador regional con tablas de rutas propias, se comparte entre cuentas con AWS RAM y admite adjuntos de VPC, VPN y Direct Connect. Una malla de peerings crece de forma cuadrática y no es transitiva, PrivateLink expone servicios concretos y una VPN por VPC no escala.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html"
+    ]
+  },
+  {
+    "id": "vpc-009",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere unir por peering dos VPC de cuentas distintas para que se comuniquen de forma privada. ¿Qué DOS condiciones deben cumplirse? (Elige 2.)",
+    "opciones": [
+      "Los bloques CIDR de las VPC no pueden solaparse.",
+      "Ambas VPC deben estar en la misma región.",
+      "Hay que añadir rutas hacia la conexión de peering en las tablas de rutas de ambas VPC.",
+      "El peering da acceso automático a las VPC unidas a su vez por peering con ellas.",
+      "Hace falta un NAT gateway en cada VPC."
+    ],
+    "correctas": [
+      0,
+      2
+    ],
+    "explicacion": "El peering exige rangos que no se solapen y rutas en ambos lados que apunten a la conexión. Se permite entre regiones y cuentas, no es transitivo y no necesita NAT.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html"
+    ]
+  }
+]

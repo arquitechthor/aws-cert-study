@@ -215,8 +215,8 @@
     "incluye": [
       "Amazon Aurora Serverless"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Base de datos relacional compatible con MySQL y PostgreSQL, con almacenamiento distribuido en tres zonas, hasta 15 réplicas y conmutación rápida.",
     "documentacion": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/"
   },
   {
@@ -796,8 +796,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servidores virtuales en la nube: eliges tipo de instancia, sistema operativo, red y almacenamiento, y pagas por el tiempo de uso.",
     "documentacion": "https://docs.aws.amazon.com/ec2/"
   },
   {
@@ -938,8 +938,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Caché en memoria gestionada compatible con Valkey, Redis OSS y Memcached, para respuestas de microsegundos y quitar carga a las bases de datos.",
     "documentacion": "https://docs.aws.amazon.com/elasticache/"
   },
   {
@@ -1748,8 +1748,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Bases de datos relacionales gestionadas (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2) con copias, parches y alta disponibilidad automáticos.",
     "documentacion": "https://docs.aws.amazon.com/rds/"
   },
   {
@@ -2249,8 +2249,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Tu red privada y aislada dentro de AWS: rangos de IP, subredes, tablas de rutas, gateways y firewalls para tus recursos.",
     "documentacion": "https://docs.aws.amazon.com/vpc/"
   },
   {

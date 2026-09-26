@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon RDS — Apuntes AWS</title>
+<meta name="description" content="Bases de datos relacionales gestionadas (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2) con copias, parches y alta disponibilidad automáticos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/rds.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon RDS — Apuntes AWS">
+<meta property="og:description" content="Bases de datos relacionales gestionadas (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2) con copias, parches y alta disponibilidad automáticos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/rds.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/rds.svg" alt="" width="56" height="56"><span>Amazon RDS</span></h1>
+      <p class="full-name">Amazon Relational Database Service (Amazon RDS)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=base-de-datos#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/base-de-datos.svg" alt="" width="18" height="18">Base de datos <span class="cat-en">(Database)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/rds/" target="_blank" rel="noopener">Documentación de Amazon RDS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon RDS (<em>Relational Database Service</em>) ejecuta bases de datos relacionales sin
+        que tengas que instalar el motor, aplicar parches, hacer copias de seguridad ni montar la
+        replicación. Tú eliges el motor, el tamaño de la instancia y el almacenamiento; AWS se ocupa
+        de la operación. A cambio, no tienes acceso al sistema operativo del servidor (salvo con
+        <em>RDS Custom</em> para Oracle y SQL Server).</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Motores:</strong> MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2. Aurora
+          también se gestiona desde RDS, pero es un motor aparte con su propia arquitectura.</li>
+        <li><strong>Multi-AZ con una instancia en espera:</strong> réplica <strong>síncrona</strong> en
+          otra zona, sin tráfico de lectura; si falla la principal, RDS cambia el DNS del endpoint a la
+          espera en uno o dos minutos. Sirve para <strong>alta disponibilidad</strong>, no para escalar.</li>
+        <li><strong>Multi-AZ DB cluster</strong> (MySQL y PostgreSQL): un escritor y <strong>dos
+          instancias en espera legibles</strong> en tres zonas, con conmutación más rápida.</li>
+        <li><strong>Réplicas de lectura:</strong> copias <strong>asíncronas</strong> para repartir las
+          lecturas, en la misma región o en otra; hasta 15 en MySQL, MariaDB y PostgreSQL, y hasta 5 en
+          Oracle y SQL Server. Se pueden <em>promocionar</em> a instancia independiente (útil para
+          recuperación ante desastres entre regiones).</li>
+        <li><strong>Copias automáticas y PITR:</strong> retención de hasta <strong>35 días</strong> y
+          restauración a cualquier segundo de ese periodo. Las <strong>instantáneas manuales</strong>
+          se conservan hasta que las borras. Restaurar siempre crea una <strong>instancia nueva</strong>.</li>
+        <li><strong>Almacenamiento:</strong> SSD de uso general (gp3) o de IOPS aprovisionadas (io2),
+          con <em>autoescalado de almacenamiento</em>. Cambiar el tamaño de la instancia provoca una breve
+          parada.</li>
+        <li><strong>RDS Proxy:</strong> agrupa y reutiliza conexiones; imprescindible con Lambda o con
+          muchas conexiones cortas, y acelera la conmutación por error.</li>
+        <li><strong>Autenticación IAM</strong> (MySQL y PostgreSQL) con tokens temporales, e
+          integración con <strong>Secrets Manager</strong> para la contraseña maestra con rotación.</li>
+        <li><strong>Blue/Green Deployments:</strong> copia sincronizada para probar actualizaciones
+          de versión o de esquema y cambiar en menos de un minuto.</li>
+        <li><strong>Performance Insights</strong> y <em>Enhanced Monitoring</em> para analizar la
+          carga y las consultas lentas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Aplicaciones web y de negocio con SQL, transacciones y JOIN.</li>
+        <li>Migrar una base de datos local sin cambiar de motor (con AWS DMS).</li>
+        <li>Software comercial que exige Oracle o SQL Server, con licencia incluida o propia.</li>
+        <li>Separar lecturas de informes en réplicas para no cargar la principal.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si necesitas más réplicas, conmutación en segundos o almacenamiento que crece solo:
+          Aurora.</li>
+        <li>Acceso por clave a escala masiva o esquemas flexibles: DynamoDB.</li>
+        <li>Análisis de grandes volúmenes (OLAP): Redshift o Athena.</li>
+        <li>Si necesitas acceso de administrador al sistema operativo o un motor no soportado:
+          base de datos en EC2 (o RDS Custom).</li>
+      </ul>
+
+      <h2 id="comparativa">Multi-AZ frente a réplicas de lectura</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Multi-AZ (una espera)</th><th>Réplica de lectura</th></tr></thead>
+          <tbody>
+            <tr><td>Objetivo</td><td>Alta disponibilidad</td><td>Escalar lecturas</td></tr>
+            <tr><td>Replicación</td><td>Síncrona</td><td>Asíncrona</td></tr>
+            <tr><td>¿Admite lecturas?</td><td>No</td><td>Sí</td></tr>
+            <tr><td>Ubicación</td><td>Otra zona de la misma región</td><td>Misma zona, otra zona u otra región</td></tr>
+            <tr><td>Conmutación</td><td>Automática, mismo endpoint</td><td>Manual (promoción), endpoint nuevo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por hora de instancia según motor, clase y despliegue (Multi-AZ cuesta más que una
+        sola zona), el almacenamiento aprovisionado por GB al mes (y las IOPS en io2), las copias de
+        seguridad que superen el tamaño de la base de datos, la transferencia de datos entre regiones y
+        extras como RDS Proxy. Hay <strong>instancias reservadas</strong> de 1 o 3 años. Oracle y SQL
+        Server pueden llevar la licencia incluida en el precio o traer la propia (BYOL). Una instancia
+        parada deja de cobrar cómputo, pero RDS la vuelve a arrancar a los 7 días.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Instancias en subredes privadas (grupo de subredes de base de datos) y acceso limitado
+          por security groups.</li>
+        <li>Cifrado en reposo con KMS, que <strong>se decide al crear la instancia</strong>: para
+          cifrar una existente hay que copiar una instantánea cifrándola y restaurarla.</li>
+        <li>TLS en tránsito; autenticación IAM o Kerberos según el motor.</li>
+        <li>Multi-AZ para fallos de zona, réplicas entre regiones o copias de instantáneas en otra
+          región para desastres regionales.</li>
+        <li>Protección contra borrado (<em>deletion protection</em>).</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Alta disponibilidad"</strong> o <strong>"conmutación automática"</strong>: Multi-AZ, no réplicas de lectura.</li>
+        <li><strong>"Escalar lecturas"</strong> o <strong>"informes que cargan la base de datos"</strong>: réplicas de lectura.</li>
+        <li><strong>"Demasiadas conexiones desde Lambda"</strong>: RDS Proxy.</li>
+        <li><strong>"Cifrar una base de datos existente sin cifrar"</strong>: instantánea, copia cifrada y restauración.</li>
+        <li><strong>"Recuperar la base de datos a las 14:32 de ayer"</strong>: restauración a un momento dado (PITR), que crea una instancia nueva.</li>
+        <li><strong>"Acceso al sistema operativo"</strong>: RDS no lo da; RDS Custom o EC2.</li>
+        <li><strong>"No guardar la contraseña en el código"</strong>: Secrets Manager o autenticación IAM.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="rds"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html" target="_blank" rel="noopener">What is Amazon Relational Database Service (Amazon RDS)?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html" target="_blank" rel="noopener">Configuring and managing a Multi-AZ deployment for Amazon RDS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html" target="_blank" rel="noopener">Working with DB instance read replicas</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html" target="_blank" rel="noopener">Amazon RDS Proxy</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Encryption.html" target="_blank" rel="noopener">Encrypting Amazon RDS resources</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

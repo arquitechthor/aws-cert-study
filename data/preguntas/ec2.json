@@ -1,0 +1,203 @@
+[
+  {
+    "id": "ec2-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Según el modelo de responsabilidad compartida, ¿quién debe aplicar los parches de seguridad del sistema operativo de una instancia EC2?",
+    "opciones": [
+      "AWS, porque EC2 es un servicio gestionado.",
+      "El cliente.",
+      "AWS y el cliente a partes iguales, según el tipo de instancia.",
+      "Nadie: las AMI se actualizan solas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "EC2 es infraestructura como servicio: AWS protege el hardware, la red física y el hipervisor, pero el sistema operativo invitado y todo lo que se instala encima es responsabilidad del cliente. Herramientas como Systems Manager Patch Manager lo automatizan, pero la responsabilidad no cambia.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+    ]
+  },
+  {
+    "id": "ec2-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa ejecuta cada noche trabajos de procesamiento que pueden reiniciarse sin problema si se interrumpen. ¿Qué opción de compra de EC2 minimiza el coste?",
+    "opciones": [
+      "Instancias bajo demanda.",
+      "Instancias reservadas de 3 años.",
+      "Instancias Spot.",
+      "Hosts dedicados."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Spot usa capacidad sobrante con grandes descuentos a cambio de que AWS pueda recuperarla con dos minutos de aviso, lo que encaja con trabajos que toleran interrupciones. Bajo demanda es más caro, las reservadas exigen un compromiso para un uso constante y los hosts dedicados son la opción más cara.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-purchasing-options.html"
+    ]
+  },
+  {
+    "id": "ec2-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un equipo quiere entrenar un modelo propio de deep learning y necesita controlar el entorno (controladores, bibliotecas y versión de CUDA). ¿Qué opción de EC2 es la más adecuada?",
+    "opciones": [
+      "Instancias de uso general T con créditos de CPU.",
+      "Instancias de computación acelerada con GPU (por ejemplo, familia P).",
+      "Instancias optimizadas para almacenamiento (familia I).",
+      "Instancias Spot de la familia R optimizadas para memoria."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El entrenamiento de deep learning se beneficia de las GPU de las instancias de computación acelerada (familias P y G, o Trn con chips propios de AWS). Las T son para cargas ligeras con picos, las I para E/S de disco y las R para memoria; ninguna aporta la aceleración que requiere el entrenamiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+    ]
+  },
+  {
+    "id": "ec2-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación HPC necesita la menor latencia de red posible entre sus nodos y puede tolerar que todos estén en la misma zona de disponibilidad. ¿Qué configuración es la adecuada?",
+    "opciones": [
+      "Grupo de colocación spread.",
+      "Grupo de colocación cluster.",
+      "Grupo de colocación partition.",
+      "Instancias en tres zonas detrás de un Network Load Balancer."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El grupo cluster coloca las instancias cerca dentro de una zona para obtener la menor latencia y el mayor ancho de banda entre ellas. Spread las separa en hardware distinto (resiliencia, no latencia), partition aísla grupos para sistemas distribuidos y repartir entre zonas aumenta la latencia.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html"
+    ]
+  },
+  {
+    "id": "ec2-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación web en EC2 debe seguir disponible si falla una zona de disponibilidad completa. ¿Qué DOS medidas son necesarias? (Elige 2.)",
+    "opciones": [
+      "Un grupo de Auto Scaling que lance instancias en al menos dos zonas.",
+      "Un Application Load Balancer con subredes en esas zonas.",
+      "Un grupo de colocación cluster.",
+      "Una instancia más grande con hibernación.",
+      "Un único volumen EBS compartido entre las instancias."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "La alta disponibilidad en EC2 se consigue con varias instancias repartidas en varias zonas (Auto Scaling) y un balanceador que envíe tráfico solo a las sanas. Un grupo cluster concentra todo en una zona, una instancia grande sigue siendo un punto único de fallo y un volumen EBS pertenece a una sola zona.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html"
+    ]
+  },
+  {
+    "id": "ec2-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una aplicación en EC2 debe leer objetos de un bucket de S3. ¿Cuál es la forma más segura de darle credenciales?",
+    "opciones": [
+      "Guardar una clave de acceso de un usuario IAM en un fichero de configuración de la instancia.",
+      "Asociar a la instancia un rol de IAM con permisos de lectura sobre el bucket.",
+      "Pasar la clave de acceso en el user data.",
+      "Hacer público el bucket y restringirlo por IP."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con un rol asociado mediante el perfil de instancia, el SDK obtiene credenciales temporales del servicio de metadatos que AWS rota automáticamente. Guardar claves en la instancia o en el user data las expone y obliga a rotarlas a mano, y un bucket público rompe el principio de mínimo privilegio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html"
+    ]
+  },
+  {
+    "id": "ec2-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Tras exigir IMDSv2 en una instancia, un script antiguo que hacía un simple GET a http://169.254.169.254/latest/meta-data/ empieza a recibir errores 401. ¿Qué debe cambiar?",
+    "opciones": [
+      "Abrir el puerto 80 en el security group.",
+      "Obtener primero un token de sesión con una petición PUT e incluirlo en la cabecera de las consultas.",
+      "Usar la dirección pública de la instancia en lugar de 169.254.169.254.",
+      "Asociar un rol de IAM con permisos ec2:DescribeInstances."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "IMDSv2 está orientado a sesiones: hay que pedir un token con PUT y enviarlo en la cabecera X-aws-ec2-metadata-token en cada consulta. El servicio de metadatos no pasa por el security group, no se accede por la IP pública y no depende de permisos de IAM.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html"
+    ]
+  },
+  {
+    "id": "ec2-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa migra un software comercial con licencia por núcleo físico y la auditoría exige demostrar en qué servidor se ejecuta. ¿Qué opción de EC2 lo permite?",
+    "opciones": [
+      "Instancias dedicadas.",
+      "Hosts dedicados.",
+      "Instancias reservadas convertibles.",
+      "Reservas de capacidad bajo demanda."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los hosts dedicados dan un servidor físico con visibilidad de sockets y núcleos y control de la colocación, necesarios para licencias BYOL por núcleo o socket. Las instancias dedicadas no comparten hardware pero no exponen el servidor físico, y las reservadas o las reservas de capacidad solo afectan al precio o a la disponibilidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-purchasing-options.html"
+    ]
+  },
+  {
+    "id": "ec2-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una flota de EC2 tiene un uso estable, pero la empresa planea mover parte de la carga a Fargate y Lambda durante el próximo año. Quiere un descuento por compromiso que acompañe ese cambio. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Instancias reservadas estándar de 3 años.",
+      "EC2 Instance Savings Plans.",
+      "Compute Savings Plans.",
+      "Instancias Spot con reservas de capacidad."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Compute Savings Plans aplica el descuento a cualquier familia, región y sistema operativo de EC2, y también a Fargate y Lambda, así que sigue ahorrando al modernizar. Las reservadas estándar y los EC2 Instance Savings Plans se limitan a EC2 (y a una familia en el segundo caso), y Spot no es un compromiso de uso.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-purchasing-options.html"
+    ]
+  }
+]

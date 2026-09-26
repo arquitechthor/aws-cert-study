@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Aurora — Apuntes AWS</title>
+<meta name="description" content="Base de datos relacional compatible con MySQL y PostgreSQL, con almacenamiento distribuido en tres zonas, hasta 15 réplicas y conmutación rápida. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/aurora.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Aurora — Apuntes AWS">
+<meta property="og:description" content="Base de datos relacional compatible con MySQL y PostgreSQL, con almacenamiento distribuido en tres zonas, hasta 15 réplicas y conmutación rápida.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/aurora.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/aurora.svg" alt="" width="56" height="56"><span>Amazon Aurora</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=base-de-datos#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/base-de-datos.svg" alt="" width="18" height="18">Base de datos <span class="cat-en">(Database)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/" target="_blank" rel="noopener">Documentación de Amazon Aurora ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Aurora es un motor relacional creado por AWS y compatible con MySQL y PostgreSQL:
+        las aplicaciones y herramientas de esos motores funcionan casi sin cambios. Se gestiona desde
+        RDS, pero su arquitectura es distinta: separa el cómputo (instancias) de un
+        <strong>volumen de almacenamiento compartido</strong> que guarda <strong>seis copias de los
+        datos en tres zonas de disponibilidad</strong> y crece solo. Eso le da más rendimiento,
+        réplicas más baratas y conmutaciones más rápidas que RDS clásico.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Clúster:</strong> una instancia <strong>escritora</strong> y hasta
+          <strong>15 réplicas de Aurora</strong> que leen del mismo volumen, con retrasos de
+          milisegundos. Cualquier réplica puede pasar a ser la escritora; con prioridades de
+          conmutación decides cuál.</li>
+        <li><strong>Endpoints:</strong> de clúster (siempre apunta a la escritora), de lectura
+          (reparte entre réplicas), de instancia y personalizados (un subconjunto de réplicas, por
+          ejemplo para informes).</li>
+        <li><strong>Almacenamiento:</strong> crece automáticamente en bloques de 10 GB, hasta
+          128 TiB o 256 TiB según la versión del motor; tolera perder dos copias sin afectar a
+          las escrituras y tres sin afectar a las lecturas.</li>
+        <li><strong>Aurora Serverless v2:</strong> la capacidad se ajusta en unidades ACU según la
+          carga, y en las versiones compatibles puede bajar a <strong>0 ACU</strong> y pausarse
+          cuando no hay actividad. Se puede mezclar con instancias aprovisionadas en el mismo clúster.</li>
+        <li><strong>Aurora Global Database:</strong> un clúster principal y hasta 10 regiones
+          secundarias de solo lectura con replicación por almacenamiento (normalmente menos de un
+          segundo). Permite lecturas locales y recuperación regional en poco tiempo.</li>
+        <li><strong>Clonación:</strong> copia de la base de datos en minutos que comparte el
+          almacenamiento hasta que cambian los datos (<em>copy-on-write</em>). Ideal para pruebas.</li>
+        <li><strong>Backtrack</strong> (solo Aurora MySQL): rebobina el clúster a un momento anterior
+          sin restaurar una copia.</li>
+        <li><strong>Modos de almacenamiento:</strong> <em>Standard</em> (pagas las operaciones de E/S)
+          o <em>I/O-Optimized</em> (sin coste por E/S, para cargas intensivas).</li>
+        <li><strong>Copias y PITR</strong> hasta 35 días, como RDS.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Aplicaciones relacionales críticas que necesitan alta disponibilidad y muchas lecturas.</li>
+        <li>SaaS y aplicaciones globales con lectores en varias regiones (Global Database).</li>
+        <li>Cargas intermitentes o entornos de desarrollo con Serverless v2.</li>
+        <li>Migrar desde bases comerciales (Oracle, SQL Server) a un motor compatible con código
+          abierto.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si necesitas Oracle, SQL Server o Db2 tal cual: RDS para ese motor.</li>
+        <li>Bases de datos pequeñas y estables donde RDS en una sola instancia es más barato.</li>
+        <li>Acceso clave-valor masivo o esquema flexible: DynamoDB.</li>
+        <li>Análisis de datos a gran escala: Redshift.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con RDS clásico</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Aurora</th><th>RDS (MySQL/PostgreSQL)</th></tr></thead>
+          <tbody>
+            <tr><td>Copias de los datos</td><td>6 copias en 3 zonas, siempre</td><td>1 (o 2-3 con Multi-AZ)</td></tr>
+            <tr><td>Réplicas de lectura</td><td>Hasta 15, sobre el mismo volumen</td><td>Hasta 15, cada una con su almacenamiento</td></tr>
+            <tr><td>Conmutación</td><td>Normalmente en menos de 30 segundos</td><td>1-2 minutos (Multi-AZ con una espera)</td></tr>
+            <tr><td>Almacenamiento</td><td>Crece solo, sin aprovisionar</td><td>Aprovisionado, con autoescalado opcional</td></tr>
+            <tr><td>Multirregión</td><td>Global Database (&lt; 1 s)</td><td>Réplicas asíncronas entre regiones</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por hora de cada instancia (o por ACU-hora en Serverless v2), el almacenamiento
+        realmente usado por GB al mes, las operaciones de E/S en el modo Standard, las copias que
+        superen el tamaño del clúster, Backtrack, y la replicación y transferencia en Global
+        Database. Hay instancias reservadas para las aprovisionadas.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos siempre replicados en tres zonas; con al menos una réplica en otra zona, la
+          conmutación es automática y rápida.</li>
+        <li>Cifrado con KMS decidido al crear el clúster, TLS en tránsito, autenticación IAM y
+          contraseña gestionada con Secrets Manager.</li>
+        <li>Subredes privadas y security groups, como cualquier base de datos en VPC.</li>
+        <li>Global Database para recuperación regional con RPO de segundos y RTO de minutos.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Compatible con MySQL/PostgreSQL, alto rendimiento y alta disponibilidad"</strong>: Aurora.</li>
+        <li><strong>"Carga impredecible o intermitente"</strong> relacional: Aurora Serverless v2.</li>
+        <li><strong>"Lecturas de baja latencia en otras regiones"</strong> o <strong>"RPO de segundos entre regiones"</strong>: Global Database.</li>
+        <li><strong>"Copia rápida de producción para pruebas"</strong>: clonación.</li>
+        <li><strong>"Deshacer un error sin restaurar"</strong> en Aurora MySQL: Backtrack.</li>
+        <li><strong>"Enviar los informes a unas réplicas concretas"</strong>: endpoint personalizado.</li>
+        <li><strong>"Muchas E/S y factura de E/S alta"</strong>: modo I/O-Optimized.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="aurora"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html" target="_blank" rel="noopener">What is Amazon Aurora?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_Limits.html" target="_blank" rel="noopener">Quotas and constraints for Amazon Aurora</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html" target="_blank" rel="noopener">Using Amazon Aurora Global Database</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html" target="_blank" rel="noopener">Using Aurora Serverless v2</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html" target="_blank" rel="noopener">Amazon Aurora endpoint connections</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

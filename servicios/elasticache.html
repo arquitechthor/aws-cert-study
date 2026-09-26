@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon ElastiCache — Apuntes AWS</title>
+<meta name="description" content="Caché en memoria gestionada compatible con Valkey, Redis OSS y Memcached, para respuestas de microsegundos y quitar carga a las bases de datos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/elasticache.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon ElastiCache — Apuntes AWS">
+<meta property="og:description" content="Caché en memoria gestionada compatible con Valkey, Redis OSS y Memcached, para respuestas de microsegundos y quitar carga a las bases de datos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/elasticache.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/elasticache.svg" alt="" width="56" height="56"><span>Amazon ElastiCache</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=base-de-datos#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/base-de-datos.svg" alt="" width="18" height="18">Base de datos <span class="cat-en">(Database)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/elasticache/" target="_blank" rel="noopener">Documentación de Amazon ElastiCache ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon ElastiCache es un almacén de datos <strong>en memoria</strong> totalmente gestionado,
+        compatible con <strong>Valkey</strong>, <strong>Redis OSS</strong> y <strong>Memcached</strong>.
+        Se coloca delante de una base de datos o de un cálculo costoso para servir los datos
+        frecuentes en microsegundos, o se usa directamente como almacén rápido de sesiones, colas o
+        clasificaciones. Puedes crearlo <strong>sin servidor</strong> (<em>ElastiCache Serverless</em>,
+        que escala solo) o como clúster de nodos que dimensionas tú.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Valkey / Redis OSS:</strong> estructuras de datos ricas (hashes, listas, conjuntos
+          ordenados, streams), persistencia con instantáneas, replicación, Multi-AZ con conmutación
+          automática, pub/sub y transacciones. Valkey es la bifurcación de código abierto de Redis que
+          AWS promueve y resulta más barata.</li>
+        <li><strong>Memcached:</strong> caché simple de clave-valor, multihilo, sin replicación ni
+          persistencia. Si un nodo cae, sus datos se pierden.</li>
+        <li><strong>Modo clúster</strong> (Valkey/Redis OSS): reparte los datos en varios
+          <em>shards</em>, cada uno con una primaria y hasta 5 réplicas, para escalar escrituras y
+          memoria. Sin modo clúster hay un único shard.</li>
+        <li><strong>Serverless:</strong> sin elegir tipos de nodo; escala según la demanda y guarda
+          los datos de forma redundante en varias zonas sin configurar nada.</li>
+        <li><strong>Patrones de caché:</strong>
+          <ul>
+            <li><em>Lazy loading</em> (cache-aside): la aplicación consulta la caché; si falla, lee la
+              base de datos y guarda el resultado. Solo se cachea lo que se pide, pero el primer acceso
+              es lento y los datos pueden quedar obsoletos.</li>
+            <li><em>Write-through</em>: al escribir en la base de datos también se actualiza la caché.
+              Datos siempre frescos, a costa de cachear cosas que quizá nadie lea.</li>
+            <li><strong>TTL</strong>: caducidad de las claves para limitar datos obsoletos y memoria.</li>
+          </ul></li>
+        <li><strong>Global Datastore</strong> (Valkey/Redis OSS): réplicas en otras regiones para
+          lecturas locales y recuperación ante desastres.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Cachear resultados de consultas a RDS o Aurora y reducir su carga.</li>
+        <li>Guardar sesiones de usuario para que las instancias web no tengan estado.</li>
+        <li>Clasificaciones de juegos con conjuntos ordenados.</li>
+        <li>Limitación de peticiones (<em>rate limiting</em>) y contadores.</li>
+        <li>Caché semántica de respuestas de modelos de IA generativa, con búsqueda vectorial en Valkey.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Como almacén principal y duradero de datos críticos: una base de datos (o MemoryDB, que es
+          duradera y compatible con Valkey/Redis OSS).</li>
+        <li>Para acelerar solo lecturas de DynamoDB sin cambiar el código: DAX.</li>
+        <li>Para contenido estático en el borde, cerca del usuario: CloudFront.</li>
+      </ul>
+
+      <h2 id="comparativa">Valkey/Redis OSS frente a Memcached</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Valkey / Redis OSS</th><th>Memcached</th></tr></thead>
+          <tbody>
+            <tr><td>Alta disponibilidad y réplicas</td><td>Sí (Multi-AZ, conmutación automática)</td><td>No</td></tr>
+            <tr><td>Persistencia y copias</td><td>Sí (instantáneas)</td><td>No</td></tr>
+            <tr><td>Estructuras de datos complejas</td><td>Sí</td><td>Solo cadenas</td></tr>
+            <tr><td>Pub/sub, transacciones</td><td>Sí</td><td>No</td></tr>
+            <tr><td>Multihilo, caché simple</td><td>—</td><td>Sí</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En <strong>Serverless</strong> se paga por los datos almacenados (GB-hora) y por las
+        unidades de procesamiento consumidas (ECPU). En clústeres de nodos, por hora de cada nodo
+        según su tipo, con <strong>nodos reservados</strong> de 1 o 3 años. Aparte, las copias de
+        seguridad y la transferencia de datos entre zonas o regiones. Valkey tiene un precio menor
+        que Redis OSS.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Solo accesible dentro de la VPC, con security groups.</li>
+        <li>Cifrado en tránsito (TLS) y en reposo con KMS; autenticación con usuarios y RBAC, AUTH o IAM
+          en Valkey/Redis OSS.</li>
+        <li>Multi-AZ con réplicas en otras zonas y conmutación automática (siempre activa en modo clúster).</li>
+        <li>Serverless reparte los datos en varias zonas automáticamente.</li>
+        <li>Global Datastore para desastres regionales.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Reducir la carga de lectura de RDS"</strong> con datos consultados a menudo: ElastiCache (o réplicas de lectura si no se puede tocar el código).</li>
+        <li><strong>"Sesiones compartidas entre instancias"</strong>: ElastiCache (o DynamoDB).</li>
+        <li><strong>"Alta disponibilidad, persistencia o estructuras complejas"</strong>: Valkey/Redis OSS, no Memcached.</li>
+        <li><strong>"Caché simple y multihilo"</strong>: Memcached.</li>
+        <li><strong>"Los datos de la caché quedan obsoletos"</strong>: TTL o write-through.</li>
+        <li><strong>"Microsegundos en DynamoDB sin cambiar el código"</strong>: DAX, no ElastiCache.</li>
+        <li><strong>"Clasificación en tiempo real"</strong>: conjuntos ordenados de Valkey/Redis OSS.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="elasticache"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html" target="_blank" rel="noopener">What is Amazon ElastiCache?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html" target="_blank" rel="noopener">Comparing Valkey, Memcached, and Redis OSS self-designed clusters</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Strategies.html" target="_blank" rel="noopener">Caching strategies</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html" target="_blank" rel="noopener">Minimizing downtime in ElastiCache by using Multi-AZ with Valkey and Redis OSS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

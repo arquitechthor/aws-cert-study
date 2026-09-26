@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon EC2 — Apuntes AWS</title>
+<meta name="description" content="Servidores virtuales en la nube: eliges tipo de instancia, sistema operativo, red y almacenamiento, y pagas por el tiempo de uso. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/ec2.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon EC2 — Apuntes AWS">
+<meta property="og:description" content="Servidores virtuales en la nube: eliges tipo de instancia, sistema operativo, red y almacenamiento, y pagas por el tiempo de uso.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/ec2.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/ec2.svg" alt="" width="56" height="56"><span>Amazon EC2</span></h1>
+      <p class="full-name">Amazon Elastic Compute Cloud (Amazon EC2)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/ec2/" target="_blank" rel="noopener">Documentación de Amazon EC2 ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon EC2 (<em>Elastic Compute Cloud</em>) ofrece máquinas virtuales, llamadas
+        <strong>instancias</strong>, que arrancas en minutos y pagas por segundo o por hora. Es el
+        servicio de cómputo más flexible de AWS: tú controlas el sistema operativo, el software y la
+        red, a cambio de encargarte de parches, escalado y alta disponibilidad. En el modelo de
+        responsabilidad compartida, EC2 es <strong>IaaS</strong>: AWS protege el hardware y el
+        hipervisor; el sistema invitado es cosa tuya.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>AMI (Amazon Machine Image):</strong> plantilla con el sistema operativo y el
+          software de arranque. Es regional; para usarla en otra región hay que copiarla.</li>
+        <li><strong>Tipos de instancia</strong> por familia: uso general (M, T con créditos de CPU),
+          optimizadas para cómputo (C), para memoria (R, X), para almacenamiento (I, D) y aceleradas
+          con GPU o chips propios (P, G, Inf, Trn). Las de <strong>Graviton</strong> (ARM) suelen dar
+          mejor relación precio-rendimiento.</li>
+        <li><strong>Almacenamiento:</strong> volúmenes <strong>EBS</strong> (persistentes, en una sola
+          zona de disponibilidad) o <strong>instance store</strong> (disco local muy rápido que se
+          pierde al parar o terminar la instancia).</li>
+        <li><strong>Security groups:</strong> firewall con estado a nivel de instancia; solo admiten
+          reglas de permitir.</li>
+        <li><strong>Pares de claves y acceso:</strong> SSH con clave, o mejor <strong>Session
+          Manager</strong> de Systems Manager, sin abrir el puerto 22 ni gestionar claves.</li>
+        <li><strong>Rol de IAM (perfil de instancia):</strong> la forma correcta de dar permisos a
+          una aplicación en EC2; nunca claves de acceso guardadas en la máquina.</li>
+        <li><strong>Metadatos (IMDS):</strong> la instancia consulta su propia información y las
+          credenciales temporales del rol en <code>169.254.169.254</code>. IMDSv2 exige un token de
+          sesión y protege contra ataques SSRF.</li>
+        <li><strong>User data:</strong> script que se ejecuta en el primer arranque.</li>
+        <li><strong>Grupos de colocación:</strong> <em>cluster</em> (misma zona, baja latencia para
+          HPC), <em>spread</em> (hardware distinto, máximo 7 instancias por zona) y
+          <em>partition</em> (particiones aisladas para Hadoop, Cassandra o Kafka).</li>
+        <li><strong>Auto Scaling y ELB:</strong> un grupo de Auto Scaling mantiene el número deseado
+          de instancias en varias zonas y un balanceador reparte el tráfico entre ellas.</li>
+        <li><strong>Hibernación:</strong> guarda la RAM en el volumen raíz EBS cifrado para arrancar
+          más rápido con la memoria intacta.</li>
+      </ul>
+
+      <h2 id="compra">Opciones de compra</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Cuándo encaja</th></tr></thead>
+          <tbody>
+            <tr><td>Bajo demanda</td><td>Cargas cortas, impredecibles o de prueba; sin compromiso.</td></tr>
+            <tr><td>Savings Plans (1 o 3 años)</td><td>Uso estable; compromiso de gasto por hora. <em>Compute</em> se aplica también a Fargate y Lambda.</td></tr>
+            <tr><td>Instancias reservadas (1 o 3 años)</td><td>Uso estable de un tipo concreto; las <em>convertibles</em> permiten cambiar de familia.</td></tr>
+            <tr><td>Spot</td><td>Hasta un 90 % más barato con capacidad sobrante; AWS la recupera con 2 minutos de aviso. Solo para cargas tolerantes a interrupciones.</td></tr>
+            <tr><td>Hosts dedicados</td><td>Licencias por socket o núcleo (BYOL) y requisitos de cumplimiento con visibilidad del servidor físico.</td></tr>
+            <tr><td>Instancias dedicadas</td><td>Hardware no compartido con otras cuentas, sin control de la ubicación.</td></tr>
+            <tr><td>Reservas de capacidad</td><td>Garantizar capacidad en una zona concreta, sin descuento por sí mismas.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Aplicaciones que necesitan control del sistema operativo o software de terceros.</li>
+        <li>Migraciones <em>lift-and-shift</em> de servidores locales.</li>
+        <li>Cómputo de alto rendimiento (HPC) y entrenamiento de modelos con GPU.</li>
+        <li>Flotas web detrás de un balanceador con Auto Scaling.</li>
+        <li>Procesamiento por lotes barato con instancias Spot.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Código corto y dirigido por eventos: Lambda, sin servidores que parchear.</li>
+        <li>Contenedores sin gestionar instancias: ECS o EKS con Fargate.</li>
+        <li>Una web o una app sencilla con precio fijo mensual: Lightsail o Elastic Beanstalk.</li>
+        <li>Una base de datos gestionada: RDS, Aurora o DynamoDB en vez de instalarla en EC2.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Control total del servidor</td><td>EC2</td></tr>
+            <tr><td>Funciones por evento, hasta 15 minutos</td><td>Lambda</td></tr>
+            <tr><td>Contenedores sin servidores</td><td>Fargate (con ECS o EKS)</td></tr>
+            <tr><td>Desplegar código sin montar la infraestructura</td><td>Elastic Beanstalk</td></tr>
+            <tr><td>VPS sencillo a precio fijo</td><td>Lightsail</td></tr>
+            <tr><td>Trabajos por lotes gestionados</td><td>AWS Batch</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga el tiempo de ejecución de la instancia (por segundo en Linux y en la mayoría de
+        sistemas, con un mínimo de 60 segundos), según tipo, región y opción de compra. Aparte se
+        pagan los volúmenes EBS (también con la instancia parada), las instantáneas, las direcciones
+        IPv4 públicas, la transferencia de datos de salida y los extras como el balanceador. Una
+        instancia <strong>parada</strong> no cobra cómputo, pero sí su almacenamiento.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Una instancia vive en <strong>una sola zona de disponibilidad</strong>: la alta
+          disponibilidad se consigue con varias instancias en varias zonas, Auto Scaling y un
+          balanceador.</li>
+        <li>Recuperación automática de la instancia si falla el hardware subyacente
+          (<em>auto recovery</em>).</li>
+        <li>Cifrado de volúmenes EBS con KMS; se puede activar por defecto en la región.</li>
+        <li>Instancias en subredes privadas y acceso con Session Manager en lugar de bastiones.</li>
+        <li>Copias con instantáneas EBS o AWS Backup, y AMI para reconstruir la máquina.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Tolerante a interrupciones"</strong> y <strong>"lo más barato"</strong>: Spot.</li>
+        <li><strong>"Uso constante durante 1 o 3 años"</strong>: Savings Plans o instancias reservadas.</li>
+        <li><strong>"Licencias por socket o núcleo"</strong>: hosts dedicados.</li>
+        <li><strong>"La aplicación necesita permisos de AWS"</strong>: rol de IAM en la instancia, nunca claves en el código.</li>
+        <li><strong>"Latencia de red mínima entre nodos HPC"</strong>: grupo de colocación <em>cluster</em>.</li>
+        <li><strong>"Datos temporales de altísimo rendimiento"</strong>: instance store (se pierden al parar).</li>
+        <li><strong>"Acceso sin abrir SSH"</strong>: Session Manager.</li>
+        <li><strong>"Parchear el sistema operativo"</strong>: responsabilidad del cliente (Systems Manager Patch Manager ayuda).</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="ec2"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html" target="_blank" rel="noopener">What is Amazon EC2?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-purchasing-options.html" target="_blank" rel="noopener">Amazon EC2 billing and purchasing options</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html" target="_blank" rel="noopener">Placement groups for your Amazon EC2 instances</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html" target="_blank" rel="noopener">Use the Instance Metadata Service to access instance metadata</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

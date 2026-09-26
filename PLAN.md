@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 12 de 164: los que usa Kopi
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 17 de 164: los que usa Kopi
   (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch). La tarea 0.9 sigue programada para el 27/10/2026.
 - **Próximo paso:** seguir la cola "Prioridad 0" por el primer servicio sin marcar
@@ -269,15 +269,15 @@ esta lista es solo el orden de trabajo.
 
 - [x] `iam` AWS IAM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `organizations` AWS Organizations — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `vpc` Amazon VPC — Redes y entrega de contenido (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `ec2` Amazon EC2 — Computación (SAA-C03, SAP-C02, AIF-C01)
+- [x] `vpc` Amazon VPC — Redes y entrega de contenido (SAA-C03, SAP-C02, AIF-C01)
+- [x] `ec2` Amazon EC2 — Computación (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `ebs` Amazon EBS — Almacenamiento (SAA-C03, SAP-C02)
 - [ ] `elb` Elastic Load Balancing (ELB) — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `ec2-auto-scaling` Amazon EC2 Auto Scaling — Computación (SAA-C03, SAP-C02)
 - [x] `s3` Amazon S3 — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `efs` Amazon EFS — Almacenamiento (SAA-C03, SAP-C02)
-- [ ] `rds` Amazon RDS — Base de datos (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `aurora` Amazon Aurora — Base de datos (SAA-C03, SAP-C02, AIF-C01)
+- [x] `rds` Amazon RDS — Base de datos (SAA-C03, SAP-C02, AIF-C01)
+- [x] `aurora` Amazon Aurora — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [x] `dynamodb` Amazon DynamoDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [x] `lambda` AWS Lambda — Computación (SAA-C03, SAP-C02, AIF-C01)
 - [x] `route-53` Amazon Route 53 — Redes y entrega de contenido (SAA-C03, SAP-C02)
@@ -304,7 +304,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `quick` Amazon Quick — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `redshift` Amazon Redshift — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `documentdb` Amazon DocumentDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `elasticache` Amazon ElastiCache — Base de datos (SAA-C03, SAP-C02, AIF-C01)
+- [x] `elasticache` Amazon ElastiCache — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `neptune` Amazon Neptune — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `ecs` Amazon ECS — Contenedores (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `eks` Amazon EKS — Contenedores (SAA-C03, SAP-C02, AIF-C01)
