@@ -56,6 +56,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Flujo git | Directo a `main`, sin pull requests (igual que el resto de proyectos kopi). |
 | Progreso del usuario | Sin cuentas ni backend: el progreso vive en `localStorage` (clave `apuntes-aws.progreso`, un objeto por servicio con las preguntas acertadas, el total y la fecha de finalización). Un servicio publicado pasa a **Finalizado** cuando se han acertado todas sus preguntas al menos una vez; si luego se añaden preguntas, vuelve a estar en curso. "Finalizado" no es un `estado` de `servicios.json`: se calcula en el navegador. |
 | Filtro de certificaciones | Con varias marcadas, modo **Unión** (al menos una, por defecto) o **Intersección** (todas), en la URL como `modo=interseccion`. Las certificaciones con `estado: "guia-pendiente"` (SAP-C03, DVA-C03) **no salen como filtro** hasta tener guía y servicios; solo se ven en su tarjeta, y un `cert=` suyo en la URL se ignora. |
+| Frases del juego (modo funciones) | Confirmado por el usuario el 2026-09-26: campo nuevo `frase` en `servicios.json` (60–90 caracteres, sin nombre, sigla ni id del servicio, que lo distinga de sus vecinos parecidos), no el `resumen`. Ver Fase 4, tarea 4.11. |
 | Servicios pendientes | Sin archivos vacíos: un servicio con `estado: "pendiente"` enlaza a la página genérica `servicio.html?id=<id>` ("Próximamente disponible"). Al publicarlo se crea `servicios/<id>.html`. |
 
 ---
