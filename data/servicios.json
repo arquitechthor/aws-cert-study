@@ -4,6 +4,7 @@
     "nombre": "AWS Certificate Manager (ACM)",
     "categoria": "seguridad-identidad-cumplimiento",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -55,6 +56,7 @@
     "nombre": "Amazon API Gateway",
     "categoria": "frontend-web-movil",
     "icono": true,
+    "kopi": true,
     "categoriasAdicionales": [
       "redes-entrega-contenido"
     ],
@@ -269,6 +271,7 @@
     "nombre": "Amazon Bedrock",
     "categoria": "machine-learning",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "AIF-C01"
     ],
@@ -371,6 +374,7 @@
     "nombre": "Amazon CloudFront",
     "categoria": "redes-entrega-contenido",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -429,6 +433,7 @@
     "nombre": "Amazon CloudWatch",
     "categoria": "administracion-gobernanza",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -514,6 +519,7 @@
     "nombre": "Amazon Cognito",
     "categoria": "seguridad-identidad-cumplimiento",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -756,6 +762,7 @@
     "nombre": "Amazon DynamoDB",
     "categoria": "base-de-datos",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1119,6 +1126,7 @@
     "nombreCompleto": "AWS Identity and Access Management (IAM)",
     "categoria": "seguridad-identidad-cumplimiento",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1354,6 +1362,7 @@
     "nombre": "AWS Lambda",
     "categoria": "computacion",
     "icono": true,
+    "kopi": true,
     "categoriasAdicionales": [
       "sin-servidor"
     ],
@@ -1790,6 +1799,7 @@
     "nombre": "Amazon Route 53",
     "categoria": "redes-entrega-contenido",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1806,6 +1816,7 @@
     "nombreCompleto": "Amazon Simple Storage Service (Amazon S3)",
     "categoria": "almacenamiento",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -1950,6 +1961,7 @@
     "nombreCompleto": "Amazon Simple Email Service (Amazon SES)",
     "categoria": "aplicaciones-empresariales",
     "icono": true,
+    "kopi": true,
     "certificaciones": [
       "SAP-C02",
       "CLF-C02"

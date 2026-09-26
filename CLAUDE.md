@@ -21,7 +21,8 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
   filters (text, category, status, certifications with union/intersection mode). Filter state
-  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=interseccion`). Certifications with
+  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=interseccion&kopi=1`). `kopi=1` shows only
+  services with `"kopi": true` in `servicios.json` (the ones Kopi uses). Certifications with
   `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
 - Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store correct
   answers per service in `localStorage` (`apuntes-aws.progreso`). `quiz.js` writes it; a
@@ -69,7 +70,8 @@ horizontal scroll).
    service's `documentacion` URL from `servicios.json`. If the service has no `"icono": true`, point the
    header icon at its category icon instead. Include the "Así lo uso en Kopi" section only
    if Kopi uses the service (see `kopi-media-admin/documentation/servicios-aws/`), with no
-   sensitive identifiers (account ID, bucket names, distribution IDs, ARNs).
+   sensitive identifiers (account ID, bucket names, distribution IDs, ARNs); in that case also
+   set `"kopi": true` in `servicios.json` so it appears under the "Usados en Kopi" filter.
 3. Write `data/preguntas/<id>.json` with 5–15 **original** questions tagged with certification
    and domain (domain names from `certificaciones.json`).
 4. In `data/servicios.json`, set `estado` to `"publicado"` and write `resumen`.

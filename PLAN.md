@@ -103,7 +103,9 @@ aws-cert-study/
 `nombreCompleto`, `categoriasAdicionales`, `incluye` y `alias` son opcionales.
 `documentacion` es la URL de la documentación oficial principal del servicio (comprobada con una
 petición HTTP 200 el 2026-09-26); solo falta en servicios retirados sin documentación publicada
-(`elastic-transcoder`, `iot-events`), que enlazan a la búsqueda de docs.aws.amazon.com. `icono: true`
+(`elastic-transcoder`, `iot-events`), que enlazan a la búsqueda de docs.aws.amazon.com. `kopi: true` marca los
+servicios que usa Kopi (su guía incluye "Así lo uso en Kopi") y alimenta el filtro "Usados en
+Kopi" (`kopi=1` en la URL). `icono: true`
 indica que existe `assets/iconos/servicios/<id>.svg`; si falta, se usa el icono de la categoría.
 Todas las categorías tienen icono en `assets/iconos/categorias/<id>.svg`. `resumen` se
 redacta al publicar el servicio en la Fase 2. `data/fuentes/<código>.txt` guarda la lista
@@ -553,3 +555,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-26 | Añadidas CLF-C02 (Cloud Practitioner) y DVA-C02 (Developer – Associate, se retira el 01/12/2026), más DVA-C03 como pendiente de guía: fuentes, dominios, 9 servicios nuevos (164), categoría "Habilitación de clientes", chips de las páginas publicadas regenerados. Tarea 0.10. |
 | 2026-09-26 | Las certificaciones con la guía pendiente (SAP-C03, DVA-C03) dejan de aparecer en el filtro de certificaciones; siguen en las tarjetas. |
 | 2026-09-26 | Publicados los 11 servicios pendientes de los 17 comunes a las cinco guías (EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail, OpenSearch Service), con 99 preguntas originales. Datos contrastados con la documentación actual: Aurora hasta 256 TiB y Serverless v2 a 0 ACU, réplicas de RDS (15; 5 en Oracle/SQL Server; 3 en Db2), rotación de KMS de 90 a 2560 días, CloudTrail Lake cerrado a clientes nuevos desde el 31/05/2026, OpenSearch Serverless NextGen con escala a cero, ECS Managed Instances y EKS Auto Mode. |
+| 2026-09-26 | Filtro "Usados en Kopi" en el catálogo (campo `kopi` en `servicios.json`, 12 servicios) y marca "Kopi" en sus tarjetas. |

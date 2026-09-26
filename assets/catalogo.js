@@ -1,6 +1,6 @@
 /**
  * Portada: tarjetas de certificación y catálogo de servicios con filtros. El estado de los
- * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=interseccion) para poder compartir
+ * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=interseccion&kopi=1) para poder compartir
  * vistas filtradas. "finalizado" no es un estado del catálogo sino del progreso local del
  * usuario (localStorage), que se superpone a "publicado".
  */
@@ -17,6 +17,7 @@
     cert: $('f-cert'),
     modo: $('f-modo'),
     modoAyuda: $('f-modo-ayuda'),
+    kopi: $('f-kopi'),
     limpiar: $('f-limpiar'),
     resultados: $('resultados'),
     grid: $('service-grid'),
@@ -34,7 +35,7 @@
   };
   const ESTADOS = ['publicado', 'finalizado', 'pendiente'];
 
-  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'union' };
+  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'union', kopi: false };
   let datos = null;
   let progreso = {};
 
@@ -75,6 +76,7 @@
     // Solo certificaciones filtrables: se ignoran códigos desconocidos o con la guía pendiente.
     estado.certs = new Set((p.get('cert') || '').split(',').filter((c) => esFiltrable(datos.certPorCodigo.get(c))));
     estado.modo = p.get('modo') === 'interseccion' ? 'interseccion' : 'union';
+    estado.kopi = p.get('kopi') === '1';
   }
 
   function escribirUrl() {
@@ -84,6 +86,7 @@
     if (estado.estado) p.set('estado', estado.estado);
     if (estado.certs.size) p.set('cert', [...estado.certs].join(','));
     if (estado.modo !== 'union') p.set('modo', estado.modo);
+    if (estado.kopi) p.set('kopi', '1');
     const q = p.toString();
     history.replaceState(null, '', `${location.pathname}${q ? `?${q}` : ''}${location.hash}`);
   }
@@ -145,6 +148,11 @@
       sincronizarControles();
       aplicar();
     });
+    el.kopi.addEventListener('click', () => {
+      estado.kopi = !estado.kopi;
+      sincronizarControles();
+      aplicar();
+    });
     el.modo.addEventListener('click', (ev) => {
       const btn = ev.target.closest('button[data-modo]');
       if (!btn) return;
@@ -153,7 +161,7 @@
       aplicar();
     });
     el.limpiar.addEventListener('click', () => {
-      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'union' });
+      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'union', kopi: false });
       sincronizarControles();
       aplicar();
     });
@@ -174,6 +182,7 @@
       btn.setAttribute('aria-checked', String(btn.dataset.modo === estado.modo));
     }
     el.modoAyuda.textContent = MODOS[estado.modo];
+    el.kopi.setAttribute('aria-pressed', String(estado.kopi));
   }
 
   // ── Filtrado y render ───────────────────────────────────────
@@ -184,6 +193,7 @@
       if (estado.cat && s.categoria !== estado.cat && !(s.categoriasAdicionales || []).includes(estado.cat)) return false;
       if (estado.estado === 'finalizado' && estadoDe(s) !== 'finalizado') return false;
       if (estado.estado && estado.estado !== 'finalizado' && s.estado !== estado.estado) return false;
+      if (estado.kopi && !s.kopi) return false;
       if (estado.certs.size) {
         const certs = [...estado.certs];
         const coincide = estado.modo === 'interseccion'
@@ -212,7 +222,8 @@
         </div>
         <p class="service-cat cat-link">${categoriaHtml(cat)}</p>
         ${s.resumen ? `<p class="service-resumen">${esc(s.resumen)}</p>` : ''}
-        <div class="chips">${s.certificaciones.map((c) => `<span class="chip chip-cert">${esc(c)}</span>`).join('')}</div>
+        <div class="chips">${s.certificaciones.map((c) => `<span class="chip chip-cert">${esc(c)}</span>`).join('')}${s.kopi
+          ? '<span class="chip chip-kopi" title="Lo usa Kopi en producción">Kopi</span>' : ''}</div>
       </a>`;
   }
 
