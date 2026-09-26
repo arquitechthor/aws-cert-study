@@ -1,0 +1,203 @@
+[
+  {
+    "id": "opensearch-service-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una tienda online quiere un buscador de productos con resultados por relevancia y tolerancia a errores de escritura. ¿Qué servicio de AWS encaja?",
+    "opciones": [
+      "Amazon OpenSearch Service.",
+      "Amazon Redshift.",
+      "Amazon RDS.",
+      "AWS Glue."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "OpenSearch está diseñado para la búsqueda de texto completo con relevancia, coincidencias aproximadas y facetas. Redshift es un almacén de datos para análisis, RDS es relacional y Glue hace ETL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
+    ]
+  },
+  {
+    "id": "opensearch-service-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS permite analizar registros de aplicaciones casi en tiempo real y visualizarlos en paneles interactivos?",
+    "opciones": [
+      "Amazon OpenSearch Service con OpenSearch Dashboards.",
+      "AWS Artifact.",
+      "Amazon S3 Glacier.",
+      "AWS Snowball."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "OpenSearch Service indexa los registros casi en tiempo real y OpenSearch Dashboards los visualiza. Artifact da informes de cumplimiento, Glacier archiva datos y Snowball transfiere datos físicamente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
+    ]
+  },
+  {
+    "id": "opensearch-service-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una Knowledge Base de Amazon Bedrock necesita un almacén de vectores sin gestionar servidores para una aplicación RAG. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Una colección de búsqueda vectorial de Amazon OpenSearch Serverless.",
+      "Un bucket de S3 Glacier Deep Archive.",
+      "Una tabla de Amazon Redshift sin índices.",
+      "Una cola de Amazon SQS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "OpenSearch Serverless ofrece colecciones de búsqueda vectorial (k-NN) sin servidores y es un almacén de vectores compatible con Bedrock Knowledge Bases. Glacier es archivo en frío, Redshift sin índices vectoriales no sirve para vecinos más cercanos y SQS es una cola.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html",
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/knn.html"
+    ]
+  },
+  {
+    "id": "opensearch-service-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un dominio de OpenSearch guarda 12 meses de registros, pero solo se consultan a menudo los últimos 7 días. El almacenamiento hot es muy caro. ¿Qué solución reduce el coste manteniendo los datos consultables?",
+    "opciones": [
+      "Mover los índices antiguos a UltraWarm y cold con una política de ISM.",
+      "Borrar los registros de más de 7 días.",
+      "Añadir más nodos de datos hot.",
+      "Desactivar las réplicas en todos los índices."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "UltraWarm y cold guardan datos de solo lectura respaldados en S3 a una fracción del coste, y las políticas ISM los mueven automáticamente por antigüedad. Borrar incumple el requisito, más nodos hot suben el coste y quitar réplicas pone en riesgo la disponibilidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ultrawarm.html"
+    ]
+  },
+  {
+    "id": "opensearch-service-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación guarda sus datos en DynamoDB y ahora necesita búsquedas de texto completo sobre ellos, sin construir ni mantener un proceso ETL. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "La integración zero-ETL de DynamoDB con Amazon OpenSearch Service.",
+      "Operaciones Scan con FilterExpression.",
+      "Un GSI por cada palabra.",
+      "Exportar la tabla a Redshift cada noche."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La integración zero-ETL mantiene sincronizados los datos de DynamoDB en OpenSearch para búsquedas de texto completo. Un Scan con filtros es lento y caro, los GSI no hacen búsqueda de texto y una exportación nocturna a Redshift ni es texto completo ni es inmediata.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
+    ]
+  },
+  {
+    "id": "opensearch-service-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador quiere que sus funciones Lambda envíen registros a un dominio de OpenSearch de forma fiable y por lotes, sin escribir el código de reintentos. ¿Qué opción es la más sencilla?",
+    "opciones": [
+      "Suscribir los grupos de registros de CloudWatch Logs a una canalización de Amazon Data Firehose u OpenSearch Ingestion con destino OpenSearch.",
+      "Hacer que cada función escriba directamente en OpenSearch en cada invocación.",
+      "Guardar los registros en DynamoDB y copiarlos a mano.",
+      "Enviar los registros por correo con SES."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Firehose u OpenSearch Ingestion agrupan, reintentan y entregan los datos a OpenSearch sin código propio. Escribir desde cada invocación añade latencia y gestión de errores, y las otras dos opciones no tienen sentido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
+    ]
+  },
+  {
+    "id": "opensearch-service-007",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Un dominio de OpenSearch contiene índices de varios clientes y cada aplicación solo debe ver sus documentos y algunos campos. ¿Qué DOS elementos lo permiten? (Elige 2.)",
+    "opciones": [
+      "Fine-grained access control con roles por índice y seguridad a nivel de documento y de campo.",
+      "Asignar roles de IAM a esos roles de OpenSearch para autenticar a cada aplicación.",
+      "Un security group distinto por índice.",
+      "Desactivar HTTPS para simplificar la autenticación.",
+      "Un dominio público sin política de acceso."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Fine-grained access control permite restringir por índice, documento y campo, y asignar roles de IAM a esos roles de OpenSearch para autenticar a cada aplicación. Los security groups funcionan a nivel de dominio, no de índice, y desactivar HTTPS o abrir el dominio reduce la seguridad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/fgac.html"
+    ]
+  },
+  {
+    "id": "opensearch-service-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un asistente interno con RAG recibe consultas solo en horario laboral y el equipo no quiere pagar capacidad de búsqueda vectorial de noche ni gestionar clústeres. ¿Qué opción es la más adecuada?",
+    "opciones": [
+      "OpenSearch Serverless con una colección de búsqueda vectorial NextGen y mínimo de 0 OCU.",
+      "Un dominio de OpenSearch con nodos reservados de 3 años.",
+      "Un dominio de OpenSearch con UltraWarm para los vectores.",
+      "Guardar los vectores en ElastiCache for Memcached."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La generación NextGen de OpenSearch Serverless permite bajar a cero OCU tras un periodo de inactividad y vuelve a escalar con la siguiente petición, sin clústeres que gestionar. Los nodos reservados pagan capacidad continua, UltraWarm no es para índices vectoriales en caliente y Memcached no ofrece búsqueda vectorial.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html"
+    ]
+  },
+  {
+    "id": "opensearch-service-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un dominio de OpenSearch crítico debe seguir atendiendo búsquedas sin perder capacidad si cae una zona de disponibilidad completa. ¿Qué configuración es la adecuada?",
+    "opciones": [
+      "Multi-AZ con espera (standby) en tres zonas.",
+      "Un único nodo de datos grande en una zona.",
+      "Dos zonas sin réplicas.",
+      "Instantáneas manuales diarias en S3."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Multi-AZ con espera reparte el dominio en tres zonas con una en espera, de modo que ante un fallo de zona conmuta sin reducir la capacidad. Un nodo o dos zonas sin réplicas pierden datos o capacidad, y las instantáneas sirven para restaurar, no para seguir en servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html"
+    ]
+  }
+]

@@ -1,0 +1,202 @@
+[
+  {
+    "id": "eks-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa ejecuta Kubernetes en su centro de datos y quiere llevarlo a AWS sin gestionar el plano de control. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "Amazon EKS.",
+      "Amazon ECS.",
+      "AWS Elastic Beanstalk.",
+      "Amazon Lightsail."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EKS es el servicio de Kubernetes gestionado: AWS opera el plano de control y las aplicaciones siguen usando la API de Kubernetes. ECS es un orquestador propio de AWS, y Elastic Beanstalk y Lightsail no ejecutan Kubernetes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
+    ]
+  },
+  {
+    "id": "eks-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "En Amazon EKS, ¿qué parte opera y protege AWS según el modelo de responsabilidad compartida?",
+    "opciones": [
+      "El plano de control de Kubernetes.",
+      "Las imágenes de contenedor de la aplicación.",
+      "Los permisos RBAC que se conceden a los usuarios.",
+      "El código de las aplicaciones desplegadas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS gestiona y protege el plano de control (API server y etcd) en varias zonas. Las imágenes, el código y la configuración de acceso de Kubernetes son responsabilidad del cliente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
+    ]
+  },
+  {
+    "id": "eks-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un equipo de ciencia de datos ya usa herramientas del ecosistema Kubernetes (como Kubeflow o Ray) para entrenar modelos y quiere ejecutarlas en AWS con GPU. ¿Qué servicio encaja?",
+    "opciones": [
+      "Amazon EKS con nodos de GPU.",
+      "Amazon Comprehend.",
+      "Amazon Rekognition.",
+      "AWS Glue DataBrew."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EKS ejecuta Kubernetes estándar, así que las herramientas del ecosistema funcionan, y admite nodos con GPU. Comprehend y Rekognition son servicios de IA ya entrenados y DataBrew prepara datos sin código.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
+    ]
+  },
+  {
+    "id": "eks-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "En un clúster de EKS, un pod debe leer de DynamoDB, pero los demás pods del mismo nodo no. ¿Cuál es la forma recomendada de darle permisos?",
+    "opciones": [
+      "Añadir el permiso al rol de IAM del nodo.",
+      "Asociar un rol de IAM a la cuenta de servicio del pod con EKS Pod Identity.",
+      "Guardar claves de acceso en un Secret de Kubernetes.",
+      "Abrir el security group del nodo hacia DynamoDB."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Pod Identity (o IRSA) vincula un rol de IAM a una cuenta de servicio concreta, así solo los pods que la usan reciben esos permisos. El rol del nodo lo heredarían todos los pods, las claves de acceso son credenciales de larga duración y los security groups no conceden permisos de API.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html"
+    ]
+  },
+  {
+    "id": "eks-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un clúster de EKS tiene nodos infrautilizados porque se dimensionaron para los picos. Se quiere que los nodos se ajusten a los pods pendientes y aprovechen instancias Spot. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Karpenter (o EKS Auto Mode, que lo integra).",
+      "Aumentar el tamaño fijo del grupo de nodos.",
+      "Horizontal Pod Autoscaler únicamente.",
+      "Pasar el plano de control a otra región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Karpenter lanza nodos del tipo y tamaño adecuados según los pods pendientes, consolida los infrautilizados y puede usar Spot; EKS Auto Mode lo incluye gestionado. Un tamaño fijo no ajusta nada, el HPA solo cambia el número de pods y el plano de control no influye en los nodos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/automode.html"
+    ]
+  },
+  {
+    "id": "eks-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un desarrollador empaqueta su aplicación con charts de Helm y la despliega en Kubernetes en local. ¿Qué servicio de AWS le permite reutilizar esos charts sin cambios?",
+    "opciones": [
+      "Amazon EKS.",
+      "Amazon ECS.",
+      "AWS App Runner.",
+      "AWS Elastic Beanstalk."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EKS ofrece la API estándar de Kubernetes, así que los charts de Helm y los manifiestos funcionan igual. ECS, App Runner y Elastic Beanstalk tienen sus propios formatos de despliegue.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html"
+    ]
+  },
+  {
+    "id": "eks-007",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "¿Qué DOS mecanismos permiten que el código de un pod en EKS obtenga credenciales temporales de AWS sin claves de larga duración? (Elige 2.)",
+    "opciones": [
+      "EKS Pod Identity.",
+      "Roles de IAM para cuentas de servicio (IRSA).",
+      "Claves de acceso de un usuario IAM en un ConfigMap.",
+      "El usuario raíz de la cuenta.",
+      "Contraseñas de la consola en variables de entorno."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Pod Identity e IRSA entregan credenciales temporales asociadas a la cuenta de servicio del pod. Las claves en un ConfigMap son de larga duración y quedan expuestas, y usar el usuario raíz o contraseñas de consola es una mala práctica grave.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html"
+    ]
+  },
+  {
+    "id": "eks-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa con varios equipos quiere una plataforma común de Kubernetes con la mínima operación de nodos, incluidos parches, escalado y actualizaciones de la AMI. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "EKS con nodos autogestionados.",
+      "EKS Auto Mode.",
+      "Kubernetes instalado en EC2 con kOps.",
+      "ECS sobre EC2."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "EKS Auto Mode delega en AWS el aprovisionamiento, el escalado, los parches y las actualizaciones de los nodos, además de los componentes de red, almacenamiento y balanceo. Los nodos autogestionados o kOps suponen más operación, y ECS no es Kubernetes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/automode.html"
+    ]
+  },
+  {
+    "id": "eks-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una organización tiene varios clústeres de EKS en versiones de Kubernetes que ya salieron del soporte estándar y la factura del plano de control ha subido. ¿Qué acción la reduce?",
+    "opciones": [
+      "Planificar y aplicar las actualizaciones de versión para volver al soporte estándar.",
+      "Cambiar los nodos a instancias Spot.",
+      "Añadir más grupos de nodos gestionados.",
+      "Desactivar el endpoint público del clúster."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las versiones en soporte extendido tienen una tarifa por hora de clúster más alta; actualizar a una versión con soporte estándar la reduce. Spot abarata los nodos pero no el plano de control, y los grupos de nodos o el endpoint no cambian esa tarifa.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html"
+    ]
+  }
+]

@@ -420,8 +420,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Registro de auditoría de la actividad en tu cuenta de AWS: quién hizo qué llamada a la API, cuándo y desde dónde.",
     "documentacion": "https://docs.aws.amazon.com/cloudtrail/"
   },
   {
@@ -845,8 +845,8 @@
     "incluye": [
       "Amazon ECS Anywhere"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Orquestador de contenedores propio de AWS: ejecuta y escala tareas Docker sobre Fargate, EC2 o instancias gestionadas, integrado con el resto de servicios.",
     "documentacion": "https://docs.aws.amazon.com/ecs/"
   },
   {
@@ -882,8 +882,8 @@
       "Amazon EKS Anywhere",
       "Amazon EKS Distro"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Kubernetes gestionado: AWS opera el plano de control en varias zonas y tú ejecutas tus pods en nodos EC2, Fargate o con EKS Auto Mode.",
     "documentacion": "https://docs.aws.amazon.com/eks/"
   },
   {
@@ -1331,8 +1331,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Crea y controla claves criptográficas para cifrar datos en casi todos los servicios de AWS, con permisos por política y auditoría de cada uso.",
     "documentacion": "https://docs.aws.amazon.com/kms/"
   },
   {
@@ -1605,8 +1605,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Búsqueda de texto completo, análisis de registros y búsqueda vectorial gestionados con OpenSearch, en clústeres o sin servidor.",
     "documentacion": "https://docs.aws.amazon.com/opensearch-service/"
   },
   {
@@ -1888,8 +1888,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Guarda, cifra y rota automáticamente contraseñas, claves de API y otros secretos, para no tenerlos nunca en el código.",
     "documentacion": "https://docs.aws.amazon.com/secretsmanager/"
   },
   {

@@ -1,0 +1,203 @@
+[
+  {
+    "id": "cloudtrail-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Un administrador necesita saber qué usuario borró una instancia de EC2 ayer. ¿Qué servicio lo muestra?",
+    "opciones": [
+      "AWS CloudTrail.",
+      "Amazon CloudWatch Metrics.",
+      "AWS Trusted Advisor.",
+      "AWS Cost Explorer."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CloudTrail registra las llamadas a la API, como TerminateInstances, con la identidad que las hizo. Las métricas de CloudWatch no identifican usuarios, Trusted Advisor da recomendaciones y Cost Explorer analiza costes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
+    ]
+  },
+  {
+    "id": "cloudtrail-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Sin crear ningún trail, ¿durante cuánto tiempo se pueden consultar los eventos de administración en el historial de eventos de CloudTrail?",
+    "opciones": [
+      "7 días.",
+      "30 días.",
+      "90 días.",
+      "Indefinidamente."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El historial de eventos de CloudTrail guarda gratis los últimos 90 días de eventos de administración de cada región. Para conservarlos más tiempo hay que crear un trail que los entregue a S3.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
+    ]
+  },
+  {
+    "id": "cloudtrail-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "El equipo de gobierno de IA quiere auditar qué roles invocan modelos de Amazon Bedrock y cuándo, para cumplir su política interna. ¿Qué servicio lo registra?",
+    "opciones": [
+      "AWS CloudTrail.",
+      "Amazon Bedrock Guardrails.",
+      "Amazon SageMaker Clarify.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las llamadas a la API de Bedrock quedan registradas en CloudTrail con la identidad del llamante. Guardrails filtra contenido, Clarify analiza sesgos y explicabilidad de modelos y Artifact ofrece informes de cumplimiento de AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
+    ]
+  },
+  {
+    "id": "cloudtrail-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una auditoría exige registrar cada vez que alguien descarga un objeto de un bucket de S3 con datos sensibles. ¿Qué hay que configurar?",
+    "opciones": [
+      "Nada: CloudTrail lo registra por defecto.",
+      "Eventos de datos de S3 en un trail de CloudTrail para ese bucket.",
+      "AWS Config con una regla gestionada.",
+      "VPC Flow Logs en la VPC."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las lecturas de objetos (GetObject) son eventos de datos y no se registran por defecto; hay que activarlos en un trail, idealmente solo para el bucket necesario. Config registra configuraciones, no accesos, y Flow Logs no ve las operaciones de la API de S3.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html"
+    ]
+  },
+  {
+    "id": "cloudtrail-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa debe garantizar que sus registros de CloudTrail no se puedan alterar ni borrar sin que se detecte. ¿Qué DOS medidas ayudan? (Elige 2.)",
+    "opciones": [
+      "Activar la validación de integridad de los ficheros de registro.",
+      "Guardar los registros en un bucket de otra cuenta con S3 Object Lock.",
+      "Enviar los registros solo al historial de eventos.",
+      "Desactivar el cifrado para poder leerlos más rápido.",
+      "Guardar los registros en el instance store de una instancia."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "La validación de integridad permite detectar cambios o borrados, y un bucket aislado en otra cuenta con Object Lock impide modificar los ficheros. El historial de eventos solo dura 90 días, quitar el cifrado reduce la seguridad y el instance store es efímero.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html"
+    ]
+  },
+  {
+    "id": "cloudtrail-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un despliegue falla porque alguien cambió la política de un bucket, pero nadie recuerda quién. ¿Cómo lo averigua el desarrollador?",
+    "opciones": [
+      "Buscando PutBucketPolicy en el historial de eventos de CloudTrail.",
+      "Revisando las métricas de S3 en CloudWatch.",
+      "Consultando AWS X-Ray.",
+      "Mirando los registros de acceso del servidor de S3 de la aplicación."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El cambio de política es un evento de administración (PutBucketPolicy) que aparece en el historial de eventos con la identidad y la hora. Las métricas no identifican usuarios y X-Ray traza peticiones de la aplicación, no cambios de configuración.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
+    ]
+  },
+  {
+    "id": "cloudtrail-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una función Lambda debe ejecutarse cada vez que alguien crea un usuario de IAM. ¿Cuál es la forma más sencilla de lograrlo?",
+    "opciones": [
+      "Una regla de EventBridge que filtre el evento CreateUser registrado por CloudTrail y tenga la función como destino.",
+      "Una función programada que recorra los usuarios cada minuto.",
+      "Una notificación de eventos de S3 sobre el bucket de CloudTrail.",
+      "Una alarma de CloudWatch sobre la CPU."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las llamadas a la API registradas por CloudTrail llegan a EventBridge como eventos, y una regla puede invocar Lambda en cuanto ocurre CreateUser. Sondear es ineficiente y con retraso, procesar ficheros de S3 añade complejidad y una alarma de CPU no tiene relación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html"
+    ]
+  },
+  {
+    "id": "cloudtrail-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización con 200 cuentas quiere registrar la actividad de todas, incluidas las futuras, en un único bucket de la cuenta de registro, sin que las cuentas miembro puedan desactivarlo. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Un trail de organización creado desde la cuenta de administración o una administradora delegada.",
+      "Un trail en cada cuenta configurado por su equipo.",
+      "Una regla de AWS Config en cada cuenta.",
+      "CloudTrail Lake con almacenes de eventos de cuenta."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El trail de organización registra todas las cuentas, se aplica a las nuevas automáticamente y las cuentas miembro no pueden modificarlo. Los trails por cuenta pueden desactivarse o faltar, Config no registra llamadas a la API y CloudTrail Lake ya no admite clientes nuevos (y los almacenes de cuenta no cubren cuentas nuevas).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html",
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-service-availability-change.html"
+    ]
+  },
+  {
+    "id": "cloudtrail-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa guarda años de registros de CloudTrail en S3 y quiere consultarlos con SQL para investigaciones puntuales al menor coste. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Amazon Athena sobre los ficheros de CloudTrail en S3.",
+      "Cargar todo en una base de datos de RDS.",
+      "Descargar los ficheros y buscarlos a mano.",
+      "Crear una nueva cuenta de CloudTrail Lake."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Athena consulta con SQL los ficheros en S3 sin infraestructura y cobra por datos analizados, ideal para consultas puntuales. Cargar en RDS es caro y laborioso, buscar a mano no escala y CloudTrail Lake no admite clientes nuevos desde el 31 de mayo de 2026.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-service-availability-change.html"
+    ]
+  }
+]

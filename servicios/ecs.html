@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon ECS — Apuntes AWS</title>
+<meta name="description" content="Orquestador de contenedores propio de AWS: ejecuta y escala tareas Docker sobre Fargate, EC2 o instancias gestionadas, integrado con el resto de servicios. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/ecs.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon ECS — Apuntes AWS">
+<meta property="og:description" content="Orquestador de contenedores propio de AWS: ejecuta y escala tareas Docker sobre Fargate, EC2 o instancias gestionadas, integrado con el resto de servicios.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/ecs.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/ecs.svg" alt="" width="56" height="56"><span>Amazon ECS</span></h1>
+      <p class="full-name">Amazon Elastic Container Service (Amazon ECS)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=contenedores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/contenedores.svg" alt="" width="18" height="18">Contenedores <span class="cat-en">(Containers)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/ecs/" target="_blank" rel="noopener">Documentación de Amazon ECS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon ECS (<em>Elastic Container Service</em>) es el orquestador de contenedores de AWS.
+        Le dices qué imagen ejecutar, con cuánta CPU y memoria y cuántas copias quieres, y ECS las
+        arranca, las reparte, las sustituye si fallan y las conecta con balanceadores, IAM y
+        CloudWatch. No hay plano de control que gestionar ni pagar: es más sencillo que Kubernetes,
+        a cambio de ser específico de AWS.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Clúster:</strong> agrupación lógica de la capacidad donde corren las tareas.</li>
+        <li><strong>Definición de tarea:</strong> la "receta" en JSON: imágenes, CPU y memoria,
+          puertos, variables, secretos, volúmenes, registros y roles de IAM. Tiene versiones
+          (<em>revisiones</em>).</li>
+        <li><strong>Tarea:</strong> una ejecución de la definición (uno o varios contenedores
+          juntos). Útil para trabajos que terminan.</li>
+        <li><strong>Servicio:</strong> mantiene un número deseado de tareas en marcha, las registra en
+          un balanceador, hace despliegues progresivos y escala con <em>Service Auto Scaling</em>.</li>
+        <li><strong>Capacidad</strong> (mediante <em>capacity providers</em>):
+          <ul>
+            <li><strong>Fargate</strong> (y Fargate Spot): sin servidores; pagas por la CPU y la memoria
+              de cada tarea.</li>
+            <li><strong>EC2</strong>: tus instancias en un grupo de Auto Scaling; más control (GPU,
+              tipos concretos) y opciones de ahorro, pero tú las gestionas.</li>
+            <li><strong>ECS Managed Instances</strong>: instancias EC2 que AWS elige, parchea y escala
+              por ti, a medio camino entre las dos anteriores.</li>
+          </ul></li>
+        <li><strong>Dos roles de IAM distintos:</strong> el <strong>rol de ejecución de la
+          tarea</strong> lo usa el agente de ECS para descargar la imagen de ECR, leer secretos y
+          enviar registros; el <strong>rol de la tarea</strong> lo usa tu código para llamar a otros
+          servicios (S3, DynamoDB…).</li>
+        <li><strong>Red <code>awsvpc</code>:</strong> cada tarea recibe su propia interfaz de red y
+          su security group (obligatorio en Fargate).</li>
+        <li><strong>Despliegues:</strong> <em>rolling update</em> por defecto; blue/green con
+          CodeDeploy o de forma nativa; el <em>circuit breaker</em> revierte despliegues que fallan.</li>
+        <li><strong>Service Connect:</strong> descubrimiento de servicios y comunicación entre ellos
+          por nombre, con métricas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Microservicios y APIs en contenedores detrás de un Application Load Balancer.</li>
+        <li>Trabajos por lotes y tareas programadas con EventBridge Scheduler.</li>
+        <li>Modernizar aplicaciones monolíticas empaquetándolas en contenedores.</li>
+        <li>Procesamiento asíncrono que escala según la longitud de una cola SQS.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si el equipo ya trabaja con Kubernetes o necesita portabilidad entre nubes: EKS.</li>
+        <li>Funciones cortas por evento sin contenedor que mantener: Lambda.</li>
+        <li>Una web sencilla desde un repositorio sin configurar nada: App Runner o Amplify.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Orquestar contenedores de la forma más sencilla en AWS</td><td>ECS</td></tr>
+            <tr><td>Kubernetes estándar y su ecosistema</td><td>EKS</td></tr>
+            <tr><td>No gestionar servidores para los contenedores</td><td>Fargate (con ECS o EKS)</td></tr>
+            <tr><td>Guardar las imágenes</td><td>ECR</td></tr>
+            <tr><td>Contenedor web desde código o imagen, sin configurar red ni balanceador</td><td>App Runner</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>ECS en sí no cobra. Pagas la capacidad: con <strong>Fargate</strong>, la vCPU y la memoria
+        que pide cada tarea por segundo (Fargate Spot es mucho más barato y puede interrumpirse); con
+        <strong>EC2</strong>, las instancias y sus volúmenes; con <strong>Managed Instances</strong>,
+        las instancias más un cargo de gestión. Aparte, balanceadores, ECR, registros y transferencia
+        de datos. Compute Savings Plans cubre Fargate y EC2.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Un rol de tarea por servicio, con mínimo privilegio.</li>
+        <li>Secretos inyectados desde Secrets Manager o Parameter Store en la definición de tarea, no
+          en la imagen ni en variables en claro.</li>
+        <li>Security group por tarea con <code>awsvpc</code>, y tareas en subredes privadas.</li>
+        <li>Servicios repartidos en varias zonas; el programador distribuye las tareas y sustituye
+          las que fallan las comprobaciones de estado.</li>
+        <li>Escaneo de imágenes en ECR (Amazon Inspector).</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Contenedores sin gestionar servidores"</strong>: Fargate.</li>
+        <li><strong>"La tarea no puede descargar la imagen de ECR"</strong> o <strong>"no lee el secreto"</strong>: revisa el rol de ejecución.</li>
+        <li><strong>"El código del contenedor no puede escribir en S3"</strong>: revisa el rol de la tarea.</li>
+        <li><strong>"Kubernetes"</strong> en el enunciado: EKS, no ECS.</li>
+        <li><strong>"Tareas por lotes baratas que toleran interrupciones"</strong>: Fargate Spot.</li>
+        <li><strong>"Revertir solo un despliegue fallido"</strong>: circuit breaker de despliegue.</li>
+        <li><strong>"Escalar según los mensajes pendientes en SQS"</strong>: Service Auto Scaling con una métrica de la cola.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="ecs"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html" target="_blank" rel="noopener">What is Amazon Elastic Container Service?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html" target="_blank" rel="noopener">Amazon ECS task execution IAM role</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html" target="_blank" rel="noopener">Amazon ECS task IAM role</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html" target="_blank" rel="noopener">AWS Fargate for Amazon ECS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-circuit-breaker.html" target="_blank" rel="noopener">How the Amazon ECS deployment circuit breaker detects failures</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+[
+  {
+    "id": "ecs-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere ejecutar contenedores en AWS sin aprovisionar ni gestionar servidores. ¿Qué combinación es la adecuada?",
+    "opciones": [
+      "Amazon ECS con AWS Fargate.",
+      "Amazon EC2 con Docker instalado a mano.",
+      "Amazon ECR sin orquestador.",
+      "AWS Batch sobre instancias dedicadas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "ECS orquesta los contenedores y Fargate aporta la capacidad sin servidores que gestionar. Instalar Docker en EC2 obliga a gestionar las instancias, ECR solo guarda imágenes y Batch sobre instancias dedicadas sigue implicando servidores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+    ]
+  },
+  {
+    "id": "ecs-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS sirve para guardar las imágenes de contenedor que luego ejecuta Amazon ECS?",
+    "opciones": [
+      "Amazon ECR.",
+      "Amazon EBS.",
+      "AWS CodeCommit.",
+      "Amazon S3 Glacier."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Amazon ECR (Elastic Container Registry) es el registro gestionado de imágenes de contenedor. EBS son discos de bloque, CodeCommit es un servicio de repositorios de código Git y S3 Glacier es almacenamiento de archivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+    ]
+  },
+  {
+    "id": "ecs-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un equipo quiere servir un modelo de ML propio empaquetado en un contenedor, detrás de un balanceador y escalando según la carga, sin usar SageMaker AI. ¿Qué servicio de AWS lo permite?",
+    "opciones": [
+      "Amazon ECS con un servicio y Service Auto Scaling.",
+      "Amazon Comprehend.",
+      "AWS Glue.",
+      "Amazon Kendra."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "ECS ejecuta el contenedor del modelo como servicio, lo registra en el balanceador y escala el número de tareas. Comprehend y Kendra son servicios de IA con modelos propios de AWS, y Glue es para ETL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+    ]
+  },
+  {
+    "id": "ecs-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Unos trabajos nocturnos en contenedores pueden reintentarse si se interrumpen y deben costar lo mínimo, sin gestionar servidores. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "ECS con Fargate bajo demanda.",
+      "ECS con Fargate Spot.",
+      "ECS sobre instancias EC2 reservadas.",
+      "EKS con nodos bajo demanda."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Fargate Spot usa capacidad sobrante con gran descuento y encaja con trabajos tolerantes a interrupciones, sin servidores que gestionar. Fargate bajo demanda es más caro, las instancias reservadas implican gestionar EC2 y un compromiso, y EKS añade el coste del plano de control.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+    ]
+  },
+  {
+    "id": "ecs-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Dos servicios de ECS en Fargate comparten subredes, pero solo uno debe poder conectarse a la base de datos. ¿Cómo se aplica el control a nivel de red?",
+    "opciones": [
+      "Con una NACL distinta por servicio en la misma subred.",
+      "Con el modo de red awsvpc y un security group distinto por servicio, permitido en el security group de la base de datos.",
+      "Con un rol de ejecución distinto por servicio.",
+      "Con etiquetas en las definiciones de tarea."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con awsvpc cada tarea tiene su interfaz y su security group, así que la base de datos puede permitir solo el security group del servicio autorizado. Una subred solo tiene una NACL, y los roles de IAM o las etiquetas no filtran tráfico de red.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+    ]
+  },
+  {
+    "id": "ecs-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Un contenedor en ECS falla al escribir en un bucket de S3 con AccessDenied, aunque la tarea arranca bien y descarga su imagen de ECR. ¿Qué hay que revisar?",
+    "opciones": [
+      "El rol de ejecución de la tarea.",
+      "El rol de la tarea (task role).",
+      "La política del repositorio de ECR.",
+      "El security group de la tarea."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los permisos que usa el código de la aplicación vienen del rol de la tarea. El rol de ejecución solo lo usa el agente para descargar la imagen, leer secretos y enviar registros, lo cual ya funciona. ECR y el security group no causan un AccessDenied de S3.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html"
+    ]
+  },
+  {
+    "id": "ecs-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un desarrollador quiere que ECS detenga y revierta automáticamente un despliegue cuyas nuevas tareas no llegan a estar sanas. ¿Qué debe activar?",
+    "opciones": [
+      "El circuit breaker de despliegue con rollback.",
+      "Fargate Spot.",
+      "Service Connect.",
+      "Container Insights."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El circuit breaker detecta que las tareas nuevas no alcanzan un estado estable y, con rollback activado, vuelve a la última revisión que funcionaba. Fargate Spot es una opción de capacidad, Service Connect gestiona la comunicación entre servicios y Container Insights da métricas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-circuit-breaker.html"
+    ]
+  },
+  {
+    "id": "ecs-008",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migra 40 aplicaciones Java a contenedores. El equipo no conoce Kubernetes, quiere mínima operación de infraestructura pero necesita instancias con GPU para dos de ellas. ¿Qué DOS decisiones son adecuadas? (Elige 2.)",
+    "opciones": [
+      "Usar Amazon ECS como orquestador.",
+      "Ejecutar la mayoría de servicios en Fargate y los de GPU en ECS Managed Instances o en EC2 con un capacity provider.",
+      "Montar un clúster de Kubernetes autogestionado en EC2.",
+      "Reescribir todas las aplicaciones como funciones Lambda.",
+      "Ejecutar todo en Fargate, incluidas las cargas de GPU."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "ECS evita la curva de Kubernetes y permite mezclar capacity providers: Fargate para lo general y Managed Instances o EC2 para las cargas que necesitan GPU, que Fargate no ofrece. Kubernetes autogestionado añade operación, reescribir en Lambda no es una migración razonable y Fargate no tiene GPU.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+    ]
+  },
+  {
+    "id": "ecs-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un servicio de ECS procesa mensajes de una cola SQS y a menudo se queda corto en los picos o sobra capacidad por la noche. ¿Qué mejora ajusta el número de tareas a la carga real?",
+    "opciones": [
+      "Service Auto Scaling con seguimiento de objetivo sobre los mensajes pendientes por tarea.",
+      "Duplicar el número deseado de tareas de forma fija.",
+      "Aumentar la CPU de la definición de tarea.",
+      "Pasar la cola a FIFO."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Escalar con una métrica de mensajes pendientes por tarea (backlog per task) hace que el número de tareas siga a la cola. Un número fijo desperdicia capacidad o se queda corto, más CPU por tarea no añade paralelismo suficiente y FIFO no cambia la capacidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+    ]
+  }
+]

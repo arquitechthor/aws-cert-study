@@ -10,11 +10,16 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 17 de 164: los que usa Kopi
-  (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
-  CloudWatch). La tarea 0.9 sigue programada para el 27/10/2026.
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 23 de 164: los 12 que usa
+  Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
+  CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
+  EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
+  Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). Las preguntas de los 6
+  ya publicados antes de añadir CLF-C02 y DVA-C02 aún no cubren esas dos guías. La tarea 0.9 sigue
+  programada para el 27/10/2026.
 - **Próximo paso:** seguir la cola "Prioridad 0" por el primer servicio sin marcar
-  (`organizations`, `vpc`, `ec2`…), siguiendo el flujo de `CLAUDE.md`.
+  (`organizations`, `ebs`, `elb`…), siguiendo el flujo de `CLAUDE.md`. Pendiente opcional: añadir
+  preguntas de CLF-C02 y DVA-C02 a IAM, S3, Lambda, DynamoDB, CloudFront y CloudWatch.
 - **Última actualización:** 2026-09-26
 
 ---
@@ -284,9 +289,9 @@ esta lista es solo el orden de trabajo.
 - [x] `cloudfront` Amazon CloudFront — Redes y entrega de contenido (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `sqs` Amazon SQS — Integración de aplicaciones (SAA-C03, SAP-C02)
 - [ ] `sns` Amazon SNS — Integración de aplicaciones (SAA-C03, SAP-C02)
-- [ ] `kms` AWS KMS — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
+- [x] `kms` AWS KMS — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 - [x] `cloudwatch` Amazon CloudWatch — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `cloudtrail` AWS CloudTrail — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
+- [x] `cloudtrail` AWS CloudTrail — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
 
 #### Prioridad 1: resto de servicios en las tres guías (SAA + SAP + AIF) (30)
 
@@ -300,14 +305,14 @@ esta lista es solo el orden de trabajo.
 - [ ] `emr` Amazon EMR — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `glue` AWS Glue — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `lake-formation` AWS Lake Formation — Análisis (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `opensearch-service` Amazon OpenSearch Service — Análisis (SAA-C03, SAP-C02, AIF-C01)
+- [x] `opensearch-service` Amazon OpenSearch Service — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `quick` Amazon Quick — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `redshift` Amazon Redshift — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `documentdb` Amazon DocumentDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [x] `elasticache` Amazon ElastiCache — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `neptune` Amazon Neptune — Base de datos (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `ecs` Amazon ECS — Contenedores (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `eks` Amazon EKS — Contenedores (SAA-C03, SAP-C02, AIF-C01)
+- [x] `ecs` Amazon ECS — Contenedores (SAA-C03, SAP-C02, AIF-C01)
+- [x] `eks` Amazon EKS — Contenedores (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `comprehend` Amazon Comprehend — Machine learning (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `lex` Amazon Lex — Machine learning (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `polly` Amazon Polly — Machine learning (SAA-C03, SAP-C02, AIF-C01)
@@ -319,7 +324,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `artifact` AWS Artifact — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `inspector` Amazon Inspector — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `macie` Amazon Macie — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `secrets-manager` AWS Secrets Manager — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
+- [x] `secrets-manager` AWS Secrets Manager — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 
 #### Prioridad 2: SAA-C03 + SAP-C02 (64)
 
@@ -547,3 +552,4 @@ táctil de unos 56 px; en modo normal el nombre puede truncarse con el nombre co
 | 2026-09-26 | Enlace a la documentación oficial en la cabecera de cada servicio (campo `documentacion`, 153 de 155 URLs comprobadas), estado "Finalizado" por progreso local en `localStorage` (barra de progreso en el quiz, insignia en la tarjeta, filtro "Solo finalizados") y modo Unión/Intersección en el filtro de certificaciones. |
 | 2026-09-26 | Añadidas CLF-C02 (Cloud Practitioner) y DVA-C02 (Developer – Associate, se retira el 01/12/2026), más DVA-C03 como pendiente de guía: fuentes, dominios, 9 servicios nuevos (164), categoría "Habilitación de clientes", chips de las páginas publicadas regenerados. Tarea 0.10. |
 | 2026-09-26 | Las certificaciones con la guía pendiente (SAP-C03, DVA-C03) dejan de aparecer en el filtro de certificaciones; siguen en las tarjetas. |
+| 2026-09-26 | Publicados los 11 servicios pendientes de los 17 comunes a las cinco guías (EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail, OpenSearch Service), con 99 preguntas originales. Datos contrastados con la documentación actual: Aurora hasta 256 TiB y Serverless v2 a 0 ACU, réplicas de RDS (15; 5 en Oracle/SQL Server; 3 en Db2), rotación de KMS de 90 a 2560 días, CloudTrail Lake cerrado a clientes nuevos desde el 31/05/2026, OpenSearch Serverless NextGen con escala a cero, ECS Managed Instances y EKS Auto Mode. |

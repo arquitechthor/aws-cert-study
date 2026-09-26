@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon EKS — Apuntes AWS</title>
+<meta name="description" content="Kubernetes gestionado: AWS opera el plano de control en varias zonas y tú ejecutas tus pods en nodos EC2, Fargate o con EKS Auto Mode. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/eks.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon EKS — Apuntes AWS">
+<meta property="og:description" content="Kubernetes gestionado: AWS opera el plano de control en varias zonas y tú ejecutas tus pods en nodos EC2, Fargate o con EKS Auto Mode.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/eks.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/eks.svg" alt="" width="56" height="56"><span>Amazon EKS</span></h1>
+      <p class="full-name">Amazon Elastic Kubernetes Service (Amazon EKS)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=contenedores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/contenedores.svg" alt="" width="18" height="18">Contenedores <span class="cat-en">(Containers)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/eks/" target="_blank" rel="noopener">Documentación de Amazon EKS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon EKS (<em>Elastic Kubernetes Service</em>) ejecuta Kubernetes estándar y certificado
+        sin que tengas que instalar ni mantener su <strong>plano de control</strong> (API server,
+        etcd, programador): AWS lo reparte en varias zonas de disponibilidad, lo parchea y lo escala.
+        Tus aplicaciones se despliegan con las herramientas habituales de Kubernetes
+        (<code>kubectl</code>, Helm, manifiestos YAML), así que son portables a otros entornos
+        Kubernetes.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Plano de control gestionado:</strong> se paga por hora por clúster; AWS lo mantiene
+          disponible en tres zonas.</li>
+        <li><strong>Opciones para el plano de datos</strong> (dónde corren los pods):
+          <ul>
+            <li><strong>EKS Auto Mode:</strong> AWS aprovisiona, escala, parchea y actualiza los nodos, e
+              incluye el balanceo de carga, el almacenamiento en bloque y la red.</li>
+            <li><strong>Grupos de nodos gestionados:</strong> instancias EC2 en un grupo de Auto Scaling
+              que EKS ayuda a crear y actualizar.</li>
+            <li><strong>Nodos autogestionados:</strong> control total, toda la operación es tuya.</li>
+            <li><strong>Fargate:</strong> cada pod en su propio entorno sin servidores (sin DaemonSets
+              ni GPU).</li>
+          </ul></li>
+        <li><strong>Escalado:</strong> el <em>Horizontal Pod Autoscaler</em> cambia el número de pods;
+          <strong>Karpenter</strong> (o Cluster Autoscaler) añade y quita nodos según los pods
+          pendientes.</li>
+        <li><strong>Permisos de los pods:</strong> <strong>EKS Pod Identity</strong> (recomendado)
+          o IRSA (roles de IAM para cuentas de servicio con OIDC) asocian un rol de IAM a una cuenta
+          de servicio de Kubernetes, sin usar el rol del nodo.</li>
+        <li><strong>Acceso al clúster:</strong> <em>access entries</em> de EKS vinculan usuarios y
+          roles de IAM con permisos de Kubernetes (sustituyen al antiguo ConfigMap
+          <code>aws-auth</code>).</li>
+        <li><strong>Complementos (add-ons):</strong> VPC CNI (cada pod recibe una IP de la VPC),
+          CoreDNS, kube-proxy, controladores de EBS o EFS, AWS Load Balancer Controller.</li>
+        <li><strong>Versiones:</strong> cada versión de Kubernetes tiene soporte estándar y luego un
+          soporte extendido de pago; hay que planificar las actualizaciones.</li>
+        <li><strong>EKS Anywhere</strong> y EKS en Outposts para ejecutar clústeres fuera de las
+          regiones de AWS.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Organizaciones que ya usan Kubernetes y quieren dejar de operar el plano de control.</li>
+        <li>Plataformas internas multiequipo con espacios de nombres, políticas y GitOps.</li>
+        <li>Entrenamiento e inferencia de ML con GPU y herramientas del ecosistema (Kubeflow, Ray).</li>
+        <li>Estrategias híbridas o multinube con la misma API en todas partes.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Equipos pequeños sin experiencia en Kubernetes que solo quieren ejecutar contenedores:
+          ECS es más sencillo y no cobra plano de control.</li>
+        <li>Funciones por evento: Lambda.</li>
+        <li>Una sola aplicación web sin necesidad de orquestar: App Runner o Elastic Beanstalk.</li>
+      </ul>
+
+      <h2 id="comparativa">ECS frente a EKS</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>ECS</th><th>EKS</th></tr></thead>
+          <tbody>
+            <tr><td>API</td><td>Propia de AWS</td><td>Kubernetes estándar</td></tr>
+            <tr><td>Coste del plano de control</td><td>Gratis</td><td>Por hora y por clúster</td></tr>
+            <tr><td>Curva de aprendizaje</td><td>Baja</td><td>Alta</td></tr>
+            <tr><td>Portabilidad</td><td>Solo AWS</td><td>Cualquier Kubernetes</td></tr>
+            <tr><td>Sin servidores</td><td>Fargate</td><td>Fargate o Auto Mode</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga una tarifa por hora por cada clúster (más alta si la versión está en soporte
+        extendido), más la capacidad donde corren los pods: instancias EC2 y volúmenes, vCPU y memoria
+        de Fargate, o el cargo de gestión de Auto Mode sobre las instancias. Aparte, balanceadores,
+        transferencia de datos y NAT. Spot y Savings Plans reducen el coste de los nodos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Plano de control replicado en varias zonas por AWS; los nodos, repartidos en varias zonas
+          por ti (o por Auto Mode).</li>
+        <li>Pod Identity o IRSA para dar a cada aplicación solo sus permisos, nunca el rol del nodo.</li>
+        <li>Endpoint del API server público, privado o ambos; con acceso privado solo se llega desde la VPC.</li>
+        <li>Cifrado de los secretos de Kubernetes con una clave de KMS.</li>
+        <li>Security groups por pod y políticas de red de Kubernetes para aislar el tráfico.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Kubernetes"</strong>, <strong>"Helm"</strong> o <strong>"kubectl"</strong> en el enunciado: EKS.</li>
+        <li><strong>"Un pod necesita permisos de AWS"</strong>: Pod Identity o IRSA, no el rol del nodo.</li>
+        <li><strong>"Kubernetes sin gestionar nodos"</strong>: EKS Auto Mode o Fargate.</li>
+        <li><strong>"Añadir nodos rápido y con el tipo de instancia justo"</strong>: Karpenter.</li>
+        <li><strong>"Clústeres en el propio centro de datos con la misma herramienta"</strong>: EKS Anywhere.</li>
+        <li><strong>"Contenedores con la menor sobrecarga operativa y sin Kubernetes"</strong>: ECS con Fargate.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="eks"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html" target="_blank" rel="noopener">What is Amazon EKS?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/automode.html" target="_blank" rel="noopener">Automate cluster infrastructure with EKS Auto Mode</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html" target="_blank" rel="noopener">Learn how EKS Pod Identity grants pods access to AWS services</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html" target="_blank" rel="noopener">Understand the Kubernetes version lifecycle on EKS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

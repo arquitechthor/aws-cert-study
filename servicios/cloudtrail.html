@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CloudTrail — Apuntes AWS</title>
+<meta name="description" content="Registro de auditoría de la actividad en tu cuenta de AWS: quién hizo qué llamada a la API, cuándo y desde dónde. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cloudtrail.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CloudTrail — Apuntes AWS">
+<meta property="og:description" content="Registro de auditoría de la actividad en tu cuenta de AWS: quién hizo qué llamada a la API, cuándo y desde dónde.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cloudtrail.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/cloudtrail.svg" alt="" width="56" height="56"><span>AWS CloudTrail</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cloudtrail/" target="_blank" rel="noopener">Documentación de AWS CloudTrail ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS CloudTrail registra las acciones que se hacen en tu cuenta, ya sea desde la consola, la
+        CLI, los SDK o los propios servicios de AWS. Cada evento indica quién hizo la llamada (usuario,
+        rol, servicio), qué acción, sobre qué recurso, cuándo, desde qué IP y si tuvo éxito. Es la base
+        de la <strong>auditoría</strong>, la investigación de incidentes y el cumplimiento normativo.
+        Está activo por defecto: el <strong>historial de eventos</strong> guarda los últimos
+        <strong>90 días</strong> de eventos de administración sin configurar nada.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Tipos de eventos:</strong>
+          <ul>
+            <li><strong>De administración</strong> (plano de control): crear una instancia, cambiar una
+              política, iniciar sesión en la consola. Se registran por defecto.</li>
+            <li><strong>De datos</strong> (plano de datos): <code>GetObject</code> de S3, invocaciones de
+              Lambda, operaciones de elementos en DynamoDB. Son muy numerosos, <strong>no se registran
+              por defecto</strong> y tienen coste.</li>
+            <li><strong>De actividad de red:</strong> llamadas a la API que pasan por un endpoint de VPC.</li>
+            <li><strong>Insights:</strong> detección de actividad inusual, como un pico anómalo de llamadas.</li>
+          </ul></li>
+        <li><strong>Registro (trail):</strong> envía los eventos de forma continua a un bucket de
+          <strong>S3</strong> para guardarlos más allá de 90 días, y opcionalmente a
+          <strong>CloudWatch Logs</strong> para crear filtros de métricas y alarmas. Puede cubrir todas
+          las regiones.</li>
+        <li><strong>Registro de organización:</strong> creado en la cuenta de administración (o en una
+          administradora delegada), registra todas las cuentas de AWS Organizations y los miembros no
+          pueden desactivarlo.</li>
+        <li><strong>Validación de integridad de los ficheros de registro:</strong> ficheros de
+          resumen firmados que permiten demostrar que nadie modificó ni borró los registros.</li>
+        <li><strong>CloudTrail Lake:</strong> almacén de eventos consultable con SQL.
+          <strong>Desde el 31 de mayo de 2026 no admite clientes nuevos</strong>; quienes ya lo usaban
+          pueden seguir. Para consultar registros, la alternativa es Athena sobre los ficheros en S3 o
+          CloudWatch.</li>
+        <li><strong>Retraso:</strong> los eventos llegan normalmente en unos minutos; CloudTrail no es
+          un sistema de tiempo real.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Averiguar quién borró un recurso o cambió un security group.</li>
+        <li>Guardar pruebas de auditoría durante años para normativas (PCI DSS, ISO…).</li>
+        <li>Alertar cuando alguien usa el usuario raíz o desactiva el propio CloudTrail.</li>
+        <li>Investigar incidentes de seguridad (lo usan también GuardDuty y Detective).</li>
+        <li>Reaccionar a llamadas concretas con reglas de EventBridge.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para métricas de rendimiento o registros de la aplicación: CloudWatch.</li>
+        <li>Para ver el historial de configuración de un recurso y si cumple reglas: AWS Config.</li>
+        <li>Para el tráfico de red IP: VPC Flow Logs.</li>
+        <li>Para detectar amenazas automáticamente: GuardDuty (que analiza, entre otros, los eventos de CloudTrail).</li>
+      </ul>
+
+      <h2 id="comparativa">CloudTrail, Config y CloudWatch</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Quién hizo este cambio y cuándo?</td><td>CloudTrail</td></tr>
+            <tr><td>¿Cómo estaba configurado el recurso el martes y cumple la norma?</td><td>AWS Config</td></tr>
+            <tr><td>¿Cuánta CPU usa y qué dicen los registros de la aplicación?</td><td>CloudWatch</td></tr>
+            <tr><td>¿Qué tráfico de red se aceptó o rechazó?</td><td>VPC Flow Logs</td></tr>
+            <tr><td>¿Hay actividad maliciosa?</td><td>GuardDuty</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El historial de 90 días de eventos de administración es gratuito, y también la primera copia
+        de los eventos de administración que un trail entrega a S3. Se pagan las copias adicionales,
+        los eventos de datos y de actividad de red (por cada 100 000 eventos), Insights, y aparte el
+        almacenamiento en S3, CloudWatch Logs y el cifrado con KMS.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Bucket de registros en una cuenta separada (de registro o de seguridad), con política
+          restrictiva y S3 Object Lock para evitar borrados.</li>
+        <li>Cifrado de los ficheros con SSE-KMS y validación de integridad activada.</li>
+        <li>Trail de organización y multirregión para no dejar regiones ni cuentas sin registrar.</li>
+        <li>Alarmas cuando alguien detiene o modifica un trail.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"¿Quién hizo…?"</strong> o <strong>"auditar llamadas a la API"</strong>: CloudTrail.</li>
+        <li><strong>"Guardar la auditoría más de 90 días"</strong>: un trail hacia S3.</li>
+        <li><strong>"Registrar quién descarga objetos de S3"</strong>: eventos de datos (no están activos por defecto).</li>
+        <li><strong>"Demostrar que los registros no se han alterado"</strong>: validación de integridad.</li>
+        <li><strong>"Todas las cuentas de la organización, sin que puedan desactivarlo"</strong>: trail de organización.</li>
+        <li><strong>"Alarma cuando se usa el usuario raíz"</strong>: CloudTrail hacia CloudWatch Logs con filtro de métrica, o EventBridge.</li>
+        <li><strong>"Historial de configuración de un recurso"</strong>: AWS Config, no CloudTrail.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cloudtrail"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html" target="_blank" rel="noopener">What is AWS CloudTrail?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html" target="_blank" rel="noopener">Logging data events</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-trail-organization.html" target="_blank" rel="noopener">Creating a trail for an organization</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html" target="_blank" rel="noopener">Validating CloudTrail log file integrity</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-service-availability-change.html" target="_blank" rel="noopener">CloudTrail Lake availability change</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

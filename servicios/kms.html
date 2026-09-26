@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS KMS — Apuntes AWS</title>
+<meta name="description" content="Crea y controla claves criptográficas para cifrar datos en casi todos los servicios de AWS, con permisos por política y auditoría de cada uso. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/kms.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS KMS — Apuntes AWS">
+<meta property="og:description" content="Crea y controla claves criptográficas para cifrar datos en casi todos los servicios de AWS, con permisos por política y auditoría de cada uso.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/kms.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/kms.svg" alt="" width="56" height="56"><span>AWS KMS</span></h1>
+      <p class="full-name">AWS Key Management Service (AWS KMS)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/kms/" target="_blank" rel="noopener">Documentación de AWS KMS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS KMS (<em>Key Management Service</em>) crea, guarda y usa claves criptográficas en
+        módulos de seguridad hardware (HSM) validados, sin que el material de la clave salga nunca en
+        claro. Casi todos los servicios de AWS (S3, EBS, RDS, DynamoDB, Lambda, Secrets Manager…) se
+        integran con KMS para el cifrado en reposo, y cada uso de una clave queda registrado en
+        CloudTrail. Tú decides quién puede usar cada clave y para qué.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Tipos de clave según quién la gestiona:</strong>
+          <ul>
+            <li><strong>Gestionadas por el cliente:</strong> las creas tú; controlas la política, la
+              rotación, la activación y el borrado. Se pueden compartir con otras cuentas.</li>
+            <li><strong>Gestionadas por AWS</strong> (<code>aws/s3</code>, <code>aws/ebs</code>…): las
+              crea un servicio en tu cuenta; no puedes cambiar su política ni compartirlas; rotan cada año.</li>
+            <li><strong>Propiedad de AWS:</strong> las usa AWS internamente en muchas cuentas; no las
+              ves ni auditas.</li>
+          </ul></li>
+        <li><strong>Simétricas</strong> (AES-256, la opción por defecto, el material nunca sale de
+          KMS), <strong>asimétricas</strong> (RSA o ECC, para firmar o cifrar fuera de AWS con la clave
+          pública) y <strong>HMAC</strong>.</li>
+        <li><strong>Cifrado de sobre (<em>envelope encryption</em>):</strong> KMS cifra directamente
+          como máximo <strong>4 KB</strong>. Para datos mayores se pide una <strong>clave de datos</strong>
+          (<code>GenerateDataKey</code>): cifras los datos localmente con ella y guardas su copia
+          cifrada junto a los datos. Es lo que hacen los servicios de AWS por dentro.</li>
+        <li><strong>Política de clave:</strong> el control de acceso principal. Sin una política que lo
+          permita, ni siquiera un administrador de IAM puede usar la clave. Las
+          <strong>concesiones (grants)</strong> dan permisos temporales y delegables.</li>
+        <li><strong>Rotación automática:</strong> para claves simétricas gestionadas por el cliente,
+          con periodo configurable de 90 a 2560 días (365 por defecto), y rotación bajo demanda. Las
+          versiones antiguas se conservan para descifrar lo ya cifrado.</li>
+        <li><strong>Borrado programado:</strong> espera obligatoria de 7 a 30 días; lo cifrado con una
+          clave borrada es irrecuperable. Desactivar la clave es la alternativa reversible.</li>
+        <li><strong>Claves multirregión:</strong> réplicas con el mismo material en varias regiones
+          para cifrar en una y descifrar en otra sin volver a cifrar.</li>
+        <li><strong>Almacenes de claves personalizados:</strong> respaldados por un clúster de
+          CloudHSM propio o por un gestor de claves externo (XKS).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Cifrado en reposo de S3, EBS, RDS, DynamoDB y demás, con claves bajo tu control.</li>
+        <li>Cumplir normativas que exigen rotación, separación de funciones y auditoría del uso.</li>
+        <li>Cifrar datos en la aplicación con el SDK de cifrado y claves de datos.</li>
+        <li>Firmar y verificar documentos o tokens con claves asimétricas.</li>
+        <li>Compartir datos cifrados con otra cuenta permitiéndole usar la clave.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si necesitas un HSM de un solo inquilino con control exclusivo y acceso por PKCS#11 o JCE:
+          CloudHSM.</li>
+        <li>Para guardar contraseñas o claves de API: Secrets Manager (que usa KMS por debajo).</li>
+        <li>Para certificados TLS: AWS Certificate Manager.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Claves gestionadas e integradas con los servicios de AWS</td><td>KMS</td></tr>
+            <tr><td>HSM dedicado bajo tu control exclusivo</td><td>CloudHSM</td></tr>
+            <tr><td>Guardar y rotar secretos (contraseñas, tokens)</td><td>Secrets Manager</td></tr>
+            <tr><td>Certificados SSL/TLS</td><td>ACM</td></tr>
+            <tr><td>Parámetros de configuración, algunos cifrados</td><td>Systems Manager Parameter Store</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Cada clave gestionada por el cliente tiene una cuota mensual (y cada versión rotada añade
+        coste, con un tope), y se paga por cada petición a la API (cifrar, descifrar, generar claves de
+        datos), con un nivel gratuito mensual. Las claves gestionadas por AWS no tienen cuota mensual,
+        pero sus peticiones sí cuentan. En S3, las <em>S3 Bucket Keys</em> reducen mucho las llamadas a
+        KMS y, por tanto, su coste.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El material de las claves nunca sale de los HSM en claro.</li>
+        <li>Políticas de clave para separar a quien administra la clave de quien la usa.</li>
+        <li>Condiciones como <code>kms:ViaService</code> para permitir el uso solo a través de un servicio.</li>
+        <li>Cada llamada queda registrada en CloudTrail.</li>
+        <li>Servicio regional y altamente disponible; claves multirregión para recuperación entre regiones.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Controlar la rotación, la política o compartir la clave con otra cuenta"</strong>: clave gestionada por el cliente, no gestionada por AWS.</li>
+        <li><strong>"Cifrar un fichero de más de 4 KB con KMS"</strong>: cifrado de sobre con <code>GenerateDataKey</code>.</li>
+        <li><strong>"Borrar la clave de inmediato"</strong>: no se puede; espera de 7 a 30 días (desactivarla sí es inmediato).</li>
+        <li><strong>"HSM de un solo inquilino"</strong> o <strong>"FIPS 140 nivel 3 bajo control exclusivo"</strong>: CloudHSM.</li>
+        <li><strong>"AccessDenied al descifrar aunque IAM lo permite"</strong>: falta el permiso en la política de la clave.</li>
+        <li><strong>"Descifrar en otra región sin recifrar"</strong>: clave multirregión.</li>
+        <li><strong>"Demasiadas llamadas a KMS desde S3"</strong>: S3 Bucket Keys.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="kms"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/overview.html" target="_blank" rel="noopener">AWS Key Management Service</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html" target="_blank" rel="noopener">AWS KMS concepts</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html" target="_blank" rel="noopener">Rotate AWS KMS keys</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html" target="_blank" rel="noopener">Key policies in AWS KMS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html" target="_blank" rel="noopener">Delete an AWS KMS key</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

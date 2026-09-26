@@ -1,0 +1,203 @@
+[
+  {
+    "id": "kms-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué servicio de AWS permite crear y controlar las claves que se usan para cifrar datos en servicios como S3 o EBS?",
+    "opciones": [
+      "AWS KMS.",
+      "AWS Shield.",
+      "Amazon Inspector.",
+      "AWS WAF."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS KMS crea y gestiona claves criptográficas integradas con la mayoría de servicios. Shield protege frente a DDoS, Inspector busca vulnerabilidades y WAF filtra peticiones web.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html"
+    ]
+  },
+  {
+    "id": "kms-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Un auditor quiere saber quién usó una clave de KMS para descifrar datos y cuándo. ¿Dónde se consulta?",
+    "opciones": [
+      "En AWS CloudTrail.",
+      "En Amazon CloudWatch Metrics.",
+      "En AWS Trusted Advisor.",
+      "En AWS Artifact."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cada llamada a la API de KMS, incluido Decrypt, queda registrada en CloudTrail con la identidad y la hora. Las métricas de CloudWatch no identifican a las personas, Trusted Advisor da recomendaciones y Artifact ofrece informes de cumplimiento de AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html"
+    ]
+  },
+  {
+    "id": "kms-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una empresa debe demostrar que controla las claves con las que se cifran los datos de entrenamiento y los artefactos de sus modelos en SageMaker AI y S3, y poder revocar el acceso. ¿Qué opción cumple el requisito?",
+    "opciones": [
+      "Claves de KMS gestionadas por el cliente.",
+      "Claves propiedad de AWS.",
+      "Cifrado por defecto sin especificar clave.",
+      "Políticas de bucket públicas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con una clave gestionada por el cliente, la empresa controla su política, puede desactivarla para revocar el acceso y audita su uso. Las claves propiedad de AWS o el cifrado por defecto no dan ese control, y un bucket público va en contra del requisito.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html"
+    ]
+  },
+  {
+    "id": "kms-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa debe cifrar volúmenes EBS con una clave cuya rotación anual controle ella, y compartir instantáneas cifradas con otra cuenta. ¿Qué tipo de clave necesita?",
+    "opciones": [
+      "La clave gestionada por AWS aws/ebs.",
+      "Una clave de KMS gestionada por el cliente.",
+      "Una clave propiedad de AWS.",
+      "Una clave SSH de EC2."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Solo las claves gestionadas por el cliente permiten controlar la rotación y editar la política para que otra cuenta use la clave y así lea las instantáneas compartidas. La clave aws/ebs no se puede compartir ni modificar, las propiedad de AWS no se ven y una clave SSH no cifra volúmenes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html",
+      "https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html"
+    ]
+  },
+  {
+    "id": "kms-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un bucket con cifrado SSE-KMS recibe millones de escrituras al día y la factura de KMS es elevada. ¿Qué cambio la reduce sin renunciar a SSE-KMS?",
+    "opciones": [
+      "Activar S3 Bucket Keys.",
+      "Pasar a claves asimétricas.",
+      "Desactivar la rotación de la clave.",
+      "Crear una clave distinta por objeto."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las S3 Bucket Keys generan una clave a nivel de bucket que reduce drásticamente las llamadas a KMS. Las claves asimétricas no sirven para SSE-KMS, desactivar la rotación no reduce las peticiones y una clave por objeto multiplica los costes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html"
+    ]
+  },
+  {
+    "id": "kms-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una aplicación debe cifrar ficheros de 50 MB con una clave de KMS. ¿Cuál es el enfoque correcto?",
+    "opciones": [
+      "Llamar a Encrypt de KMS con el fichero completo.",
+      "Llamar a GenerateDataKey, cifrar el fichero localmente con la clave de datos en claro y guardar la clave de datos cifrada junto al fichero.",
+      "Dividir el fichero en trozos de 4 KB y llamar a Encrypt por cada uno.",
+      "Guardar el fichero en un bucket público con una clave en el nombre."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Encrypt admite como máximo 4 KB; para datos grandes se usa cifrado de sobre: KMS genera una clave de datos, la aplicación cifra localmente y guarda la versión cifrada de esa clave. Trocear en llamadas de 4 KB es lento y caro, y la última opción no cifra nada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html"
+    ]
+  },
+  {
+    "id": "kms-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una función Lambda con permiso kms:Decrypt en su rol de IAM recibe AccessDeniedException al descifrar con una clave gestionada por el cliente de otra cuenta. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "La política de la clave no permite el uso por ese rol o esa cuenta.",
+      "Lambda no puede usar KMS.",
+      "La clave está en rotación.",
+      "La función tiene poca memoria."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En KMS la política de la clave es obligatoria: para un uso entre cuentas, tanto la política de la clave como la de IAM deben permitirlo. Lambda sí puede usar KMS, la rotación no impide descifrar y la memoria no provoca un AccessDenied.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html"
+    ]
+  },
+  {
+    "id": "kms-008",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un equipo de seguridad central gestiona las claves de KMS de una organización y los equipos de aplicación solo deben poder usarlas para cifrar y descifrar a través de S3, sin administrarlas. ¿Qué DOS medidas lo consiguen? (Elige 2.)",
+    "opciones": [
+      "Separar en la política de la clave los administradores (gestión) de los usuarios (uso criptográfico).",
+      "Añadir la condición kms:ViaService con el servicio S3 a los permisos de uso.",
+      "Dar kms:* a todos los roles de la organización.",
+      "Usar claves gestionadas por AWS para poder compartirlas.",
+      "Programar el borrado de la clave con 7 días."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Separar funciones en la política de la clave impide que quien la usa pueda administrarla, y kms:ViaService limita el uso a peticiones que llegan a través de S3. Dar kms:* rompe el mínimo privilegio, las claves gestionadas por AWS no se pueden compartir y programar el borrado no tiene relación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html"
+    ]
+  },
+  {
+    "id": "kms-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación cifra datos en el cliente en us-east-1 y debe poder descifrarlos en eu-west-1 durante una recuperación ante desastres, sin recifrarlos ni llamar a la región original. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Claves multirregión de KMS con una réplica en eu-west-1.",
+      "Copiar la clave simétrica exportando su material.",
+      "Usar una clave gestionada por AWS en cada región.",
+      "Guardar la clave de datos en claro junto a los datos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las claves multirregión comparten el material y el identificador de clave entre regiones, así que lo cifrado en una región se descifra con la réplica en otra. El material de una clave simétrica de KMS no se puede exportar, las gestionadas por AWS son distintas en cada región y guardar la clave en claro anula el cifrado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html"
+    ]
+  }
+]

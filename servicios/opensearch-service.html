@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon OpenSearch Service — Apuntes AWS</title>
+<meta name="description" content="Búsqueda de texto completo, análisis de registros y búsqueda vectorial gestionados con OpenSearch, en clústeres o sin servidor. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/opensearch-service.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon OpenSearch Service — Apuntes AWS">
+<meta property="og:description" content="Búsqueda de texto completo, análisis de registros y búsqueda vectorial gestionados con OpenSearch, en clústeres o sin servidor.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/opensearch-service.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/opensearch-service.svg" alt="" width="56" height="56"><span>Amazon OpenSearch Service</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/opensearch-service/" target="_blank" rel="noopener">Documentación de Amazon OpenSearch Service ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon OpenSearch Service ejecuta <strong>OpenSearch</strong> (la bifurcación de código
+        abierto de Elasticsearch) y versiones antiguas de Elasticsearch, junto con
+        <strong>OpenSearch Dashboards</strong> para visualizar. Sirve para tres cosas: búsqueda de
+        texto completo con relevancia, análisis casi en tiempo real de registros y eventos, y
+        <strong>búsqueda vectorial</strong> para aplicaciones de IA generativa (RAG). Puedes usar
+        <strong>dominios</strong> (clústeres que dimensionas) u <strong>OpenSearch Serverless</strong>
+        (colecciones que escalan solas).</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Dominio:</strong> clúster gestionado con nodos de datos, nodos maestros dedicados
+          (para estabilidad) y, opcionalmente, varias zonas de disponibilidad.</li>
+        <li><strong>Índices y shards:</strong> los documentos JSON se guardan en índices divididos en
+          shards primarios y réplicas repartidos entre nodos.</li>
+        <li><strong>Niveles de almacenamiento:</strong> <em>hot</em> (discos de los nodos, rápido),
+          <strong>UltraWarm</strong> (datos de solo lectura respaldados en S3, mucho más barato) y
+          <strong>cold</strong> (desacoplado del cómputo, se adjunta cuando hay que consultarlo). Las
+          políticas ISM mueven los índices entre niveles según su antigüedad.</li>
+        <li><strong>Multi-AZ con espera (standby):</strong> tres zonas, una de ellas en espera, para
+          conmutar sin pérdida de capacidad.</li>
+        <li><strong>OpenSearch Serverless:</strong> colecciones de tipo búsqueda, series temporales o
+          búsqueda vectorial; la capacidad se mide en OCU y escala sola. La generación
+          <em>NextGen</em> puede bajar a cero OCU cuando no hay actividad.</li>
+        <li><strong>Búsqueda vectorial (k-NN):</strong> guarda embeddings y encuentra los vecinos más
+          cercanos; es uno de los almacenes de vectores de Bedrock Knowledge Bases.</li>
+        <li><strong>Ingesta:</strong> OpenSearch Ingestion (canalizaciones gestionadas), Amazon Data
+          Firehose, integraciones <em>zero-ETL</em> con DynamoDB y S3, o suscripciones de CloudWatch Logs.</li>
+        <li><strong>Seguridad detallada (<em>fine-grained access control</em>):</strong> permisos por
+          índice, documento y campo, con usuarios internos, IAM o SAML.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Buscador de un comercio electrónico con relevancia, facetas y autocompletado.</li>
+        <li>Análisis centralizado de registros de aplicaciones y de seguridad con paneles.</li>
+        <li>Observabilidad: trazas, métricas y registros en un mismo sitio.</li>
+        <li>Almacén de vectores para RAG y búsqueda semántica.</li>
+        <li>Búsqueda de texto sobre datos de DynamoDB sin montar ETL.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Como base de datos principal y transaccional: RDS, Aurora o DynamoDB.</li>
+        <li>Consultas SQL puntuales sobre registros en S3 sin mantener un clúster: Athena.</li>
+        <li>Almacén de datos analítico con SQL y JOIN complejos: Redshift.</li>
+        <li>Búsqueda empresarial en documentos con conectores y respuestas listas sin gestionar índices: Kendra.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Texto completo, relevancia y paneles en tiempo casi real</td><td>OpenSearch Service</td></tr>
+            <tr><td>SQL sin servidor sobre ficheros en S3</td><td>Athena</td></tr>
+            <tr><td>Almacén de datos para BI con SQL</td><td>Redshift</td></tr>
+            <tr><td>Búsqueda empresarial gestionada con conectores</td><td>Kendra</td></tr>
+            <tr><td>Registros y consultas sin otro servicio</td><td>CloudWatch Logs Insights</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En los dominios se paga por hora de cada nodo según su tipo (con instancias reservadas), el
+        almacenamiento EBS, UltraWarm y cold por GB, y la transferencia de datos. En Serverless se
+        pagan las OCU de indexación y de búsqueda por hora y el almacenamiento en S3 por GB. OpenSearch
+        Ingestion cobra por unidad de canalización.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Dominio dentro de una VPC (acceso privado) o público con políticas de acceso.</li>
+        <li>Cifrado en reposo con KMS, cifrado entre nodos y HTTPS obligatorio.</li>
+        <li>Fine-grained access control y autenticación con IAM, Cognito o SAML para Dashboards.</li>
+        <li>Varias zonas con réplicas o Multi-AZ con espera; instantáneas automáticas en S3.</li>
+        <li>Serverless es de alta disponibilidad por defecto.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Búsqueda de texto completo"</strong> o <strong>"búsqueda con relevancia"</strong>: OpenSearch.</li>
+        <li><strong>"Paneles casi en tiempo real sobre registros"</strong>: OpenSearch con Dashboards (ingesta con Firehose u OpenSearch Ingestion).</li>
+        <li><strong>"Consultas SQL ocasionales sobre registros en S3"</strong>: Athena, no un clúster.</li>
+        <li><strong>"Guardar meses de registros poco consultados de forma barata"</strong>: UltraWarm o cold.</li>
+        <li><strong>"Almacén de vectores para RAG"</strong>: OpenSearch Serverless (búsqueda vectorial).</li>
+        <li><strong>"Buscar en los datos de DynamoDB"</strong>: integración zero-ETL con OpenSearch.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="opensearch-service"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/what-is.html" target="_blank" rel="noopener">What is Amazon OpenSearch Service?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html" target="_blank" rel="noopener">What is Amazon OpenSearch Serverless?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ultrawarm.html" target="_blank" rel="noopener">UltraWarm storage for Amazon OpenSearch Service</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/fgac.html" target="_blank" rel="noopener">Fine-grained access control in Amazon OpenSearch Service</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/opensearch-service/latest/developerguide/knn.html" target="_blank" rel="noopener">k-Nearest Neighbor (k-NN) search in Amazon OpenSearch Service</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://kopitools.link/#sobre-mi">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
