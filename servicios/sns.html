@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon SNS — Apuntes AWS</title>
+<meta name="description" content="Mensajería pub/sub gestionada: publicas un mensaje en un tema y SNS lo entrega a todos sus suscriptores (colas, funciones, HTTP, correo, SMS o móviles). Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/sns.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon SNS — Apuntes AWS">
+<meta property="og:description" content="Mensajería pub/sub gestionada: publicas un mensaje en un tema y SNS lo entrega a todos sus suscriptores (colas, funciones, HTTP, correo, SMS o móviles).">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/sns.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/sns.svg" alt="" width="56" height="56"><span>Amazon SNS</span></h1>
+      <p class="full-name">Amazon Simple Notification Service (Amazon SNS)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=integracion-aplicaciones#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/integracion-aplicaciones.svg" alt="" width="18" height="18">Integración de aplicaciones <span class="cat-en">(Application Integration)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/sns/" target="_blank" rel="noopener">Documentación de Amazon SNS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon SNS (<em>Simple Notification Service</em>) es un servicio de mensajería de tipo
+        <strong>publicación/suscripción</strong> (<em>pub/sub</em>). Un productor publica un mensaje
+        en un <strong>tema</strong> (<em>topic</em>) y SNS lo entrega, casi al instante, a
+        <strong>todos</strong> los suscriptores de ese tema. Sirve tanto para comunicar
+        aplicaciones entre sí (A2A) como para avisar a personas (A2P) por correo, SMS <span class="sigla">(<em>Short Message Service</em>: mensajes de texto al móvil)</span> o notificaciones
+        móviles. SNS <strong>empuja</strong> los mensajes (modelo <em>push</em>) y no los guarda: si
+        un suscriptor no está disponible, reintenta durante un tiempo.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Tema y suscripciones:</strong> un tema puede tener muchas suscripciones de
+          distintos tipos: colas <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, funciones <a href="lambda.html">Lambda</a>, endpoints HTTP/HTTPS, <a href="../servicio.html?id=data-firehose">Amazon Data Firehose</a>,
+          correo electrónico, SMS y notificaciones push a móviles.</li>
+        <li><strong>Fan-out:</strong> publicar una vez en un tema con varias colas SQS suscritas para
+          que cada sistema reciba su copia y la procese a su ritmo. Es el patrón SNS + SQS más
+          preguntado.</li>
+        <li><strong>Políticas de filtrado:</strong> cada suscripción puede recibir solo los mensajes
+          que le interesan, filtrando por atributos del mensaje o por el contenido del JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span>, sin
+          que el publicador tenga que saber quién escucha.</li>
+        <li><strong>Temas estándar vs FIFO:</strong> los estándar tienen rendimiento casi ilimitado y
+          entrega al menos una vez sin orden garantizado; los FIFO (<em>First In, First Out</em>)
+          mantienen el orden y evitan duplicados, y solo admiten colas SQS (FIFO o estándar) como
+          suscriptores. Los temas FIFO pueden archivar mensajes y volver a enviarlos (<em>replay</em>).</li>
+        <li><strong>Reintentos y DLQ <span class="sigla">(<em>Dead-Letter Queue</em>: cola donde acaban los mensajes que fallan)</span>:</strong> si un suscriptor falla, SNS reintenta según su política
+          de entrega; lo que no se entrega puede ir a una cola de mensajes fallidos de SQS asociada a
+          la suscripción.</li>
+        <li><strong>Tamaño:</strong> hasta 256 KB por defecto, ampliable a <strong>1 MiB</strong>
+          configurando el atributo <code>MaximumMessageSize</code> del tema (para suscripciones SQS,
+          Lambda y Firehose). Para más, se guarda el contenido en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> y se envía la referencia.</li>
+        <li><strong>Origen de eventos de AWS:</strong> muchos servicios publican en SNS (alarmas de
+          <a href="cloudwatch.html">CloudWatch</a>, notificaciones de S3, eventos de <a href="../servicio.html?id=cloudformation">CloudFormation</a>…).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Avisar al equipo de guardia por correo o SMS cuando salta una alarma de <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li>Fan-out de un evento de negocio (pedido creado) a varias colas y funciones.</li>
+        <li>Notificaciones push a apps móviles.</li>
+        <li>Mensajes de texto transaccionales a clientes (códigos, avisos).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si un solo consumidor debe procesar cada mensaje y guardarlo mientras está caído: <a href="sqs.html">SQS</a>.</li>
+        <li>Enrutamiento por reglas complejas, eventos de SaaS (software como servicio) o programación
+          horaria: <a href="eventbridge.html">EventBridge</a>.</li>
+        <li>Campañas de marketing por correo con plantillas y seguimiento: <a href="ses.html">SES</a> (y la mensajería al
+          usuario final de AWS End User Messaging para SMS a gran escala).</li>
+        <li>Streaming con relectura de datos: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">SNS, SQS y EventBridge</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>SNS</th><th><a href="sqs.html">SQS</a></th><th><a href="eventbridge.html">EventBridge</a></th></tr></thead>
+          <tbody>
+            <tr><td>Modelo</td><td>Push, pub/sub</td><td>Pull, cola</td><td>Bus de eventos con reglas</td></tr>
+            <tr><td>Receptores por mensaje</td><td>Todos los suscriptores</td><td>Uno</td><td>Todos los destinos de las reglas que coinciden</td></tr>
+            <tr><td>Persistencia</td><td>No (reintentos)</td><td>Hasta 14 días</td><td>No (reintentos, archivo opcional)</td></tr>
+            <tr><td>Filtrado</td><td>Políticas de filtrado</td><td>—</td><td>Patrones de eventos muy ricos</td></tr>
+            <tr><td>Destinos</td><td>SQS, <a href="lambda.html">Lambda</a>, HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>, correo, SMS, móvil</td><td>—</td><td>Más de 20 servicios de AWS, API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> y SaaS</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por millón de peticiones de publicación (cada 64 KB cuenta como una) y por las
+        entregas según el tipo de destino: las entregas a <a href="sqs.html">SQS</a> y <a href="lambda.html">Lambda</a> son gratuitas o muy baratas,
+        las HTTP y el correo tienen su tarifa, y los SMS y las notificaciones móviles se cobran por
+        mensaje y país. Los temas FIFO cobran además por datos. Hay nivel gratuito mensual.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Mensajes almacenados de forma redundante en varias zonas hasta su entrega.</li>
+        <li>Cifrado en reposo con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> y en tránsito con HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span>.</li>
+        <li>Políticas del tema para decidir quién publica y quién se suscribe (incluidas otras
+          cuentas); <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> para los usuarios y roles.</li>
+        <li>Endpoint de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> para publicar sin salir a internet.</li>
+        <li>La función de protección de datos de mensajes (<em>Message Data Protection</em>) dejó de
+          admitir clientes nuevos el 30/04/2026.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Un mensaje a muchos destinos"</strong> o <strong>"notificar"</strong>: SNS.</li>
+        <li><strong>"Cada sistema lo procesa a su ritmo y sin perder mensajes"</strong>: fan-out SNS + <a href="sqs.html">SQS</a>.</li>
+        <li><strong>"Cada suscriptor solo quiere algunos mensajes"</strong>: políticas de filtrado, no un tema por tipo.</li>
+        <li><strong>"Orden y sin duplicados en el fan-out"</strong>: tema FIFO con colas FIFO.</li>
+        <li><strong>"Avisar por correo cuando salta una alarma"</strong>: alarma de <a href="cloudwatch.html">CloudWatch</a> con acción hacia un tema SNS.</li>
+        <li><strong>"Los mensajes deben esperar si el consumidor está caído"</strong>: SNS no los guarda; pon una cola SQS.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="sns"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/sns/latest/dg/welcome.html" target="_blank" rel="noopener">What is Amazon SNS?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/hands-on/latest/send-fanout-event-notifications/send-fanout-event-notifications.html" target="_blank" rel="noopener">Send fanout event notifications (Amazon SNS and Amazon SQS)</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html" target="_blank" rel="noopener">Amazon SNS message filtering</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sns/latest/dg/sns-fifo-topics.html" target="_blank" rel="noopener">Amazon SNS FIFO topics</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-sns-1mib-support/" target="_blank" rel="noopener">Amazon SNS now supports message payloads up to 1 MiB</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

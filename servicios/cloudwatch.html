@@ -78,7 +78,7 @@
           Las <strong>métricas personalizadas</strong> pueden tener resolución de hasta 1 segundo.</li>
         <li><strong>Memoria y disco de EC2 no vienen por defecto:</strong> hace falta el
           <strong>agente de CloudWatch</strong> en la instancia (que también envía logs del sistema).</li>
-        <li><strong>Alarmas:</strong> estados OK, ALARM e INSUFFICIENT_DATA. Acciones: notificar por <a href="../servicio.html?id=sns">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>,
+        <li><strong>Alarmas:</strong> estados OK, ALARM e INSUFFICIENT_DATA. Acciones: notificar por <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>,
           escalar con <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a>, parar, reiniciar o recuperar una instancia EC2, o abrir incidencias.
           Las <strong>alarmas compuestas</strong> combinan varias para reducir el ruido, y la
           <strong>detección de anomalías</strong> aprende el patrón normal.</li>
@@ -90,7 +90,7 @@
         <li><strong>Paneles (dashboards):</strong> pueden combinar métricas de varias cuentas y regiones.</li>
         <li><strong>Otras funciones:</strong> Synthetics (canarios que prueban endpoints), RUM (usuarios
           reales), Application Signals, Container Insights y Lambda Insights.</li>
-        <li>Los eventos de cambios de estado de AWS los gestiona <strong><a href="../servicio.html?id=eventbridge">Amazon EventBridge</a></strong>
+        <li>Los eventos de cambios de estado de AWS los gestiona <strong><a href="eventbridge.html">Amazon EventBridge</a></strong>
           (antes CloudWatch Events).</li>
       </ul>
 

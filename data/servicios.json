@@ -103,8 +103,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Transfiere datos entre aplicaciones SaaS (Salesforce, SAP, Google Analytics…) y servicios de AWS con flujos sin código, programados o por evento.",
     "documentacion": "https://docs.aws.amazon.com/appflow/"
   },
   {
@@ -156,8 +156,8 @@
       "SAP-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "API GraphQL y de eventos en tiempo real sin servidores: una sola API para leer y escribir de varias fuentes de datos, con suscripciones por WebSocket.",
     "documentacion": "https://docs.aws.amazon.com/appsync/"
   },
   {
@@ -989,8 +989,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Bus de eventos sin servidores: recibe eventos de AWS, de tus aplicaciones y de SaaS, y los enruta por reglas a más de 20 destinos; incluye Scheduler y Pipes.",
     "documentacion": "https://docs.aws.amazon.com/eventbridge/"
   },
   {
@@ -1544,8 +1544,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Brokers de mensajería gestionados de Apache ActiveMQ y RabbitMQ, para migrar aplicaciones que usan protocolos estándar sin reescribirlas.",
     "documentacion": "https://docs.aws.amazon.com/amazon-mq/"
   },
   {
@@ -2026,8 +2026,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Mensajería pub/sub gestionada: publicas un mensaje en un tema y SNS lo entrega a todos sus suscriptores (colas, funciones, HTTP, correo, SMS o móviles).",
     "documentacion": "https://docs.aws.amazon.com/sns/"
   },
   {
@@ -2042,8 +2042,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Colas de mensajes totalmente gestionadas para desacoplar componentes: un productor deja mensajes y los consumidores los procesan a su ritmo.",
     "documentacion": "https://docs.aws.amazon.com/sqs/"
   },
   {
@@ -2057,8 +2057,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Orquestación visual de flujos de trabajo sin servidores: encadena servicios de AWS con pasos, ramas, esperas, reintentos y ejecución en paralelo.",
     "documentacion": "https://docs.aws.amazon.com/step-functions/"
   },
   {

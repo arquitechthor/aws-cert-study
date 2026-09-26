@@ -1,0 +1,202 @@
+[
+  {
+    "id": "step-functions-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un equipo quiere coordinar varias funciones Lambda en un proceso de varios pasos, con reintentos y ramas, y ver cada ejecución en un diagrama. ¿Qué servicio lo ofrece?",
+    "opciones": [
+      "AWS Step Functions.",
+      "Amazon SQS.",
+      "Amazon CloudFront.",
+      "AWS Budgets."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Step Functions orquesta pasos como una máquina de estados, con gestión de errores, ramas y un diagrama de cada ejecución. SQS es una cola, CloudFront una red de entrega de contenido y Budgets controla costes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html"
+    ]
+  },
+  {
+    "id": "step-functions-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Qué ventaja aporta usar un servicio gestionado de orquestación como Step Functions en lugar de programar la coordinación en un servidor propio?",
+    "opciones": [
+      "No hay servidores que mantener y se paga por uso.",
+      "Hay que comprar el hardware por adelantado.",
+      "Obliga a gestionar el sistema operativo.",
+      "Solo funciona en el centro de datos del cliente."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Step Functions es sin servidores: AWS opera la infraestructura y se paga por las transiciones o ejecuciones. Las otras opciones describen justo lo contrario de un servicio gestionado en la nube.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html"
+    ]
+  },
+  {
+    "id": "step-functions-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un proceso de alta de clientes incluye un paso en el que un empleado debe aprobar la solicitud, lo que puede tardar varios días. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Un flujo Standard de Step Functions con una tarea .waitForTaskToken que se reanuda cuando se devuelve el token tras la aprobación.",
+      "Un flujo Express que espere la aprobación.",
+      "Una función Lambda que espere en un bucle durante días.",
+      "Una cola SQS con retraso de entrega de 7 días."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los flujos Standard duran hasta un año y el patrón de devolución de llamada pausa la ejecución hasta que alguien envía el token. Express dura como máximo 5 minutos, Lambda como máximo 15 minutos y el retraso de SQS es de hasta 15 minutos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html"
+    ]
+  },
+  {
+    "id": "step-functions-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Hay que procesar 5 millones de ficheros CSV (Comma-Separated Values: texto con valores separados por comas) de un bucket de S3 con una función cada uno, con alta concurrencia y seguimiento de fallos. ¿Qué opción es la más adecuada?",
+    "opciones": [
+      "Un estado Map en modo distribuido de Step Functions sobre el bucket.",
+      "Un estado Map en línea con los 5 millones de elementos en la entrada.",
+      "Una sola función Lambda que recorra los ficheros.",
+      "Una regla programada de EventBridge por fichero."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El Map distribuido lee directamente los objetos de S3 y lanza ejecuciones hijas en paralelo a gran escala, con informe de fallos. El Map en línea está limitado por el tamaño de la entrada y el historial, una sola Lambda no terminaría en 15 minutos y una regla por fichero no escala.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/state-map-distributed.html"
+    ]
+  },
+  {
+    "id": "step-functions-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un paso que llama a una API (Application Programming Interface: interfaz para que los programas se comuniquen) de pagos externa falla a veces por errores temporales. ¿Cómo debe gestionarse en la definición de la máquina de estados?",
+    "opciones": [
+      "Con un Retry con espera exponencial para esos errores y un Catch que desvíe a un paso de compensación si se agotan los intentos.",
+      "Con un bucle infinito dentro de la función.",
+      "Desactivando el paso cuando falle.",
+      "Con un estado Wait fijo de 1 hora antes del paso."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Retry reintenta con backoff exponencial y Catch captura el error final para tratarlo, todo declarado en ASL (Amazon States Language). Un bucle en la función consume tiempo y dinero, y las otras opciones no gestionan el error.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html"
+    ]
+  },
+  {
+    "id": "step-functions-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un paso de un flujo solo debe guardar un elemento en DynamoDB. ¿Cuál es la forma más sencilla y barata?",
+    "opciones": [
+      "Usar la integración directa de Step Functions con la acción PutItem de DynamoDB.",
+      "Crear una función Lambda que haga el PutItem.",
+      "Lanzar una tarea de ECS.",
+      "Publicar en SNS y que otro sistema escriba."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Step Functions puede llamar directamente a la API (Application Programming Interface: interfaz para que los programas se comuniquen) de DynamoDB (y a más de 200 servicios) sin código intermedio, lo que evita una función que mantener y pagar. Las demás opciones añaden piezas innecesarias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html"
+    ]
+  },
+  {
+    "id": "step-functions-007",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "¿Qué DOS afirmaciones sobre los flujos Express de Step Functions son correctas? (Elige 2.)",
+    "opciones": [
+      "Pueden durar como máximo 5 minutos.",
+      "Tienen semántica de ejecución al menos una vez.",
+      "Admiten el patrón .waitForTaskToken.",
+      "Guardan el historial en el servicio durante 90 días.",
+      "Se pagan por transición de estado."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Express dura hasta 5 minutos y ejecuta al menos una vez; envía el historial a CloudWatch Logs y se paga por ejecución y duración. .waitForTaskToken, el historial de 90 días y el pago por transición son propios de Standard.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/choosing-workflow-type.html"
+    ]
+  },
+  {
+    "id": "step-functions-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una reserva de viaje debe reservar vuelo, hotel y coche en tres servicios distintos; si falla el coche, hay que cancelar el hotel y el vuelo ya reservados. ¿Qué diseño lo implementa de forma mantenible?",
+    "opciones": [
+      "Un flujo de Step Functions con Catch en cada paso que desvía a pasos de compensación en orden inverso (patrón saga).",
+      "Una transacción de base de datos que abarque los tres servicios.",
+      "Tres funciones que se llaman entre sí en cadena.",
+      "Una cola FIFO con los tres mensajes."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El patrón saga con Step Functions declara la compensación de cada paso y la ejecuta si algo falla más adelante. No existe una transacción de base de datos entre servicios independientes, encadenar funciones esconde la lógica de errores y una cola no deshace pasos. Siglas: FIFO (First In, First Out: el primero en entrar es el primero en salir).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html"
+    ]
+  },
+  {
+    "id": "step-functions-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa procesa 50 millones de eventos de IoT (internet de las cosas) al día con flujos Standard de Step Functions de 3 segundos cada uno, y el coste por transiciones es alto. La lógica tolera ejecutar un paso más de una vez. ¿Qué cambio lo reduce?",
+    "opciones": [
+      "Migrar a flujos Express.",
+      "Pasar a flujos Standard con más estados.",
+      "Mover la lógica a una instancia EC2 grande.",
+      "Añadir un estado Wait al inicio."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Express está pensado para alto volumen y corta duración, se cobra por ejecución y duración y acepta semántica al menos una vez, lo que encaja aquí. Más estados encarecen Standard, EC2 (Elastic Compute Cloud) añade operación y un Wait no reduce el coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/step-functions/latest/dg/choosing-workflow-type.html"
+    ]
+  }
+]

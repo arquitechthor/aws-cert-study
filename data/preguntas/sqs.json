@@ -1,0 +1,224 @@
+[
+  {
+    "id": "sqs-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una tienda online quiere que su web acepte pedidos aunque el sistema que los procesa vaya lento o esté caído, guardándolos hasta que pueda atenderlos. ¿Qué servicio de AWS encaja?",
+    "opciones": [
+      "Amazon SQS.",
+      "Amazon CloudFront.",
+      "Amazon Route 53.",
+      "AWS Direct Connect."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "SQS guarda los mensajes en una cola hasta que el consumidor los procesa, desacoplando la web del procesamiento. CloudFront distribuye contenido, Route 53 es DNS (Domain Name System: traduce nombres de dominio a direcciones IP) y Direct Connect es un enlace de red dedicado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
+    ]
+  },
+  {
+    "id": "sqs-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Qué principio de diseño de la nube se aplica al poner una cola SQS entre dos componentes de una aplicación?",
+    "opciones": [
+      "Desacoplar los componentes.",
+      "Pagar por adelantado la capacidad.",
+      "Concentrar todo en un único servidor.",
+      "Desactivar la escalabilidad."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La cola desacopla los componentes: cada uno funciona y escala por separado y un fallo en uno no tumba al otro. Las demás opciones van en contra de las buenas prácticas de la nube.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
+    ]
+  },
+  {
+    "id": "sqs-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un sistema de pagos debe procesar las operaciones de cada cliente exactamente en el orden en que llegan y sin duplicados, aunque los clientes distintos pueden procesarse en paralelo. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Una cola estándar de SQS con varios consumidores.",
+      "Una cola FIFO de SQS con el identificador del cliente como MessageGroupId.",
+      "Un tema de SNS estándar.",
+      "Una cola estándar con long polling."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las colas FIFO garantizan el orden y el procesamiento exactamente una vez dentro de cada grupo de mensajes; usar el cliente como grupo permite paralelizar entre clientes. Las colas estándar no garantizan orden ni evitan duplicados, y SNS estándar tampoco.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fifo-queue-message-identifiers.html"
+    ]
+  },
+  {
+    "id": "sqs-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una flota de instancias EC2 (Elastic Compute Cloud) procesa trabajos de una cola SQS. En los picos la cola crece durante horas y de noche las instancias están ociosas. ¿Cómo se ajusta la flota a la carga?",
+    "opciones": [
+      "Un grupo de Auto Scaling con seguimiento de objetivo sobre los mensajes pendientes por instancia.",
+      "Aumentar el tiempo de visibilidad.",
+      "Pasar la cola a FIFO.",
+      "Añadir una segunda cola vacía."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Escalar según los mensajes pendientes por instancia (backlog per instance) hace que el número de trabajadores siga a la cola. El tiempo de visibilidad, FIFO o más colas no cambian la capacidad de procesamiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
+    ]
+  },
+  {
+    "id": "sqs-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Unos consumidores consultan una cola SQS casi vacía miles de veces por minuto y la factura de peticiones es alta. ¿Qué DOS cambios la reducen? (Elige 2.)",
+    "opciones": [
+      "Activar long polling con un tiempo de espera de hasta 20 segundos.",
+      "Recibir mensajes por lotes (hasta 10 por llamada).",
+      "Pasar la cola a FIFO.",
+      "Reducir el periodo de retención a 1 minuto.",
+      "Crear una cola por consumidor."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Long polling evita las respuestas vacías y los lotes reducen el número de llamadas por mensaje. FIFO es más caro, la retención no influye en las peticiones y más colas no reducen las consultas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
+    ]
+  },
+  {
+    "id": "sqs-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un consumidor tarda unos 2 minutos en procesar cada mensaje de SQS y los mensajes se procesan dos veces con frecuencia. El tiempo de visibilidad es de 30 segundos. ¿Qué cambio lo soluciona?",
+    "opciones": [
+      "Aumentar el tiempo de visibilidad por encima del tiempo de procesamiento (o ampliarlo con ChangeMessageVisibility).",
+      "Reducir el tiempo de visibilidad a 0.",
+      "Activar el retraso de entrega.",
+      "Reducir el periodo de retención."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Si el mensaje no se borra antes de que venza el tiempo de visibilidad, vuelve a ser visible y otro consumidor lo recibe. Hay que dar más tiempo que el que dura el procesamiento. Las demás opciones no evitan la reentrega.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html"
+    ]
+  },
+  {
+    "id": "sqs-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Algunos mensajes con datos corruptos hacen fallar siempre a una función Lambda que lee de SQS, y se reintentan una y otra vez. ¿Qué solución los aparta para analizarlos?",
+    "opciones": [
+      "Configurar una cola de mensajes fallidos (DLQ) con un maxReceiveCount en la política de redrive.",
+      "Borrar la cola y crearla de nuevo.",
+      "Aumentar la memoria de la función.",
+      "Cambiar a una cola FIFO."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Tras el número máximo de recepciones, SQS mueve el mensaje a la DLQ, donde se puede inspeccionar y, si procede, devolver con redrive. Borrar la cola pierde los mensajes buenos, y ni la memoria ni FIFO resuelven un mensaje que siempre falla.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html"
+    ]
+  },
+  {
+    "id": "sqs-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una aplicación necesita enviar a SQS documentos JSON (JavaScript Object Notation: formato de datos en texto) de hasta 5 MB. ¿Qué enfoque es el correcto?",
+    "opciones": [
+      "Guardar el documento en S3 y enviar a la cola solo la referencia, por ejemplo con la biblioteca Extended Client.",
+      "Subir el límite de tamaño de la cola a 5 MB.",
+      "Enviar el documento en un solo mensaje FIFO.",
+      "Comprimirlo siempre en un mensaje de 256 KB."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El tamaño máximo de un mensaje de SQS es 1 MiB; para cargas mayores se guarda el contenido en S3 (hasta 2 GB) y se envía la referencia. El límite no se puede ampliar a 5 MB, FIFO tiene el mismo límite y comprimir no garantiza caber.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/08/amazon-sqs-max-payload-size-1mib/"
+    ]
+  },
+  {
+    "id": "sqs-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Cuando se crea un pedido, tres sistemas independientes (facturación, almacén y análisis) deben recibirlo y procesarlo cada uno a su ritmo, sin perder mensajes si alguno está caído. ¿Qué arquitectura es la adecuada?",
+    "opciones": [
+      "Un tema de SNS con tres colas SQS suscritas, una por sistema (fan-out).",
+      "Una única cola SQS leída por los tres sistemas.",
+      "Llamadas HTTP síncronas desde el servicio de pedidos a los tres sistemas.",
+      "Una cola FIFO por cada pedido."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En el fan-out, SNS entrega una copia a cada cola y cada sistema consume la suya con su propio ritmo y reintentos. Con una sola cola cada mensaje solo lo recibe un consumidor, las llamadas síncronas acoplan los sistemas y una cola por pedido no tiene sentido. Siglas: HTTP (HyperText Transfer Protocol: protocolo de la web).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
+    ]
+  },
+  {
+    "id": "sqs-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migra un monolito que llama de forma síncrona a un servicio de facturación lento, lo que provoca timeouts en los picos. Quiere modernizarlo con el mínimo cambio. ¿Qué primer paso es el más adecuado?",
+    "opciones": [
+      "Poner una cola SQS entre el monolito y la facturación y procesar las facturas de forma asíncrona.",
+      "Aumentar el timeout del balanceador a 1 hora.",
+      "Duplicar el tamaño de las instancias del monolito.",
+      "Mover la base de datos a otra región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una cola desacopla la llamada: el monolito responde enseguida y la facturación procesa a su ritmo, eliminando los timeouts. Alargar los timeouts o agrandar instancias no resuelve el acoplamiento, y mover la base de datos no tiene relación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
+    ]
+  }
+]

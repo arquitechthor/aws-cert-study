@@ -1,0 +1,202 @@
+[
+  {
+    "id": "sns-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un equipo quiere recibir un correo electrónico cada vez que una alarma de CloudWatch detecte un uso de CPU (Central Processing Unit: procesador) alto. ¿Qué servicio envía esa notificación?",
+    "opciones": [
+      "Amazon SNS.",
+      "Amazon SQS.",
+      "AWS Config.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La acción de la alarma publica en un tema de SNS y SNS entrega el aviso a los suscriptores de correo. SQS es una cola que se consulta, Config registra configuraciones e Inspector busca vulnerabilidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sns/latest/dg/welcome.html"
+    ]
+  },
+  {
+    "id": "sns-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué describe mejor el modelo de mensajería de Amazon SNS?",
+    "opciones": [
+      "Publicación/suscripción: un mensaje publicado en un tema llega a todos sus suscriptores.",
+      "Una cola en la que cada mensaje lo procesa un único consumidor.",
+      "Un almacén de datos para análisis.",
+      "Una red de entrega de contenido."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "SNS es pub/sub: el tema reparte cada mensaje a todos los suscriptores. La cola con un único consumidor por mensaje es SQS, y las otras dos opciones describen Redshift y CloudFront.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sns/latest/dg/welcome.html"
+    ]
+  },
+  {
+    "id": "sns-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un evento de \"pedido creado\" debe llegar a tres microservicios que lo procesan de forma independiente, y ninguno debe perder mensajes si está caído un rato. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Un tema SNS con una cola SQS suscrita por microservicio.",
+      "Un tema SNS con los tres microservicios suscritos por HTTP.",
+      "Una única cola SQS compartida por los tres.",
+      "Tres llamadas síncronas desde el servicio de pedidos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El fan-out SNS + SQS entrega una copia a cada cola, que la conserva hasta que su microservicio la procesa. Con HTTP directo, SNS solo reintenta durante un tiempo; una cola compartida entrega cada mensaje a uno solo; y las llamadas síncronas acoplan los servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/hands-on/latest/send-fanout-event-notifications/send-fanout-event-notifications.html"
+    ]
+  },
+  {
+    "id": "sns-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un tema SNS publica eventos de pedidos de todos los países, pero la cola del equipo de Francia solo debe recibir los pedidos con país igual a FR. ¿Cuál es la solución más sencilla?",
+    "opciones": [
+      "Una política de filtrado en la suscripción de esa cola.",
+      "Un tema distinto por país y que el productor elija.",
+      "Que el consumidor descarte los mensajes que no son de FR.",
+      "Una función Lambda intermedia que reenvíe solo los de FR."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las políticas de filtrado hacen que SNS entregue a esa suscripción solo los mensajes que cumplen la condición, sin cambiar al productor ni añadir componentes. Las demás opciones funcionan pero añaden acoplamiento, coste o código.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html"
+    ]
+  },
+  {
+    "id": "sns-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador necesita que los eventos de cada cuenta de cliente se entreguen en orden y sin duplicados a dos colas, una de facturación y otra de auditoría. ¿Qué configuración es la adecuada?",
+    "opciones": [
+      "Un tema SNS FIFO con dos colas SQS FIFO suscritas, usando la cuenta como MessageGroupId.",
+      "Un tema SNS estándar con dos colas estándar.",
+      "Dos temas SNS estándar independientes.",
+      "Un tema SNS estándar con suscripciones de correo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los temas FIFO conservan el orden por grupo de mensajes y deduplican, y entregan a colas SQS. Los temas estándar no garantizan orden ni ausencia de duplicados, y el correo no sirve para procesar eventos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sns/latest/dg/sns-fifo-topics.html"
+    ]
+  },
+  {
+    "id": "sns-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una suscripción HTTP de SNS falla a menudo porque el endpoint del cliente está caído, y los mensajes se pierden al agotarse los reintentos. ¿Qué mejora permite recuperarlos?",
+    "opciones": [
+      "Asociar una cola de mensajes fallidos (DLQ) de SQS a la suscripción.",
+      "Aumentar el tamaño máximo de mensaje del tema.",
+      "Cambiar el tema a FIFO.",
+      "Publicar cada mensaje dos veces."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con una DLQ en la suscripción, lo que SNS no consigue entregar tras los reintentos queda en una cola SQS para volver a procesarlo. El tamaño o FIFO no evitan la pérdida, y publicar dos veces genera duplicados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sns/latest/dg/welcome.html"
+    ]
+  },
+  {
+    "id": "sns-007",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "¿Qué DOS tipos de suscriptor admite un tema estándar de Amazon SNS? (Elige 2.)",
+    "opciones": [
+      "Una función AWS Lambda.",
+      "Una cola Amazon SQS.",
+      "Una tabla de DynamoDB directamente.",
+      "Un bucket de S3 directamente.",
+      "Una instancia RDS."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "SNS entrega a Lambda, SQS, HTTP/HTTPS, correo, SMS, push móvil y Firehose. No escribe directamente en DynamoDB, S3 o RDS (Relational Database Service); para eso se usa una función o Firehose de por medio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sns/latest/dg/welcome.html"
+    ]
+  },
+  {
+    "id": "sns-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una cuenta central publica eventos de seguridad en un tema SNS y cuentas de otros equipos deben suscribir sus propias colas SQS. ¿Qué configuración lo permite?",
+    "opciones": [
+      "Una política de acceso en el tema que permita sns:Subscribe a esas cuentas, y en cada cola una política que permita al tema enviar mensajes.",
+      "Compartir las claves de acceso de la cuenta central.",
+      "Replicar el tema en cada cuenta con CloudFormation.",
+      "No es posible suscribir colas de otras cuentas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las suscripciones entre cuentas se habilitan con la política del tema (quién puede suscribirse) y la política de la cola (permitir sqs:SendMessage al ARN (Amazon Resource Name: identificador único de un recurso de AWS) del tema). Compartir claves es inseguro, replicar temas no conecta los eventos y sí es posible hacerlo entre cuentas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/hands-on/latest/send-fanout-event-notifications/send-fanout-event-notifications.html"
+    ]
+  },
+  {
+    "id": "sns-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una aplicación envía mensajes de 800 KB a través de SNS guardando el contenido en S3 y publicando solo la referencia, lo que añade latencia y código. Los suscriptores son colas SQS y funciones Lambda. ¿Qué mejora es la más sencilla hoy?",
+    "opciones": [
+      "Configurar MaximumMessageSize del tema para admitir hasta 1 MiB y publicar el mensaje completo.",
+      "Dividir cada mensaje en cuatro trozos.",
+      "Sustituir SNS por correo electrónico.",
+      "Pasar a un tema FIFO."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "SNS admite cargas de hasta 1 MiB activando el atributo MaximumMessageSize del tema, con suscripciones SQS, Lambda y Firehose, así que un mensaje de 800 KB ya cabe entero. Trocear complica el diseño, el correo no es una integración entre sistemas y FIFO no cambia el tamaño.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-sns-1mib-support/"
+    ]
+  }
+]

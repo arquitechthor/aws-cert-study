@@ -106,9 +106,9 @@
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Microservicios y APIs en contenedores detrás de un <a href="../servicio.html?id=elb">Application Load Balancer</a>.</li>
-        <li>Trabajos por lotes y tareas programadas con <a href="../servicio.html?id=eventbridge">EventBridge</a> Scheduler.</li>
+        <li>Trabajos por lotes y tareas programadas con <a href="eventbridge.html">EventBridge</a> Scheduler.</li>
         <li>Modernizar aplicaciones monolíticas empaquetándolas en contenedores.</li>
-        <li>Procesamiento asíncrono que escala según la longitud de una cola <a href="../servicio.html?id=sqs">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>.</li>
+        <li>Procesamiento asíncrono que escala según la longitud de una cola <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
@@ -158,7 +158,7 @@
         <li><strong>"Kubernetes"</strong> en el enunciado: <a href="eks.html">EKS</a>, no ECS.</li>
         <li><strong>"Tareas por lotes baratas que toleran interrupciones"</strong>: Fargate Spot.</li>
         <li><strong>"Revertir solo un despliegue fallido"</strong>: circuit breaker de despliegue.</li>
-        <li><strong>"Escalar según los mensajes pendientes en <a href="../servicio.html?id=sqs">SQS</a>"</strong>: Service Auto Scaling con una métrica de la cola.</li>
+        <li><strong>"Escalar según los mensajes pendientes en <a href="sqs.html">SQS</a>"</strong>: Service Auto Scaling con una métrica de la cola.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

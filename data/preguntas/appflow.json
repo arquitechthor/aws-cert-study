@@ -1,0 +1,90 @@
+[
+  {
+    "id": "appflow-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "El equipo de ventas quiere tener cada noche en S3 los datos de oportunidades de Salesforce para analizarlos con Athena, sin desarrollar ni mantener código de integración. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "Amazon AppFlow con un flujo programado de Salesforce a S3.",
+      "AWS DataSync.",
+      "AWS Database Migration Service.",
+      "Una instancia EC2 con un script que llama a la API de Salesforce."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AppFlow tiene un conector nativo de Salesforce y programa transferencias a S3 sin código. DataSync mueve ficheros de sistemas de almacenamiento, DMS migra bases de datos y un script en EC2 (Elastic Compute Cloud) es justo el código que se quiere evitar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appflow/latest/userguide/what-is-appflow.html"
+    ]
+  },
+  {
+    "id": "appflow-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa debe transferir datos de Salesforce a S3 y su política de seguridad prohíbe que viajen por internet público. ¿Qué configuración lo cumple?",
+    "opciones": [
+      "Un flujo privado de AppFlow que usa AWS PrivateLink.",
+      "Un flujo de AppFlow con cifrado desactivado.",
+      "Un NAT gateway en una subred pública.",
+      "Descargar los datos a mano con VPN."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con proveedores compatibles como Salesforce, AppFlow puede crear flujos privados sobre PrivateLink, de modo que el tráfico no pasa por internet. Desactivar el cifrado empeora la seguridad, un NAT gateway (Network Address Translation: traducción de direcciones de red) sale a internet y la descarga manual no es una integración. Siglas: VPN (Virtual Private Network: red privada virtual).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appflow/latest/userguide/private-flows.html"
+    ]
+  },
+  {
+    "id": "appflow-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Cuando un comercial cierra una oportunidad en Salesforce, un proceso en AWS debe arrancar en minutos para generar el contrato. ¿Qué diseño es el más sencillo?",
+    "opciones": [
+      "Un flujo de AppFlow disparado por evento que envía el cambio a EventBridge, donde una regla inicia el proceso.",
+      "Un script que consulta Salesforce cada 24 horas.",
+      "Exportaciones manuales a CSV.",
+      "Una réplica de base de datos con DMS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AppFlow admite disparadores por evento de Salesforce y EventBridge como destino, así el proceso arranca casi al instante sin código de sondeo. Consultar cada día añade retraso, lo manual no escala y DMS no se conecta a Salesforce. Siglas: CSV (Comma-Separated Values: texto con valores separados por comas).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appflow/latest/userguide/flow-triggers.html"
+    ]
+  },
+  {
+    "id": "appflow-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un flujo de AppFlow copia cada hora la tabla completa de clientes de un SaaS a S3, lo que genera muchos datos duplicados y coste. ¿Qué cambio es el adecuado?",
+    "opciones": [
+      "Configurar el flujo programado con transferencia incremental de los registros nuevos o modificados.",
+      "Ejecutar el flujo cada minuto.",
+      "Cambiar el destino a Redshift sin más.",
+      "Desactivar la programación y ejecutarlo a mano."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los flujos programados pueden transferir solo lo nuevo o modificado desde la última ejecución, reduciendo volumen y coste. Ejecutar más a menudo empeora el problema, cambiar el destino no evita la copia completa y hacerlo a mano no es sostenible.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appflow/latest/userguide/flow-triggers.html"
+    ]
+  }
+]

@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 23 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 30 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -289,8 +289,8 @@ esta lista es solo el orden de trabajo.
 - [x] `lambda` AWS Lambda — Computación (SAA-C03, SAP-C02, AIF-C01)
 - [x] `route-53` Amazon Route 53 — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [x] `cloudfront` Amazon CloudFront — Redes y entrega de contenido (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `sqs` Amazon SQS — Integración de aplicaciones (SAA-C03, SAP-C02)
-- [ ] `sns` Amazon SNS — Integración de aplicaciones (SAA-C03, SAP-C02)
+- [x] `sqs` Amazon SQS — Integración de aplicaciones (SAA-C03, SAP-C02)
+- [x] `sns` Amazon SNS — Integración de aplicaciones (SAA-C03, SAP-C02)
 - [x] `kms` AWS KMS — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 - [x] `cloudwatch` Amazon CloudWatch — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
 - [x] `cloudtrail` AWS CloudTrail — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
@@ -364,10 +364,10 @@ esta lista es solo el orden de trabajo.
 - [ ] `amplify` AWS Amplify — Frontend web y móvil (SAA-C03, SAP-C02)
 - [ ] `device-farm` AWS Device Farm — Frontend web y móvil (SAA-C03, SAP-C02)
 - [ ] `x-ray` AWS X-Ray — Herramientas para desarrolladores (SAA-C03, SAP-C02)
-- [ ] `appflow` Amazon AppFlow — Integración de aplicaciones (SAA-C03, SAP-C02)
-- [ ] `eventbridge` Amazon EventBridge — Integración de aplicaciones (SAA-C03, SAP-C02)
-- [ ] `mq` Amazon MQ — Integración de aplicaciones (SAA-C03, SAP-C02)
-- [ ] `step-functions` AWS Step Functions — Integración de aplicaciones (SAA-C03, SAP-C02)
+- [x] `appflow` Amazon AppFlow — Integración de aplicaciones (SAA-C03, SAP-C02)
+- [x] `eventbridge` Amazon EventBridge — Integración de aplicaciones (SAA-C03, SAP-C02)
+- [x] `mq` Amazon MQ — Integración de aplicaciones (SAA-C03, SAP-C02)
+- [x] `step-functions` AWS Step Functions — Integración de aplicaciones (SAA-C03, SAP-C02)
 - [ ] `application-migration-service` AWS Application Migration Service — Migración y transferencia (SAA-C03, SAP-C02)
 - [ ] `dms` AWS DMS — Migración y transferencia (SAA-C03, SAP-C02)
 - [ ] `datasync` AWS DataSync — Migración y transferencia (SAA-C03, SAP-C02)
@@ -414,7 +414,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `codedeploy` AWS CodeDeploy — Herramientas para desarrolladores (SAP-C02)
 - [ ] `codeguru` Amazon CodeGuru — Herramientas para desarrolladores (SAP-C02)
 - [ ] `codepipeline` AWS CodePipeline — Herramientas para desarrolladores (SAP-C02)
-- [ ] `appsync` AWS AppSync — Integración de aplicaciones (SAP-C02)
+- [x] `appsync` AWS AppSync — Integración de aplicaciones (SAP-C02)
 - [ ] `iot-1-click` AWS IoT 1-Click — Internet de las cosas (IoT) (SAP-C02)
 - [ ] `iot-core` AWS IoT Core — Internet de las cosas (IoT) (SAP-C02)
 - [ ] `iot-device-defender` AWS IoT Device Defender — Internet de las cosas (IoT) (SAP-C02)

@@ -107,7 +107,7 @@
         <li>Guardar pruebas de auditoría durante años para normativas (PCI DSS, ISO <span class="sigla">(<em>International Organization for Standardization</em>: organismo de normas internacionales)</span>…).</li>
         <li>Alertar cuando alguien usa el usuario raíz o desactiva el propio CloudTrail.</li>
         <li>Investigar incidentes de seguridad (lo usan también <a href="../servicio.html?id=guardduty">GuardDuty</a> y <a href="../servicio.html?id=detective">Detective</a>).</li>
-        <li>Reaccionar a llamadas concretas con reglas de <a href="../servicio.html?id=eventbridge">EventBridge</a>.</li>
+        <li>Reaccionar a llamadas concretas con reglas de <a href="eventbridge.html">EventBridge</a>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
@@ -154,7 +154,7 @@
         <li><strong>"Registrar quién descarga objetos de S3"</strong>: eventos de datos (no están activos por defecto).</li>
         <li><strong>"Demostrar que los registros no se han alterado"</strong>: validación de integridad.</li>
         <li><strong>"Todas las cuentas de la organización, sin que puedan desactivarlo"</strong>: trail de organización.</li>
-        <li><strong>"Alarma cuando se usa el usuario raíz"</strong>: CloudTrail hacia <a href="cloudwatch.html">CloudWatch</a> Logs con filtro de métrica, o <a href="../servicio.html?id=eventbridge">EventBridge</a>.</li>
+        <li><strong>"Alarma cuando se usa el usuario raíz"</strong>: CloudTrail hacia <a href="cloudwatch.html">CloudWatch</a> Logs con filtro de métrica, o <a href="eventbridge.html">EventBridge</a>.</li>
         <li><strong>"Historial de configuración de un recurso"</strong>: <a href="../servicio.html?id=config">AWS Config</a>, no CloudTrail.</li>
       </ul>
 

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon AppFlow — Apuntes AWS</title>
+<meta name="description" content="Transfiere datos entre aplicaciones SaaS (Salesforce, SAP, Google Analytics…) y servicios de AWS con flujos sin código, programados o por evento. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/appflow.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon AppFlow — Apuntes AWS">
+<meta property="og:description" content="Transfiere datos entre aplicaciones SaaS (Salesforce, SAP, Google Analytics…) y servicios de AWS con flujos sin código, programados o por evento.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/appflow.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/appflow.svg" alt="" width="56" height="56"><span>Amazon AppFlow</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=integracion-aplicaciones#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/integracion-aplicaciones.svg" alt="" width="18" height="18">Integración de aplicaciones <span class="cat-en">(Application Integration)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/appflow/" target="_blank" rel="noopener">Documentación de Amazon AppFlow ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon AppFlow mueve datos entre aplicaciones SaaS (software como servicio, como
+        Salesforce, SAP, Zendesk, Slack, ServiceNow o Google Analytics) y servicios de AWS como <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> o
+        <a href="../servicio.html?id=redshift">Redshift</a>, en ambos sentidos. Se configura con clics: eliges origen, destino, qué campos
+        copiar y cuándo, y AppFlow hace la extracción, la transformación básica y la carga sin que
+        tengas que programar ni mantener integraciones con las API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> de cada proveedor.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Flujo (flow):</strong> la definición de una transferencia: conexión de origen,
+          destino, mapeo de campos, filtros y disparador.</li>
+        <li><strong>Conectores:</strong> decenas de aplicaciones SaaS y servicios de AWS integrados;
+          con el SDK (<em>Software Development Kit</em>) de conectores personalizados se pueden añadir
+          otros.</li>
+        <li><strong>Disparadores:</strong> bajo demanda, programado (cada cierto tiempo, con
+          transferencias incrementales solo de lo nuevo o modificado) o por evento (por ejemplo, cuando
+          cambia un registro en Salesforce).</li>
+        <li><strong>Transformaciones:</strong> mapear y renombrar campos, filtrar registros, validar,
+          enmascarar campos sensibles y combinar campos, sin código.</li>
+        <li><strong>Destinos habituales:</strong> <a href="s3.html">S3</a> (para un lago de datos), <a href="../servicio.html?id=redshift">Redshift</a>, Snowflake,
+          <a href="eventbridge.html">EventBridge</a> y de vuelta a otras aplicaciones SaaS como Salesforce.</li>
+        <li><strong>Conectividad privada:</strong> con proveedores que lo admiten (como Salesforce),
+          los datos viajan por <a href="../servicio.html?id=privatelink">AWS PrivateLink</a> sin pasar por internet.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Copiar cada día las oportunidades de Salesforce a <a href="s3.html">S3</a> para analizarlas con <a href="../servicio.html?id=athena">Athena</a> o
+          <a href="../servicio.html?id=redshift">Redshift</a>.</li>
+        <li>Enviar a Salesforce datos de clientes calculados en AWS.</li>
+        <li>Reaccionar a cambios en un SaaS enviando los eventos a <a href="eventbridge.html">EventBridge</a>.</li>
+        <li>Alimentar un lago de datos con información de marketing y soporte sin desarrollar
+          integraciones.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Transformaciones complejas o grandes volúmenes entre bases de datos: <a href="../servicio.html?id=glue">AWS Glue</a>.</li>
+        <li>Migrar bases de datos relacionales: <a href="../servicio.html?id=dms">AWS DMS</a> (<em>Database Migration Service</em>).</li>
+        <li>Transferir ficheros desde servidores propios: <a href="../servicio.html?id=datasync">DataSync</a> o <a href="../servicio.html?id=transfer-family">Transfer Family</a>.</li>
+        <li>Datos en streaming en tiempo real de alto volumen: Kinesis o <a href="../servicio.html?id=data-firehose">Amazon Data Firehose</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Datos de aplicaciones SaaS, sin código</td><td>AppFlow</td></tr>
+            <tr><td>ETL (extraer, transformar y cargar) complejo y catálogo de datos</td><td><a href="../servicio.html?id=glue">Glue</a></td></tr>
+            <tr><td>Migrar o replicar bases de datos</td><td><a href="../servicio.html?id=dms">DMS</a></td></tr>
+            <tr><td>Ficheros desde el centro de datos</td><td><a href="../servicio.html?id=datasync">DataSync</a></td></tr>
+            <tr><td>Streaming hacia <a href="s3.html">S3</a> o <a href="../servicio.html?id=redshift">Redshift</a></td><td><a href="../servicio.html?id=data-firehose">Amazon Data Firehose</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por cada ejecución de flujo y por el volumen de datos procesados (por GB), más los
+        servicios de destino (almacenamiento en <a href="s3.html">S3</a>, <a href="../servicio.html?id=redshift">Redshift</a>…) y, si se usa, <a href="../servicio.html?id=privatelink">PrivateLink</a>. No hay
+        infraestructura que aprovisionar.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos cifrados en tránsito y en reposo, con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> gestionadas por AWS o por el
+          cliente.</li>
+        <li>Credenciales de las aplicaciones SaaS guardadas de forma segura (en <a href="secrets-manager.html">Secrets Manager</a>).</li>
+        <li>Tráfico privado por <a href="../servicio.html?id=privatelink">PrivateLink</a> con los proveedores que lo admiten.</li>
+        <li>Servicio gestionado y regional, sin servidores que mantener.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Datos de Salesforce (u otro SaaS) a <a href="s3.html">S3</a> o <a href="../servicio.html?id=redshift">Redshift</a> sin programar"</strong>: AppFlow.</li>
+        <li><strong>"Sin pasar por internet"</strong> con Salesforce: AppFlow con <a href="../servicio.html?id=privatelink">PrivateLink</a>.</li>
+        <li><strong>"ETL complejo entre bases de datos"</strong>: <a href="../servicio.html?id=glue">Glue</a>, no AppFlow.</li>
+        <li><strong>"Solo los registros nuevos o cambiados"</strong>: flujo programado con transferencia incremental.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="appflow"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/appflow/latest/userguide/what-is-appflow.html" target="_blank" rel="noopener">What is Amazon AppFlow?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appflow/latest/userguide/flow-triggers.html" target="_blank" rel="noopener">Flow triggers</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appflow/latest/userguide/private-flows.html" target="_blank" rel="noopener">Private Amazon AppFlow flows</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

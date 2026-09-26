@@ -1,0 +1,158 @@
+[
+  {
+    "id": "appsync-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una app móvil muestra en una pantalla datos de un usuario (DynamoDB) y sus pedidos (un microservicio HTTP), y hoy necesita varias llamadas REST que devuelven campos que no usa. ¿Qué servicio permite obtenerlo todo en una sola consulta con solo los campos necesarios?",
+    "opciones": [
+      "AWS AppSync con una API GraphQL y resolvers para cada fuente.",
+      "Amazon SQS.",
+      "Amazon CloudFront con más caché.",
+      "AWS Step Functions Express."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con GraphQL el cliente pide exactamente los campos que quiere en una sola consulta, y los resolvers de AppSync los obtienen de DynamoDB y del servicio HTTP. SQS es una cola, CloudFront no combina fuentes y Step Functions orquesta procesos, no sirve API a clientes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html"
+    ]
+  },
+  {
+    "id": "appsync-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "En una app de chat con AppSync, los usuarios deben ver los mensajes nuevos al instante sin recargar. ¿Qué operación de GraphQL lo permite?",
+    "opciones": [
+      "Una subscription asociada a la mutation que crea mensajes.",
+      "Una query ejecutada cada segundo.",
+      "Una mutation sin subscription.",
+      "Una caché del servidor más grande."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las subscriptions mantienen una conexión WebSocket y envían al cliente los datos cuando se ejecuta la mutation asociada. Consultar cada segundo es ineficiente, una mutation sola no notifica a nadie y la caché no entrega datos en tiempo real.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appsync/latest/devguide/aws-appsync-real-time-data.html"
+    ]
+  },
+  {
+    "id": "appsync-003",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una API GraphQL de AppSync debe permitir lecturas públicas desde la web y reservar las mutations a usuarios que han iniciado sesión. ¿Qué DOS modos de autorización se combinan? (Elige 2.)",
+    "opciones": [
+      "Clave de API para las operaciones públicas.",
+      "Grupos de usuarios de Amazon Cognito para las operaciones de usuarios autenticados.",
+      "Un security group en la API.",
+      "Una NACL en la subred del cliente.",
+      "Una política de bucket de S3."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "AppSync admite varios modos de autorización en la misma API y reglas por tipo o campo: una clave de API para lo público y Cognito para lo autenticado. Los security groups, las NACL (Network Access Control List: firewall a nivel de subred) y las políticas de bucket no autorizan operaciones de GraphQL. Siglas: S3 (Simple Storage Service).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appsync/latest/devguide/security-authz.html"
+    ]
+  },
+  {
+    "id": "appsync-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un backend publica resultados de partidos en EventBridge y hay que enviarlos en tiempo real a millones de navegadores, sin diseñar un esquema GraphQL ni gestionar conexiones WebSocket. ¿Qué opción encaja?",
+    "opciones": [
+      "AWS AppSync Events, publicando en un canal al que se suscriben los navegadores.",
+      "Una API REST de API Gateway consultada cada 5 segundos.",
+      "Un tema SNS con suscripciones de correo.",
+      "Una cola SQS por navegador."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AppSync Events ofrece canales pub/sub sobre WebSocket gestionados, a los que se puede publicar desde EventBridge o Lambda, y escala a grandes cantidades de conexiones. Sondear una API REST, el correo o una cola por navegador no son soluciones de tiempo real escalables.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-welcome.html"
+    ]
+  },
+  {
+    "id": "appsync-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Varios equipos mantienen sus propias API GraphQL en AppSync (catálogo, pedidos, usuarios) y los clientes quieren un único endpoint con todo. ¿Qué solución lo permite sin juntar el código de los equipos?",
+    "opciones": [
+      "Una API fusionada (merged API) de AppSync que combine las API de origen.",
+      "Copiar todos los esquemas en una sola API mantenida por un equipo.",
+      "Un balanceador de carga delante de las tres API.",
+      "Una distribución de CloudFront por API."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las merged APIs unen los esquemas de varias API de origen en un único endpoint, y cada equipo sigue gestionando la suya. Copiar esquemas crea un cuello de botella, y un balanceador o CloudFront no fusionan esquemas GraphQL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html"
+    ]
+  },
+  {
+    "id": "appsync-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa diseña una app móvil que debe funcionar sin conexión y sincronizar los cambios cuando vuelva la red, con autenticación de usuarios y datos en DynamoDB. ¿Qué combinación es la más adecuada?",
+    "opciones": [
+      "Amplify con AppSync (GraphQL) y Cognito.",
+      "API Gateway REST con instancias EC2.",
+      "Un bucket de S3 público con la app.",
+      "Amazon MQ con clientes móviles."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Amplify ofrece almacenamiento local y sincronización sobre AppSync, que sirve los datos de DynamoDB por GraphQL, y Cognito autentica a los usuarios. Las otras opciones obligan a programar la sincronización o no son adecuadas para clientes móviles. Siglas: EC2 (Elastic Compute Cloud); S3 (Simple Storage Service).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html"
+    ]
+  },
+  {
+    "id": "appsync-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una API GraphQL de AppSync recibe muchas consultas repetidas del catálogo de productos, que cambia pocas veces al día, y la carga en DynamoDB es alta. ¿Qué mejora es la más directa?",
+    "opciones": [
+      "Activar la caché del servidor de AppSync para esas consultas con un TTL adecuado.",
+      "Pasar la tabla a capacidad aprovisionada.",
+      "Crear más índices secundarios.",
+      "Mover la API a otra región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La caché de AppSync devuelve las respuestas repetidas sin llegar a DynamoDB durante el TTL (Time To Live: tiempo de vida antes de caducar) configurado. Cambiar la capacidad o añadir índices no reduce las lecturas repetidas y cambiar de región no tiene relación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html"
+    ]
+  }
+]

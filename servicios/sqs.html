@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon SQS — Apuntes AWS</title>
+<meta name="description" content="Colas de mensajes totalmente gestionadas para desacoplar componentes: un productor deja mensajes y los consumidores los procesan a su ritmo. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/sqs.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon SQS — Apuntes AWS">
+<meta property="og:description" content="Colas de mensajes totalmente gestionadas para desacoplar componentes: un productor deja mensajes y los consumidores los procesan a su ritmo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/sqs.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/sqs.svg" alt="" width="56" height="56"><span>Amazon SQS</span></h1>
+      <p class="full-name">Amazon Simple Queue Service (Amazon SQS)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=integracion-aplicaciones#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/integracion-aplicaciones.svg" alt="" width="18" height="18">Integración de aplicaciones <span class="cat-en">(Application Integration)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/sqs/" target="_blank" rel="noopener">Documentación de Amazon SQS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon SQS (<em>Simple Queue Service</em>) es un servicio de colas de mensajes sin
+        servidores que gestionar. Un componente (el <strong>productor</strong>) envía mensajes a la
+        cola y otro (el <strong>consumidor</strong>) los recoge cuando puede, los procesa y los
+        borra. Así las dos partes quedan <strong>desacopladas</strong>: si el consumidor va lento o
+        se cae, los mensajes esperan en la cola en lugar de perderse, y cada parte escala por su
+        cuenta. Es uno de los servicios más antiguos de AWS y la pieza básica de las arquitecturas
+        asíncronas.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Modelo pull:</strong> los consumidores preguntan a la cola
+          (<code>ReceiveMessage</code>); SQS no empuja los mensajes. Cada mensaje lo procesa un solo
+          consumidor (a diferencia de <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, que reparte a todos).</li>
+        <li><strong>Cola estándar:</strong> rendimiento casi ilimitado, entrega <em>al menos una
+          vez</em> (puede llegar algún duplicado) y orden aproximado. La aplicación debe ser
+          <strong>idempotente</strong>, es decir, procesar dos veces el mismo mensaje sin efectos
+          indeseados.</li>
+        <li><strong>Cola FIFO</strong> (<em>First In, First Out</em>, el nombre acaba en
+          <code>.fifo</code>): orden estricto dentro de cada <strong>grupo de mensajes</strong>
+          (<code>MessageGroupId</code>) y procesamiento exactamente una vez con deduplicación
+          durante 5 minutos. Rendimiento más limitado, ampliable con el modo de alto rendimiento.</li>
+        <li><strong>Tiempo de visibilidad:</strong> cuando un consumidor recibe un mensaje, este se
+          oculta al resto durante ese tiempo (30 s por defecto, hasta 12 horas). Si no se borra antes
+          de que venza, vuelve a la cola y otro consumidor lo recibe.</li>
+        <li><strong>Long polling:</strong> la llamada espera hasta 20 segundos a que llegue algo,
+          en vez de volver vacía al instante. Reduce respuestas vacías y coste.</li>
+        <li><strong>Cola de mensajes fallidos (DLQ):</strong> tras un número máximo de intentos
+          (<code>maxReceiveCount</code>), el mensaje pasa a otra cola para analizarlo sin bloquear al
+          resto. Se puede devolver a la cola original con <em>redrive</em>.</li>
+        <li><strong>Límites:</strong> mensajes de hasta <strong>1 MiB</strong>; para cargas mayores
+          (hasta 2 GB) se guarda el contenido en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> y en la cola solo la referencia, con la biblioteca
+          <em>Extended Client</em>. Retención de 1 minuto a 14 días (4 días por defecto). Retraso de
+          entrega de hasta 15 minutos (<em>delay queues</em>).</li>
+        <li><strong>Integración con <a href="lambda.html">Lambda</a>:</strong> un <em>event source mapping</em> lee la cola por
+          lotes, invoca la función y borra los mensajes procesados; con respuestas parciales de lote
+          solo se reintentan los mensajes que fallaron.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Absorber picos: el frontal acepta pedidos al instante y los trabajadores los procesan
+          a su ritmo.</li>
+        <li>Repartir trabajo entre una flota de instancias o contenedores que escala según los
+          mensajes pendientes.</li>
+        <li>Procesamiento asíncrono con <a href="lambda.html">Lambda</a> (miniaturas, correos, integraciones).</li>
+        <li>Pedidos o transacciones que deben procesarse en orden por cliente (FIFO con
+          <code>MessageGroupId</code> por cliente).</li>
+        <li>Patrón <em>fan-out</em> junto a <a href="sns.html">SNS</a>: un tema reparte cada mensaje a varias colas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si varios consumidores deben recibir el mismo mensaje: <a href="sns.html">SNS</a> o <a href="eventbridge.html">EventBridge</a> (o SNS delante
+          de varias colas).</li>
+        <li>Si hay que releer los datos o mantener un flujo ordenado para varios lectores:
+          <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk">MSK</a> <span class="sigla">(<em>Managed Streaming for Apache Kafka</em>)</span>.</li>
+        <li>Si migras una aplicación que usa JMS <span class="sigla">(<em>Java Message Service</em>: API estándar de mensajería de Java)</span>, AMQP <span class="sigla">(<em>Advanced Message Queuing Protocol</em>: protocolo estándar de mensajería)</span> o MQTT <span class="sigla">(<em>Message Queuing Telemetry Transport</em>: protocolo ligero de mensajería para dispositivos)</span> sin reescribirla: <a href="mq.html">Amazon MQ</a>.</li>
+        <li>Para orquestar pasos con estado, esperas y ramas: <a href="step-functions.html">Step Functions</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa de mensajería</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Cola: un consumidor por mensaje, desacoplar</td><td>SQS</td></tr>
+            <tr><td>Publicar y que lo reciban muchos suscriptores</td><td><a href="sns.html">SNS</a></td></tr>
+            <tr><td>Enrutar eventos por su contenido entre servicios y SaaS (software como servicio)</td><td><a href="eventbridge.html">EventBridge</a></td></tr>
+            <tr><td>Streaming con varios lectores y relectura</td><td><a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a></td></tr>
+            <tr><td>Protocolos estándar (JMS, AMQP, MQTT) en una migración</td><td><a href="mq.html">Amazon MQ</a></td></tr>
+            <tr><td>Flujos de varios pasos con estado</td><td><a href="step-functions.html">Step Functions</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por petición a la API (enviar, recibir, borrar…), contando cada bloque de 64 KB de
+        la carga como una petición, con un nivel gratuito mensual. FIFO cuesta algo más que
+        estándar. Se suma la transferencia de datos de salida. Recibir por lotes (hasta 10 mensajes)
+        y usar long polling reduce mucho el número de peticiones.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Mensajes guardados de forma redundante en varias zonas de disponibilidad.</li>
+        <li>Cifrado en reposo con SSE-SQS (claves gestionadas por SQS) o con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>.</li>
+        <li>Políticas de acceso de la cola (por ejemplo, permitir solo a un tema <a href="sns.html">SNS</a> concreto enviar
+          mensajes) además de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>.</li>
+        <li>Endpoint de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> para usar SQS sin salir a internet.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Desacoplar"</strong> o <strong>"absorber picos"</strong> entre componentes: SQS.</li>
+        <li><strong>"Orden estricto"</strong> o <strong>"sin duplicados"</strong>: cola FIFO.</li>
+        <li><strong>"Un mensaje se procesa dos veces"</strong>: el tiempo de visibilidad es menor que lo que tarda el procesamiento; auméntalo (o amplíalo con <code>ChangeMessageVisibility</code>).</li>
+        <li><strong>"Muchas respuestas vacías y coste alto"</strong>: long polling.</li>
+        <li><strong>"Un mensaje erróneo bloquea o se reintenta sin fin"</strong>: cola de mensajes fallidos (DLQ).</li>
+        <li><strong>"Mensajes de varios MB"</strong>: guardar en <a href="s3.html">S3</a> y enviar la referencia (Extended Client).</li>
+        <li><strong>"Escalar los trabajadores según la cola"</strong>: <a href="../servicio.html?id=ec2-auto-scaling">Auto Scaling</a> con la métrica de mensajes pendientes por instancia.</li>
+        <li><strong>"Un evento debe llegar a varios sistemas"</strong>: <a href="sns.html">SNS</a> con varias colas suscritas (fan-out), no una sola cola.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="sqs"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html" target="_blank" rel="noopener">What is Amazon Simple Queue Service?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html" target="_blank" rel="noopener">Amazon SQS visibility timeout</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html" target="_blank" rel="noopener">Using dead-letter queues in Amazon SQS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fifo-queue-message-identifiers.html" target="_blank" rel="noopener">FIFO queue and message identifiers in Amazon SQS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/08/amazon-sqs-max-payload-size-1mib/" target="_blank" rel="noopener">Amazon SQS increases maximum message payload size to 1 MiB</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

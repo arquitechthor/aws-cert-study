@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon EventBridge — Apuntes AWS</title>
+<meta name="description" content="Bus de eventos sin servidores: recibe eventos de AWS, de tus aplicaciones y de SaaS, y los enruta por reglas a más de 20 destinos; incluye Scheduler y Pipes. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/eventbridge.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon EventBridge — Apuntes AWS">
+<meta property="og:description" content="Bus de eventos sin servidores: recibe eventos de AWS, de tus aplicaciones y de SaaS, y los enruta por reglas a más de 20 destinos; incluye Scheduler y Pipes.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/eventbridge.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/eventbridge.svg" alt="" width="56" height="56"><span>Amazon EventBridge</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=integracion-aplicaciones#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/integracion-aplicaciones.svg" alt="" width="18" height="18">Integración de aplicaciones <span class="cat-en">(Application Integration)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/eventbridge/" target="_blank" rel="noopener">Documentación de Amazon EventBridge ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon EventBridge es un servicio sin servidores para construir arquitecturas
+        <strong>dirigidas por eventos</strong>. Un <strong>evento</strong> es un JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span> que dice "ha
+        pasado algo" (se creó un pedido, una instancia cambió de estado, alguien subió un fichero).
+        EventBridge recibe esos eventos en un <strong>bus</strong>, los compara con
+        <strong>reglas</strong> y envía los que coinciden a sus <strong>destinos</strong>. Quien emite
+        el evento no necesita saber quién lo consume. Antes se llamaba <a href="cloudwatch.html">CloudWatch</a> Events, y ha crecido
+        con dos piezas más: <strong>Scheduler</strong> (tareas programadas) y <strong>Pipes</strong>
+        (conexiones punto a punto).</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Buses de eventos:</strong> el bus <em>por defecto</em> recibe los eventos de los
+          servicios de AWS; los <em>personalizados</em>, los de tus aplicaciones; los de
+          <em>socios</em>, los de proveedores SaaS (software como servicio) como Zendesk o Shopify.</li>
+        <li><strong>Reglas y patrones:</strong> una regla filtra eventos por cualquier campo del JSON
+          (prefijos, números, listas, existencia…) y los envía a hasta 5 destinos. También puede
+          transformar el evento antes de enviarlo (<em>input transformer</em>).</li>
+        <li><strong>Destinos:</strong> <a href="lambda.html">Lambda</a>, <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, <a href="step-functions.html">Step Functions</a>, Kinesis, <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span>, <a href="api-gateway.html">API Gateway</a>,
+          otro bus (incluso de otra cuenta o región), <em>API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> destinations</em> hacia cualquier API HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>
+          externa, y muchos más.</li>
+        <li><strong>Tamaño de evento:</strong> hasta <strong>1 MB</strong> en la mayoría de regiones
+          (antes 256 KB).</li>
+        <li><strong>Archivo y reproducción:</strong> guarda eventos y permite volver a enviarlos, útil
+          para recuperarse de errores o probar un consumidor nuevo.</li>
+        <li><strong>Registro de esquemas:</strong> descubre la estructura de los eventos y genera
+          código para usarlos con tipos.</li>
+        <li><strong>EventBridge Scheduler:</strong> programa millones de tareas puntuales o
+          recurrentes (expresiones <code>cron</code> y <code>rate</code>, con zona horaria) que invocan
+          directamente más de 200 servicios. Sustituye a las reglas programadas.</li>
+        <li><strong>EventBridge Pipes:</strong> conecta una fuente (SQS, Kinesis, <a href="dynamodb.html">DynamoDB</a> Streams,
+          <a href="../servicio.html?id=msk">MSK</a> <span class="sigla">(<em>Managed Streaming for Apache Kafka</em>)</span>…) con un destino, con filtrado, enriquecimiento y transformación opcionales, sin escribir
+          código de pegamento.</li>
+        <li><strong>Reintentos y DLQ <span class="sigla">(<em>Dead-Letter Queue</em>: cola donde acaban los mensajes que fallan)</span>:</strong> reintenta hasta 24 horas y, si no consigue entregar,
+          envía el evento a una cola de mensajes fallidos de SQS.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Reaccionar a cambios en AWS: una instancia se detiene, un bucket se hace público, falla un
+          despliegue.</li>
+        <li>Desacoplar microservicios que publican eventos de dominio y se suscriben por reglas.</li>
+        <li>Integrar aplicaciones SaaS con tus funciones o colas sin sondear sus API.</li>
+        <li>Tareas programadas (informes diarios, limpiezas, recordatorios) con Scheduler.</li>
+        <li>Centralizar eventos de varias cuentas en una cuenta de seguridad u operaciones.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si los mensajes deben esperar a que un consumidor los recoja: <a href="sqs.html">SQS</a> (EventBridge entrega, no
+          almacena salvo el archivo).</li>
+        <li>Streaming de gran volumen con orden y relectura: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk">MSK</a>.</li>
+        <li>Notificaciones a personas por SMS <span class="sigla">(<em>Short Message Service</em>: mensajes de texto al móvil)</span> o push móvil: <a href="sns.html">SNS</a>.</li>
+        <li>Orquestar pasos con estado y esperas: <a href="step-functions.html">Step Functions</a> (que se puede lanzar desde
+          EventBridge).</li>
+      </ul>
+
+      <h2 id="comparativa">EventBridge frente a SNS</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>EventBridge</th><th><a href="sns.html">SNS</a></th></tr></thead>
+          <tbody>
+            <tr><td>Eventos de servicios de AWS y SaaS</td><td>Sí, nativos</td><td>Solo los que publican en SNS</td></tr>
+            <tr><td>Filtrado</td><td>Patrones sobre todo el evento</td><td>Políticas de filtrado</td></tr>
+            <tr><td>Destinos</td><td>Más de 20 servicios y API externas</td><td><a href="sqs.html">SQS</a>, <a href="lambda.html">Lambda</a>, HTTP, correo, SMS, móvil</td></tr>
+            <tr><td>Programación horaria</td><td>Sí (Scheduler)</td><td>No</td></tr>
+            <tr><td>Archivo y reproducción</td><td>Sí</td><td>Solo temas FIFO <span class="sigla">(<em>First In, First Out</em>: el primero en entrar es el primero en salir)</span></td></tr>
+            <tr><td>Rendimiento y latencia</td><td>Alto, con cuotas por región</td><td>Muy alto, latencia mínima</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Los eventos de servicios de AWS en el bus por defecto son gratuitos; se pagan los eventos
+        personalizados y de socios publicados (por millón, cada 64 KB cuenta como uno), la entrega
+        entre cuentas, el archivo (por GB guardado y procesado), las invocaciones de API destinations,
+        las peticiones de Pipes y las invocaciones de Scheduler (con un nivel gratuito generoso).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Servicio regional y redundante en varias zonas.</li>
+        <li>Políticas de recursos en el bus para aceptar eventos de otras cuentas o de la organización.</li>
+        <li>Roles de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> para que EventBridge invoque los destinos.</li>
+        <li>Cifrado en reposo, con opción de clave de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> gestionada por el cliente.</li>
+        <li>Buses globales y replicación de eventos entre regiones con <em>global endpoints</em>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Reaccionar a un cambio de estado de un servicio de AWS"</strong>: regla de EventBridge.</li>
+        <li><strong>"Ejecutar una <a href="lambda.html">Lambda</a> cada día a las 8:00"</strong>: EventBridge Scheduler (o una regla programada).</li>
+        <li><strong>"Integrar eventos de un SaaS"</strong>: bus de socio de EventBridge.</li>
+        <li><strong>"Conectar una cola con <a href="step-functions.html">Step Functions</a> sin código intermedio"</strong>: EventBridge Pipes.</li>
+        <li><strong>"Reprocesar los eventos de ayer tras corregir un error"</strong>: archivo y reproducción.</li>
+        <li><strong>"Centralizar eventos de todas las cuentas"</strong>: reglas que envían al bus de una cuenta central con política de recursos.</li>
+        <li><strong>"Llamar a una API HTTP de un tercero ante un evento"</strong>: API destinations.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="eventbridge"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html" target="_blank" rel="noopener">What is Amazon EventBridge?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html" target="_blank" rel="noopener">Amazon EventBridge event patterns</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html" target="_blank" rel="noopener">What is Amazon EventBridge Scheduler?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-pipes.html" target="_blank" rel="noopener">Amazon EventBridge Pipes</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-archive.html" target="_blank" rel="noopener">Archiving and replaying events in Amazon EventBridge</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

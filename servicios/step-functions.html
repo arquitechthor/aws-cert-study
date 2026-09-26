@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Step Functions — Apuntes AWS</title>
+<meta name="description" content="Orquestación visual de flujos de trabajo sin servidores: encadena servicios de AWS con pasos, ramas, esperas, reintentos y ejecución en paralelo. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/step-functions.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Step Functions — Apuntes AWS">
+<meta property="og:description" content="Orquestación visual de flujos de trabajo sin servidores: encadena servicios de AWS con pasos, ramas, esperas, reintentos y ejecución en paralelo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/step-functions.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/step-functions.svg" alt="" width="56" height="56"><span>AWS Step Functions</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=integracion-aplicaciones#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/integracion-aplicaciones.svg" alt="" width="18" height="18">Integración de aplicaciones <span class="cat-en">(Application Integration)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/step-functions/" target="_blank" rel="noopener">Documentación de AWS Step Functions ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Step Functions coordina los pasos de un proceso como una <strong>máquina de
+        estados</strong>: defines qué se hace en cada paso, qué pasa si falla, cuándo esperar y por
+        dónde seguir, y el servicio lo ejecuta, guarda el estado entre pasos y te muestra cada
+        ejecución en un diagrama. Así la lógica de coordinación (reintentos, ramas, tiempos de
+        espera) sale del código de tus funciones y queda declarada en un solo sitio. Los flujos se
+        escriben en ASL (<em>Amazon States Language</em>, un JSON <span class="sigla">(<em>JavaScript Object Notation</em>: formato de datos en texto)</span>) o se diseñan arrastrando pasos en
+        <em>Workflow Studio</em>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Estados:</strong> <code>Task</code> (hace un trabajo), <code>Choice</code> (rama
+          según una condición), <code>Parallel</code> (ramas a la vez), <code>Map</code> (repite un
+          paso para cada elemento de una lista; el <em>Map distribuido</em> procesa millones de
+          objetos de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> en paralelo), <code>Wait</code>, <code>Pass</code>, <code>Succeed</code> y
+          <code>Fail</code>.</li>
+        <li><strong>Tipos de flujo</strong> (se elige al crearlo y no se puede cambiar):
+          <ul>
+            <li><strong>Standard:</strong> hasta <strong>1 año</strong>, cada paso se ejecuta
+              <strong>exactamente una vez</strong>, historial consultable en el servicio durante
+              90 días; se paga por transición de estado.</li>
+            <li><strong>Express:</strong> hasta <strong>5 minutos</strong>, ejecución <em>al menos
+              una vez</em>, ritmo de más de 100 000 ejecuciones por segundo, historial en <a href="cloudwatch.html">CloudWatch</a>
+              Logs; se paga por número y duración de ejecuciones.</li>
+          </ul></li>
+        <li><strong>Integraciones con servicios:</strong> llamadas directas a más de 200 servicios
+          (<a href="dynamodb.html">DynamoDB</a>, <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, <a href="ecs.html">ECS</a> <span class="sigla">(<em>Elastic Container Service</em>)</span>, <a href="../servicio.html?id=glue">Glue</a>, <a href="bedrock.html">Bedrock</a>…) sin una <a href="lambda.html">Lambda</a> de por medio.</li>
+        <li><strong>Patrones de integración</strong> (solo en Standard los dos últimos):
+          <em>petición-respuesta</em> (llama y sigue), <em>ejecutar un trabajo</em>
+          (<code>.sync</code>, espera a que termine, por ejemplo un trabajo de Batch) y <em>esperar
+          una devolución de llamada</em> (<code>.waitForTaskToken</code>, se pausa hasta que alguien
+          devuelve un token; ideal para aprobaciones humanas).</li>
+        <li><strong>Gestión de errores:</strong> <code>Retry</code> con espera exponencial y
+          <code>Catch</code> para desviar a un paso de compensación. Es la base del patrón
+          <em>saga</em> para deshacer pasos de una transacción distribuida.</li>
+        <li><strong>Datos entre pasos:</strong> con JSONPath o con expresiones JSONata, y variables
+          para reutilizar valores en pasos posteriores.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Procesos de negocio con varios pasos: pedido, pago, envío y notificación.</li>
+        <li>Flujos con intervención humana (aprobaciones) mediante tokens de devolución.</li>
+        <li>Canalizaciones de datos y ML (<a href="../servicio.html?id=glue">Glue</a>, <a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a>, Batch) con esperas a que terminen.</li>
+        <li>Procesar en paralelo miles de ficheros de <a href="s3.html">S3</a> con el Map distribuido.</li>
+        <li>Orquestar llamadas a modelos de <a href="bedrock.html">Bedrock</a> y pasos de validación en aplicaciones de IA <span class="sigla">(inteligencia artificial)</span>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Una sola acción rápida disparada por un evento: una función <a href="lambda.html">Lambda</a> basta.</li>
+        <li>Enrutar eventos entre servicios sin estado: <a href="eventbridge.html">EventBridge</a>.</li>
+        <li>Desacoplar productor y consumidor con una cola: <a href="sqs.html">SQS</a>.</li>
+        <li>Canalizaciones de datos complejas con dependencias al estilo Apache Airflow y un equipo que
+          ya lo usa: Amazon MWAA (<em>Managed Workflows for Apache Airflow</em>).</li>
+      </ul>
+
+      <h2 id="comparativa">Standard frente a Express</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Standard</th><th>Express</th></tr></thead>
+          <tbody>
+            <tr><td>Duración máxima</td><td>1 año</td><td>5 minutos</td></tr>
+            <tr><td>Semántica</td><td>Exactamente una vez</td><td>Al menos una vez</td></tr>
+            <tr><td>Ritmo de inicio</td><td>Miles por segundo</td><td>Más de 100 000 por segundo</td></tr>
+            <tr><td>Precio</td><td>Por transición de estado</td><td>Por ejecución y duración</td></tr>
+            <tr><td>.sync y waitForTaskToken</td><td>Sí</td><td>No</td></tr>
+            <tr><td>Uso típico</td><td>Procesos largos y auditables</td><td>Eventos de alto volumen, IoT (internet de las cosas), streaming</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En los flujos Standard se paga por cada transición de estado, con un nivel gratuito mensual.
+        En los Express, por número de ejecuciones y por su duración según la memoria usada. Se suman
+        los servicios invocados en cada paso y, en Express, los registros en <a href="cloudwatch.html">CloudWatch</a>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cada máquina de estados asume un rol de <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> con los permisos justos para los servicios que
+          llama.</li>
+        <li>Servicio regional y redundante en varias zonas; el estado de las ejecuciones Standard se
+          guarda de forma duradera.</li>
+        <li>Cifrado de los datos con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> gestionadas por el cliente si se necesita.</li>
+        <li>Integración con <a href="../servicio.html?id=x-ray">X-Ray</a> para trazar las ejecuciones y endpoints de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Coordinar varias Lambdas con reintentos, ramas y esperas"</strong>: Step Functions, no encadenar funciones que se llaman entre sí.</li>
+        <li><strong>"Proceso que dura días"</strong> o <strong>"aprobación humana"</strong>: flujo Standard con <code>.waitForTaskToken</code>.</li>
+        <li><strong>"Alto volumen de eventos cortos y barato"</strong>: flujo Express.</li>
+        <li><strong>"Exactamente una vez"</strong>: Standard.</li>
+        <li><strong>"Procesar en paralelo millones de objetos de <a href="s3.html">S3</a>"</strong>: Map distribuido.</li>
+        <li><strong>"Deshacer pasos si falla uno posterior"</strong>: <code>Catch</code> hacia pasos de compensación (patrón saga).</li>
+        <li><strong>"Llamar a <a href="dynamodb.html">DynamoDB</a> sin escribir una <a href="lambda.html">Lambda</a>"</strong>: integración directa con el servicio.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="step-functions"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html" target="_blank" rel="noopener">What is Step Functions?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/step-functions/latest/dg/choosing-workflow-type.html" target="_blank" rel="noopener">Choosing workflow type in Step Functions</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html" target="_blank" rel="noopener">Discover service integration patterns in Step Functions</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/step-functions/latest/dg/state-map-distributed.html" target="_blank" rel="noopener">Using Map state in Distributed mode</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html" target="_blank" rel="noopener">Handling errors in Step Functions workflows</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

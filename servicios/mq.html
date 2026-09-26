@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon MQ — Apuntes AWS</title>
+<meta name="description" content="Brokers de mensajería gestionados de Apache ActiveMQ y RabbitMQ, para migrar aplicaciones que usan protocolos estándar sin reescribirlas. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/mq.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon MQ — Apuntes AWS">
+<meta property="og:description" content="Brokers de mensajería gestionados de Apache ActiveMQ y RabbitMQ, para migrar aplicaciones que usan protocolos estándar sin reescribirlas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/mq.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/mq.svg" alt="" width="56" height="56"><span>Amazon MQ</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=integracion-aplicaciones#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/integracion-aplicaciones.svg" alt="" width="18" height="18">Integración de aplicaciones <span class="cat-en">(Application Integration)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/amazon-mq/" target="_blank" rel="noopener">Documentación de Amazon MQ ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon MQ es un servicio de <strong>brokers de mensajes gestionados</strong> con dos motores
+        de código abierto: <strong>Apache ActiveMQ</strong> y <strong>RabbitMQ</strong>. Un broker es
+        el servidor intermediario que recibe, guarda y reparte los mensajes entre aplicaciones.
+        AWS se encarga de aprovisionarlo, parchearlo y mantener su alta disponibilidad, y tus
+        aplicaciones siguen hablando los mismos protocolos estándar que en tu centro de datos. Su
+        razón de ser es la <strong>migración</strong>: llevar a AWS aplicaciones que ya usan un broker
+        sin reescribir la mensajería.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Protocolos:</strong> ActiveMQ habla JMS <span class="sigla">(<em>Java Message Service</em>: API estándar de mensajería de Java)</span>, AMQP <span class="sigla">(<em>Advanced Message Queuing Protocol</em>: protocolo estándar de mensajería)</span> 1.0, MQTT <span class="sigla">(<em>Message Queuing Telemetry Transport</em>: protocolo ligero de mensajería para dispositivos)</span>, STOMP <span class="sigla">(<em>Simple Text Oriented Messaging Protocol</em>: protocolo de mensajería basado en texto)</span>, OpenWire y
+          WebSocket; RabbitMQ habla AMQP 0-9-1. Por eso encaja cuando la aplicación ya usa esas
+          interfaces.</li>
+        <li><strong>Modos de despliegue:</strong>
+          <ul>
+            <li><strong>Instancia única:</strong> para desarrollo y pruebas.</li>
+            <li><strong>ActiveMQ activo/en espera:</strong> dos brokers en dos zonas de disponibilidad
+              con almacenamiento compartido (<a href="../servicio.html?id=efs">EFS</a>); si cae el activo, el de espera toma el control.</li>
+            <li><strong>RabbitMQ en clúster:</strong> tres nodos en tres zonas detrás de un único
+              endpoint, con colas replicadas (colas <em>quorum</em>).</li>
+          </ul></li>
+        <li><strong>Tamaño del broker:</strong> se elige un tipo de instancia (<code>mq.m5</code>,
+          <code>mq.m7g</code>…); no escala solo como <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, hay que dimensionarlo.</li>
+        <li><strong>Colas y temas:</strong> los brokers ofrecen tanto colas (punto a punto) como temas
+          (publicación/suscripción) con los modelos propios de cada motor (intercambios de RabbitMQ,
+          destinos virtuales de ActiveMQ).</li>
+        <li><strong>Acceso:</strong> brokers públicos (con endpoint accesible desde internet) o
+          privados (solo dentro de una <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Migrar a AWS aplicaciones Java empresariales que usan JMS.</li>
+        <li>Llevar un clúster de RabbitMQ autogestionado a un servicio gestionado.</li>
+        <li>Integrar sistemas heredados que solo hablan AMQP, MQTT o STOMP.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Aplicaciones nuevas en la nube: <a href="sqs.html">SQS</a> y <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> escalan solos, no hay broker que dimensionar y
+          son más baratos para la mayoría de cargas.</li>
+        <li>Streaming de eventos con relectura y gran volumen: <a href="../servicio.html?id=kinesis-data-streams">Kinesis Data Streams</a> o <a href="../servicio.html?id=msk">MSK</a> <span class="sigla">(<em>Managed Streaming for Apache Kafka</em>)</span>.</li>
+        <li>Enrutamiento de eventos entre servicios de AWS: <a href="eventbridge.html">EventBridge</a>.</li>
+        <li>Mensajería de miles de dispositivos por MQTT: <a href="../servicio.html?id=iot-core">AWS IoT Core</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Amazon MQ frente a SQS/SNS</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>Amazon MQ</th><th><a href="sqs.html">SQS</a> / <a href="sns.html">SNS</a></th></tr></thead>
+          <tbody>
+            <tr><td>Protocolos</td><td>Estándar (JMS, AMQP, MQTT, STOMP)</td><td>API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> propia de AWS</td></tr>
+            <tr><td>Escalado</td><td>Eliges el tamaño del broker</td><td>Automático, casi ilimitado</td></tr>
+            <tr><td>Operación</td><td>Gestionado, pero con broker y ventanas de mantenimiento</td><td>Sin servidores</td></tr>
+            <tr><td>Mejor para</td><td>Migrar aplicaciones existentes</td><td>Aplicaciones nuevas en AWS</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por hora de cada instancia de broker según su tipo y el modo de despliegue (varias
+        instancias en alta disponibilidad multiplican el coste), más el almacenamiento por GB al mes y
+        la transferencia de datos. No hay cobro por mensaje.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Brokers privados dentro de la <a href="vpc.html">VPC</a>, con security groups.</li>
+        <li>Cifrado en tránsito con TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> y en reposo con claves de <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>.</li>
+        <li>Usuarios del propio broker (y LDAP <span class="sigla">(<em>Lightweight Directory Access Protocol</em>: protocolo de directorios de usuarios)</span> en ActiveMQ); <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> controla quién gestiona los brokers.</li>
+        <li>Alta disponibilidad con activo/en espera (ActiveMQ) o clúster de tres nodos (RabbitMQ).</li>
+        <li>Actualizaciones en ventanas de mantenimiento que elige el cliente.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"JMS"</strong>, <strong>"AMQP"</strong>, <strong>"STOMP"</strong>, <strong>"OpenWire"</strong> o <strong>"migrar sin cambiar el código de mensajería"</strong>: Amazon MQ.</li>
+        <li><strong>"Aplicación nueva, escalado automático, sin servidores"</strong>: <a href="sqs.html">SQS</a> o <a href="sns.html">SNS</a>, no Amazon MQ.</li>
+        <li><strong>"Alta disponibilidad de ActiveMQ"</strong>: despliegue activo/en espera en dos zonas.</li>
+        <li><strong>"RabbitMQ gestionado y resistente a fallos de zona"</strong>: clúster de tres nodos.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="mq"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/welcome.html" target="_blank" rel="noopener">What is Amazon MQ?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/amazon-mq/latest/migration-guide/concept-chapter-about.html" target="_blank" rel="noopener">What is the Amazon MQ migration guide?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/rabbitmq-broker-architecture.html" target="_blank" rel="noopener">Amazon MQ for RabbitMQ broker architecture</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

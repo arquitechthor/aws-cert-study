@@ -125,7 +125,7 @@
       <ul>
         <li>La clave privada de los certificados estándar la protege AWS y no sale del servicio.</li>
         <li>Renovación automática con validación DNS: evita caídas por certificados caducados.</li>
-        <li>Eventos de <a href="../servicio.html?id=eventbridge">EventBridge</a> y métrica de días hasta la caducidad para vigilar los certificados importados.</li>
+        <li>Eventos de <a href="eventbridge.html">EventBridge</a> y métrica de días hasta la caducidad para vigilar los certificados importados.</li>
         <li>Permisos con <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> para solicitar, importar o borrar certificados.</li>
       </ul>
 
@@ -140,7 +140,7 @@
         <li><strong>"Certificado para <a href="cloudfront.html">CloudFront</a>"</strong>: ACM en <strong>us-east-1</strong>.</li>
         <li><strong>"Renovación automática"</strong>: validación por DNS (la de correo exige acción humana).</li>
         <li><strong>"Certificado importado caducado"</strong>: ACM no renueva los importados; hay que
-          vigilarlos con <a href="../servicio.html?id=eventbridge">EventBridge</a> o <a href="cloudwatch.html">CloudWatch</a>.</li>
+          vigilarlos con <a href="eventbridge.html">EventBridge</a> o <a href="cloudwatch.html">CloudWatch</a>.</li>
         <li><strong>"HTTPS en <a href="ec2.html">EC2</a> sin pagar certificados"</strong>: terminar TLS en un <a href="../servicio.html?id=elb">ALB</a> con un
           certificado de ACM.</li>
         <li><strong>"Certificados internos"</strong>: AWS Private CA.</li>

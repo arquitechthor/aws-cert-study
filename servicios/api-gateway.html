@@ -104,7 +104,7 @@
         <li>Fachada única delante de microservicios en contenedores o instancias privadas.</li>
         <li>Publicar una API para terceros con claves, cuotas y planes de uso (REST).</li>
         <li>Integración directa con servicios de AWS sin Lambda intermedia (por ejemplo, poner mensajes
-          en <a href="../servicio.html?id=sqs">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span> o escribir en DynamoDB).</li>
+          en <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span> o escribir en DynamoDB).</li>
         <li>Aplicaciones en tiempo real con WebSocket.</li>
       </ul>
 
@@ -112,7 +112,7 @@
       <ul>
         <li>Subir o descargar ficheros grandes: superan los 10 MB. Mejor URLs prefirmadas de <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>.</li>
         <li>Procesos que tardan más que el tiempo máximo de integración: mejor un patrón asíncrono (la
-          API encola el trabajo en <a href="../servicio.html?id=sqs">SQS</a> o <a href="../servicio.html?id=step-functions">Step Functions</a> y el cliente consulta el estado).</li>
+          API encola el trabajo en <a href="sqs.html">SQS</a> o <a href="step-functions.html">Step Functions</a> y el cliente consulta el estado).</li>
         <li>Si solo necesitas un endpoint HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> para una única función <a href="lambda.html">Lambda</a>, sin autorizador ni
           límites, una <strong>URL <span class="sigla">(<em>Uniform Resource Locator</em>: dirección web)</span> de función de Lambda</strong> puede bastar.</li>
         <li>Para balancear tráfico hacia instancias o contenedores sin funciones de API: un Application

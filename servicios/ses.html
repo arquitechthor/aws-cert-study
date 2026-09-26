@@ -79,7 +79,7 @@
           CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>), <strong>SPF <span class="sigla">(<em>Sender Policy Framework</em>: lista de servidores autorizados a enviar correo del dominio)</span></strong> (dominio MAIL FROM personalizado) y <strong>DMARC <span class="sigla">(<em>Domain-based Message Authentication, Reporting and Conformance</em>: política que indica qué hacer con correos que no se autentican)</span></strong>. Son
           claves para no acabar en spam.</li>
         <li><strong>Conjuntos de configuración:</strong> agrupan envíos para publicar eventos (entregas,
-          rebotes, quejas, aperturas, clics) en <a href="cloudwatch.html">CloudWatch</a>, <a href="../servicio.html?id=data-firehose">Firehose</a>, <a href="../servicio.html?id=sns">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> o <a href="../servicio.html?id=eventbridge">EventBridge</a>.</li>
+          rebotes, quejas, aperturas, clics) en <a href="cloudwatch.html">CloudWatch</a>, <a href="../servicio.html?id=data-firehose">Firehose</a>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> o <a href="eventbridge.html">EventBridge</a>.</li>
         <li><strong>Reputación:</strong> AWS vigila las tasas de rebote y de quejas; si suben demasiado,
           puede pausar el envío. La lista de supresión evita reenviar a direcciones que rebotan.</li>
         <li><strong>Recepción:</strong> reglas de recepción que guardan el correo en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>, invocan <a href="lambda.html">Lambda</a> o
@@ -101,7 +101,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Notificaciones operativas a un equipo por varios canales (correo, SMS <span class="sigla">(<em>Short Message Service</em>: mensajes de texto al móvil)</span>, push, HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>): Amazon
-          <a href="../servicio.html?id=sns">SNS</a> es más sencillo.</li>
+          <a href="sns.html">SNS</a> es más sencillo.</li>
         <li>Buzones de correo corporativos para personas: SES no es un servidor de buzones.</li>
         <li>Si no puedes gestionar rebotes y quejas: una mala reputación puede suspender el envío.</li>
       </ul>
@@ -109,10 +109,10 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>SES</th><th><a href="../servicio.html?id=sns">SNS</a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>SES</th><th><a href="sns.html">SNS</a></th></tr></thead>
           <tbody>
             <tr><td>Correo con HTML <span class="sigla">(<em>HyperText Markup Language</em>: lenguaje de las páginas web)</span>, remitente propio y dominio autenticado</td><td>Sí</td><td>No (correo básico de suscripción)</td></tr>
-            <tr><td>Publicar un mensaje a muchos suscriptores y protocolos</td><td>No</td><td>Sí (<a href="../servicio.html?id=sqs">SQS</a>, <a href="lambda.html">Lambda</a>, HTTP, SMS, correo)</td></tr>
+            <tr><td>Publicar un mensaje a muchos suscriptores y protocolos</td><td>No</td><td>Sí (<a href="sqs.html">SQS</a>, <a href="lambda.html">Lambda</a>, HTTP, SMS, correo)</td></tr>
             <tr><td>Recibir correo</td><td>Sí</td><td>No</td></tr>
             <tr><td>Métricas de rebotes y quejas</td><td>Sí</td><td>No</td></tr>
           </tbody>
@@ -148,7 +148,7 @@
         <li><strong>"Registrar rebotes, quejas y aperturas"</strong>: conjunto de configuración con
           destino de eventos.</li>
         <li><strong>"Procesar correos entrantes"</strong>: reglas de recepción de SES hacia <a href="s3.html">S3</a> o <a href="lambda.html">Lambda</a>.</li>
-        <li><strong>"Notificar a un equipo por correo y SMS"</strong>: <a href="../servicio.html?id=sns">SNS</a>, no SES.</li>
+        <li><strong>"Notificar a un equipo por correo y SMS"</strong>: <a href="sns.html">SNS</a>, no SES.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

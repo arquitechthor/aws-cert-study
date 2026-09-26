@@ -1,0 +1,202 @@
+[
+  {
+    "id": "eventbridge-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere que se ejecute automáticamente una función cada vez que una instancia EC2 (Elastic Compute Cloud) cambia al estado \"stopped\". ¿Qué servicio detecta el evento y lanza la función?",
+    "opciones": [
+      "Amazon EventBridge.",
+      "Amazon Route 53.",
+      "AWS Artifact.",
+      "Amazon Lightsail."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EC2 emite eventos de cambio de estado al bus por defecto de EventBridge, y una regla puede invocar la función. Route 53 es DNS (Domain Name System: traduce nombres de dominio a direcciones IP), Artifact da informes de cumplimiento y Lightsail ofrece servidores sencillos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html"
+    ]
+  },
+  {
+    "id": "eventbridge-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué opción permite programar tareas recurrentes, como lanzar un proceso todos los días a medianoche, sin mantener un servidor con cron?",
+    "opciones": [
+      "Amazon EventBridge Scheduler.",
+      "Amazon S3 Glacier.",
+      "AWS Snowball.",
+      "Amazon Macie."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EventBridge Scheduler ejecuta tareas puntuales o recurrentes con expresiones cron o rate e invoca directamente muchos servicios. Las demás opciones son almacenamiento, transferencia física de datos y descubrimiento de datos sensibles.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html"
+    ]
+  },
+  {
+    "id": "eventbridge-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "El equipo de seguridad quiere recibir en una cuenta central, en tiempo casi real, los hallazgos de GuardDuty de todas las cuentas de la organización para procesarlos con una función. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Reglas de EventBridge en cada cuenta que envían los eventos a un bus de la cuenta central con una política de recursos que lo permite.",
+      "Un script que descarga cada hora los hallazgos de cada cuenta.",
+      "Compartir las claves de acceso de cada cuenta con la central.",
+      "Copiar los hallazgos a mano una vez al día."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EventBridge puede enviar eventos a un bus de otra cuenta y la política de recursos del bus central autoriza esas cuentas; allí una regla invoca la función. Sondear o copiar a mano añade retraso y compartir claves es inseguro.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html"
+    ]
+  },
+  {
+    "id": "eventbridge-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un error en un consumidor hizo que se procesaran mal los eventos de un bus personalizado durante dos horas. Tras corregirlo, hay que volver a procesar esos eventos. ¿Qué función de EventBridge lo permite si se configuró antes?",
+    "opciones": [
+      "Archivo y reproducción (archive and replay).",
+      "Registro de esquemas.",
+      "API destinations.",
+      "Input transformer."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Un archivo guarda los eventos del bus y la reproducción los vuelve a enviar para un intervalo de tiempo. El registro de esquemas describe eventos, API destinations llama a API externas y el input transformer cambia la forma del evento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-archive.html"
+    ]
+  },
+  {
+    "id": "eventbridge-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador quiere que una regla solo capture los eventos de pedidos con importe mayor de 1000 y país ES o PT. ¿Dónde se expresa esa condición?",
+    "opciones": [
+      "En el patrón de eventos de la regla, con filtrado numérico y lista de valores.",
+      "En el código de la función destino, descartando el resto.",
+      "En la política de recursos del bus.",
+      "En el registro de esquemas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los patrones de eventos admiten filtrado por valores exactos, listas y comparaciones numéricas, así que solo se invoca al destino con lo que interesa. Filtrar en la función cuesta invocaciones, y la política del bus o los esquemas no filtran eventos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-patterns.html"
+    ]
+  },
+  {
+    "id": "eventbridge-006",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un equipo quiere leer mensajes de una cola SQS, descartar los que no tengan el campo \"prioridad\", enriquecer los demás con una función y arrancar con cada uno una máquina de Step Functions, con el mínimo código. ¿Qué DOS elementos de EventBridge Pipes intervienen? (Elige 2.)",
+    "opciones": [
+      "Un filtro sobre los mensajes de la fuente SQS.",
+      "Un paso de enriquecimiento que invoca la función antes del destino.",
+      "Un bus de socio SaaS.",
+      "Una regla programada con expresión cron.",
+      "Una cola de mensajes fallidos obligatoria en el destino."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Un pipe conecta la fuente SQS con el destino Step Functions y admite filtrado y enriquecimiento opcionales. Los buses de socios y las reglas cron son otras funciones de EventBridge, y la DLQ no es obligatoria.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-pipes.html"
+    ]
+  },
+  {
+    "id": "eventbridge-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una aplicación debe notificar a la API REST (Representational State Transfer: estilo de API sobre HTTP) de un proveedor externo, que usa una clave de API, cada vez que llega cierto evento a un bus. ¿Qué opción evita escribir y mantener una función intermedia?",
+    "opciones": [
+      "Un destino de tipo API destination con una conexión que guarda la autenticación.",
+      "Una suscripción de correo en SNS.",
+      "Una cola SQS que el proveedor consulte.",
+      "Una regla que escriba en S3."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las API destinations llaman a endpoints HTTP externos directamente desde una regla, con la autenticación guardada en una conexión y con control de ritmo. Las demás opciones obligan al proveedor a cambiar o no llaman a su API. Siglas: S3 (Simple Storage Service).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html"
+    ]
+  },
+  {
+    "id": "eventbridge-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa diseña microservicios que publican eventos de dominio; nuevos equipos deben poder suscribirse a subconjuntos de esos eventos sin cambiar a los productores, e integrar además eventos de un CRM (Customer Relationship Management) SaaS. ¿Qué pieza central encaja mejor?",
+    "opciones": [
+      "Un bus personalizado de EventBridge con reglas por consumidor y un bus de socio para el CRM.",
+      "Una cola SQS compartida por todos.",
+      "Llamadas HTTP directas entre servicios.",
+      "Una base de datos compartida que todos consultan."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EventBridge desacopla productores y consumidores: cada equipo añade su regla con el patrón que le interesa, y los buses de socios reciben eventos de SaaS. Una cola compartida entrega cada mensaje a uno solo, y las llamadas directas o la base compartida acoplan los servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html"
+    ]
+  },
+  {
+    "id": "eventbridge-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa tiene cientos de reglas programadas de EventBridge con expresiones cron en UTC (Coordinated Universal Time: hora universal coordinada) que fallan cada cambio de horario de verano, y necesita tareas puntuales (\"recordar esto el día X a las 10:00\"). ¿Qué mejora lo resuelve?",
+    "opciones": [
+      "Migrar a EventBridge Scheduler, que admite zonas horarias y programaciones puntuales.",
+      "Crear una instancia EC2 con cron.",
+      "Duplicar cada regla para invierno y verano.",
+      "Usar alarmas de CloudWatch."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Scheduler permite indicar la zona horaria (y así respeta el horario de verano), crear programaciones puntuales y escalar a millones de tareas. Un servidor con cron añade operación, duplicar reglas es frágil y las alarmas no programan tareas. Siglas: EC2 (Elastic Compute Cloud).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html"
+    ]
+  }
+]

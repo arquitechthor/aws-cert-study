@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS AppSync — Apuntes AWS</title>
+<meta name="description" content="API GraphQL y de eventos en tiempo real sin servidores: una sola API para leer y escribir de varias fuentes de datos, con suscripciones por WebSocket. Apuntes y preguntas de práctica para SAP-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/appsync.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS AppSync — Apuntes AWS">
+<meta property="og:description" content="API GraphQL y de eventos en tiempo real sin servidores: una sola API para leer y escribir de varias fuentes de datos, con suscripciones por WebSocket.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/appsync.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/appsync.svg" alt="" width="56" height="56"><span>AWS AppSync</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=integracion-aplicaciones#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/integracion-aplicaciones.svg" alt="" width="18" height="18">Integración de aplicaciones <span class="cat-en">(Application Integration)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/appsync/" target="_blank" rel="noopener">Documentación de AWS AppSync ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS AppSync crea y aloja dos tipos de API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> sin servidores:</p>
+      <ul>
+        <li><strong>API GraphQL:</strong> GraphQL es un lenguaje de consulta en el que el cliente
+          pide exactamente los campos que necesita en una sola petición, aunque vengan de varias
+          fuentes (<a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="aurora.html">Aurora</a>, <a href="opensearch-service.html">OpenSearch</a>, una API HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>…). Evita las múltiples llamadas
+          y los datos de más típicos de una API REST <span class="sigla">(<em>Representational State Transfer</em>: estilo de API sobre HTTP)</span>.</li>
+        <li><strong>API de eventos (AppSync Events):</strong> canales de publicación/suscripción en
+          tiempo real sobre WebSocket, sin necesidad de GraphQL, para enviar actualizaciones a millones
+          de clientes conectados.</li>
+      </ul>
+      <p>Es muy usado en aplicaciones web y móviles, a menudo junto a <a href="../servicio.html?id=amplify">Amplify</a> y <a href="cognito.html">Cognito</a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Esquema GraphQL:</strong> define tipos y operaciones: <em>queries</em> (leer),
+          <em>mutations</em> (escribir) y <em>subscriptions</em> (recibir cambios en tiempo real).</li>
+        <li><strong>Resolvers:</strong> conectan cada campo con su fuente de datos. Se escriben en
+          JavaScript (entorno APPSYNC_JS) o en plantillas VTL <span class="sigla">(<em>Velocity Template Language</em>: lenguaje de plantillas)</span> antiguas; los <em>pipeline resolvers</em>
+          encadenan varias funciones.</li>
+        <li><strong>Fuentes de datos:</strong> <a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="aurora.html">Aurora</a> (a través de la Data API),
+          <a href="opensearch-service.html">OpenSearch</a>, <a href="eventbridge.html">EventBridge</a>, endpoints HTTP y <a href="bedrock.html">Bedrock</a>.</li>
+        <li><strong>Suscripciones en tiempo real:</strong> los clientes mantienen una conexión
+          WebSocket y reciben los cambios que provoca una mutación.</li>
+        <li><strong>AppSync Events:</strong> canales agrupados en <em>namespaces</em>, con
+          manejadores <code>OnPublish</code> y <code>OnSubscribe</code> para filtrar o transformar, y
+          suscripción con comodines.</li>
+        <li><strong>Autorización:</strong> clave de API, <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span>, grupos de usuarios de <a href="cognito.html">Cognito</a>, OIDC
+          (<em>OpenID Connect</em>) o un autorizador Lambda, combinables en la misma API.</li>
+        <li><strong>Caché del servidor</strong> para respuestas de consultas frecuentes y
+          <strong>API fusionadas</strong> (<em>merged APIs</em>) para unir las API de varios equipos.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Backend de apps web y móviles que necesitan datos de varias fuentes en una sola llamada.</li>
+        <li>Funciones en tiempo real: chats, tableros colaborativos, marcadores deportivos, pujas.</li>
+        <li>Aplicaciones con modo sin conexión que sincronizan al volver a tener red (con <a href="../servicio.html?id=amplify">Amplify</a>).</li>
+        <li>Enviar a los clientes conectados eventos que ocurren en el backend (desde <a href="eventbridge.html">EventBridge</a> o
+          <a href="lambda.html">Lambda</a>) con AppSync Events.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>API REST sencillas o existentes con transformaciones HTTP, planes de uso y claves por
+          cliente: <a href="api-gateway.html">API Gateway</a>.</li>
+        <li>Mensajería entre sistemas backend: <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span> o <a href="eventbridge.html">EventBridge</a>.</li>
+        <li>WebSocket con rutas propias y control total de cada conexión: API Gateway WebSocket.</li>
+      </ul>
+
+      <h2 id="comparativa">AppSync frente a API Gateway</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>AppSync</th><th><a href="api-gateway.html">API Gateway</a></th></tr></thead>
+          <tbody>
+            <tr><td>Estilo de API</td><td>GraphQL y eventos pub/sub</td><td>REST, HTTP y WebSocket</td></tr>
+            <tr><td>Varias fuentes en una sola petición</td><td>Sí, por diseño</td><td>Solo con lógica propia (por ejemplo, <a href="lambda.html">Lambda</a>)</td></tr>
+            <tr><td>Tiempo real para clientes</td><td>Suscripciones y Events gestionados</td><td>WebSocket, con la gestión de conexiones a tu cargo</td></tr>
+            <tr><td>Planes de uso y claves por cliente</td><td>Limitado</td><td>Sí</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En las API GraphQL se paga por millón de operaciones de consulta y mutación, y por los
+        minutos de conexión y los mensajes de las suscripciones en tiempo real. En AppSync Events,
+        por operaciones de API, minutos de conexión y mensajes. La caché se cobra por hora según su
+        tamaño. Hay nivel gratuito durante los primeros meses.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Varios modos de autorización combinables y reglas por campo en el esquema.</li>
+        <li>Integración con <a href="../servicio.html?id=waf">AWS WAF</a> <span class="sigla">(<em>Web Application Firewall</em>)</span> para filtrar peticiones.</li>
+        <li>API privadas accesibles solo desde una <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> mediante endpoints de interfaz.</li>
+        <li>Servicio gestionado, regional y redundante en varias zonas; registros y métricas en <a href="cloudwatch.html">CloudWatch</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"GraphQL"</strong>: AppSync.</li>
+        <li><strong>"Datos en tiempo real a clientes web o móviles"</strong>: suscripciones de AppSync o AppSync Events.</li>
+        <li><strong>"Una sola llamada que combine datos de <a href="dynamodb.html">DynamoDB</a> y de una API"</strong>: resolvers de AppSync.</li>
+        <li><strong>"Sincronizar datos con modo sin conexión"</strong>: AppSync con <a href="../servicio.html?id=amplify">Amplify</a>.</li>
+        <li><strong>"Planes de uso y límites por cliente de una API REST"</strong>: <a href="api-gateway.html">API Gateway</a>, no AppSync.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="appsync"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html" target="_blank" rel="noopener">What is AWS AppSync?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-welcome.html" target="_blank" rel="noopener">What is AWS AppSync Events?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appsync/latest/devguide/aws-appsync-real-time-data.html" target="_blank" rel="noopener">Using subscriptions for real-time data applications in AWS AppSync</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appsync/latest/devguide/security-authz.html" target="_blank" rel="noopener">Configuring authorization and authentication to secure your GraphQL APIs</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

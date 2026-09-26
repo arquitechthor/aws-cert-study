@@ -1,0 +1,112 @@
+[
+  {
+    "id": "mq-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa migra a AWS una aplicación Java que usa JMS con un broker Apache ActiveMQ en su centro de datos, y no quiere cambiar el código de mensajería. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "Amazon MQ para ActiveMQ.",
+      "Amazon SQS.",
+      "Amazon SNS.",
+      "Amazon Kinesis Data Streams."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Amazon MQ ofrece ActiveMQ gestionado y compatible con JMS, así que la aplicación se migra sin reescribir la mensajería. SQS, SNS y Kinesis usan sus propias API y obligarían a cambiar el código.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/welcome.html"
+    ]
+  },
+  {
+    "id": "mq-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un broker de Amazon MQ para ActiveMQ de producción debe seguir disponible si falla una zona de disponibilidad. ¿Qué modo de despliegue lo consigue?",
+    "opciones": [
+      "Activo/en espera en dos zonas de disponibilidad.",
+      "Instancia única con copias de seguridad diarias.",
+      "Instancia única de mayor tamaño.",
+      "Dos brokers independientes sin almacenamiento compartido."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En activo/en espera hay un broker en cada zona con almacenamiento compartido, y el de espera toma el control si cae el activo. Una instancia única es un punto único de fallo y dos brokers independientes no comparten los mensajes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazon-mq/latest/migration-guide/concept-chapter-about.html"
+    ]
+  },
+  {
+    "id": "mq-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un equipo va a crear una aplicación nueva en AWS que necesita una cola sencilla para desacoplar dos servicios, con escalado automático y el menor coste operativo. ¿Qué opción es la más adecuada?",
+    "opciones": [
+      "Amazon SQS.",
+      "Amazon MQ con RabbitMQ en clúster.",
+      "Un broker ActiveMQ en EC2.",
+      "Amazon MQ con ActiveMQ activo/en espera."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "SQS es sin servidores, escala solo y se paga por uso, lo ideal para aplicaciones nuevas. Amazon MQ está pensado para migrar aplicaciones que usan protocolos estándar y obliga a dimensionar y pagar brokers por hora; un broker en EC2 (Elastic Compute Cloud) añade aún más operación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/welcome.html"
+    ]
+  },
+  {
+    "id": "mq-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa tiene un clúster de RabbitMQ autogestionado de tres nodos que usan decenas de aplicaciones con AMQP 0-9-1. Quiere dejar de operarlo en la migración a AWS, con resistencia a fallos de zona. ¿Qué opción requiere menos cambios?",
+    "opciones": [
+      "Amazon MQ para RabbitMQ en despliegue de clúster de tres nodos.",
+      "Reescribir las aplicaciones para usar SQS y SNS.",
+      "Amazon MQ para ActiveMQ de instancia única.",
+      "RabbitMQ en una única instancia EC2."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Amazon MQ para RabbitMQ mantiene el protocolo AMQP 0-9-1 y el despliegue en clúster reparte tres nodos en tres zonas. Reescribir a SQS/SNS es un cambio grande, ActiveMQ no habla AMQP 0-9-1 y una sola instancia no es resistente. Siglas: EC2 (Elastic Compute Cloud).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/rabbitmq-broker-architecture.html"
+    ]
+  },
+  {
+    "id": "mq-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Tras migrar a Amazon MQ, un broker ActiveMQ de producción es público en internet porque así se configuró por prisas, aunque todas las aplicaciones están en la VPC. ¿Qué cambio mejora la seguridad?",
+    "opciones": [
+      "Crear un broker privado en subredes de la VPC, con security groups que solo permitan a las aplicaciones, y migrar a él.",
+      "Mantenerlo público y cambiar la contraseña cada mes.",
+      "Poner CloudFront delante del broker.",
+      "Desactivar TLS para reducir latencia."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La accesibilidad pública se decide al crear el broker; lo correcto es un broker privado en la VPC limitado por security groups. Cambiar contraseñas no elimina la exposición, CloudFront no está pensado para protocolos de mensajería y desactivar TLS empeora la seguridad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/welcome.html"
+    ]
+  }
+]

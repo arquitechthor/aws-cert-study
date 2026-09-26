@@ -81,8 +81,8 @@
           <ul>
             <li><strong>Síncrona:</strong> el llamante espera la respuesta (<a href="api-gateway.html">API Gateway</a>, <a href="../servicio.html?id=elb">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, SDK <span class="sigla">(<em>Software Development Kit</em>: bibliotecas para programar contra AWS)</span>).</li>
             <li><strong>Asíncrona:</strong> Lambda encola el evento y reintenta hasta 2 veces si falla
-              (<a href="s3.html">S3</a>, <a href="../servicio.html?id=sns">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, <a href="../servicio.html?id=eventbridge">EventBridge</a>). Los fallos pueden ir a una DLQ <span class="sigla">(<em>Dead-Letter Queue</em>: cola donde acaban los mensajes que fallan)</span> o a un <em>destino</em>.</li>
-            <li><strong>Event source mapping:</strong> Lambda lee por lotes de <a href="../servicio.html?id=sqs">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, Kinesis, <a href="dynamodb.html">DynamoDB</a>
+              (<a href="s3.html">S3</a>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, <a href="eventbridge.html">EventBridge</a>). Los fallos pueden ir a una DLQ <span class="sigla">(<em>Dead-Letter Queue</em>: cola donde acaban los mensajes que fallan)</span> o a un <em>destino</em>.</li>
+            <li><strong>Event source mapping:</strong> Lambda lee por lotes de <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, Kinesis, <a href="dynamodb.html">DynamoDB</a>
               Streams o Kafka.</li>
           </ul></li>
         <li><strong>Concurrencia:</strong> número de ejecuciones simultáneas (1.000 por región por
@@ -104,8 +104,8 @@
       <ul>
         <li>Backends de APIs <em>serverless</em> con <a href="api-gateway.html">API Gateway</a>.</li>
         <li>Procesar ficheros al subirlos a <a href="s3.html">S3</a> (miniaturas, validación, extracción de metadatos).</li>
-        <li>Consumidores de colas y flujos (<a href="../servicio.html?id=sqs">SQS</a>, Kinesis, <a href="dynamodb.html">DynamoDB</a> Streams).</li>
-        <li>Tareas programadas con <a href="../servicio.html?id=eventbridge">EventBridge</a> Scheduler (sustituye a un cron en una instancia).</li>
+        <li>Consumidores de colas y flujos (<a href="sqs.html">SQS</a>, Kinesis, <a href="dynamodb.html">DynamoDB</a> Streams).</li>
+        <li>Tareas programadas con <a href="eventbridge.html">EventBridge</a> Scheduler (sustituye a un cron en una instancia).</li>
         <li>Automatización de operaciones: reaccionar a eventos de la cuenta (por ejemplo, etiquetar
           recursos nuevos).</li>
       </ul>
@@ -113,7 +113,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Procesos que duran más de 15 minutos: mejor <a href="ecs.html">ECS</a>/Fargate, <a href="../servicio.html?id=batch">AWS Batch</a> o dividir el trabajo con
-          <a href="../servicio.html?id=step-functions">Step Functions</a>.</li>
+          <a href="step-functions.html">Step Functions</a>.</li>
         <li>Cargas muy estables y continuas con uso alto de CPU: contenedores o instancias pueden salir
           más baratos.</li>
         <li>Aplicaciones que necesitan estado local persistente o conexiones de larga duración.</li>
@@ -144,7 +144,7 @@
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
         <li>Cada función tiene un <strong>rol de ejecución</strong> con sus permisos (mínimo privilegio).</li>
-        <li>Una <strong>política basada en recurso</strong> define quién puede invocarla (<a href="s3.html">S3</a>, <a href="../servicio.html?id=sns">SNS</a>, otra cuenta…).</li>
+        <li>Una <strong>política basada en recurso</strong> define quién puede invocarla (<a href="s3.html">S3</a>, <a href="sns.html">SNS</a>, otra cuenta…).</li>
         <li>Variables de entorno cifradas con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>; para secretos, mejor <a href="secrets-manager.html">Secrets Manager</a>.</li>
         <li>Se ejecuta en varias zonas de disponibilidad de forma automática. En una <a href="vpc.html">VPC</a> conviene
           configurar subredes de al menos dos zonas.</li>
@@ -160,7 +160,7 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Más de 15 minutos"</strong>: no es Lambda; piensa en <a href="../servicio.html?id=fargate">Fargate</a>, Batch o <a href="../servicio.html?id=step-functions">Step Functions</a>.</li>
+        <li><strong>"Más de 15 minutos"</strong>: no es Lambda; piensa en <a href="../servicio.html?id=fargate">Fargate</a>, Batch o <a href="step-functions.html">Step Functions</a>.</li>
         <li><strong>"Evitar arranques en frío"</strong>: concurrencia aprovisionada o SnapStart, no
           más memoria (ayuda algo, pero no lo evita).</li>
         <li><strong>"Una función no debe consumir toda la concurrencia"</strong> o <strong>"proteger una
