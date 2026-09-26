@@ -378,7 +378,7 @@ def revisar_preguntas(sid, escribir):
         return 0
     qs = json.load(open(ruta, encoding='utf8'))
     n = 0
-    g = glosario_para(sid)
+    g = g_completo = glosario_para(sid)
     # Las siglas que ya aparecen (y por tanto se explican) en la guía del servicio no se vuelven
     # a explicar en sus preguntas. Las explicaciones que ya tengan las preguntas se conservan.
     pagina = os.path.join(REPO, 'servicios', f'{sid}.html')
@@ -393,7 +393,7 @@ def revisar_preguntas(sid, escribir):
         ins = {'enunciado': [], 'explicacion': []}
         ocupado = {'enunciado': [], 'explicacion': []}
         for c in ('enunciado', 'explicacion'):
-            for tok2, (e2, g2) in g.items():
+            for tok2, (e2, g2) in g_completo.items():  # protege todas las explicaciones existentes
                 exp = expansion_txt(e2, g2)
                 for x in re.finditer(re.escape(exp), orig[c]):
                     ocupado[c].append((x.start(), x.end()))
