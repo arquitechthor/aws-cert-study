@@ -68,7 +68,7 @@
       <h2 id="que-es">Qué es</h2>
       <p>AWS KMS (<em>Key Management Service</em>) crea, guarda y usa claves criptográficas en
         módulos de seguridad hardware (HSM) validados, sin que el material de la clave salga nunca en
-        claro. Casi todos los servicios de AWS (<a href="s3.html">S3</a>, <a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span>, <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, <a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="secrets-manager.html">Secrets Manager</a>…) se
+        claro. Casi todos los servicios de AWS (<a href="s3.html">S3</a>, <a href="ebs.html">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span>, <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span>, <a href="dynamodb.html">DynamoDB</a>, <a href="lambda.html">Lambda</a>, <a href="secrets-manager.html">Secrets Manager</a>…) se
         integran con KMS para el cifrado en reposo, y cada uso de una clave queda registrado en
         <a href="cloudtrail.html">CloudTrail</a>. Tú decides quién puede usar cada clave y para qué.</p>
 
@@ -83,8 +83,8 @@
             <li><strong>Propiedad de AWS:</strong> las usa AWS internamente en muchas cuentas; no las
               ves ni auditas.</li>
           </ul></li>
-        <li><strong>Simétricas</strong> (AES-256, la opción por defecto, el material nunca sale de
-          KMS), <strong>asimétricas</strong> (RSA o ECC <span class="sigla">(<em>Elliptic Curve Cryptography</em>: criptografía de curva elíptica)</span>, para firmar o cifrar fuera de AWS con la clave
+        <li><strong>Simétricas</strong> (AES-256 <span class="sigla">(<em>Advanced Encryption Standard</em>: cifrado simétrico con claves de 256 bits)</span>, la opción por defecto, el material nunca sale de
+          KMS), <strong>asimétricas</strong> (RSA <span class="sigla">(<em>Rivest-Shamir-Adleman</em>: algoritmo de clave pública)</span> o ECC <span class="sigla">(<em>Elliptic Curve Cryptography</em>: criptografía de curva elíptica)</span>, para firmar o cifrar fuera de AWS con la clave
           pública) y <strong>HMAC <span class="sigla">(<em>Hash-based Message Authentication Code</em>: código que verifica integridad y autenticidad)</span></strong>.</li>
         <li><strong>Cifrado de sobre (<em>envelope encryption</em>):</strong> KMS cifra directamente
           como máximo <strong>4 KB</strong>. Para datos mayores se pide una <strong>clave de datos</strong>
@@ -106,7 +106,7 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Cifrado en reposo de <a href="s3.html">S3</a>, <a href="../servicio.html?id=ebs">EBS</a>, <a href="rds.html">RDS</a>, <a href="dynamodb.html">DynamoDB</a> y demás, con claves bajo tu control.</li>
+        <li>Cifrado en reposo de <a href="s3.html">S3</a>, <a href="ebs.html">EBS</a>, <a href="rds.html">RDS</a>, <a href="dynamodb.html">DynamoDB</a> y demás, con claves bajo tu control.</li>
         <li>Cumplir normativas que exigen rotación, separación de funciones y auditoría del uso.</li>
         <li>Cifrar datos en la aplicación con el SDK <span class="sigla">(<em>Software Development Kit</em>: bibliotecas para programar contra AWS)</span> de cifrado y claves de datos.</li>
         <li>Firmar y verificar documentos o tokens con claves asimétricas.</li>

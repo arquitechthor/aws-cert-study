@@ -64,7 +64,7 @@
     <article class="doc">
 <h2 id="que-es">Qué es</h2>
       <p>AWS Certificate Manager (ACM) emite y gestiona certificados SSL/TLS para dominios y los
-        despliega en servicios integrados de AWS (<a href="../servicio.html?id=elb">Elastic Load Balancing</a>, <a href="cloudfront.html">CloudFront</a>, <a href="api-gateway.html">API Gateway</a>, App
+        despliega en servicios integrados de AWS (<a href="elb.html">Elastic Load Balancing</a>, <a href="cloudfront.html">CloudFront</a>, <a href="api-gateway.html">API Gateway</a>, App
         Runner, entre otros). Los certificados públicos para estos servicios son
         <strong>gratuitos</strong> y se <strong>renuevan automáticamente</strong>.</p>
 
@@ -90,7 +90,7 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> con dominio propio en <a href="cloudfront.html">CloudFront</a>, un <a href="../servicio.html?id=elb">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span> o <a href="api-gateway.html">API Gateway</a>.</li>
+        <li>HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span> con dominio propio en <a href="cloudfront.html">CloudFront</a>, un <a href="elb.html">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span> o <a href="api-gateway.html">API Gateway</a>.</li>
         <li>Certificados comodín para varios subdominios.</li>
         <li>Certificados privados para TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> mutuo o servicios internos (con Private CA).</li>
       </ul>
@@ -141,7 +141,7 @@
         <li><strong>"Renovación automática"</strong>: validación por DNS (la de correo exige acción humana).</li>
         <li><strong>"Certificado importado caducado"</strong>: ACM no renueva los importados; hay que
           vigilarlos con <a href="eventbridge.html">EventBridge</a> o <a href="cloudwatch.html">CloudWatch</a>.</li>
-        <li><strong>"HTTPS en <a href="ec2.html">EC2</a> sin pagar certificados"</strong>: terminar TLS en un <a href="../servicio.html?id=elb">ALB</a> con un
+        <li><strong>"HTTPS en <a href="ec2.html">EC2</a> sin pagar certificados"</strong>: terminar TLS en un <a href="elb.html">ALB</a> con un
           certificado de ACM.</li>
         <li><strong>"Certificados internos"</strong>: AWS Private CA.</li>
       </ul>

@@ -68,13 +68,13 @@
       <p>Amazon CloudFront es la CDN <span class="sigla">(<em>Content Delivery Network</em>: red de entrega de contenido)</span> de AWS. Distribuye el contenido desde cientos de
         <strong>ubicaciones perimetrales</strong> (<em>edge locations</em>) de todo el mundo: cachea
         lo que puede y, para lo demás, conecta con el origen a través de la red troncal de AWS. Reduce
-        la latencia y la carga del origen, y añade HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span>, protección frente a DDoS y control de acceso
+        la latencia y la carga del origen, y añade HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span>, protección frente a DDoS <span class="sigla">(<em>Distributed Denial of Service</em>: ataque que satura un servicio desde muchos orígenes)</span> y control de acceso
         delante de tu aplicación.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Distribución:</strong> configuración con uno o varios <strong>orígenes</strong> (<a href="s3.html">S3</a>,
-          <a href="../servicio.html?id=elb">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>, <a href="api-gateway.html">API Gateway</a>, cualquier servidor HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>) y <strong>comportamientos de caché</strong>
+          <a href="elb.html">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>, <a href="api-gateway.html">API Gateway</a>, cualquier servidor HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>) y <strong>comportamientos de caché</strong>
           por patrón de ruta (<code>/api/*</code>, <code>/img/*</code>).</li>
         <li><strong>Políticas de caché y de petición al origen:</strong> qué cabeceras, cookies y
           parámetros forman la clave de caché y cuáles se envían al origen, y los TTL <span class="sigla">(<em>Time To Live</em>: tiempo de vida antes de caducar)</span>.</li>
@@ -106,7 +106,7 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Tráfico no HTTP (TCP o UDP <span class="sigla">(<em>User Datagram Protocol</em>: protocolo de transporte sin conexión)</span> genérico, como juegos o VoIP) o que necesita IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> fijas:
+        <li>Tráfico no HTTP (TCP <span class="sigla">(<em>Transmission Control Protocol</em>: protocolo de transporte fiable)</span> o UDP <span class="sigla">(<em>User Datagram Protocol</em>: protocolo de transporte sin conexión)</span> genérico, como juegos o VoIP) o que necesita IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> fijas:
           <strong><a href="../servicio.html?id=global-accelerator">AWS Global Accelerator</a></strong>.</li>
         <li>Si solo necesitas acelerar subidas a <a href="s3.html">S3</a> desde lejos: S3 Transfer Acceleration puede bastar.</li>
         <li>Contenido que nunca se cachea y usuarios en la misma región que el origen: el beneficio es menor.</li>

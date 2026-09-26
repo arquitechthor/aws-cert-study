@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon EBS — Apuntes AWS</title>
+<meta name="description" content="Discos de bloque persistentes para instancias EC2: volúmenes SSD o HDD que sobreviven a la instancia, con instantáneas en S3. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/ebs.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon EBS — Apuntes AWS">
+<meta property="og:description" content="Discos de bloque persistentes para instancias EC2: volúmenes SSD o HDD que sobreviven a la instancia, con instantáneas en S3.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/ebs.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/ebs.svg" alt="" width="56" height="56"><span>Amazon EBS</span></h1>
+      <p class="full-name">Amazon Elastic Block Store (Amazon EBS)</p>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=almacenamiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/almacenamiento.svg" alt="" width="18" height="18">Almacenamiento <span class="cat-en">(Storage)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/ebs/" target="_blank" rel="noopener">Documentación de Amazon EBS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon EBS (<em>Elastic Block Store</em>) ofrece <strong>volúmenes de almacenamiento de
+        bloque</strong>: discos virtuales que se conectan a instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span> como si fueran discos
+        físicos, para el sistema operativo, bases de datos o cualquier aplicación que necesite un
+        sistema de ficheros. Son <strong>persistentes</strong> (los datos siguen ahí aunque pares la
+        instancia) y viven en <strong>una sola zona de disponibilidad</strong>, replicados dentro de
+        ella para protegerlos de fallos de hardware.</p>
+
+      <h2 id="tipos">Tipos de volumen</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Características</th><th>Uso típico</th></tr></thead>
+          <tbody>
+            <tr><td>gp3 (SSD <span class="sigla">(<em>Solid-State Drive</em>: disco de estado sólido)</span> de uso general)</td><td>3 000 IOPS <span class="sigla">(<em>Input/Output Operations Per Second</em>: operaciones de disco por segundo)</span> y 125 MiB/s incluidos, ampliables por separado hasta 80 000 IOPS y 2 000 MiB/s; hasta 64 TiB</td><td>La opción por defecto: arranque, aplicaciones, bases de datos medianas</td></tr>
+            <tr><td>gp2 (generación anterior)</td><td>IOPS ligadas al tamaño (3 por GiB) con ráfagas</td><td>Heredado; migrar a gp3 suele abaratar</td></tr>
+            <tr><td>io2 Block Express (SSD de IOPS aprovisionadas)</td><td>Hasta 256 000 IOPS, latencia submilisegundo, durabilidad del 99,999 %</td><td>Bases de datos críticas y de gran rendimiento</td></tr>
+            <tr><td>st1 (HDD <span class="sigla">(<em>Hard Disk Drive</em>: disco duro magnético)</span> de rendimiento)</td><td>Barato, optimizado para lecturas secuenciales grandes</td><td>Big data, registros, almacenes de datos</td></tr>
+            <tr><td>sc1 (HDD en frío)</td><td>El más barato</td><td>Datos poco consultados</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Los HDD (st1 y sc1) no pueden ser volumen de arranque.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Una zona de disponibilidad:</strong> un volumen solo se conecta a instancias de su
+          misma zona. Para llevarlo a otra zona o región, se hace una instantánea y se restaura allí.</li>
+        <li><strong>Instantáneas (snapshots):</strong> copias incrementales guardadas en <a href="s3.html">S3</a> (solo se
+          guardan los bloques cambiados). Se pueden copiar entre regiones, compartir con otras cuentas y
+          automatizar con Data Lifecycle Manager o <a href="../servicio.html?id=backup">AWS Backup</a>. El archivo de instantáneas abarata las que
+          se guardan mucho tiempo; la papelera de reciclaje protege contra borrados accidentales.</li>
+        <li><strong>Multi-Attach:</strong> los io2 pueden conectarse a varias instancias Nitro de la misma
+          zona a la vez (la aplicación debe gestionar la escritura concurrente).</li>
+        <li><strong>Elastic Volumes:</strong> ampliar tamaño o cambiar tipo, IOPS y rendimiento en
+          caliente, sin parar la instancia.</li>
+        <li><strong>DeleteOnTermination:</strong> por defecto el volumen raíz se borra al terminar la
+          instancia; los adicionales, no.</li>
+        <li><strong>Instance store:</strong> disco local de algunas instancias, muy rápido pero
+          <em>efímero</em>: se pierde al parar o terminar la instancia. No es EBS.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Volumen de arranque y de aplicaciones de instancias <a href="ec2.html">EC2</a>.</li>
+        <li>Bases de datos instaladas en EC2 (io2 para las más exigentes).</li>
+        <li>Copias de seguridad y recuperación entre regiones con instantáneas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Ficheros compartidos entre muchas instancias o zonas: <a href="../servicio.html?id=efs">EFS</a> (Linux) o <a href="../servicio.html?id=fsx">FSx</a> (Windows y otros).</li>
+        <li>Objetos accesibles por HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>, a escala ilimitada: <a href="s3.html">S3</a>.</li>
+        <li>Datos temporales de máximo rendimiento que pueden perderse: instance store.</li>
+      </ul>
+
+      <h2 id="comparativa">EBS, EFS y S3</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Característica</th><th>EBS</th><th><a href="../servicio.html?id=efs">EFS</a></th><th><a href="s3.html">S3</a></th></tr></thead>
+          <tbody>
+            <tr><td>Tipo</td><td>Bloque (disco)</td><td>Ficheros (NFS)</td><td>Objetos (API HTTP)</td></tr>
+            <tr><td>Acceso</td><td>Una instancia (salvo Multi-Attach)</td><td>Miles de instancias a la vez</td><td>Cualquier cliente</td></tr>
+            <tr><td>Alcance</td><td>Una zona</td><td>Regional (varias zonas)</td><td>Regional</td></tr>
+            <tr><td>Capacidad</td><td>Aprovisionada</td><td>Crece sola</td><td>Ilimitada</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por GB aprovisionado al mes (se use o no), más las IOPS y el rendimiento aprovisionados
+        por encima de lo incluido (gp3, io2), y por el almacenamiento de las instantáneas (en su nivel
+        estándar o de archivo). Los volúmenes siguen cobrando aunque la instancia esté parada.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> de volúmenes e instantáneas, transparente y sin impacto de rendimiento;
+          se puede activar por defecto en la región.</li>
+        <li>Un volumen sin cifrar se cifra copiando una instantánea con cifrado y restaurándola.</li>
+        <li>Replicación dentro de la zona; para fallos de zona o región, instantáneas copiadas a otra
+          zona o región.</li>
+        <li>Instantáneas compartidas solo con las cuentas necesarias; bloqueo de acceso público a
+          instantáneas.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Mover un volumen a otra zona o región"</strong>: instantánea y restauración allí.</li>
+        <li><strong>"Más IOPS sin pagar más capacidad"</strong>: gp3 (IOPS independientes del tamaño).</li>
+        <li><strong>"Base de datos con IOPS muy altas y constantes"</strong>: io2 Block Express.</li>
+        <li><strong>"Lectura secuencial barata de grandes volúmenes"</strong>: st1.</li>
+        <li><strong>"Compartir ficheros entre muchas instancias"</strong>: <a href="../servicio.html?id=efs">EFS</a>, no EBS.</li>
+        <li><strong>"Los datos del disco desaparecieron al parar la instancia"</strong>: era instance store.</li>
+        <li><strong>"Cifrar un volumen existente"</strong>: instantánea, copia cifrada y nuevo volumen.</li>
+        <li><strong>"Automatizar las instantáneas"</strong>: Data Lifecycle Manager o <a href="../servicio.html?id=backup">AWS Backup</a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="ebs"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html" target="_blank" rel="noopener">What is Amazon Elastic Block Store?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html" target="_blank" rel="noopener">Amazon EBS volume types</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/ebs/latest/userguide/ebs-snapshots.html" target="_blank" rel="noopener">Amazon EBS snapshots</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html" target="_blank" rel="noopener">Amazon EBS encryption</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/09/amazon-ebs-size-provisioned-performance-gp3-volumes/" target="_blank" rel="noopener">Amazon EBS increases the maximum size and provisioned performance of gp3 volumes</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

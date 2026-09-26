@@ -16,7 +16,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "AWS KMS (Key Management Service) crea y gestiona claves criptográficas integradas con la mayoría de servicios. Shield protege frente a DDoS, Inspector busca vulnerabilidades y WAF (Web Application Firewall) filtra peticiones web.",
+    "explicacion": "AWS KMS (Key Management Service) crea y gestiona claves criptográficas integradas con la mayoría de servicios. Shield protege frente a DDoS (Distributed Denial of Service: ataque que satura un servicio desde muchos orígenes), Inspector busca vulnerabilidades y WAF (Web Application Firewall) filtra peticiones web.",
     "fuentes": [
       "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html"
     ]

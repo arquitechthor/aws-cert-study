@@ -72,7 +72,7 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Plantilla de lanzamiento (launch template):</strong> define qué instancia lanzar
-          (AMI, tipo, security groups, rol, <em>user data</em>). Sustituye a las antiguas
+          (AMI <span class="sigla">(<em>Amazon Machine Image</em>: plantilla con el sistema operativo para arrancar instancias)</span>, tipo, security groups, rol, <em>user data</em>). Sustituye a las antiguas
           <em>launch configurations</em>, que ya no reciben funciones nuevas.</li>
         <li><strong>Capacidad mínima, deseada y máxima:</strong> el grupo nunca baja del mínimo ni
           pasa del máximo; la deseada es la que intenta mantener ahora.</li>
@@ -106,7 +106,7 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Flotas web detrás de un <a href="../servicio.html?id=elb">Application Load Balancer</a> que crecen en los picos.</li>
+        <li>Flotas web detrás de un <a href="elb.html">Application Load Balancer</a> que crecen en los picos.</li>
         <li>Trabajadores que procesan una cola <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span> y escalan según los mensajes pendientes.</li>
         <li>Mantener siempre al menos N instancias sanas repartidas en varias zonas.</li>
         <li>Adelantarse a picos predecibles (lunes por la mañana) con escalado predictivo o programado.</li>

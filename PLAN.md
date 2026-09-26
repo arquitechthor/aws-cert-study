@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 34 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 37 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -289,8 +289,8 @@ esta lista es solo el orden de trabajo.
 - [ ] `organizations` AWS Organizations — Administración y gobernanza (SAA-C03, SAP-C02)
 - [x] `vpc` Amazon VPC — Redes y entrega de contenido (SAA-C03, SAP-C02, AIF-C01)
 - [x] `ec2` Amazon EC2 — Computación (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `ebs` Amazon EBS — Almacenamiento (SAA-C03, SAP-C02)
-- [ ] `elb` Elastic Load Balancing (ELB) — Redes y entrega de contenido (SAA-C03, SAP-C02)
+- [x] `ebs` Amazon EBS — Almacenamiento (SAA-C03, SAP-C02)
+- [x] `elb` Elastic Load Balancing (ELB) — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [x] `ec2-auto-scaling` Amazon EC2 Auto Scaling — Computación (SAA-C03, SAP-C02)
 - [x] `s3` Amazon S3 — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `efs` Amazon EFS — Almacenamiento (SAA-C03, SAP-C02)
@@ -320,7 +320,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `lake-formation` AWS Lake Formation — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [x] `opensearch-service` Amazon OpenSearch Service — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `quick` Amazon Quick — Análisis (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `redshift` Amazon Redshift — Análisis (SAA-C03, SAP-C02, AIF-C01)
+- [x] `redshift` Amazon Redshift — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `documentdb` Amazon DocumentDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [x] `elasticache` Amazon ElastiCache — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `neptune` Amazon Neptune — Base de datos (SAA-C03, SAP-C02, AIF-C01)

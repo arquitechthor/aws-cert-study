@@ -106,7 +106,7 @@
         <li>Dar a una instancia <a href="ec2.html">EC2</a> o a una función <a href="lambda.html">Lambda</a> acceso a <a href="s3.html">S3</a> o <a href="dynamodb.html">DynamoDB</a> mediante un
           <strong>rol</strong> (en EC2, a través de un perfil de instancia).</li>
         <li>Acceso entre cuentas: un rol en la cuenta B que la cuenta A puede asumir.</li>
-        <li>Federación: usuarios de un proveedor de identidad corporativo (SAML u OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>) que asumen roles,
+        <li>Federación: usuarios de un proveedor de identidad corporativo (SAML <span class="sigla">(<em>Security Assertion Markup Language</em>: estándar de inicio de sesión federado)</span> u OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>) que asumen roles,
           normalmente gestionado con <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
         <li>Delegar la creación de roles a desarrolladores sin riesgo de escalada, usando
           <strong>límites de permisos</strong>.</li>

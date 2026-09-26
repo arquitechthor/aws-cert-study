@@ -786,8 +786,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Discos de bloque persistentes para instancias EC2: volúmenes SSD o HDD que sobreviven a la instancia, con instantáneas en S3.",
     "documentacion": "https://docs.aws.amazon.com/ebs/"
   },
   {
@@ -959,8 +959,8 @@
       "SAP-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Balanceadores de carga gestionados que reparten el tráfico entre instancias, contenedores, IP o funciones, y solo lo envían a los destinos sanos.",
     "documentacion": "https://docs.aws.amazon.com/elasticloadbalancing/"
   },
   {
@@ -1775,8 +1775,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Almacén de datos (data warehouse) gestionado para analizar con SQL petabytes de datos, en clústeres aprovisionados o sin servidores.",
     "documentacion": "https://docs.aws.amazon.com/redshift/"
   },
   {

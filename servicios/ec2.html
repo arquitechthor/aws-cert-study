@@ -81,7 +81,7 @@
           optimizadas para cómputo (C), para memoria (R, X), para almacenamiento (I, D) y aceleradas
           con GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span> o chips propios (P, G, Inf, Trn). Las de <strong>Graviton</strong> (ARM) suelen dar
           mejor relación precio-rendimiento.</li>
-        <li><strong>Almacenamiento:</strong> volúmenes <strong><a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span></strong> (persistentes, en una sola
+        <li><strong>Almacenamiento:</strong> volúmenes <strong><a href="ebs.html">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span></strong> (persistentes, en una sola
           zona de disponibilidad) o <strong>instance store</strong> (disco local muy rápido que se
           pierde al parar o terminar la instancia).</li>
         <li><strong>Security groups:</strong> firewall con estado a nivel de instancia; solo admiten
@@ -97,7 +97,7 @@
         <li><strong>Grupos de colocación:</strong> <em>cluster</em> (misma zona, baja latencia para
           HPC <span class="sigla">(<em>High Performance Computing</em>: cómputo de alto rendimiento)</span>), <em>spread</em> (hardware distinto, máximo 7 instancias por zona) y
           <em>partition</em> (particiones aisladas para Hadoop, Cassandra o Kafka).</li>
-        <li><strong><a href="ec2-auto-scaling.html">Auto Scaling</a> y <a href="../servicio.html?id=elb">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>:</strong> un grupo de Auto Scaling mantiene el número deseado
+        <li><strong><a href="ec2-auto-scaling.html">Auto Scaling</a> y <a href="elb.html">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>:</strong> un grupo de Auto Scaling mantiene el número deseado
           de instancias en varias zonas y un balanceador reparte el tráfico entre ellas.</li>
         <li><strong>Hibernación:</strong> guarda la <a href="../servicio.html?id=ram">RAM</a> <span class="sigla">(<em>Random Access Memory</em>: memoria)</span> en el volumen raíz EBS cifrado para arrancar
           más rápido con la memoria intacta.</li>
@@ -154,7 +154,7 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga el tiempo de ejecución de la instancia (por segundo en Linux y en la mayoría de
         sistemas, con un mínimo de 60 segundos), según tipo, región y opción de compra. Aparte se
-        pagan los volúmenes <a href="../servicio.html?id=ebs">EBS</a> (también con la instancia parada), las instantáneas, las direcciones
+        pagan los volúmenes <a href="ebs.html">EBS</a> (también con la instancia parada), las instantáneas, las direcciones
         IPv4 públicas, la transferencia de datos de salida y los extras como el balanceador. Una
         instancia <strong>parada</strong> no cobra cómputo, pero sí su almacenamiento.</p>
 
@@ -165,7 +165,7 @@
           balanceador.</li>
         <li>Recuperación automática de la instancia si falla el hardware subyacente
           (<em>auto recovery</em>).</li>
-        <li>Cifrado de volúmenes <a href="../servicio.html?id=ebs">EBS</a> con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>; se puede activar por defecto en la región.</li>
+        <li>Cifrado de volúmenes <a href="ebs.html">EBS</a> con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span>; se puede activar por defecto en la región.</li>
         <li>Instancias en subredes privadas y acceso con <a href="../servicio.html?id=systems-manager">Session Manager</a> en lugar de bastiones.</li>
         <li>Copias con instantáneas EBS o <a href="../servicio.html?id=backup">AWS Backup</a>, y AMI para reconstruir la máquina.</li>
       </ul>

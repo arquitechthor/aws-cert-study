@@ -79,7 +79,7 @@
           en invocación síncrona (petición y respuesta) y <strong>1 MB</strong> en asíncrona.</li>
         <li><strong>Modelos de invocación:</strong>
           <ul>
-            <li><strong>Síncrona:</strong> el llamante espera la respuesta (<a href="api-gateway.html">API Gateway</a>, <a href="../servicio.html?id=elb">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, SDK <span class="sigla">(<em>Software Development Kit</em>: bibliotecas para programar contra AWS)</span>).</li>
+            <li><strong>Síncrona:</strong> el llamante espera la respuesta (<a href="api-gateway.html">API Gateway</a>, <a href="elb.html">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, SDK <span class="sigla">(<em>Software Development Kit</em>: bibliotecas para programar contra AWS)</span>).</li>
             <li><strong>Asíncrona:</strong> Lambda encola el evento y reintenta hasta 2 veces si falla
               (<a href="s3.html">S3</a>, <a href="sns.html">SNS</a> <span class="sigla">(<em>Simple Notification Service</em>)</span>, <a href="eventbridge.html">EventBridge</a>). Los fallos pueden ir a una DLQ <span class="sigla">(<em>Dead-Letter Queue</em>: cola donde acaban los mensajes que fallan)</span> o a un <em>destino</em>.</li>
             <li><strong>Event source mapping:</strong> Lambda lee por lotes de <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>, Kinesis, <a href="dynamodb.html">DynamoDB</a>
@@ -126,7 +126,7 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Lambda</th><th><a href="fargate.html">Fargate</a> (<a href="ecs.html">ECS</a>/EKS)</th><th><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></th></tr></thead>
           <tbody>
-            <tr><td>Gestión de servidores</td><td>Ninguna</td><td>Ninguna (gestionas contenedores)</td><td>Toda (SO, parches)</td></tr>
+            <tr><td>Gestión de servidores</td><td>Ninguna</td><td>Ninguna (gestionas contenedores)</td><td>Toda (SO <span class="sigla">(sistema operativo)</span>, parches)</td></tr>
             <tr><td>Duración máxima</td><td>15 min</td><td>Sin límite</td><td>Sin límite</td></tr>
             <tr><td>Modelo de cobro</td><td>Por invocación y ms</td><td>Por vCPU y memoria por segundo</td><td>Por instancia encendida</td></tr>
             <tr><td>Mejor para</td><td>Eventos y tráfico variable</td><td>Servicios en contenedores</td><td>Control total o software legado</td></tr>

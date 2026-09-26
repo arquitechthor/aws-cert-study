@@ -67,7 +67,7 @@
     <article class="doc">
       <h2 id="que-es">Qué es</h2>
       <p>Amazon EKS (<em>Elastic Kubernetes Service</em>) ejecuta Kubernetes estándar y certificado
-        sin que tengas que instalar ni mantener su <strong>plano de control</strong> (API server,
+        sin que tengas que instalar ni mantener su <strong>plano de control</strong> (API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> server,
         etcd, programador): AWS lo reparte en varias zonas de disponibilidad, lo parchea y lo escala.
         Tus aplicaciones se despliegan con las herramientas habituales de Kubernetes
         (<code>kubectl</code>, Helm, manifiestos YAML <span class="sigla">(<em>YAML Ain&#x27;t Markup Language</em>: formato de configuración legible)</span>), así que son portables a otros entornos
@@ -97,7 +97,7 @@
           roles de IAM con permisos de Kubernetes (sustituyen al antiguo ConfigMap
           <code>aws-auth</code>).</li>
         <li><strong>Complementos (add-ons):</strong> <a href="vpc.html">VPC</a> CNI (cada pod recibe una IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> de la VPC <span class="sigla">(<em>Virtual Private Cloud</em>)</span>),
-          CoreDNS, kube-proxy, controladores de <a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span> o <a href="../servicio.html?id=efs">EFS</a> <span class="sigla">(<em>Elastic File System</em>)</span>, AWS Load Balancer Controller.</li>
+          CoreDNS, kube-proxy, controladores de <a href="ebs.html">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span> o <a href="../servicio.html?id=efs">EFS</a> <span class="sigla">(<em>Elastic File System</em>)</span>, AWS Load Balancer Controller.</li>
         <li><strong>Versiones:</strong> cada versión de Kubernetes tiene soporte estándar y luego un
           soporte extendido de pago; hay que planificar las actualizaciones.</li>
         <li><strong>EKS Anywhere</strong> y EKS en <a href="../servicio.html?id=outposts">Outposts</a> para ejecutar clústeres fuera de las

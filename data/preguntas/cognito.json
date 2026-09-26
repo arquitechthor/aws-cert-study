@@ -107,7 +107,7 @@
     "correctas": [
       0
     ],
-    "explicacion": "La protección frente a amenazas del plan Plus analiza el riesgo de cada inicio de sesión y comprueba contraseñas comprometidas. Shield protege frente a DDoS, no frente al robo de credenciales.",
+    "explicacion": "La protección frente a amenazas del plan Plus analiza el riesgo de cada inicio de sesión y comprueba contraseñas comprometidas. Shield protege frente a DDoS (Distributed Denial of Service: ataque que satura un servicio desde muchos orígenes), no frente al robo de credenciales.",
     "fuentes": [
       "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html"
     ]

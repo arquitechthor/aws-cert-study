@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Redshift — Apuntes AWS</title>
+<meta name="description" content="Almacén de datos (data warehouse) gestionado para analizar con SQL petabytes de datos, en clústeres aprovisionados o sin servidores. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/redshift.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Redshift — Apuntes AWS">
+<meta property="og:description" content="Almacén de datos (data warehouse) gestionado para analizar con SQL petabytes de datos, en clústeres aprovisionados o sin servidores.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/redshift.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/redshift.svg" alt="" width="56" height="56"><span>Amazon Redshift</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+        <span><strong>También en:</strong> <a class="cat-link" href="../index.html?cat=base-de-datos#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/base-de-datos.svg" alt="" width="18" height="18">Base de datos <span class="cat-en">(Database)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/redshift/" target="_blank" rel="noopener">Documentación de Amazon Redshift ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Redshift es un <strong>almacén de datos</strong> (<em>data warehouse</em>): una base de
+        datos pensada para <strong>analizar</strong> grandes volúmenes de datos con SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span>, no para las
+        transacciones del día a día. Guarda los datos por <strong>columnas</strong> y reparte cada
+        consulta entre muchos nodos que trabajan en paralelo (MPP), así que agregaciones sobre miles de millones de filas tardan segundos. Es la
+        base típica de los informes y cuadros de mando de BI (<em>Business Intelligence</em>).</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Aprovisionado o sin servidores:</strong> en un clúster aprovisionado eliges tipo y
+          número de nodos (los RA3 separan cómputo y almacenamiento gestionado en <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span>); en
+          <strong>Redshift Serverless</strong> la capacidad (en RPU <span class="sigla">(<em>Redshift Processing Unit</em>: unidad de capacidad de Redshift Serverless)</span>) se ajusta sola y pagas por uso.</li>
+        <li><strong>Almacenamiento columnar y compresión:</strong> se leen solo las columnas que usa la
+          consulta, lo que reduce la E/S.</li>
+        <li><strong>Claves de distribución y ordenación:</strong> cómo se reparten las filas entre nodos y
+          cómo se ordenan en disco; bien elegidas evitan mover datos entre nodos en los JOIN.</li>
+        <li><strong>Carga de datos:</strong> el comando <code>COPY</code> desde S3 (en paralelo, mucho
+          más rápido que INSERT), la ingesta en streaming desde Kinesis o <a href="../servicio.html?id=msk">MSK</a> <span class="sigla">(<em>Managed Streaming for Apache Kafka</em>)</span>, y las integraciones
+          <strong>zero-ETL</strong> que replican automáticamente datos de <a href="aurora.html">Aurora</a>, <a href="rds.html">RDS</a> <span class="sigla">(<em>Relational Database Service</em>)</span> o <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li><strong>Redshift Spectrum:</strong> consulta con SQL datos que siguen en S3 (lago de datos)
+          sin cargarlos, y los combina con las tablas del almacén.</li>
+        <li><strong>Consultas federadas:</strong> leer en vivo de bases de datos RDS o Aurora.</li>
+        <li><strong>Data sharing:</strong> compartir datos en vivo entre clústeres o cuentas sin
+          copiarlos.</li>
+        <li><strong>Concurrency scaling:</strong> añade capacidad temporal cuando hay muchas consultas a
+          la vez.</li>
+        <li><strong>Vistas materializadas</strong> y caché de resultados para acelerar consultas
+          repetidas; Redshift ML <span class="sigla">(<em>Machine Learning</em>: aprendizaje automático)</span> para crear modelos con SQL.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Almacén de datos corporativo para informes y cuadros de mando (con Quick u otras
+          herramientas de BI).</li>
+        <li>Análisis histórico de ventas, clientes o registros a gran escala.</li>
+        <li>Combinar datos del almacén con el lago de datos de <a href="s3.html">S3</a> mediante Spectrum.</li>
+        <li>Análisis casi en tiempo real de datos operativos con zero-ETL.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Transacciones de una aplicación (OLTP <span class="sigla">(<em>Online Transaction Processing</em>: las transacciones del día a día de una aplicación)</span>, muchas escrituras pequeñas): <a href="rds.html">RDS</a>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Consultas puntuales sobre ficheros en <a href="s3.html">S3</a> sin mantener un almacén: <a href="../servicio.html?id=athena">Athena</a>.</li>
+        <li>Búsqueda de texto o análisis de registros casi en tiempo real: <a href="opensearch-service.html">OpenSearch</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Redshift, Athena y RDS</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
+          <tbody>
+            <tr><td>Análisis intensivo y recurrente sobre grandes volúmenes (OLAP)</td><td>Redshift</td></tr>
+            <tr><td>Consultas SQL ocasionales sobre ficheros en <a href="s3.html">S3</a>, sin infraestructura</td><td><a href="../servicio.html?id=athena">Athena</a></td></tr>
+            <tr><td>Transacciones de una aplicación (OLTP)</td><td><a href="rds.html">RDS</a> o <a href="aurora.html">Aurora</a></td></tr>
+            <tr><td>Tablero de BI sobre esos datos</td><td><a href="../servicio.html?id=quick">Amazon Quick</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En clústeres aprovisionados se paga por hora de nodo (con instancias reservadas) y por el
+        almacenamiento gestionado de los RA3. En Serverless, por RPU-hora consumida mientras se ejecutan
+        consultas y por almacenamiento. Aparte: Spectrum (por datos analizados en <a href="s3.html">S3</a>), concurrency
+        scaling por encima del crédito gratuito diario y las copias entre regiones.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado en reposo con <a href="kms.html">KMS</a> <span class="sigla">(<em>Key Management Service</em>)</span> y en tránsito con TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span>.</li>
+        <li>Despliegue en subredes privadas; <em>Enhanced VPC Routing</em> fuerza a que el tráfico de COPY
+          y UNLOAD pase por la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
+        <li>Permisos por usuario, rol, esquema, tabla, fila y columna; integración con <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
+        <li>Instantáneas automáticas en <a href="s3.html">S3</a>, copia a otra región y reubicación del clúster a otra zona
+          (RA3); despliegue Multi-AZ para clústeres RA3.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Data warehouse"</strong>, <strong>"OLAP"</strong> o <strong>"BI sobre petabytes"</strong>: Redshift.</li>
+        <li><strong>"Consultar datos de <a href="s3.html">S3</a> desde Redshift sin cargarlos"</strong>: Redshift Spectrum.</li>
+        <li><strong>"Cargar muchos datos de S3 rápido"</strong>: COPY, no INSERT fila a fila.</li>
+        <li><strong>"Analizar datos de <a href="aurora.html">Aurora</a> sin construir ETL <span class="sigla">(<em>Extract, Transform, Load</em>: extraer, transformar y cargar datos)</span>"</strong>: integración zero-ETL.</li>
+        <li><strong>"Carga intermitente sin gestionar el clúster"</strong>: Redshift Serverless.</li>
+        <li><strong>"Compartir datos con otra cuenta sin copiarlos"</strong>: data sharing.</li>
+        <li><strong>"Consultas SQL puntuales y baratas sobre S3"</strong>: <a href="../servicio.html?id=athena">Athena</a>, no Redshift.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="redshift"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html" target="_blank" rel="noopener">What is Amazon Redshift?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-whatis.html" target="_blank" rel="noopener">What is Amazon Redshift Serverless?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/redshift/latest/dg/c-using-spectrum.html" target="_blank" rel="noopener">Amazon Redshift Spectrum</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-using.html" target="_blank" rel="noopener">Zero-ETL integrations</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html" target="_blank" rel="noopener">COPY</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

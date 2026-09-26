@@ -64,7 +64,7 @@
       <h2 id="que-es">Qué es</h2>
       <p>Amazon AppFlow mueve datos entre aplicaciones SaaS (software como servicio, como
         Salesforce, SAP, Zendesk, Slack, ServiceNow o Google Analytics) y servicios de AWS como <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> o
-        <a href="../servicio.html?id=redshift">Redshift</a>, en ambos sentidos. Se configura con clics: eliges origen, destino, qué campos
+        <a href="redshift.html">Redshift</a>, en ambos sentidos. Se configura con clics: eliges origen, destino, qué campos
         copiar y cuándo, y AppFlow hace la extracción, la transformación básica y la carga sin que
         tengas que programar ni mantener integraciones con las API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> de cada proveedor.</p>
 
@@ -80,7 +80,7 @@
           cambia un registro en Salesforce).</li>
         <li><strong>Transformaciones:</strong> mapear y renombrar campos, filtrar registros, validar,
           enmascarar campos sensibles y combinar campos, sin código.</li>
-        <li><strong>Destinos habituales:</strong> <a href="s3.html">S3</a> (para un lago de datos), <a href="../servicio.html?id=redshift">Redshift</a>, Snowflake,
+        <li><strong>Destinos habituales:</strong> <a href="s3.html">S3</a> (para un lago de datos), <a href="redshift.html">Redshift</a>, Snowflake,
           <a href="eventbridge.html">EventBridge</a> y de vuelta a otras aplicaciones SaaS como Salesforce.</li>
         <li><strong>Conectividad privada:</strong> con proveedores que lo admiten (como Salesforce),
           los datos viajan por <a href="../servicio.html?id=privatelink">AWS PrivateLink</a> sin pasar por internet.</li>
@@ -89,7 +89,7 @@
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Copiar cada día las oportunidades de Salesforce a <a href="s3.html">S3</a> para analizarlas con <a href="../servicio.html?id=athena">Athena</a> o
-          <a href="../servicio.html?id=redshift">Redshift</a>.</li>
+          <a href="redshift.html">Redshift</a>.</li>
         <li>Enviar a Salesforce datos de clientes calculados en AWS.</li>
         <li>Reaccionar a cambios en un SaaS enviando los eventos a <a href="eventbridge.html">EventBridge</a>.</li>
         <li>Alimentar un lago de datos con información de marketing y soporte sin desarrollar
@@ -113,14 +113,14 @@
             <tr><td>ETL (extraer, transformar y cargar) complejo y catálogo de datos</td><td><a href="../servicio.html?id=glue">Glue</a></td></tr>
             <tr><td>Migrar o replicar bases de datos</td><td><a href="../servicio.html?id=dms">DMS</a></td></tr>
             <tr><td>Ficheros desde el centro de datos</td><td><a href="../servicio.html?id=datasync">DataSync</a></td></tr>
-            <tr><td>Streaming hacia <a href="s3.html">S3</a> o <a href="../servicio.html?id=redshift">Redshift</a></td><td><a href="../servicio.html?id=data-firehose">Amazon Data Firehose</a></td></tr>
+            <tr><td>Streaming hacia <a href="s3.html">S3</a> o <a href="redshift.html">Redshift</a></td><td><a href="../servicio.html?id=data-firehose">Amazon Data Firehose</a></td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga por cada ejecución de flujo y por el volumen de datos procesados (por GB), más los
-        servicios de destino (almacenamiento en <a href="s3.html">S3</a>, <a href="../servicio.html?id=redshift">Redshift</a>…) y, si se usa, <a href="../servicio.html?id=privatelink">PrivateLink</a>. No hay
+        servicios de destino (almacenamiento en <a href="s3.html">S3</a>, <a href="redshift.html">Redshift</a>…) y, si se usa, <a href="../servicio.html?id=privatelink">PrivateLink</a>. No hay
         infraestructura que aprovisionar.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
@@ -134,7 +134,7 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Datos de Salesforce (u otro SaaS) a <a href="s3.html">S3</a> o <a href="../servicio.html?id=redshift">Redshift</a> sin programar"</strong>: AppFlow.</li>
+        <li><strong>"Datos de Salesforce (u otro SaaS) a <a href="s3.html">S3</a> o <a href="redshift.html">Redshift</a> sin programar"</strong>: AppFlow.</li>
         <li><strong>"Sin pasar por internet"</strong> con Salesforce: AppFlow con <a href="../servicio.html?id=privatelink">PrivateLink</a>.</li>
         <li><strong>"ETL complejo entre bases de datos"</strong>: <a href="../servicio.html?id=glue">Glue</a>, no AppFlow.</li>
         <li><strong>"Solo los registros nuevos o cambiados"</strong>: flujo programado con transferencia incremental.</li>

@@ -86,7 +86,7 @@
           <ul>
             <li><strong><a href="fargate.html">Fargate</a></strong> (y Fargate Spot): sin servidores; pagas por la CPU y la memoria
               de cada tarea.</li>
-            <li><strong><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></strong>: tus instancias en un grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>; más control (GPU,
+            <li><strong><a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span></strong>: tus instancias en un grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>; más control (GPU <span class="sigla">(<em>Graphics Processing Unit</em>: procesador gráfico, muy usado en ML)</span>,
               tipos concretos) y opciones de ahorro, pero tú las gestionas.</li>
             <li><strong>ECS Managed Instances</strong>: instancias EC2 que AWS elige, parchea y escala
               por ti, a medio camino entre las dos anteriores.</li>
@@ -105,7 +105,7 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Microservicios y APIs en contenedores detrás de un <a href="../servicio.html?id=elb">Application Load Balancer</a>.</li>
+        <li>Microservicios y APIs en contenedores detrás de un <a href="elb.html">Application Load Balancer</a>.</li>
         <li>Trabajos por lotes y tareas programadas con <a href="eventbridge.html">EventBridge</a> Scheduler.</li>
         <li>Modernizar aplicaciones monolíticas empaquetándolas en contenedores.</li>
         <li>Procesamiento asíncrono que escala según la longitud de una cola <a href="sqs.html">SQS</a> <span class="sigla">(<em>Simple Queue Service</em>)</span>.</li>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elastic Load Balancing (ELB) — Apuntes AWS</title>
+<meta name="description" content="Balanceadores de carga gestionados que reparten el tráfico entre instancias, contenedores, IP o funciones, y solo lo envían a los destinos sanos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/elb.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Elastic Load Balancing (ELB) — Apuntes AWS">
+<meta property="og:description" content="Balanceadores de carga gestionados que reparten el tráfico entre instancias, contenedores, IP o funciones, y solo lo envían a los destinos sanos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/elb.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-secondary btn-sm" href="https://kopitools.link">Ir a Kopi</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/elb.svg" alt="" width="56" height="56"><span>Elastic Load Balancing (ELB)</span></h1>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/elasticloadbalancing/" target="_blank" rel="noopener">Documentación de Elastic Load Balancing (ELB) ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Elastic Load Balancing (ELB) reparte automáticamente el tráfico entrante entre varios
+        destinos (instancias <a href="ec2.html">EC2</a> <span class="sigla">(<em>Elastic Compute Cloud</em>)</span>, contenedores, direcciones IP <span class="sigla">(<em>Internet Protocol</em>: dirección de red)</span> o funciones <a href="lambda.html">Lambda</a>) repartidos en varias
+        zonas de disponibilidad. Comprueba continuamente la salud de cada destino y deja de enviar
+        tráfico a los que fallan. Así una aplicación escala horizontalmente y sigue funcionando aunque
+        caiga una instancia o una zona entera. Es un servicio gestionado: escala solo y AWS mantiene su
+        disponibilidad.</p>
+
+      <h2 id="tipos">Tipos de balanceador</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>Capa</th><th>Cuándo usarlo</th></tr></thead>
+          <tbody>
+            <tr><td>Application Load Balancer (ALB)</td><td>7 (HTTP/HTTPS, gRPC)</td><td>Webs y microservicios: enruta por ruta, host, cabeceras o parámetros; destinos <a href="lambda.html">Lambda</a>; autenticación con <a href="cognito.html">Cognito</a> u OIDC <span class="sigla">(<em>OpenID Connect</em>: estándar de identidad sobre OAuth 2.0)</span>.</td></tr>
+            <tr><td>Network Load Balancer (NLB)</td><td>4 (TCP <span class="sigla">(<em>Transmission Control Protocol</em>: protocolo de transporte fiable)</span>, UDP <span class="sigla">(<em>User Datagram Protocol</em>: protocolo de transporte sin conexión)</span>, TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span>)</td><td>Millones de peticiones por segundo con latencia mínima, IP estática por zona, conserva la IP de origen, protocolos no HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span>.</td></tr>
+            <tr><td>Gateway Load Balancer (GWLB)</td><td>3 (IP, con GENEVE <span class="sigla">(<em>Generic Network Virtualization Encapsulation</em>: protocolo que encapsula el tráfico hacia los appliances)</span>)</td><td>Insertar de forma transparente appliances de terceros (firewalls, inspección) y escalarlos.</td></tr>
+            <tr><td>Classic Load Balancer (CLB)</td><td>4 y 7</td><td>Generación anterior; solo para aplicaciones heredadas.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Listener:</strong> puerto y protocolo en los que escucha el balanceador (por
+          ejemplo, HTTPS <span class="sigla">(<em>HTTP Secure</em>: HTTP cifrado con TLS)</span>:443), con reglas que deciden a qué <strong>grupo de destinos</strong> va cada
+          petición.</li>
+        <li><strong>Comprobaciones de estado:</strong> por grupo de destinos; un destino que falla deja
+          de recibir tráfico. Con <a href="ec2-auto-scaling.html">Auto Scaling</a>, se puede además sustituir.</li>
+        <li><strong>Terminación TLS:</strong> el balanceador descifra HTTPS con un certificado de <a href="acm.html">ACM</a>
+          (<em>AWS Certificate Manager</em>) y varios certificados por listener gracias a SNI
+          (<em>Server Name Indication</em>).</li>
+        <li><strong>Balanceo entre zonas (cross-zone):</strong> reparte por igual entre todos los
+          destinos de todas las zonas; activo por defecto en ALB, opcional en NLB.</li>
+        <li><strong>Sesiones persistentes (sticky sessions):</strong> envían al mismo usuario al mismo
+          destino con una cookie; mejor evitarlas guardando las sesiones fuera (<a href="elasticache.html">ElastiCache</a>, <a href="dynamodb.html">DynamoDB</a>).</li>
+        <li><strong>Connection draining (deregistration delay):</strong> deja terminar las peticiones en
+          curso antes de retirar un destino.</li>
+        <li><strong>IP del cliente:</strong> el ALB la pasa en la cabecera <code>X-Forwarded-For</code>;
+          el NLB la conserva tal cual.</li>
+        <li><strong>Interno o público:</strong> un balanceador puede estar orientado a internet o ser
+          solo interno de la <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Frente de una flota web con <a href="ec2-auto-scaling.html">Auto Scaling</a> repartida en varias zonas.</li>
+        <li>Enrutar <code>/api/*</code> a un servicio y <code>/img/*</code> a otro con un solo ALB.</li>
+        <li>Juegos, IoT (internet de las cosas) o protocolos propios sobre TCP/UDP con NLB.</li>
+        <li>Exponer un servicio a otras <a href="vpc.html">VPC</a> o cuentas con <a href="../servicio.html?id=privatelink">PrivateLink</a> detrás de un NLB.</li>
+        <li>Pasar todo el tráfico por firewalls de terceros con GWLB.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para repartir tráfico entre regiones: <a href="route-53.html">Route 53</a> (políticas de enrutamiento) o Global
+          Accelerator.</li>
+        <li>Para una API <span class="sigla">(<em>Application Programming Interface</em>: interfaz para que los programas se comuniquen)</span> sin servidores con límites, claves y planes de uso: <a href="api-gateway.html">API Gateway</a>.</li>
+        <li>Para cachear contenido cerca del usuario: <a href="cloudfront.html">CloudFront</a> (que puede tener el ALB como origen).</li>
+      </ul>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por hora de balanceador más unidades de capacidad según el uso: LCU (<em>Load Balancer
+        Capacity Units</em>) en ALB y NLCU <span class="sigla">(<em>Network Load Balancer Capacity Unit</em>: unidad de facturación del NLB)</span> en NLB, que combinan conexiones nuevas, conexiones activas,
+        bytes procesados y evaluaciones de reglas. GWLB cobra por hora y por GWLCU <span class="sigla">(<em>Gateway Load Balancer Capacity Unit</em>: unidad de facturación del GWLB)</span>. Aparte, la
+        transferencia de datos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Nodos del balanceador en varias zonas; si una cae, el tráfico va a las demás.</li>
+        <li>Security groups en ALB y NLB, y en los destinos permitir solo el tráfico que viene del
+          security group del balanceador.</li>
+        <li><a href="../servicio.html?id=waf">AWS WAF</a> (<em>Web Application Firewall</em>) sobre el ALB contra ataques web; <a href="../servicio.html?id=shield">AWS Shield</a>
+          Standard contra DDoS (<em>Distributed Denial of Service</em>) incluido.</li>
+        <li>Políticas de seguridad TLS para exigir versiones y cifrados modernos.</li>
+        <li>Registros de acceso a <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> para auditoría.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Enrutar por ruta o por nombre de host"</strong>: ALB.</li>
+        <li><strong>"Latencia ultrabaja"</strong>, <strong>"TCP/UDP"</strong> o <strong>"IP estática"</strong>: NLB.</li>
+        <li><strong>"Firewalls de terceros de forma transparente"</strong>: GWLB.</li>
+        <li><strong>"La aplicación necesita la IP real del cliente"</strong> tras un ALB: cabecera <code>X-Forwarded-For</code>.</li>
+        <li><strong>"Proteger contra inyección SQL <span class="sigla">(<em>Structured Query Language</em>: lenguaje de consultas de bases de datos relacionales)</span> en el balanceador"</strong>: <a href="../servicio.html?id=waf">AWS WAF</a> en el ALB.</li>
+        <li><strong>"Instancias que solo acepten tráfico del balanceador"</strong>: su security group referencia el del balanceador.</li>
+        <li><strong>"Varios dominios HTTPS en un solo ALB"</strong>: varios certificados con SNI.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="elb"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html" target="_blank" rel="noopener">What is Elastic Load Balancing?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html" target="_blank" rel="noopener">What is an Application Load Balancer?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html" target="_blank" rel="noopener">What is a Network Load Balancer?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html" target="_blank" rel="noopener">What is a Gateway Load Balancer?</a>, documentación de AWS (consultada el 26/09/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="https://kopitools.link">Kopi</a>
+        <a href="https://arquitechthor.github.io/">Sobre mí</a>
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

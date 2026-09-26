@@ -1,0 +1,178 @@
+[
+  {
+    "id": "ebs-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS proporciona discos de bloque persistentes para instancias EC2?",
+    "opciones": [
+      "Amazon EBS.",
+      "Amazon S3.",
+      "Amazon EFS.",
+      "Amazon S3 Glacier."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EBS ofrece volúmenes de bloque que se conectan a una instancia como un disco. S3 es almacenamiento de objetos, EFS un sistema de ficheros compartido y Glacier almacenamiento de archivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html"
+    ]
+  },
+  {
+    "id": "ebs-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa para sus instancias EC2 de pruebas cada fin de semana. ¿Qué sigue cobrándose mientras están paradas?",
+    "opciones": [
+      "El almacenamiento de sus volúmenes EBS.",
+      "Las horas de cómputo de la instancia.",
+      "Nada en absoluto.",
+      "El tráfico de red que no se produce."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una instancia parada no cobra cómputo, pero sus volúmenes EBS siguen existiendo y se pagan por GB aprovisionado. El tráfico solo se cobra si existe.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html"
+    ]
+  },
+  {
+    "id": "ebs-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Hay que usar en una instancia de otra zona de disponibilidad los datos de un volumen EBS. ¿Cómo se hace?",
+    "opciones": [
+      "Crear una instantánea del volumen y restaurar un volumen nuevo en la otra zona.",
+      "Desconectar el volumen y conectarlo a la instancia de la otra zona.",
+      "Activar Multi-Attach entre zonas.",
+      "Cambiar la zona del volumen con Elastic Volumes."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Un volumen EBS solo se conecta a instancias de su zona; para llevar los datos a otra se usa una instantánea, que es regional. Multi-Attach solo funciona dentro de la misma zona y Elastic Volumes cambia tamaño y rendimiento, no la zona.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/ebs-snapshots.html"
+    ]
+  },
+  {
+    "id": "ebs-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una base de datos en EC2 usa un volumen gp2 de 3 TiB solo para conseguir 9 000 IOPS, aunque los datos ocupan 500 GiB. ¿Qué cambio reduce el coste manteniendo el rendimiento?",
+    "opciones": [
+      "Migrar a un volumen gp3 de 500 GiB con 9 000 IOPS aprovisionadas.",
+      "Pasar a sc1.",
+      "Duplicar el tamaño del gp2.",
+      "Usar instance store."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En gp3 las IOPS se aprovisionan independientemente del tamaño, así que no hace falta pagar 3 TiB para tener 9 000 IOPS. sc1 es HDD lento, agrandar el gp2 cuesta más e instance store es efímero, inadecuado para una base de datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html"
+    ]
+  },
+  {
+    "id": "ebs-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una auditoría exige que un volumen EBS de datos existente, creado sin cifrar, quede cifrado con una clave de KMS. ¿Cómo se consigue?",
+    "opciones": [
+      "Crear una instantánea, copiarla activando el cifrado con la clave de KMS y crear un volumen nuevo desde la copia.",
+      "Activar el cifrado en el volumen desde la consola.",
+      "Cambiar el tipo de volumen a io2.",
+      "Activar el cifrado por defecto de la región, que cifra los volúmenes existentes."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El cifrado se decide al crear el volumen; un volumen existente se cifra a través de una copia cifrada de su instantánea. El cifrado por defecto solo afecta a los volúmenes nuevos y cambiar el tipo no cifra.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html"
+    ]
+  },
+  {
+    "id": "ebs-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un script de despliegue termina instancias EC2 y el equipo descubre que el volumen raíz se borra con ellas, pero el volumen adicional de datos no. ¿Qué lo explica?",
+    "opciones": [
+      "El atributo DeleteOnTermination, activo por defecto en el volumen raíz y desactivado en los adicionales.",
+      "Un error del servicio EBS.",
+      "Los volúmenes adicionales siempre están cifrados.",
+      "La instancia usaba instance store."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "DeleteOnTermination decide si el volumen se borra al terminar la instancia; por defecto es verdadero en el raíz y falso en los adicionales. El cifrado no influye y el instance store no son volúmenes EBS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html"
+    ]
+  },
+  {
+    "id": "ebs-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación de clúster certificada necesita un almacenamiento de bloque compartido por varias instancias de la misma zona, con IOPS muy altas, y gestiona ella misma la escritura concurrente. ¿Qué opción de EBS lo permite?",
+    "opciones": [
+      "Volúmenes io2 con Multi-Attach en instancias Nitro.",
+      "Volúmenes gp2 conectados a varias zonas.",
+      "Volúmenes sc1 compartidos.",
+      "Instantáneas montadas en varias instancias."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Multi-Attach permite conectar un volumen io2 a varias instancias Nitro de la misma zona; la aplicación debe coordinar las escrituras. gp2 y sc1 no admiten esa configuración entre zonas, y las instantáneas no se montan.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html"
+    ]
+  },
+  {
+    "id": "ebs-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa tiene miles de instantáneas EBS que debe conservar 7 años por normativa y casi nunca restaura. ¿Qué cambio reduce su coste?",
+    "opciones": [
+      "Mover las instantáneas antiguas al nivel de archivo de instantáneas de EBS.",
+      "Borrarlas y conservar solo la última.",
+      "Convertirlas en volúmenes gp3.",
+      "Copiarlas a otra región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El archivo de instantáneas guarda copias completas a un precio mucho menor, adecuado para retenciones largas con restauraciones raras. Borrarlas incumple la normativa, convertirlas en volúmenes cuesta más y copiarlas duplica el coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/ebs-snapshots.html"
+    ]
+  }
+]

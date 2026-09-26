@@ -1,0 +1,158 @@
+[
+  {
+    "id": "elb-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación web debe enviar las peticiones de /api/* a un grupo de contenedores y las de /web/* a otro, con un único punto de entrada HTTPS. ¿Qué balanceador se usa?",
+    "opciones": [
+      "Application Load Balancer con reglas por ruta.",
+      "Network Load Balancer.",
+      "Gateway Load Balancer.",
+      "Classic Load Balancer."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El ALB trabaja en la capa 7 y enruta por ruta, host o cabeceras a distintos grupos de destinos. El NLB trabaja en la capa 4 sin ver la ruta, el GWLB sirve para appliances y el CLB es la generación anterior.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
+    ]
+  },
+  {
+    "id": "elb-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un servicio de juegos sobre UDP necesita millones de peticiones por segundo, latencia mínima y una IP estática por zona para que los clientes la pongan en su lista de permitidos. ¿Qué balanceador es el adecuado?",
+    "opciones": [
+      "Network Load Balancer.",
+      "Application Load Balancer.",
+      "Classic Load Balancer.",
+      "Un balanceador de CloudFront."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El NLB trabaja en la capa 4 con TCP y UDP, ofrece latencia muy baja y una IP estática (o Elastic IP) por zona. El ALB solo gestiona HTTP/HTTPS y gRPC, el CLB es heredado y CloudFront no es un balanceador.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html"
+    ]
+  },
+  {
+    "id": "elb-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Unas instancias EC2 detrás de un ALB solo deben aceptar tráfico que llegue a través del balanceador. ¿Cómo se configura?",
+    "opciones": [
+      "En el security group de las instancias, permitir el puerto de la aplicación solo desde el security group del ALB.",
+      "Hacer públicas las instancias y confiar en el ALB.",
+      "Crear una NACL que deniegue todo el tráfico.",
+      "Desactivar las comprobaciones de estado."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Referenciar el security group del ALB permite solo el tráfico que viene de sus nodos, sin depender de IP. Hacer públicas las instancias las expone, una NACL (Network Access Control List: firewall a nivel de subred) que lo deniega todo corta también al ALB y las comprobaciones de estado no son control de acceso.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
+    ]
+  },
+  {
+    "id": "elb-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una aplicación detrás de un ALB registra como IP de origen de todas las peticiones una IP privada de la VPC. ¿Cómo obtiene la IP real del cliente?",
+    "opciones": [
+      "Leyendo la cabecera X-Forwarded-For que añade el ALB.",
+      "Cambiando a un Classic Load Balancer.",
+      "Desactivando el balanceo entre zonas.",
+      "Activando las sesiones persistentes."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El ALB abre su propia conexión con el destino, así que la IP de origen es la del balanceador; la IP del cliente viaja en X-Forwarded-For. Las demás opciones no cambian esa IP.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
+    ]
+  },
+  {
+    "id": "elb-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador quiere que un ALB invoque directamente una función Lambda para la ruta /webhook, sin servidores. ¿Es posible?",
+    "opciones": [
+      "Sí: un grupo de destinos de tipo Lambda asociado a una regla del listener.",
+      "No: el ALB solo admite instancias EC2.",
+      "Solo con un Network Load Balancer.",
+      "Solo a través de API Gateway obligatoriamente."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El ALB admite grupos de destinos de tipo Lambda y convierte la petición HTTP en un evento para la función. El NLB no invoca funciones Lambda y API Gateway es una alternativa, no un requisito.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
+    ]
+  },
+  {
+    "id": "elb-006",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere que todo el tráfico que entra y sale de sus VPC pase por una flota de firewalls virtuales de un tercero, que debe escalar y tolerar fallos sin cambiar las aplicaciones. ¿Qué DOS componentes forman la solución? (Elige 2.)",
+    "opciones": [
+      "Un Gateway Load Balancer delante de la flota de firewalls.",
+      "Endpoints de Gateway Load Balancer en las VPC y rutas que envían el tráfico hacia ellos.",
+      "Un Application Load Balancer con reglas por ruta.",
+      "Sesiones persistentes en un NLB.",
+      "Una distribución de CloudFront por VPC."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "El GWLB distribuye el tráfico entre los appliances de forma transparente y los endpoints de GWLB, junto con las tablas de rutas, desvían el tráfico hacia ellos. Un ALB solo entiende HTTP, las sesiones persistentes no insertan appliances y CloudFront no inspecciona tráfico de VPC.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html"
+    ]
+  },
+  {
+    "id": "elb-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un equipo ofrece un servicio interno a cientos de VPC de otras cuentas, con rangos de IP que se solapan, sin peering ni Transit Gateway. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Un Network Load Balancer delante del servicio, publicado como servicio de endpoint de PrivateLink.",
+      "Un ALB público con una lista de IP permitidas.",
+      "VPC peering con cada VPC consumidora.",
+      "Un Classic Load Balancer interno."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "PrivateLink expone el servicio a través de un NLB y los consumidores crean endpoints de interfaz en sus VPC, sin importar que los rangos se solapen. Un ALB público expone el servicio en internet y el peering no admite rangos solapados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html"
+    ]
+  }
+]

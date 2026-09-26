@@ -1,0 +1,134 @@
+[
+  {
+    "id": "redshift-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere un almacén de datos para analizar con SQL varios años de ventas y alimentar sus cuadros de mando. ¿Qué servicio de AWS es el adecuado?",
+    "opciones": [
+      "Amazon Redshift.",
+      "Amazon DynamoDB.",
+      "Amazon ElastiCache.",
+      "Amazon EBS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Redshift es el almacén de datos de AWS, optimizado para consultas analíticas sobre grandes volúmenes. DynamoDB es NoSQL para aplicaciones, ElastiCache una caché y EBS (Elastic Block Store) discos de bloque.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html"
+    ]
+  },
+  {
+    "id": "redshift-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un equipo de analistas que domina SQL quiere entrenar un modelo sencillo de predicción de abandono de clientes sobre datos que ya están en su almacén de datos, sin mover los datos. ¿Qué opción lo facilita?",
+    "opciones": [
+      "Redshift ML, que crea y usa modelos con sentencias SQL.",
+      "Amazon Polly.",
+      "Amazon Translate.",
+      "AWS Glue DataBrew."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Redshift ML permite crear modelos (entrenados con SageMaker AI por debajo) y hacer predicciones con SQL dentro de Redshift. Polly sintetiza voz, Translate traduce y DataBrew prepara datos sin crear modelos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/redshift/latest/mgmt/welcome.html"
+    ]
+  },
+  {
+    "id": "redshift-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un almacén de datos en Redshift debe unir sus tablas con años de registros históricos guardados en S3 en formato Parquet, sin cargar esos datos en el clúster. ¿Qué función lo permite?",
+    "opciones": [
+      "Redshift Spectrum con tablas externas.",
+      "El comando COPY de todos los ficheros cada noche.",
+      "Concurrency scaling.",
+      "Una réplica de lectura de Redshift."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Spectrum consulta los datos directamente en S3 mediante tablas externas y los combina con las tablas locales. COPY los cargaría en el clúster, concurrency scaling añade capacidad para concurrencia y Redshift no tiene réplicas de lectura.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/redshift/latest/dg/c-using-spectrum.html"
+    ]
+  },
+  {
+    "id": "redshift-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un equipo ejecuta informes en Redshift unas pocas horas a la semana y el clúster aprovisionado está ocioso el resto del tiempo. ¿Qué opción reduce el coste sin gestionar capacidad?",
+    "opciones": [
+      "Amazon Redshift Serverless.",
+      "Un clúster más grande con instancias reservadas.",
+      "Añadir concurrency scaling.",
+      "Mover los datos a ElastiCache."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Redshift Serverless ajusta la capacidad automáticamente y cobra por el tiempo en que se ejecutan consultas, ideal para uso intermitente. Un clúster reservado paga también las horas ociosas, concurrency scaling añade capacidad y ElastiCache no es un almacén de datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-whatis.html"
+    ]
+  },
+  {
+    "id": "redshift-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Los analistas necesitan consultar en Redshift, con minutos de retraso, los datos transaccionales de una base de datos Aurora MySQL, sin construir ni mantener canalizaciones de ETL (extraer, transformar y cargar). ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Una integración zero-ETL de Aurora con Redshift.",
+      "Exportar a CSV cada noche y cargar con COPY.",
+      "Consultar Aurora directamente desde los cuadros de mando.",
+      "Replicar Aurora a DynamoDB."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La integración zero-ETL replica los cambios de Aurora a Redshift de forma continua y gestionada. La exportación nocturna tiene horas de retraso y exige mantenimiento, consultar Aurora carga la base transaccional y DynamoDB no es un almacén analítico. Siglas: CSV (Comma-Separated Values: texto con valores separados por comas).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-using.html"
+    ]
+  },
+  {
+    "id": "redshift-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una canalización carga en Redshift millones de filas diarias con sentencias INSERT fila a fila desde una aplicación, y tarda horas. ¿Qué cambio es el más eficaz?",
+    "opciones": [
+      "Escribir los datos en ficheros en S3 (divididos y comprimidos) y cargarlos con COPY.",
+      "Aumentar el número de conexiones con INSERT en paralelo.",
+      "Crear más vistas materializadas.",
+      "Desactivar la compresión de columnas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "COPY carga desde S3 en paralelo usando todos los nodos y es la forma recomendada de cargar grandes volúmenes. Más INSERT paralelos siguen siendo lentos, las vistas materializadas aceleran consultas y quitar la compresión empeora el rendimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html"
+    ]
+  }
+]

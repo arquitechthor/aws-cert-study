@@ -75,7 +75,7 @@
           <em>privadas</em> (solo dentro de las <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span> asociadas).</li>
         <li><strong>Registros:</strong> A, AAAA, CNAME <span class="sigla">(<em>Canonical Name</em>: registro DNS que apunta a otro nombre)</span>, MX <span class="sigla">(<em>Mail Exchange</em>: registro DNS del servidor de correo)</span>, TXT, NS <span class="sigla">(<em>Name Server</em>: registro DNS con los servidores de nombres del dominio)</span>, SOA <span class="sigla">(<em>Start of Authority</em>: registro DNS con los datos de la zona)</span>, CAA <span class="sigla">(<em>Certification Authority Authorization</em>: registro DNS que indica qué autoridades pueden emitir certificados)</span>… con su TTL <span class="sigla">(<em>Time To Live</em>: tiempo de vida antes de caducar)</span>.</li>
         <li><strong>Registro alias:</strong> extensión de Route 53 que apunta a recursos de AWS
-          (<a href="cloudfront.html">CloudFront</a>, <a href="../servicio.html?id=elb">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, <a href="api-gateway.html">API Gateway</a>, <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> web, otra entrada de la zona). Funciona en el
+          (<a href="cloudfront.html">CloudFront</a>, <a href="elb.html">ALB</a> <span class="sigla">(<em>Application Load Balancer</em>: balanceador HTTP/HTTPS)</span>, <a href="api-gateway.html">API Gateway</a>, <a href="s3.html">S3</a> <span class="sigla">(<em>Simple Storage Service</em>)</span> web, otra entrada de la zona). Funciona en el
           <strong>vértice del dominio</strong> (<code>ejemplo.com</code>), donde un CNAME no está
           permitido, y las consultas a recursos de AWS son gratuitas.</li>
         <li><strong>Políticas de enrutamiento:</strong>
@@ -100,7 +100,7 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Apuntar un dominio propio a <a href="cloudfront.html">CloudFront</a>, un <a href="../servicio.html?id=elb">ALB</a> o <a href="api-gateway.html">API Gateway</a> con registros alias.</li>
+        <li>Apuntar un dominio propio a <a href="cloudfront.html">CloudFront</a>, un <a href="elb.html">ALB</a> o <a href="api-gateway.html">API Gateway</a> con registros alias.</li>
         <li>Recuperación ante desastres activo-pasivo entre regiones con failover y comprobaciones de estado.</li>
         <li>Aplicaciones multirregión que llevan a cada usuario a la región más cercana.</li>
         <li>Migraciones graduales con enrutamiento ponderado.</li>
@@ -111,7 +111,7 @@
       <ul>
         <li>Para conmutar entre regiones en segundos sin depender del TTL en caché de los clientes:
           <a href="../servicio.html?id=global-accelerator">Global Accelerator</a>.</li>
-        <li>Como balanceador de carga con reparto real por conexión: <a href="../servicio.html?id=elb">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>. El DNS solo devuelve direcciones.</li>
+        <li>Como balanceador de carga con reparto real por conexión: <a href="elb.html">ELB</a> <span class="sigla">(<em>Elastic Load Balancing</em>)</span>. El DNS solo devuelve direcciones.</li>
         <li>No es obligatorio para dominios registrados en otro proveedor, pero su integración con <a href="acm.html">ACM</a> <span class="sigla">(<em>AWS Certificate Manager</em>)</span>
           y los alias suele compensar.</li>
       </ul>
@@ -152,7 +152,7 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Dominio raíz a <a href="cloudfront.html">CloudFront</a> o a un <a href="../servicio.html?id=elb">ALB</a>"</strong>: registro alias, no CNAME.</li>
+        <li><strong>"Dominio raíz a <a href="cloudfront.html">CloudFront</a> o a un <a href="elb.html">ALB</a>"</strong>: registro alias, no CNAME.</li>
         <li><strong>"País"</strong> o <strong>"cumplimiento legal"</strong>: geolocalización.
           <strong>"Menor latencia"</strong>: latencia. No se deben confundir.</li>
         <li><strong>"Activo-pasivo"</strong>: failover con comprobaciones de estado.</li>

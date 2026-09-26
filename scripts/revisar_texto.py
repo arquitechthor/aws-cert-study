@@ -161,6 +161,17 @@ G = {
     'UTC': ('Coordinated Universal Time', 'hora universal coordinada'),
     'VTL': ('Velocity Template Language', 'lenguaje de plantillas'),
     'LDAP': ('Lightweight Directory Access Protocol', 'protocolo de directorios de usuarios'),
+    'CLB': ('Classic Load Balancer', 'balanceador de la generación anterior'),
+    'GWLB': ('Gateway Load Balancer', 'balanceador para appliances de red'),
+    'GENEVE': ('Generic Network Virtualization Encapsulation', 'protocolo que encapsula el tráfico hacia los appliances'),
+    'NLCU': ('Network Load Balancer Capacity Unit', 'unidad de facturación del NLB'),
+    'GWLCU': ('Gateway Load Balancer Capacity Unit', 'unidad de facturación del GWLB'),
+    'SNI': ('Server Name Indication', 'permite varios certificados en la misma IP'),
+    'HDD': ('Hard Disk Drive', 'disco duro magnético'),
+    'OLTP': ('Online Transaction Processing', 'las transacciones del día a día de una aplicación'),
+    'RPU': ('Redshift Processing Unit', 'unidad de capacidad de Redshift Serverless'),
+    'MPP': ('Massively Parallel Processing', 'procesamiento masivamente paralelo'),
+    'DDoS': ('Distributed Denial of Service', 'ataque que satura un servicio desde muchos orígenes'),
     # Siglas de servicios: se expanden (sin explicación, el enlace lleva a su página).
     'ACM': ('AWS Certificate Manager', None), 'ALB': ('Application Load Balancer', 'balanceador HTTP/HTTPS'),
     'NLB': ('Network Load Balancer', 'balanceador TCP/UDP'), 'CLI': ('Command Line Interface', 'línea de comandos'),
@@ -264,8 +275,8 @@ SUFIJOS = {'NAT': ' [Gg]ateway'}
 def explicado(tok, eng, gloss, texto_total, pos_txt, txt, pos):
     """True si la sigla ya se entiende: va entre paréntesis tras el término o ya está desplegada."""
     antes = txt[max(0, pos - 2):pos]
-    if antes.endswith('('):
-        return True
+    if antes.endswith('(') and txt[pos + len(tok):pos + len(tok) + 1] == ')':
+        return True  # "término (SIGLA)": ya explicada por el término que la precede
     siguiente = txt[pos + len(tok):pos + len(tok) + 22]
     if siguiente.startswith(' (') or siguiente.startswith(' <span class="sigla">'):
         return True  # ya va seguida de su explicación entre paréntesis

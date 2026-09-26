@@ -117,7 +117,7 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Como disco de un sistema operativo o de una base de datos: eso es <a href="../servicio.html?id=ebs">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span>.</li>
+        <li>Como disco de un sistema operativo o de una base de datos: eso es <a href="ebs.html">EBS</a> <span class="sigla">(<em>Elastic Block Store</em>)</span>.</li>
         <li>Como sistema de ficheros compartido con semántica POSIX <span class="sigla">(<em>Portable Operating System Interface</em>: estándar de ficheros y permisos tipo Unix)</span>: <a href="../servicio.html?id=efs">EFS</a> <span class="sigla">(<em>Elastic File System</em>)</span> o <a href="../servicio.html?id=fsx">FSx</a>.</li>
         <li>Para datos con muchas actualizaciones pequeñas de partes de un fichero: S3 reescribe el
           objeto entero.</li>
@@ -126,7 +126,7 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>S3</th><th><a href="../servicio.html?id=ebs">EBS</a></th><th><a href="../servicio.html?id=efs">EFS</a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>S3</th><th><a href="ebs.html">EBS</a></th><th><a href="../servicio.html?id=efs">EFS</a></th></tr></thead>
           <tbody>
             <tr><td>Tipo</td><td>Objetos</td><td>Bloques (disco)</td><td>Ficheros (NFS)</td></tr>
             <tr><td>Acceso</td><td>API HTTP <span class="sigla">(<em>HyperText Transfer Protocol</em>: protocolo de la web)</span> desde cualquier sitio</td><td>Una instancia (salvo multi-attach)</td><td>Muchas instancias a la vez</td></tr>
@@ -148,7 +148,7 @@
           defecto (<em>Bucket owner enforced</em>).</li>
         <li>Acceso con políticas <a href="iam.html">IAM</a> <span class="sigla">(<em>Identity and Access Management</em>)</span> y <strong>bucket policies</strong> (por ejemplo, exigir TLS <span class="sigla">(<em>Transport Layer Security</em>: cifrado de las conexiones)</span> con
           <code>aws:SecureTransport</code> o limitar a un endpoint de <a href="vpc.html">VPC</a> <span class="sigla">(<em>Virtual Private Cloud</em>)</span>).</li>
-        <li>Cifrado en reposo siempre activo (SSE-S3 por defecto). También SSE-KMS <span class="sigla">(<em>Server-Side Encryption with KMS keys</em>: cifrado en el servidor con claves de KMS)</span>, DSSE-KMS <span class="sigla">(<em>Dual-layer Server-Side Encryption with KMS</em>: doble capa de cifrado con claves de KMS)</span> o SSE-C <span class="sigla">(<em>Server-Side Encryption with Customer-provided keys</em>: cifrado en el servidor con claves que aporta el cliente)</span>
+        <li>Cifrado en reposo siempre activo (SSE-S3 <span class="sigla">(<em>Server-Side Encryption with S3 managed keys</em>: cifrado en el servidor con claves que gestiona S3)</span> por defecto). También SSE-KMS <span class="sigla">(<em>Server-Side Encryption with KMS keys</em>: cifrado en el servidor con claves de KMS)</span>, DSSE-KMS <span class="sigla">(<em>Dual-layer Server-Side Encryption with KMS</em>: doble capa de cifrado con claves de KMS)</span> o SSE-C <span class="sigla">(<em>Server-Side Encryption with Customer-provided keys</em>: cifrado en el servidor con claves que aporta el cliente)</span>
           con clave del cliente.</li>
         <li>Las clases regionales replican en al menos tres zonas de disponibilidad; One Zone y Express
           One Zone, en una sola.</li>
