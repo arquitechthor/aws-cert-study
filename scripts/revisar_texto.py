@@ -201,6 +201,22 @@ G = {
     'SQS': ('Simple Queue Service', None), 'STS': ('Security Token Service', None),
     'VPC': ('Virtual Private Cloud', None), 'WAF': ('Web Application Firewall', None),
     'SCT': ('Schema Conversion Tool', None),
+    # Siglas de las frases del catálogo (campo `frase` de servicios.json)
+    'AD': ('Active Directory', 'directorio de usuarios y equipos de Microsoft'),
+    'CNCF': ('Cloud Native Computing Foundation', 'fundación que mantiene Kubernetes y otros proyectos cloud native'),
+    'CQL': ('Cassandra Query Language', 'lenguaje de consultas de Apache Cassandra'),
+    'CVE': ('Common Vulnerabilities and Exposures', 'catálogo público de vulnerabilidades conocidas'),
+    'FTP': ('File Transfer Protocol', 'protocolo clásico de transferencia de ficheros'),
+    'FTPS': ('FTP Secure', 'FTP cifrado con TLS'),
+    'SFTP': ('SSH File Transfer Protocol', 'transferencia de ficheros sobre SSH'),
+    'IDE': ('Integrated Development Environment', 'editor de código con herramientas de desarrollo'),
+    'IPS': ('Intrusion Prevention System', 'sistema que detecta y bloquea intrusiones en la red'),
+    'IVR': ('Interactive Voice Response', 'menú telefónico automático por voz o teclado'),
+    'NAS': ('Network Attached Storage', 'almacenamiento de ficheros conectado a la red'),
+    'NLP': ('Natural Language Processing', 'procesamiento del lenguaje natural'),
+    'OTA': ('Over-The-Air', 'actualización remota por la red, sin conectar el dispositivo'),
+    'TAM': ('Technical Account Manager', 'responsable técnico asignado por AWS'),
+    'TI': (None, 'tecnologías de la información: el departamento de sistemas'),
 }
 # RAM es la memoria en EC2 y el servicio AWS RAM en el resto de páginas.
 POR_PAGINA = {
@@ -390,15 +406,54 @@ def enlazar_html(fragmento, pagina):
     return ''.join(p[1] for p in partes), cambios
 
 
+RX_FRASE = re.compile(r'\n\s*<div class="meta-row meta-frase">.*?</div>', re.S)
+CORTE = '<!--corte-->'
+
+
+def texto_plano(fragmento):
+    sin_exp = re.sub(r'<span class="sigla-exp">.*?</span>', '', fragmento, flags=re.S)
+    return html.unescape(re.sub(r'<[^>]+>', '', sin_exp))
+
+
+def poner_frase(t, sid):
+    """Fila "En una frase:" de la cabecera con el campo `frase` de servicios.json. Solo se
+    reescribe si su texto cambia, para no perder las siglas ya marcadas."""
+    frase = S[sid].get('frase', '')
+    fila = (f'\n      <div class="meta-row meta-frase"><strong>En una frase:</strong> '
+            f'<span>{html.escape(frase, quote=False)}</span></div>')
+    actual = RX_FRASE.search(t)
+    if actual:
+        if texto_plano(actual.group(0)) == texto_plano(fila):
+            return t
+        return t[:actual.start()] + (fila if frase else '') + t[actual.end():]
+    if not frase:
+        return t
+    cab = t.index('<div class="service-head">')
+    fin_cab = t.index('<div class="meta-row">', cab)
+    m = re.compile(r'<p class="full-name">.*?</p>', re.S).search(t, cab, fin_cab)         or re.compile('</h1>').search(t, cab)
+    return t[:m.end()] + fila + t[m.end():]
+
+
 def revisar_pagina(sid, escribir):
     ruta = os.path.join(REPO, 'servicios', f'{sid}.html')
     t = open(ruta, encoding='utf8').read()
+    t0 = t
+    t = poner_frase(t, sid)
     ini = t.index('<article class="doc">')
     fin = t.index('<h2 id="preguntas">')
     # Primero los enlaces (sobre el texto limpio) y después las siglas, también dentro de enlaces.
     cuerpo, enlaces = enlazar_html(VIEJA_EXPANSION.sub('', t[ini:fin]), sid)
-    cuerpo, siglas = aplicar_glosario_html(cuerpo, sid)
-    nuevo = t[:ini] + cuerpo + t[fin:]
+    # Las siglas de la fila "En una frase:" se marcan junto con el artículo, para que la
+    # explicación de la primera aparición no se repita.
+    fila = RX_FRASE.search(t)
+    if fila:
+        juntos, siglas = aplicar_glosario_html(fila.group(0) + CORTE + cuerpo, sid)
+        fila_nueva, cuerpo = juntos.split(CORTE)
+        nuevo = t[:fila.start()] + fila_nueva + t[fila.end():ini] + cuerpo + t[fin:]
+    else:
+        cuerpo, siglas = aplicar_glosario_html(cuerpo, sid)
+        nuevo = t[:ini] + cuerpo + t[fin:]
+    t = t0
     if '../assets/siglas.js' not in nuevo:  # script del tooltip, antes que quiz.js
         nuevo = nuevo.replace('<script src="../assets/quiz.js" defer></script>',
                               '<script src="../assets/siglas.js" defer></script>\n<script src="../assets/quiz.js" defer></script>')

@@ -19,6 +19,8 @@ of every work session so work can be resumed at any time.
 Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 `kopi-web`, whose palette and base components were copied into `styles.css`).
 
+- Every page shares the same `<nav>` as `kopi-web` and the personal site ("Sobre mí" first, no
+  call-to-action button): policy "Mismo menú en las tres webs" in `../kopi-docs/politicas.md`.
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
   filters (text, category, status, certifications with union/intersection mode). Filter state
   lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=interseccion&kopi=1`). `kopi=1` shows only
@@ -41,7 +43,9 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   Noria topic (`{version: 1, temas: [{nombre, descripcion, preguntas}]}`, format in
   `../kopi-docs/importar_temas.md`; statement + options, no answers).
 - `scripts/revisar_texto.py`: applies the acronym and service-link content rules (below) to
-  published pages and questions; idempotent, dry run unless `--escribir`.
+  published pages and questions, and writes the header's "En una frase:" row from each service's
+  `frase` in `servicios.json` (acronyms marked too); idempotent, dry run unless `--escribir`.
+  The catalog cards and the "Próximamente" page show `frase` as well (not `resumen`).
 - `aviso-legal.html`: legal notice, terms, trademarks, license and privacy.
 - `data/servicios.json`, `data/categorias.json`, `data/certificaciones.json`: the catalog
   (schemas in `PLAN.md`). `data/fuentes/*.txt`: the original in-scope service lists from each

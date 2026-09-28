@@ -221,7 +221,7 @@
           <span class="badge badge-${clase}">${texto}</span>
         </div>
         <p class="service-cat cat-link">${categoriaHtml(cat)}</p>
-        ${s.resumen ? `<p class="service-resumen">${esc(s.resumen)}</p>` : ''}
+        ${s.frase ? `<p class="service-resumen">${esc(s.frase)}</p>` : ''}
         <div class="chips">${s.certificaciones.map((c) => `<span class="chip chip-cert">${esc(c)}</span>`).join('')}${s.kopi
           ? '<span class="chip chip-kopi" title="Lo usa Kopi en producción">Kopi</span>' : ''}</div>
       </a>`;

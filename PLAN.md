@@ -17,10 +17,8 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). Las preguntas de los 6
   ya publicados antes de añadir CLF-C02 y DVA-C02 aún no cubren esas dos guías. La tarea 0.9 sigue
   programada para el 27/10/2026.
-- **Próximo paso (siguiente sesión):** terminar la **tarea 4.11**: las 164 frases ya están en
-  `servicios.json` y pasan `scripts/revisar_frases.py`; falta la fila "En una frase:" en guías y
-  "Próximamente", las tarjetas del catálogo con la frase en vez del resumen, las siglas nuevas
-  en el glosario y la revisión a mano de parejas. Después, seguir con las guías pendientes:
+- **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
+  parejas que se confunden fácilmente (lo demás está hecho). Después, seguir con las guías pendientes:
   **Computación (7):** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda
   ECS Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
   `serverless-application-repository`, `vmware-cloud-on-aws` (aviso: AWS dejó de revenderlo el
@@ -55,7 +53,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Iconos de AWS | Se usan los **AWS Architecture Icons oficiales** (paquete del 31/07/2025 en `data/asset-package/`) **junto al nombre de cada servicio y categoría** (tarjetas del catálogo, filtro de categoría y cabecera de las páginas de servicio; ampliado el 2026-09-26) y en el juego de memoria (Fase 4). Un servicio sin icono oficial muestra el de su categoría. AWS los permite para diagramas y materiales como presentaciones y pósteres, y sus *Trademark Guidelines* aceptan el uso limitado con fines educativos y sin ánimo de lucro; ni el catálogo ni un juego están citados de forma explícita: es una zona gris que se asume por ser un sitio personal, educativo y no comercial. Condiciones: iconos **sin modificar** (ni recolorear ni recortar), nada que sugiera patrocinio o afiliación con AWS, aviso de marcas en el pie y en el aviso legal, y quedan **fuera de la licencia CC BY-SA** (se indica en `README` y en el aviso legal). Si AWS lo pidiera, se retiran y se muestran solo los nombres. |
 | Paquete de iconos en git | `data/asset-package/` (29 MB, con basura de macOS) está en `.gitignore`. Solo se versionan los SVG de 64 px de los servicios y categorías del catálogo, copiados a `assets/iconos/servicios/<id>.svg` y `assets/iconos/categorias/<id>.svg`. |
 | Preguntas | Solo preguntas **originales** tipo examen. Nunca preguntas reales de examen, que están bajo NDA. |
-| Enlaces a Kopi | En la navegación y el pie: "Kopi" → `https://kopitools.link` y "Sobre mí" → `https://arquitechthor.github.io/` (web personal aparte, repo `arquitechthor.github.io`). `kopi-web` y la web personal enlazan a este sitio. |
+| Enlaces a Kopi | "Sobre mí" → `https://arquitechthor.github.io/` (web personal aparte, repo `arquitechthor.github.io`) en el menú, como **primer enlace**, y en el pie; "Kopi" → `https://kopitools.link` solo en el pie. Desde el 2026-09-28 el menú sigue el patrón común de las tres webs (política "Mismo menú en las tres webs" de `kopi-docs/politicas.md`): sin el botón "Ir a Kopi". `kopi-web` y la web personal enlazan a este sitio. |
 | Flujo git | Directo a `main`, sin pull requests (igual que el resto de proyectos kopi). |
 | Progreso del usuario | Sin cuentas ni backend: el progreso vive en `localStorage` (clave `apuntes-aws.progreso`, un objeto por servicio con las preguntas acertadas, el total y la fecha de finalización). Un servicio publicado pasa a **Finalizado** cuando se han acertado todas sus preguntas al menos una vez; si luego se añaden preguntas, vuelve a estar en curso. "Finalizado" no es un `estado` de `servicios.json`: se calcula en el navegador. |
 | Filtro de certificaciones | Con varias marcadas, modo **Unión** (al menos una, por defecto) o **Intersección** (todas), en la URL como `modo=interseccion`. Las certificaciones con `estado: "guia-pendiente"` (SAP-C03, DVA-C03) **no salen como filtro** hasta tener guía y servicios; solo se ven en su tarjeta, y un `cert=` suyo en la URL se ignora. |
@@ -572,12 +570,13 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 - [ ] **4.11** **(En curso.)** Campo `frase` para **todos** los servicios (unos 164) según la
       decisión "Campo `frase`": ~~escribir las frases; comprobación automática (sin nombre, sigla ni
       id del servicio; 60–90 caracteres) en `scripts/`~~ (hecho el 2026-09-28: 164 frases de 65 a
-      89 caracteres, `scripts/revisar_frases.py` sin errores; siglas de las frases que aún no están
-      en el glosario `G`: IDE, NLP, IVR, NAS, AD, CNCF, CVE, OTA, CQL, IPS, TI, TAM, SFTP, FTPS, FTP); fila "En una frase:" en la cabecera de las
+      89 caracteres, `scripts/revisar_frases.py` sin errores); ~~fila "En una frase:" en la cabecera de las
       guías publicadas (y en la plantilla y el generador de páginas) y en `servicio.html`
       ("Próximamente"); las tarjetas del catálogo (`catalogo.js`) muestran la `frase` en lugar del
       `resumen`; aplicar `revisar_texto.py` para que las siglas de la fila lleven tooltip (hoy el
-      script solo procesa el `<article>`: ampliarlo a esa fila); revisar a mano las parejas que se
+      script solo procesa el `<article>`: ampliarlo a esa fila)~~ (hecho el 2026-09-28:
+      `revisar_texto.py` inserta la fila desde `servicios.json` y marca sus siglas; 15 siglas
+      nuevas en el glosario); revisar a mano las parejas que se
       confunden fácilmente.
 - [ ] **4.12** Selector de modo (categorías / funciones) en el panel de configuración y en la URL.
 - [ ] **4.13** Generador del modo funciones: N servicios al azar del filtro que tengan icono y
@@ -637,3 +636,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-09-26 | Fase 4 ampliada con un segundo modo, "funciones": emparejar cada servicio (icono y nombre) con la frase que describe lo que hace. Nuevo campo `frase` en `servicios.json` (sin el nombre ni la sigla del servicio) y tareas 4.11–4.15. |
 | 2026-09-26 | Decidido (para la próxima sesión) el campo `frase` en los 164 servicios con fila "En una frase:" en guías y "Próximamente", y como texto de las tarjetas del catálogo en lugar del resumen; tarea 4.11 ampliada. Sesión cerrada con 47 guías publicadas. |
 | 2026-09-28 | Tarea 4.11 (primera parte): campo `frase` en los 164 servicios de `servicios.json` (60–90 caracteres, sin nombre, sigla ni id del servicio, distinguiendo vecinos como SQS/SNS, EBS/EFS, Athena/Redshift) y comprobador `scripts/revisar_frases.py`. Pendiente: mostrarla en guías, "Próximamente" y catálogo. |
+| 2026-09-28 | Tarea 4.11 (segunda parte): fila "En una frase:" en las 47 guías (la inserta `revisar_texto.py` desde `servicios.json`, con siglas marcadas), en "Próximamente" y en la plantilla; las tarjetas del catálogo muestran la frase en lugar del resumen; 15 siglas nuevas en el glosario. Menú homologado con `kopi-web` y la web personal: "Sobre mí" primero y sin el botón "Ir a Kopi". |

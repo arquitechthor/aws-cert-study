@@ -16,6 +16,10 @@
    "en": "Aurora Capacity Unit",
    "es": "unidad de capacidad de Aurora Serverless"
   },
+  "AD": {
+   "en": "Active Directory",
+   "es": "directorio de usuarios y equipos de Microsoft"
+  },
   "AES-256": {
    "en": "Advanced Encryption Standard",
    "es": "cifrado simétrico con claves de 256 bits"
@@ -100,6 +104,10 @@
    "en": "Canonical Name",
    "es": "registro DNS que apunta a otro nombre"
   },
+  "CNCF": {
+   "en": "Cloud Native Computing Foundation",
+   "es": "fundación que mantiene Kubernetes y otros proyectos cloud native"
+  },
   "CNI": {
    "en": "Container Network Interface",
    "es": "plugin de red de los contenedores"
@@ -111,6 +119,10 @@
   "CPU": {
    "en": "Central Processing Unit",
    "es": "procesador"
+  },
+  "CQL": {
+   "en": "Cassandra Query Language",
+   "es": "lenguaje de consultas de Apache Cassandra"
   },
   "CRM": {
    "en": "Customer Relationship Management",
@@ -135,6 +147,10 @@
   "CUDA": {
    "en": "Compute Unified Device Architecture",
    "es": "plataforma de NVIDIA para programar GPU"
+  },
+  "CVE": {
+   "en": "Common Vulnerabilities and Exposures",
+   "es": "catálogo público de vulnerabilidades conocidas"
   },
   "DAX": {
    "en": "DynamoDB Accelerator",
@@ -244,6 +260,14 @@
    "en": "Foundation Model",
    "es": "modelo fundacional"
   },
+  "FTP": {
+   "en": "File Transfer Protocol",
+   "es": "protocolo clásico de transferencia de ficheros"
+  },
+  "FTPS": {
+   "en": "FTP Secure",
+   "es": "FTP cifrado con TLS"
+  },
   "GENEVE": {
    "en": "Generic Network Virtualization Encapsulation",
    "es": "protocolo que encapsula el tráfico hacia los appliances"
@@ -304,6 +328,10 @@
    "en": "Identity and Access Management",
    "es": null
   },
+  "IDE": {
+   "en": "Integrated Development Environment",
+   "es": "editor de código con herramientas de desarrollo"
+  },
   "IMDS": {
    "en": "Instance Metadata Service",
    "es": "servicio de metadatos de la instancia"
@@ -320,6 +348,10 @@
    "en": "Internet Protocol",
    "es": "dirección de red"
   },
+  "IPS": {
+   "en": "Intrusion Prevention System",
+   "es": "sistema que detecta y bloquea intrusiones en la red"
+  },
   "IRSA": {
    "en": "IAM Roles for Service Accounts",
    "es": "roles de IAM para cuentas de servicio de Kubernetes"
@@ -331,6 +363,10 @@
   "ISO": {
    "en": "International Organization for Standardization",
    "es": "organismo de normas internacionales"
+  },
+  "IVR": {
+   "en": "Interactive Voice Response",
+   "es": "menú telefónico automático por voz o teclado"
   },
   "IaC": {
    "en": "Infrastructure as Code",
@@ -424,6 +460,10 @@
    "en": "Network Access Control List",
    "es": "firewall a nivel de subred"
   },
+  "NAS": {
+   "en": "Network Attached Storage",
+   "es": "almacenamiento de ficheros conectado a la red"
+  },
   "NAT": {
    "en": "Network Address Translation",
    "es": "traducción de direcciones de red"
@@ -439,6 +479,10 @@
   "NLCU": {
    "en": "Network Load Balancer Capacity Unit",
    "es": "unidad de facturación del NLB"
+  },
+  "NLP": {
+   "en": "Natural Language Processing",
+   "es": "procesamiento del lenguaje natural"
   },
   "NS": {
    "en": "Name Server",
@@ -475,6 +519,10 @@
   "OSS": {
    "en": "Open Source Software",
    "es": "la versión de código abierto"
+  },
+  "OTA": {
+   "en": "Over-The-Air",
+   "es": "actualización remota por la red, sin conectar el dispositivo"
   },
   "OU": {
    "en": "Organizational Unit",
@@ -592,6 +640,10 @@
    "en": "Simple Email Service",
    "es": null
   },
+  "SFTP": {
+   "en": "SSH File Transfer Protocol",
+   "es": "transferencia de ficheros sobre SSH"
+  },
   "SLA": {
    "en": "Service Level Agreement",
    "es": "compromiso de disponibilidad"
@@ -696,9 +748,17 @@
    "en": "Security Token Service",
    "es": null
   },
+  "TAM": {
+   "en": "Technical Account Manager",
+   "es": "responsable técnico asignado por AWS"
+  },
   "TCP": {
    "en": "Transmission Control Protocol",
    "es": "protocolo de transporte fiable"
+  },
+  "TI": {
+   "en": null,
+   "es": "tecnologías de la información: el departamento de sistemas"
   },
   "TLS": {
    "en": "Transport Layer Security",

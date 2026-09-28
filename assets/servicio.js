@@ -34,6 +34,7 @@
       <div class="service-head">
         <h1 class="service-title">${iconoServicio(s, cat, 'service-icon-lg')}<span>${esc(s.nombre)}</span></h1>
         ${s.nombreCompleto ? `<p class="full-name">${esc(s.nombreCompleto)}</p>` : ''}
+        ${s.frase ? `<div class="meta-row meta-frase"><strong>En una frase:</strong> <span id="frase">${esc(s.frase)}</span></div>` : ''}
         <div class="meta-row">
           <span><strong>Categoría:</strong>
             <a class="cat-link" href="${esc(urlCatalogo({ cat: s.categoria }))}">${categoriaHtml(cat)}</a></span>
@@ -61,6 +62,14 @@
         <a class="btn btn-secondary" href="${esc(urlDocumentacion(s))}" target="_blank" rel="noopener">${s.documentacion
           ? 'Ir a la documentación oficial ↗' : 'Buscar en la documentación de AWS ↗'}</a>
       </div>`;
+
+    // Siglas de la frase con tooltip, igual que en las guías.
+    const frase = document.getElementById('frase');
+    if (frase && window.AwsSiglas) {
+      window.AwsSiglas.cargarGlosario()
+        .then((g) => { frase.innerHTML = window.AwsSiglas.marcar(esc(s.frase), s.id, g); })
+        .catch(() => {});
+    }
   }).catch((err) => {
     console.error(err);
     cont.innerHTML = '<p class="empty-state">No se pudo cargar el catálogo.</p>';
