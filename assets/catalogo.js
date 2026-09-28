@@ -55,8 +55,13 @@
     return normalizar(nombre.replace(/^(Amazon|AWS)\s+/, ''));
   }
 
-  function textoBusqueda(s) {
+  function textoNombre(s) {
     return normalizar([s.id, s.nombre, s.nombreCompleto, ...(s.alias || []), ...(s.incluye || [])].filter(Boolean).join(' '));
+  }
+
+  /** La búsqueda mira el nombre y también la frase ("cola" encuentra SQS). */
+  function textoBusqueda(s) {
+    return `${textoNombre(s)} ${normalizar(s.frase || '')}`;
   }
 
   /**
@@ -202,7 +207,15 @@
         if (!coincide) return false;
       }
       return true;
-    }).sort((a, b) => claveOrden(a.nombre).localeCompare(claveOrden(b.nombre), 'es'));
+    }).sort((a, b) => {
+      // Con búsqueda, primero los que coinciden por nombre y después los que solo por la frase.
+      if (q) {
+        const pa = textoNombre(a).includes(q) ? 0 : 1;
+        const pb = textoNombre(b).includes(q) ? 0 : 1;
+        if (pa !== pb) return pa - pb;
+      }
+      return claveOrden(a.nombre).localeCompare(claveOrden(b.nombre), 'es');
+    });
   }
 
   const BADGES = {

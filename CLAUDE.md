@@ -19,8 +19,11 @@ of every work session so work can be resumed at any time.
 Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 `kopi-web`, whose palette and base components were copied into `styles.css`).
 
-- Every page shares the same `<nav>` as `kopi-web` and the personal site ("Sobre mí" first, no
-  call-to-action button): policy "Mismo menú en las tres webs" in `../kopi-docs/politicas.md`.
+- Every page shares the same `<nav>` and closing footer line (`.footer-sitios`: Kopi Tools ·
+  Apuntes AWS · Sobre mí) as `kopi-web` and the personal site ("Sobre mí" first, no
+  call-to-action button, active link via `aria-current` set by `assets/nav.js`): policy "Mismo
+  menú y pie en las tres webs" in `../kopi-docs/politicas.md`. The catalog search also matches
+  each service's `frase` (name matches are listed first).
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
   filters (text, category, status, certifications with union/intersection mode). Filter state
   lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=interseccion&kopi=1`). `kopi=1` shows only
