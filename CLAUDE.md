@@ -58,7 +58,9 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 python -m http.server 8765   # or: npx serve .   (fetch() of the JSON files fails on file://)
 ```
 
-No build, lint or test tooling (only the helper `scripts/revisar_texto.py`). Verify changes in a browser, including at ~375px width (no
+No build, lint or test tooling (only the helpers `scripts/revisar_texto.py` and
+`scripts/revisar_frases.py`, which checks every service's `frase` in `servicios.json`: 60–90
+characters, no word of the service's name, acronym or id; run it after adding or editing one). Verify changes in a browser, including at ~375px width (no
 horizontal scroll).
 
 ## Workflow: filling in a service (Phase 2)

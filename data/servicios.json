@@ -12,6 +12,7 @@
     ],
     "estado": "publicado",
     "resumen": "Emite, gestiona y renueva certificados SSL/TLS para servicios de AWS como CloudFront, ELB y API Gateway.",
+    "frase": "Emite y renueva automáticamente los certificados TLS de tus dominios para webs cifradas",
     "documentacion": "https://docs.aws.amazon.com/acm/"
   },
   {
@@ -31,6 +32,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Asistente de IA generativa que escribe, explica y moderniza código dentro de tu IDE",
     "documentacion": "https://docs.aws.amazon.com/amazonq/"
   },
   {
@@ -49,6 +51,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Crea y aloja apps web y móviles full stack con autenticación y datos ya conectados",
     "documentacion": "https://docs.aws.amazon.com/amplify/"
   },
   {
@@ -68,6 +71,7 @@
     ],
     "estado": "publicado",
     "resumen": "Crea, publica y protege APIs REST, HTTP y WebSocket delante de Lambda u otros backends.",
+    "frase": "Expone tus backends como endpoints REST, HTTP o WebSocket con autorización y cuotas",
     "documentacion": "https://docs.aws.amazon.com/apigateway/"
   },
   {
@@ -80,6 +84,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Lanza una web desde código o imagen de contenedor con HTTPS y escalado incluidos",
     "documentacion": "https://docs.aws.amazon.com/apprunner/"
   },
   {
@@ -92,6 +97,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Publica cambios de configuración y feature flags de forma gradual y con marcha atrás",
     "documentacion": "https://docs.aws.amazon.com/appconfig/"
   },
   {
@@ -105,6 +111,7 @@
     ],
     "estado": "publicado",
     "resumen": "Transfiere datos entre aplicaciones SaaS (Salesforce, SAP, Google Analytics…) y servicios de AWS con flujos sin código, programados o por evento.",
+    "frase": "Copia datos entre apps SaaS como Salesforce o Slack y tus servicios, sin programar",
     "documentacion": "https://docs.aws.amazon.com/appflow/"
   },
   {
@@ -118,6 +125,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Inventaría los servidores de tu centro de datos y sus dependencias antes de migrar",
     "documentacion": "https://docs.aws.amazon.com/application-discovery/"
   },
   {
@@ -132,6 +140,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Replica servidores físicos o virtuales a la nube tal cual, para migrarlos sin rehacer",
     "documentacion": "https://docs.aws.amazon.com/mgn/"
   },
   {
@@ -145,6 +154,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Transmite aplicaciones de escritorio al navegador sin instalarlas en el equipo",
     "documentacion": "https://docs.aws.amazon.com/appstream2/"
   },
   {
@@ -158,6 +168,7 @@
     ],
     "estado": "publicado",
     "resumen": "API GraphQL y de eventos en tiempo real sin servidores: una sola API para leer y escribir de varias fuentes de datos, con suscripciones por WebSocket.",
+    "frase": "Sirve APIs GraphQL gestionadas con suscripciones en tiempo real y datos offline",
     "documentacion": "https://docs.aws.amazon.com/appsync/"
   },
   {
@@ -173,6 +184,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Descarga los informes de auditoría y certificaciones de cumplimiento de la nube",
     "documentacion": "https://docs.aws.amazon.com/artifact/"
   },
   {
@@ -188,6 +200,7 @@
     ],
     "estado": "publicado",
     "resumen": "Consultas SQL sin servidores directamente sobre ficheros en S3: sin cargar datos ni gestionar infraestructura, pagando por los datos analizados.",
+    "frase": "Consulta con SQL estándar los ficheros de S3 sin cargarlos ni levantar servidores",
     "documentacion": "https://docs.aws.amazon.com/athena/"
   },
   {
@@ -200,6 +213,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Recoge evidencias automáticas para preparar auditorías frente a marcos como PCI DSS",
     "documentacion": "https://docs.aws.amazon.com/audit-manager/"
   },
   {
@@ -219,6 +233,7 @@
     ],
     "estado": "publicado",
     "resumen": "Base de datos relacional compatible con MySQL y PostgreSQL, con almacenamiento distribuido en tres zonas, hasta 15 réplicas y conmutación rápida.",
+    "frase": "Base relacional compatible con MySQL y PostgreSQL con almacenamiento replicado en 3 AZ",
     "documentacion": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/"
   },
   {
@@ -236,6 +251,7 @@
     ],
     "estado": "publicado",
     "resumen": "Configura desde un solo sitio el escalado de varios recursos de una aplicación: grupos EC2, tareas de ECS, tablas de DynamoDB y réplicas de Aurora.",
+    "frase": "Plan de escalado único para instancias, tablas NoSQL, réplicas y otros recursos",
     "documentacion": "https://docs.aws.amazon.com/autoscaling/"
   },
   {
@@ -250,6 +266,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Centraliza y programa copias de seguridad de muchos servicios con políticas y bóvedas",
     "documentacion": "https://docs.aws.amazon.com/aws-backup/"
   },
   {
@@ -264,6 +281,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Ejecuta miles de trabajos por lotes en cola eligiendo y escalando el cómputo por ti",
     "documentacion": "https://docs.aws.amazon.com/batch/"
   },
   {
@@ -277,6 +295,7 @@
     ],
     "estado": "publicado",
     "resumen": "Acceso por API a modelos fundacionales de varios proveedores para crear aplicaciones de IA generativa.",
+    "frase": "Acceso por API a modelos fundacionales de varias empresas para crear apps de IA",
     "documentacion": "https://docs.aws.amazon.com/bedrock/"
   },
   {
@@ -288,6 +307,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Ejecuta y protege agentes de IA en producción con memoria, identidad y observabilidad",
     "documentacion": "https://docs.aws.amazon.com/bedrock-agentcore/"
   },
   {
@@ -303,6 +323,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Fija límites de gasto o uso y te avisa, o actúa, cuando se superan o se prevé superarlos",
     "documentacion": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
   },
   {
@@ -316,6 +337,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Define infraestructura con TypeScript, Python o Java y la convierte en plantillas",
     "documentacion": "https://docs.aws.amazon.com/cdk/"
   },
   {
@@ -335,6 +357,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Controla todos los servicios desde la terminal con comandos y scripts automatizables",
     "documentacion": "https://docs.aws.amazon.com/cli/"
   },
   {
@@ -352,6 +375,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Da a empleados en remoto un túnel cifrado desde su portátil hasta tus redes privadas",
     "documentacion": "https://docs.aws.amazon.com/vpn/"
   },
   {
@@ -367,6 +391,7 @@
     ],
     "estado": "publicado",
     "resumen": "Infraestructura como código: describes tus recursos de AWS en plantillas YAML o JSON y CloudFormation los crea, actualiza y borra como una unidad.",
+    "frase": "Crea y actualiza pilas de recursos a partir de plantillas declarativas YAML o JSON",
     "documentacion": "https://docs.aws.amazon.com/cloudformation/"
   },
   {
@@ -384,6 +409,7 @@
     ],
     "estado": "publicado",
     "resumen": "Red de entrega de contenido (CDN) que acerca contenido estático y dinámico a los usuarios con caché en el borde.",
+    "frase": "Red de distribución que cachea tu web y tus vídeos en ubicaciones cerca del usuario",
     "documentacion": "https://docs.aws.amazon.com/cloudfront/"
   },
   {
@@ -398,6 +424,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Módulos de hardware dedicados de un solo cliente para guardar tus claves criptográficas",
     "documentacion": "https://docs.aws.amazon.com/cloudhsm/"
   },
   {
@@ -410,6 +437,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Terminal en el navegador ya autenticada, con las herramientas de línea de comandos",
     "documentacion": "https://docs.aws.amazon.com/cloudshell/"
   },
   {
@@ -426,6 +454,7 @@
     ],
     "estado": "publicado",
     "resumen": "Registro de auditoría de la actividad en tu cuenta de AWS: quién hizo qué llamada a la API, cuándo y desde dónde.",
+    "frase": "Registra quién hizo cada llamada a la API de tu cuenta, cuándo y desde dónde",
     "documentacion": "https://docs.aws.amazon.com/cloudtrail/"
   },
   {
@@ -446,6 +475,7 @@
     ],
     "estado": "publicado",
     "resumen": "Métricas, logs, alarmas y paneles para observar y reaccionar ante el comportamiento de recursos y aplicaciones.",
+    "frase": "Recoge métricas y logs, dibuja paneles y lanza alarmas cuando algo se sale de rango",
     "documentacion": "https://docs.aws.amazon.com/cloudwatch/"
   },
   {
@@ -459,6 +489,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Repositorio privado de paquetes npm, Maven o PyPI para compartir dependencias",
     "documentacion": "https://docs.aws.amazon.com/codeartifact/"
   },
   {
@@ -473,6 +504,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Compila el código, ejecuta las pruebas y genera artefactos en entornos efímeros",
     "documentacion": "https://docs.aws.amazon.com/codebuild/"
   },
   {
@@ -486,6 +518,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Despliega versiones en servidores, funciones o contenedores con estrategias blue/green",
     "documentacion": "https://docs.aws.amazon.com/codedeploy/"
   },
   {
@@ -498,6 +531,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Revisa el código con aprendizaje automático y señala fallos y problemas de rendimiento",
     "documentacion": "https://docs.aws.amazon.com/codeguru/"
   },
   {
@@ -512,6 +546,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Encadena fuente, compilación, pruebas y despliegue en un flujo de entrega continua",
     "documentacion": "https://docs.aws.amazon.com/codepipeline/"
   },
   {
@@ -528,6 +563,7 @@
     ],
     "estado": "publicado",
     "resumen": "Registro, inicio de sesión y control de acceso de usuarios para aplicaciones web y móviles.",
+    "frase": "Registro e inicio de sesión de usuarios para tus apps, con tokens JWT y login social",
     "documentacion": "https://docs.aws.amazon.com/cognito/"
   },
   {
@@ -543,6 +579,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Analiza textos para sacar sentimiento, entidades, idioma y temas con NLP gestionado",
     "documentacion": "https://docs.aws.amazon.com/comprehend/"
   },
   {
@@ -557,6 +594,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Sugiere el tamaño idóneo de instancias, volúmenes y funciones según su uso real",
     "documentacion": "https://docs.aws.amazon.com/compute-optimizer/"
   },
   {
@@ -572,6 +610,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Guarda el historial de configuración de tus recursos y evalúa si cumplen tus reglas",
     "documentacion": "https://docs.aws.amazon.com/config/"
   },
   {
@@ -584,6 +623,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Centro de contacto en la nube con llamadas, chat, IVR y enrutado a agentes",
     "documentacion": "https://docs.aws.amazon.com/connect/"
   },
   {
@@ -598,6 +638,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Monta una landing zone multicuenta con barreras de protección predefinidas",
     "documentacion": "https://docs.aws.amazon.com/controltower/"
   },
   {
@@ -612,6 +653,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Exporta el detalle más fino de facturación, línea a línea, a S3 para analizarlo",
     "documentacion": "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
   },
   {
@@ -627,6 +669,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Visualiza y filtra tu gasto de meses pasados y hace previsiones del próximo",
     "documentacion": "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html"
   },
   {
@@ -641,6 +684,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Catálogo para suscribirse a conjuntos de datos de terceros y usarlos en tu cuenta",
     "documentacion": "https://docs.aws.amazon.com/data-exchange/"
   },
   {
@@ -656,6 +700,7 @@
     ],
     "estado": "publicado",
     "resumen": "Entrega flujos de datos casi en tiempo real a S3, Redshift, OpenSearch, tablas Iceberg o terceros, sin servidores ni código, con transformación opcional.",
+    "frase": "Entrega flujos de datos a S3, Redshift u OpenSearch casi en tiempo real, sin código",
     "documentacion": "https://docs.aws.amazon.com/firehose/"
   },
   {
@@ -669,6 +714,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Copia en línea grandes volúmenes desde NAS o servidores de ficheros a S3, EFS o FSx",
     "documentacion": "https://docs.aws.amazon.com/datasync/"
   },
   {
@@ -683,6 +729,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Investiga el origen de hallazgos de seguridad con gráficos de relaciones entre eventos",
     "documentacion": "https://docs.aws.amazon.com/detective/"
   },
   {
@@ -696,6 +743,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Prueba tu app en móviles y navegadores reales alojados en la nube",
     "documentacion": "https://docs.aws.amazon.com/devicefarm/"
   },
   {
@@ -710,6 +758,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Enlace de red dedicado y privado entre tu centro de datos y la nube, sin Internet",
     "documentacion": "https://docs.aws.amazon.com/directconnect/"
   },
   {
@@ -724,6 +773,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Controladores de dominio de Microsoft AD gestionados o un conector hacia tu AD local",
     "documentacion": "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html"
   },
   {
@@ -739,6 +789,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Migra bases de datos con la de origen en marcha y replica los cambios hasta el corte",
     "documentacion": "https://docs.aws.amazon.com/dms/"
   },
   {
@@ -755,6 +806,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Base de datos de documentos JSON con consultas ricas e índices, para catálogos y perfiles",
     "documentacion": "https://docs.aws.amazon.com/documentdb/"
   },
   {
@@ -772,6 +824,7 @@
     ],
     "estado": "publicado",
     "resumen": "Base de datos NoSQL clave-valor y de documentos, serverless, con latencia de milisegundos a cualquier escala.",
+    "frase": "Base NoSQL clave-valor sin servidor con latencia de milisegundos a cualquier escala",
     "documentacion": "https://docs.aws.amazon.com/dynamodb/"
   },
   {
@@ -788,6 +841,7 @@
     ],
     "estado": "publicado",
     "resumen": "Discos de bloque persistentes para instancias EC2: volúmenes SSD o HDD que sobreviven a la instancia, con instantáneas en S3.",
+    "frase": "Discos de bloque persistentes que se conectan a una instancia, con instantáneas",
     "documentacion": "https://docs.aws.amazon.com/ebs/"
   },
   {
@@ -805,6 +859,7 @@
     ],
     "estado": "publicado",
     "resumen": "Servidores virtuales en la nube: eliges tipo de instancia, sistema operativo, red y almacenamiento, y pagas por el tiempo de uso.",
+    "frase": "Servidores virtuales en la nube que eliges por tipo de CPU, memoria y red",
     "documentacion": "https://docs.aws.amazon.com/ec2/"
   },
   {
@@ -818,6 +873,7 @@
     ],
     "estado": "publicado",
     "resumen": "Mantiene el número adecuado de instancias EC2 en un grupo: sustituye las que fallan y añade o quita instancias según la carga o un horario.",
+    "frase": "Añade o quita servidores de un grupo según la demanda y reemplaza los que fallan",
     "documentacion": "https://docs.aws.amazon.com/autoscaling/"
   },
   {
@@ -834,6 +890,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Registro privado de imágenes Docker con escaneo de vulnerabilidades y réplica",
     "documentacion": "https://docs.aws.amazon.com/ecr/"
   },
   {
@@ -854,6 +911,7 @@
     ],
     "estado": "publicado",
     "resumen": "Orquestador de contenedores propio de AWS: ejecuta y escala tareas Docker sobre Fargate, EC2 o instancias gestionadas, integrado con el resto de servicios.",
+    "frase": "Orquestador de contenedores propio de AWS que ejecuta tareas y servicios en EC2 o Fargate",
     "documentacion": "https://docs.aws.amazon.com/ecs/"
   },
   {
@@ -870,6 +928,7 @@
     ],
     "estado": "publicado",
     "resumen": "Sistema de ficheros compartido NFS, elástico y sin servidores, que miles de instancias, contenedores y funciones pueden montar a la vez.",
+    "frase": "Sistema de ficheros NFS compartido que crece solo y montan muchas instancias a la vez",
     "documentacion": "https://docs.aws.amazon.com/efs/"
   },
   {
@@ -891,6 +950,7 @@
     ],
     "estado": "publicado",
     "resumen": "Kubernetes gestionado: AWS opera el plano de control en varias zonas y tú ejecutas tus pods en nodos EC2, Fargate o con EKS Auto Mode.",
+    "frase": "Plano de control gestionado para clústeres del orquestador de contenedores de la CNCF",
     "documentacion": "https://docs.aws.amazon.com/eks/"
   },
   {
@@ -906,6 +966,7 @@
     ],
     "estado": "publicado",
     "resumen": "Despliega aplicaciones web subiendo el código: Beanstalk crea y gestiona instancias, balanceador, Auto Scaling y monitorización por ti.",
+    "frase": "Sube tu código y te monta el entorno: balanceador, escalado, instancias y alarmas",
     "documentacion": "https://docs.aws.amazon.com/elastic-beanstalk/"
   },
   {
@@ -919,6 +980,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Mantiene réplicas baratas de tus servidores para arrancarlos en minutos si algo cae",
     "documentacion": "https://docs.aws.amazon.com/drs/"
   },
   {
@@ -931,7 +993,8 @@
       "SAP-C02"
     ],
     "estado": "pendiente",
-    "resumen": ""
+    "resumen": "",
+    "frase": "Convierte ficheros de vídeo de S3 a formatos aptos para móviles, webs y televisores"
   },
   {
     "id": "elasticache",
@@ -947,6 +1010,7 @@
     ],
     "estado": "publicado",
     "resumen": "Caché en memoria gestionada compatible con Valkey, Redis OSS y Memcached, para respuestas de microsegundos y quitar carga a las bases de datos.",
+    "frase": "Caché en memoria compatible con Redis, Valkey o Memcached para acelerar lecturas",
     "documentacion": "https://docs.aws.amazon.com/elasticache/"
   },
   {
@@ -961,6 +1025,7 @@
     ],
     "estado": "publicado",
     "resumen": "Balanceadores de carga gestionados que reparten el tráfico entre instancias, contenedores, IP o funciones, y solo lo envían a los destinos sanos.",
+    "frase": "Reparte el tráfico entre instancias, contenedores o IP y deja fuera los que fallan",
     "documentacion": "https://docs.aws.amazon.com/elasticloadbalancing/"
   },
   {
@@ -976,6 +1041,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Clústeres gestionados de Spark, Hive o Hadoop para procesar big data",
     "documentacion": "https://docs.aws.amazon.com/emr/"
   },
   {
@@ -991,6 +1057,7 @@
     ],
     "estado": "publicado",
     "resumen": "Bus de eventos sin servidores: recibe eventos de AWS, de tus aplicaciones y de SaaS, y los enruta por reglas a más de 20 destinos; incluye Scheduler y Pipes.",
+    "frase": "Bus de eventos que enruta sucesos de apps, SaaS y AWS a destinos según reglas",
     "documentacion": "https://docs.aws.amazon.com/eventbridge/"
   },
   {
@@ -1008,6 +1075,7 @@
     ],
     "estado": "publicado",
     "resumen": "Motor de cómputo sin servidores para contenedores: ejecuta tareas de ECS y pods de EKS sin aprovisionar ni gestionar instancias.",
+    "frase": "Motor sin servidor para contenedores: tú defines la tarea y AWS pone las máquinas",
     "documentacion": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
   },
   {
@@ -1022,6 +1090,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Aplica reglas de WAF, Shield y grupos de seguridad a todas las cuentas de tu organización",
     "documentacion": "https://docs.aws.amazon.com/waf/"
   },
   {
@@ -1034,6 +1103,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Modelos de aprendizaje automático que puntúan pagos y altas sospechosas de fraude",
     "documentacion": "https://docs.aws.amazon.com/frauddetector/"
   },
   {
@@ -1049,6 +1119,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Sistemas de ficheros gestionados de Windows, Lustre, NetApp ONTAP u OpenZFS",
     "documentacion": "https://docs.aws.amazon.com/fsx/"
   },
   {
@@ -1063,6 +1134,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Dos IP estáticas anycast que llevan a tus usuarios por la red troncal de AWS",
     "documentacion": "https://docs.aws.amazon.com/global-accelerator/"
   },
   {
@@ -1078,6 +1150,7 @@
     ],
     "estado": "publicado",
     "resumen": "Integración de datos sin servidores: catálogo de datos, crawlers que descubren esquemas y trabajos ETL con Spark o Python para preparar datos del lago.",
+    "frase": "ETL sin servidor con catálogo de datos y rastreadores que descubren esquemas",
     "documentacion": "https://docs.aws.amazon.com/glue/"
   },
   {
@@ -1090,6 +1163,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Limpia y prepara datos con más de 250 transformaciones visuales, sin escribir código",
     "documentacion": "https://docs.aws.amazon.com/databrew/latest/dg/what-is.html"
   },
   {
@@ -1104,6 +1178,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Detecta amenazas analizando logs de red, DNS y actividad de la cuenta con ML",
     "documentacion": "https://docs.aws.amazon.com/guardduty/"
   },
   {
@@ -1118,6 +1193,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Te avisa de incidencias y mantenimientos de AWS que afectan a tus recursos",
     "documentacion": "https://docs.aws.amazon.com/health/"
   },
   {
@@ -1136,6 +1212,7 @@
     ],
     "estado": "publicado",
     "resumen": "Control de identidades y permisos: decide quién puede hacer qué sobre qué recurso de AWS.",
+    "frase": "Usuarios, roles y políticas que deciden quién puede hacer qué en tu cuenta",
     "documentacion": "https://docs.aws.amazon.com/iam/"
   },
   {
@@ -1150,6 +1227,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Inicio de sesión único para todas tus cuentas y apps, con usuarios de tu directorio",
     "documentacion": "https://docs.aws.amazon.com/singlesignon/"
   },
   {
@@ -1165,6 +1243,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Escanea instancias, imágenes de contenedor y funciones en busca de CVE y exposición",
     "documentacion": "https://docs.aws.amazon.com/inspector/"
   },
   {
@@ -1176,6 +1255,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Dispositivos de un botón que lanzan una función con una simple pulsación",
     "documentacion": "https://docs.aws.amazon.com/iot-1-click/"
   },
   {
@@ -1189,6 +1269,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Conecta millones de dispositivos por MQTT y enruta sus mensajes con reglas",
     "documentacion": "https://docs.aws.amazon.com/iot/"
   },
   {
@@ -1201,6 +1282,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Audita la configuración de tu flota de sensores y alerta de comportamientos anómalos",
     "documentacion": "https://docs.aws.amazon.com/iot-device-defender/"
   },
   {
@@ -1213,6 +1295,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Registra, organiza, actualiza por OTA y controla en remoto flotas de sensores",
     "documentacion": "https://docs.aws.amazon.com/iot-device-management/"
   },
   {
@@ -1224,7 +1307,8 @@
       "SAP-C02"
     ],
     "estado": "pendiente",
-    "resumen": ""
+    "resumen": "",
+    "frase": "Detecta patrones en datos de sensores y dispara alertas o acciones al cambiar de estado"
   },
   {
     "id": "iot-greengrass",
@@ -1236,6 +1320,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Ejecuta funciones y modelos de ML en dispositivos del borde, incluso sin conexión",
     "documentacion": "https://docs.aws.amazon.com/greengrass/"
   },
   {
@@ -1248,6 +1333,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Recoge y modela datos de equipos industriales para vigilar el rendimiento de plantas",
     "documentacion": "https://docs.aws.amazon.com/iot-sitewise/"
   },
   {
@@ -1259,6 +1345,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Conecta visualmente dispositivos y servicios web en flujos sin programar",
     "documentacion": "https://docs.aws.amazon.com/thingsgraph/"
   },
   {
@@ -1271,6 +1358,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Buscador empresarial inteligente que responde preguntas sobre tus documentos internos",
     "documentacion": "https://docs.aws.amazon.com/kendra/"
   },
   {
@@ -1285,6 +1373,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Base de columnas anchas sin servidor compatible con CQL y sus drivers de código abierto",
     "documentacion": "https://docs.aws.amazon.com/keyspaces/"
   },
   {
@@ -1300,6 +1389,7 @@
     ],
     "estado": "publicado",
     "resumen": "Flujos de datos en tiempo real: ingiere millones de eventos por segundo, los guarda de 24 horas a 365 días y varios consumidores los leen en orden.",
+    "frase": "Flujo de datos en tiempo real con fragmentos, retención y varios consumidores propios",
     "documentacion": "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
   },
   {
@@ -1313,6 +1403,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Ingiere vídeo de cámaras en directo y lo guarda para reproducirlo o analizarlo",
     "documentacion": "https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/what-is-kinesis-video.html"
   },
   {
@@ -1324,6 +1415,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "IDE con agentes de IA que parte de especificaciones para planificar y escribir código",
     "documentacion": "https://kiro.dev/docs/"
   },
   {
@@ -1341,6 +1433,7 @@
     ],
     "estado": "publicado",
     "resumen": "Crea y controla claves criptográficas para cifrar datos en casi todos los servicios de AWS, con permisos por política y auditoría de cada uso.",
+    "frase": "Crea y controla claves de cifrado gestionadas e integradas con casi todos los servicios",
     "documentacion": "https://docs.aws.amazon.com/kms/"
   },
   {
@@ -1355,6 +1448,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Gobierna permisos finos por tabla, columna y fila sobre tu lago de datos en S3",
     "documentacion": "https://docs.aws.amazon.com/lake-formation/"
   },
   {
@@ -1375,6 +1469,7 @@
     ],
     "estado": "publicado",
     "resumen": "Ejecuta código en respuesta a eventos sin gestionar servidores y pagando solo por el tiempo de ejecución.",
+    "frase": "Ejecuta tu código como funciones por evento, sin servidores y pagando por milisegundo",
     "documentacion": "https://docs.aws.amazon.com/lambda/"
   },
   {
@@ -1390,6 +1485,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Crea chatbots de voz y texto que entienden intenciones en lenguaje natural",
     "documentacion": "https://docs.aws.amazon.com/lex/"
   },
   {
@@ -1404,6 +1500,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Controla cuántas licencias de software usas y evita excederlas o incumplirlas",
     "documentacion": "https://docs.aws.amazon.com/license-manager/"
   },
   {
@@ -1417,6 +1514,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Servidores privados virtuales con precio mensual fijo para webs y apps sencillas",
     "documentacion": "https://docs.aws.amazon.com/lightsail/"
   },
   {
@@ -1432,6 +1530,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Descubre datos personales y sensibles en tus buckets de S3 con aprendizaje automático",
     "documentacion": "https://docs.aws.amazon.com/macie/"
   },
   {
@@ -1444,6 +1543,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Redes de libro mayor distribuido Hyperledger Fabric o Ethereum sin montar nodos",
     "documentacion": "https://docs.aws.amazon.com/managed-blockchain/"
   },
   {
@@ -1457,6 +1557,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Paneles de observabilidad de código abierto gestionados, con varias fuentes de datos",
     "documentacion": "https://docs.aws.amazon.com/grafana/"
   },
   {
@@ -1469,6 +1570,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Procesa flujos en tiempo real con aplicaciones Java, SQL o Python con estado",
     "documentacion": "https://docs.aws.amazon.com/managed-flink/"
   },
   {
@@ -1482,6 +1584,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Almacena y consulta con PromQL métricas de contenedores, compatible con código abierto",
     "documentacion": "https://docs.aws.amazon.com/prometheus/"
   },
   {
@@ -1496,6 +1599,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Interfaz web para gestionar todos tus recursos desde el navegador",
     "documentacion": "https://docs.aws.amazon.com/awsconsolehelpdocs/"
   },
   {
@@ -1508,6 +1612,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Tienda de software de terceros que compras y despliegas con tu factura de AWS",
     "documentacion": "https://docs.aws.amazon.com/marketplace/"
   },
   {
@@ -1520,6 +1625,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Estima el coste en la nube de tu centro de datos para preparar el caso de negocio",
     "documentacion": "https://aws.amazon.com/migration-evaluator/"
   },
   {
@@ -1533,6 +1639,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Panel único para seguir el progreso de todas tus migraciones de aplicaciones",
     "documentacion": "https://docs.aws.amazon.com/migrationhub/"
   },
   {
@@ -1546,6 +1653,7 @@
     ],
     "estado": "publicado",
     "resumen": "Brokers de mensajería gestionados de Apache ActiveMQ y RabbitMQ, para migrar aplicaciones que usan protocolos estándar sin reescribirlas.",
+    "frase": "Broker gestionado de ActiveMQ o RabbitMQ para apps que usan JMS, AMQP o MQTT",
     "documentacion": "https://docs.aws.amazon.com/amazon-mq/"
   },
   {
@@ -1560,6 +1668,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Clústeres gestionados de brokers de eventos con topics y particiones de código abierto",
     "documentacion": "https://docs.aws.amazon.com/msk/"
   },
   {
@@ -1575,6 +1684,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Base de datos de grafos para relaciones: redes sociales, fraude y grafos de conocimiento",
     "documentacion": "https://docs.aws.amazon.com/neptune/"
   },
   {
@@ -1588,6 +1698,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Cortafuegos gestionado con inspección de paquetes e IPS para el tráfico de tu VPC",
     "documentacion": "https://docs.aws.amazon.com/network-firewall/"
   },
   {
@@ -1600,6 +1711,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Familia de modelos fundacionales propios de AWS para texto, imagen y vídeo",
     "documentacion": "https://docs.aws.amazon.com/nova/"
   },
   {
@@ -1616,6 +1728,7 @@
     ],
     "estado": "publicado",
     "resumen": "Búsqueda de texto completo, análisis de registros y búsqueda vectorial gestionados con OpenSearch, en clústeres o sin servidor.",
+    "frase": "Búsqueda de texto completo y análisis de logs con índices, paneles y búsqueda vectorial",
     "documentacion": "https://docs.aws.amazon.com/opensearch-service/"
   },
   {
@@ -1630,6 +1743,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Agrupa cuentas en unidades, unifica la factura y aplica SCP a todas a la vez",
     "documentacion": "https://docs.aws.amazon.com/organizations/"
   },
   {
@@ -1644,6 +1758,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Racks y servidores de AWS instalados en tu centro de datos para baja latencia local",
     "documentacion": "https://docs.aws.amazon.com/outposts/"
   },
   {
@@ -1657,6 +1772,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Recomendaciones personalizadas en tiempo real como las de una tienda online",
     "documentacion": "https://docs.aws.amazon.com/personalize/"
   },
   {
@@ -1669,6 +1785,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Campañas de marketing por correo, SMS y push segmentando a tus usuarios",
     "documentacion": "https://docs.aws.amazon.com/pinpoint/"
   },
   {
@@ -1684,6 +1801,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Convierte texto en voz natural en muchos idiomas para narrar o dar voz a apps",
     "documentacion": "https://docs.aws.amazon.com/polly/"
   },
   {
@@ -1698,6 +1816,7 @@
     ],
     "estado": "publicado",
     "resumen": "Conectividad privada a servicios de AWS, de terceros o propios mediante endpoints de interfaz en tu VPC, sin internet, NAT ni peering.",
+    "frase": "Accede a servicios de otra VPC o de AWS por IP privada, sin salir a Internet",
     "documentacion": "https://docs.aws.amazon.com/vpc/latest/privatelink/"
   },
   {
@@ -1710,6 +1829,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Plantillas de plataforma para que los equipos desplieguen servicios estandarizados",
     "documentacion": "https://docs.aws.amazon.com/proton/"
   },
   {
@@ -1727,6 +1847,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Paneles e informes de BI sin servidor con preguntas en lenguaje natural sobre tus datos",
     "documentacion": "https://docs.aws.amazon.com/quicksuite/"
   },
   {
@@ -1742,6 +1863,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Comparte subredes, licencias y otros recursos con otras cuentas sin duplicarlos",
     "documentacion": "https://docs.aws.amazon.com/ram/"
   },
   {
@@ -1759,6 +1881,7 @@
     ],
     "estado": "publicado",
     "resumen": "Bases de datos relacionales gestionadas (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2) con copias, parches y alta disponibilidad automáticos.",
+    "frase": "Base relacional gestionada con MySQL, Oracle o SQL Server: parches y copias automáticos",
     "documentacion": "https://docs.aws.amazon.com/rds/"
   },
   {
@@ -1777,6 +1900,7 @@
     ],
     "estado": "publicado",
     "resumen": "Almacén de datos (data warehouse) gestionado para analizar con SQL petabytes de datos, en clústeres aprovisionados o sin servidores.",
+    "frase": "Almacén de datos columnar para consultas analíticas de petabytes con SQL",
     "documentacion": "https://docs.aws.amazon.com/redshift/"
   },
   {
@@ -1792,6 +1916,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Analiza imágenes y vídeos para detectar caras, objetos, texto y contenido inapropiado",
     "documentacion": "https://docs.aws.amazon.com/rekognition/"
   },
   {
@@ -1808,6 +1933,7 @@
     ],
     "estado": "publicado",
     "resumen": "DNS gestionado y registro de dominios, con políticas de enrutamiento y comprobaciones de estado.",
+    "frase": "DNS gestionado que registra dominios y enruta por latencia, geografía o salud",
     "documentacion": "https://docs.aws.amazon.com/route53/"
   },
   {
@@ -1826,6 +1952,7 @@
     ],
     "estado": "publicado",
     "resumen": "Almacenamiento de objetos duradero, escalable y barato, con clases de almacenamiento para cada patrón de acceso.",
+    "frase": "Almacenamiento de objetos casi ilimitado con clases por coste y 11 nueves de durabilidad",
     "documentacion": "https://docs.aws.amazon.com/s3/"
   },
   {
@@ -1841,6 +1968,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Archivo de muy bajo coste para datos fríos que recuperas en minutos u horas",
     "documentacion": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html"
   },
   {
@@ -1859,6 +1987,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Plataforma para preparar datos, entrenar, ajustar y desplegar tus propios modelos de ML",
     "documentacion": "https://docs.aws.amazon.com/sagemaker/"
   },
   {
@@ -1872,6 +2001,7 @@
     ],
     "estado": "publicado",
     "resumen": "Modelo de precios con descuento a cambio de comprometer un gasto por hora durante 1 o 3 años, en cómputo, bases de datos o SageMaker AI.",
+    "frase": "Descuento a cambio de comprometer un gasto por hora durante uno o tres años",
     "documentacion": "https://docs.aws.amazon.com/savingsplans/"
   },
   {
@@ -1885,6 +2015,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Traduce esquemas y código SQL de un motor de bases de datos a otro distinto",
     "documentacion": "https://docs.aws.amazon.com/SchemaConversionTool/"
   },
   {
@@ -1901,6 +2032,7 @@
     ],
     "estado": "publicado",
     "resumen": "Guarda, cifra y rota automáticamente contraseñas, claves de API y otros secretos, para no tenerlos nunca en el código.",
+    "frase": "Guarda contraseñas y claves de API cifradas y las rota automáticamente cada cierto tiempo",
     "documentacion": "https://docs.aws.amazon.com/secretsmanager/"
   },
   {
@@ -1915,6 +2047,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Reúne hallazgos de seguridad de varios servicios y puntúa tu cumplimiento de normas",
     "documentacion": "https://docs.aws.amazon.com/securityhub/"
   },
   {
@@ -1927,6 +2060,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Publica y reutiliza aplicaciones sin servidor ya empaquetadas por ti o por la comunidad",
     "documentacion": "https://docs.aws.amazon.com/serverlessrepo/"
   },
   {
@@ -1941,6 +2075,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Portafolio de productos aprobados por TI que los equipos lanzan en autoservicio",
     "documentacion": "https://docs.aws.amazon.com/servicecatalog/"
   },
   {
@@ -1953,6 +2088,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Consulta los límites de tu cuenta por servicio y pide que te los amplíen",
     "documentacion": "https://docs.aws.amazon.com/servicequotas/"
   },
   {
@@ -1968,6 +2104,7 @@
     ],
     "estado": "publicado",
     "resumen": "Envío y recepción de correo electrónico a escala: transaccional, notificaciones y marketing.",
+    "frase": "Envía correo transaccional y de marketing a gran escala con DKIM y control de rebotes",
     "documentacion": "https://docs.aws.amazon.com/ses/"
   },
   {
@@ -1982,6 +2119,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Protege contra ataques DDoS, gratis en capa básica y con equipo de respuesta en avanzada",
     "documentacion": "https://docs.aws.amazon.com/waf/"
   },
   {
@@ -1999,6 +2137,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Túnel IPsec cifrado sobre Internet entre tu red local y tus redes privadas en AWS",
     "documentacion": "https://docs.aws.amazon.com/vpn/"
   },
   {
@@ -2012,6 +2151,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Dispositivos físicos resistentes para mover terabytes sin red o procesar en el borde",
     "documentacion": "https://docs.aws.amazon.com/snowball/"
   },
   {
@@ -2028,6 +2168,7 @@
     ],
     "estado": "publicado",
     "resumen": "Mensajería pub/sub gestionada: publicas un mensaje en un tema y SNS lo entrega a todos sus suscriptores (colas, funciones, HTTP, correo, SMS o móviles).",
+    "frase": "Publica un mensaje una vez y lo reparte a correos, SMS, colas y funciones suscritas",
     "documentacion": "https://docs.aws.amazon.com/sns/"
   },
   {
@@ -2044,6 +2185,7 @@
     ],
     "estado": "publicado",
     "resumen": "Colas de mensajes totalmente gestionadas para desacoplar componentes: un productor deja mensajes y los consumidores los procesan a su ritmo.",
+    "frase": "Cola de mensajes que desacopla productores y consumidores y guarda lo pendiente",
     "documentacion": "https://docs.aws.amazon.com/sqs/"
   },
   {
@@ -2059,6 +2201,7 @@
     ],
     "estado": "publicado",
     "resumen": "Orquestación visual de flujos de trabajo sin servidores: encadena servicios de AWS con pasos, ramas, esperas, reintentos y ejecución en paralelo.",
+    "frase": "Orquesta pasos de un flujo como máquina de estados con reintentos y ramas visuales",
     "documentacion": "https://docs.aws.amazon.com/step-functions/"
   },
   {
@@ -2073,6 +2216,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Conecta tu centro de datos a S3 con volúmenes, recursos NFS o cintas virtuales",
     "documentacion": "https://docs.aws.amazon.com/storagegateway/"
   },
   {
@@ -2084,6 +2228,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "SDK de código abierto para crear agentes de IA en Python con unas pocas líneas",
     "documentacion": "https://strandsagents.com/docs/"
   },
   {
@@ -2097,6 +2242,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Emite credenciales temporales para asumir roles o federar identidades externas",
     "documentacion": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html"
   },
   {
@@ -2109,6 +2255,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Planes de ayuda técnica con casos, tiempos de respuesta y un TAM en los superiores",
     "documentacion": "https://docs.aws.amazon.com/awssupport/latest/user/getting-started.html"
   },
   {
@@ -2124,6 +2271,7 @@
     ],
     "estado": "publicado",
     "resumen": "Operación centralizada de servidores y aplicaciones: acceso sin SSH, parches, comandos remotos, inventario y parámetros de configuración, en AWS y en local.",
+    "frase": "Parchea, ejecuta comandos y abre sesiones en tus instancias sin SSH ni bastiones",
     "documentacion": "https://docs.aws.amazon.com/systems-manager/"
   },
   {
@@ -2139,6 +2287,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Extrae texto, tablas y campos de formularios de documentos escaneados",
     "documentacion": "https://docs.aws.amazon.com/textract/"
   },
   {
@@ -2151,6 +2300,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Base de datos de series temporales para métricas y lecturas con marca de tiempo",
     "documentacion": "https://docs.aws.amazon.com/timestream/"
   },
   {
@@ -2166,6 +2316,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Convierte audio de voz en texto, con marcas de tiempo e identificación de hablantes",
     "documentacion": "https://docs.aws.amazon.com/transcribe/"
   },
   {
@@ -2179,6 +2330,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Servidores SFTP, FTPS y FTP gestionados que guardan los ficheros en S3 o EFS",
     "documentacion": "https://docs.aws.amazon.com/transfer/"
   },
   {
@@ -2191,6 +2343,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Agentes de IA que modernizan código heredado: .NET, mainframe y cargas de VMware",
     "documentacion": "https://docs.aws.amazon.com/transform/"
   },
   {
@@ -2205,6 +2358,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Hub central que interconecta cientos de VPC y redes locales en estrella",
     "documentacion": "https://docs.aws.amazon.com/vpc/latest/tgw/"
   },
   {
@@ -2220,6 +2374,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Traduce textos entre decenas de idiomas con traducción automática neuronal",
     "documentacion": "https://docs.aws.amazon.com/translate/"
   },
   {
@@ -2235,6 +2390,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Revisa tu cuenta y recomienda ahorros, mejoras de seguridad y límites a punto de agotarse",
     "documentacion": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html"
   },
   {
@@ -2246,6 +2402,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Lleva tus cargas vSphere a hardware de AWS sin cambiar herramientas ni procesos",
     "documentacion": "https://techdocs.broadcom.com/us/en/vmware-cis/cloud/vmware-cloud-on-aws/SaaS.html"
   },
   {
@@ -2263,6 +2420,7 @@
     ],
     "estado": "publicado",
     "resumen": "Tu red privada y aislada dentro de AWS: rangos de IP, subredes, tablas de rutas, gateways y firewalls para tus recursos.",
+    "frase": "Red aislada y lógica en la nube con subredes, tablas de rutas y grupos de seguridad",
     "documentacion": "https://docs.aws.amazon.com/vpc/"
   },
   {
@@ -2278,6 +2436,7 @@
     ],
     "estado": "publicado",
     "resumen": "Firewall de aplicaciones web: filtra peticiones HTTP hacia CloudFront, ALB, API Gateway y otros, frente a inyecciones, bots y abusos.",
+    "frase": "Filtra peticiones HTTP con reglas contra inyección SQL, XSS, bots y exceso de tráfico",
     "documentacion": "https://docs.aws.amazon.com/waf/"
   },
   {
@@ -2291,6 +2450,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Lleva cómputo al borde de las redes 5G de las operadoras para latencia mínima",
     "documentacion": "https://docs.aws.amazon.com/wavelength/"
   },
   {
@@ -2306,6 +2466,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Evalúa tus cargas con preguntas sobre los seis pilares de buenas prácticas de AWS",
     "documentacion": "https://docs.aws.amazon.com/wellarchitected/"
   },
   {
@@ -2319,6 +2480,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Escritorios Windows o Linux completos en la nube accesibles desde cualquier equipo",
     "documentacion": "https://docs.aws.amazon.com/workspaces/"
   },
   {
@@ -2330,6 +2492,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Navegador aislado en la nube para usar webs internas sin dejar datos en el equipo",
     "documentacion": "https://docs.aws.amazon.com/workspaces-web/"
   },
   {
@@ -2345,6 +2508,7 @@
     ],
     "estado": "pendiente",
     "resumen": "",
+    "frase": "Traza cada petición entre servicios y dibuja un mapa con latencias y errores",
     "documentacion": "https://docs.aws.amazon.com/xray/"
   }
 ]

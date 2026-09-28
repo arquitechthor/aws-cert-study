@@ -17,9 +17,10 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). Las preguntas de los 6
   ya publicados antes de añadir CLF-C02 y DVA-C02 aún no cubren esas dos guías. La tarea 0.9 sigue
   programada para el 27/10/2026.
-- **Próximo paso (siguiente sesión):** la **tarea 4.11 ampliada** (campo `frase` en los 164
-  servicios, fila "En una frase:" en guías y "Próximamente", tarjetas del catálogo con la frase en
-  vez del resumen), según la decisión "Campo `frase`". Después, seguir con las guías pendientes:
+- **Próximo paso (siguiente sesión):** terminar la **tarea 4.11**: las 164 frases ya están en
+  `servicios.json` y pasan `scripts/revisar_frases.py`; falta la fila "En una frase:" en guías y
+  "Próximamente", las tarjetas del catálogo con la frase en vez del resumen, las siglas nuevas
+  en el glosario y la revisión a mano de parejas. Después, seguir con las guías pendientes:
   **Computación (7):** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda
   ECS Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
   `serverless-application-repository`, `vmware-cloud-on-aws` (aviso: AWS dejó de revenderlo el
@@ -31,7 +32,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   `appconfig` y `proton` (aviso: en retirada desde oct. 2025). Luego, la cola "Prioridad 0".
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-09-26
+- **Última actualización:** 2026-09-28
 
 ---
 
@@ -568,9 +569,11 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
   Athena frente a Redshift): el juego enseña justo esas diferencias.
 
 **Tareas (modo 2):**
-- [ ] **4.11** **(Próxima sesión.)** Campo `frase` para **todos** los servicios (unos 164) según la
-      decisión "Campo `frase`": escribir las frases; comprobación automática (sin nombre, sigla ni
-      id del servicio; 60–90 caracteres) en `scripts/`; fila "En una frase:" en la cabecera de las
+- [ ] **4.11** **(En curso.)** Campo `frase` para **todos** los servicios (unos 164) según la
+      decisión "Campo `frase`": ~~escribir las frases; comprobación automática (sin nombre, sigla ni
+      id del servicio; 60–90 caracteres) en `scripts/`~~ (hecho el 2026-09-28: 164 frases de 65 a
+      89 caracteres, `scripts/revisar_frases.py` sin errores; siglas de las frases que aún no están
+      en el glosario `G`: IDE, NLP, IVR, NAS, AD, CNCF, CVE, OTA, CQL, IPS, TI, TAM, SFTP, FTPS, FTP); fila "En una frase:" en la cabecera de las
       guías publicadas (y en la plantilla y el generador de páginas) y en `servicio.html`
       ("Próximamente"); las tarjetas del catálogo (`catalogo.js`) muestran la `frase` en lugar del
       `resumen`; aplicar `revisar_texto.py` para que las siglas de la fila lleven tooltip (hoy el
@@ -633,3 +636,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-09-26 | Publicadas las 13 guías más mencionadas por las ya existentes: ELB, Redshift, EBS, Data Firehose, Athena, Systems Manager, Savings Plans, EFS, Kinesis Data Streams, CloudFormation, WAF, PrivateLink y Glue (47 de 164). Datos verificados: gp3 hasta 64 TiB/80 000 IOPS, cuatro tipos de Savings Plans (incluido Database), registros de Kinesis de hasta 10 MiB, Firehose con destino Iceberg. Arreglado el desbordamiento horizontal en móvil (fieldset del quiz y `.sigla-exp` dentro de tablas). |
 | 2026-09-26 | Fase 4 ampliada con un segundo modo, "funciones": emparejar cada servicio (icono y nombre) con la frase que describe lo que hace. Nuevo campo `frase` en `servicios.json` (sin el nombre ni la sigla del servicio) y tareas 4.11–4.15. |
 | 2026-09-26 | Decidido (para la próxima sesión) el campo `frase` en los 164 servicios con fila "En una frase:" en guías y "Próximamente", y como texto de las tarjetas del catálogo en lugar del resumen; tarea 4.11 ampliada. Sesión cerrada con 47 guías publicadas. |
+| 2026-09-28 | Tarea 4.11 (primera parte): campo `frase` en los 164 servicios de `servicios.json` (60–90 caracteres, sin nombre, sigla ni id del servicio, distinguiendo vecinos como SQS/SNS, EBS/EFS, Athena/Redshift) y comprobador `scripts/revisar_frases.py`. Pendiente: mostrarla en guías, "Próximamente" y catálogo. |
