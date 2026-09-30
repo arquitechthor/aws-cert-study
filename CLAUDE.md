@@ -26,7 +26,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   each service's `frase` (name matches are listed first).
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
   filters (text, category, status, certifications with union/intersection mode). Filter state
-  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=interseccion&kopi=1`). `kopi=1` shows only
+  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&kopi=1`). `kopi=1` shows only
   services with `"kopi": true` in `servicios.json` (the ones Kopi uses). Certifications with
   `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
 - Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store correct

@@ -1,6 +1,6 @@
 /**
  * Portada: tarjetas de certificación y catálogo de servicios con filtros. El estado de los
- * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=interseccion&kopi=1) para poder compartir
+ * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=union&kopi=1) para poder compartir
  * vistas filtradas. "finalizado" no es un estado del catálogo sino del progreso local del
  * usuario (localStorage), que se superpone a "publicado".
  */
@@ -35,7 +35,7 @@
   };
   const ESTADOS = ['publicado', 'finalizado', 'pendiente'];
 
-  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'union', kopi: false };
+  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', kopi: false };
   let datos = null;
   let progreso = {};
 
@@ -80,7 +80,7 @@
     estado.estado = p.get('estado') || '';
     // Solo certificaciones filtrables: se ignoran códigos desconocidos o con la guía pendiente.
     estado.certs = new Set((p.get('cert') || '').split(',').filter((c) => esFiltrable(datos.certPorCodigo.get(c))));
-    estado.modo = p.get('modo') === 'interseccion' ? 'interseccion' : 'union';
+    estado.modo = p.get('modo') === 'union' ? 'union' : 'interseccion';
     estado.kopi = p.get('kopi') === '1';
   }
 
@@ -90,7 +90,7 @@
     if (estado.cat) p.set('cat', estado.cat);
     if (estado.estado) p.set('estado', estado.estado);
     if (estado.certs.size) p.set('cert', [...estado.certs].join(','));
-    if (estado.modo !== 'union') p.set('modo', estado.modo);
+    if (estado.modo !== 'interseccion') p.set('modo', estado.modo);
     if (estado.kopi) p.set('kopi', '1');
     const q = p.toString();
     history.replaceState(null, '', `${location.pathname}${q ? `?${q}` : ''}${location.hash}`);
@@ -166,7 +166,7 @@
       aplicar();
     });
     el.limpiar.addEventListener('click', () => {
-      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'union', kopi: false });
+      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', kopi: false });
       sincronizarControles();
       aplicar();
     });
