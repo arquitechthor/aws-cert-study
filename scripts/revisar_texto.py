@@ -218,10 +218,11 @@ G = {
     'TAM': ('Technical Account Manager', 'responsable técnico asignado por AWS'),
     'TI': (None, 'tecnologías de la información: el departamento de sistemas'),
 }
-# RAM es la memoria en EC2 y el servicio AWS RAM en el resto de páginas.
+# RAM es la memoria en EC2 y el servicio AWS RAM en el resto de páginas. IA es Infrequent Access en EFS y S3.
 POR_PAGINA = {
     'RAM': {'*': ('Resource Access Manager', None), 'ec2': G['RAM']},
-    'IA': {'*': G['IA'], 'efs': ('Infrequent Access', 'clase para ficheros poco usados')},
+    'IA': {'*': G['IA'], 'efs': ('Infrequent Access', 'clase para ficheros poco usados'),
+           's3': ('Infrequent Access', 'clase para objetos poco usados')},
 }
 
 # ── Índice de nombres de servicio -> id ──────────────────────────────────────────────────

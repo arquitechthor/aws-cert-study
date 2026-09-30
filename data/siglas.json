@@ -856,6 +856,10 @@
    "efs": {
     "en": "Infrequent Access",
     "es": "clase para ficheros poco usados"
+   },
+   "s3": {
+    "en": "Infrequent Access",
+    "es": "clase para objetos poco usados"
    }
   }
  },
