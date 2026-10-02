@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Cost Explorer — Apuntes AWS</title>
+<meta name="description" content="Herramienta para visualizar, filtrar y analizar el coste y el uso de AWS a lo largo del tiempo, con previsiones y recomendaciones de Savings Plans e instancias reservadas. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cost-explorer.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Cost Explorer — Apuntes AWS">
+<meta property="og:description" content="Herramienta para visualizar, filtrar y analizar el coste y el uso de AWS a lo largo del tiempo, con previsiones y recomendaciones de Savings Plans e instancias reservadas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cost-explorer.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/cost-explorer.svg" alt="" width="56" height="56"><span>AWS Cost Explorer</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Visualiza y filtra tu gasto de meses pasados y hace previsiones del próximo</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-financiera#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="18" height="18">Administración financiera en la nube <span class="cat-en">(Cloud Financial Management)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html" target="_blank" rel="noopener">Documentación de AWS Cost Explorer ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Cost Explorer es la herramienta para <strong>entender</strong> en qué se va el dinero. Muestra el coste y el
+        uso en gráficas que se pueden filtrar y agrupar, permite comparar periodos, hace
+        <strong>previsiones</strong> y da <strong>recomendaciones de ahorro</strong>. Es de consulta y análisis: no
+        avisa ni limita el gasto, para eso está <a href="budgets.html">AWS Budgets</a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Hay que activarlo</strong> una vez; a partir de ahí los datos se actualizan al menos una vez al
+          día.</li>
+        <li><strong>Histórico y previsión:</strong> muestra los últimos meses de gasto (trece por defecto, ampliables) y
+          prevé hasta los doce meses siguientes a partir del histórico.</li>
+        <li><strong>Granularidad:</strong> mensual o diaria, y <strong>por hora</strong> de los últimos 14 días como
+          opción de pago.</li>
+        <li><strong>Filtrar y agrupar:</strong> por servicio, cuenta, región, tipo de instancia, tipo de uso,
+          <strong>etiqueta de asignación de costes</strong> o categoría de costes.</li>
+        <li><strong>Informes guardados:</strong> vienen varios predefinidos (coste mensual por servicio, por cuenta) y
+          puedes guardar los tuyos.</li>
+        <li><strong>Informes de compromisos:</strong> <strong>utilización</strong> (cuánto se aprovecha lo comprado) y
+          <strong>cobertura</strong> (qué parte del uso está cubierta) de instancias reservadas y <a href="savings-plans.html">Savings Plans</a>.</li>
+        <li><strong>Recomendaciones:</strong> de compra de <strong>Savings Plans</strong> y de <strong>instancias
+          reservadas</strong>, y de ajuste de tamaño de instancias (con datos de <a href="compute-optimizer.html">Compute Optimizer</a>).</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de Cost Explorer:</strong> los mismos datos para tus herramientas; se cobra por
+          petición.</li>
+        <li><strong>Etiquetas de asignación de costes:</strong> hay que <strong>activarlas</strong> en la consola de
+          facturación para que aparezcan como dimensión; solo cuentan desde su activación.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Averiguar qué servicio o qué cuenta ha hecho subir la factura este mes.</li>
+        <li>Repartir el gasto entre equipos o proyectos mediante etiquetas.</li>
+        <li>Decidir cuánto comprometer en <a href="savings-plans.html">Savings Plans</a> mirando el uso estable.</li>
+        <li>Prever el gasto del próximo trimestre.</li>
+        <li>Seguir el coste de las cargas de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> (entrenamiento, inferencia) por etiqueta o por servicio.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>alertas</strong> y límites: <a href="budgets.html">AWS Budgets</a>.</li>
+        <li>Para el máximo detalle (cada línea de la factura, por recurso y hora) y análisis con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>: Cost and Usage
+          Report con <a href="athena.html">Athena</a>.</li>
+        <li>Para estimar el coste de algo que aún no existe: AWS Pricing Calculator.</li>
+        <li>Para recomendaciones de tamaño recurso a recurso: <a href="compute-optimizer.html">Compute Optimizer</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Herramienta</th></tr></thead>
+          <tbody>
+            <tr><td>¿En qué he gastado y cómo evoluciona?</td><td>Cost Explorer</td></tr>
+            <tr><td>¿Voy a pasarme del presupuesto? Avísame.</td><td><a href="budgets.html">AWS Budgets</a></td></tr>
+            <tr><td>Quiero todos los datos de facturación para analizarlos yo</td><td><a href="../servicio.html?id=cost-and-usage-report">Cost and Usage Report</a></td></tr>
+            <tr><td>¿Cuánto costará esta arquitectura?</td><td>AWS Pricing Calculator</td></tr>
+            <tr><td>¿Qué tamaño deberían tener mis instancias?</td><td><a href="compute-optimizer.html">Compute Optimizer</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>La interfaz de la consola es <strong>gratuita</strong>. Se cobran las <strong>peticiones a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></strong> y la
+        <strong>granularidad por hora</strong> (según los registros de uso almacenados).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El acceso se controla con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>, una vez habilitado el acceso de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> a la facturación.</li>
+        <li>En una organización, la cuenta de administración ve el gasto de todas las cuentas y decide si las cuentas
+          miembro pueden ver las recomendaciones, los descuentos y los reembolsos.</li>
+        <li>Solo muestra datos de facturación; no accede al contenido de los recursos.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Visualizar", "analizar tendencias" o "identificar qué servicio genera más gasto"</strong>: Cost
+          Explorer.</li>
+        <li><strong>"Prever el gasto de los próximos meses"</strong>: Cost Explorer (previsión).</li>
+        <li><strong>"Recomendación de compra de <a href="savings-plans.html">Savings Plans</a>"</strong>: Cost Explorer.</li>
+        <li><strong>"Alertas"</strong>: <a href="budgets.html">AWS Budgets</a>. <strong>"El informe más detallado"</strong>: Cost and Usage
+          Report.</li>
+        <li><strong>Para desglosar por equipo hacen falta etiquetas de asignación de costes activadas.</strong></li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cost-explorer"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html" target="_blank" rel="noopener">Analyzing your costs and usage with AWS Cost Explorer</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/pricing/" target="_blank" rel="noopener">AWS Cost Explorer Pricing</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/features/" target="_blank" rel="noopener">AWS Cost Explorer features</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/aws-cloud-financial-management/update-cost-explorer-forecasting-api-improvement/" target="_blank" rel="noopener">Cost Explorer Forecasting API Improvement</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

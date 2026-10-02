@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Artifact — Apuntes AWS</title>
+<meta name="description" content="Portal gratuito de autoservicio para descargar los informes de auditoría y certificaciones de cumplimiento de AWS (SOC, ISO, PCI) y gestionar acuerdos como el BAA. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/artifact.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Artifact — Apuntes AWS">
+<meta property="og:description" content="Portal gratuito de autoservicio para descargar los informes de auditoría y certificaciones de cumplimiento de AWS (SOC, ISO, PCI) y gestionar acuerdos como el BAA.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/artifact.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/artifact.svg" alt="" width="56" height="56"><span>AWS Artifact</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Descarga los informes de auditoría y certificaciones de cumplimiento de la nube</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/artifact/" target="_blank" rel="noopener">Documentación de AWS Artifact ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Artifact es el portal de <strong>autoservicio</strong> donde se descargan, cuando haga falta, los
+        <strong>documentos de seguridad y cumplimiento de AWS</strong>: los informes de auditores externos y las
+        certificaciones que demuestran que la infraestructura de AWS cumple determinadas normas. También sirve para
+        <strong>revisar y aceptar acuerdos</strong> con AWS. Es lo que entregas a tu auditor para justificar la parte
+        del cumplimiento que corresponde a AWS.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Informes</strong> (<em>AWS Artifact Reports</em>): informes <strong><abbr class="sigla sigla-1" data-s="SOC" data-en="System and Organization Controls" data-es="informes de auditoría sobre los controles de un proveedor" tabindex="0">SOC<span class="sigla-exp"> (System and Organization Controls: informes de auditoría sobre los controles de un proveedor)</span></abbr></strong> (1, 2 y 3),
+          certificaciones <strong><abbr class="sigla sigla-1" data-s="ISO" data-en="International Organization for Standardization" data-es="organismo de normas internacionales" tabindex="0">ISO<span class="sigla-exp"> (International Organization for Standardization: organismo de normas internacionales)</span></abbr></strong> (como la 27001), el informe de cumplimiento de <strong><abbr class="sigla sigla-1" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS<span class="sigla-exp"> (Payment Card Industry Data Security Standard: norma de seguridad para datos de tarjetas)</span></abbr></strong>
+          y otros informes regionales y sectoriales.</li>
+        <li><strong>Acuerdos</strong> (<em>AWS Artifact Agreements</em>): revisar, aceptar y seguir el estado de acuerdos
+          con AWS, como el <strong><abbr class="sigla sigla-1" data-s="BAA" data-en="Business Associate Addendum" data-es="acuerdo que exige HIPAA para tratar datos de salud" tabindex="0">BAA<span class="sigla-exp"> (Business Associate Addendum: acuerdo que exige HIPAA para tratar datos de salud)</span></abbr></strong> (el acuerdo que exige la normativa sanitaria <abbr class="sigla sigla-1" data-s="HIPAA" data-en="Health Insurance Portability and Accountability Act" data-es="ley de EE. UU. que protege los datos de salud" tabindex="0">HIPAA<span class="sigla-exp"> (Health Insurance Portability and Accountability Act: ley de EE. UU. que protege los datos de salud)</span></abbr> de Estados Unidos).
+          Se pueden aceptar para una cuenta o para <strong>todas las cuentas de una organización</strong> de AWS
+          <a href="organizations.html">Organizations</a>.</li>
+        <li><strong>Documentos de terceros:</strong> informes de seguridad y cumplimiento de los proveedores de
+          software que venden en <a href="../servicio.html?id=marketplace">AWS Marketplace</a>.</li>
+        <li><strong>Condiciones de uso:</strong> algunos informes son confidenciales y hay que aceptar un acuerdo de
+          confidencialidad antes de descargarlos.</li>
+        <li><strong>Notificaciones:</strong> avisos cuando se publica un informe nuevo o una versión nueva.</li>
+        <li><strong>Asistente:</strong> respuestas generadas con <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> a preguntas de cumplimiento y de diligencia
+          debida.</li>
+        <li><strong>Responsabilidad compartida:</strong> Artifact acredita el cumplimiento <strong>de AWS</strong>
+          (seguridad <em>de</em> la nube). El cumplimiento de lo que tú construyes encima sigue siendo cosa tuya.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Entregar a un auditor o a un regulador el informe <abbr class="sigla" data-s="SOC" data-en="System and Organization Controls" data-es="informes de auditoría sobre los controles de un proveedor" tabindex="0">SOC</abbr> 2 o el certificado <abbr class="sigla" data-s="ISO" data-en="International Organization for Standardization" data-es="organismo de normas internacionales" tabindex="0">ISO</abbr> 27001 de AWS.</li>
+        <li>Firmar el <abbr class="sigla" data-s="BAA" data-en="Business Associate Addendum" data-es="acuerdo que exige HIPAA para tratar datos de salud" tabindex="0">BAA</abbr> antes de tratar datos de salud protegidos en AWS.</li>
+        <li>Evaluar a AWS como proveedor en un proceso de diligencia debida.</li>
+        <li>Documentar el cumplimiento de la infraestructura sobre la que se ejecuta una solución de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para auditar <strong>tus</strong> recursos y generar evidencias de <strong>tu</strong> cumplimiento: Audit
+          Manager y <a href="config.html">AWS Config</a>.</li>
+        <li>Para saber quién hizo qué en tu cuenta: <a href="cloudtrail.html">CloudTrail</a>.</li>
+        <li>Para buscar vulnerabilidades: <a href="inspector.html">Inspector</a>. Para datos sensibles en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>: <a href="macie.html">Macie</a>.</li>
+        <li>Para una visión de tu postura de seguridad: <a href="../servicio.html?id=security-hub">Security Hub</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Cumple AWS tal norma? Necesito el informe.</td><td>Artifact</td></tr>
+            <tr><td>¿Cumplen mis recursos mis reglas de configuración?</td><td><a href="config.html">AWS Config</a></td></tr>
+            <tr><td>¿Cómo reúno evidencias para auditar mi propio entorno?</td><td><a href="../servicio.html?id=audit-manager">Audit Manager</a></td></tr>
+            <tr><td>¿Quién hizo cada acción en mi cuenta?</td><td><a href="cloudtrail.html">CloudTrail</a></td></tr>
+            <tr><td>¿Cuál es mi postura de seguridad global?</td><td><a href="../servicio.html?id=security-hub">Security Hub</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Artifact es <strong>gratuito</strong>: los documentos y los acuerdos no tienen coste.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El acceso a los informes y a los acuerdos se controla con políticas de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; se puede limitar quién
+          descarga y quién acepta acuerdos.</li>
+        <li>Los documentos descargados son confidenciales: compártelos solo con quien deba verlos.</li>
+        <li>Aceptar acuerdos para toda la organización se hace desde la cuenta de administración.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Descargar los informes de cumplimiento de AWS"</strong> (<abbr class="sigla" data-s="SOC" data-en="System and Organization Controls" data-es="informes de auditoría sobre los controles de un proveedor" tabindex="0">SOC</abbr>, <abbr class="sigla" data-s="ISO" data-en="International Organization for Standardization" data-es="organismo de normas internacionales" tabindex="0">ISO</abbr>, PCI): Artifact.</li>
+        <li><strong>"Firmar o consultar el <abbr class="sigla" data-s="BAA" data-en="Business Associate Addendum" data-es="acuerdo que exige HIPAA para tratar datos de salud" tabindex="0">BAA</abbr>"</strong>: Artifact (acuerdos).</li>
+        <li><strong>"Un auditor pide pruebas de los controles de seguridad de los centros de datos de AWS"</strong>:
+          Artifact. No se visitan los centros de datos.</li>
+        <li><strong>Artifact no audita tu entorno:</strong> para eso, <a href="config.html">AWS Config</a>, <a href="../servicio.html?id=audit-manager">Audit Manager</a> o <a href="../servicio.html?id=security-hub">Security Hub</a>.</li>
+        <li><strong>No confundir con <a href="../servicio.html?id=codeartifact">CodeArtifact</a></strong>, que es un repositorio de paquetes de software.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="artifact"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html" target="_blank" rel="noopener">What is AWS Artifact?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/artifact/latest/ug/managing-agreements.html" target="_blank" rel="noopener">Managing agreements in AWS Artifact</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/artifact/faq/" target="_blank" rel="noopener">AWS Artifact FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+[
+  {
+    "id": "s3-glacier-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa debe conservar durante diez años copias de documentos que casi nunca consultará, al menor coste posible, y puede esperar un día para recuperarlos. ¿Qué clase de almacenamiento de S3 es la adecuada?",
+    "opciones": [
+      "S3 Standard.",
+      "S3 Standard-IA.",
+      "S3 Glacier Deep Archive.",
+      "S3 One Zone-IA."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Deep Archive es la clase más barata de S3 y está pensada para datos que se guardan años y se leen muy rara vez, con recuperación en torno a 12 horas o más. Las otras clases cuestan más por gigabyte y ofrecen un acceso inmediato que aquí no se necesita.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html"
+    ]
+  },
+  {
+    "id": "s3-glacier-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué contrapartida tienen las clases de archivo S3 Glacier frente a S3 Standard?",
+    "opciones": [
+      "El almacenamiento es más barato, pero recuperar los datos cuesta más o tarda más.",
+      "Tienen menos durabilidad, porque los datos se guardan en una sola AZ.",
+      "No admiten cifrado de los objetos.",
+      "Solo aceptan objetos de más de 5 GB."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las clases Glacier reducen mucho el precio por gigabyte a cambio de cargos de recuperación y, en Flexible Retrieval y Deep Archive, de esperas. Mantienen la durabilidad de S3 en varias AZ y admiten cifrado.",
+    "fuentes": [
+      "https://aws.amazon.com/s3/faqs/"
+    ]
+  },
+  {
+    "id": "s3-glacier-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un hospital guarda imágenes médicas que se consultan una o dos veces por trimestre, pero cuando se piden deben abrirse al instante. ¿Qué clase de almacenamiento minimiza el coste cumpliendo el requisito?",
+    "opciones": [
+      "S3 Glacier Deep Archive.",
+      "S3 Glacier Instant Retrieval.",
+      "S3 Glacier Flexible Retrieval con restauración masiva.",
+      "S3 Standard."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Glacier Instant Retrieval ofrece precio de archivo con acceso en milisegundos, pensado para datos que se leen alrededor de una vez por trimestre. Flexible Retrieval y Deep Archive obligan a restaurar y esperar, y S3 Standard es más caro.",
+    "fuentes": [
+      "https://aws.amazon.com/s3/faqs/"
+    ]
+  },
+  {
+    "id": "s3-glacier-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Los logs de una aplicación deben estar accesibles de inmediato 30 días y conservarse después 7 años, al menor coste y sin tareas manuales. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Copiar los logs cada mes a un volumen de EBS de tipo sc1 y conservarlo 7 años.",
+      "Guardarlos siempre en S3 Standard y borrarlos a mano cuando cumplan 7 años.",
+      "Usar S3 Intelligent-Tiering sin configuración adicional ni fecha de borrado.",
+      "Una regla de ciclo de vida que los pase a S3 Glacier Deep Archive a los 30 días y los borre a los 7 años."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las reglas de ciclo de vida mueven los objetos a clases más baratas según su antigüedad y los eliminan al cumplirse el plazo, sin intervención. Deep Archive es la opción más económica para una retención de años.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html"
+    ]
+  },
+  {
+    "id": "s3-glacier-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa archiva copias de seguridad en S3 Glacier Flexible Retrieval. Su plan de recuperación exige poder restaurar algunos ficheros críticos en menos de 10 minutos, también en momentos de mucha demanda. ¿Qué debe prever?",
+    "opciones": [
+      "Restauraciones aceleradas, con capacidad aprovisionada para garantizar que estén disponibles.",
+      "Restauraciones masivas lanzadas con S3 Batch Operations.",
+      "Pasar las copias a S3 Glacier Deep Archive.",
+      "Restauraciones estándar y un tema de SNS para avisar al terminar."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La restauración acelerada entrega los datos en 1 a 5 minutos, y la capacidad aprovisionada asegura que esa capacidad exista cuando se necesite. La estándar tarda horas, la masiva más, y Deep Archive no admite restauración acelerada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/restoring-objects.html"
+    ]
+  },
+  {
+    "id": "s3-glacier-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo pasa a S3 Glacier Flexible Retrieval millones de objetos de unos pocos kilobytes y el ahorro esperado no llega. Además, muchos se borran al mes. ¿Qué explica el resultado?",
+    "opciones": [
+      "Las clases Glacier cobran la transferencia entre AZ.",
+      "Los objetos archivados se replican a otra región de forma obligatoria.",
+      "Cada objeto archivado añade metadatos facturables y hay un cargo por borrar antes de los 90 días.",
+      "Glacier Flexible Retrieval solo es rentable con cifrado desactivado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "En las clases de archivo cada objeto lleva unos kilobytes extra de metadatos, lo que penaliza los objetos pequeños, y borrar antes de la duración mínima de almacenamiento se factura igualmente. Conviene agrupar los ficheros pequeños y archivar solo lo que se va a conservar.",
+    "fuentes": [
+      "https://repost.aws/knowledge-center/s3-manage-data-retrieval"
+    ]
+  },
+  {
+    "id": "s3-glacier-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Por requisitos de auditoría, una empresa debe conservar cinco años los conjuntos de datos con los que entrenó sus modelos, aunque no espera volver a usarlos. ¿Qué opción de almacenamiento es la más económica?",
+    "opciones": [
+      "Amazon EBS con instantáneas diarias.",
+      "S3 Glacier Deep Archive, mediante una regla de ciclo de vida.",
+      "Amazon EFS en modo de acceso estándar.",
+      "S3 Standard con replicación entre regiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Para datos que se guardan años y casi nunca se leen, Deep Archive ofrece el menor coste por gigabyte, y la regla de ciclo de vida automatiza el paso. EBS y EFS son almacenamiento para cargas activas, mucho más caro.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html"
+    ]
+  }
+]

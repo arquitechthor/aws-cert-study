@@ -1,0 +1,134 @@
+[
+  {
+    "id": "budgets-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa quiere recibir un correo cuando el gasto mensual de su cuenta de AWS alcance el 80 % de un importe fijado. ¿Qué servicio debe usar?",
+    "opciones": [
+      "AWS Cost Explorer.",
+      "AWS Budgets.",
+      "AWS Artifact.",
+      "AWS Trusted Advisor."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Budgets permite fijar un importe y configurar alertas al alcanzar un porcentaje, sobre el gasto real o el previsto. Cost Explorer sirve para analizar el gasto, Artifact ofrece informes de cumplimiento y Trusted Advisor da recomendaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+    ]
+  },
+  {
+    "id": "budgets-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué puede hacer AWS Budgets que no hace una simple revisión de la factura a final de mes?",
+    "opciones": [
+      "Aplicar descuentos automáticos en la factura al superar un umbral de gasto.",
+      "Cambiar automáticamente el plan de soporte de la cuenta a uno más barato.",
+      "Avisar antes de que ocurra, cuando la previsión indica que se superará el presupuesto.",
+      "Reservar capacidad de cómputo a menor precio para el mes siguiente."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las alertas de Budgets pueden basarse en el gasto previsto, de modo que avisan antes de sobrepasar el presupuesto. Budgets no aplica descuentos ni reserva capacidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+    ]
+  },
+  {
+    "id": "budgets-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una cuenta de pruebas no debe superar un gasto mensual. Si se alcanza el límite, hay que impedir automáticamente que los desarrolladores lancen nuevas instancias. ¿Qué solución requiere menos desarrollo?",
+    "opciones": [
+      "Una acción de AWS Budgets que aplique una política de IAM de denegación al alcanzarse el umbral.",
+      "Una función Lambda programada que consulte la factura cada hora.",
+      "Un informe semanal de AWS Cost Explorer enviado al responsable.",
+      "Una regla de AWS Config sobre el número de instancias."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las acciones de presupuesto pueden aplicar automáticamente una política de IAM o una SCP, o detener instancias, cuando salta una alerta. Las demás opciones exigen desarrollo propio o solo informan.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html"
+    ]
+  },
+  {
+    "id": "budgets-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa ha comprado Savings Plans y quiere saber si deja de aprovecharlos. ¿Qué debe configurar?",
+    "opciones": [
+      "Un presupuesto de coste con un importe fijo mensual.",
+      "Una alarma de CloudWatch sobre el uso de CPU de las instancias.",
+      "Una comprobación de límites de servicio de Trusted Advisor.",
+      "Un presupuesto de utilización de Savings Plans con una alerta por debajo de un umbral."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los presupuestos de utilización avisan cuando el porcentaje aprovechado de las instancias reservadas o de los Savings Plans cae por debajo del umbral definido. Un presupuesto de coste no mide el aprovechamiento de los compromisos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+    ]
+  },
+  {
+    "id": "budgets-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "En una organización, el equipo financiero quiere un presupuesto por unidad de negocio. Cada unidad usa varias cuentas y marca sus recursos con la etiqueta Unidad. ¿Cuál es el planteamiento adecuado?",
+    "opciones": [
+      "Crear en cada cuenta miembro un presupuesto y sumar los resultados a mano.",
+      "Crear en la cuenta de administración presupuestos filtrados por la etiqueta de asignación de costes Unidad.",
+      "Asociar una SCP con el importe máximo a cada OU.",
+      "Activar AWS Compute Optimizer en toda la organización."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Desde la cuenta de administración se pueden crear presupuestos que abarcan todas las cuentas y filtrarlos por etiquetas de asignación de costes activadas, cuentas u otras dimensiones. Una SCP no contiene importes y Compute Optimizer dimensiona recursos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+    ]
+  },
+  {
+    "id": "budgets-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Un equipo experimenta con modelos fundacionales y teme que las pruebas de inferencia disparen la factura. ¿Qué medida de gobierno de costes puede aplicar desde el primer día?",
+    "opciones": [
+      "Activar Amazon Macie sobre los buckets del proyecto para descubrir datos sensibles.",
+      "Desplegar los modelos en varias regiones para repartir el coste entre ellas.",
+      "Crear un presupuesto en AWS Budgets para el proyecto, con alertas sobre el gasto real y el previsto.",
+      "Aumentar las cuotas del servicio en Service Quotas antes de empezar las pruebas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Un presupuesto filtrado por las etiquetas o los servicios del proyecto avisa cuando el gasto real o el previsto se acerca al límite, lo que permite reaccionar a tiempo. Macie descubre datos sensibles y subir cuotas no controla el gasto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
+    ]
+  }
+]

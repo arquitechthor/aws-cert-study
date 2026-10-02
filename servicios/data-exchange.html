@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Data Exchange — Apuntes AWS</title>
+<meta name="description" content="Servicio para encontrar, contratar y usar conjuntos de datos de terceros (ficheros, API, Redshift, S3), y para publicar los propios, integrado con AWS Marketplace. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/data-exchange.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Data Exchange — Apuntes AWS">
+<meta property="og:description" content="Servicio para encontrar, contratar y usar conjuntos de datos de terceros (ficheros, API, Redshift, S3), y para publicar los propios, integrado con AWS Marketplace.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/data-exchange.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/data-exchange.svg" alt="" width="56" height="56"><span>AWS Data Exchange</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Catálogo para suscribirse a conjuntos de datos de terceros y usarlos en tu cuenta</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/data-exchange/" target="_blank" rel="noopener">Documentación de AWS Data Exchange ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Data Exchange es un mercado de <strong>datos de terceros</strong>. Los <strong>proveedores</strong>
+        (empresas de datos financieros, sanitarios, meteorológicos, de geolocalización…) publican productos de datos, y
+        los <strong>suscriptores</strong> los buscan, aceptan sus condiciones y los usan directamente en su cuenta de
+        AWS. Evita el trabajo tradicional de licenciar datos: negociar contratos, recibir ficheros por canales
+        distintos y montar la entrega de cada proveedor.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Producto de datos:</strong> lo que se publica en el catálogo de <a href="../servicio.html?id=marketplace">AWS Marketplace</a>. Incluye uno o
+          varios conjuntos de datos, la oferta (precio y duración) y el acuerdo de suscripción.</li>
+        <li><strong>Conjunto de datos, revisión y activo:</strong> un conjunto de datos tiene <strong>revisiones</strong>
+          (cada actualización que publica el proveedor), y cada revisión contiene <strong>activos</strong>, que son los
+          datos en sí.</li>
+        <li><strong>Formas de entrega:</strong>
+          <ul>
+            <li><strong>Ficheros:</strong> se exportan a tu bucket de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
+            <li><strong>Acceso a datos en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>:</strong> lees directamente del bucket del proveedor, sin copiar.</li>
+            <li><strong><abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>:</strong> llamas a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> del proveedor, a través de <a href="api-gateway.html">API Gateway</a>.</li>
+            <li><strong><a href="redshift.html">Amazon Redshift</a>:</strong> consultas con acceso de solo lectura los datos compartidos, sin
+              <abbr class="sigla sigla-1" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL<span class="sigla-exp"> (Extract, Transform, Load: extraer, transformar y cargar datos)</span></abbr>.</li>
+            <li><strong>Permisos de <a href="lake-formation.html">AWS Lake Formation</a></strong> (en versión preliminar): acceso a tablas del lago de
+              datos del proveedor.</li>
+          </ul>
+        </li>
+        <li><strong>Ofertas:</strong> públicas, o <strong>privadas</strong> con condiciones negociadas para un
+          suscriptor. Algunos productos exigen que el proveedor verifique la suscripción antes de conceder el
+          acceso.</li>
+        <li><strong>Automatización:</strong> al publicarse una revisión nueva se genera un evento en <a href="eventbridge.html">EventBridge</a>, y se
+          puede configurar la exportación automática a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</li>
+        <li><strong>Concesiones de datos</strong> (<em>data grants</em>): compartir datos con otra cuenta sin publicarlos
+          en el catálogo.</li>
+        <li><strong>Datos abiertos:</strong> el catálogo incluye conjuntos de datos gratuitos.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Enriquecer el análisis propio con datos externos: mercados, demografía, clima, movilidad.</li>
+        <li>Alimentar modelos de aprendizaje automático con conjuntos de datos de terceros ya preparados.</li>
+        <li>Recibir cada día las actualizaciones de un proveedor en el lago de datos sin intervención.</li>
+        <li>Vender o distribuir los datos de la propia empresa.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para compartir datos <strong>dentro</strong> de tu organización: <a href="lake-formation.html">Lake Formation</a>, el uso compartido de datos
+          de <a href="redshift.html">Redshift</a> o <a href="../servicio.html?id=ram"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a>.</li>
+        <li>Para <strong>mover</strong> tus datos a AWS: <a href="../servicio.html?id=datasync">DataSync</a>, <a href="../servicio.html?id=transfer-family">Transfer Family</a> o <a href="../servicio.html?id=snow-family">Snow Family</a>.</li>
+        <li>Para comprar <strong>software</strong>: <a href="../servicio.html?id=marketplace">AWS Marketplace</a>.</li>
+        <li>Para transformar los datos recibidos: <a href="glue.html">Glue</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Suscribirse a datos de terceros o vender los propios</td><td>Data Exchange</td></tr>
+            <tr><td>Comprar software y servicios de terceros</td><td><a href="../servicio.html?id=marketplace">AWS Marketplace</a></td></tr>
+            <tr><td>Gobernar y compartir tu lago de datos entre cuentas</td><td><a href="lake-formation.html">Lake Formation</a></td></tr>
+            <tr><td>Transferir tus propios ficheros a AWS</td><td><a href="../servicio.html?id=datasync">DataSync</a></td></tr>
+            <tr><td>Catalogar y transformar datos</td><td><a href="glue.html">Glue</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El suscriptor paga el <strong>precio que fija cada proveedor</strong> (suscripción por un periodo, o por uso en
+        el caso de las <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>); muchos productos son gratuitos. Aparte se pagan los servicios donde se guardan y analizan
+        los datos (<a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="redshift.html">Redshift</a>, <a href="athena.html">Athena</a>). La factura llega integrada en la de AWS.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El acceso a los datos suscritos se controla con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> en la cuenta del suscriptor.</li>
+        <li>Los datos se cifran en tránsito y en reposo; los exportados heredan la configuración del bucket de
+          destino.</li>
+        <li>Las suscripciones y las exportaciones quedan registradas en <a href="cloudtrail.html">CloudTrail</a>.</li>
+        <li>El acuerdo de suscripción de datos fija qué uso se puede hacer de ellos: es responsabilidad del
+          suscriptor respetarlo.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Datos de terceros"</strong>, "suscribirse a conjuntos de datos" o "licenciar datos externos":
+          Data Exchange.</li>
+        <li><strong>"Recibir automáticamente las actualizaciones del proveedor en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: exportación automática
+          de revisiones o evento de <a href="eventbridge.html">EventBridge</a>.</li>
+        <li><strong>"Consultar los datos del proveedor sin copiarlos ni hacer <abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr>"</strong>: conjuntos de datos de
+          <a href="redshift.html">Redshift</a> o de acceso a datos en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</li>
+        <li><strong>No es para migrar tus datos</strong> ni para compartirlos internamente.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="data-exchange"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/data-exchange/latest/userguide/what-is.html" target="_blank" rel="noopener">What is AWS Data Exchange?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/data-exchange/latest/userguide/subscribing-to-LakeFormation-product.html" target="_blank" rel="noopener">Subscribing to an AWS Data Exchange product containing AWS Lake Formation data sets</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/big-data/aws-lake-formation-2022-year-in-review/" target="_blank" rel="noopener">AWS Lake Formation 2022 year in review</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+[
+  {
+    "id": "rekognition-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una aplicación de fotos quiere etiquetar automáticamente las imágenes según lo que aparece en ellas (playa, perro, coche). ¿Qué servicio de AWS lo hace sin entrenar modelos?",
+    "opciones": [
+      "Amazon Textract.",
+      "Amazon Rekognition.",
+      "Amazon Polly.",
+      "Amazon Comprehend."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Rekognition detecta objetos, escenas y conceptos en imágenes con modelos ya entrenados. Textract extrae texto de documentos, Polly convierte texto en voz y Comprehend analiza texto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "rekognition-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una red social necesita detectar automáticamente las imágenes con contenido explícito que suben los usuarios. ¿Qué capacidad de AWS debe usar?",
+    "opciones": [
+      "El análisis de sentimiento de Amazon Comprehend.",
+      "Las consultas de Amazon Textract.",
+      "La moderación de contenido de Amazon Rekognition.",
+      "La identificación de hablantes de Amazon Transcribe."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Rekognition incluye la detección de contenido inapropiado en imágenes y vídeo, con categorías y niveles de confianza. Los otros servicios trabajan con texto, documentos o audio.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/machine-learning/moderate-your-amazon-ivs-live-stream-using-amazon-rekognition/"
+    ]
+  },
+  {
+    "id": "rekognition-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una fintech quiere verificar en el alta que el selfi del cliente corresponde a la foto de su documento y que hay una persona real ante la cámara. ¿Qué funciones debe combinar?",
+    "opciones": [
+      "La comparación de caras y la prueba de vida de Amazon Rekognition.",
+      "La detección de etiquetas y de texto de Amazon Rekognition.",
+      "La extracción de formularios de Amazon Textract y Amazon Polly.",
+      "La detección de PII de Amazon Comprehend y Amazon Macie."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La comparación de caras mide la similitud entre el selfi y la foto del documento, y la prueba de vida detecta suplantaciones con fotos o vídeos. Detectar etiquetas o texto no verifica la identidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "rekognition-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una productora guarda miles de horas de vídeo en S3 y quiere indexarlas por los objetos y las personas que aparecen. ¿Cómo debe plantear el análisis con Amazon Rekognition?",
+    "opciones": [
+      "Llamadas síncronas con el vídeo completo en cada petición.",
+      "Descargar los vídeos a instancias de EC2 y analizarlos con software propio.",
+      "Convertir cada vídeo en audio y analizarlo con Transcribe.",
+      "Trabajos asíncronos sobre los vídeos de S3, recogiendo el resultado tras el aviso de SNS."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El análisis de vídeo almacenado es asíncrono: se inicia el trabajo indicando el objeto de S3 y Rekognition publica en un tema de SNS cuando termina, momento en que se recuperan los resultados. El audio no contiene la información visual.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "rekognition-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un fabricante quiere detectar en las fotos de la línea de montaje un tipo de defecto propio de sus piezas. Dispone de unos cientos de imágenes etiquetadas y no tiene especialistas en aprendizaje automático. ¿Qué opción encaja?",
+    "opciones": [
+      "La detección de etiquetas genérica de Amazon Rekognition.",
+      "Amazon Rekognition Custom Labels, entrenado con sus imágenes.",
+      "Un modelo fundacional de texto en Amazon Bedrock.",
+      "Amazon Textract con consultas personalizadas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las etiquetas personalizadas permiten entrenar un modelo de visión con pocas imágenes propias, sin diseñar la red ni gestionar la infraestructura. Las etiquetas genéricas no conocen los defectos específicos de la empresa.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/what-is.html"
+    ]
+  },
+  {
+    "id": "rekognition-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Directrices para una IA responsable",
+    "enunciado": "Una empresa usa Amazon Rekognition para buscar coincidencias de caras en un proceso que afecta a personas. ¿Qué práctica de IA responsable debe aplicar?",
+    "opciones": [
+      "Aceptar cualquier coincidencia, sea cual sea su nivel de confianza.",
+      "Desactivar los registros para proteger la privacidad.",
+      "Usar un umbral de confianza alto y someter los resultados a revisión humana antes de actuar.",
+      "Entrenar el modelo solo con imágenes de una única persona."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los resultados de un modelo son probabilísticos. En usos con consecuencias para las personas se recomienda exigir una confianza alta y mantener a una persona en el circuito de decisión. Aceptar cualquier coincidencia aumenta los errores y el perjuicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "rekognition-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Una empresa tenía previsto analizar vídeo en directo con la función de streaming de Amazon Rekognition en una cuenta nueva. ¿Qué debe tener en cuenta?",
+    "opciones": [
+      "Que esa función solo existe en SageMaker AI y hay que entrenar un modelo propio.",
+      "Que Rekognition ha dejado de analizar cualquier tipo de vídeo, también el almacenado en S3.",
+      "Que el análisis de vídeo en directo requiere contratar un plan de soporte Enterprise.",
+      "Que esa función ya no admite clientes nuevos y AWS propone analizar fotogramas con la API de imágenes."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Desde el 30/04/2026, el vídeo en streaming y el análisis masivo de imágenes de Rekognition no están disponibles para clientes nuevos. La alternativa indicada es extraer fotogramas y analizarlos con la API de imágenes; el vídeo almacenado sigue disponible.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/rekognition/latest/dg/rekognition-availability-changes.html"
+    ]
+  }
+]

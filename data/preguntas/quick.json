@@ -1,0 +1,134 @@
+[
+  {
+    "id": "quick-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere crear paneles interactivos para que los directivos consulten los datos de ventas, sin administrar servidores. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "Amazon Athena.",
+      "AWS Glue.",
+      "Amazon QuickSight (Amazon Quick).",
+      "Amazon EMR."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "QuickSight, hoy parte de Amazon Quick, es el servicio de inteligencia empresarial sin servidor para crear y compartir paneles. Athena consulta datos con SQL, Glue los cataloga y transforma, y EMR los procesa a gran escala.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/quick/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "quick-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué ventaja tiene que Amazon QuickSight sea un servicio sin servidor?",
+    "opciones": [
+      "No hay infraestructura que aprovisionar ni mantener, y escala con el número de usuarios.",
+      "Los datos se guardan siempre en el equipo de cada usuario, sin pasar por la nube.",
+      "Solo funciona con datos almacenados en Amazon S3, lo que simplifica el acceso.",
+      "No necesita permisos para acceder a las fuentes de datos de la organización."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Al ser un servicio gestionado y sin servidor, AWS se ocupa de la capacidad y del escalado. QuickSight se conecta a muchas fuentes, no solo a S3, y el acceso sigue requiriendo permisos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/quick/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "quick-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un panel de Amazon QuickSight consulta directamente una base de datos de producción y la ralentiza en las horas punta. ¿Qué cambio mejora el rendimiento del panel y descarga la base de datos?",
+    "opciones": [
+      "Aumentar el número de autores del panel.",
+      "Importar el conjunto de datos a SPICE y programar su actualización.",
+      "Cambiar el panel a consulta directa con más visualizaciones.",
+      "Mover la base de datos a una subred pública."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "SPICE guarda una copia de los datos en un motor en memoria, de modo que los paneles responden rápido sin consultar la fuente en cada visita; la actualización se programa. La consulta directa es justo lo que provoca la carga.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/whitepapers/latest/big-data-analytics-options/amazon-quicksight.html"
+    ]
+  },
+  {
+    "id": "quick-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un mismo panel de Amazon QuickSight lo usan los responsables de cada país, y cada uno debe ver únicamente las ventas de su país. ¿Qué función lo consigue sin crear un panel por país?",
+    "opciones": [
+      "Un análisis distinto por cada usuario.",
+      "El cifrado de SPICE con una clave por país.",
+      "Una copia del conjunto de datos por cada región de AWS.",
+      "La seguridad a nivel de fila sobre el conjunto de datos."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La seguridad a nivel de fila filtra los registros que ve cada usuario o grupo según unas reglas, sobre un único conjunto de datos y un único panel. Las demás opciones multiplican el mantenimiento o no filtran por usuario.",
+    "fuentes": [
+      "https://aws.amazon.com/quick/quicksight/faqs/"
+    ]
+  },
+  {
+    "id": "quick-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa de software quiere mostrar a sus clientes paneles analíticos dentro de su propia aplicación web, sin que estos tengan cuenta de AWS ni salgan de la aplicación. ¿Qué opción encaja?",
+    "opciones": [
+      "El análisis incrustado de Amazon QuickSight.",
+      "Un panel de Amazon CloudWatch compartido públicamente.",
+      "Informes de Amazon Athena exportados a PDF cada noche.",
+      "Un espacio de trabajo de Amazon Managed Grafana por cliente."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "QuickSight permite incrustar paneles en aplicaciones propias y servirlos a usuarios que no tienen cuenta de AWS, con precios por sesión o por capacidad. CloudWatch y Grafana están orientados a métricas operativas.",
+    "fuentes": [
+      "https://aws.amazon.com/quick/quicksight/faqs/"
+    ]
+  },
+  {
+    "id": "quick-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un equipo de negocio sin conocimientos de SQL quiere preguntar en lenguaje natural a sus datos corporativos y obtener gráficos y respuestas. ¿Qué servicio de AWS ofrece esa experiencia?",
+    "opciones": [
+      "Amazon Textract, con la función de consultas.",
+      "Amazon Translate, con terminología personalizada.",
+      "Amazon QuickSight (Amazon Quick), con sus funciones de IA generativa.",
+      "Amazon Transcribe, con un vocabulario personalizado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Amazon Quick incorpora preguntas en lenguaje natural y agentes de IA sobre los datos y paneles de la organización. Textract extrae texto de documentos, Translate traduce y Transcribe convierte voz en texto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/quick/latest/userguide/what-is.html"
+    ]
+  }
+]

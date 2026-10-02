@@ -1,0 +1,134 @@
+[
+  {
+    "id": "emr-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS ofrece un entorno gestionado para procesar grandes volúmenes de datos con marcos como Apache Spark y Hadoop?",
+    "opciones": [
+      "Amazon EMR.",
+      "Amazon RDS.",
+      "Amazon SQS.",
+      "AWS Snowball."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EMR aprovisiona y gestiona clústeres con Spark, Hadoop, Hive y otros marcos de código abierto de big data. RDS es una base de datos relacional, SQS una cola de mensajes y Snowball un dispositivo de transferencia de datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-what-is-emr.html"
+    ]
+  },
+  {
+    "id": "emr-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un clúster de Amazon EMR ejecuta cada noche un proceso de Spark que tolera reintentos. La empresa quiere reducir el coste sin arriesgar los datos intermedios guardados en HDFS. ¿Qué configuración es la adecuada?",
+    "opciones": [
+      "Todos los nodos, incluido el principal, en instancias Spot.",
+      "Nodos centrales en Spot y nodos de tarea bajo demanda.",
+      "Nodo principal y nodos centrales bajo demanda, y nodos de tarea en instancias Spot.",
+      "Un único nodo principal de gran tamaño bajo demanda."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los nodos de tarea solo aportan cómputo, así que perder uno por una interrupción de Spot no afecta a los datos. El nodo principal coordina el clúster y los centrales guardan HDFS, por lo que conviene mantenerlos bajo demanda.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-instance-group-configuration.html"
+    ]
+  },
+  {
+    "id": "emr-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa quiere que los resultados de sus trabajos de Amazon EMR se conserven aunque el clúster se termine al acabar. ¿Dónde debe guardar los datos?",
+    "opciones": [
+      "En HDFS, en los discos de los nodos centrales.",
+      "En Amazon S3, usando EMRFS.",
+      "En el almacén de instancia del nodo principal.",
+      "En la memoria de los nodos de tarea."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "EMRFS permite usar S3 como capa de datos, separando el almacenamiento del cómputo: los datos persisten con independencia del ciclo de vida del clúster. HDFS y el almacén de instancia desaparecen al terminar el clúster.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-overview-benefits.html"
+    ]
+  },
+  {
+    "id": "emr-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa quiere migrar a AWS su clúster local de Hadoop con cientos de trabajos de Spark y Hive, cambiando lo mínimo posible, y aprovechar para separar el almacenamiento del cómputo. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Reescribir los trabajos como funciones Lambda encadenadas con Step Functions.",
+      "Cargar todos los datos en Amazon Redshift y reescribir los trabajos en SQL.",
+      "Instalar Hadoop a mano en instancias de EC2 con volúmenes de EBS.",
+      "Amazon EMR con los datos en Amazon S3 mediante EMRFS."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "EMR ejecuta los mismos marcos de código abierto, por lo que los trabajos se trasladan con pocos cambios, y con los datos en S3 el clúster puede ser transitorio o cambiar de tamaño sin perder nada. Las otras opciones exigen reescribir o administrar Hadoop a mano.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-overview-benefits.html"
+    ]
+  },
+  {
+    "id": "emr-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo lanza trabajos de Spark de forma irregular, algunos días ninguno, y no quiere dimensionar ni administrar clústeres. ¿Qué opción de Amazon EMR encaja mejor?",
+    "opciones": [
+      "EMR Serverless.",
+      "EMR en EC2 con un clúster de larga duración.",
+      "EMR en Outposts.",
+      "EMR en EC2 con tres nodos principales."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EMR Serverless asigna trabajadores a cada trabajo cuando hacen falta y cobra solo por los recursos usados, sin clúster que gestionar. Un clúster de larga duración se paga aunque esté ocioso.",
+    "fuentes": [
+      "https://aws.amazon.com/emr/faqs/"
+    ]
+  },
+  {
+    "id": "emr-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Antes de entrenar un modelo, un equipo debe transformar varios terabytes de datos en bruto con Apache Spark. ¿Qué servicio de AWS está pensado para ejecutar ese procesamiento distribuido?",
+    "opciones": [
+      "Amazon Polly.",
+      "Amazon Lex.",
+      "Amazon EMR.",
+      "Amazon Rekognition."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "EMR ejecuta Spark y otros marcos de big data a gran escala, y es habitual para preparar datos de entrenamiento. Polly, Lex y Rekognition son servicios de IA ya entrenados para voz, conversación e imagen.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-what-is-emr.html"
+    ]
+  }
+]

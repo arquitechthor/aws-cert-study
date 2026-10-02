@@ -1,0 +1,156 @@
+[
+  {
+    "id": "inspector-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa quiere detectar automáticamente las vulnerabilidades de software conocidas en sus instancias de EC2. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "Amazon Macie.",
+      "AWS Shield.",
+      "Amazon Inspector.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Inspector analiza de forma continua las instancias, las imágenes de contenedor y las funciones en busca de vulnerabilidades conocidas y exposición de red. Macie busca datos sensibles en S3, Shield protege frente a DDoS y Artifact ofrece informes de cumplimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html"
+    ]
+  },
+  {
+    "id": "inspector-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Según el modelo de responsabilidad compartida, ¿por qué le corresponde al cliente usar algo como Amazon Inspector en sus instancias de EC2?",
+    "opciones": [
+      "Porque el cliente es responsable del sistema operativo invitado y del software que instala.",
+      "Porque AWS no protege físicamente los centros de datos donde están las instancias.",
+      "Porque el hipervisor de las instancias lo administra y lo parchea el cliente.",
+      "Porque AWS no ofrece ninguna opción de cifrado para los volúmenes de EC2."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En EC2, AWS se ocupa de la infraestructura y del hipervisor, y el cliente del sistema operativo, las aplicaciones y sus actualizaciones. Inspector ayuda al cliente a cumplir esa parte detectando lo que falta por parchear.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html"
+    ]
+  },
+  {
+    "id": "inspector-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un equipo despliega contenedores desde Amazon ECR y quiere saber si las imágenes contienen vulnerabilidades, tanto al subirlas como cuando aparezcan CVE nuevas. ¿Qué debe activar?",
+    "opciones": [
+      "Amazon GuardDuty con protección de S3.",
+      "El análisis de ECR de Amazon Inspector.",
+      "AWS WAF delante del registro.",
+      "Una regla de AWS Config sobre los repositorios."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con Inspector activado, los repositorios de ECR pasan al análisis mejorado: las imágenes se revisan al subirlas y se vuelven a analizar de forma continua cuando se publican vulnerabilidades nuevas. GuardDuty detecta amenazas y WAF filtra tráfico web.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/inspector/latest/user/scanning-resources.html"
+    ]
+  },
+  {
+    "id": "inspector-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Tras detectar con Amazon Inspector una vulnerabilidad crítica en decenas de instancias, el equipo quiere corregirla de forma automatizada. ¿Qué servicio aplica los parches?",
+    "opciones": [
+      "Amazon Inspector, con una regla de supresión.",
+      "AWS Trusted Advisor.",
+      "Amazon Macie.",
+      "Patch Manager, de AWS Systems Manager."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Inspector identifica y prioriza las vulnerabilidades, pero no modifica los recursos. La instalación de parches se automatiza con Patch Manager de Systems Manager. Una regla de supresión solo oculta el hallazgo.",
+    "fuentes": [
+      "https://aws.amazon.com/inspector/faqs/"
+    ]
+  },
+  {
+    "id": "inspector-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización con 150 cuentas quiere que el equipo de seguridad active y gestione Amazon Inspector en todas, incluidas las futuras, y vea los hallazgos de forma centralizada. ¿Cuál es el diseño adecuado?",
+    "opciones": [
+      "Activar Inspector a mano en cada cuenta y exportar los hallazgos a un bucket de S3.",
+      "Desplegar agentes de análisis propios en todas las cuentas con un StackSet de CloudFormation.",
+      "Designar un administrador delegado de Inspector en AWS Organizations y activar el alta automática.",
+      "Asociar a la raíz una SCP que obligue a cada cuenta a activar Inspector."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Inspector se integra con Organizations: el administrador delegado lo activa en las cuentas miembro, incluidas las nuevas, y centraliza los hallazgos. Una SCP limita permisos, pero no activa servicios ni agrega resultados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html"
+    ]
+  },
+  {
+    "id": "inspector-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Parte de la flota de EC2 de una empresa no tiene instalado el agente de Systems Manager y no se puede modificar a corto plazo. ¿Cómo puede Amazon Inspector buscar vulnerabilidades en esas instancias?",
+    "opciones": [
+      "No puede: sin el agente de Systems Manager no hay análisis posible.",
+      "Con el análisis sin agente, que examina instantáneas de los volúmenes de EBS.",
+      "Analizando los registros de flujo de la VPC de esas instancias.",
+      "Mediante un análisis de puertos lanzado desde internet contra cada instancia."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El modo híbrido de Inspector usa el agente de Systems Manager donde existe y, donde no, el análisis sin agente basado en instantáneas de EBS. Los registros de flujo y los análisis de puertos no revelan el software instalado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/inspector/latest/user/scanning-resources.html"
+    ]
+  },
+  {
+    "id": "inspector-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una aplicación de IA se despliega como contenedores y funciones Lambda. ¿Qué servicio ayuda a comprobar que esas piezas no incluyen bibliotecas con vulnerabilidades conocidas?",
+    "opciones": [
+      "Amazon SageMaker Clarify.",
+      "Amazon Bedrock Guardrails.",
+      "AWS Artifact.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Inspector analiza las imágenes de contenedor y las funciones Lambda en busca de vulnerabilidades en sus dependencias. Clarify evalúa sesgos, Guardrails filtra contenido de los modelos y Artifact ofrece informes de cumplimiento de AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/inspector/latest/user/scanning-resources.html"
+    ]
+  }
+]

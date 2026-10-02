@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Budgets — Apuntes AWS</title>
+<meta name="description" content="Presupuestos personalizados de coste, de uso y de cobertura de compromisos, con alertas sobre el gasto real o previsto y acciones automáticas al superarlos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/budgets.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Budgets — Apuntes AWS">
+<meta property="og:description" content="Presupuestos personalizados de coste, de uso y de cobertura de compromisos, con alertas sobre el gasto real o previsto y acciones automáticas al superarlos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/budgets.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/budgets.svg" alt="" width="56" height="56"><span>AWS Budgets</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Fija límites de gasto o uso y te avisa, o actúa, cuando se superan o se prevé superarlos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-financiera#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="18" height="18">Administración financiera en la nube <span class="cat-en">(Cloud Financial Management)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html" target="_blank" rel="noopener">Documentación de AWS Budgets ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Budgets permite definir <strong>presupuestos</strong> y recibir <strong>alertas</strong> cuando el gasto o
+        el uso superan, o <strong>se prevé que superen</strong>, el importe fijado. Es la herramienta para
+        <strong>controlar</strong> el gasto de forma proactiva: tú marcas el límite y AWS te avisa a tiempo, o incluso
+        actúa por ti. No impide gastar por sí sola, salvo que configures una acción.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Tipos de presupuesto:</strong>
+          <ul>
+            <li><strong>De coste:</strong> un importe en dinero.</li>
+            <li><strong>De uso:</strong> una cantidad de uso (horas de instancia, gigabytes).</li>
+            <li><strong>De utilización de instancias reservadas o de <a href="savings-plans.html">Savings Plans</a>:</strong> avisa si lo comprometido
+              se aprovecha por debajo de un umbral.</li>
+            <li><strong>De cobertura de instancias reservadas o de Savings Plans:</strong> avisa si la parte del uso
+              cubierta por compromisos baja de un umbral.</li>
+          </ul>
+        </li>
+        <li><strong>Periodo:</strong> diario, mensual, trimestral, anual o a medida (por ejemplo, la duración de un
+          proyecto). El importe puede ser fijo, planificado mes a mes o ajustarse solo según el histórico.</li>
+        <li><strong>Filtros:</strong> por servicio, cuenta de la organización, región, etiqueta de asignación de
+          costes, categoría de costes y otras dimensiones.</li>
+        <li><strong>Alertas:</strong> al llegar a un porcentaje o importe, sobre el gasto <strong>real</strong> o sobre
+          el <strong>previsto</strong>. Se envían por correo, a un tema de <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> o a un canal de chat.</li>
+        <li><strong>Acciones de presupuesto</strong> (<em>budget actions</em>): al saltar una alerta pueden, de forma
+          automática o tras una aprobación, <strong>aplicar una política de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a></strong>, <strong>asociar una
+          <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr></strong> o <strong>detener instancias</strong> concretas de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> o de <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>.</li>
+        <li><strong>Informes de presupuestos:</strong> un resumen periódico por correo del estado de los
+          presupuestos.</li>
+        <li><strong>Actualización:</strong> los datos se refrescan varias veces al día, no en tiempo real.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Aviso al llegar al 80 % del presupuesto mensual de la cuenta, y otro si la previsión supera el 100 %.</li>
+        <li>Un presupuesto por equipo o proyecto, filtrado por etiqueta o por cuenta.</li>
+        <li>Frenar un entorno de pruebas que se dispara: una acción que impide crear más recursos.</li>
+        <li>Vigilar que las instancias reservadas y los <a href="savings-plans.html">Savings Plans</a> se aprovechan.</li>
+        <li>Controlar el gasto de un experimento de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> (entrenamiento, inferencia) con un presupuesto por
+          etiqueta.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>analizar</strong> en qué se ha gastado: <a href="cost-explorer.html">Cost Explorer</a>.</li>
+        <li>Para el detalle línea a línea de la factura: <a href="../servicio.html?id=cost-and-usage-report">Cost and Usage Report</a>.</li>
+        <li>Para detectar picos anómalos sin fijar umbrales: la detección de anomalías de costes.</li>
+        <li>Para una alarma sencilla sobre el total facturado: una alarma de facturación de <a href="cloudwatch.html">CloudWatch</a> también
+          sirve, pero no prevé ni filtra tanto.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Herramienta</th></tr></thead>
+          <tbody>
+            <tr><td>Fijar un límite y recibir alertas (reales o previstas), con acciones</td><td>Budgets</td></tr>
+            <tr><td>Explorar y visualizar el gasto pasado y su previsión</td><td><a href="cost-explorer.html">Cost Explorer</a></td></tr>
+            <tr><td>Datos de facturación más detallados, en ficheros para analizar</td><td><a href="../servicio.html?id=cost-and-usage-report">Cost and Usage Report</a></td></tr>
+            <tr><td>Recomendar el tamaño adecuado de los recursos</td><td><a href="compute-optimizer.html">Compute Optimizer</a></td></tr>
+            <tr><td>Estimar el coste de una arquitectura antes de desplegarla</td><td>AWS Pricing Calculator</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Crear presupuestos y recibir alertas es <strong>gratuito</strong>. Los presupuestos con acciones tienen un
+        coste diario a partir del tercero (los dos primeros son gratuitos). Los informes de presupuestos se cobran por
+        informe enviado.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El acceso a los datos de facturación se controla con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>; el usuario raíz debe haber habilitado el acceso
+          de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> a la facturación.</li>
+        <li>En una organización, la cuenta de administración puede crear presupuestos para todas las cuentas; las
+          cuentas miembro, solo para sí mismas.</li>
+        <li>Las acciones se ejecutan con un rol de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> que Budgets asume, con permisos acotados a lo que debe
+          hacer.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Recibir una alerta cuando el gasto supere o vaya a superar un importe"</strong>: Budgets.</li>
+        <li><strong>"Visualizar y analizar el gasto"</strong>: <a href="cost-explorer.html">Cost Explorer</a>. Budgets alerta; Cost Explorer explica.</li>
+        <li><strong>"Impedir automáticamente que se creen más recursos al superar el presupuesto"</strong>: acción de
+          presupuesto con una política de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> o una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>.</li>
+        <li><strong>"Avisar si las instancias reservadas se usan poco"</strong>: presupuesto de utilización.</li>
+        <li><strong>La alerta puede basarse en la previsión</strong>, antes de que el gasto ocurra.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="budgets"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html" target="_blank" rel="noopener">Managing your costs with AWS Budgets</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/aws-cost-management/aws-budgets/pricing/" target="_blank" rel="noopener">AWS Budgets Pricing</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html" target="_blank" rel="noopener">Configuring AWS Budgets actions</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/aws-cost-management.html" target="_blank" rel="noopener">AWS Cost Management (AWS overview)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

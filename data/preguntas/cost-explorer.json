@@ -1,0 +1,134 @@
+[
+  {
+    "id": "cost-explorer-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "El responsable financiero quiere ver en gráficas cómo ha evolucionado el gasto de AWS en los últimos meses, desglosado por servicio. ¿Qué herramienta debe usar?",
+    "opciones": [
+      "AWS Cost Explorer.",
+      "AWS Budgets.",
+      "AWS Pricing Calculator.",
+      "AWS Health Dashboard."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cost Explorer visualiza el coste y el uso a lo largo del tiempo y permite agruparlo por servicio, cuenta o etiqueta. Budgets alerta sobre límites, Pricing Calculator estima costes futuros y Health Dashboard informa de incidencias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html"
+    ]
+  },
+  {
+    "id": "cost-explorer-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Cuál de estas funciones ofrece AWS Cost Explorer?",
+    "opciones": [
+      "Bloquear el lanzamiento de recursos al superar un importe.",
+      "Negociar descuentos por volumen con AWS.",
+      "Calcular el coste de una arquitectura que aún no existe.",
+      "Prever el gasto de los próximos meses a partir del histórico."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Cost Explorer incluye previsiones basadas en el uso pasado. Bloquear recursos es cosa de una acción de Budgets o de una SCP, y estimar una arquitectura nueva se hace con Pricing Calculator.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/aws-cloud-financial-management/update-cost-explorer-forecasting-api-improvement/"
+    ]
+  },
+  {
+    "id": "cost-explorer-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa con un uso de cómputo estable quiere saber qué compromiso de Savings Plans le conviene. ¿Dónde obtiene una recomendación basada en su consumo real?",
+    "opciones": [
+      "En AWS Trusted Advisor, categoría de tolerancia a fallos.",
+      "En las recomendaciones de Savings Plans de AWS Cost Explorer.",
+      "En AWS Config, con una regla gestionada.",
+      "En la consola de Service Quotas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Cost Explorer analiza el uso histórico y recomienda el compromiso de Savings Plans, con el ahorro estimado. Config evalúa configuraciones y Service Quotas gestiona límites.",
+    "fuentes": [
+      "https://aws.amazon.com/aws-cost-management/aws-cost-explorer/features/"
+    ]
+  },
+  {
+    "id": "cost-explorer-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un arquitecto quiere repartir el gasto por proyecto en Cost Explorer, pero la dimensión de la etiqueta Proyecto no aparece. ¿Qué falta?",
+    "opciones": [
+      "Crear un presupuesto por cada proyecto en AWS Budgets y esperar un mes.",
+      "Mover los recursos de cada proyecto a una región distinta.",
+      "Activar esa etiqueta como etiqueta de asignación de costes en la consola de facturación.",
+      "Contratar un plan de soporte de nivel Business para desbloquear esa dimensión."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las etiquetas solo se pueden usar para analizar costes después de activarlas como etiquetas de asignación de costes, y cuentan a partir de ese momento. No depende del plan de soporte ni de la región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html"
+    ]
+  },
+  {
+    "id": "cost-explorer-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un equipo de FinOps necesita analizar con SQL el gasto de toda la organización a nivel de recurso y de hora durante el último año. ¿Qué opción es más adecuada que la interfaz de Cost Explorer?",
+    "opciones": [
+      "AWS Cost and Usage Report entregado en S3 y consultado con Amazon Athena.",
+      "Un presupuesto de coste con granularidad diaria.",
+      "El panel de facturación de la cuenta de administración.",
+      "Las comprobaciones de costes de AWS Trusted Advisor."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cost and Usage Report es la fuente más detallada (por recurso y por hora) y se entrega en S3, donde se consulta con Athena. Cost Explorer ofrece vistas agregadas y su detalle por hora se limita a los últimos 14 días.",
+    "fuentes": [
+      "https://aws.amazon.com/aws-cost-management/aws-cost-explorer/pricing/"
+    ]
+  },
+  {
+    "id": "cost-explorer-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una empresa quiere saber cuánto le está costando cada mes el uso de modelos en Amazon Bedrock frente al resto de servicios. ¿Qué herramienta se lo muestra directamente?",
+    "opciones": [
+      "Amazon CloudWatch Logs, con un grupo de logs por modelo.",
+      "AWS CloudTrail, filtrando los eventos de Bedrock.",
+      "Amazon SageMaker Clarify, con un informe de sesgos.",
+      "AWS Cost Explorer, filtrando o agrupando por servicio."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Cost Explorer desglosa el coste por servicio y a lo largo del tiempo, lo que permite aislar el gasto de Bedrock. CloudTrail registra llamadas, CloudWatch Logs guarda logs y Clarify analiza sesgos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html"
+    ]
+  }
+]

@@ -1,0 +1,178 @@
+[
+  {
+    "id": "sagemaker-ai-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un equipo de ciencia de datos quiere construir, entrenar y desplegar sus propios modelos de aprendizaje automático sin administrar los servidores. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "Amazon Rekognition.",
+      "Amazon SageMaker AI.",
+      "Amazon Lex.",
+      "Amazon Athena."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "SageMaker AI es la plataforma gestionada para todo el ciclo de vida de los modelos propios. Rekognition y Lex son servicios de IA ya entrenados, y Athena es un motor de consultas SQL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Cuándo tiene sentido usar Amazon SageMaker AI en lugar de un servicio de IA preentrenado como Amazon Comprehend?",
+    "opciones": [
+      "Cuando se quiere el resultado con una sola llamada a la API y sin datos propios.",
+      "Cuando no hay nadie en el equipo con conocimientos de aprendizaje automático.",
+      "Cuando el problema es específico del negocio y exige un modelo entrenado con datos propios.",
+      "Cuando solo hay que traducir textos entre idiomas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los servicios preentrenados resuelven tareas habituales sin experiencia en ML. SageMaker AI se justifica cuando el problema es propio y se dispone de datos y de un equipo para entrenar un modelo a medida.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un modelo desplegado en Amazon SageMaker AI recibe ráfagas de peticiones unas pocas veces al día y el resto del tiempo está inactivo. ¿Qué opción de inferencia minimiza el coste?",
+    "opciones": [
+      "Inferencia sin servidor.",
+      "Un punto de enlace en tiempo real con dos instancias.",
+      "Un punto de enlace en tiempo real con una instancia con GPU.",
+      "Un clúster de EMR dedicado."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La inferencia sin servidor escala según el tráfico y no cobra capacidad en los periodos de inactividad, lo que encaja con un uso intermitente. Un punto de enlace en tiempo real se paga mientras existe, haya o no peticiones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/model-deploy-feature-matrix.html"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Cada noche hay que generar predicciones para diez millones de registros guardados en S3. Nadie espera la respuesta en línea. ¿Qué opción de Amazon SageMaker AI es la adecuada?",
+    "opciones": [
+      "Un punto de enlace en tiempo real invocado registro a registro.",
+      "Inferencia sin servidor con concurrencia aprovisionada.",
+      "Un cuaderno de Studio ejecutado a mano.",
+      "Transformación por lotes."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La transformación por lotes procesa un conjunto de datos completo desde S3 y deja los resultados en S3, sin mantener un punto de enlace. Es la opción indicada para inferencia sin conexión sobre grandes volúmenes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/model-deploy-feature-matrix.html"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un modelo de riesgo desplegado hace un año en Amazon SageMaker AI acierta cada vez menos porque el comportamiento de los clientes ha cambiado. ¿Qué capacidad habría detectado el problema a tiempo?",
+    "opciones": [
+      "SageMaker Ground Truth.",
+      "SageMaker Model Monitor.",
+      "SageMaker Canvas.",
+      "SageMaker JumpStart."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Model Monitor compara de forma continua los datos y las predicciones de producción con una referencia y avisa de la deriva de los datos o de la calidad del modelo. Ground Truth etiqueta datos, Canvas es la interfaz sin código y JumpStart un catálogo de modelos.",
+    "fuentes": [
+      "https://aws.amazon.com/sagemaker/ai/deploy/"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere automatizar el paso de sus modelos a producción: reentrenar, evaluar, registrar la versión y desplegar solo tras una aprobación. ¿Qué combinación de Amazon SageMaker AI lo cubre?",
+    "opciones": [
+      "Data Wrangler y Canvas.",
+      "Ground Truth y Clarify.",
+      "SageMaker Pipelines y Model Registry.",
+      "JumpStart y Studio."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Pipelines orquesta los pasos del flujo de aprendizaje automático y Model Registry cataloga las versiones del modelo con su estado de aprobación, lo que permite un despliegue controlado. Las demás herramientas sirven para preparar datos, etiquetar o explorar modelos.",
+    "fuentes": [
+      "https://aws.amazon.com/sagemaker/ai/deploy/"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Directrices para una IA responsable",
+    "enunciado": "Antes de poner en producción un modelo de concesión de créditos, una entidad debe comprobar que no discrimina por género y poder explicar cada decisión. ¿Qué herramienta de Amazon SageMaker AI lo permite?",
+    "opciones": [
+      "SageMaker Feature Store.",
+      "SageMaker Autopilot.",
+      "SageMaker Data Wrangler.",
+      "SageMaker Clarify."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Clarify detecta sesgos en los datos y en las predicciones y aporta explicabilidad, indicando qué características pesan más en cada resultado. Feature Store almacena características, Autopilot automatiza la creación de modelos y Data Wrangler prepara datos.",
+    "fuentes": [
+      "https://aws.amazon.com/sagemaker/ai/deploy/"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un equipo quiere probar un modelo fundacional de código abierto, desplegarlo en su propia cuenta y ajustarlo con sus datos, controlando la infraestructura. ¿Qué opción de AWS encaja?",
+    "opciones": [
+      "Amazon SageMaker JumpStart.",
+      "Amazon Polly.",
+      "Amazon Kendra.",
+      "AWS Glue DataBrew."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "JumpStart ofrece un catálogo de modelos preentrenados y fundacionales que se despliegan y se ajustan en puntos de enlace de SageMaker AI dentro de la cuenta. Si no se quiere gestionar infraestructura, la alternativa es Bedrock.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-jumpstart.html"
+    ]
+  }
+]

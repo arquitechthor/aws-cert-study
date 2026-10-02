@@ -1,0 +1,134 @@
+[
+  {
+    "id": "neptune-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una red social necesita almacenar las conexiones entre millones de usuarios y consultar rápidamente \"amigos de amigos\". ¿Qué servicio de base de datos de AWS está diseñado para ello?",
+    "opciones": [
+      "Amazon Neptune.",
+      "Amazon Redshift.",
+      "Amazon S3 Glacier.",
+      "Amazon ElastiCache."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Neptune es una base de datos de grafos, optimizada para almacenar y recorrer relaciones entre entidades. Redshift es un almacén de datos analítico, Glacier es almacenamiento de archivo y ElastiCache una caché en memoria.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/neptune/latest/userguide/intro.html"
+    ]
+  },
+  {
+    "id": "neptune-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿En qué caso es Amazon Neptune una elección más adecuada que una base de datos relacional?",
+    "opciones": [
+      "Cuando los datos son tablas de facturas con totales mensuales.",
+      "Cuando hay que archivar ficheros durante años.",
+      "Cuando se necesita una caché de sesiones en memoria.",
+      "Cuando lo importante son las relaciones entre los datos y hay que recorrerlas varios niveles."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los grafos destacan cuando las consultas siguen relaciones a varios saltos, algo que en una base de datos relacional requiere muchas uniones costosas. Para tablas con totales, una relacional es suficiente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/neptune/latest/userguide/intro.html"
+    ]
+  },
+  {
+    "id": "neptune-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un banco quiere detectar grupos de cuentas que comparten teléfonos, direcciones y dispositivos, siguiendo esas conexiones a varios niveles en tiempo casi real. ¿Qué base de datos encaja mejor?",
+    "opciones": [
+      "Amazon DynamoDB con índices secundarios globales.",
+      "Amazon Neptune.",
+      "Amazon RDS para MySQL con réplicas de lectura.",
+      "Amazon Timestream."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Encontrar anillos de entidades conectadas por atributos comunes es un problema de recorrido de grafos, para lo que está optimizado Neptune. En DynamoDB o en una base de datos relacional exigiría muchas consultas o uniones encadenadas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/neptune/latest/userguide/intro.html"
+    ]
+  },
+  {
+    "id": "neptune-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un clúster de Amazon Neptune debe seguir atendiendo consultas si falla la AZ de la instancia principal. ¿Qué configuración lo permite?",
+    "opciones": [
+      "Una instantánea manual diaria guardada en S3, para restaurar el clúster.",
+      "Una instancia principal de mayor tamaño en la misma AZ.",
+      "Al menos una réplica de lectura en otra AZ, que se promociona automáticamente.",
+      "Un volumen de EBS adicional asociado a la instancia en la misma AZ."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los datos ya están replicados en tres AZ en el volumen del clúster; para que el cómputo también sobreviva hace falta una réplica en otra AZ, a la que Neptune conmuta automáticamente. Una instantánea solo permite restaurar, con tiempo de inactividad.",
+    "fuentes": [
+      "https://aws.amazon.com/neptune/faqs/"
+    ]
+  },
+  {
+    "id": "neptune-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa tiene un grafo con miles de millones de relaciones y quiere ejecutar algoritmos como la detección de comunidades y el cálculo de centralidad en segundos. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Neptune Analytics, el motor analítico en memoria.",
+      "Más réplicas de lectura en Neptune Database.",
+      "Exportar el grafo a DynamoDB.",
+      "Un clúster de Amazon ElastiCache delante del grafo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Neptune Analytics carga el grafo en memoria y ofrece algoritmos de grafos optimizados para análisis a gran escala, mientras que Neptune Database está orientado a cargas transaccionales. Las réplicas escalan lecturas, no aceleran algoritmos globales.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/database/the-role-of-vector-datastores-in-generative-ai-applications/"
+    ]
+  },
+  {
+    "id": "neptune-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una aplicación de IA generativa necesita que el modelo razone sobre las relaciones explícitas entre productos, proveedores y documentos, combinándolas con búsqueda por similitud. ¿Qué enfoque de AWS encaja?",
+    "opciones": [
+      "Amazon Polly con voces neuronales para leer los resultados.",
+      "Amazon Rekognition Custom Labels entrenado con imágenes de productos.",
+      "Amazon Translate con terminología personalizada de proveedores.",
+      "GraphRAG con Amazon Neptune Analytics, que une grafo y búsqueda vectorial."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "GraphRAG enriquece la generación aumentada por recuperación con las relaciones de un grafo de conocimiento; Neptune Analytics combina recorridos de grafo y búsqueda vectorial en la misma consulta. Las demás opciones son servicios de voz, imagen y traducción.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vector-databases/"
+    ]
+  }
+]

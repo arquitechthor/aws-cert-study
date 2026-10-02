@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Polly — Apuntes AWS</title>
+<meta name="description" content="Servicio de conversión de texto en voz con decenas de idiomas y voces (estándar, neuronales, de formato largo y generativas), con control mediante SSML y lexicones. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/polly.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Polly — Apuntes AWS">
+<meta property="og:description" content="Servicio de conversión de texto en voz con decenas de idiomas y voces (estándar, neuronales, de formato largo y generativas), con control mediante SSML y lexicones.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/polly.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/polly.svg" alt="" width="56" height="56"><span>Amazon Polly</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Convierte texto en voz natural en muchos idiomas para narrar o dar voz a apps</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/polly/" target="_blank" rel="noopener">Documentación de Amazon Polly ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Polly convierte <strong>texto en voz</strong> con sonido natural. Le envías un texto y devuelve el audio,
+        en decenas de idiomas y con muchas voces a elegir. Sirve para dar voz a aplicaciones, narrar contenidos o
+        mejorar la accesibilidad. El audio generado es tuyo: se puede guardar y reproducir tantas veces como quieras
+        sin volver a pagar.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Motores de voz:</strong> <strong>estándar</strong>, <strong>neuronal</strong> (más natural),
+          <strong>de formato largo</strong> (para narrar textos extensos) y <strong>generativo</strong> (el más
+          expresivo). Cada voz está disponible en ciertos motores.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="SSML" data-en="Speech Synthesis Markup Language" data-es="marcas para controlar cómo se pronuncia un texto" tabindex="0">SSML<span class="sigla-exp"> (Speech Synthesis Markup Language: marcas para controlar cómo se pronuncia un texto)</span></abbr>:</strong> lenguaje de marcas para controlar cómo se dice el texto: pausas, énfasis, velocidad,
+          tono, pronunciación de siglas o fechas.</li>
+        <li><strong>Lexicones de pronunciación:</strong> diccionarios propios para que una palabra o sigla se pronuncie
+          de una forma concreta (nombres de marca, tecnicismos).</li>
+        <li><strong>Marcas de voz</strong> (<em>speech marks</em>): metadatos que indican cuándo empieza cada palabra o
+          frase, para sincronizar el audio con subtítulos o con los labios de un avatar.</li>
+        <li><strong>Síntesis en tiempo real:</strong> devuelve el audio al momento, para textos de hasta unos miles de
+          caracteres.</li>
+        <li><strong>Síntesis asíncrona:</strong> para textos largos; el audio se deja en un bucket de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> y se puede
+          avisar por <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> al terminar.</li>
+        <li><strong>Formatos de salida:</strong> MP3, Ogg y PCM.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Versión en audio de artículos, noticias y libros.</li>
+        <li>Accesibilidad para personas con dificultades de visión o de lectura.</li>
+        <li>La voz de un asistente o de la respuesta telefónica (con <a href="lex.html">Lex</a> y <a href="../servicio.html?id=connect">Amazon Connect</a>).</li>
+        <li>Locuciones de formación en línea y avisos en aplicaciones o dispositivos.</li>
+        <li>Con <a href="translate.html">Translate</a>: ofrecer el mismo contenido hablado en varios idiomas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para lo contrario, convertir <strong>voz en texto</strong>: <a href="transcribe.html">Transcribe</a>.</li>
+        <li>Para entender lo que dice el usuario y mantener un diálogo: <a href="lex.html">Lex</a>.</li>
+        <li>Para traducir el texto antes de leerlo: <a href="translate.html">Translate</a>.</li>
+        <li>Para generar el contenido que se va a leer: un modelo de <a href="bedrock.html">Bedrock</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Dirección</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Texto → voz</td><td>Polly</td></tr>
+            <tr><td>Voz → texto</td><td><a href="transcribe.html">Transcribe</a></td></tr>
+            <tr><td>Texto → texto en otro idioma</td><td><a href="translate.html">Translate</a></td></tr>
+            <tr><td>Conversación (entender y responder)</td><td><a href="lex.html">Lex</a></td></tr>
+            <tr><td>Texto → significado (sentimiento, entidades)</td><td><a href="comprehend.html">Comprehend</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>número de caracteres</strong> convertidos, con una tarifa distinta por motor (el estándar
+        es el más barato). Guardar y reproducir el audio ya generado no cuesta nada más, salvo el almacenamiento en
+        <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Acceso controlado con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; las llamadas van cifradas con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
+        <li>La salida asíncrona se guarda en tu bucket, que puede tener cifrado.</li>
+        <li>Servicio gestionado y regional que escala solo.</li>
+        <li>Guardar en caché el audio de textos repetidos reduce el coste y la latencia.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Texto a voz"</strong>, "leer en voz alta" o "narración": Polly.</li>
+        <li><strong>"Voz a texto"</strong>: <a href="transcribe.html">Transcribe</a>. Es la confusión más habitual.</li>
+        <li><strong>"Controlar pausas, énfasis o cómo se pronuncia una sigla"</strong>: <abbr class="sigla" data-s="SSML" data-en="Speech Synthesis Markup Language" data-es="marcas para controlar cómo se pronuncia un texto" tabindex="0">SSML</abbr>.</li>
+        <li><strong>"Una palabra propia de la empresa se pronuncia mal"</strong>: lexicón de pronunciación.</li>
+        <li><strong>"Sincronizar el audio con el texto resaltado"</strong>: marcas de voz.</li>
+        <li><strong>"Convertir un documento muy largo"</strong>: síntesis asíncrona con salida en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="polly"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/polly/latest/dg/what-is.html" target="_blank" rel="noopener">What Is Amazon Polly?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/polly/latest/dg/asynchronous.html" target="_blank" rel="noopener">Long audio files (asynchronous synthesis)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/polly/latest/dg/ssml.html" target="_blank" rel="noopener">Generating speech from SSML documents</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html" target="_blank" rel="noopener">Managing lexicons</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

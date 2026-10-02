@@ -1,0 +1,112 @@
+[
+  {
+    "id": "lake-formation-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Los analistas consultan con Amazon Athena una tabla de clientes guardada en S3. La empresa quiere que no puedan ver las columnas con datos personales, sin duplicar los datos. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Una política de bucket que deniegue el acceso a esas columnas.",
+      "Una copia de la tabla sin esas columnas en otro bucket.",
+      "Permisos a nivel de columna concedidos con AWS Lake Formation.",
+      "Cifrar las columnas con una clave de KMS distinta."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Lake Formation concede permisos por columna sobre las tablas del Data Catalog y Athena los aplica al consultar. Las políticas de bucket actúan sobre objetos, no sobre columnas, y duplicar los datos añade coste y mantenimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lake-formation/latest/dg/working-with-services.html"
+    ]
+  },
+  {
+    "id": "lake-formation-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Tras registrar una ubicación de S3 en AWS Lake Formation, ¿cómo acceden a los datos los usuarios autorizados cuando consultan con un motor integrado?",
+    "opciones": [
+      "Con credenciales temporales que Lake Formation entrega al motor de consulta.",
+      "Con las claves de acceso del administrador del lago de datos.",
+      "Con una URL prefirmada por cada objeto consultado.",
+      "Con permisos directos de lectura sobre el bucket en su política de IAM."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Lake Formation comprueba los permisos y entrega credenciales temporales al motor integrado (Athena, EMR, Glue, Redshift Spectrum) para leer de S3. Así los usuarios no necesitan, ni deben tener, permisos directos sobre el bucket.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lake-formation/latest/dg/how-it-works.html"
+    ]
+  },
+  {
+    "id": "lake-formation-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa con una arquitectura de malla de datos quiere que las cuentas productoras compartan tablas con las cuentas consumidoras de varias OU, sin copiar los datos y con un gobierno central. ¿Qué debe usar?",
+    "opciones": [
+      "Replicación entre cuentas de los buckets de S3.",
+      "El uso compartido entre cuentas de AWS Lake Formation.",
+      "Un punto de enlace de VPC de S3 por cada cuenta consumidora.",
+      "Una exportación nocturna de las tablas a cada cuenta."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Lake Formation comparte bases de datos y tablas del catálogo con otras cuentas, OU o toda la organización, y los consumidores consultan los datos en su ubicación original. Replicar o exportar duplica los datos y complica el gobierno.",
+    "fuentes": [
+      "https://repost.aws/knowledge-center/glue-lake-formation-cross-account"
+    ]
+  },
+  {
+    "id": "lake-formation-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "El lago de datos de una empresa tiene miles de tablas y cientos de usuarios. Conceder permisos tabla a tabla se ha vuelto inmanejable. ¿Qué función de AWS Lake Formation resuelve el problema?",
+    "opciones": [
+      "Los filtros de datos a nivel de celda.",
+      "El modo de acceso híbrido.",
+      "El registro de ubicaciones de S3.",
+      "El control de acceso basado en etiquetas LF."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con las etiquetas LF se clasifican los recursos del catálogo por atributos y se conceden permisos por etiqueta, de modo que las tablas nuevas con esa etiqueta quedan cubiertas automáticamente. Los filtros de datos restringen filas y celdas, pero no simplifican la gestión a escala.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lake-formation/latest/dg/managing-dl-tutorial.html"
+    ]
+  },
+  {
+    "id": "lake-formation-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una empresa quiere que el equipo que entrena modelos solo pueda leer del lago de datos las tablas y columnas aprobadas para ese uso, y poder auditar los accesos. ¿Qué servicio aporta ese gobierno de los datos?",
+    "opciones": [
+      "Amazon SageMaker Model Monitor.",
+      "Amazon Bedrock Guardrails.",
+      "AWS Lake Formation.",
+      "Amazon Kendra."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Lake Formation centraliza los permisos por tabla, columna y fila sobre los datos de S3 y deja traza de los accesos en CloudTrail. Model Monitor vigila modelos desplegados, Guardrails filtra entradas y salidas de modelos y Kendra es un buscador.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lake-formation/latest/dg/what-is-lake-formation.html"
+    ]
+  }
+]

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Translate — Apuntes AWS</title>
+<meta name="description" content="Servicio de traducción automática neuronal entre decenas de idiomas, en tiempo real o por lotes, con terminología personalizada y ajuste del estilo. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/translate.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Translate — Apuntes AWS">
+<meta property="og:description" content="Servicio de traducción automática neuronal entre decenas de idiomas, en tiempo real o por lotes, con terminología personalizada y ajuste del estilo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/translate.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/translate.svg" alt="" width="56" height="56"><span>Amazon Translate</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Traduce textos entre decenas de idiomas con traducción automática neuronal</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/translate/" target="_blank" rel="noopener">Documentación de Amazon Translate ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Translate es un servicio de <strong>traducción automática neuronal</strong>: traduce texto de un idioma
+        a otro con modelos de aprendizaje profundo, que tienen en cuenta el contexto de la frase completa. Cubre
+        decenas de idiomas, responde en tiempo real y permite adaptar las traducciones al vocabulario y al estilo de
+        tu empresa.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Traducción en tiempo real:</strong> una llamada a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> devuelve al momento la traducción de un
+          texto o de un documento.</li>
+        <li><strong>Traducción por lotes:</strong> trabajos asíncronos sobre conjuntos de documentos guardados en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>
+          (texto, <abbr class="sigla sigla-1" data-s="HTML" data-en="HyperText Markup Language" data-es="lenguaje de las páginas web" tabindex="0">HTML<span class="sigla-exp"> (HyperText Markup Language: lenguaje de las páginas web)</span></abbr>, Word, Excel, PowerPoint…), conservando el formato.</li>
+        <li><strong>Detección automática del idioma de origen:</strong> si no lo indicas, lo detecta (con
+          <a href="comprehend.html">Comprehend</a>).</li>
+        <li><strong>Terminología personalizada:</strong> un glosario que fija cómo se traducen ciertos términos:
+          nombres de marca, de producto, tecnicismos.</li>
+        <li><strong>Datos paralelos</strong> (<em>Active Custom Translation</em>): ejemplos de traducciones tuyas para
+          que el resultado imite tu <strong>estilo y tono</strong>, sin entrenar un modelo.</li>
+        <li><strong>Formalidad:</strong> registro formal o informal en los idiomas que lo distinguen.</li>
+        <li><strong>Enmascarado de palabras malsonantes</strong> y <strong>brevedad</strong> (traducciones más
+          cortas, útil para subtítulos).</li>
+        <li><strong>Etiquetas de no traducir:</strong> marcan fragmentos que deben quedar tal cual.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Localizar sitios web, aplicaciones y catálogos de productos.</li>
+        <li>Chat y soporte multilingüe en tiempo real.</li>
+        <li>Traducir contenido generado por los usuarios: reseñas, comentarios, foros.</li>
+        <li>Analizar textos en muchos idiomas: se traducen a uno y después se analizan con <a href="comprehend.html">Comprehend</a>.</li>
+        <li>Subtítulos en otros idiomas: <a href="transcribe.html">Transcribe</a>, Translate y, si se quiere doblaje, <a href="polly.html">Polly</a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si la entrada es <strong>audio</strong>: antes <a href="transcribe.html">Transcribe</a>. Si es un <strong>documento escaneado</strong>:
+          antes <a href="textract.html">Textract</a>.</li>
+        <li>Para analizar el sentimiento o las entidades: <a href="comprehend.html">Comprehend</a>.</li>
+        <li>Para textos legales, médicos o de marca donde un error tiene consecuencias: úsalo como borrador, con
+          revisión humana.</li>
+        <li>Para reescribir, resumir o adaptar creativamente un texto: un modelo de <a href="bedrock.html">Bedrock</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Traducir texto entre idiomas</td><td>Translate</td></tr>
+            <tr><td>Detectar el idioma, el sentimiento o las entidades</td><td><a href="comprehend.html">Comprehend</a></td></tr>
+            <tr><td>Pasar audio a texto antes de traducir</td><td><a href="transcribe.html">Transcribe</a></td></tr>
+            <tr><td>Decir en voz alta la traducción</td><td><a href="polly.html">Polly</a></td></tr>
+            <tr><td>Generar o reescribir contenido</td><td><a href="bedrock.html">Bedrock</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>número de caracteres</strong> traducidos. La traducción con datos paralelos y la de
+        documentos tienen tarifas propias, más altas que la estándar.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; los trabajos por lotes usan un rol para leer y escribir en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li>Cifrado en tránsito y, en los trabajos por lotes, cifrado de la salida con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>Acceso privado desde una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> mediante <a href="privatelink.html">PrivateLink</a>.</li>
+        <li>Las terminologías y los datos paralelos se guardan cifrados y son privados de tu cuenta.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Traducir"</strong>, "localizar el contenido" o "soporte multilingüe": Translate.</li>
+        <li><strong>"Los nombres de marca no deben traducirse" o "deben traducirse siempre igual"</strong>:
+          terminología personalizada.</li>
+        <li><strong>"Que la traducción tenga el estilo de nuestras traducciones anteriores"</strong>: datos
+          paralelos.</li>
+        <li><strong>"Miles de documentos de una vez"</strong>: traducción por lotes desde <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li><strong>"Subtítulos traducidos de un vídeo"</strong>: <a href="transcribe.html">Transcribe</a> y después Translate.</li>
+        <li><strong>Translate no analiza ni resume:</strong> solo traduce.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="translate"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/translate/latest/dg/what-is.html" target="_blank" rel="noopener">What is Amazon Translate?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/translate/latest/dg/how-it-works.html" target="_blank" rel="noopener">How Amazon Translate works</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/translate/latest/dg/customizing-translations.html" target="_blank" rel="noopener">Customizing your translations with Amazon Translate</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/translate/latest/dg/sync-console.html" target="_blank" rel="noopener">Real-time translation using the console</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

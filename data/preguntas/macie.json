@@ -1,0 +1,156 @@
+[
+  {
+    "id": "macie-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa quiere saber cuáles de sus buckets de S3 contienen datos personales de clientes. ¿Qué servicio de AWS lo descubre automáticamente?",
+    "opciones": [
+      "Amazon Macie.",
+      "Amazon Inspector.",
+      "AWS Shield.",
+      "AWS Trusted Advisor."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Macie descubre y clasifica datos sensibles en S3 mediante aprendizaje automático y búsqueda de patrones. Inspector busca vulnerabilidades de software, Shield protege frente a DDoS y Trusted Advisor da recomendaciones generales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html"
+    ]
+  },
+  {
+    "id": "macie-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué información proporciona Amazon Macie además de localizar datos sensibles?",
+    "opciones": [
+      "El listado de vulnerabilidades de software de las instancias de EC2.",
+      "El historial completo de llamadas a la API de la cuenta.",
+      "Los informes de auditoría SOC e ISO de la infraestructura de AWS.",
+      "Una evaluación de los buckets: si son públicos, si están cifrados o si se comparten."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Macie mantiene un inventario de los buckets y avisa cuando alguno es accesible públicamente, no está cifrado o se comparte fuera de la organización. Las otras opciones corresponden a Inspector, CloudTrail y Artifact.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/macie/latest/user/findings-types.html"
+    ]
+  },
+  {
+    "id": "macie-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "El equipo de seguridad debe recibir un aviso inmediato cuando Amazon Macie encuentre números de tarjeta en un objeto de S3. ¿Qué diseño lo consigue con servicios gestionados?",
+    "opciones": [
+      "Una función Lambda que lea todos los objetos del bucket cada minuto.",
+      "Una regla de Amazon EventBridge para los hallazgos de Macie que publique en un tema de SNS.",
+      "Una alarma de CloudWatch sobre el tamaño del bucket.",
+      "Un informe semanal de AWS Trusted Advisor."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Macie publica sus hallazgos en EventBridge, donde una regla puede enviarlos a SNS, a una función Lambda o a una herramienta de incidencias. Leer todos los objetos con código propio duplica lo que ya hace el servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/macie/latest/user/findings-types.html"
+    ]
+  },
+  {
+    "id": "macie-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa identifica a sus empleados con un código interno de formato propio y quiere encontrar los ficheros de S3 que lo contienen. ¿Qué función de Amazon Macie debe usar?",
+    "opciones": [
+      "Una lista de permitidos con el formato del código.",
+      "Los identificadores de datos gestionados para tarjetas de crédito.",
+      "Un identificador de datos personalizado con una expresión regular y palabras clave.",
+      "El bloqueo de acceso público de S3."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los identificadores personalizados permiten definir con una expresión regular, y palabras clave cercanas, tipos de datos propios de la organización. Los gestionados cubren tipos estándar, y una lista de permitidos sirve para ignorar texto, no para detectarlo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/macie/latest/user/custom-data-identifiers.html"
+    ]
+  },
+  {
+    "id": "macie-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización tiene miles de buckets con petabytes de datos y quiere una visión continua de dónde hay datos sensibles sin pagar el análisis completo de todo. ¿Qué enfoque es el adecuado?",
+    "opciones": [
+      "El descubrimiento automatizado de Macie en toda la organización, con trabajos dirigidos donde haga falta.",
+      "Un trabajo de descubrimiento diario sobre todos los objetos de todos los buckets.",
+      "Copiar todos los datos a un único bucket central y analizarlo una sola vez.",
+      "Revisar manualmente una muestra de buckets cada trimestre y documentarlo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El descubrimiento automatizado muestrea objetos de forma continua en todos los buckets y construye un mapa de sensibilidad a un coste contenido; los trabajos completos se reservan para los buckets que lo requieren. Analizarlo todo a diario dispara el coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/macie/latest/user/discovery-asdd.html"
+    ]
+  },
+  {
+    "id": "macie-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Amazon Macie no consigue analizar los objetos de un bucket que están cifrados con una clave de KMS gestionada por el cliente. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Macie no admite ningún objeto cifrado, sea cual sea el tipo de clave.",
+      "La política de la clave de KMS no permite al rol de servicio de Macie usarla para descifrar.",
+      "El bucket tiene activado el control de versiones y Macie solo lee la versión actual.",
+      "Los objetos están en la clase S3 Standard-IA, que Macie no analiza."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Para leer objetos cifrados con una clave gestionada por el cliente, el rol de Macie necesita permiso de descifrado en la política de esa clave. Macie sí admite objetos cifrados, y el control de versiones o la clase Standard-IA no lo impiden.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html"
+    ]
+  },
+  {
+    "id": "macie-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Antes de usar un bucket de S3 como origen de datos para entrenar un modelo o para una base de conocimiento, una empresa quiere asegurarse de que no contiene datos personales. ¿Qué servicio debe usar?",
+    "opciones": [
+      "Amazon SageMaker Model Monitor.",
+      "Amazon Polly.",
+      "Amazon Inspector.",
+      "Amazon Macie."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Macie analiza los objetos de S3 y señala los que contienen datos personales u otra información sensible, lo que permite limpiarlos o excluirlos antes de usarlos. Model Monitor vigila modelos ya desplegados e Inspector busca vulnerabilidades de software.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html"
+    ]
+  }
+]

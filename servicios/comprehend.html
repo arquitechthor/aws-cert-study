@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Comprehend — Apuntes AWS</title>
+<meta name="description" content="Servicio de procesamiento del lenguaje natural que extrae de un texto el sentimiento, las entidades, las frases clave, el idioma y los datos personales, sin entrenar modelos propios. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/comprehend.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Comprehend — Apuntes AWS">
+<meta property="og:description" content="Servicio de procesamiento del lenguaje natural que extrae de un texto el sentimiento, las entidades, las frases clave, el idioma y los datos personales, sin entrenar modelos propios.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/comprehend.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/comprehend.svg" alt="" width="56" height="56"><span>Amazon Comprehend</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Analiza textos para sacar sentimiento, entidades, idioma y temas con <abbr class="sigla sigla-1" data-s="NLP" data-en="Natural Language Processing" data-es="procesamiento del lenguaje natural" tabindex="0">NLP<span class="sigla-exp"> (Natural Language Processing: procesamiento del lenguaje natural)</span></abbr> gestionado</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/comprehend/" target="_blank" rel="noopener">Documentación de Amazon Comprehend ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> tres funciones de Comprehend ya <strong>no están
+        disponibles para clientes nuevos</strong>: el <strong>modelado de temas</strong>, la <strong>detección de
+        eventos</strong> y la <strong>clasificación de seguridad de prompts</strong>. AWS remite a los modelos de
+        <a href="bedrock.html">Amazon Bedrock</a> para identificar temas y eventos, y a Bedrock Guardrails para la seguridad de los prompts. El
+        resto del servicio no cambia.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Comprehend es un servicio de <strong>procesamiento del lenguaje natural</strong>: recibe
+        <strong>texto</strong> y devuelve información sobre él. Usa modelos ya entrenados por AWS, así que no hace falta
+        experiencia en aprendizaje automático. Sirve para entender grandes volúmenes de texto no estructurado: opiniones
+        de clientes, correos, tiques de soporte, documentos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Análisis integrados:</strong>
+          <ul>
+            <li><strong>Sentimiento:</strong> positivo, negativo, neutro o mixto. El <strong>sentimiento
+              dirigido</strong> lo asigna a cada entidad mencionada.</li>
+            <li><strong>Entidades:</strong> personas, lugares, organizaciones, fechas, cantidades.</li>
+            <li><strong>Frases clave:</strong> los conceptos principales del texto.</li>
+            <li><strong>Idioma dominante:</strong> en qué idioma está escrito.</li>
+            <li><strong>Sintaxis:</strong> la función gramatical de cada palabra.</li>
+            <li><strong><abbr class="sigla sigla-1" data-s="PII" data-en="Personally Identifiable Information" data-es="datos personales identificables" tabindex="0">PII<span class="sigla-exp"> (Personally Identifiable Information: datos personales identificables)</span></abbr>:</strong> detecta datos personales (nombres, direcciones, números de tarjeta) y permite
+              <strong>enmascararlos</strong>.</li>
+          </ul>
+        </li>
+        <li><strong>Modelos personalizados:</strong>
+          <ul>
+            <li><strong>Clasificación personalizada:</strong> entrenas un clasificador con tus categorías (por
+              ejemplo, tipo de incidencia).</li>
+            <li><strong>Reconocimiento de entidades personalizado:</strong> para términos propios del negocio (códigos
+              de producto, números de póliza).</li>
+          </ul>
+        </li>
+        <li><strong>En tiempo real o por lotes:</strong> llamadas síncronas para textos sueltos, o trabajos asíncronos
+          sobre documentos guardados en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
+        <li><strong>Comprehend Medical:</strong> servicio hermano especializado en texto clínico: extrae diagnósticos,
+          medicación y datos de salud protegidos.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Medir la opinión de los clientes en reseñas, encuestas y redes sociales.</li>
+        <li>Clasificar y encaminar tiques de soporte o correos entrantes.</li>
+        <li>Enmascarar datos personales antes de guardar o analizar documentos.</li>
+        <li>Indexar documentos por sus entidades para mejorar la búsqueda.</li>
+        <li>Cadena habitual: <a href="transcribe.html">Transcribe</a> convierte las llamadas en texto y Comprehend analiza su sentimiento.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si la entrada es <strong>audio</strong>: primero <a href="transcribe.html">Transcribe</a>. Si es una <strong>imagen o un
+          escaneado</strong>: primero <a href="textract.html">Textract</a>.</li>
+        <li>Para <strong>traducir</strong>: <a href="translate.html">Translate</a>. Para un <strong>chatbot</strong>: <a href="lex.html">Lex</a>.</li>
+        <li>Para <strong>generar</strong> o resumir texto, o razonar sobre él: un modelo fundacional en <a href="bedrock.html">Bedrock</a>.</li>
+        <li>Para buscar datos personales en <strong>buckets de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></strong> a gran escala: <a href="macie.html">Macie</a>.</li>
+        <li>Para un modelo de lenguaje totalmente a medida: <a href="sagemaker-ai.html">SageMaker AI</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Entrada</th><th>Salida</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Texto</td><td>Sentimiento, entidades, <abbr class="sigla" data-s="PII" data-en="Personally Identifiable Information" data-es="datos personales identificables" tabindex="0">PII</abbr>, clasificación</td><td>Comprehend</td></tr>
+            <tr><td>Audio</td><td>Texto</td><td><a href="transcribe.html">Transcribe</a></td></tr>
+            <tr><td>Documento escaneado</td><td>Texto, tablas y formularios</td><td><a href="textract.html">Textract</a></td></tr>
+            <tr><td>Texto</td><td>Texto en otro idioma</td><td><a href="translate.html">Translate</a></td></tr>
+            <tr><td>Texto</td><td>Voz</td><td><a href="polly.html">Polly</a></td></tr>
+            <tr><td>Instrucción</td><td>Texto generado</td><td><a href="bedrock.html">Bedrock</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por la <strong>cantidad de texto analizado</strong> (en unidades de 100 caracteres), según el tipo de
+        análisis. Los modelos personalizados añaden el coste del <strong>entrenamiento</strong> y, para inferencia en
+        tiempo real, el de los <strong>puntos de enlace</strong> aprovisionados.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Acceso controlado con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; los trabajos por lotes usan un rol para leer y escribir en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li>Cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> de los resultados y de los volúmenes usados en los trabajos.</li>
+        <li>Puede usarse de forma privada desde una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> mediante <a href="privatelink.html">PrivateLink</a>.</li>
+        <li>La detección y el enmascarado de <abbr class="sigla" data-s="PII" data-en="Personally Identifiable Information" data-es="datos personales identificables" tabindex="0">PII</abbr> ayudan a cumplir normas de protección de datos.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Análisis de sentimiento"</strong>, "extraer entidades" o "frases clave" de un
+          <em>texto</em>: Comprehend.</li>
+        <li><strong>"Detectar y ocultar datos personales en textos"</strong>: detección de <abbr class="sigla" data-s="PII" data-en="Personally Identifiable Information" data-es="datos personales identificables" tabindex="0">PII</abbr> de Comprehend.</li>
+        <li><strong>"Analizar el sentimiento de las llamadas"</strong>: <a href="transcribe.html">Transcribe</a> y después Comprehend.</li>
+        <li><strong>"Clasificar documentos en categorías propias sin ser experto en <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>"</strong>: clasificación
+          personalizada.</li>
+        <li><strong>"Historias clínicas"</strong>: Comprehend Medical.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="comprehend"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html" target="_blank" rel="noopener">What is Amazon Comprehend?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/comprehend/latest/dg/comprehend-availability-change.html" target="_blank" rel="noopener">Amazon Comprehend feature availability change</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/comprehend/latest/dg/get-started-console.html" target="_blank" rel="noopener">Analysis using the Amazon Comprehend console</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/comprehend/latest/dg/pii.html" target="_blank" rel="noopener">Personally identifiable information (PII)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

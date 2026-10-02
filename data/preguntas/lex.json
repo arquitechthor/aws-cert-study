@@ -1,0 +1,134 @@
+[
+  {
+    "id": "lex-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere añadir a su web un asistente con el que los clientes puedan consultar el estado de sus pedidos escribiendo o hablando con naturalidad. ¿Qué servicio de AWS está pensado para ello?",
+    "opciones": [
+      "Amazon Comprehend.",
+      "Amazon Lex.",
+      "Amazon Textract.",
+      "Amazon Rekognition."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Lex sirve para crear chatbots y asistentes de voz que entienden el lenguaje natural. Comprehend analiza texto ya escrito, Textract extrae texto de documentos y Rekognition analiza imágenes y vídeo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lexv2/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "lex-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué dos capacidades combina Amazon Lex para mantener una conversación por voz?",
+    "opciones": [
+      "Traducción automática neuronal y síntesis de voz.",
+      "Detección de objetos en imágenes y reconocimiento facial.",
+      "Reconocimiento automático del habla y comprensión del lenguaje natural.",
+      "Extracción de tablas de documentos y análisis de sentimiento."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Lex convierte la voz en texto y después interpreta la intención del usuario. La voz de respuesta la genera Polly, y la traducción, las imágenes y los documentos son cosa de otros servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lexv2/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "lex-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un bot de Amazon Lex para reservar citas ya ha recogido la fecha, la hora y el nombre del cliente. ¿Qué componente debe registrar la cita en la base de datos?",
+    "opciones": [
+      "Una función Lambda configurada como cumplimiento de la intención.",
+      "Un enunciado de ejemplo adicional en la intención de reservar cita.",
+      "Un tipo de ranura personalizado para la fecha y la hora.",
+      "Un alias nuevo del bot que apunte a la base de datos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cuando la intención tiene todas sus ranuras, Lex invoca la función Lambda de cumplimiento, que ejecuta la lógica de negocio. Los enunciados y las ranuras sirven para entender y recoger datos, y los alias para publicar versiones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lexv2/latest/dg/how-it-works.html"
+    ]
+  },
+  {
+    "id": "lex-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa quiere que su centro de atención telefónica resuelva las consultas sencillas con un asistente de voz, sin menús de teclas. ¿Qué combinación es la adecuada?",
+    "opciones": [
+      "Amazon Polly con Amazon SQS.",
+      "Amazon Transcribe con Amazon Kinesis Data Streams.",
+      "Amazon Comprehend con Amazon SNS.",
+      "Amazon Connect con un bot de Amazon Lex."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Amazon Connect es el centro de atención en la nube y se integra de forma nativa con Lex para entender lo que dice quien llama y atenderlo de forma automática. Las otras combinaciones no forman un asistente conversacional.",
+    "fuentes": [
+      "https://aws.amazon.com/lex/faqs/"
+    ]
+  },
+  {
+    "id": "lex-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un bot de Amazon Lex debe pasar de pruebas a producción sin que los cambios en curso afecten a los usuarios. ¿Qué mecanismo ofrece el servicio?",
+    "opciones": [
+      "Un bot distinto por cada desarrollador, sin versiones.",
+      "Versiones numeradas del bot y alias que apuntan a la versión publicada.",
+      "Una copia del bot en otra región para cada entorno.",
+      "Una función Lambda que reescriba las intenciones al desplegar."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Lex permite crear versiones inmutables del bot y alias (por ejemplo, producción) que apuntan a una versión concreta; las aplicaciones cliente usan el alias. Así el borrador puede cambiar sin afectar a lo publicado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lexv2/latest/dg/how-it-works.html"
+    ]
+  },
+  {
+    "id": "lex-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "En un bot de Amazon Lex, el usuario dice \"quiero reservar una mesa para cuatro mañana a las nueve\". ¿Cómo se llaman, en la terminología de Lex, \"reservar una mesa\" y los datos \"cuatro\", \"mañana\" y \"las nueve\"?",
+    "opciones": [
+      "Enunciado y alias, respectivamente.",
+      "Canal y versión, respectivamente.",
+      "Intención y ranuras, respectivamente.",
+      "Cumplimiento y entidades, respectivamente."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La intención es lo que el usuario quiere hacer, y las ranuras son los datos que esa intención necesita. El enunciado es la frase completa, y el cumplimiento es la acción que se ejecuta al final.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lexv2/latest/dg/how-it-works.html"
+    ]
+  }
+]

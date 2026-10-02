@@ -1,0 +1,134 @@
+[
+  {
+    "id": "artifact-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Un auditor pide a una empresa el informe SOC 2 de AWS para comprobar los controles del proveedor de nube. ¿Dónde puede descargarlo la empresa?",
+    "opciones": [
+      "En AWS Trusted Advisor.",
+      "En AWS Artifact.",
+      "En Amazon Inspector.",
+      "En AWS CloudTrail."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Artifact es el portal de autoservicio con los informes de auditoría y las certificaciones de AWS. Trusted Advisor da recomendaciones, Inspector busca vulnerabilidades y CloudTrail registra las llamadas a la API de la cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html"
+    ]
+  },
+  {
+    "id": "artifact-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Según el modelo de responsabilidad compartida, ¿qué acreditan los informes disponibles en AWS Artifact?",
+    "opciones": [
+      "El cumplimiento de las aplicaciones que el cliente despliega.",
+      "La configuración correcta de los grupos de seguridad del cliente.",
+      "El cumplimiento de la infraestructura y los servicios de AWS, es decir, la seguridad de la nube.",
+      "La ausencia de vulnerabilidades en las instancias del cliente."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los informes de Artifact demuestran el cumplimiento de AWS como proveedor. Lo que el cliente configura y despliega (seguridad en la nube) es responsabilidad suya y debe acreditarlo por su cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html"
+    ]
+  },
+  {
+    "id": "artifact-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué coste tiene descargar informes de cumplimiento desde AWS Artifact?",
+    "opciones": [
+      "Ninguno: el servicio es gratuito.",
+      "Una cuota por cada informe descargado.",
+      "Exige un plan de soporte Enterprise.",
+      "Una suscripción mensual por cuenta."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS proporciona los documentos y los acuerdos de Artifact sin coste, a cualquier cuenta con los permisos de IAM adecuados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html"
+    ]
+  },
+  {
+    "id": "artifact-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa sanitaria de Estados Unidos va a tratar datos de salud protegidos en AWS y necesita formalizar con AWS el acuerdo que exige la normativa HIPAA. ¿Qué debe hacer?",
+    "opciones": [
+      "Abrir un caso en AWS Support solicitando una auditoría.",
+      "Activar Amazon Macie en todos los buckets.",
+      "Crear una regla de AWS Config para HIPAA.",
+      "Revisar y aceptar el BAA en AWS Artifact."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los acuerdos como el BAA se revisan, aceptan y gestionan en la sección de acuerdos de Artifact. Macie y Config ayudan a proteger y evaluar los recursos propios, pero no formalizan el acuerdo con AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/artifact/latest/ug/managing-agreements.html"
+    ]
+  },
+  {
+    "id": "artifact-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización con 200 cuentas debe tener aceptado el BAA en todas ellas, incluidas las que se creen en el futuro. ¿Cuál es la forma con menos esfuerzo operativo?",
+    "opciones": [
+      "Aceptarlo cuenta por cuenta con el usuario raíz de cada una.",
+      "Aceptar el acuerdo para la organización en AWS Artifact desde la cuenta de administración.",
+      "Asociar una SCP que obligue a aceptarlo.",
+      "Desplegar un StackSet de CloudFormation con el acuerdo."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Artifact permite aceptar acuerdos en nombre de todas las cuentas de una organización de AWS Organizations desde la cuenta de administración, y cubre también las cuentas que se añadan después. Una SCP o un StackSet no pueden aceptar acuerdos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/artifact/latest/ug/managing-agreements.html"
+    ]
+  },
+  {
+    "id": "artifact-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una empresa que despliega una solución de IA en AWS debe aportar a su regulador pruebas de que la infraestructura del proveedor cumple ISO 27001. ¿Qué servicio le proporciona esa documentación?",
+    "opciones": [
+      "Amazon SageMaker Clarify.",
+      "Amazon Bedrock Guardrails.",
+      "AWS Artifact.",
+      "AWS CloudTrail."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Artifact ofrece las certificaciones y los informes de cumplimiento de AWS, como ISO 27001. Clarify analiza sesgos, Guardrails filtra contenido de modelos y CloudTrail registra la actividad de la cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/artifact/latest/ug/what-is-aws-artifact.html"
+    ]
+  }
+]

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "translate-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una tienda en línea quiere mostrar automáticamente las descripciones de sus productos en varios idiomas. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "Amazon Transcribe.",
+      "Amazon Translate.",
+      "Amazon Comprehend.",
+      "Amazon Lex."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Translate traduce texto entre idiomas con traducción automática neuronal. Transcribe convierte voz en texto, Comprehend analiza el contenido de un texto y Lex sirve para crear chatbots.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/translate/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "translate-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué tecnología usa Amazon Translate para producir traducciones más naturales que los sistemas basados en reglas?",
+    "opciones": [
+      "Diccionarios bilingües palabra por palabra mantenidos a mano por lingüistas.",
+      "Reconocimiento óptico de caracteres aplicado al texto de origen.",
+      "Redes neuronales que tienen en cuenta el contexto de la frase (traducción automática neuronal).",
+      "Síntesis de voz con un lenguaje de marcas para controlar la pronunciación."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La traducción automática neuronal emplea redes neuronales que consideran el contexto completo, lo que da traducciones más fluidas que la sustitución palabra por palabra.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/translate/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "translate-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa traduce su documentación con Amazon Translate, pero el nombre de sus productos aparece traducido de formas distintas. ¿Cómo se garantiza una traducción uniforme de esos términos?",
+    "opciones": [
+      "Cargando una terminología personalizada con los términos y su traducción.",
+      "Activando el enmascarado de palabras malsonantes.",
+      "Cambiando a traducción por lotes.",
+      "Indicando el idioma de origen de forma manual."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La terminología personalizada define cómo debe traducirse cada término concreto, y Translate la aplica al encontrarlo. Las demás opciones no afectan a cómo se traducen los términos propios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/translate/latest/dg/customizing-translations.html"
+    ]
+  },
+  {
+    "id": "translate-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Hay que traducir de una vez 50 000 documentos de Word guardados en S3, conservando su formato, sin urgencia. ¿Qué opción de Amazon Translate es la adecuada?",
+    "opciones": [
+      "Llamadas en tiempo real, documento a documento, desde un script.",
+      "Convertir los documentos en audio y transcribirlos.",
+      "Copiar el texto a mano en la consola.",
+      "Un trabajo de traducción por lotes sobre la carpeta de S3."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La traducción por lotes procesa de forma asíncrona conjuntos grandes de documentos en S3 y admite formatos como Word, manteniendo la estructura. Las llamadas en tiempo real están pensadas para textos sueltos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/translate/latest/dg/how-it-works.html"
+    ]
+  },
+  {
+    "id": "translate-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un medio global quiere publicar subtítulos en diez idiomas para sus vídeos, que solo tienen audio en inglés, de forma automática. ¿Qué cadena de servicios es la adecuada?",
+    "opciones": [
+      "Amazon Polly para leer el audio y Amazon Comprehend para detectar el idioma.",
+      "Amazon Transcribe para obtener el texto y Amazon Translate para traducirlo a cada idioma.",
+      "Amazon Textract para extraer los subtítulos y Amazon Lex para adaptarlos.",
+      "Amazon Rekognition para leer los labios y Amazon Translate para traducir."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Primero hay que convertir el audio en texto con marcas de tiempo (Transcribe) y después traducir ese texto (Translate). Polly sintetiza voz, Textract lee documentos y Rekognition analiza la imagen.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/translate/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "translate-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa quiere que sus traducciones automáticas imiten el tono y las elecciones de palabras de sus traducciones anteriores, sin entrenar ni mantener un modelo propio. ¿Qué función de Amazon Translate lo permite?",
+    "opciones": [
+      "El ajuste de formalidad.",
+      "Las etiquetas de no traducir.",
+      "Los datos paralelos (Active Custom Translation).",
+      "La detección automática del idioma."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Con los datos paralelos se aportan ejemplos de traducciones propias y Translate adapta la salida a ese estilo en el momento de traducir, sin que haya que entrenar un modelo. La terminología fija términos concretos, pero no el estilo general.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/translate/latest/dg/customizing-translations.html"
+    ]
+  }
+]

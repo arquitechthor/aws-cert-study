@@ -1,0 +1,134 @@
+[
+  {
+    "id": "transcribe-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere generar automáticamente subtítulos para sus vídeos de formación a partir del audio. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "Amazon Polly.",
+      "Amazon Rekognition.",
+      "Amazon Transcribe.",
+      "Amazon Textract."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Transcribe convierte la voz en texto, con marcas de tiempo aptas para subtítulos. Polly hace lo contrario, Rekognition analiza la imagen del vídeo y Textract extrae texto de documentos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transcribe/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "transcribe-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Cuál es la diferencia entre Amazon Transcribe y Amazon Polly?",
+    "opciones": [
+      "Transcribe convierte voz en texto y Polly convierte texto en voz.",
+      "Transcribe traduce y Polly detecta el idioma.",
+      "Transcribe analiza imágenes y Polly analiza vídeo.",
+      "Transcribe solo funciona en inglés y Polly en cualquier idioma."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Son servicios inversos: Transcribe hace reconocimiento del habla (voz a texto) y Polly síntesis de voz (texto a voz). Ambos admiten muchos idiomas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transcribe/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "transcribe-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa graba reuniones con varias personas y quiere una transcripción en la que conste qué dijo cada una. ¿Qué función de Amazon Transcribe debe activar?",
+    "opciones": [
+      "El filtro de vocabulario.",
+      "La identificación automática del idioma.",
+      "El modelo de lenguaje personalizado.",
+      "La diferenciación de hablantes."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La diferenciación de hablantes etiqueta cada intervención con un identificador de hablante. El filtro de vocabulario oculta palabras, la identificación de idioma detecta en qué se habla y el modelo personalizado mejora la precisión.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transcribe/latest/dg/diarization.html"
+    ]
+  },
+  {
+    "id": "transcribe-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un centro de atención transcribe las llamadas en tiempo real, y en ellas los clientes dictan números de tarjeta. La empresa no quiere que esos números queden en las transcripciones. ¿Qué solución requiere menos desarrollo?",
+    "opciones": [
+      "Borrar a mano las transcripciones cada semana.",
+      "Activar el enmascarado de PII de Amazon Transcribe.",
+      "Cifrar las transcripciones con una clave de KMS.",
+      "Aplicar expresiones regulares propias en una función Lambda."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Transcribe puede identificar y enmascarar datos personales, como números de tarjeta, tanto por lotes como en streaming. El cifrado protege el fichero pero no elimina el dato, y la lógica propia es más frágil y costosa de mantener.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/machine-learning/introducing-pii-identification-and-redaction-in-streaming-transcriptions-using-amazon-transcribe/"
+    ]
+  },
+  {
+    "id": "transcribe-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Las transcripciones de Amazon Transcribe confunden sistemáticamente los nombres de los productos y las siglas internas de una empresa. ¿Cuál es el primer cambio que conviene aplicar?",
+    "opciones": [
+      "Aumentar la calidad de compresión del audio.",
+      "Transcribir cada audio dos veces y elegir el mejor resultado.",
+      "Crear un vocabulario personalizado con esos términos.",
+      "Cambiar a transcripción por lotes en otra región."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El vocabulario personalizado enseña al servicio palabras y expresiones específicas del dominio para que las reconozca correctamente. Si aun así no basta, un modelo de lenguaje personalizado mejora la precisión general.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transcribe/latest/dg/custom-vocabulary.html"
+    ]
+  },
+  {
+    "id": "transcribe-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa quiere que un modelo fundacional resuma automáticamente las llamadas de soporte, que hoy solo existen como grabaciones de audio. ¿Qué servicio debe ir antes del modelo en la cadena?",
+    "opciones": [
+      "Amazon Transcribe, para convertir las grabaciones en texto.",
+      "Amazon Polly, para sintetizar las grabaciones.",
+      "Amazon Rekognition, para detectar objetos.",
+      "Amazon Textract, para extraer tablas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los modelos de lenguaje trabajan con texto, así que primero hay que transcribir el audio. Transcribe ofrece además funciones para llamadas, como la separación de canales y el análisis de la conversación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transcribe/latest/dg/call-analytics.html"
+    ]
+  }
+]

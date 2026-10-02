@@ -60,6 +60,10 @@
    "en": "Availability Zone",
    "es": "zona de disponibilidad"
   },
+  "BAA": {
+   "en": "Business Associate Addendum",
+   "es": "acuerdo que exige HIPAA para tratar datos de salud"
+  },
   "BI": {
    "en": "Business Intelligence",
    "es": "análisis de datos para el negocio"
@@ -91,6 +95,10 @@
   "CIDR": {
    "en": "Classless Inter-Domain Routing",
    "es": "notación de rangos de IP como 10.0.0.0/16"
+  },
+  "CIS": {
+   "en": "Center for Internet Security",
+   "es": "organización que publica referencias de configuración segura"
   },
   "CLB": {
    "en": "Classic Load Balancer",
@@ -196,6 +204,10 @@
    "en": "Dual-layer Server-Side Encryption with KMS",
    "es": "doble capa de cifrado con claves de KMS"
   },
+  "E/S": {
+   "en": null,
+   "es": "entrada y salida: lecturas y escrituras"
+  },
   "EBS": {
    "en": "Elastic Block Store",
    "es": null
@@ -292,9 +304,21 @@
    "en": "Gateway Load Balancer Capacity Unit",
    "es": "unidad de facturación del GWLB"
   },
+  "GraphRAG": {
+   "en": null,
+   "es": "generación aumentada por recuperación apoyada en un grafo de conocimiento"
+  },
   "HDD": {
    "en": "Hard Disk Drive",
    "es": "disco duro magnético"
+  },
+  "HDFS": {
+   "en": "Hadoop Distributed File System",
+   "es": "sistema de ficheros distribuido de Hadoop"
+  },
+  "HIPAA": {
+   "en": "Health Insurance Portability and Accountability Act",
+   "es": "ley de EE. UU. que protege los datos de salud"
   },
   "HMAC": {
    "en": "Hash-based Message Authentication Code",
@@ -444,6 +468,10 @@
    "en": "Machine Learning",
    "es": "aprendizaje automático"
   },
+  "MLOps": {
+   "en": "Machine Learning Operations",
+   "es": "prácticas para llevar y mantener modelos en producción"
+  },
   "MPP": {
    "en": "Massively Parallel Processing",
    "es": "procesamiento masivamente paralelo"
@@ -588,6 +616,10 @@
    "en": "Read Capacity Unit",
    "es": "unidad de capacidad de lectura"
   },
+  "RDF": {
+   "en": "Resource Description Framework",
+   "es": "modelo de datos en tripletas de la web semántica"
+  },
   "RDP": {
    "en": "Remote Desktop Protocol",
    "es": "escritorio remoto de Windows"
@@ -635,6 +667,10 @@
   "SAN": {
    "en": "Subject Alternative Name",
    "es": "nombres adicionales de un certificado"
+  },
+  "SBOM": {
+   "en": "Software Bill of Materials",
+   "es": "inventario de los componentes de un software"
   },
   "SCP": {
    "en": "Service Control Policy",
@@ -688,6 +724,10 @@
    "en": "Start of Authority",
    "es": "registro DNS con los datos de la zona"
   },
+  "SOC": {
+   "en": "System and Organization Controls",
+   "es": "informes de auditoría sobre los controles de un proveedor"
+  },
   "SPA": {
    "en": "Single-Page Application",
    "es": "web de una sola página"
@@ -695,6 +735,10 @@
   "SPF": {
    "en": "Sender Policy Framework",
    "es": "lista de servidores autorizados a enviar correo del dominio"
+  },
+  "SPICE": {
+   "en": "Super-fast, Parallel, In-memory Calculation Engine",
+   "es": "motor en memoria de QuickSight"
   },
   "SQL": {
    "en": "Structured Query Language",
@@ -744,6 +788,10 @@
    "en": "Systems Manager",
    "es": "nombre corto de AWS Systems Manager y de su agente"
   },
+  "SSML": {
+   "en": "Speech Synthesis Markup Language",
+   "es": "marcas para controlar cómo se pronuncia un texto"
+  },
   "SSO": {
    "en": "Single Sign-On",
    "es": "un único inicio de sesión para varias aplicaciones"
@@ -759,6 +807,10 @@
   "STS": {
    "en": "Security Token Service",
    "es": null
+  },
+  "SaaS": {
+   "en": "Software as a Service",
+   "es": "software que se usa como servicio"
   },
   "TAM": {
    "en": "Technical Account Manager",

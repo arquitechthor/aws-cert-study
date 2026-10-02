@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon EMR — Apuntes AWS</title>
+<meta name="description" content="Plataforma gestionada de big data para ejecutar Spark, Hive, Presto, Flink y otros marcos de código abierto en clústeres de EC2, sobre EKS o en modo sin servidor. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/emr.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon EMR — Apuntes AWS">
+<meta property="og:description" content="Plataforma gestionada de big data para ejecutar Spark, Hive, Presto, Flink y otros marcos de código abierto en clústeres de EC2, sobre EKS o en modo sin servidor.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/emr.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/emr.svg" alt="" width="56" height="56"><span>Amazon EMR</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Clústeres gestionados de Spark, Hive o Hadoop para procesar big data</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/emr/" target="_blank" rel="noopener">Documentación de Amazon EMR ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon <abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr> es la plataforma gestionada de AWS para <strong>procesar grandes volúmenes de datos</strong> con
+        marcos de <strong>código abierto</strong>: Apache Spark, Hive, Presto o Trino, Flink, HBase y el ecosistema de
+        Hadoop. AWS se ocupa de aprovisionar, configurar y afinar el clúster; tú envías los trabajos. Es la opción
+        natural para quien ya tiene cargas de Hadoop o Spark y quiere el control del entorno.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Tres formas de despliegue:</strong>
+          <ul>
+            <li><strong><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr> en <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>:</strong> clústeres de instancias; el máximo control.</li>
+            <li><strong><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr> en <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>:</strong> los trabajos de Spark se ejecutan en un clúster de Kubernetes compartido
+              con otras aplicaciones.</li>
+            <li><strong>EMR Serverless:</strong> sin clúster que gestionar; se paga por los recursos que usa cada
+              trabajo y escala solo.</li>
+          </ul>
+        </li>
+        <li><strong>Tipos de nodo</strong> (en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>):
+          <ul>
+            <li><strong>Principal</strong> (<em>primary</em>): coordina el clúster.</li>
+            <li><strong>Central</strong> (<em>core</em>): ejecuta tareas y <strong>guarda datos</strong> en <abbr class="sigla sigla-1" data-s="HDFS" data-en="Hadoop Distributed File System" data-es="sistema de ficheros distribuido de Hadoop" tabindex="0">HDFS<span class="sigla-exp"> (Hadoop Distributed File System: sistema de ficheros distribuido de Hadoop)</span></abbr>.</li>
+            <li><strong>De tarea</strong> (<em>task</em>): solo cómputo, sin datos; es opcional y el candidato ideal
+              para instancias Spot.</li>
+          </ul>
+        </li>
+        <li><strong>Almacenamiento:</strong> <strong><abbr class="sigla" data-s="HDFS" data-en="Hadoop Distributed File System" data-es="sistema de ficheros distribuido de Hadoop" tabindex="0">HDFS</abbr></strong>, en los discos del clúster, que desaparece con él; o
+          <strong>EMRFS</strong>, que usa <strong><a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a></strong> como capa de datos y separa el cómputo del
+          almacenamiento.</li>
+        <li><strong>Clúster transitorio o de larga duración:</strong> el transitorio se crea, ejecuta sus pasos y se
+          termina solo; el de larga duración queda encendido para uso interactivo.</li>
+        <li><strong>Grupos o flotas de instancias:</strong> las flotas permiten mezclar varios tipos de instancia y
+          capacidad bajo demanda y Spot, en varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>.</li>
+        <li><strong>Escalado gestionado:</strong> <abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr> ajusta el número de nodos según la carga, entre un mínimo y un
+          máximo.</li>
+        <li><strong>EMR Studio y cuadernos:</strong> entorno para desarrollar y depurar de forma interactiva.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Procesos de <abbr class="sigla sigla-1" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL<span class="sigla-exp"> (Extract, Transform, Load: extraer, transformar y cargar datos)</span></abbr> y transformación de terabytes o petabytes con Spark.</li>
+        <li>Migrar un clúster de Hadoop local a la nube sin reescribir los trabajos.</li>
+        <li>Aprendizaje automático a gran escala con Spark MLlib y preparación de datos para entrenar modelos.</li>
+        <li>Análisis interactivo con Presto o Trino, y procesamiento de flujos con Flink o Spark Streaming.</li>
+        <li>Análisis de logs, clics y datos científicos (genómica).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li><abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr> sin gestionar nada y con catálogo integrado: <a href="glue.html">Glue</a>.</li>
+        <li>Consultas <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> puntuales sobre <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>: <a href="athena.html">Athena</a>.</li>
+        <li>Almacén de datos para informes y <abbr class="sigla sigla-1" data-s="BI" data-en="Business Intelligence" data-es="análisis de datos para el negocio" tabindex="0">BI<span class="sigla-exp"> (Business Intelligence: análisis de datos para el negocio)</span></abbr>: <a href="redshift.html">Redshift</a>.</li>
+        <li>Flujos en tiempo real gestionados: <a href="../servicio.html?id=managed-service-for-apache-flink">Managed Service for Apache Flink</a> o <a href="data-firehose.html">Data Firehose</a>.</li>
+        <li>Cargas pequeñas u ocasionales: el clúster sale caro frente a las opciones sin servidor.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Spark, Hive o Hadoop con control del entorno y de las versiones</td><td><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></td></tr>
+            <tr><td><abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr> sin servidor con catálogo de datos</td><td><a href="glue.html">Glue</a></td></tr>
+            <tr><td><abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> sin servidor sobre <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, pago por consulta</td><td><a href="athena.html">Athena</a></td></tr>
+            <tr><td>Almacén de datos para consultas analíticas complejas</td><td><a href="redshift.html">Redshift</a></td></tr>
+            <tr><td>Trabajos por lotes genéricos en contenedores</td><td><a href="batch.html">AWS Batch</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> se paga un <strong>cargo de <abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr> por instancia y segundo</strong>, sumado al precio de la instancia de
+        <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> y de sus volúmenes; admite Spot, instancias reservadas y <a href="savings-plans.html">Savings Plans</a>. En <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>, un cargo por la vCPU y la
+        memoria de los trabajos. En EMR Serverless, por la vCPU, la memoria y el almacenamiento que usan los
+        trabajadores mientras se ejecutan.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El clúster se lanza en tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>, preferiblemente en subredes privadas, con grupos de seguridad
+          gestionados.</li>
+        <li><strong>Configuraciones de seguridad:</strong> cifrado en reposo (<a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, discos locales) y en tránsito, y
+          autenticación con Kerberos.</li>
+        <li>Roles de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para el servicio y para las instancias; con <a href="lake-formation.html">Lake Formation</a> se aplican permisos por tabla,
+          columna y fila.</li>
+        <li>Para alta disponibilidad, <strong>tres nodos principales</strong>. Guardar los datos en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> (EMRFS) evita
+          perderlos si el clúster cae.</li>
+        <li>Un clúster vive en una <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>; las flotas de instancias eligen la mejor <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr> al lanzarlo.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Hadoop", "Spark", "Hive" o "big data con marcos de código abierto"</strong>: <abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr>.</li>
+        <li><strong>"Migrar un clúster de Hadoop local con los mínimos cambios"</strong>: <abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr>.</li>
+        <li><strong>"Reducir el coste de un clúster de <abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr>"</strong>: instancias Spot en los nodos de tarea (nunca
+          dependas de Spot para el nodo principal ni para los nodos centrales con datos en <abbr class="sigla" data-s="HDFS" data-en="Hadoop Distributed File System" data-es="sistema de ficheros distribuido de Hadoop" tabindex="0">HDFS</abbr>).</li>
+        <li><strong>"Los datos deben sobrevivir al clúster"</strong>: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con EMRFS, no <abbr class="sigla" data-s="HDFS" data-en="Hadoop Distributed File System" data-es="sistema de ficheros distribuido de Hadoop" tabindex="0">HDFS</abbr>.</li>
+        <li><strong>"Sin administrar clústeres"</strong>: EMR Serverless; si además piden <abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr> sencillo, <a href="glue.html">Glue</a>.</li>
+        <li><strong>"Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> ocasionales sobre <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>"</strong>: <a href="athena.html">Athena</a>, no <abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="emr"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-what-is-emr.html" target="_blank" rel="noopener">What is Amazon EMR?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-overview-benefits.html" target="_blank" rel="noopener">Benefits of using Amazon EMR</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-instance-group-configuration.html" target="_blank" rel="noopener">Create an Amazon EMR cluster with instance fleets or uniform instance groups</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/emr/faqs/" target="_blank" rel="noopener">Amazon EMR FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/whitepapers/latest/cost-modeling-data-lakes/cost-optimization-in-analytics-services.html" target="_blank" rel="noopener">Cost optimization in analytics services</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

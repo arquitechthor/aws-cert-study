@@ -1,0 +1,134 @@
+[
+  {
+    "id": "polly-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un medio digital quiere ofrecer una versión en audio de cada artículo, generada automáticamente a partir del texto. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "Amazon Transcribe.",
+      "Amazon Comprehend.",
+      "Amazon Polly.",
+      "Amazon Lex."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Polly convierte texto en voz. Transcribe hace lo contrario (voz a texto), Comprehend analiza el contenido de un texto y Lex sirve para construir chatbots.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/polly/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "polly-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Cuál de estos es un caso de uso propio de Amazon Polly?",
+    "opciones": [
+      "Leer en voz alta el contenido de una aplicación a personas con dificultades de visión.",
+      "Subtitular automáticamente un vídeo a partir de su pista de audio.",
+      "Detectar el idioma en el que está escrito un documento.",
+      "Extraer los importes y el proveedor de una factura escaneada."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La accesibilidad mediante lectura en voz alta es un uso típico de Polly. Subtitular un vídeo requiere Transcribe, detectar el idioma es Comprehend y extraer datos de una factura es Textract.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/polly/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "polly-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una editorial quiere convertir en audio capítulos completos de libros, de decenas de miles de caracteres cada uno, y recibir un aviso cuando cada fichero esté listo. ¿Qué opción de Amazon Polly es la adecuada?",
+    "opciones": [
+      "Llamadas síncronas, troceando a mano cada capítulo.",
+      "Un lexicón de pronunciación por capítulo.",
+      "Las marcas de voz en formato JSON.",
+      "La síntesis asíncrona, con salida en un bucket de S3 y notificación por SNS."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La síntesis asíncrona acepta textos largos, deja el audio en S3 y puede publicar un mensaje en un tema de SNS al terminar. La operación síncrona está limitada a textos cortos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/polly/latest/dg/asynchronous.html"
+    ]
+  },
+  {
+    "id": "polly-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una aplicación reproduce miles de veces al día los mismos mensajes de bienvenida generados con Amazon Polly. ¿Cómo se reduce el coste sin perder calidad?",
+    "opciones": [
+      "Cambiando a una voz de otro idioma con menos caracteres por palabra.",
+      "Generando el audio una vez, guardándolo en S3 y sirviendo ese fichero.",
+      "Enviando el texto en mayúsculas para que se procese más rápido.",
+      "Llamando a Polly desde más regiones para repartir las peticiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Polly cobra por los caracteres sintetizados y permite reutilizar el audio generado sin coste adicional, así que guardar los mensajes repetidos evita volver a sintetizarlos. Además mejora la latencia.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/polly/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "polly-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación de formación lee textos con Amazon Polly, pero pronuncia mal el nombre de la marca y varias siglas internas. ¿Cuál es la solución adecuada?",
+    "opciones": [
+      "Entrenar un modelo propio de síntesis de voz en SageMaker AI.",
+      "Cambiar el formato de salida de MP3 a PCM sin comprimir.",
+      "Cargar un lexicón de pronunciación con esas palabras y aplicarlo al sintetizar.",
+      "Aumentar la frecuencia de muestreo del audio generado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los lexicones permiten definir cómo debe pronunciarse cada palabra o sigla concreta, y se aplican al sintetizar. El formato y la frecuencia de muestreo no cambian la pronunciación, y entrenar un modelo propio es desproporcionado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/polly/latest/dg/managing-lexicons.html"
+    ]
+  },
+  {
+    "id": "polly-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un asistente virtual genera respuestas de texto con un modelo fundacional y debe decirlas en voz alta con pausas naturales y énfasis en ciertas palabras. ¿Qué servicio y qué función lo permiten?",
+    "opciones": [
+      "Amazon Polly, usando SSML en el texto de entrada.",
+      "Amazon Transcribe, con un vocabulario personalizado.",
+      "Amazon Comprehend, con sentimiento dirigido.",
+      "Amazon Rekognition, con etiquetas personalizadas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Polly sintetiza la voz y SSML permite marcar pausas, énfasis, velocidad y pronunciación. Transcribe convierte voz en texto, Comprehend analiza texto y Rekognition analiza imágenes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/polly/latest/dg/ssml.html"
+    ]
+  }
+]

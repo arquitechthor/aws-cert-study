@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Lex — Apuntes AWS</title>
+<meta name="description" content="Servicio para crear chatbots y asistentes de voz que entienden el lenguaje natural: reconocen la intención del usuario, piden los datos que faltan y ejecutan la acción. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/lex.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Lex — Apuntes AWS">
+<meta property="og:description" content="Servicio para crear chatbots y asistentes de voz que entienden el lenguaje natural: reconocen la intención del usuario, piden los datos que faltan y ejecutan la acción.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/lex.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/lex.svg" alt="" width="56" height="56"><span>Amazon Lex</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Crea chatbots de voz y texto que entienden intenciones en lenguaje natural</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/lex/" target="_blank" rel="noopener">Documentación de Amazon Lex ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Lex permite crear <strong>interfaces conversacionales</strong>: chatbots de texto y asistentes de voz.
+        Usa la misma tecnología que Alexa para dos cosas: <strong>reconocer la voz</strong> y <strong>entender lo que
+        la persona quiere</strong>. Tú defines qué puede hacer el bot y Lex conduce la conversación: identifica la
+        petición, pregunta los datos que faltan y llama a tu lógica para resolverla. La versión actual es <strong>Lex
+        V2</strong>; la anterior dejó de tener soporte en 2025.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Bot:</strong> la aplicación conversacional. Un mismo bot puede tener varios
+          <strong>idiomas</strong>.</li>
+        <li><strong>Intención</strong> (<em>intent</em>): lo que el usuario quiere conseguir: reservar una cita,
+          consultar un saldo.</li>
+        <li><strong>Enunciados de ejemplo</strong> (<em>utterances</em>): frases con las que se puede expresar una
+          intención ("quiero pedir cita", "necesito ver al médico"). Lex generaliza a partir de ellas.</li>
+        <li><strong>Ranuras</strong> (<em>slots</em>): los datos que necesita la intención (fecha, hora, ciudad). Cada
+          una tiene un <strong>tipo</strong> y una pregunta para pedirla si falta.</li>
+        <li><strong>Cumplimiento</strong> (<em>fulfillment</em>): cuando están todos los datos, se ejecuta la acción,
+          normalmente con una <strong>función <a href="lambda.html">Lambda</a></strong>, que también puede validar las respuestas por el
+          camino.</li>
+        <li><strong>Versiones y alias:</strong> para publicar y pasar de pruebas a producción.</li>
+        <li><strong>Canales:</strong> web y móvil con los <abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr>, plataformas de mensajería, y <strong>Amazon
+          Connect</strong> para los centros de atención telefónica.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> generativa:</strong> integración con modelos de <a href="bedrock.html">Bedrock</a> para generar enunciados, resolver
+          ranuras ambiguas y responder preguntas a partir de una base de conocimiento.</li>
+        <li><strong>Voz de respuesta:</strong> las respuestas habladas se sintetizan con <a href="polly.html">Polly</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Asistente telefónico que atiende sin esperas: sustituye los menús de "pulse 1".</li>
+        <li>Chatbot de atención al cliente en la web: estado de pedidos, citas, preguntas frecuentes.</li>
+        <li>Bots internos para tareas de <abbr class="sigla sigla-1" data-s="TI" data-es="tecnologías de la información: el departamento de sistemas" tabindex="0">TI<span class="sigla-exp"> (tecnologías de la información: el departamento de sistemas)</span></abbr> o de recursos humanos.</li>
+        <li>Asistentes de voz en aplicaciones móviles o dispositivos.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Solo convertir audio en texto: <a href="transcribe.html">Transcribe</a>. Solo generar voz: <a href="polly.html">Polly</a>.</li>
+        <li>Analizar textos ya escritos: <a href="comprehend.html">Comprehend</a>.</li>
+        <li>Buscar en documentos corporativos con respuestas generadas: una base de conocimiento de <a href="bedrock.html">Bedrock</a>, <a href="../servicio.html?id=kendra">Kendra</a> o
+          <a href="../servicio.html?id=amazon-q">Amazon Q</a>.</li>
+        <li>Conversación abierta sin flujo definido: un agente sobre un modelo fundacional en Bedrock.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Chatbot o asistente de voz con intenciones y datos que recoger</td><td>Lex</td></tr>
+            <tr><td>Centro de atención en la nube (se integra con Lex)</td><td><a href="../servicio.html?id=connect">Amazon Connect</a></td></tr>
+            <tr><td>Voz a texto</td><td><a href="transcribe.html">Transcribe</a></td></tr>
+            <tr><td>Texto a voz</td><td><a href="polly.html">Polly</a></td></tr>
+            <tr><td>Agentes y respuestas generativas sobre tus datos</td><td><a href="bedrock.html">Bedrock</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por petición</strong> procesada, con precio distinto para <strong>voz</strong> y para
+        <strong>texto</strong>. No hay coste por tener bots creados. Las funciones <a href="lambda.html">Lambda</a> y los demás servicios que
+        use el bot se pagan aparte.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; el bot invoca la función <a href="lambda.html">Lambda</a> mediante una política basada en recursos.</li>
+        <li>Los registros de las conversaciones (texto y audio) son opcionales y se guardan en <a href="cloudwatch.html">CloudWatch</a> Logs y <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>,
+          cifrados.</li>
+        <li>Las ranuras con datos sensibles se pueden <strong>ofuscar</strong> en los registros.</li>
+        <li>Servicio gestionado que escala solo, sin capacidad que aprovisionar.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Chatbot"</strong>, "asistente conversacional" o "interfaz de voz y texto": Lex.</li>
+        <li><strong>"Automatizar la atención telefónica de un centro de llamadas"</strong>: <a href="../servicio.html?id=connect">Amazon Connect</a> con
+          Lex.</li>
+        <li><strong>Intención</strong> = qué quiere el usuario; <strong>ranura</strong> = dato necesario;
+          <strong>cumplimiento</strong> = <a href="lambda.html">Lambda</a>.</li>
+        <li><strong>Lex entiende; <a href="polly.html">Polly</a> habla; <a href="transcribe.html">Transcribe</a> escribe.</strong></li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="lex"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/lexv2/latest/dg/what-is.html" target="_blank" rel="noopener">What is Amazon Lex V2?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lexv2/latest/dg/how-it-works.html" target="_blank" rel="noopener">How Amazon Lex V2 works</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/lex/faqs/" target="_blank" rel="noopener">Amazon Lex FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://repost.aws/knowledge-center/connect-configure-list-picker" target="_blank" rel="noopener">Configure a Lambda function and Amazon Lex V2 in Amazon Connect</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

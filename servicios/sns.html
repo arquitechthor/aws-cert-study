@@ -108,7 +108,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Si un solo consumidor debe procesar cada mensaje y guardarlo mientras está caído: <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>.</li>
-        <li>Enrutamiento por reglas complejas, eventos de SaaS (software como servicio) o programación
+        <li>Enrutamiento por reglas complejas, eventos de <abbr class="sigla" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS</abbr> (software como servicio) o programación
           horaria: <a href="eventbridge.html">EventBridge</a>.</li>
         <li>Campañas de marketing por correo con plantillas y seguimiento: <a href="ses.html"><abbr class="sigla sigla-1" data-s="SES" data-en="Simple Email Service" tabindex="0">SES<span class="sigla-exp"> (Simple Email Service)</span></abbr></a> (y la mensajería al
           usuario final de AWS End User Messaging para <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr> a gran escala).</li>
@@ -124,7 +124,7 @@
             <tr><td>Receptores por mensaje</td><td>Todos los suscriptores</td><td>Uno</td><td>Todos los destinos de las reglas que coinciden</td></tr>
             <tr><td>Persistencia</td><td>No (reintentos)</td><td>Hasta 14 días</td><td>No (reintentos, archivo opcional)</td></tr>
             <tr><td>Filtrado</td><td>Políticas de filtrado</td><td>—</td><td>Patrones de eventos muy ricos</td></tr>
-            <tr><td>Destinos</td><td><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>, <a href="lambda.html">Lambda</a>, <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>, correo, <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr>, móvil</td><td>—</td><td>Más de 20 servicios de AWS, <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> y SaaS</td></tr>
+            <tr><td>Destinos</td><td><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>, <a href="lambda.html">Lambda</a>, <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>, correo, <abbr class="sigla" data-s="SMS" data-en="Short Message Service" data-es="mensajes de texto al móvil" tabindex="0">SMS</abbr>, móvil</td><td>—</td><td>Más de 20 servicios de AWS, <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> y <abbr class="sigla" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS</abbr></td></tr>
           </tbody>
         </table>
       </div>

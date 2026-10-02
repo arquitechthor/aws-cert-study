@@ -220,6 +220,19 @@ G = {
     '5G': (None, 'quinta generación de redes móviles'),
     'RDP': ('Remote Desktop Protocol', 'escritorio remoto de Windows'),
     'LAMP': (None, 'Linux, Apache, MySQL y PHP'),
+    'SSML': ('Speech Synthesis Markup Language', 'marcas para controlar cómo se pronuncia un texto'),
+    'SOC': ('System and Organization Controls', 'informes de auditoría sobre los controles de un proveedor'),
+    'BAA': ('Business Associate Addendum', 'acuerdo que exige HIPAA para tratar datos de salud'),
+    'HIPAA': ('Health Insurance Portability and Accountability Act', 'ley de EE. UU. que protege los datos de salud'),
+    'HDFS': ('Hadoop Distributed File System', 'sistema de ficheros distribuido de Hadoop'),
+    'RDF': ('Resource Description Framework', 'modelo de datos en tripletas de la web semántica'),
+    'SBOM': ('Software Bill of Materials', 'inventario de los componentes de un software'),
+    'CIS': ('Center for Internet Security', 'organización que publica referencias de configuración segura'),
+    'SPICE': ('Super-fast, Parallel, In-memory Calculation Engine', 'motor en memoria de QuickSight'),
+    'SaaS': ('Software as a Service', 'software que se usa como servicio'),
+    'MLOps': ('Machine Learning Operations', 'prácticas para llevar y mantener modelos en producción'),
+    'GraphRAG': (None, 'generación aumentada por recuperación apoyada en un grafo de conocimiento'),
+    'E/S': (None, 'entrada y salida: lecturas y escrituras'),
 }
 # RAM es la memoria en EC2 y el servicio AWS RAM en el resto de páginas. IA es Infrequent Access en EFS y S3.
 POR_PAGINA = {

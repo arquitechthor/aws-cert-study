@@ -1,0 +1,112 @@
+[
+  {
+    "id": "data-exchange-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa de análisis quiere incorporar a su lago de datos en S3 los datos de mercado que publica cada día un proveedor externo, sin negociar ni montar una entrega a medida. ¿Qué servicio debe usar?",
+    "opciones": [
+      "AWS DataSync.",
+      "AWS Data Exchange.",
+      "AWS Transfer Family.",
+      "AWS Snowball Edge."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Data Exchange permite suscribirse a productos de datos de terceros y recibir sus revisiones en la cuenta propia. DataSync, Transfer Family y Snowball mueven datos propios, no gestionan la licencia ni el catálogo de proveedores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/data-exchange/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "data-exchange-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un proveedor de AWS Data Exchange publica una revisión nueva cada día. El suscriptor quiere que los ficheros lleguen a su bucket de S3 sin intervención. ¿Qué opción lo consigue con menos desarrollo?",
+    "opciones": [
+      "Una instancia de EC2 que descargue los ficheros por FTP cada noche.",
+      "Una tarea de AWS DataSync entre la cuenta del proveedor y la propia.",
+      "Activar la exportación automática de las revisiones nuevas a S3.",
+      "Un trabajo de AWS Glue que lea la API del proveedor cada hora."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Data Exchange puede exportar automáticamente cada revisión nueva al bucket indicado; también emite un evento en EventBridge por si se quiere lanzar un proceso propio. Las demás opciones requieren construir y mantener la entrega.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/data-exchange/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "data-exchange-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo de análisis quiere consultar con SQL un gran conjunto de datos de un proveedor externo sin copiarlo ni montar un proceso de ETL. Ya usa Amazon Redshift. ¿Qué tipo de producto de AWS Data Exchange encaja?",
+    "opciones": [
+      "Un conjunto de datos de Amazon Redshift, con acceso de solo lectura a los datos compartidos.",
+      "Un conjunto de datos de ficheros exportado a S3 Glacier.",
+      "Un conjunto de datos de API consultado desde una función Lambda.",
+      "Una oferta privada de AWS Marketplace de software."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los conjuntos de datos de Redshift dan al suscriptor acceso de solo lectura a los datos del proveedor para consultarlos directamente, sin extraerlos ni cargarlos. Los de ficheros obligan a exportar y cargar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/data-exchange/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "data-exchange-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa quiere distribuir un conjunto de datos propio a tres socios concretos, cada uno con condiciones negociadas, usando AWS Data Exchange. ¿Qué mecanismo es el adecuado?",
+    "opciones": [
+      "Publicar el producto con una oferta pública para todos.",
+      "Compartir el bucket con una política pública de solo lectura.",
+      "Enviar los ficheros por correo con una URL prefirmada.",
+      "Crear ofertas privadas dirigidas a las cuentas de esos socios."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las ofertas privadas permiten fijar precio y condiciones para suscriptores concretos, sin exponer el producto a todo el catálogo. Un bucket público o un envío manual no gestionan licencia, facturación ni actualizaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/data-exchange/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "data-exchange-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un equipo de ciencia de datos necesita datos externos ya preparados (por ejemplo, demográficos o meteorológicos) para enriquecer el conjunto de entrenamiento de un modelo. ¿Qué servicio de AWS facilita encontrarlos y licenciarlos?",
+    "opciones": [
+      "Amazon SageMaker Ground Truth.",
+      "AWS Data Exchange.",
+      "Amazon Comprehend.",
+      "AWS Glue DataBrew."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Data Exchange es el catálogo para suscribirse a conjuntos de datos de terceros y usarlos en la cuenta propia. Ground Truth sirve para etiquetar datos, Comprehend analiza texto y DataBrew limpia y prepara datos que ya se tienen.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/data-exchange/latest/userguide/what-is.html"
+    ]
+  }
+]

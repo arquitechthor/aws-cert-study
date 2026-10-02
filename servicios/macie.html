@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Macie — Apuntes AWS</title>
+<meta name="description" content="Servicio de seguridad de datos que descubre y clasifica información sensible (datos personales, financieros, credenciales) en buckets de S3 y evalúa su exposición. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/macie.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Macie — Apuntes AWS">
+<meta property="og:description" content="Servicio de seguridad de datos que descubre y clasifica información sensible (datos personales, financieros, credenciales) en buckets de S3 y evalúa su exposición.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/macie.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/macie.svg" alt="" width="56" height="56"><span>Amazon Macie</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Descubre datos personales y sensibles en tus buckets de <abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr> con aprendizaje automático</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/macie/" target="_blank" rel="noopener">Documentación de Amazon Macie ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Macie es un servicio de <strong>seguridad de datos</strong> que usa aprendizaje automático y búsqueda de
+        patrones para <strong>descubrir datos sensibles en <a href="s3.html">Amazon <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></strong>. Responde a dos preguntas: <strong>dónde
+        tengo datos sensibles</strong> (datos personales, financieros, credenciales) y <strong>cómo de expuestos están
+        mis buckets</strong> (públicos, sin cifrar, compartidos con otras cuentas). Trabaja solo con <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Inventario de buckets:</strong> al activarlo, Macie evalúa todos los buckets de la cuenta: si son
+          accesibles públicamente, si están cifrados, si se comparten o se replican fuera de la organización.</li>
+        <li><strong>Identificadores de datos gestionados:</strong> detectores ya preparados por AWS para muchos tipos
+          de datos y países: tarjetas de crédito, cuentas bancarias, pasaportes, documentos de identidad, datos de
+          salud, claves de acceso de AWS y claves privadas.</li>
+        <li><strong>Identificadores de datos personalizados:</strong> los defines tú con una expresión regular y,
+          opcionalmente, palabras clave cercanas, para datos propios (números de empleado, códigos internos).</li>
+        <li><strong>Listas de permitidos:</strong> texto que Macie debe ignorar.</li>
+        <li><strong>Dos formas de descubrir:</strong>
+          <ul>
+            <li><strong>Descubrimiento automatizado:</strong> Macie <strong>muestrea</strong> continuamente objetos de
+              todos los buckets y construye un mapa de sensibilidad, a bajo coste.</li>
+            <li><strong>Trabajos de descubrimiento:</strong> análisis completo o programado de los buckets que
+              elijas.</li>
+          </ul>
+        </li>
+        <li><strong>Hallazgos:</strong> de <strong>política</strong> (un bucket pasa a ser público o pierde el cifrado)
+          y de <strong>datos sensibles</strong> (un objeto contiene, por ejemplo, números de tarjeta).</li>
+        <li><strong>Integraciones:</strong> los hallazgos van a <strong><a href="eventbridge.html">EventBridge</a></strong> y a <strong>Security
+          Hub</strong>, para avisar o corregir automáticamente.</li>
+        <li><strong>Varias cuentas:</strong> con <a href="organizations.html">AWS Organizations</a>, un administrador delegado gestiona Macie para
+          todas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Saber qué buckets contienen datos personales para cumplir la normativa de protección de datos.</li>
+        <li>Detectar datos sensibles que han acabado donde no debían: un lago de datos, una carpeta de logs.</li>
+        <li>Revisar los datos antes de una migración o de compartirlos.</li>
+        <li>Encontrar credenciales expuestas en ficheros.</li>
+        <li>Comprobar que los datos con los que se va a entrenar un modelo no incluyen información personal.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para datos fuera de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> (bases de datos, discos de instancias): no los analiza.</li>
+        <li>Para detectar <strong>amenazas</strong> y accesos anómalos a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>: <a href="../servicio.html?id=guardduty">GuardDuty</a>.</li>
+        <li>Para <strong>vulnerabilidades</strong> de software: <a href="inspector.html">Inspector</a>.</li>
+        <li>Para detectar o enmascarar datos personales <strong>en un texto dentro de una aplicación</strong>:
+          <a href="comprehend.html">Comprehend</a>.</li>
+        <li>Para <strong>impedir</strong> el acceso público: el bloqueo de acceso público de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> y las políticas de
+          bucket. Macie avisa, no bloquea.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Qué datos sensibles hay en mis buckets de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>?</td><td>Macie</td></tr>
+            <tr><td>¿Alguien está accediendo a mis datos de forma sospechosa?</td><td><a href="../servicio.html?id=guardduty">GuardDuty</a></td></tr>
+            <tr><td>¿Tiene mi software vulnerabilidades?</td><td><a href="inspector.html">Inspector</a></td></tr>
+            <tr><td>¿Hay datos personales en este texto?</td><td><a href="comprehend.html">Comprehend</a></td></tr>
+            <tr><td>¿Quién puede acceder a mis buckets desde fuera?</td><td><a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> Access Analyzer</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>bucket evaluado</strong> al mes (inventario y supervisión), por <strong>gigabyte
+        analizado</strong> en los trabajos de descubrimiento y por los <strong>objetos supervisados</strong> en el
+        descubrimiento automatizado. Analizar por completo grandes volúmenes es caro: conviene empezar por el
+        descubrimiento automatizado y acotar los trabajos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Usa un rol vinculado al servicio para leer los objetos; para objetos cifrados con claves de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> propias
+          hay que darle permiso sobre la clave.</li>
+        <li>Es un servicio <strong>regional</strong>: se activa en cada región donde haya buckets.</li>
+        <li>Los resultados detallados del descubrimiento se guardan cifrados en un bucket que tú indicas.</li>
+        <li>Macie no modifica ni mueve los datos: solo los lee e informa.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Datos sensibles" o "<abbr class="sigla sigla-1" data-s="PII" data-en="Personally Identifiable Information" data-es="datos personales identificables" tabindex="0">PII<span class="sigla-exp"> (Personally Identifiable Information: datos personales identificables)</span></abbr>" en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></strong>: Macie.</li>
+        <li><strong>"Clasificar los datos de los buckets"</strong> o "cumplir la normativa de privacidad sobre datos
+          en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>": Macie.</li>
+        <li><strong>"Avisar cuando se detecten datos sensibles"</strong>: hallazgo de Macie hacia <a href="eventbridge.html">EventBridge</a> y
+          <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>.</li>
+        <li><strong>"Formato de dato propio de la empresa"</strong>: identificador de datos personalizado.</li>
+        <li><strong>"Actividad sospechosa"</strong>: <a href="../servicio.html?id=guardduty">GuardDuty</a>. <strong>"Vulnerabilidades"</strong>: <a href="inspector.html">Inspector</a>.</li>
+        <li><strong>Macie solo analiza <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</strong></li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="macie"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html" target="_blank" rel="noopener">What is Amazon Macie?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html" target="_blank" rel="noopener">Using managed data identifiers</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/macie/latest/user/custom-data-identifiers.html" target="_blank" rel="noopener">Building custom data identifiers</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/macie/latest/user/discovery-asdd.html" target="_blank" rel="noopener">Performing automated sensitive data discovery</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/macie/latest/user/findings-types.html" target="_blank" rel="noopener">Types of Macie findings</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

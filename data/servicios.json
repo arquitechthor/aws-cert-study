@@ -182,8 +182,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Portal gratuito de autoservicio para descargar los informes de auditoría y certificaciones de cumplimiento de AWS (SOC, ISO, PCI) y gestionar acuerdos como el BAA.",
     "frase": "Descarga los informes de auditoría y certificaciones de cumplimiento de la nube",
     "documentacion": "https://docs.aws.amazon.com/artifact/"
   },
@@ -321,8 +321,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Presupuestos personalizados de coste, de uso y de cobertura de compromisos, con alertas sobre el gasto real o previsto y acciones automáticas al superarlos.",
     "frase": "Fija límites de gasto o uso y te avisa, o actúa, cuando se superan o se prevé superarlos",
     "documentacion": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html"
   },
@@ -577,8 +577,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de procesamiento del lenguaje natural que extrae de un texto el sentimiento, las entidades, las frases clave, el idioma y los datos personales, sin entrenar modelos propios.",
     "frase": "Analiza textos para sacar sentimiento, entidades, idioma y temas con NLP gestionado",
     "documentacion": "https://docs.aws.amazon.com/comprehend/"
   },
@@ -667,8 +667,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Herramienta para visualizar, filtrar y analizar el coste y el uso de AWS a lo largo del tiempo, con previsiones y recomendaciones de Savings Plans e instancias reservadas.",
     "frase": "Visualiza y filtra tu gasto de meses pasados y hace previsiones del próximo",
     "documentacion": "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html"
   },
@@ -682,8 +682,8 @@
       "SAP-C02",
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio para encontrar, contratar y usar conjuntos de datos de terceros (ficheros, API, Redshift, S3), y para publicar los propios, integrado con AWS Marketplace.",
     "frase": "Catálogo para suscribirse a conjuntos de datos de terceros y usarlos en tu cuenta",
     "documentacion": "https://docs.aws.amazon.com/data-exchange/"
   },
@@ -804,8 +804,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Base de datos de documentos JSON gestionada y compatible con MongoDB, con almacenamiento replicado en tres AZ, réplicas de lectura, clústeres globales y elásticos.",
     "frase": "Base de datos de documentos JSON con consultas ricas e índices, para catálogos y perfiles",
     "documentacion": "https://docs.aws.amazon.com/documentdb/"
   },
@@ -1039,8 +1039,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Plataforma gestionada de big data para ejecutar Spark, Hive, Presto, Flink y otros marcos de código abierto en clústeres de EC2, sobre EKS o en modo sin servidor.",
     "frase": "Clústeres gestionados de Spark, Hive o Hadoop para procesar big data",
     "documentacion": "https://docs.aws.amazon.com/emr/"
   },
@@ -1241,8 +1241,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de gestión de vulnerabilidades que analiza de forma continua instancias de EC2, imágenes de contenedor de ECR, funciones Lambda y repositorios de código en busca de CVE y exposición de red.",
     "frase": "Escanea instancias, imágenes de contenedor y funciones en busca de CVE y exposición",
     "documentacion": "https://docs.aws.amazon.com/inspector/"
   },
@@ -1446,8 +1446,8 @@
       "SAP-C02",
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Gobierno centralizado de lagos de datos en S3: permisos por base de datos, tabla, columna, fila y celda sobre el Glue Data Catalog, aplicados por Athena, Redshift Spectrum, EMR y Glue.",
     "frase": "Gobierna permisos finos por tabla, columna y fila sobre tu lago de datos en S3",
     "documentacion": "https://docs.aws.amazon.com/lake-formation/"
   },
@@ -1483,8 +1483,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio para crear chatbots y asistentes de voz que entienden el lenguaje natural: reconocen la intención del usuario, piden los datos que faltan y ejecutan la acción.",
     "frase": "Crea chatbots de voz y texto que entienden intenciones en lenguaje natural",
     "documentacion": "https://docs.aws.amazon.com/lex/"
   },
@@ -1528,8 +1528,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de seguridad de datos que descubre y clasifica información sensible (datos personales, financieros, credenciales) en buckets de S3 y evalúa su exposición.",
     "frase": "Descubre datos personales y sensibles en tus buckets de S3 con aprendizaje automático",
     "documentacion": "https://docs.aws.amazon.com/macie/"
   },
@@ -1682,8 +1682,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Base de datos de grafos gestionada para datos muy conectados, con los lenguajes Gremlin, openCypher y SPARQL, réplicas de lectura y un motor analítico (Neptune Analytics).",
     "frase": "Base de datos de grafos para relaciones: redes sociales, fraude y grafos de conocimiento",
     "documentacion": "https://docs.aws.amazon.com/neptune/"
   },
@@ -1799,8 +1799,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de conversión de texto en voz con decenas de idiomas y voces (estándar, neuronales, de formato largo y generativas), con control mediante SSML y lexicones.",
     "frase": "Convierte texto en voz natural en muchos idiomas para narrar o dar voz a apps",
     "documentacion": "https://docs.aws.amazon.com/polly/"
   },
@@ -1845,8 +1845,8 @@
     "alias": [
       "Amazon QuickSight"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de IA y análisis que evolucionó de Amazon QuickSight: paneles e informes de inteligencia empresarial sin servidor (Quick Sight), más agentes, investigación y automatización.",
     "frase": "Paneles e informes de BI sin servidor con preguntas en lenguaje natural sobre tus datos",
     "documentacion": "https://docs.aws.amazon.com/quicksuite/"
   },
@@ -1914,8 +1914,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de visión artificial preentrenado que analiza imágenes y vídeos: detecta objetos, escenas, texto, caras y contenido inapropiado, y compara o busca caras.",
     "frase": "Analiza imágenes y vídeos para detectar caras, objetos, texto y contenido inapropiado",
     "documentacion": "https://docs.aws.amazon.com/rekognition/"
   },
@@ -1966,8 +1966,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Clases de almacenamiento de archivo de S3 de muy bajo coste: Instant Retrieval (milisegundos), Flexible Retrieval (minutos u horas) y Deep Archive (hasta 12 o 48 horas).",
     "frase": "Archivo de muy bajo coste para datos fríos que recuperas en minutos u horas",
     "documentacion": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html"
   },
@@ -1985,8 +1985,8 @@
     "incluye": [
       "Amazon SageMaker JumpStart"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Plataforma gestionada para todo el ciclo del aprendizaje automático: preparar datos, entrenar, ajustar, desplegar y vigilar modelos propios, con MLOps integrado.",
     "frase": "Plataforma para preparar datos, entrenar, ajustar y desplegar tus propios modelos de ML",
     "documentacion": "https://docs.aws.amazon.com/sagemaker/"
   },
@@ -2285,8 +2285,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio que extrae texto impreso y manuscrito, tablas, formularios y datos concretos de documentos escaneados, más allá del simple reconocimiento óptico de caracteres.",
     "frase": "Extrae texto, tablas y campos de formularios de documentos escaneados",
     "documentacion": "https://docs.aws.amazon.com/textract/"
   },
@@ -2314,8 +2314,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de reconocimiento automático del habla que convierte audio en texto, por lotes o en tiempo real, con identificación de hablantes, vocabulario propio y enmascarado de datos personales.",
     "frase": "Convierte audio de voz en texto, con marcas de tiempo e identificación de hablantes",
     "documentacion": "https://docs.aws.amazon.com/transcribe/"
   },
@@ -2372,8 +2372,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de traducción automática neuronal entre decenas de idiomas, en tiempo real o por lotes, con terminología personalizada y ajuste del estilo.",
     "frase": "Traduce textos entre decenas de idiomas con traducción automática neuronal",
     "documentacion": "https://docs.aws.amazon.com/translate/"
   },

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "textract-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una gestoría recibe miles de formularios en papel escaneados y quiere volcar automáticamente sus campos y tablas a una base de datos. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "Amazon Textract.",
+      "Amazon Rekognition.",
+      "Amazon Translate.",
+      "Amazon Polly."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Textract extrae texto, pares clave-valor de formularios y tablas de documentos escaneados. Rekognition analiza imágenes y vídeo, Translate traduce y Polly convierte texto en voz.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/textract/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "textract-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué aporta Amazon Textract frente a un reconocimiento óptico de caracteres tradicional?",
+    "opciones": [
+      "Traduce automáticamente el documento al idioma de cada usuario.",
+      "Convierte el documento en un fichero de audio para escucharlo.",
+      "Detecta y compara las caras que aparecen en el documento.",
+      "Además del texto, reconoce la estructura: campos de formulario con su valor y tablas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El reconocimiento óptico de caracteres clásico devuelve texto plano; Textract identifica además las relaciones, como qué valor corresponde a cada campo y cómo se organiza una tabla.",
+    "fuentes": [
+      "https://aws.amazon.com/textract/faqs/"
+    ]
+  },
+  {
+    "id": "textract-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aseguradora procesa expedientes en PDF de cientos de páginas guardados en S3. ¿Cómo debe usar Amazon Textract para analizarlos?",
+    "opciones": [
+      "Con llamadas síncronas, una por cada documento completo.",
+      "Con operaciones asíncronas, que avisan por SNS cuando el análisis ha terminado.",
+      "Convirtiendo antes cada página en audio.",
+      "Con la API de documentos de identidad."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las operaciones síncronas están pensadas para documentos de una página. Para documentos de varias páginas se usan las asíncronas: se inicia el trabajo sobre el objeto de S3 y se recogen los resultados tras la notificación de SNS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/textract/latest/dg/async.html"
+    ]
+  },
+  {
+    "id": "textract-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "De cada contrato escaneado solo interesa un dato: la fecha de vencimiento, que aparece en posiciones distintas según el modelo de contrato. ¿Qué función de Amazon Textract lo obtiene con menos procesamiento posterior?",
+    "opciones": [
+      "La detección de texto, buscando después la fecha con expresiones regulares.",
+      "La función de tablas.",
+      "La función de consultas, preguntando por la fecha de vencimiento.",
+      "La detección de firmas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las consultas permiten pedir un dato concreto en lenguaje natural y Textract devuelve la respuesta con su confianza, sin depender de dónde esté en la página. Extraer todo el texto obliga a escribir y mantener lógica de búsqueda propia.",
+    "fuentes": [
+      "https://aws.amazon.com/textract/faqs/"
+    ]
+  },
+  {
+    "id": "textract-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un banco automatiza la lectura de solicitudes con Amazon Textract, pero exige que una persona revise los campos que el servicio extrae con poca seguridad. ¿Qué diseño cumple el requisito con menos desarrollo?",
+    "opciones": [
+      "Integrar Amazon Augmented AI para enviar a revisión humana los resultados con poca confianza.",
+      "Procesar cada documento dos veces con Textract y comparar los dos resultados.",
+      "Sustituir Textract por un modelo propio entrenado en SageMaker AI.",
+      "Enviar todos los documentos a revisión manual, sin tener en cuenta la confianza."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Textract devuelve una puntuación de confianza por cada dato, y Augmented AI ofrece flujos de revisión humana que se activan según condiciones como un umbral de confianza. Revisarlo todo a mano anula el ahorro.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/textract/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "textract-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa quiere que un modelo fundacional responda preguntas sobre miles de contratos escaneados como imagen. ¿Qué paso previo hace falta para que el modelo pueda trabajar con su contenido?",
+    "opciones": [
+      "Convertir los contratos en audio con Amazon Polly.",
+      "Analizar las imágenes con la detección de etiquetas de Amazon Rekognition.",
+      "Traducir los contratos con Amazon Translate.",
+      "Extraer el texto y la estructura de los documentos con Amazon Textract."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Un documento escaneado es una imagen: antes de indexarlo o pasarlo a un modelo hay que extraer su texto y su estructura, que es lo que hace Textract. Rekognition detecta objetos y escenas, no el contenido documental.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/textract/latest/dg/what-is.html"
+    ]
+  }
+]

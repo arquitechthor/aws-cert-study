@@ -1,0 +1,156 @@
+[
+  {
+    "id": "comprehend-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere saber si las miles de reseñas de texto que escriben sus clientes son positivas o negativas, sin crear modelos propios. ¿Qué servicio debe usar?",
+    "opciones": [
+      "Amazon Comprehend.",
+      "Amazon Polly.",
+      "Amazon Rekognition.",
+      "Amazon Translate."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Comprehend analiza texto y devuelve, entre otras cosas, su sentimiento. Polly convierte texto en voz, Rekognition analiza imágenes y vídeo, y Translate traduce.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "comprehend-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Cuál de estas tareas resuelve Amazon Comprehend?",
+    "opciones": [
+      "Convertir una grabación de audio de una reunión en texto.",
+      "Detectar las caras que aparecen en una fotografía.",
+      "Traducir un documento del inglés al español manteniendo el formato.",
+      "Identificar personas, lugares y organizaciones mencionados en un texto."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El reconocimiento de entidades es una de las funciones de Comprehend. Convertir audio en texto es Transcribe, detectar caras es Rekognition y traducir es Translate.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/comprehend/latest/dg/get-started-console.html"
+    ]
+  },
+  {
+    "id": "comprehend-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Antes de guardar las transcripciones de un chat de soporte para analizarlas, hay que eliminar los nombres, teléfonos y números de tarjeta que contengan. ¿Qué opción requiere menos desarrollo?",
+    "opciones": [
+      "Expresiones regulares mantenidas por el equipo en una función Lambda.",
+      "La detección y el enmascarado de PII de Amazon Comprehend.",
+      "Cifrar los ficheros con una clave de KMS.",
+      "Amazon Macie sobre el bucket de destino."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Comprehend detecta datos personales en texto y puede devolverlo con esos datos enmascarados. Las expresiones regulares propias son frágiles, el cifrado no elimina los datos y Macie los descubre en S3, pero no los enmascara en el flujo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/comprehend/latest/dg/pii.html"
+    ]
+  },
+  {
+    "id": "comprehend-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un centro de atención graba las llamadas en audio y quiere conocer el sentimiento de cada conversación. ¿Qué combinación de servicios es la adecuada?",
+    "opciones": [
+      "Amazon Polly para leer la llamada y Amazon Lex para interpretarla.",
+      "Amazon Textract para extraer el texto y Amazon Translate para traducirlo.",
+      "Amazon Transcribe para pasar el audio a texto y Amazon Comprehend para el sentimiento.",
+      "Amazon Rekognition para analizar la grabación y Amazon Comprehend para resumirla."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Comprehend trabaja con texto, así que primero hay que transcribir el audio con Transcribe. Polly hace lo contrario (texto a voz), Textract lee documentos y Rekognition analiza imágenes y vídeo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "comprehend-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aseguradora recibe miles de correos al día y quiere encaminarlos automáticamente a siniestros, altas o reclamaciones, que son categorías propias. El equipo no tiene especialistas en aprendizaje automático. ¿Qué solución encaja?",
+    "opciones": [
+      "Un clasificador personalizado de Amazon Comprehend entrenado con correos ya etiquetados.",
+      "Un modelo construido desde cero en instancias de EC2 con GPU.",
+      "Reglas de palabras clave mantenidas a mano en una función Lambda.",
+      "Amazon Kendra con un índice por categoría."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La clasificación personalizada de Comprehend entrena un modelo con ejemplos etiquetados de las categorías del negocio, sin que el equipo tenga que diseñar ni operar el modelo. Construirlo desde cero exige conocimientos, y las reglas de palabras clave son poco fiables.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/comprehend/latest/dg/get-started-console.html"
+    ]
+  },
+  {
+    "id": "comprehend-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un caso de uso consiste en extraer automáticamente las frases clave y el idioma de documentos de texto. ¿Qué tipo de servicio de AWS es el más adecuado y por qué?",
+    "opciones": [
+      "Un modelo entrenado desde cero en SageMaker AI, porque siempre da más precisión.",
+      "Amazon Rekognition, porque analiza cualquier tipo de documento.",
+      "Amazon Comprehend, un servicio de IA preentrenado para lenguaje natural que no exige entrenar modelos.",
+      "Amazon Polly, porque trabaja con texto."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Para tareas habituales de lenguaje natural, un servicio de IA ya entrenado como Comprehend resuelve el problema con una llamada a la API. Entrenar un modelo propio solo compensa cuando los servicios preentrenados no cubren la necesidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "comprehend-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA generativa",
+    "enunciado": "Un equipo usaba la clasificación de seguridad de prompts de Amazon Comprehend y debe diseñar una solución nueva en una cuenta que nunca la había usado. ¿Qué alternativa indica AWS?",
+    "opciones": [
+      "Amazon Translate con terminología personalizada.",
+      "Amazon Textract con consultas.",
+      "Amazon Transcribe con filtros de vocabulario.",
+      "Amazon Bedrock Guardrails."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Esa función de Comprehend ya no está disponible para clientes nuevos, y AWS remite a Bedrock Guardrails para filtrar entradas y salidas de los modelos. Los otros servicios no evalúan la seguridad de los prompts.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/comprehend/latest/dg/comprehend-availability-change.html"
+    ]
+  }
+]

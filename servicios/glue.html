@@ -66,7 +66,7 @@
       <p>AWS Glue es un servicio de <strong>integración de datos</strong> sin servidores. Sirve para
         descubrir qué datos tienes, catalogarlos y transformarlos (<abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr>) para dejarlos listos para el
         análisis o el <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>. Su pieza más transversal es el <strong>catálogo de datos</strong>: un registro
-        central de tablas (esquema y ubicación) que usan <a href="athena.html">Athena</a>, <a href="redshift.html">Redshift</a> Spectrum, <a href="../servicio.html?id=emr"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a> y Lake
+        central de tablas (esquema y ubicación) que usan <a href="athena.html">Athena</a>, <a href="redshift.html">Redshift</a> Spectrum, <a href="emr.html"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a> y Lake
         Formation. Los trabajos de <abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr> corren sobre Apache Spark o Python sin clústeres que gestionar.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
@@ -97,10 +97,10 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Solo copiar datos de aplicaciones SaaS sin transformar: <a href="appflow.html">AppFlow</a>.</li>
+        <li>Solo copiar datos de aplicaciones <abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr> sin transformar: <a href="appflow.html">AppFlow</a>.</li>
         <li>Migrar o replicar una base de datos: <a href="../servicio.html?id=dms"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a>.</li>
         <li>Entregar streaming a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin transformaciones complejas: <a href="data-firehose.html">Firehose</a>.</li>
-        <li>Si necesitas control total del clúster de big data: <a href="../servicio.html?id=emr"><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></a>.</li>
+        <li>Si necesitas control total del clúster de big data: <a href="emr.html"><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></a>.</li>
       </ul>
 
       <h2 id="precios">Modelo de precios</h2>
@@ -112,14 +112,14 @@
       <ul>
         <li>Roles de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para que los trabajos accedan a los datos.</li>
         <li>Cifrado del catálogo, de los registros y de los datos con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
-        <li>Permisos detallados sobre el catálogo con <a href="../servicio.html?id=lake-formation">Lake Formation</a>.</li>
+        <li>Permisos detallados sobre el catálogo con <a href="lake-formation.html">Lake Formation</a>.</li>
         <li>Conexiones a fuentes dentro de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Descubrir el esquema de los datos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> automáticamente"</strong>: crawler de Glue.</li>
-        <li><strong>"Catálogo central para <a href="athena.html">Athena</a>, <a href="../servicio.html?id=emr"><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></a> y <a href="redshift.html">Redshift</a> Spectrum"</strong>: Glue Data Catalog.</li>
+        <li><strong>"Catálogo central para <a href="athena.html">Athena</a>, <a href="emr.html"><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></a> y <a href="redshift.html">Redshift</a> Spectrum"</strong>: Glue Data Catalog.</li>
         <li><strong>"<abbr class="sigla" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL</abbr> sin servidores"</strong>: trabajos de Glue.</li>
         <li><strong>"Procesar solo los datos nuevos en cada ejecución"</strong>: job bookmarks.</li>
         <li><strong>"Preparar datos sin código"</strong>: <a href="../servicio.html?id=glue-databrew">Glue DataBrew</a>.</li>

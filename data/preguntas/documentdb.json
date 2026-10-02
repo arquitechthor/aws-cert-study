@@ -1,0 +1,156 @@
+[
+  {
+    "id": "documentdb-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere migrar a AWS una aplicación que usa MongoDB, sin cambiar su código y sin administrar los servidores de base de datos. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "Amazon Redshift.",
+      "Amazon DocumentDB.",
+      "Amazon Neptune.",
+      "Amazon ElastiCache."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "DocumentDB es una base de datos de documentos gestionada y compatible con MongoDB, de modo que la aplicación sigue usando los mismos controladores. Redshift es un almacén de datos, Neptune una base de datos de grafos y ElastiCache una caché en memoria.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/documentdb/latest/devguide/what-is.html"
+    ]
+  },
+  {
+    "id": "documentdb-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué tipo de datos está pensado para almacenar Amazon DocumentDB?",
+    "opciones": [
+      "Tablas relacionales con esquema fijo.",
+      "Series temporales de sensores.",
+      "Documentos JSON semiestructurados.",
+      "Relaciones entre nodos de un grafo."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "DocumentDB guarda documentos JSON con estructura flexible. Para datos relacionales están RDS y Aurora, para series temporales Timestream y para grafos Neptune.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/documentdb/latest/devguide/what-is.html"
+    ]
+  },
+  {
+    "id": "documentdb-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación sobre Amazon DocumentDB tiene muchas más lecturas que escrituras y la instancia principal está saturada. ¿Qué cambio escala las lecturas con menos esfuerzo?",
+    "opciones": [
+      "Añadir réplicas y dirigir las lecturas al punto de enlace de lectura.",
+      "Pasar el clúster a almacenamiento optimizado para E/S.",
+      "Activar los flujos de cambios en todas las colecciones.",
+      "Crear un segundo clúster y sincronizarlo con la aplicación."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las réplicas comparten el volumen del clúster y atienden lecturas; el punto de enlace de lectura reparte las conexiones entre ellas. La configuración de E/S afecta al coste, no a la capacidad de lectura.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/documentdb/latest/devguide/what-is.html"
+    ]
+  },
+  {
+    "id": "documentdb-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "¿Cómo protege Amazon DocumentDB los datos de un clúster frente a la pérdida de una zona de disponibilidad?",
+    "opciones": [
+      "Con una copia diaria automática del clúster a otra región de AWS.",
+      "Con un volumen de EBS replicado por cada instancia del clúster.",
+      "Con una réplica de lectura obligatoria en cada AZ de la región.",
+      "Guardando seis copias de los datos en tres AZ en el volumen del clúster."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El volumen de clúster replica los datos seis veces en tres AZ, con independencia del número de instancias. Las réplicas aportan disponibilidad del cómputo, pero la durabilidad viene del volumen.",
+    "fuentes": [
+      "https://aws.amazon.com/documentdb/pricing/"
+    ]
+  },
+  {
+    "id": "documentdb-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un catálogo sobre Amazon DocumentDB crece hasta el punto de que una sola instancia principal no da abasto con las escrituras ni con el volumen de datos. ¿Qué opción permite seguir creciendo?",
+    "opciones": [
+      "Añadir más réplicas de lectura al clúster.",
+      "Un clúster elástico, que reparte los datos en fragmentos.",
+      "Un clúster global con más regiones secundarias.",
+      "Activar la búsqueda vectorial en las colecciones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los clústeres elásticos distribuyen las colecciones en fragmentos, cada uno con su cómputo y almacenamiento, lo que escala las escrituras y la capacidad. Las réplicas y las regiones secundarias solo escalan las lecturas.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/database/scale-write-performance-on-amazon-documentdb-elastic-clusters/"
+    ]
+  },
+  {
+    "id": "documentdb-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación mundial sobre Amazon DocumentDB necesita lecturas con baja latencia en tres continentes y poder recuperarse de la caída de una región entera. ¿Qué debe usar?",
+    "opciones": [
+      "Réplicas de lectura en distintas AZ de una sola región.",
+      "Copias instantáneas manuales cada hora, restauradas en otra región si hace falta.",
+      "Un clúster global, con una región principal y regiones secundarias de solo lectura.",
+      "Un clúster elástico con más fragmentos repartidos en la misma región."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los clústeres globales replican los datos a clústeres de solo lectura en otras regiones: sirven lecturas locales y permiten promocionar una región secundaria si falla la principal. Las réplicas en varias AZ no protegen frente a la pérdida de la región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/documentdb/latest/devguide/global-clusters.html"
+    ]
+  },
+  {
+    "id": "documentdb-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una aplicación guarda sus documentos en Amazon DocumentDB y quiere añadir búsqueda semántica para una función de IA generativa sin incorporar otra base de datos. ¿Qué capacidad puede usar?",
+    "opciones": [
+      "Los flujos de cambios de DocumentDB.",
+      "Las réplicas de lectura de DocumentDB.",
+      "Los clústeres globales de DocumentDB.",
+      "La búsqueda vectorial de DocumentDB."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "DocumentDB admite índices de vectores, lo que permite guardar las representaciones vectoriales junto a los documentos y hacer búsquedas por similitud. Los flujos de cambios, las réplicas y los clústeres globales no aportan búsqueda semántica.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/documentdb/latest/devguide/vector-search.html"
+    ]
+  }
+]

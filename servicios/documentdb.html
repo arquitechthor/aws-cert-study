@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon DocumentDB — Apuntes AWS</title>
+<meta name="description" content="Base de datos de documentos JSON gestionada y compatible con MongoDB, con almacenamiento replicado en tres AZ, réplicas de lectura, clústeres globales y elásticos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/documentdb.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon DocumentDB — Apuntes AWS">
+<meta property="og:description" content="Base de datos de documentos JSON gestionada y compatible con MongoDB, con almacenamiento replicado en tres AZ, réplicas de lectura, clústeres globales y elásticos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/documentdb.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/documentdb.svg" alt="" width="56" height="56"><span>Amazon DocumentDB</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Base de datos de documentos <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> con consultas ricas e índices, para catálogos y perfiles</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=base-de-datos#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/base-de-datos.svg" alt="" width="18" height="18">Base de datos <span class="cat-en">(Database)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/documentdb/" target="_blank" rel="noopener">Documentación de Amazon DocumentDB ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon DocumentDB es una <strong>base de datos de documentos</strong> totalmente gestionada y
+        <strong>compatible con MongoDB</strong>: las aplicaciones usan los mismos controladores y herramientas. Guarda
+        documentos <strong><abbr class="sigla" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON</abbr></strong> con estructura flexible, anidada y distinta de un documento a otro, y permite
+        consultarlos e indexarlos por cualquier campo. Su arquitectura es parecida a la de <a href="aurora.html">Aurora</a>: el cómputo y el
+        almacenamiento van separados.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Clúster basado en instancias:</strong> una instancia <strong>principal</strong> (lecturas y
+          escrituras) y hasta <strong>15 réplicas</strong> de solo lectura, todas sobre un mismo <strong>volumen de
+          clúster</strong>.</li>
+        <li><strong>Volumen de clúster:</strong> el almacenamiento crece solo y guarda <strong>seis copias de los datos
+          en tres <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr></strong>. Se paga una vez, no por copia.</li>
+        <li><strong>Puntos de enlace:</strong> el del clúster apunta a la principal; el de <strong>lectura</strong>
+          reparte entre las réplicas.</li>
+        <li><strong>Conmutación por error:</strong> si cae la principal, se promociona una réplica
+          automáticamente.</li>
+        <li><strong>Clústeres globales:</strong> una región principal y regiones secundarias de solo lectura, para
+          lecturas locales y recuperación ante la caída de una región.</li>
+        <li><strong>Clústeres elásticos:</strong> reparten los datos en <strong>fragmentos</strong>
+          (<em>shards</em>) para escalar las <strong>escrituras</strong> y el almacenamiento más allá de lo que da una
+          sola instancia principal.</li>
+        <li><strong>Copias:</strong> automáticas y continuas en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, con recuperación a un momento dado, e instantáneas
+          manuales.</li>
+        <li><strong>Flujos de cambios</strong> (<em>change streams</em>): la secuencia de modificaciones, para reaccionar
+          a ellas.</li>
+        <li><strong>Búsqueda vectorial:</strong> índices de vectores para aplicaciones de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> generativa sobre los
+          mismos documentos.</li>
+        <li><strong>Almacenamiento estándar u optimizado para <abbr class="sigla sigla-1" data-s="E/S" data-es="entrada y salida: lecturas y escrituras" tabindex="0">E/S<span class="sigla-exp"> (entrada y salida: lecturas y escrituras)</span></abbr>:</strong> el segundo no cobra por operación y
+          conviene con mucha actividad.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Catálogos de productos, donde cada artículo tiene atributos distintos.</li>
+        <li>Perfiles de usuario y gestión de contenidos.</li>
+        <li><strong>Migrar cargas de MongoDB</strong> a un servicio gestionado sin reescribir la aplicación.</li>
+        <li>Aplicaciones móviles y web con modelos de datos que cambian a menudo.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Acceso por clave con latencia de milisegundos a cualquier escala y sin instancias: <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Datos relacionales con uniones y transacciones complejas: <a href="aurora.html">Aurora</a> o <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>.</li>
+        <li>Datos muy conectados (relaciones entre entidades): <a href="neptune.html">Neptune</a>.</li>
+        <li>Búsqueda de texto completo y análisis de logs: <a href="opensearch-service.html">OpenSearch Service</a>.</li>
+        <li>Caché en memoria: <a href="elasticache.html">ElastiCache</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>DocumentDB</th><th><a href="dynamodb.html">DynamoDB</a></th></tr></thead>
+          <tbody>
+            <tr><td>Modelo</td><td>Documentos <abbr class="sigla" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON</abbr>, consultas ricas por cualquier campo</td><td>Clave-valor y documentos, acceso por clave</td></tr>
+            <tr><td>Compatibilidad</td><td><abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de MongoDB</td><td><abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> propia</td></tr>
+            <tr><td>Capacidad</td><td>Instancias que se dimensionan</td><td>Sin servidor, bajo demanda o aprovisionada</td></tr>
+            <tr><td>Cuándo elegirlo</td><td>Migrar MongoDB, consultas y agregaciones flexibles</td><td>Escala masiva con patrones de acceso conocidos</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se pagan las <strong>instancias</strong> por hora, el <strong>almacenamiento</strong> por gigabyte y mes, las
+        <strong>operaciones de <abbr class="sigla" data-s="E/S" data-es="entrada y salida: lecturas y escrituras" tabindex="0">E/S</abbr></strong> (salvo en la configuración optimizada para <abbr class="sigla" data-s="E/S" data-es="entrada y salida: lecturas y escrituras" tabindex="0">E/S</abbr>) y el almacenamiento de
+        copias que supere el tamaño del clúster. Los clústeres elásticos se cobran por la vCPU de sus fragmentos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Solo es accesible <strong>dentro de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></strong>; no tiene punto de enlace público.</li>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> (se decide al crear el clúster) y en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
+        <li>Con réplicas en otras <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>, la conmutación por error es automática; sin réplicas, hay que esperar a que se
+          cree una instancia nueva.</li>
+        <li>Para la caída de una región, clústeres globales.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"MongoDB"</strong> en el enunciado: DocumentDB.</li>
+        <li><strong>"Documentos <abbr class="sigla" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON</abbr> con consultas flexibles e índices"</strong>: DocumentDB.</li>
+        <li><strong>"Clave-valor, sin servidor, milisegundos a cualquier escala"</strong>: <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li><strong>"Escalar las lecturas"</strong>: réplicas y el punto de enlace de lectura. <strong>"Escalar las
+          escrituras"</strong>: clústeres elásticos.</li>
+        <li><strong>"Relaciones entre entidades, grafos"</strong>: <a href="neptune.html">Neptune</a>, no DocumentDB.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="documentdb"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/documentdb/latest/devguide/what-is.html" target="_blank" rel="noopener">What is Amazon DocumentDB (with MongoDB compatibility)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/documentdb/latest/devguide/global-clusters.html" target="_blank" rel="noopener">Overview of Amazon DocumentDB global clusters</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/documentdb/latest/devguide/global-clusters.get-started.html" target="_blank" rel="noopener">Quick start guide: global clusters</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/database/scale-write-performance-on-amazon-documentdb-elastic-clusters/" target="_blank" rel="noopener">Scale write performance on Amazon DocumentDB elastic clusters</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/documentdb/latest/devguide/vector-search.html" target="_blank" rel="noopener">Vector search for Amazon DocumentDB</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/documentdb/pricing/" target="_blank" rel="noopener">Amazon DocumentDB Pricing</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

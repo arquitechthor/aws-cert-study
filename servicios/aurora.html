@@ -93,15 +93,15 @@
           almacenamiento hasta que cambian los datos (<em>copy-on-write</em>). Ideal para pruebas.</li>
         <li><strong>Backtrack</strong> (solo Aurora MySQL): rebobina el clúster a un momento anterior
           sin restaurar una copia.</li>
-        <li><strong>Modos de almacenamiento:</strong> <em>Standard</em> (pagas las operaciones de E/S)
-          o <em>I/O-Optimized</em> (sin coste por E/S, para cargas intensivas).</li>
+        <li><strong>Modos de almacenamiento:</strong> <em>Standard</em> (pagas las operaciones de <abbr class="sigla sigla-1" data-s="E/S" data-es="entrada y salida: lecturas y escrituras" tabindex="0">E/S<span class="sigla-exp"> (entrada y salida: lecturas y escrituras)</span></abbr>)
+          o <em>I/O-Optimized</em> (sin coste por <abbr class="sigla" data-s="E/S" data-es="entrada y salida: lecturas y escrituras" tabindex="0">E/S</abbr>, para cargas intensivas).</li>
         <li><strong>Copias y <abbr class="sigla sigla-1" data-s="PITR" data-en="Point-In-Time Recovery" data-es="restaurar a un momento concreto" tabindex="0">PITR<span class="sigla-exp"> (Point-In-Time Recovery: restaurar a un momento concreto)</span></abbr></strong> hasta 35 días, como <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Aplicaciones relacionales críticas que necesitan alta disponibilidad y muchas lecturas.</li>
-        <li>SaaS y aplicaciones globales con lectores en varias regiones (Global Database).</li>
+        <li><abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr> y aplicaciones globales con lectores en varias regiones (Global Database).</li>
         <li>Cargas intermitentes o entornos de desarrollo con Serverless v2.</li>
         <li>Migrar desde bases comerciales (Oracle, SQL Server) a un motor compatible con código
           abierto.</li>
@@ -131,7 +131,7 @@
 
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga por hora de cada instancia (o por ACU-hora en Serverless v2), el almacenamiento
-        realmente usado por GB al mes, las operaciones de E/S en el modo Standard, las copias que
+        realmente usado por GB al mes, las operaciones de <abbr class="sigla" data-s="E/S" data-es="entrada y salida: lecturas y escrituras" tabindex="0">E/S</abbr> en el modo Standard, las copias que
         superen el tamaño del clúster, Backtrack, y la replicación y transferencia en Global
         Database. Hay instancias reservadas para las aprovisionadas.</p>
 
@@ -153,7 +153,7 @@
         <li><strong>"Copia rápida de producción para pruebas"</strong>: clonación.</li>
         <li><strong>"Deshacer un error sin restaurar"</strong> en Aurora MySQL: Backtrack.</li>
         <li><strong>"Enviar los informes a unas réplicas concretas"</strong>: endpoint personalizado.</li>
-        <li><strong>"Muchas E/S y factura de E/S alta"</strong>: modo I/O-Optimized.</li>
+        <li><strong>"Muchas <abbr class="sigla" data-s="E/S" data-es="entrada y salida: lecturas y escrituras" tabindex="0">E/S</abbr> y factura de <abbr class="sigla" data-s="E/S" data-es="entrada y salida: lecturas y escrituras" tabindex="0">E/S</abbr> alta"</strong>: modo I/O-Optimized.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

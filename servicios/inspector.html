@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Inspector — Apuntes AWS</title>
+<meta name="description" content="Servicio de gestión de vulnerabilidades que analiza de forma continua instancias de EC2, imágenes de contenedor de ECR, funciones Lambda y repositorios de código en busca de CVE y exposición de red. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/inspector.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Inspector — Apuntes AWS">
+<meta property="og:description" content="Servicio de gestión de vulnerabilidades que analiza de forma continua instancias de EC2, imágenes de contenedor de ECR, funciones Lambda y repositorios de código en busca de CVE y exposición de red.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/inspector.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/inspector.svg" alt="" width="56" height="56"><span>Amazon Inspector</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Escanea instancias, imágenes de contenedor y funciones en busca de <abbr class="sigla sigla-1" data-s="CVE" data-en="Common Vulnerabilities and Exposures" data-es="catálogo público de vulnerabilidades conocidas" tabindex="0">CVE<span class="sigla-exp"> (Common Vulnerabilities and Exposures: catálogo público de vulnerabilidades conocidas)</span></abbr> y exposición</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/inspector/" target="_blank" rel="noopener">Documentación de Amazon Inspector ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Inspector es el servicio de <strong>gestión de vulnerabilidades</strong> de AWS. Descubre
+        automáticamente tus cargas de trabajo y las analiza <strong>de forma continua</strong> en busca de
+        <strong>vulnerabilidades de software conocidas</strong> (<abbr class="sigla" data-s="CVE" data-en="Common Vulnerabilities and Exposures" data-es="catálogo público de vulnerabilidades conocidas" tabindex="0">CVE</abbr>) y de <strong>exposición de red no
+        intencionada</strong>. No hay que programar análisis: vuelve a revisar cuando cambia el recurso o cuando se
+        publica una vulnerabilidad nueva.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Qué analiza:</strong>
+          <ul>
+            <li><strong>Instancias de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>:</strong> paquetes del sistema operativo y de lenguajes de programación, y
+              accesibilidad desde la red.</li>
+            <li><strong>Imágenes de contenedor en <a href="../servicio.html?id=ecr"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>:</strong> al subirlas y de forma continua después (el
+              <em>análisis mejorado</em> de <abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr>).</li>
+            <li><strong>Funciones <a href="lambda.html">Lambda</a>:</strong> las dependencias del paquete y, con el análisis de código, el
+              código propio.</li>
+            <li><strong>Repositorios de código</strong> (<em>Code Security</em>): código propio, dependencias de
+              terceros e infraestructura como código.</li>
+          </ul>
+        </li>
+        <li><strong>Con o sin agente en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>:</strong> usa el <strong>agente de <a href="systems-manager.html">Systems Manager</a></strong> si la
+          instancia está gestionada; si no, el <strong>análisis sin agente</strong> examina instantáneas de sus
+          volúmenes de <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>. Por defecto combina los dos.</li>
+        <li><strong>Hallazgos</strong> (<em>findings</em>): cada vulnerabilidad detectada, con su gravedad, el recurso
+          afectado y cómo corregirla.</li>
+        <li><strong>Puntuación de riesgo de Inspector:</strong> ajusta la gravedad genérica de la <abbr class="sigla" data-s="CVE" data-en="Common Vulnerabilities and Exposures" data-es="catálogo público de vulnerabilidades conocidas" tabindex="0">CVE</abbr> al contexto del
+          recurso, por ejemplo si es accesible desde internet, para priorizar.</li>
+        <li><strong>Reglas de supresión:</strong> ocultan los hallazgos que has decidido aceptar.</li>
+        <li><strong>Varias cuentas:</strong> con <a href="organizations.html">AWS Organizations</a>, un <strong>administrador delegado</strong> activa
+          y gestiona Inspector en todas las cuentas.</li>
+        <li><strong>Integraciones:</strong> los hallazgos van a <strong><a href="../servicio.html?id=security-hub">Security Hub</a></strong> y a
+          <strong><a href="eventbridge.html">EventBridge</a></strong>, para avisar o corregir automáticamente.</li>
+        <li><strong>Inventario de software</strong> (<abbr class="sigla" data-s="SBOM" data-en="Software Bill of Materials" data-es="inventario de los componentes de un software" tabindex="0">SBOM</abbr>): exporta la lista de componentes de los recursos
+          analizados.</li>
+        <li><strong>Análisis <abbr class="sigla sigla-1" data-s="CIS" data-en="Center for Internet Security" data-es="organización que publica referencias de configuración segura" tabindex="0">CIS<span class="sigla-exp"> (Center for Internet Security: organización que publica referencias de configuración segura)</span></abbr>:</strong> evalúa la configuración del sistema operativo de las instancias frente a
+          las referencias del <abbr class="sigla" data-s="CIS" data-en="Center for Internet Security" data-es="organización que publica referencias de configuración segura" tabindex="0">CIS</abbr>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Saber qué instancias, imágenes y funciones están afectadas cuando se publica una vulnerabilidad
+          grave.</li>
+        <li>Impedir que lleguen a producción imágenes de contenedor con vulnerabilidades críticas, en el
+          pipeline.</li>
+        <li>Priorizar los parches por riesgo real y lanzar el parcheo con <a href="systems-manager.html">Systems Manager</a>.</li>
+        <li>Cumplir requisitos de gestión de vulnerabilidades (<abbr class="sigla sigla-1" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS<span class="sigla-exp"> (Payment Card Industry Data Security Standard: norma de seguridad para datos de tarjetas)</span></abbr> y otros).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para detectar <strong>amenazas activas</strong> y comportamiento malicioso: <a href="../servicio.html?id=guardduty">GuardDuty</a>.</li>
+        <li>Para encontrar <strong>datos sensibles</strong> en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>: <a href="macie.html">Macie</a>.</li>
+        <li>Para evaluar la <strong>configuración</strong> de los recursos de AWS frente a reglas: <a href="config.html">AWS Config</a>.</li>
+        <li>Para <strong>aplicar</strong> los parches: <a href="systems-manager.html">Patch Manager</a> de Systems Manager. Inspector detecta, no
+          corrige.</li>
+        <li>Para proteger frente a ataques web: <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> y <a href="../servicio.html?id=shield">Shield</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Tiene mi software vulnerabilidades conocidas?</td><td>Inspector</td></tr>
+            <tr><td>¿Hay actividad maliciosa o cuentas comprometidas?</td><td><a href="../servicio.html?id=guardduty">GuardDuty</a></td></tr>
+            <tr><td>¿Hay datos personales expuestos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>?</td><td><a href="macie.html">Macie</a></td></tr>
+            <tr><td>¿Están mis recursos configurados según mis reglas?</td><td><a href="config.html">AWS Config</a></td></tr>
+            <tr><td>¿Cuál es mi postura de seguridad, con todo junto?</td><td><a href="../servicio.html?id=security-hub">Security Hub</a></td></tr>
+            <tr><td>¿Sigo las buenas prácticas generales?</td><td><a href="trusted-advisor.html">Trusted Advisor</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga según <strong>lo que se analiza</strong>: por instancia de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> analizada al mes, por imagen de
+        contenedor analizada (al subirla y en cada nuevo análisis), por función <a href="lambda.html">Lambda</a> al mes y por el análisis de
+        código. Hay un periodo de prueba gratuito al activarlo.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Usa roles vinculados al servicio; no necesita credenciales dentro de las instancias.</li>
+        <li>Es un servicio <strong>regional</strong>: hay que activarlo en cada región que se use.</li>
+        <li>El análisis es continuo y automático; no hay ventanas de análisis que gestionar.</li>
+        <li>Los hallazgos se cierran solos cuando se corrige la vulnerabilidad.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Vulnerabilidades de software"</strong>, "<abbr class="sigla" data-s="CVE" data-en="Common Vulnerabilities and Exposures" data-es="catálogo público de vulnerabilidades conocidas" tabindex="0">CVE</abbr>" o "exposición de red" en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, contenedores o <a href="lambda.html">Lambda</a>:
+          Inspector.</li>
+        <li><strong>"Analizar las imágenes de contenedor al subirlas al registro"</strong>: Inspector con <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>.</li>
+        <li><strong>"Amenazas", "comportamiento anómalo", "minería de criptomonedas"</strong>: <a href="../servicio.html?id=guardduty">GuardDuty</a>, no
+          Inspector.</li>
+        <li><strong>"Datos personales en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: <a href="macie.html">Macie</a>.</li>
+        <li><strong>Inspector detecta; <a href="systems-manager.html">Patch Manager</a> parchea.</strong></li>
+        <li><strong>"Sin instalar agentes"</strong>: análisis sin agente, a partir de instantáneas de <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="inspector"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html" target="_blank" rel="noopener">What is Amazon Inspector?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/inspector/latest/user/scanning-resources.html" target="_blank" rel="noopener">Automated scan types in Amazon Inspector</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/inspector/latest/user/activate-scans.html" target="_blank" rel="noopener">Activating a scan type</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/inspector/faqs/" target="_blank" rel="noopener">Amazon Inspector FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

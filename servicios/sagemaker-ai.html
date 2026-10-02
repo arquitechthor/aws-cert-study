@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon SageMaker AI — Apuntes AWS</title>
+<meta name="description" content="Plataforma gestionada para todo el ciclo del aprendizaje automático: preparar datos, entrenar, ajustar, desplegar y vigilar modelos propios, con MLOps integrado. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/sagemaker-ai.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon SageMaker AI — Apuntes AWS">
+<meta property="og:description" content="Plataforma gestionada para todo el ciclo del aprendizaje automático: preparar datos, entrenar, ajustar, desplegar y vigilar modelos propios, con MLOps integrado.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/sagemaker-ai.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/sagemaker-ai.svg" alt="" width="56" height="56"><span>Amazon SageMaker AI</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Plataforma para preparar datos, entrenar, ajustar y desplegar tus propios modelos de <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr></span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/sagemaker/" target="_blank" rel="noopener">Documentación de Amazon SageMaker AI ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon SageMaker AI (antes Amazon SageMaker) es la plataforma de AWS para <strong>construir, entrenar y
+        desplegar modelos de aprendizaje automático propios</strong>. Cubre todo el ciclo de vida: preparar los datos,
+        experimentar, entrenar a gran escala, poner el modelo en producción y vigilarlo. AWS gestiona la
+        infraestructura; tú decides el algoritmo y los datos. Es la opción cuando los servicios de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> ya entrenados
+        (<a href="rekognition.html">Rekognition</a>, <a href="comprehend.html">Comprehend</a>…) no cubren el problema.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>SageMaker Studio:</strong> el entorno web de trabajo, con cuadernos y acceso a todas las
+          herramientas.</li>
+        <li><strong>Preparación de datos:</strong> <strong>Data Wrangler</strong> (limpiar y transformar de forma
+          visual), <strong>Ground Truth</strong> (etiquetar datos, con personas y con ayuda automática) y
+          <strong>Feature Store</strong> (almacén de características para que entrenamiento e inferencia usen los
+          mismos datos).</li>
+        <li><strong>Entrenamiento:</strong> trabajos en instancias gestionadas que se crean, entrenan y se apagan. Con
+          algoritmos integrados, con tu código en marcos como PyTorch o TensorFlow, o con tu contenedor. El
+          <strong>entrenamiento con Spot gestionado</strong> abarata, y el <strong>ajuste automático de
+          hiperparámetros</strong> busca la mejor configuración.</li>
+        <li><strong>Sin escribir código:</strong> <strong>Canvas</strong> (interfaz visual para analistas),
+          <strong>Autopilot</strong> (prueba modelos automáticamente) y <strong>JumpStart</strong> (catálogo de
+          modelos preentrenados y modelos fundacionales listos para desplegar o ajustar).</li>
+        <li><strong>Cuatro opciones de inferencia:</strong>
+          <ul>
+            <li><strong>En tiempo real:</strong> punto de enlace siempre activo, baja latencia.</li>
+            <li><strong>Sin servidor:</strong> para tráfico intermitente; escala a cero entre ráfagas.</li>
+            <li><strong>Asíncrona:</strong> peticiones grandes o lentas en cola, casi en tiempo real.</li>
+            <li><strong>Transformación por lotes:</strong> predicciones sobre un conjunto de datos completo, sin punto
+              de enlace permanente.</li>
+          </ul>
+        </li>
+        <li><strong><abbr class="sigla sigla-1" data-s="MLOps" data-en="Machine Learning Operations" data-es="prácticas para llevar y mantener modelos en producción" tabindex="0">MLOps<span class="sigla-exp"> (Machine Learning Operations: prácticas para llevar y mantener modelos en producción)</span></abbr>:</strong> <strong>Pipelines</strong> (flujos automatizados), <strong>Model Registry</strong>
+          (catálogo y aprobación de versiones) y <strong>Model Monitor</strong> (detecta la deriva de los datos y de la
+          calidad del modelo en producción).</li>
+        <li><strong><abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> responsable:</strong> <strong>Clarify</strong> (detecta sesgos y explica las predicciones) y
+          <strong>Model Cards</strong> (documentación del modelo).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Modelos predictivos con datos propios: demanda, abandono de clientes, riesgo, mantenimiento.</li>
+        <li>Detección de fraude y sistemas de recomendación a medida.</li>
+        <li>Ajustar y desplegar modelos fundacionales de código abierto con control de la infraestructura.</li>
+        <li>Industrializar el aprendizaje automático: del cuaderno a un proceso repetible y auditado.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si un <strong>servicio de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> preentrenado</strong> resuelve el problema (visión, texto, voz,
+          traducción): <a href="rekognition.html">Rekognition</a>, <a href="comprehend.html">Comprehend</a>, <a href="transcribe.html">Transcribe</a>, <a href="translate.html">Translate</a>… Es más rápido y no exige conocimientos de
+          <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr>.</li>
+        <li>Para usar <strong>modelos fundacionales por <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr></strong> sin gestionar infraestructura: <a href="bedrock.html">Bedrock</a>.</li>
+        <li>Para procesar datos a gran escala antes de entrenar: <a href="emr.html"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a> o <a href="glue.html">Glue</a>.</li>
+        <li>Si no hay datos suficientes ni de calidad: ningún modelo propio lo arregla.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Capa</th><th>Servicio</th><th>Para quién</th></tr></thead>
+          <tbody>
+            <tr><td>Servicios de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> preentrenados</td><td><a href="rekognition.html">Rekognition</a>, <a href="comprehend.html">Comprehend</a>, <a href="textract.html">Textract</a>, <a href="polly.html">Polly</a>…</td><td>Desarrolladores sin experiencia en <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr></td></tr>
+            <tr><td>Modelos fundacionales por <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></td><td><a href="bedrock.html">Bedrock</a></td><td>Equipos que construyen <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> generativa</td></tr>
+            <tr><td>Plataforma de <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr></td><td>SageMaker AI</td><td>Científicos de datos e ingenieros de <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr></td></tr>
+            <tr><td>Infraestructura</td><td><a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> con <abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr>, contenedores</td><td>Quien quiere gestionarlo todo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por uso de cada componente</strong>: las instancias de los cuadernos, las de entrenamiento
+        (por segundo), las de inferencia (por hora mientras el punto de enlace existe, o por uso en la opción sin
+        servidor), el almacenamiento y el procesamiento de datos. Un punto de enlace en tiempo real olvidado sigue
+        costando: es el descuido más habitual.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Roles de ejecución de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para cada trabajo, con acceso solo a los datos necesarios.</li>
+        <li>Entrenamiento e inferencia dentro de tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>, sin acceso a internet si se exige, y cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> de datos,
+          volúmenes y artefactos.</li>
+        <li>Puntos de enlace con varias instancias repartidas en distintas <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr> y escalado automático.</li>
+        <li>Model Monitor y Clarify aportan vigilancia continua y trazabilidad para la gobernanza.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Construir, entrenar y desplegar un modelo propio"</strong>: SageMaker AI.</li>
+        <li><strong>"Tráfico intermitente, sin pagar en reposo"</strong>: inferencia sin servidor. <strong>"Peticiones
+          grandes o de larga duración"</strong>: asíncrona. <strong>"Predicciones sobre todo un conjunto de datos, sin
+          necesidad de respuesta inmediata"</strong>: transformación por lotes. <strong>"Baja latencia
+          constante"</strong>: tiempo real.</li>
+        <li><strong>"Detectar sesgos" o "explicar predicciones"</strong>: Clarify.</li>
+        <li><strong>"El modelo empeora con el tiempo en producción"</strong>: Model Monitor.</li>
+        <li><strong>"Etiquetar datos"</strong>: Ground Truth. <strong>"Sin código"</strong>: Canvas.</li>
+        <li><strong>"Modelos preentrenados y fundacionales listos para desplegar"</strong>: JumpStart.</li>
+        <li><strong>"Reducir el coste del entrenamiento"</strong>: entrenamiento con Spot gestionado.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="sagemaker-ai"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html" target="_blank" rel="noopener">What is Amazon SageMaker AI?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-deploy-feature-matrix.html" target="_blank" rel="noopener">Inference options: supported features</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/sagemaker/ai/deploy/" target="_blank" rel="noopener">Amazon SageMaker AI model deployment</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/wellarchitected/latest/machine-learning-lens/mlrel03-bp02.html" target="_blank" rel="noopener">MLREL03-BP02 Verify feature consistency across training and inference</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/studio-jumpstart.html" target="_blank" rel="noopener">SageMaker JumpStart</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 71 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 91 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -21,11 +21,12 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
 - **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
   parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después, seguir con las guías pendientes
-  (93). Las categorías **Computación** y **Administración y gobernanza** están completas desde el
-  02/10/2026, y la cola "Prioridad 0" también. Siguiente bloque: "Prioridad 1" (`budgets`,
-  `cost-explorer`, `s3-glacier`, `data-exchange`, `emr`, `lake-formation`, `quick`, `documentdb`,
-  `neptune` y los de Machine learning y Seguridad). **Revisar tras el 07/10/2026:** el aviso de
-  `proton` (ese día termina su soporte: pasar el texto a pasado).
+  (73). Las categorías **Computación** y **Administración y gobernanza** y las colas "Prioridad 0" y
+  "Prioridad 1" están completas desde el 02/10/2026. Siguiente bloque: lo que queda de "Prioridad 2"
+  (SAA-C03 + SAP-C02): `cost-and-usage-report`, almacenamiento (`backup`, `fsx`, `storage-gateway`),
+  `msk`, `keyspaces`, `ecr`, `amplify`, `device-farm`, `x-ray`, migración, redes y seguridad.
+  **Revisar tras el 07/10/2026:** el aviso de `proton` (ese día termina su soporte: pasar el texto a
+  pasado).
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
 - **Última actualización:** 2026-10-02
@@ -306,35 +307,35 @@ esta lista es solo el orden de trabajo.
 
 #### Prioridad 1: resto de servicios en las tres guías (SAA + SAP + AIF) (30)
 
-- [ ] `budgets` AWS Budgets — Administración financiera en la nube (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `cost-explorer` AWS Cost Explorer — Administración financiera en la nube (SAA-C03, SAP-C02, AIF-C01)
+- [x] `budgets` AWS Budgets — Administración financiera en la nube (SAA-C03, SAP-C02, AIF-C01)
+- [x] `cost-explorer` AWS Cost Explorer — Administración financiera en la nube (SAA-C03, SAP-C02, AIF-C01)
 - [x] `config` AWS Config — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
 - [x] `trusted-advisor` AWS Trusted Advisor — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
 - [x] `well-architected-tool` AWS Well-Architected Tool — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `s3-glacier` Amazon S3 Glacier — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `data-exchange` AWS Data Exchange — Análisis (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `emr` Amazon EMR — Análisis (SAA-C03, SAP-C02, AIF-C01)
+- [x] `s3-glacier` Amazon S3 Glacier — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
+- [x] `data-exchange` AWS Data Exchange — Análisis (SAA-C03, SAP-C02, AIF-C01)
+- [x] `emr` Amazon EMR — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [x] `glue` AWS Glue — Análisis (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `lake-formation` AWS Lake Formation — Análisis (SAA-C03, SAP-C02, AIF-C01)
+- [x] `lake-formation` AWS Lake Formation — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [x] `opensearch-service` Amazon OpenSearch Service — Análisis (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `quick` Amazon Quick — Análisis (SAA-C03, SAP-C02, AIF-C01)
+- [x] `quick` Amazon Quick — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [x] `redshift` Amazon Redshift — Análisis (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `documentdb` Amazon DocumentDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
+- [x] `documentdb` Amazon DocumentDB — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [x] `elasticache` Amazon ElastiCache — Base de datos (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `neptune` Amazon Neptune — Base de datos (SAA-C03, SAP-C02, AIF-C01)
+- [x] `neptune` Amazon Neptune — Base de datos (SAA-C03, SAP-C02, AIF-C01)
 - [x] `ecs` Amazon ECS — Contenedores (SAA-C03, SAP-C02, AIF-C01)
 - [x] `eks` Amazon EKS — Contenedores (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `comprehend` Amazon Comprehend — Machine learning (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `lex` Amazon Lex — Machine learning (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `polly` Amazon Polly — Machine learning (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `rekognition` Amazon Rekognition — Machine learning (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `sagemaker-ai` Amazon SageMaker AI — Machine learning (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `textract` Amazon Textract — Machine learning (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `transcribe` Amazon Transcribe — Machine learning (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `translate` Amazon Translate — Machine learning (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `artifact` AWS Artifact — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `inspector` Amazon Inspector — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `macie` Amazon Macie — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
+- [x] `comprehend` Amazon Comprehend — Machine learning (SAA-C03, SAP-C02, AIF-C01)
+- [x] `lex` Amazon Lex — Machine learning (SAA-C03, SAP-C02, AIF-C01)
+- [x] `polly` Amazon Polly — Machine learning (SAA-C03, SAP-C02, AIF-C01)
+- [x] `rekognition` Amazon Rekognition — Machine learning (SAA-C03, SAP-C02, AIF-C01)
+- [x] `sagemaker-ai` Amazon SageMaker AI — Machine learning (SAA-C03, SAP-C02, AIF-C01)
+- [x] `textract` Amazon Textract — Machine learning (SAA-C03, SAP-C02, AIF-C01)
+- [x] `transcribe` Amazon Transcribe — Machine learning (SAA-C03, SAP-C02, AIF-C01)
+- [x] `translate` Amazon Translate — Machine learning (SAA-C03, SAP-C02, AIF-C01)
+- [x] `artifact` AWS Artifact — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
+- [x] `inspector` Amazon Inspector — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
+- [x] `macie` Amazon Macie — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 - [x] `secrets-manager` AWS Secrets Manager — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02, AIF-C01)
 
 #### Prioridad 2: SAA-C03 + SAP-C02 (64)
@@ -648,3 +649,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-02 | Fase 2: publicadas 5 guías de Administración y gobernanza (Organizations, Config, Control Tower, Trusted Advisor y Proton), con 38 preguntas originales (52 de 164). Datos contrastados con la documentación actual: Proton termina su soporte el 07/10/2026 (cerrado a clientes nuevos desde el 07/10/2025; alternativas: Git sync de CloudFormation, CodePipeline + CodeBuild, GitHub Actions, Harmonix); Organizations con 10 SCP por raíz, OU o cuenta, 5 niveles de OU, RCP y políticas declarativas; Control Tower con controles preventivos (SCP/RCP), de detección (Config) y proactivos (hooks) y la landing zone 4.0 sin OU de seguridad obligatoria; Config con grabación continua o diaria; Trusted Advisor con seis categorías y los planes nuevos (Business Support+, Enterprise, Unified Operations; Developer, Business y Enterprise On-Ramp se retiran el 01/01/2027). |
 | 2026-10-02 | Fase 2: categoría Administración y gobernanza completa con 12 guías más (AppConfig, CDK, CLI, Compute Optimizer, Health Dashboard, License Manager, Managed Grafana, Managed Service for Prometheus, Management Console, Service Catalog, Service Quotas y Well-Architected Tool) y 81 preguntas originales (64 de 164). Avisos: AppRegistry de Service Catalog sin clientes nuevos desde el 30/07/2026 y myApplications de la consola sin aplicaciones nuevas. Datos contrastados: Compute Optimizer analiza 14 días (93 con métricas mejoradas, de pago), retención de Prometheus de 150 días ampliable a 3 años, API de AWS Health solo con Business Support+ o superior, plantilla de cuotas con hasta 10 aumentos, precedencia de credenciales de la CLI. Service Quotas no tiene icono propio y usa el de su categoría. |
 | 2026-10-02 | Fase 2: categoría Computación completa con 7 guías más (App Runner, Batch, Lightsail, Outposts, Serverless Application Repository, VMware Cloud on AWS y Wavelength) y 41 preguntas originales (71 de 164). Avisos: App Runner sin clientes nuevos desde el 30/04/2026 (alternativa: ECS Express Mode), servidores Outposts de 1U y 2U fuera de venta, VMware Cloud on AWS contratado con Broadcom desde el 30/04/2024 (alternativa de AWS: Amazon EVS). Siglas nuevas en el glosario: 5G, RDP y LAMP. VMware Cloud on AWS no tiene icono propio y usa el de su categoría. |
+| 2026-10-02 | Fase 2: cola "Prioridad 1" completa con 20 guías más (Budgets, Cost Explorer, S3 Glacier, Data Exchange, EMR, Lake Formation, Quick, DocumentDB, Neptune, Artifact, Comprehend, Lex, Polly, Rekognition, SageMaker AI, Textract, Transcribe, Translate, Inspector y Macie) y 126 preguntas originales, todas con al menos una pregunta de AIF-C01 (91 de 164). Avisos: Amazon Quick es el nombre actual de QuickSight (ahora Quick Sight, dentro de Quick); el servicio Amazon Glacier de bóvedas no admite clientes nuevos desde el 07/11/2025; Comprehend (modelado de temas, detección de eventos y seguridad de prompts) y Rekognition (vídeo en streaming y análisis masivo de imágenes) cerraron funciones a clientes nuevos el 30/04/2026. 13 siglas nuevas en el glosario (SSML, SOC, BAA, HIPAA, HDFS, RDF, SBOM, CIS, SPICE, SaaS, MLOps, GraphRAG, E/S). |

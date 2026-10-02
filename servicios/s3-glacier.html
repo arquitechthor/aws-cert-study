@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon S3 Glacier — Apuntes AWS</title>
+<meta name="description" content="Clases de almacenamiento de archivo de S3 de muy bajo coste: Instant Retrieval (milisegundos), Flexible Retrieval (minutos u horas) y Deep Archive (hasta 12 o 48 horas). Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/s3-glacier.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon S3 Glacier — Apuntes AWS">
+<meta property="og:description" content="Clases de almacenamiento de archivo de S3 de muy bajo coste: Instant Retrieval (milisegundos), Flexible Retrieval (minutos u horas) y Deep Archive (hasta 12 o 48 horas).">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/s3-glacier.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/s3-glacier.svg" alt="" width="56" height="56"><span>Amazon S3 Glacier</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Archivo de muy bajo coste para datos fríos que recuperas en minutos u horas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=almacenamiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/almacenamiento.svg" alt="" width="18" height="18">Almacenamiento <span class="cat-en">(Storage)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html" target="_blank" rel="noopener">Documentación de Amazon S3 Glacier ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> hoy "S3 Glacier" significa las <strong>clases de
+        almacenamiento de archivo de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a></strong>. El servicio original e independiente, <strong>Amazon Glacier</strong>
+        (con bóvedas y archivos, y su propia <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>), no admite clientes nuevos desde el 07/11/2025. Para archivar se
+        usan las clases Glacier dentro de un bucket de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon S3 Glacier es la familia de <strong>clases de almacenamiento de archivo</strong> de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>: las más baratas
+        por gigabyte, pensadas para datos que se guardan mucho tiempo y se consultan rara vez. A cambio del precio, el
+        acceso es más caro o más lento. Ofrecen la misma durabilidad que el resto de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> (once nueves), con los datos
+        repartidos en al menos tres <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>S3 Glacier Instant Retrieval:</strong> archivo con acceso en <strong>milisegundos</strong>, como <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>
+          Standard, para datos que se leen alguna vez por trimestre (imágenes médicas, archivos de prensa). Duración
+          mínima de almacenamiento: 90 días.</li>
+        <li><strong>S3 Glacier Flexible Retrieval:</strong> los objetos <strong>no son accesibles al instante</strong>:
+          hay que restaurarlos. Tres velocidades: <strong>acelerada</strong> (1 a 5 minutos), <strong>estándar</strong>
+          (3 a 5 horas) y <strong>masiva</strong> (5 a 12 horas, gratuita). Duración mínima: 90 días. Típica para copias
+          de seguridad y recuperación ante desastres.</li>
+        <li><strong>S3 Glacier Deep Archive:</strong> la clase <strong>más barata</strong> de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>. Restauración
+          <strong>estándar</strong> en unas 12 horas o <strong>masiva</strong> en unas 48. Duración mínima: 180 días.
+          Para datos que se conservan siete o diez años por cumplimiento.</li>
+        <li><strong>Restauración:</strong> en Flexible Retrieval y Deep Archive se pide una restauración y se obtiene
+          una <strong>copia temporal</strong> durante los días que se indiquen; el objeto sigue archivado.</li>
+        <li><strong>Capacidad aprovisionada:</strong> se compra para garantizar las restauraciones aceleradas cuando
+          hagan falta.</li>
+        <li><strong>Reglas de ciclo de vida:</strong> la forma habitual de llegar a Glacier: los objetos pasan solos de
+          una clase a otra según su antigüedad y, al final, se borran.</li>
+        <li><strong>Cargos a tener en cuenta:</strong> por recuperación (por gigabyte y por petición), por borrado
+          anticipado si no se cumple la duración mínima, y unos kilobytes extra de metadatos por objeto, que hacen
+          poco rentable archivar muchos objetos muy pequeños.</li>
+        <li><strong>S3 Object Lock:</strong> modelo <abbr class="sigla sigla-1" data-s="WORM" data-en="Write Once, Read Many" data-es="se escribe una vez y no se puede modificar" tabindex="0">WORM<span class="sigla-exp"> (Write Once, Read Many: se escribe una vez y no se puede modificar)</span></abbr> para que los datos archivados no se puedan borrar ni
+          modificar durante el periodo de retención.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Archivo normativo a largo plazo: registros financieros, historias clínicas, grabaciones.</li>
+        <li>Sustituir las cintas magnéticas y sus bibliotecas.</li>
+        <li>Copias de seguridad antiguas que casi nunca se restauran.</li>
+        <li>Conservar a bajo coste los conjuntos de datos y las versiones de modelos de aprendizaje automático ya
+          usados, por auditoría o reproducibilidad.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Datos de acceso frecuente: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> Standard.</li>
+        <li>Patrón de acceso desconocido o cambiante: S3 Intelligent-Tiering, que mueve los objetos solo.</li>
+        <li>Datos de acceso poco frecuente pero inmediato y mensual: S3 Standard-IA.</li>
+        <li>Datos que se borran antes de 90 días: el cargo por borrado anticipado anula el ahorro.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Clase</th><th>Acceso</th><th>Duración mínima</th><th>Uso típico</th></tr></thead>
+          <tbody>
+            <tr><td><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> Standard-IA</td><td>Milisegundos</td><td>30 días</td><td>Acceso mensual</td></tr>
+            <tr><td>Glacier Instant Retrieval</td><td>Milisegundos</td><td>90 días</td><td>Acceso trimestral</td></tr>
+            <tr><td>Glacier Flexible Retrieval</td><td>Minutos a 12 horas</td><td>90 días</td><td>Copias, una o dos lecturas al año</td></tr>
+            <tr><td>Glacier Deep Archive</td><td>12 a 48 horas</td><td>180 días</td><td>Archivo de años, casi nunca leído</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga el <strong>almacenamiento</strong> por gigabyte y mes (cada clase más barata que la anterior), las
+        <strong>peticiones</strong>, la <strong>recuperación</strong> por gigabyte según la velocidad elegida, las
+        transiciones de ciclo de vida y, si procede, el borrado anticipado. Cuanto más barato es guardar, más caro o
+        lento es recuperar.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado en reposo como en el resto de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, con claves de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> o de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>, y control de acceso con políticas de
+          bucket e <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Durabilidad de once nueves, con copias en tres <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr> o más.</li>
+        <li>Object Lock y el control de versiones protegen frente a borrados accidentales o malintencionados.</li>
+        <li>La replicación entre regiones también puede dejar la copia directamente en una clase Glacier.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"El menor coste" y "se puede esperar 12 horas o más"</strong>: Deep Archive.</li>
+        <li><strong>"Archivo, pero recuperable en minutos"</strong>: Flexible Retrieval con restauración
+          acelerada.</li>
+        <li><strong>"Archivo con acceso inmediato en milisegundos"</strong>: Glacier Instant Retrieval.</li>
+        <li><strong>"Conservar durante siete años datos que casi nunca se consultan"</strong>: regla de ciclo de vida
+          hacia Deep Archive.</li>
+        <li><strong>"No se debe poder borrar ni modificar"</strong>: añade <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> Object Lock en modo de
+          cumplimiento.</li>
+        <li><strong>Un objeto en Flexible Retrieval o Deep Archive no se lee directamente:</strong> primero se
+          restaura.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="s3-glacier"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/glacier-storage-classes.html" target="_blank" rel="noopener">Understanding S3 Glacier storage classes for long-term data storage</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/s3/faqs/" target="_blank" rel="noopener">Amazon S3 FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://repost.aws/knowledge-center/s3-manage-data-retrieval" target="_blank" rel="noopener">How do I manage data retrieval and storage costs for S3 Glacier?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/restoring-objects.html" target="_blank" rel="noopener">Restoring an archived object</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/storage/restoring-archived-objects-at-scale-from-the-amazon-s3-glacier-storage-classes/" target="_blank" rel="noopener">Restoring archived objects at scale from the Amazon S3 Glacier storage classes</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/" target="_blank" rel="noopener">AWS Service Availability Updates (octubre de 2025)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
