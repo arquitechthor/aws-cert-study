@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Managed Service for Prometheus — Apuntes AWS</title>
+<meta name="description" content="Servicio gestionado compatible con Prometheus para ingerir, almacenar y consultar con PromQL métricas de contenedores a gran escala, sin administrar servidores. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/managed-service-for-prometheus.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Managed Service for Prometheus — Apuntes AWS">
+<meta property="og:description" content="Servicio gestionado compatible con Prometheus para ingerir, almacenar y consultar con PromQL métricas de contenedores a gran escala, sin administrar servidores.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/managed-service-for-prometheus.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/managed-service-for-prometheus.svg" alt="" width="56" height="56"><span>Amazon Managed Service for Prometheus</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Almacena y consulta con PromQL métricas de contenedores, compatible con código abierto</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/prometheus/" target="_blank" rel="noopener">Documentación de Amazon Managed Service for Prometheus ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Managed Service for Prometheus es un servicio de monitorización <strong>compatible con
+        Prometheus</strong>, el sistema de métricas de código abierto más usado con Kubernetes. Recibe las métricas, las
+        guarda y permite consultarlas con <strong>PromQL</strong> y lanzar alertas, sin que tengas que desplegar,
+        escalar ni mantener servidores de Prometheus ni su almacenamiento. Está pensado para entornos de
+        <strong>contenedores</strong> con muchísimas series de métricas.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Espacio de trabajo</strong> (<em>workspace</em>): el contenedor lógico donde se guardan y consultan
+          las métricas. Tiene un punto de enlace de escritura y otro de consulta.</li>
+        <li><strong>Ingesta:</strong> hay dos caminos:
+          <ul>
+            <li><strong>Recolector gestionado por AWS:</strong> un <em>scraper</em> sin agentes que recoge las métricas
+              de los clústeres de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>.</li>
+            <li><strong>Recolector propio:</strong> un Prometheus en modo agente o AWS Distro for OpenTelemetry, que
+              envían las métricas con <strong>escritura remota</strong> (<em>remote write</em>).</li>
+          </ul>
+        </li>
+        <li><strong>Retención:</strong> 150 días por defecto, configurable hasta tres años.</li>
+        <li><strong>Consulta:</strong> con PromQL, a través de una <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> compatible con Prometheus. Lo habitual es
+          visualizar con <a href="managed-grafana.html">Amazon Managed Grafana</a>.</li>
+        <li><strong>Reglas:</strong> de <strong>grabación</strong> (precalculan consultas costosas y guardan el
+          resultado como una serie nueva) y de <strong>alerta</strong>.</li>
+        <li><strong>Gestor de alertas</strong> (<em>alert manager</em>): agrupa, silencia y enruta las alertas; los
+          avisos salen por <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>.</li>
+        <li><strong>Sin servidor:</strong> la ingesta, el almacenamiento y las consultas escalan solos con el
+          volumen.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Monitorizar clústeres de <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> o Kubernetes autogestionado, también fuera de AWS.</li>
+        <li>Sustituir un Prometheus propio que ya no escala o cuyo almacenamiento da trabajo.</li>
+        <li>Centralizar en un espacio de trabajo las métricas de muchos clústeres y cuentas.</li>
+        <li>Conservar los paneles, las consultas PromQL y las reglas de alerta que el equipo ya tiene.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para las métricas estándar de los servicios de AWS con alarmas sencillas: <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li>Para <strong>logs</strong> o <strong>trazas</strong>: CloudWatch Logs, <a href="opensearch-service.html">OpenSearch Service</a> o <a href="../servicio.html?id=x-ray">X-Ray</a>. Prometheus
+          solo trata métricas.</li>
+        <li>Para <strong>visualizar</strong>: no trae paneles; se combina con <a href="managed-grafana.html">Managed Grafana</a>.</li>
+        <li>Si el equipo no usa Prometheus ni PromQL y no quiere aprenderlo, CloudWatch Container Insights es más
+          directo.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Métricas compatibles con Prometheus y PromQL, gestionadas</td><td>Managed Service for Prometheus</td></tr>
+            <tr><td>Métricas, logs y alarmas nativos de AWS</td><td><a href="cloudwatch.html">CloudWatch</a></td></tr>
+            <tr><td>Métricas y logs de contenedores sin Prometheus</td><td>CloudWatch Container Insights</td></tr>
+            <tr><td>Paneles sobre cualquiera de las anteriores</td><td><a href="managed-grafana.html">Managed Grafana</a></td></tr>
+            <tr><td>Trazas distribuidas</td><td><a href="../servicio.html?id=x-ray">X-Ray</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>muestras de métricas ingeridas</strong> (con tramos por volumen), por
+        <strong>almacenamiento</strong> y por <strong>muestras procesadas en las consultas</strong>. El recolector
+        gestionado se cobra por las horas que está activo y por las muestras que recoge. La ingesta suele ser la
+        partida principal: se controla descartando métricas y etiquetas que no se usan.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las peticiones de escritura y de consulta se autorizan con <strong><a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a></strong> y se firman con Signature
+          Version 4; en <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> se usan roles de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> para las cuentas de servicio.</li>
+        <li>Los datos se replican en <strong>varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr></strong> de la región.</li>
+        <li>Se puede acceder de forma privada desde una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> con puntos de enlace de interfaz (<a href="privatelink.html">PrivateLink</a>).</li>
+        <li>Cifrado en tránsito y en reposo, con la opción de usar una clave de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> propia.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Prometheus", "PromQL" o "métricas de Kubernetes sin gestionar la infraestructura de
+          monitorización"</strong>: Managed Service for Prometheus.</li>
+        <li><strong>Guarda, no dibuja:</strong> para los paneles, <a href="managed-grafana.html">Managed Grafana</a>.</li>
+        <li><strong>"Enviar las métricas desde un Prometheus existente"</strong>: escritura remota.</li>
+        <li><strong>"Sin instalar agentes en <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>"</strong>: recolector gestionado por AWS.</li>
+        <li><strong>Solo métricas:</strong> si piden logs o trazas, es otro servicio.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="managed-service-for-prometheus"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/prometheus/latest/userguide/what-is-Amazon-Managed-Service-Prometheus.html" target="_blank" rel="noopener">What is Amazon Managed Service for Prometheus?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-ingest-methods.html" target="_blank" rel="noopener">Ingest metrics to your Amazon Managed Service for Prometheus workspace</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-secure-metric-ingestion.html" target="_blank" rel="noopener">Secure the ingestion of your metrics</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-costs.html" target="_blank" rel="noopener">Understand and optimize costs in Amazon Managed Service for Prometheus</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/mt/amazon-managed-service-for-prometheus-is-now-generally-available/" target="_blank" rel="noopener">Amazon Managed Service for Prometheus is now Generally Available</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

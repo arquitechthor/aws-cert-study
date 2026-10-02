@@ -95,8 +95,8 @@
     "certificaciones": [
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Despliega cambios de configuración y feature flags sin redesplegar el código: validación previa, despliegue gradual y marcha atrás automática con alarmas de CloudWatch.",
     "frase": "Publica cambios de configuración y feature flags de forma gradual y con marcha atrás",
     "documentacion": "https://docs.aws.amazon.com/appconfig/"
   },
@@ -335,8 +335,8 @@
     "certificaciones": [
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Marco de código abierto para definir infraestructura con lenguajes de programación (TypeScript, Python, Java y otros) que se sintetiza en plantillas de CloudFormation.",
     "frase": "Define infraestructura con TypeScript, Python o Java y la convierte en plantillas",
     "documentacion": "https://docs.aws.amazon.com/cdk/"
   },
@@ -355,8 +355,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Herramienta de línea de comandos para llamar a las API de todos los servicios de AWS desde la terminal y automatizar tareas con scripts.",
     "frase": "Controla todos los servicios desde la terminal con comandos y scripts automatizables",
     "documentacion": "https://docs.aws.amazon.com/cli/"
   },
@@ -592,8 +592,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Analiza las métricas de uso de tus recursos y recomienda el tamaño y tipo adecuados (instancias, volúmenes, funciones, bases de datos) para ahorrar o ganar rendimiento.",
     "frase": "Sugiere el tamaño idóneo de instancias, volúmenes y funciones según su uso real",
     "documentacion": "https://docs.aws.amazon.com/compute-optimizer/"
   },
@@ -1191,8 +1191,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Muestra el estado de los servicios de AWS y, sobre todo, las incidencias, mantenimientos y avisos que afectan a los recursos de tu cuenta, con integración en EventBridge.",
     "frase": "Te avisa de incidencias y mantenimientos de AWS que afectan a tus recursos",
     "documentacion": "https://docs.aws.amazon.com/health/"
   },
@@ -1498,8 +1498,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Gestiona de forma centralizada las licencias de software de terceros (Microsoft, Oracle, SAP, IBM): reglas de uso, límites y seguimiento en varias cuentas y regiones.",
     "frase": "Controla cuántas licencias de software usas y evita excederlas o incumplirlas",
     "documentacion": "https://docs.aws.amazon.com/license-manager/"
   },
@@ -1555,8 +1555,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Grafana como servicio gestionado: paneles que combinan métricas, logs y trazas de CloudWatch, Prometheus, OpenSearch y otras fuentes, con inicio de sesión único.",
     "frase": "Paneles de observabilidad de código abierto gestionados, con varias fuentes de datos",
     "documentacion": "https://docs.aws.amazon.com/grafana/"
   },
@@ -1582,8 +1582,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio gestionado compatible con Prometheus para ingerir, almacenar y consultar con PromQL métricas de contenedores a gran escala, sin administrar servidores.",
     "frase": "Almacena y consulta con PromQL métricas de contenedores, compatible con código abierto",
     "documentacion": "https://docs.aws.amazon.com/prometheus/"
   },
@@ -1597,8 +1597,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Interfaz web para administrar los servicios y recursos de AWS desde el navegador, con búsqueda unificada, selector de región y aplicación móvil.",
     "frase": "Interfaz web para gestionar todos tus recursos desde el navegador",
     "documentacion": "https://docs.aws.amazon.com/awsconsolehelpdocs/"
   },
@@ -2073,8 +2073,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Catálogo de productos de TI aprobados (plantillas de CloudFormation o Terraform) que los usuarios lanzan en autoservicio sin tener permisos directos sobre los recursos.",
     "frase": "Portafolio de productos aprobados por TI que los equipos lanzan en autoservicio",
     "documentacion": "https://docs.aws.amazon.com/servicecatalog/"
   },
@@ -2086,8 +2086,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Consola y API centrales para ver las cuotas (límites) de cada servicio de AWS en tu cuenta, su uso, y solicitar aumentos de las que son ajustables.",
     "frase": "Consulta los límites de tu cuenta por servicio y pide que te los amplíen",
     "documentacion": "https://docs.aws.amazon.com/servicequotas/"
   },
@@ -2464,8 +2464,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Herramienta gratuita para revisar tus cargas de trabajo frente a los seis pilares del AWS Well-Architected Framework, detectar riesgos y seguir un plan de mejora.",
     "frase": "Evalúa tus cargas con preguntas sobre los seis pilares de buenas prácticas de AWS",
     "documentacion": "https://docs.aws.amazon.com/wellarchitected/"
   },

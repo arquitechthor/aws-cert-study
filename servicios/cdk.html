@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CDK — Apuntes AWS</title>
+<meta name="description" content="Marco de código abierto para definir infraestructura con lenguajes de programación (TypeScript, Python, Java y otros) que se sintetiza en plantillas de CloudFormation. Apuntes y preguntas de práctica para DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cdk.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CDK — Apuntes AWS">
+<meta property="og:description" content="Marco de código abierto para definir infraestructura con lenguajes de programación (TypeScript, Python, Java y otros) que se sintetiza en plantillas de CloudFormation.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cdk.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/cdk.svg" alt="" width="56" height="56"><span>AWS CDK</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Define infraestructura con TypeScript, Python o Java y la convierte en plantillas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cdk/" target="_blank" rel="noopener">Documentación de AWS CDK ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS CDK (<em>Cloud Development Kit</em>) es un marco de código abierto para definir infraestructura con un
+        <strong>lenguaje de programación de propósito general</strong> en lugar de escribir plantillas a mano. Tu
+        programa describe los recursos con clases y objetos; el CDK lo <strong>sintetiza</strong> en plantillas de
+        <a href="cloudformation.html">CloudFormation</a> y las despliega. Así aprovechas bucles, condiciones, funciones, tipos, pruebas unitarias y el
+        autocompletado del editor, y por debajo sigues teniendo las garantías de CloudFormation (pilas, reversión,
+        detección de desviaciones).</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Lenguajes:</strong> TypeScript, JavaScript, Python, Java, C# y Go.</li>
+        <li><strong>App, pila y <em>construct</em>:</strong> una <strong>app</strong> contiene una o varias
+          <strong>pilas</strong> (cada una es una pila de <a href="cloudformation.html">CloudFormation</a>), y cada pila está hecha de
+          <strong><em>constructs</em></strong>, las piezas reutilizables.</li>
+        <li><strong>Tres niveles de <em>construct</em>:</strong>
+          <ul>
+            <li><strong>L1</strong> (clases <code>Cfn…</code>): equivalencia uno a uno con un recurso de CloudFormation;
+              hay que indicar todas las propiedades.</li>
+            <li><strong>L2:</strong> recursos con valores por defecto sensatos y métodos de ayuda. Por ejemplo,
+              <code>bucket.grantRead(funcion)</code> genera la política de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> de mínimo privilegio.</li>
+            <li><strong>L3</strong> (patrones): varios recursos ya combinados para una tarea, como un servicio de
+              <a href="fargate.html">Fargate</a> con su balanceador.</li>
+          </ul>
+        </li>
+        <li><strong>Síntesis:</strong> <code>cdk synth</code> ejecuta el programa y genera el <em>cloud assembly</em>:
+          una plantilla por pila más los <strong>recursos adjuntos</strong> (<em>assets</em>), como el código de las
+          funciones <a href="lambda.html">Lambda</a> o las imágenes de contenedor.</li>
+        <li><strong><em>Bootstrap</em>:</strong> <code>cdk bootstrap</code> se ejecuta <strong>una vez por cuenta y
+          región</strong>. Crea la pila <code>CDKToolkit</code> con el bucket de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, el repositorio de <a href="../servicio.html?id=ecr"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a> y los roles
+          de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> que el CDK necesita para subir los recursos adjuntos y desplegar.</li>
+        <li><strong>Comandos habituales:</strong> <code>cdk init</code> (proyecto nuevo), <code>cdk synth</code>,
+          <code>cdk diff</code> (qué cambiaría respecto a lo desplegado), <code>cdk deploy</code> y
+          <code>cdk destroy</code>.</li>
+        <li><strong>Entorno:</strong> la pareja cuenta y región a la que apunta cada pila.</li>
+        <li><strong>Pruebas:</strong> el módulo de aserciones permite comprobar en pruebas unitarias la plantilla que
+          se va a generar.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Equipos de desarrollo que quieren definir la infraestructura en el mismo lenguaje y repositorio que la
+          aplicación.</li>
+        <li>Crear <strong>componentes internos reutilizables</strong> (un <em>construct</em> con los estándares de la
+          empresa) y compartirlos como una biblioteca.</li>
+        <li>Infraestructura con mucha repetición o lógica: diez entornos casi iguales, recursos generados en un
+          bucle.</li>
+        <li>Pipelines de despliegue definidos también en código (CDK Pipelines).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si el equipo prefiere plantillas declarativas y no quiere mantener código: <a href="cloudformation.html">CloudFormation</a> directamente.</li>
+        <li>Para aplicaciones sin servidor sencillas con una sintaxis abreviada: <abbr class="sigla sigla-1" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM<span class="sigla-exp"> (Serverless Application Model: extensión de CloudFormation para aplicaciones sin servidores)</span></abbr>, que además permite probar las
+          funciones en local.</li>
+        <li>Si necesitas la misma herramienta para varias nubes: Terraform.</li>
+        <li>Para desplegar una aplicación web sin diseñar la infraestructura: <a href="elastic-beanstalk.html">Elastic Beanstalk</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Herramienta</th><th>Cómo se escribe</th><th>Qué genera</th></tr></thead>
+          <tbody>
+            <tr><td>CDK</td><td>Código en un lenguaje de programación</td><td>Plantillas de <a href="cloudformation.html">CloudFormation</a></td></tr>
+            <tr><td>CloudFormation</td><td>Plantillas <abbr class="sigla sigla-1" data-s="YAML" data-en="YAML Ain&#x27;t Markup Language" data-es="formato de configuración legible" tabindex="0">YAML<span class="sigla-exp"> (YAML Ain&#x27;t Markup Language: formato de configuración legible)</span></abbr> o <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr></td><td>Pilas de recursos</td></tr>
+            <tr><td><abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr></td><td>Plantilla <abbr class="sigla" data-s="YAML" data-en="YAML Ain&#x27;t Markup Language" data-es="formato de configuración legible" tabindex="0">YAML</abbr> abreviada para aplicaciones sin servidor</td><td>Plantillas de CloudFormation (transformación)</td></tr>
+            <tr><td><abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr> de AWS</td><td>Código que llama a las <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> una a una</td><td>Nada declarativo: no hay pila ni reversión</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El CDK es gratuito y de código abierto. Se pagan los recursos que despliega y los que crea el
+        <em>bootstrap</em> (el almacenamiento del bucket de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y del repositorio de <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El despliegue lo hace <a href="cloudformation.html">CloudFormation</a> con los roles creados en el <em>bootstrap</em>, no con los permisos
+          directos de quien ejecuta el comando: conviene acotar esos roles.</li>
+        <li>Los métodos <code>grant…</code> generan políticas de mínimo privilegio y evitan escribir <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> a mano.</li>
+        <li><code>cdk diff</code> avisa de los cambios en permisos de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> y en grupos de seguridad antes de
+          desplegar.</li>
+        <li>La alta disponibilidad depende de lo que definas (varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>, escalado); el CDK solo genera la
+          plantilla.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Definir infraestructura con Python, TypeScript o Java"</strong>: CDK.</li>
+        <li><strong>El CDK no sustituye a <a href="cloudformation.html">CloudFormation</a>:</strong> lo usa por debajo. Las cuotas y el comportamiento de
+          las pilas son los de CloudFormation.</li>
+        <li><strong>Error al desplegar por falta del bucket de recursos adjuntos</strong> o en una cuenta o región
+          nueva: falta ejecutar <code>cdk bootstrap</code>.</li>
+        <li><strong>"Ver los cambios antes de desplegar"</strong>: <code>cdk diff</code>. <strong>"Obtener la
+          plantilla"</strong>: <code>cdk synth</code>.</li>
+        <li><strong>"Componentes de alto nivel con valores por defecto"</strong>: L2. <strong>"Control total sobre cada
+          propiedad"</strong>: L1.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cdk"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/home.html" target="_blank" rel="noopener">What is the AWS CDK?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/constructs.html" target="_blank" rel="noopener">AWS CDK Constructs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html" target="_blank" rel="noopener">AWS CDK bootstrapping</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/cli.html" target="_blank" rel="noopener">AWS CDK CLI reference</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/languages.html" target="_blank" rel="noopener">Supported programming languages for the AWS CDK</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

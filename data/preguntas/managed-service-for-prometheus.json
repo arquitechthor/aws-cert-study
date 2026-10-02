@@ -1,0 +1,134 @@
+[
+  {
+    "id": "managed-service-for-prometheus-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un equipo ejecuta Prometheus en sus clústeres de Amazon EKS y el almacenamiento de métricas ya no escala. Quiere conservar sus consultas PromQL y dejar de administrar esa infraestructura. ¿Qué debe usar?",
+    "opciones": [
+      "Amazon CloudWatch Logs.",
+      "Amazon Managed Service for Prometheus.",
+      "Amazon Timestream.",
+      "AWS X-Ray."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El servicio gestionado de Prometheus es compatible con PromQL y con la escritura remota, y escala la ingesta, el almacenamiento y las consultas automáticamente. CloudWatch Logs guarda logs, Timestream es una base de datos de series temporales con otro lenguaje y X-Ray recoge trazas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prometheus/latest/userguide/what-is-Amazon-Managed-Service-Prometheus.html"
+    ]
+  },
+  {
+    "id": "managed-service-for-prometheus-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa quiere recoger las métricas de sus clústeres de Amazon EKS en Amazon Managed Service for Prometheus sin instalar ni mantener agentes en los clústeres. ¿Qué opción lo permite?",
+    "opciones": [
+      "Un servidor de Prometheus en modo agente en cada clúster.",
+      "El agente de CloudWatch desplegado como DaemonSet.",
+      "AWS Distro for OpenTelemetry en cada nodo.",
+      "El recolector gestionado por AWS."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El recolector gestionado es un scraper sin agentes que extrae las métricas de los puntos de enlace compatibles con Prometheus de los clústeres de EKS. Las otras opciones son recolectores que hay que desplegar y mantener.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-ingest-methods.html"
+    ]
+  },
+  {
+    "id": "managed-service-for-prometheus-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "¿Cómo se autoriza a un servidor de Prometheus a enviar métricas por escritura remota a un espacio de trabajo de Amazon Managed Service for Prometheus?",
+    "opciones": [
+      "Con un rol de IAM cuyas credenciales firman las peticiones con Signature Version 4.",
+      "Con un usuario y una contraseña definidos en el espacio de trabajo.",
+      "Con una clave de API generada en Amazon Managed Grafana.",
+      "Con un certificado de cliente emitido por ACM."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El servicio se integra con IAM: las peticiones de ingesta y de consulta deben ir firmadas con Signature Version 4 por una identidad con permisos. En EKS se usa un rol de IAM asociado a la cuenta de servicio del recolector.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-secure-metric-ingestion.html"
+    ]
+  },
+  {
+    "id": "managed-service-for-prometheus-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una plataforma con 40 clústeres de Kubernetes en varias cuentas necesita almacenar las métricas de forma centralizada, con alertas basadas en PromQL y paneles compartidos. ¿Qué diseño usa servicios gestionados de principio a fin?",
+    "opciones": [
+      "Un Prometheus por clúster con volúmenes de EBS y un Grafana en EC2.",
+      "CloudWatch Logs con filtros de métricas y un panel de Amazon Quick.",
+      "Amazon Managed Service for Prometheus con reglas de alerta y Amazon Managed Grafana para los paneles.",
+      "Amazon OpenSearch Service con OpenSearch Dashboards para las métricas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El servicio gestionado de Prometheus centraliza las métricas de todos los clústeres, evalúa reglas de alerta en PromQL y envía los avisos con su gestor de alertas; Managed Grafana aporta los paneles. La primera opción obliga a administrar servidores y almacenamiento.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/amazon-managed-service-for-prometheus-is-now-generally-available/"
+    ]
+  },
+  {
+    "id": "managed-service-for-prometheus-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "La factura de Amazon Managed Service for Prometheus de una empresa ha crecido mucho. ¿Qué factor suele ser el principal y cómo se reduce?",
+    "opciones": [
+      "El número de espacios de trabajo; se reduce uniendo todos los clústeres en uno solo.",
+      "La ingesta de muestras; se reduce descartando en el recolector las métricas y etiquetas que no se usan.",
+      "El número de usuarios con acceso de consulta; se reduce quitando lectores.",
+      "Las horas de servidor; se reduce apagando el servicio por la noche y los fines de semana."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El servicio cobra sobre todo por muestras ingeridas, además del almacenamiento y de las muestras procesadas en las consultas. Filtrar en origen métricas y etiquetas innecesarias baja la ingesta. No hay servidores que apagar ni tarifa por usuario.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-costs.html"
+    ]
+  },
+  {
+    "id": "managed-service-for-prometheus-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un panel ejecuta continuamente una consulta PromQL muy costosa sobre millones de series y tarda demasiado. ¿Qué función del servicio ayuda?",
+    "opciones": [
+      "Aumentar la retención del espacio de trabajo a tres años.",
+      "Crear un segundo espacio de trabajo en otra región.",
+      "Pasar las alertas al gestor de alertas.",
+      "Una regla de grabación que precalcule el resultado y lo guarde como una serie nueva."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las reglas de grabación evalúan la expresión a intervalos regulares y guardan el resultado como una serie; consultar esa serie es mucho más rápido que recalcular la expresión cada vez. La retención y el gestor de alertas no afectan al coste de la consulta.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/amazon-managed-service-for-prometheus-is-now-generally-available/"
+    ]
+  }
+]

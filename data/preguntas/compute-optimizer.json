@@ -1,0 +1,156 @@
+[
+  {
+    "id": "compute-optimizer-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué servicio de AWS analiza las métricas de uso de las instancias de EC2 y recomienda un tipo de instancia más adecuado para reducir costes?",
+    "opciones": [
+      "AWS Budgets.",
+      "AWS Compute Optimizer.",
+      "AWS Artifact.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Compute Optimizer estudia la configuración y el uso de los recursos y recomienda su tamaño óptimo. Budgets avisa de desviaciones de gasto, Artifact ofrece informes de cumplimiento e Inspector busca vulnerabilidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html"
+    ]
+  },
+  {
+    "id": "compute-optimizer-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "Una empresa ha descubierto que muchas de sus instancias usan menos del 10 % de la CPU. Ajustar su tamaño con AWS Compute Optimizer es un ejemplo de qué práctica de la nube.",
+    "opciones": [
+      "Dimensionamiento correcto de los recursos (rightsizing).",
+      "Recuperación ante desastres entre regiones.",
+      "Modelo de responsabilidad compartida.",
+      "Cifrado de los datos en reposo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El rightsizing consiste en ajustar cada recurso a lo que la carga necesita de verdad, y es una de las formas básicas de optimizar costes en la nube. Las otras opciones tratan de resiliencia y seguridad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html"
+    ]
+  },
+  {
+    "id": "compute-optimizer-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un arquitecto quiere reducir el coste de una flota de EC2 identificando las instancias sobredimensionadas y un tipo alternativo para cada una, sin desarrollar nada. ¿Qué debe usar?",
+    "opciones": [
+      "Un informe de AWS Cost and Usage Report analizado con Athena.",
+      "Las alarmas de Amazon CloudWatch sobre la CPU de cada instancia.",
+      "Las recomendaciones de AWS Compute Optimizer.",
+      "Las recomendaciones de compra de Savings Plans."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Compute Optimizer clasifica cada instancia como sobreaprovisionada, infraaprovisionada u optimizada y propone tipos concretos con el ahorro estimado. El informe de costes y las alarmas exigen análisis propio, y los Savings Plans reducen el precio pero no ajustan el tamaño.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html"
+    ]
+  },
+  {
+    "id": "compute-optimizer-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Las recomendaciones de AWS Compute Optimizer para unas instancias de EC2 no tienen en cuenta el uso de memoria. ¿Qué hay que hacer para que lo incluyan?",
+    "opciones": [
+      "Activar la monitorización detallada de EC2.",
+      "Pasar las instancias a la familia optimizada para memoria.",
+      "Esperar 93 días a que se acumulen métricas.",
+      "Instalar el agente de CloudWatch para publicar la métrica de memoria."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La memoria es una métrica del sistema operativo que EC2 no publica por defecto. Con el agente de CloudWatch la métrica llega a CloudWatch y Compute Optimizer la usa. La monitorización detallada solo aumenta la frecuencia de las métricas básicas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html"
+    ]
+  },
+  {
+    "id": "compute-optimizer-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa tiene cargas con un pico fuerte a final de cada trimestre. Las recomendaciones de AWS Compute Optimizer, basadas en dos semanas, proponen tamaños que se quedarían cortos en ese pico. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Activar las métricas de infraestructura mejoradas para ampliar el periodo de análisis hasta 93 días.",
+      "Desactivar Compute Optimizer durante la semana del pico trimestral.",
+      "Pasar todas las instancias a instancias Spot.",
+      "Exportar las recomendaciones a S3 y sumarles un margen fijo a mano."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las métricas de infraestructura mejoradas son una función de pago que extiende el análisis de 14 a 93 días, de modo que las recomendaciones recogen patrones mensuales y trimestrales. Las demás opciones no hacen que el análisis vea el pico.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/aws/new-for-aws-compute-optimizer-enhanced-infrastructure-metrics-to-extend-the-look-back-period-to-three-months/"
+    ]
+  },
+  {
+    "id": "compute-optimizer-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "El equipo de FinOps quiere ver las recomendaciones de dimensionamiento de todas las cuentas de la organización desde un solo sitio. ¿Qué debe hacer?",
+    "opciones": [
+      "Crear un agregador de AWS Config en la cuenta de seguridad.",
+      "Activar AWS Compute Optimizer desde la cuenta de administración para toda la organización.",
+      "Compartir las instancias con AWS RAM con la cuenta de FinOps.",
+      "Instalar el agente de CloudWatch en la cuenta de administración."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Al activar Compute Optimizer desde la cuenta de administración (o un administrador delegado) se incluyen las cuentas miembro y sus recomendaciones se ven de forma centralizada. El agregador de Config reúne datos de configuración, no de dimensionamiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html"
+    ]
+  },
+  {
+    "id": "compute-optimizer-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Además de las instancias de EC2, ¿para cuál de estos recursos genera recomendaciones AWS Compute Optimizer?",
+    "opciones": [
+      "Distribuciones de Amazon CloudFront.",
+      "Zonas alojadas de Amazon Route 53.",
+      "Funciones de AWS Lambda.",
+      "Temas de Amazon SNS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Compute Optimizer recomienda, entre otros, la memoria de las funciones Lambda, el tipo de los volúmenes de EBS, el tamaño de las tareas de ECS en Fargate y las instancias de RDS y Aurora. CloudFront, Route 53 y SNS no tienen un tamaño que ajustar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html"
+    ]
+  }
+]

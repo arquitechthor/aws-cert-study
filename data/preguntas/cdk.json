@@ -1,0 +1,134 @@
+[
+  {
+    "id": "cdk-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo quiere definir su infraestructura de AWS en TypeScript, con bucles, funciones y pruebas unitarias, y que el despliegue siga gestionándose como pilas con reversión. ¿Qué debe usar?",
+    "opciones": [
+      "El SDK de AWS para JavaScript.",
+      "AWS CDK.",
+      "AWS CLI con scripts de shell.",
+      "AWS Elastic Beanstalk."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El CDK permite definir la infraestructura con un lenguaje de programación y la sintetiza en plantillas de CloudFormation, que despliega como pilas. El SDK y la CLI llaman a las API de forma imperativa, sin pila ni reversión, y Elastic Beanstalk gestiona una aplicación, no infraestructura arbitraria.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cdk/v2/guide/home.html"
+    ]
+  },
+  {
+    "id": "cdk-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Al ejecutar cdk deploy por primera vez en una cuenta y región nuevas, el despliegue falla porque no existe el bucket donde subir el código de las funciones Lambda. ¿Qué falta?",
+    "opciones": [
+      "Ejecutar cdk synth para generar el bucket.",
+      "Crear a mano un bucket con el nombre de la pila.",
+      "Activar el control de versiones de S3 en la cuenta.",
+      "Ejecutar cdk bootstrap en esa cuenta y región."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El bootstrap crea, una vez por cuenta y región, la pila CDKToolkit con el bucket de S3, el repositorio de ECR y los roles que el CDK usa para publicar los recursos adjuntos y desplegar. cdk synth solo genera las plantillas en local.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html"
+    ]
+  },
+  {
+    "id": "cdk-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Antes de aplicar un cambio en producción, un desarrollador quiere ver qué recursos y permisos de IAM cambiarían respecto a lo ya desplegado. ¿Qué comando de la CLI del CDK lo muestra?",
+    "opciones": [
+      "cdk diff",
+      "cdk init",
+      "cdk bootstrap",
+      "cdk destroy"
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "cdk diff compara la plantilla sintetizada con la pila desplegada y resalta los cambios, incluidos los de permisos de IAM y grupos de seguridad. init crea un proyecto, bootstrap prepara el entorno y destroy elimina la pila.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cdk/v2/guide/cli.html"
+    ]
+  },
+  {
+    "id": "cdk-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "En una app de CDK, una función Lambda debe leer objetos de un bucket de S3. ¿Cuál es la forma recomendada de darle el permiso con mínimo privilegio?",
+    "opciones": [
+      "Asociar al rol de la función la política gestionada AmazonS3FullAccess.",
+      "Hacer público el bucket solo para lectura.",
+      "Llamar al método grantRead del bucket pasando la función.",
+      "Escribir las credenciales de un usuario de IAM en las variables de entorno."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los constructs L2 ofrecen métodos grant que generan la política de IAM justa para la operación y el recurso concretos. Una política de acceso total o un bucket público conceden de más, y las credenciales fijas en variables de entorno son una mala práctica.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cdk/v2/guide/constructs.html"
+    ]
+  },
+  {
+    "id": "cdk-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador necesita configurar una propiedad muy reciente de un recurso que todavía no está expuesta en el construct de alto nivel del CDK. ¿Qué nivel de construct le da acceso directo a todas las propiedades de CloudFormation?",
+    "opciones": [
+      "L3, los patrones.",
+      "L1, las clases Cfn.",
+      "L2, con sus valores por defecto.",
+      "Ninguno: hay que salir del CDK."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los constructs L1 se generan a partir de la especificación de CloudFormation y exponen cada propiedad del recurso tal cual. Los L2 añaden abstracción y valores por defecto, y los L3 combinan varios recursos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cdk/v2/guide/constructs.html"
+    ]
+  },
+  {
+    "id": "cdk-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "¿Qué produce el comando cdk synth?",
+    "opciones": [
+      "Un plan de ejecución que se aplica sin pasar por CloudFormation.",
+      "Las pilas ya desplegadas en la cuenta de destino.",
+      "Un paquete ZIP con el SDK de AWS para el lenguaje elegido.",
+      "Una plantilla de CloudFormation por pila, junto con sus recursos adjuntos."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La síntesis ejecuta la app y genera el cloud assembly: una plantilla de CloudFormation por pila y los recursos adjuntos (código de Lambda, imágenes). No despliega nada; para eso está cdk deploy.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cdk/v2/guide/cli.html"
+    ]
+  }
+]

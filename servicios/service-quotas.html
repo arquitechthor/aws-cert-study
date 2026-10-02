@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Quotas — Apuntes AWS</title>
+<meta name="description" content="Consola y API centrales para ver las cuotas (límites) de cada servicio de AWS en tu cuenta, su uso, y solicitar aumentos de las que son ajustables. Apuntes y preguntas de práctica para SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/service-quotas.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Service Quotas — Apuntes AWS">
+<meta property="og:description" content="Consola y API centrales para ver las cuotas (límites) de cada servicio de AWS en tu cuenta, su uso, y solicitar aumentos de las que son ajustables.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/service-quotas.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="56" height="56"><span>Service Quotas</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Consulta los límites de tu cuenta por servicio y pide que te los amplíen</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/servicequotas/" target="_blank" rel="noopener">Documentación de Service Quotas ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Service Quotas es el sitio central para ver y gestionar las <strong>cuotas</strong> de los servicios de AWS:
+        los valores máximos de recursos, acciones o elementos que puede tener tu cuenta (antes se llamaban
+        <em>límites</em>). Cada servicio fija sus cuotas y un valor por defecto. Service Quotas te deja
+        <strong>consultarlas</strong>, ver <strong>cuánto llevas usado</strong> y <strong>pedir un aumento</strong> de
+        las que son ajustables, sin abrir un caso de soporte por cada servicio.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Valor por defecto y valor aplicado:</strong> el por defecto es el inicial que fija AWS; el aplicado
+          es el de tu cuenta tras un aumento.</li>
+        <li><strong>Ajustable o no:</strong> solo las cuotas ajustables admiten aumento. Algunas son límites fijos del
+          servicio (por ejemplo, el tamaño máximo de un mensaje).</li>
+        <li><strong>Ámbito:</strong> la mayoría son <strong>por región</strong>; unas pocas son de cuenta
+          (<strong>globales</strong>) y su aumento se pide desde us-east-1. Algunas se pueden ajustar a nivel de un
+          recurso concreto.</li>
+        <li><strong>Solicitud de aumento:</strong> desde la consola, la <a href="cli.html"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> o la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>. <a href="../servicio.html?id=support">AWS Support</a> puede aprobarla,
+          denegarla o aprobarla en parte, y no siempre es inmediata; hay un historial de solicitudes.</li>
+        <li><strong>Uso y utilización:</strong> para muchas cuotas se ve una gráfica del uso. Esas métricas se publican
+          en <a href="cloudwatch.html">CloudWatch</a> (espacio de nombres <code>AWS/Usage</code>).</li>
+        <li><strong>Alarmas:</strong> se puede crear una alarma de CloudWatch que avise al llegar a un porcentaje de la
+          cuota.</li>
+        <li><strong>Gestión automática:</strong> una vez activada, AWS vigila el uso de las cuotas y te avisa antes de
+          que se agoten.</li>
+        <li><strong>Plantilla de solicitudes de cuota:</strong> con <a href="organizations.html">AWS Organizations</a> (todas las funciones), se definen
+          hasta 10 aumentos que se piden automáticamente en cada <strong>cuenta nueva</strong> de la organización. No
+          cambia las cuentas existentes.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Comprobar antes de un lanzamiento o una campaña que hay margen: vCPU de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, concurrencia de <a href="lambda.html">Lambda</a>,
+          direcciones <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> elásticas.</li>
+        <li>Pedir aumentos con antelación, también desde un script o un pipeline.</li>
+        <li>Alarma que avise cuando el uso llegue al 80 % de una cuota.</li>
+        <li>Que las cuentas nuevas de la organización nazcan con las cuotas que necesitan.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para un repaso general de qué cuotas están cerca del límite junto con otras recomendaciones: Trusted
+          Advisor (comprobaciones de límites de servicio).</li>
+        <li>Para limitar <strong>tú</strong> lo que puede usar un equipo: no es para eso. Usa <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> de <a href="organizations.html">AWS Organizations</a>,
+          <a href="../servicio.html?id=budgets">AWS Budgets</a> o las restricciones de <a href="service-catalog.html">Service Catalog</a>.</li>
+        <li>Para controlar el gasto: AWS Budgets y <a href="../servicio.html?id=cost-explorer">Cost Explorer</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Ver las cuotas, su uso y pedir aumentos</td><td>Service Quotas</td></tr>
+            <tr><td>Aviso general de que el uso se acerca a un límite</td><td><a href="trusted-advisor.html">Trusted Advisor</a></td></tr>
+            <tr><td>Alarma propia al llegar a un porcentaje de una cuota</td><td><a href="cloudwatch.html">CloudWatch</a>, con las métricas de uso</td></tr>
+            <tr><td>Impedir que las cuentas usen ciertos servicios o regiones</td><td><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> de <a href="organizations.html">AWS Organizations</a></td></tr>
+            <tr><td>Avisar cuando el gasto supera un umbral</td><td><a href="../servicio.html?id=budgets">AWS Budgets</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Service Quotas es <strong>gratuito</strong>. Las alarmas de <a href="cloudwatch.html">CloudWatch</a> que crees sobre las métricas de uso se
+        pagan como cualquier alarma.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las cuotas existen para proteger tanto a AWS como a ti: evitan un consumo descontrolado por error o por un
+          ataque y garantizan la disponibilidad para todos los clientes.</li>
+        <li>Quién puede ver cuotas y pedir aumentos se controla con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>En los diseños resilientes hay que contar con las cuotas de la región de respaldo: una conmutación por error
+          falla si allí no hay cuota suficiente.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Solicitar un aumento de un límite"</strong> o "ver los límites de la cuenta": Service Quotas.</li>
+        <li><strong>"Saber si me acerco a un límite"</strong>: <a href="trusted-advisor.html">Trusted Advisor</a> (visión general) o una alarma de
+          <a href="cloudwatch.html">CloudWatch</a> sobre el uso (aviso a medida).</li>
+        <li><strong>Las cuotas son por región</strong> en su mayoría: un aumento en una región no vale para otra.</li>
+        <li><strong>"Las cuentas nuevas de la organización deben tener cuotas más altas"</strong>: plantilla de
+          solicitudes de cuota.</li>
+        <li><strong>Errores de límite superado</strong> (por ejemplo, al lanzar instancias): revisar la cuota de vCPU
+          en Service Quotas.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="service-quotas"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html" target="_blank" rel="noopener">What is Service Quotas?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/organization-templates.html" target="_blank" rel="noopener">Using Service Quotas request templates</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/configure-cloudwatch.html" target="_blank" rel="noopener">Service Quotas and Amazon CloudWatch alarms</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/mt/service-quota-observability-across-regions-and-accounts/" target="_blank" rel="noopener">Service Quota Observability Across Regions and Accounts</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

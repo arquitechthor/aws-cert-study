@@ -1,0 +1,156 @@
+[
+  {
+    "id": "service-catalog-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere que sus empleados solo puedan desplegar en AWS un conjunto de configuraciones revisadas y aprobadas por el departamento de TI. ¿Qué servicio lo permite?",
+    "opciones": [
+      "AWS Marketplace.",
+      "AWS Service Catalog.",
+      "AWS Trusted Advisor.",
+      "AWS Systems Manager."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Service Catalog publica carteras de productos aprobados que los usuarios lanzan en autoservicio. Marketplace vende software de terceros, Trusted Advisor da recomendaciones y Systems Manager opera recursos ya desplegados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html"
+    ]
+  },
+  {
+    "id": "service-catalog-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué ventaja de gobierno aporta AWS Service Catalog a una organización?",
+    "opciones": [
+      "Cifra automáticamente todos los datos de la cuenta con claves gestionadas por AWS.",
+      "Detecta amenazas analizando los registros de red y de DNS de la organización.",
+      "Estandariza lo que se despliega, de modo que los recursos cumplen las normas de la empresa desde su creación.",
+      "Sustituye a las políticas de IAM de los usuarios por los permisos del catálogo."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Al limitar los despliegues a productos definidos y aprobados, los recursos nacen con la configuración exigida. No cifra por sí mismo, no detecta amenazas (eso es GuardDuty) ni reemplaza a IAM.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html"
+    ]
+  },
+  {
+    "id": "service-catalog-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Los desarrolladores deben poder lanzar un entorno estándar con RDS y EC2, pero no deben tener permisos para crear esos recursos directamente. ¿Cómo se consigue con AWS Service Catalog?",
+    "opciones": [
+      "Con una restricción de lanzamiento que indique el rol de IAM que Service Catalog asume al aprovisionar.",
+      "Con una restricción de plantilla que oculte los parámetros del producto.",
+      "Concediendo a los desarrolladores permisos de administrador solo durante el lanzamiento.",
+      "Compartiendo con ellos las claves de acceso de un usuario de servicio."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La restricción de lanzamiento asocia al producto un rol con los permisos necesarios; Service Catalog lo asume al crear los recursos, y al usuario le basta el permiso de usar el catálogo. La restricción de plantilla limita valores de parámetros, no permisos.",
+    "fuentes": [
+      "https://aws.amazon.com/servicecatalog/features/"
+    ]
+  },
+  {
+    "id": "service-catalog-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un producto de AWS Service Catalog permite elegir el tipo de instancia. Para controlar el gasto, la empresa quiere que en la cartera de desarrollo solo se puedan elegir dos tipos pequeños, sin duplicar la plantilla. ¿Qué debe usar?",
+    "opciones": [
+      "Una restricción de lanzamiento con un rol más limitado.",
+      "Una SCP asociada a la OU de desarrollo.",
+      "Una versión nueva del producto con el tipo fijado.",
+      "Una restricción de plantilla que limite los valores permitidos del parámetro."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las restricciones de plantilla acotan los valores que el usuario puede dar a los parámetros de un producto dentro de una cartera, lo que permite reutilizar una plantilla genérica con límites distintos por cartera. La restricción de lanzamiento define el rol, no los parámetros.",
+    "fuentes": [
+      "https://aws.amazon.com/servicecatalog/features/"
+    ]
+  },
+  {
+    "id": "service-catalog-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización con 80 cuentas quiere que el equipo de plataforma mantenga los productos en una cuenta central y que estén disponibles en todas las cuentas de ciertas OU, incluidas las que se creen en el futuro. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Copiar las plantillas a un bucket de S3 y avisar a cada cuenta para que cree sus productos.",
+      "Compartir la cartera con las OU mediante la integración de Service Catalog con AWS Organizations.",
+      "Crear la cartera a mano en cada cuenta con un script de la CLI.",
+      "Publicar los productos como ofertas privadas de AWS Marketplace."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Service Catalog puede compartir carteras con una organización o con OU concretas; las cuentas nuevas de esas OU reciben la cartera automáticamente y los cambios hechos en la cuenta central se propagan. Las otras opciones exigen mantenimiento manual en cada cuenta.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/simplify-sharing-your-aws-service-catalog-portfolios-in-an-aws-organizations-setup/"
+    ]
+  },
+  {
+    "id": "service-catalog-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Al compartir una cartera con otras cuentas, el equipo quiere que los recursos se aprovisionen en la cuenta de quien lanza el producto, usando un rol que existe en cada cuenta con el mismo nombre. ¿Cómo debe definir la restricción de lanzamiento?",
+    "opciones": [
+      "Indicando el ARN del rol de la cuenta central.",
+      "Sin restricción de lanzamiento, para que se usen los permisos del usuario.",
+      "Indicando el nombre del rol local, en lugar de un ARN.",
+      "Con una restricción de notificación hacia un tema de SNS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Una restricción de lanzamiento definida por nombre de rol hace que cada cuenta consumidora use su propio rol local con ese nombre. Un ARN queda ligado a la cuenta central, y sin restricción el usuario necesitaría permisos sobre los recursos.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/simplify-sharing-your-aws-service-catalog-portfolios-in-an-aws-organizations-setup/"
+    ]
+  },
+  {
+    "id": "service-catalog-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa estandariza su infraestructura con Terraform y quiere ofrecer esos módulos a los equipos en autoservicio, con control de acceso y versiones, dentro de AWS. ¿Qué opción encaja?",
+    "opciones": [
+      "Productos de Terraform en AWS Service Catalog, con una restricción de lanzamiento.",
+      "Convertir a mano todos los módulos en plantillas de CloudFormation.",
+      "Guardar los módulos en CodeArtifact y dar permisos de administrador.",
+      "Publicar los módulos en un bucket de S3 público."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Service Catalog admite productos definidos con Terraform, que se gestionan como cualquier otro producto (carteras, versiones, acceso). En ellos la restricción de lanzamiento es obligatoria. No hace falta reescribir los módulos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/getstarted-launchconstraint-Terraform.html"
+    ]
+  }
+]

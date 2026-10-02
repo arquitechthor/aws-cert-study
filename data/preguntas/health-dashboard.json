@@ -1,0 +1,156 @@
+[
+  {
+    "id": "health-dashboard-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere ver los avisos de mantenimiento programado e incidencias de AWS que afectan específicamente a sus recursos. ¿Dónde los encuentra?",
+    "opciones": [
+      "En AWS Trusted Advisor.",
+      "En Amazon CloudWatch.",
+      "En AWS Health Dashboard.",
+      "En AWS Artifact."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La vista de estado de tu cuenta de Health Dashboard muestra los eventos de AWS que tocan tus recursos, con los recursos afectados y las acciones recomendadas. Trusted Advisor da recomendaciones, CloudWatch mide tus recursos y Artifact ofrece informes de cumplimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/health/latest/ug/what-is-aws-health.html"
+    ]
+  },
+  {
+    "id": "health-dashboard-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una persona sin cuenta de AWS quiere comprobar si un servicio tiene una incidencia en una región. ¿Qué puede consultar?",
+    "opciones": [
+      "La página pública de estado de los servicios de AWS Health Dashboard.",
+      "La consola de facturación de AWS, en el apartado de avisos.",
+      "El centro de AWS Support, abriendo un caso técnico.",
+      "El panel de AWS Trusted Advisor, en la categoría de tolerancia a fallos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La vista de estado de los servicios es pública y no requiere iniciar sesión: muestra las incidencias generales por servicio y región. Las demás opciones exigen una cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/health/latest/ug/aws-health-concepts-and-terms.html"
+    ]
+  },
+  {
+    "id": "health-dashboard-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "AWS notifica con antelación que el hardware de algunas instancias de EC2 se va a retirar. Un arquitecto quiere que esas instancias se detengan y arranquen de nuevo automáticamente al recibir el aviso. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Una alarma de CloudWatch sobre la comprobación de estado de la instancia.",
+      "Una regla de Amazon EventBridge para los eventos de AWS Health que invoque una función Lambda.",
+      "Una regla de AWS Config con corrección automática.",
+      "Una comprobación de AWS Trusted Advisor revisada cada semana."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los cambios programados llegan como eventos de AWS Health a EventBridge, y una regla puede lanzar la automatización. La alarma de estado salta cuando el fallo ya ha ocurrido, Config evalúa configuración y Trusted Advisor no recibe esos avisos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/health/latest/ug/cloudwatch-events-health.html"
+    ]
+  },
+  {
+    "id": "health-dashboard-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación empieza a dar errores al llamar a un servicio de AWS. Antes de depurar el código, ¿qué conviene comprobar primero y dónde?",
+    "opciones": [
+      "Los cambios de configuración recientes, en AWS Config.",
+      "El gasto del mes, en AWS Cost Explorer.",
+      "Las vulnerabilidades de las instancias, en Amazon Inspector.",
+      "Si hay una incidencia de AWS que afecte a la cuenta, en AWS Health Dashboard."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Health Dashboard indica si hay un problema en la plataforma que afecte a tus recursos, lo que evita depurar un fallo que no es tuyo. Las demás herramientas responden a otras preguntas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/health/latest/ug/what-is-aws-health.html"
+    ]
+  },
+  {
+    "id": "health-dashboard-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "El equipo de operaciones de una organización con 120 cuentas quiere recibir en un único punto los eventos de AWS Health de todas ellas y enviarlos a su herramienta de incidencias. ¿Qué debe configurar?",
+    "opciones": [
+      "Una regla de EventBridge distinta en cada cuenta que escriba en un bucket compartido.",
+      "Un agregador de AWS Config para toda la organización.",
+      "La vista de organización de AWS Health, con una regla de EventBridge en la cuenta de administrador delegado.",
+      "El reenvío de los correos del usuario raíz de cada cuenta."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La vista de organización agrega los eventos de AWS Health de todas las cuentas y los entrega en EventBridge en la cuenta de administración o de administrador delegado, donde una regla los envía a la herramienta. Mantener una regla por cuenta es más esfuerzo operativo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html"
+    ]
+  },
+  {
+    "id": "health-dashboard-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo intenta consultar la API de AWS Health desde una cuenta con el plan de soporte básico y recibe el error SubscriptionRequiredException. ¿Qué alternativa tiene sin cambiar de plan?",
+    "opciones": [
+      "Recibir los eventos de AWS Health mediante Amazon EventBridge.",
+      "Solicitar un aumento de cuota en Service Quotas.",
+      "Usar la API de AWS Trusted Advisor.",
+      "Asumir un rol de la cuenta de administración."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La API de AWS Health exige un plan de soporte de pago de nivel Business o superior, pero los eventos se publican en EventBridge para todas las cuentas. La API de Trusted Advisor tiene el mismo requisito de plan y no ofrece esos eventos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/health/latest/APIReference/Welcome.html"
+    ]
+  },
+  {
+    "id": "health-dashboard-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "¿Qué tipo de información NO proporciona AWS Health Dashboard?",
+    "opciones": [
+      "Los mantenimientos programados de las instancias de la cuenta.",
+      "Las métricas de latencia y errores de la aplicación del cliente.",
+      "Las incidencias operativas de un servicio en una región.",
+      "Los avisos de seguridad sobre la cuenta, como una clave expuesta."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Health Dashboard informa de lo que ocurre en la plataforma de AWS y afecta a la cuenta: incidencias, cambios programados y notificaciones. El rendimiento de la aplicación del cliente se mide con CloudWatch.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/health/latest/ug/aws-health-concepts-and-terms.html"
+    ]
+  }
+]

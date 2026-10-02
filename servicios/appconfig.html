@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS AppConfig — Apuntes AWS</title>
+<meta name="description" content="Despliega cambios de configuración y feature flags sin redesplegar el código: validación previa, despliegue gradual y marcha atrás automática con alarmas de CloudWatch. Apuntes y preguntas de práctica para DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/appconfig.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS AppConfig — Apuntes AWS">
+<meta property="og:description" content="Despliega cambios de configuración y feature flags sin redesplegar el código: validación previa, despliegue gradual y marcha atrás automática con alarmas de CloudWatch.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/appconfig.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/appconfig.svg" alt="" width="56" height="56"><span>AWS AppConfig</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Publica cambios de configuración y feature flags de forma gradual y con marcha atrás</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/appconfig/" target="_blank" rel="noopener">Documentación de AWS AppConfig ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS AppConfig separa la <strong>configuración</strong> de una aplicación de su <strong>código</strong>. Permite
+        cambiar en caliente parámetros de funcionamiento y <strong><em>feature flags</em></strong> (interruptores de
+        funcionalidades) sin compilar ni desplegar de nuevo. Trata cada cambio de configuración como un despliegue: lo
+        <strong>valida</strong>, lo reparte <strong>poco a poco</strong> y lo <strong>revierte solo</strong> si salta una
+        alarma. Es una capacidad de <a href="systems-manager.html">AWS Systems Manager</a> con consola y <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> propias.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Aplicación:</strong> el contenedor lógico (un microservicio, una app móvil).</li>
+        <li><strong>Entorno:</strong> un grupo de destinos, como <em>beta</em> o <em>producción</em>. Cada entorno puede
+          tener asociadas alarmas de <a href="cloudwatch.html">CloudWatch</a> que se vigilan durante los despliegues.</li>
+        <li><strong>Perfil de configuración:</strong> indica dónde está el dato y de qué tipo es:
+          <ul>
+            <li><strong><em>Feature flags</em>:</strong> interruptores con atributos y variantes, en un formato propio
+              pensado para la consola.</li>
+            <li><strong>Configuración libre:</strong> <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr>, <abbr class="sigla sigla-1" data-s="YAML" data-en="YAML Ain&#x27;t Markup Language" data-es="formato de configuración legible" tabindex="0">YAML<span class="sigla-exp"> (YAML Ain&#x27;t Markup Language: formato de configuración legible)</span></abbr> o texto. Puede guardarse en el <strong>almacén
+              alojado de AppConfig</strong> (lo recomendado), en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, en <a href="systems-manager.html">Parameter Store</a>, en <a href="secrets-manager.html">Secrets Manager</a> o en un
+              documento de Systems Manager.</li>
+          </ul>
+        </li>
+        <li><strong>Validadores:</strong> antes de desplegar comprueban la configuración, con un <strong>esquema
+          <abbr class="sigla" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON</abbr></strong> (sintaxis) o con una <strong>función <a href="lambda.html">Lambda</a></strong> (lógica propia). Si fallan, el despliegue
+          no empieza.</li>
+        <li><strong>Estrategia de despliegue:</strong> define a qué ritmo llega el cambio a los destinos (todo a la vez,
+          lineal o exponencial), la duración del despliegue y el <strong>tiempo de observación</strong> (<em>bake
+          time</em>) durante el que se siguen vigilando las alarmas.</li>
+        <li><strong>Marcha atrás automática:</strong> si una alarma de CloudWatch del entorno salta durante el
+          despliegue o el tiempo de observación, AppConfig vuelve a la versión anterior.</li>
+        <li><strong>Cómo la lee la aplicación:</strong> con el <strong>agente de AppConfig</strong>, que consulta el
+          servicio cada cierto intervalo, guarda la configuración en una caché local y la sirve por <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr> en
+          <code>localhost</code>. En Lambda se añade como <strong>extensión</strong> (una capa); en <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> y <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>, como
+          contenedor auxiliar; en <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, como proceso. También se puede llamar a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> directamente
+          (<code>StartConfigurationSession</code> y <code>GetLatestConfiguration</code>).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Lanzar una funcionalidad poco a poco:</strong> el código ya está desplegado y se activa con un
+          <em>flag</em>, primero para una parte del tráfico.</li>
+        <li><strong>Interruptor de emergencia:</strong> desactivar una función que da problemas sin desplegar.</li>
+        <li><strong>Ajuste operativo:</strong> cambiar límites, tiempos de espera o niveles de log en caliente.</li>
+        <li><strong>Listas de permitidos o bloqueados</strong> que cambian a menudo.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>secretos</strong> (contraseñas, claves): <a href="secrets-manager.html">Secrets Manager</a>, que además los rota.</li>
+        <li>Para valores sueltos que casi no cambian: <a href="systems-manager.html">Parameter Store</a> o variables de entorno.</li>
+        <li>Para desplegar <strong>código</strong> de forma gradual: <a href="../servicio.html?id=codedeploy">CodeDeploy</a>.</li>
+        <li>Para experimentos A/B con análisis estadístico de resultados, AppConfig solo aporta el interruptor.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Configuración dinámica y feature flags con validación, despliegue gradual y marcha atrás</td><td>AppConfig</td></tr>
+            <tr><td>Guardar parámetros de configuración en una jerarquía, sin despliegue gradual</td><td><a href="systems-manager.html">Parameter Store</a> (Systems Manager)</td></tr>
+            <tr><td>Guardar y rotar secretos</td><td><a href="secrets-manager.html">Secrets Manager</a></td></tr>
+            <tr><td>Configuración fija por despliegue</td><td>Variables de entorno de <a href="lambda.html">Lambda</a> o de la tarea</td></tr>
+            <tr><td>Despliegue gradual del código (canary, lineal, blue/green)</td><td><a href="../servicio.html?id=codedeploy">CodeDeploy</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>petición de configuración</strong> que hacen los destinos y por <strong>configuración
+        recibida</strong> (cuando hay datos nuevos). El almacén alojado no tiene coste aparte; si el dato vive en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>,
+        <a href="systems-manager.html">Parameter Store</a> o <a href="secrets-manager.html">Secrets Manager</a>, se suma el precio de ese servicio. El agente, con su caché, reduce el número
+        de llamadas.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El acceso se controla con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>: lo normal es que la aplicación solo pueda <strong>leer</strong> su
+          configuración y que desplegar cambios quede para otro rol.</li>
+        <li>Los datos del almacén alojado se cifran, también con una clave de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> gestionada por el cliente.</li>
+        <li>Para la marcha atrás, AppConfig necesita un rol con permiso para consultar las alarmas de <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li>Si el agente no llega al servicio, sigue sirviendo la última configuración válida de su caché: un fallo de
+          red no tumba la aplicación.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Feature flags"</strong> o "activar una funcionalidad sin desplegar código": AppConfig.</li>
+        <li><strong>"Cambiar la configuración de forma gradual y revertir si hay errores"</strong>: estrategia de
+          despliegue de AppConfig con alarma de <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li><strong>"Evitar que una configuración mal formada llegue a producción"</strong>: validadores (esquema <abbr class="sigla" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON</abbr> o
+          <a href="lambda.html">Lambda</a>).</li>
+        <li><strong>"Reducir las llamadas y la latencia al leer la configuración desde Lambda"</strong>: la extensión
+          del agente de AppConfig, que usa caché local.</li>
+        <li><strong>Secretos:</strong> <a href="secrets-manager.html">Secrets Manager</a>. <strong>Parámetros sin despliegue controlado:</strong> Parameter
+          Store.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="appconfig"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfig.html" target="_blank" rel="noopener">What is AWS AppConfig?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appconfig/latest/userguide/deploying-feature-flags.html" target="_blank" rel="noopener">Deploying feature flags and configuration data in AWS AppConfig</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-environment.html" target="_blank" rel="noopener">Creating environments for your application in AWS AppConfig</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-free-form-configurations-creating.html" target="_blank" rel="noopener">Creating a free form configuration profile in AWS AppConfig</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-and-profile-quotas.html" target="_blank" rel="noopener">Understanding configuration store quotas and limitations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/compute/implementing-dynamic-feature-flags-with-aws-appconfig-on-aws-lambda/" target="_blank" rel="noopener">Implementing dynamic feature flags with AWS AppConfig on AWS Lambda</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CLI — Apuntes AWS</title>
+<meta name="description" content="Herramienta de línea de comandos para llamar a las API de todos los servicios de AWS desde la terminal y automatizar tareas con scripts. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cli.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CLI — Apuntes AWS">
+<meta property="og:description" content="Herramienta de línea de comandos para llamar a las API de todos los servicios de AWS desde la terminal y automatizar tareas con scripts.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cli.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/cli.svg" alt="" width="56" height="56"><span>AWS CLI</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Controla todos los servicios desde la terminal con comandos y scripts automatizables</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cli/" target="_blank" rel="noopener">Documentación de AWS CLI ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>La AWS <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> (<em>Command Line Interface</em>) es una herramienta de código abierto para manejar los servicios de
+        AWS desde la terminal. Cada comando equivale a una <strong>llamada a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr></strong> de un servicio, firmada con
+        tus credenciales. Sirve para trabajar más rápido que en la consola y, sobre todo, para
+        <strong>automatizar</strong> con scripts. Es una de las tres formas de acceder a AWS, junto con la consola (en
+        el navegador) y los <abbr class="sigla" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK</abbr> (desde el código).</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Estructura de un comando:</strong> <code>aws &lt;servicio&gt; &lt;operación&gt; [opciones]</code>, por
+          ejemplo <code>aws s3 ls</code> o <code>aws ec2 describe-instances</code>.</li>
+        <li><strong>Versión 2:</strong> la actual. Añade, entre otras cosas, el inicio de sesión con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> Identity
+          Center y el autocompletado interactivo.</li>
+        <li><strong>Ficheros de configuración:</strong> <code>~/.aws/credentials</code> (claves) y
+          <code>~/.aws/config</code> (región, formato de salida, roles). <code>aws configure</code> los rellena.</li>
+        <li><strong>Perfiles con nombre:</strong> varios juegos de configuración; se elige con
+          <code>--profile</code> o con la variable <code>AWS_PROFILE</code>. Un perfil puede <strong>asumir un
+          rol</strong> (<code>role_arn</code> y <code>source_profile</code>) para trabajar en otra cuenta.</li>
+        <li><strong>Orden de precedencia</strong> de credenciales y ajustes, de mayor a menor: opciones del comando,
+          variables de entorno, rol asumido, <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>, fichero de credenciales, fichero de configuración,
+          credenciales del contenedor (rol de la tarea de <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>) y, por último, el <strong>perfil de instancia</strong> de
+          <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>.</li>
+        <li><strong>Credenciales:</strong> lo recomendado son las <strong>temporales</strong>: <code>aws sso login</code>
+          con IAM Identity Center en tu equipo, y roles en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> o <a href="lambda.html">Lambda</a>. Las claves de acceso de larga duración de
+          un usuario de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> son el último recurso.</li>
+        <li><strong>Salida:</strong> <code>--output json</code> (por defecto), <code>yaml</code>, <code>text</code> o
+          <code>table</code>.</li>
+        <li><strong>Filtrado:</strong> <code>--query</code> filtra <em>en tu equipo</em> la respuesta con expresiones
+          JMESPath; <code>--filters</code> (en los servicios que lo tienen) filtra <em>en el servidor</em> y reduce lo
+          que se transfiere.</li>
+        <li><strong>Paginación:</strong> la <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> pide automáticamente todas las páginas. <code>--page-size</code> reduce
+          el tamaño de cada llamada (útil ante tiempos de espera agotados) y <code>--max-items</code> limita cuántos
+          elementos se devuelven.</li>
+        <li><strong>Comandos de alto nivel de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>:</strong> <code>aws s3 cp</code>, <code>sync</code>, <code>mv</code>… que
+          usan la carga multiparte de forma automática.</li>
+        <li><strong>Otras opciones útiles:</strong> <code>--dry-run</code> (en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, comprueba permisos sin ejecutar),
+          <code>--debug</code> y <code>--region</code>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Scripts de operación y tareas repetitivas (copias, limpieza de recursos, informes).</li>
+        <li>Pasos de un pipeline de <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr>.</li>
+        <li>Consultas rápidas y diagnóstico: ver qué devuelve exactamente una <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
+        <li>Sincronizar carpetas con <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para definir infraestructura repetible: <a href="cloudformation.html">CloudFormation</a> o <a href="cdk.html">CDK</a>. Un script de <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> no guarda estado ni
+          revierte.</li>
+        <li>Dentro del código de una aplicación: el <abbr class="sigla" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK</abbr> del lenguaje.</li>
+        <li>Si no quieres instalar ni configurar nada en tu equipo: <a href="../servicio.html?id=cloudshell">CloudShell</a>, una terminal en el navegador con la <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr>
+          ya instalada y tus credenciales de la consola.</li>
+        <li>Para explorar un servicio por primera vez suele ser más cómoda la <a href="management-console.html">AWS Management Console</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Forma de acceso</th><th>Para quién</th><th>Credenciales</th></tr></thead>
+          <tbody>
+            <tr><td>Consola</td><td>Personas, en el navegador</td><td>Usuario y contraseña, con <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr></td></tr>
+            <tr><td><abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></td><td>Personas y scripts, en la terminal</td><td>Credenciales temporales o claves de acceso</td></tr>
+            <tr><td><abbr class="sigla" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK</abbr></td><td>Aplicaciones, desde el código</td><td>Rol del recurso o claves de acceso</td></tr>
+            <tr><td><a href="../servicio.html?id=cloudshell">CloudShell</a></td><td>Personas, terminal en el navegador</td><td>Las de la sesión de la consola</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>La <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> es gratuita. Se pagan los recursos y las llamadas que generen sus comandos, al precio de cada
+        servicio.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li><strong>Nunca guardes claves de acceso en una instancia de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>:</strong> asocia un rol (perfil de instancia)
+          y la <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> obtendrá credenciales temporales sola.</li>
+        <li>No subas el fichero de credenciales a un repositorio ni uses las claves del usuario raíz.</li>
+        <li>Si una política exige <abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr>, hay que pedir credenciales temporales con <code>aws sts get-session-token</code>
+          (o asumir un rol con <abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr>) y usarlas en la <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr>.</li>
+        <li>Cada comando queda registrado en <a href="cloudtrail.html">CloudTrail</a> como cualquier otra llamada a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
+        <li>Un mensaje de error de autorización codificado se descifra con
+          <code>aws sts decode-authorization-message</code>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Acceso programático"</strong> o "automatizar con scripts": <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> (o <abbr class="sigla" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK</abbr>). La consola es acceso
+          interactivo.</li>
+        <li><strong>La <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> sin claves:</strong> rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> en el perfil de instancia.</li>
+        <li><strong>La <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> usa unas credenciales inesperadas:</strong> revisa la precedencia; las variables de entorno
+          ganan a los ficheros.</li>
+        <li><strong>Un listado enorme agota el tiempo de espera:</strong> <code>--page-size</code> más pequeño.</li>
+        <li><strong>"Reducir los datos devueltos por la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>"</strong>: filtro en el servidor (<code>--filters</code>).
+          <code>--query</code> solo recorta lo que se muestra.</li>
+        <li><strong>"Comprobar si tengo permiso sin ejecutar la acción"</strong>: <code>--dry-run</code>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cli"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html" target="_blank" rel="noopener">What is the AWS Command Line Interface?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html" target="_blank" rel="noopener">Configuring settings for the AWS CLI</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html" target="_blank" rel="noopener">Authentication and access credentials for the AWS CLI</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-pagination.html" target="_blank" rel="noopener">Using the pagination options in the AWS CLI</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html" target="_blank" rel="noopener">Filtering output in the AWS CLI</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

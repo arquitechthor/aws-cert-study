@@ -1,0 +1,156 @@
+[
+  {
+    "id": "license-manager-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa migra a AWS servidores con software de Microsoft y Oracle y quiere controlar de forma centralizada que no usa más licencias de las que tiene. ¿Qué servicio le ayuda?",
+    "opciones": [
+      "AWS Service Catalog.",
+      "AWS License Manager.",
+      "AWS Artifact.",
+      "AWS Marketplace."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "License Manager lleva la cuenta del consumo de licencias de terceros según las reglas de cada contrato y puede limitar los lanzamientos. Service Catalog publica productos aprobados, Artifact ofrece informes de cumplimiento de AWS y Marketplace es una tienda de software.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/license-manager/latest/userguide/license-manager.html"
+    ]
+  },
+  {
+    "id": "license-manager-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué modelo permite a una empresa reutilizar en AWS las licencias de software que ya había comprado, y qué servicio ayuda a seguir su uso?",
+    "opciones": [
+      "Licencia incluida, con AWS Budgets.",
+      "Pago por uso, con AWS Cost Explorer.",
+      "Instancias reservadas, con AWS Compute Optimizer.",
+      "BYOL (traer la licencia propia), con AWS License Manager."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "BYOL consiste en usar en la nube licencias que ya se poseen, y License Manager ayuda a contar su uso y a no incumplir sus condiciones. Con licencia incluida, AWS factura la licencia y no hay nada que seguir.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/license-manager/latest/userguide/license-manager.html"
+    ]
+  },
+  {
+    "id": "license-manager-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa tiene 200 licencias por vCPU de un software y quiere que sea imposible lanzar instancias que superen esa cifra. ¿Qué debe configurar?",
+    "opciones": [
+      "Una licencia autogestionada en AWS License Manager con límite estricto, asociada a la AMI.",
+      "Una alarma de CloudWatch sobre el número de instancias en ejecución.",
+      "Una regla de AWS Config que marque las instancias sobrantes.",
+      "Un presupuesto de AWS Budgets con una acción automática."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con el límite estricto, License Manager bloquea el lanzamiento de las instancias que superarían las licencias disponibles, y al asociar la regla a la AMI se aplica a todo lo que se lance con ella. La alarma y la regla de Config detectan después, y Budgets controla gasto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/license-manager/latest/userguide/license-manager.html"
+    ]
+  },
+  {
+    "id": "license-manager-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un software se licencia por núcleo físico y la empresa quiere traer sus licencias a AWS. ¿Qué opción de alojamiento necesita y cómo puede administrarla con menos esfuerzo?",
+    "opciones": [
+      "Instancias bajo demanda en hardware compartido, con etiquetas de coste.",
+      "Instancias Spot, con un grupo de Auto Scaling.",
+      "Hosts dedicados de EC2, con un grupo de recursos de host de AWS License Manager.",
+      "Instancias reservadas convertibles, con AWS Compute Optimizer."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las licencias por núcleo físico o por zócalo necesitan visibilidad del hardware, que solo dan los hosts dedicados. Un grupo de recursos de host deja que License Manager asigne y libere los hosts automáticamente respetando las reglas.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/how-to-manage-licenses-for-servers-migrating-to-aws-using-aws-license-manager/"
+    ]
+  },
+  {
+    "id": "license-manager-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Durante una migración, una empresa necesita saber qué software licenciado hay instalado tanto en sus servidores locales como en sus instancias de EC2, y contarlo contra sus contratos. ¿Qué combinación lo resuelve?",
+    "opciones": [
+      "AWS Application Discovery Service y AWS Budgets.",
+      "AWS License Manager con el inventario de AWS Systems Manager.",
+      "Amazon Inspector y AWS Artifact.",
+      "AWS Config y AWS Trusted Advisor."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El inventario de Systems Manager recoge el software instalado en los servidores gestionados, también los locales, y License Manager usa esos datos para descubrir y contar el consumo de licencias. Inspector busca vulnerabilidades y Config evalúa configuraciones.",
+    "fuentes": [
+      "https://aws.amazon.com/license-manager/faqs/"
+    ]
+  },
+  {
+    "id": "license-manager-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización con muchas cuentas quiere definir una sola vez las reglas de sus licencias y ver el consumo agregado de todas las cuentas. ¿Cómo debe plantearlo?",
+    "opciones": [
+      "Crear las reglas por separado en cada cuenta y sumar los informes a mano.",
+      "Usar una SCP que limite el número de instancias por cuenta.",
+      "Guardar el recuento de licencias en una tabla de DynamoDB compartida.",
+      "Integrar AWS License Manager con AWS Organizations y compartir las licencias desde una cuenta central."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "License Manager se integra con Organizations para compartir las reglas con las cuentas miembro y agregar el consumo. Una SCP no cuenta licencias, y las soluciones manuales o caseras exigen mantenimiento propio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/license-manager/latest/userguide/license-manager.html"
+    ]
+  },
+  {
+    "id": "license-manager-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa quiere ofrecer Microsoft Visual Studio a sus desarrolladores en instancias de EC2 pagando por usuario y mes, sin comprar licencias por adelantado. ¿Qué función lo permite?",
+    "opciones": [
+      "Las suscripciones por usuario de AWS License Manager.",
+      "Los Savings Plans de cómputo.",
+      "Un producto de AWS Service Catalog con restricción de lanzamiento.",
+      "La conversión de tipo de licencia a BYOL."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las suscripciones por usuario de License Manager permiten usar software con licencia por usuario, como Visual Studio u Office, en instancias de EC2 con una cuota mensual por usuario. Los Savings Plans descuentan cómputo y la conversión a BYOL exige tener licencias propias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/license-manager/latest/userguide/user-based-subscriptions.html"
+    ]
+  }
+]

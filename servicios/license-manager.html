@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS License Manager — Apuntes AWS</title>
+<meta name="description" content="Gestiona de forma centralizada las licencias de software de terceros (Microsoft, Oracle, SAP, IBM): reglas de uso, límites y seguimiento en varias cuentas y regiones. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/license-manager.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS License Manager — Apuntes AWS">
+<meta property="og:description" content="Gestiona de forma centralizada las licencias de software de terceros (Microsoft, Oracle, SAP, IBM): reglas de uso, límites y seguimiento en varias cuentas y regiones.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/license-manager.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/license-manager.svg" alt="" width="56" height="56"><span>AWS License Manager</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Controla cuántas licencias de software usas y evita excederlas o incumplirlas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/license-manager/" target="_blank" rel="noopener">Documentación de AWS License Manager ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS License Manager ayuda a gestionar las <strong>licencias de software de terceros</strong> (Microsoft, Oracle,
+        SAP, IBM y otros) que usas en AWS y en tus centros de datos. Traduces las condiciones de tus contratos a
+        <strong>reglas</strong>, y el servicio cuenta el consumo, avisa o <strong>impide lanzar</strong> recursos cuando
+        se superaría el límite, y da una visión única para las auditorías. Su objetivo es evitar tanto pagar licencias
+        de más como incumplir los contratos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Licencias autogestionadas</strong> (antes <em>configuraciones de licencia</em>): las reglas de un
+          contrato. Indican <strong>en qué se cuenta</strong> la licencia (vCPU, núcleos físicos, zócalos o
+          instancias), cuántas tienes y si el límite es <strong>estricto</strong>.</li>
+        <li><strong>Límite estricto o flexible:</strong> con el estricto (<em>hard limit</em>), el lanzamiento de una
+          instancia que superaría el número de licencias se <strong>bloquea</strong>. Con el flexible, se permite y se
+          avisa.</li>
+        <li><strong>Reglas adicionales:</strong> tipo de alojamiento permitido (compartido, instancia dedicada o host
+          dedicado), mínimos y máximos de vCPU o núcleos, y afinidad de la licencia a un host durante un número de
+          días.</li>
+        <li><strong>Asociación:</strong> las reglas se asocian a una <strong><abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr></strong>, a una plantilla de
+          lanzamiento o a una plantilla de <a href="cloudformation.html">CloudFormation</a>, de modo que todo lo que se lance con ellas consume
+          licencias.</li>
+        <li><strong>Grupos de recursos de host:</strong> un conjunto de <strong>hosts dedicados</strong> de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> que
+          License Manager administra por ti (asigna, libera y recupera hosts), pensado para licencias ligadas al
+          hardware en modelo <abbr class="sigla sigla-1" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL<span class="sigla-exp"> (Bring Your Own License: usar tu propia licencia)</span></abbr>.</li>
+        <li><strong>Descubrimiento:</strong> con el inventario de <a href="systems-manager.html">Systems Manager</a> detecta qué software hay instalado,
+          también en servidores locales, y lo cuenta.</li>
+        <li><strong>Derechos gestionados</strong> (<em>managed entitlements</em>): licencias emitidas por un vendedor
+          (por ejemplo, compradas en <a href="../servicio.html?id=marketplace">AWS Marketplace</a>) que se distribuyen y se controlan entre las cuentas de la
+          organización.</li>
+        <li><strong>Suscripciones por usuario:</strong> software con licencia por usuario y mes en instancias de <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>,
+          como Microsoft Office o Visual Studio.</li>
+        <li><strong>Conversión de tipo de licencia:</strong> pasar una instancia de licencia incluida a <abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr>, o al
+          revés, sin volver a desplegarla.</li>
+        <li><strong>Varias cuentas:</strong> se integra con <a href="organizations.html">AWS Organizations</a> para compartir las reglas y ver el
+          consumo de todas las cuentas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Traer licencias propias</strong> al migrar a AWS (Windows Server, SQL Server, Oracle) y demostrar
+          que se cumplen las condiciones.</li>
+        <li>Impedir que los equipos lancen más instancias de las que cubren las licencias.</li>
+        <li>Preparar una auditoría de un proveedor con informes de uso.</li>
+        <li>Gestionar hosts dedicados para software licenciado por núcleo o por zócalo.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si usas instancias con <strong>licencia incluida</strong>, donde AWS factura la licencia: no hay nada que
+          contar.</li>
+        <li>Para controlar qué productos pueden lanzar los usuarios: <a href="service-catalog.html">Service Catalog</a>.</li>
+        <li>Para inventario general de recursos y cumplimiento de configuración: <a href="config.html">AWS Config</a>.</li>
+        <li>Para comprar software: <a href="../servicio.html?id=marketplace">AWS Marketplace</a> (License Manager gestiona después esas licencias).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Contar y limitar el consumo de licencias de terceros</td><td>License Manager</td></tr>
+            <tr><td>Servidores físicos dedicados para licencias ligadas al hardware</td><td>Hosts dedicados de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (administrados con License Manager)</td></tr>
+            <tr><td>Saber qué software hay instalado en cada servidor</td><td>Inventario de <a href="systems-manager.html">Systems Manager</a></td></tr>
+            <tr><td>Comprar software de terceros</td><td><a href="../servicio.html?id=marketplace">AWS Marketplace</a></td></tr>
+            <tr><td>Evaluar reglas de configuración de los recursos</td><td><a href="config.html">AWS Config</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>License Manager <strong>no tiene coste adicional</strong>: se pagan los recursos que gestiona (instancias,
+        hosts dedicados). Las suscripciones por usuario se facturan por usuario y mes según el producto.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Usa roles vinculados al servicio; el acceso de los administradores se controla con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>El límite estricto es un control <strong>preventivo</strong>: evita el incumplimiento en el momento de
+          lanzar, no después.</li>
+        <li>Los hosts dedicados dan visibilidad de zócalos y núcleos físicos, que es lo que exigen algunas licencias;
+          las instancias dedicadas no.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Evitar superar el número de licencias contratadas"</strong> o "cumplimiento de licencias de
+          Oracle o Microsoft": License Manager.</li>
+        <li><strong>"Impedir el lanzamiento"</strong> al llegar al límite: límite estricto.</li>
+        <li><strong>"Licencias por núcleo físico o por zócalo" en <abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr></strong>: hosts dedicados, gestionados con un
+          grupo de recursos de host.</li>
+        <li><strong>"Visión del uso de licencias en varias cuentas y en servidores locales"</strong>: License Manager
+          con <a href="organizations.html">Organizations</a> y el inventario de <a href="systems-manager.html">Systems Manager</a>.</li>
+        <li><strong>No es <a href="service-catalog.html">Service Catalog</a></strong> (catálogo de productos) ni <strong>Marketplace</strong>
+          (compra).</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="license-manager"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/license-manager/latest/userguide/license-manager.html" target="_blank" rel="noopener">What is AWS License Manager?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/license-manager/faqs/" target="_blank" rel="noopener">AWS License Manager FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/mt/how-to-manage-licenses-for-servers-migrating-to-aws-using-aws-license-manager/" target="_blank" rel="noopener">How to Manage Licenses for Servers Migrating to AWS using AWS License Manager</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/license-manager/latest/userguide/user-based-subscriptions.html" target="_blank" rel="noopener">Use License Manager user-based subscriptions</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

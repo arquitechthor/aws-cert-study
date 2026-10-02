@@ -1,0 +1,134 @@
+[
+  {
+    "id": "appconfig-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo quiere activar una funcionalidad nueva solo para una parte de los usuarios y poder apagarla al instante, sin volver a desplegar el código. ¿Qué servicio debe usar?",
+    "opciones": [
+      "AWS CodeDeploy con un despliegue canary.",
+      "Los feature flags de AWS AppConfig.",
+      "Las variables de entorno de AWS Lambda.",
+      "Las etapas de Amazon API Gateway."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "AppConfig gestiona feature flags que la aplicación lee en tiempo de ejecución, así que se activan o desactivan sin desplegar. CodeDeploy despliega código, cambiar una variable de entorno publica una versión nueva de la función y las etapas de API Gateway separan entornos de la API.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfig.html"
+    ]
+  },
+  {
+    "id": "appconfig-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un cambio de configuración debe llegar poco a poco a la flota y revertirse solo si aumenta la tasa de errores. ¿Qué combinación de AWS AppConfig lo consigue?",
+    "opciones": [
+      "Un validador de esquema JSON y un despliegue inmediato a todos los destinos.",
+      "Una regla de Amazon EventBridge que vuelva a publicar la versión anterior.",
+      "Una estrategia de despliegue gradual y una alarma de Amazon CloudWatch asociada al entorno.",
+      "Un perfil de configuración guardado en Amazon S3 con el control de versiones activado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La estrategia de despliegue define el ritmo y el tiempo de observación; si la alarma de CloudWatch del entorno salta en ese periodo, AppConfig revierte a la versión anterior. El validador solo comprueba el formato antes de empezar, y el versionado de S3 no revierte nada por sí mismo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appconfig/latest/userguide/deploying-feature-flags.html"
+    ]
+  },
+  {
+    "id": "appconfig-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una función Lambda consulta AWS AppConfig en cada invocación y eso añade latencia y coste. ¿Cuál es la forma recomendada de reducirlos?",
+    "opciones": [
+      "Añadir la extensión del agente de AWS AppConfig, que guarda la configuración en una caché local.",
+      "Aumentar la memoria asignada a la función para que las llamadas sean más rápidas.",
+      "Guardar la configuración en una variable de entorno cifrada con KMS.",
+      "Mover la configuración a una tabla de Amazon DynamoDB con DAX delante."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La extensión del agente consulta AppConfig en segundo plano cada cierto intervalo y sirve la configuración desde una caché local por HTTP, sin llamar al servicio en cada invocación. Más memoria no evita las llamadas, y las variables de entorno no se pueden cambiar sin publicar la función.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/compute/implementing-dynamic-feature-flags-with-aws-appconfig-on-aws-lambda/"
+    ]
+  },
+  {
+    "id": "appconfig-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un error de sintaxis en un fichero de configuración JSON tumbó producción. ¿Qué función de AWS AppConfig evita que se repita?",
+    "opciones": [
+      "El tiempo de observación de la estrategia de despliegue.",
+      "El cifrado del almacén alojado con una clave de KMS.",
+      "La caché local del agente de AppConfig.",
+      "Un validador con un esquema JSON en el perfil de configuración."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los validadores se ejecutan al iniciar el despliegue: con un esquema JSON comprueban la estructura y, con una función Lambda, reglas propias. Si fallan, el despliegue se detiene antes de tocar los destinos. El tiempo de observación actúa después, cuando el cambio ya está desplegado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-free-form-configurations-creating.html"
+    ]
+  },
+  {
+    "id": "appconfig-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una aplicación necesita la contraseña de una base de datos, con rotación automática, y además varios parámetros de ajuste que se cambian con despliegues graduales. ¿Qué reparto es el adecuado?",
+    "opciones": [
+      "Todo en AWS AppConfig, en un único perfil de configuración libre.",
+      "La contraseña en AWS Secrets Manager y los parámetros de ajuste en AWS AppConfig.",
+      "Todo en variables de entorno cifradas de la función.",
+      "La contraseña en AWS AppConfig y los parámetros en AWS Secrets Manager."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Secrets Manager está pensado para secretos y los rota; AppConfig, para configuración operativa con validación, despliegue gradual y marcha atrás. Las variables de entorno no rotan ni se despliegan de forma gradual.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-and-profile-quotas.html"
+    ]
+  },
+  {
+    "id": "appconfig-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Durante un despliegue de AWS AppConfig, la alarma del entorno pasa a estado de alarma. ¿Qué hace el servicio?",
+    "opciones": [
+      "Pausa el despliegue hasta que alguien lo apruebe a mano.",
+      "Continúa, pero marca el despliegue como degradado en la consola.",
+      "Revierte automáticamente la configuración a la versión anterior.",
+      "Elimina el perfil de configuración afectado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Si una alarma de CloudWatch asociada al entorno salta durante el despliegue o el tiempo de observación, AppConfig hace marcha atrás a la versión previa. Para ello necesita un rol de IAM con permiso para consultar las alarmas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-environment.html"
+    ]
+  }
+]

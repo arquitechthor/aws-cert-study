@@ -64,7 +64,7 @@
       <h2 id="que-es">Qué es</h2>
       <p>AWS Control Tower es la forma más rápida de montar y gobernar un entorno de <strong>varias cuentas</strong>
         siguiendo las buenas prácticas de AWS. No sustituye a otros servicios: los <strong>orquesta</strong>. Usa
-        <a href="organizations.html">Organizations</a> para las cuentas y las <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr>, <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a> para el acceso, <a href="../servicio.html?id=service-catalog">Service Catalog</a> para crear cuentas,
+        <a href="organizations.html">Organizations</a> para las cuentas y las <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr>, <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a> para el acceso, <a href="service-catalog.html">Service Catalog</a> para crear cuentas,
         <a href="cloudformation.html">CloudFormation</a> StackSets para desplegar la configuración base, y <a href="config.html">AWS Config</a> y <a href="cloudtrail.html">CloudTrail</a> para vigilar. El resultado
         es una <strong><em>landing zone</em></strong>: un entorno multicuenta ya preparado, con registro centralizado y
         reglas de gobierno aplicadas.</p>
@@ -92,7 +92,7 @@
         <li><strong>Nivel de recomendación:</strong> cada control es <strong>obligatorio</strong> (siempre activo),
           <strong>muy recomendado</strong> u <strong>optativo</strong>.</li>
         <li><strong>Account Factory:</strong> la "máquina expendedora" de cuentas: crea cuentas nuevas ya inscritas, con
-          la configuración base y los controles de su <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr>. Está construida sobre <a href="../servicio.html?id=service-catalog">Service Catalog</a>. Con <strong>Account
+          la configuración base y los controles de su <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr>. Está construida sobre <a href="service-catalog.html">Service Catalog</a>. Con <strong>Account
           Factory for Terraform</strong> (AFT) las cuentas se piden desde un pipeline de Terraform.</li>
         <li><strong>Inscripción:</strong> las <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> y cuentas ya existentes se pueden <strong>registrar</strong> para que
           queden bajo gobierno.</li>
@@ -129,7 +129,7 @@
             <tr><td>Solo agrupar cuentas, factura única y políticas escritas por ti</td><td><a href="organizations.html">Organizations</a></td></tr>
             <tr><td>Solo evaluar la configuración de los recursos</td><td><a href="config.html">AWS Config</a></td></tr>
             <tr><td>Solo inicio de sesión único en varias cuentas</td><td><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></td></tr>
-            <tr><td>Catálogo de productos aprobados dentro de las cuentas</td><td><a href="../servicio.html?id=service-catalog">Service Catalog</a></td></tr>
+            <tr><td>Catálogo de productos aprobados dentro de las cuentas</td><td><a href="service-catalog.html">Service Catalog</a></td></tr>
             <tr><td>Vista agregada de hallazgos de seguridad</td><td><a href="../servicio.html?id=security-hub">Security Hub</a></td></tr>
           </tbody>
         </table>
@@ -138,7 +138,7 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Control Tower <strong>no tiene coste adicional</strong>. Se pagan los servicios que activa y usa: las reglas y
         los elementos de configuración de <a href="config.html">AWS Config</a>, los registros de <a href="cloudtrail.html">CloudTrail</a>, el almacenamiento en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> de los logs,
-        <a href="../servicio.html?id=service-catalog">Service Catalog</a>… En cuentas con recursos efímeros, el coste de AWS Config puede crecer.</p>
+        <a href="service-catalog.html">Service Catalog</a>… En cuentas con recursos efímeros, el coste de AWS Config puede crecer.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>

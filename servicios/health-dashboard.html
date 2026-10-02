@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Health Dashboard — Apuntes AWS</title>
+<meta name="description" content="Muestra el estado de los servicios de AWS y, sobre todo, las incidencias, mantenimientos y avisos que afectan a los recursos de tu cuenta, con integración en EventBridge. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/health-dashboard.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Health Dashboard — Apuntes AWS">
+<meta property="og:description" content="Muestra el estado de los servicios de AWS y, sobre todo, las incidencias, mantenimientos y avisos que afectan a los recursos de tu cuenta, con integración en EventBridge.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/health-dashboard.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/health-dashboard.svg" alt="" width="56" height="56"><span>AWS Health Dashboard</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Te avisa de incidencias y mantenimientos de AWS que afectan a tus recursos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/health/" target="_blank" rel="noopener">Documentación de AWS Health Dashboard ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Health Dashboard es el sitio donde AWS te comunica lo que pasa en <strong>su</strong> lado y te afecta:
+        incidencias de servicio, mantenimientos programados y avisos sobre tu cuenta. Tiene dos vistas. <strong>Estado
+        de los servicios</strong> (<em>Service health</em>) es pública y muestra la situación general de cada servicio en
+        cada región. <strong>Estado de tu cuenta</strong> (<em>Your account health</em>, antes Personal Health Dashboard)
+        muestra solo los eventos que tocan <strong>tus recursos</strong>, con la lista de recursos afectados y qué
+        hacer.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Eventos públicos y eventos de cuenta:</strong> los públicos no dependen de ninguna cuenta (un
+          problema de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> en una región, lo uses o no). Los de cuenta son específicos de tus recursos o de los de tu
+          organización.</li>
+        <li><strong>Categorías de evento:</strong>
+          <ul>
+            <li><strong>Incidencia</strong> (<em>issue</em>): un problema inesperado en un servicio o recurso.</li>
+            <li><strong>Cambio programado</strong> (<em>scheduled change</em>): mantenimiento futuro, como la retirada
+              del hardware de una instancia o una actualización obligatoria de <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>.</li>
+            <li><strong>Notificación de cuenta:</strong> avisos de administración o seguridad, como una clave de acceso
+              expuesta o una función que se va a retirar.</li>
+          </ul>
+        </li>
+        <li><strong>Entidades afectadas:</strong> los recursos concretos (identificador de instancia, volumen, base de
+          datos) a los que se refiere el evento.</li>
+        <li><strong><a href="eventbridge.html">EventBridge</a>:</strong> los eventos de AWS Health llegan a EventBridge en <strong>todas las
+          cuentas</strong>, sea cual sea el plan de soporte. Con una regla se envían a <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, a una función <a href="lambda.html">Lambda</a> o a un
+          canal de chat.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de AWS Health:</strong> acceso programático a los mismos datos. Exige un plan de soporte de
+          pago de nivel Business o superior.</li>
+        <li><strong>Vista de organización:</strong> agrega los eventos de todas las cuentas de una organización de AWS
+          <a href="organizations.html">Organizations</a>; se puede gestionar desde un administrador delegado.</li>
+        <li><strong>Notificaciones:</strong> con AWS User Notifications se configuran avisos por correo, chat o la
+          aplicación móvil de la consola.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Saber si un fallo es tuyo o de AWS antes de ponerte a depurar.</li>
+        <li>Planificar ventanas de mantenimiento: instancias con retirada programada, certificados o versiones que
+          caducan.</li>
+        <li>Automatizar la respuesta: ante el aviso de retirada de una instancia, una función <a href="lambda.html">Lambda</a> la detiene y la
+          arranca en hardware nuevo.</li>
+        <li>Llevar los eventos de toda la organización a la herramienta de incidencias de la empresa.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para vigilar el rendimiento de <strong>tu</strong> aplicación: <a href="cloudwatch.html">CloudWatch</a>. Health habla de la plataforma de
+          AWS, no de tu código.</li>
+        <li>Para recomendaciones de mejora (coste, seguridad, cuotas): <a href="trusted-advisor.html">Trusted Advisor</a>.</li>
+        <li>Para saber quién cambió un recurso: <a href="cloudtrail.html">CloudTrail</a>. Para su historial de configuración: <a href="config.html">AWS Config</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Hay una incidencia o un mantenimiento de AWS que afecte a mis recursos?</td><td>Health Dashboard (estado de tu cuenta)</td></tr>
+            <tr><td>¿Funciona con normalidad un servicio de AWS en una región?</td><td>Health Dashboard (estado de los servicios)</td></tr>
+            <tr><td>¿Cómo rinde mi aplicación y mis recursos?</td><td><a href="cloudwatch.html">CloudWatch</a></td></tr>
+            <tr><td>¿Sigo las buenas prácticas?</td><td><a href="trusted-advisor.html">Trusted Advisor</a></td></tr>
+            <tr><td>¿Quién hizo qué llamada a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>?</td><td><a href="cloudtrail.html">CloudTrail</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El panel y los eventos en <a href="eventbridge.html">EventBridge</a> son <strong>gratuitos</strong> para todas las cuentas. La <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> de AWS
+        Health va incluida en los planes de soporte de pago de nivel Business o superior.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El acceso al panel y a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> se controla con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; se puede limitar por servicio o por tipo de evento.</li>
+        <li>AWS Health es un servicio global: su <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> tiene puntos de enlace en dos regiones en configuración
+          activa-pasiva, para que siga disponible durante una incidencia regional.</li>
+        <li>Avisa de riesgos de seguridad de la cuenta, como credenciales expuestas públicamente.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Avisos personalizados sobre eventos de AWS que afectan a mis recursos"</strong>: Health Dashboard,
+          vista de tu cuenta.</li>
+        <li><strong>"Estado general de todos los servicios de AWS por región"</strong>: la vista pública de estado de
+          los servicios.</li>
+        <li><strong>"Reaccionar automáticamente a un mantenimiento programado de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>"</strong>: evento de AWS Health en
+          <a href="eventbridge.html">EventBridge</a> con una función <a href="lambda.html">Lambda</a>.</li>
+        <li><strong>"Ver los eventos de todas las cuentas"</strong>: vista de organización.</li>
+        <li><strong>No es <a href="cloudwatch.html">CloudWatch</a>:</strong> no mide tu aplicación; informa de la plataforma.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="health-dashboard"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/health/latest/ug/what-is-aws-health.html" target="_blank" rel="noopener">What is AWS Health?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/health/latest/ug/aws-health-concepts-and-terms.html" target="_blank" rel="noopener">Concepts for AWS Health</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/health/latest/APIReference/Welcome.html" target="_blank" rel="noopener">AWS Health API Reference</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/health/latest/ug/aggregate-events.html" target="_blank" rel="noopener">Aggregating AWS Health events across accounts</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/health/latest/ug/cloudwatch-events-health.html" target="_blank" rel="noopener">Monitoring events in AWS Health with Amazon EventBridge</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

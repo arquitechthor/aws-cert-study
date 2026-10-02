@@ -1,0 +1,134 @@
+[
+  {
+    "id": "managed-grafana-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un equipo usa Grafana en servidores propios para ver las métricas de sus aplicaciones y quiere dejar de mantener esos servidores sin cambiar de herramienta. ¿Qué servicio encaja?",
+    "opciones": [
+      "Los paneles de Amazon CloudWatch.",
+      "Amazon Quick.",
+      "Amazon Managed Grafana.",
+      "Amazon OpenSearch Service."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Managed Grafana ofrece Grafana como servicio gestionado, compatible con los paneles existentes, y AWS se ocupa de la infraestructura. CloudWatch y Quick obligarían a rehacer los paneles con otra herramienta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/grafana/latest/userguide/what-is-Amazon-Managed-Service-Grafana.html"
+    ]
+  },
+  {
+    "id": "managed-grafana-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa ejecuta sus microservicios en Amazon EKS y quiere almacenar métricas compatibles con Prometheus y verlas en paneles, todo con servicios gestionados. ¿Qué combinación es la adecuada?",
+    "opciones": [
+      "Amazon Managed Service for Prometheus para almacenar y Amazon Managed Grafana para visualizar.",
+      "Amazon Managed Grafana para almacenar y Amazon CloudWatch para visualizar.",
+      "Amazon Kinesis Data Streams para almacenar y Amazon Quick para visualizar.",
+      "AWS X-Ray para almacenar y Amazon Athena para visualizar."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El servicio gestionado de Prometheus ingiere, almacena y consulta las métricas, y Managed Grafana se conecta a él como fuente de datos para los paneles. Grafana no almacena métricas y X-Ray es para trazas.",
+    "fuentes": [
+      "https://aws.amazon.com/grafana/features/"
+    ]
+  },
+  {
+    "id": "managed-grafana-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "¿Cómo inician sesión los usuarios en un espacio de trabajo de Amazon Managed Grafana?",
+    "opciones": [
+      "Con un usuario de IAM y su clave de acceso.",
+      "Con AWS IAM Identity Center o un proveedor de identidad SAML 2.0.",
+      "Con el usuario raíz de la cuenta.",
+      "Con un usuario local creado en la consola de Grafana."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Managed Grafana autentica a las personas mediante inicio de sesión único, con IAM Identity Center, con un proveedor SAML 2.0 o con ambos. Los roles de IAM se usan para que el espacio de trabajo lea las fuentes de datos, no para el acceso de los usuarios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/grafana/latest/userguide/authentication-in-AMG.html"
+    ]
+  },
+  {
+    "id": "managed-grafana-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización quiere un único espacio de trabajo de Amazon Managed Grafana que lea las métricas de CloudWatch de las cuentas de varias OU, sin crear roles a mano en cada cuenta. ¿Qué opción lo permite?",
+    "opciones": [
+      "Copiar las métricas de cada cuenta a un bucket de S3 central y leerlas desde allí.",
+      "Crear un espacio de trabajo por cuenta y enlazarlos entre sí con paneles compartidos.",
+      "Compartir los paneles con las cuentas de las OU mediante AWS RAM.",
+      "Configurar el espacio de trabajo con acceso a la organización y permisos gestionados por el servicio."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con el acceso a la organización, se indican las OU y Managed Grafana despliega con CloudFormation StackSets los roles de IAM necesarios en sus cuentas para leer las fuentes de AWS. Así un solo espacio de trabajo consulta todas las cuentas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/grafana/latest/userguide/AMG-and-Organizations.html"
+    ]
+  },
+  {
+    "id": "managed-grafana-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo de plataforma necesita un panel que muestre a la vez métricas de Amazon CloudWatch, métricas de un Prometheus autogestionado y datos de una herramienta de observabilidad de terceros. ¿Qué servicio lo resuelve con menos desarrollo?",
+    "opciones": [
+      "Los paneles de CloudWatch con métricas personalizadas.",
+      "Una aplicación web propia que consulte las tres API.",
+      "Amazon Managed Grafana, con una fuente de datos por cada origen.",
+      "Amazon Athena con consultas federadas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Grafana está diseñado para combinar en un panel muchas fuentes, de AWS, de código abierto y de terceros. Con CloudWatch habría que copiar antes los datos externos como métricas personalizadas, y una aplicación propia exige desarrollo y mantenimiento.",
+    "fuentes": [
+      "https://aws.amazon.com/grafana/features/"
+    ]
+  },
+  {
+    "id": "managed-grafana-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "¿Cómo se factura Amazon Managed Grafana?",
+    "opciones": [
+      "Por usuario activo al mes en cada espacio de trabajo, con tarifas distintas para editores y lectores.",
+      "Por panel creado en el espacio de trabajo y por consulta ejecutada contra las fuentes.",
+      "Por hora de instancia del servidor de Grafana, según el tamaño elegido.",
+      "Por gigabyte de métricas almacenadas en el espacio de trabajo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El precio depende de los usuarios activos de cada espacio de trabajo, con una tarifa para editores y administradores y otra para lectores. No se gestionan instancias y Grafana no almacena las métricas; las consultas se pagan en cada fuente.",
+    "fuentes": [
+      "https://aws.amazon.com/grafana/faqs/"
+    ]
+  }
+]

@@ -111,7 +111,7 @@
         <li>Vigilar las cuotas antes de un lanzamiento para no quedarse sin capacidad.</li>
         <li>Automatizar reacciones: un cambio de estado de una comprobación llega a <a href="eventbridge.html">EventBridge</a> y dispara una función
           <a href="lambda.html">Lambda</a> o un aviso.</li>
-        <li>Punto de partida para una revisión de arquitectura junto con <a href="../servicio.html?id=well-architected-tool">Well-Architected Tool</a>.</li>
+        <li>Punto de partida para una revisión de arquitectura junto con <a href="well-architected-tool.html">Well-Architected Tool</a>.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
@@ -119,9 +119,9 @@
         <li>Para definir <strong>tus propias</strong> reglas de configuración y auditar su historial: <a href="config.html">AWS Config</a>.</li>
         <li>Para analizar el gasto en detalle y hacer previsiones: <a href="../servicio.html?id=cost-explorer">Cost Explorer</a>. Para alertas de presupuesto:
           <a href="../servicio.html?id=budgets">AWS Budgets</a>.</li>
-        <li>Para recomendaciones detalladas de tamaño de instancias basadas en métricas: <a href="../servicio.html?id=compute-optimizer">Compute Optimizer</a>.</li>
+        <li>Para recomendaciones detalladas de tamaño de instancias basadas en métricas: <a href="compute-optimizer.html">Compute Optimizer</a>.</li>
         <li>Para buscar vulnerabilidades de software: <a href="../servicio.html?id=inspector">Inspector</a>. Para detectar amenazas activas: <a href="../servicio.html?id=guardduty">GuardDuty</a>.</li>
-        <li>Para pedir un aumento de cuota: <a href="../servicio.html?id=service-quotas">Service Quotas</a> (Trusted Advisor solo avisa).</li>
+        <li>Para pedir un aumento de cuota: <a href="service-quotas.html">Service Quotas</a> (Trusted Advisor solo avisa).</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -130,11 +130,11 @@
           <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
           <tbody>
             <tr><td>Recomendaciones generales y automáticas sobre coste, seguridad, rendimiento, resiliencia y cuotas</td><td>Trusted Advisor</td></tr>
-            <tr><td>Revisar una carga concreta contra los pilares de buena arquitectura, respondiendo un cuestionario</td><td><a href="../servicio.html?id=well-architected-tool">Well-Architected Tool</a></td></tr>
-            <tr><td>Recomendar el tamaño adecuado de instancias, volúmenes o funciones</td><td><a href="../servicio.html?id=compute-optimizer">Compute Optimizer</a></td></tr>
+            <tr><td>Revisar una carga concreta contra los pilares de buena arquitectura, respondiendo un cuestionario</td><td><a href="well-architected-tool.html">Well-Architected Tool</a></td></tr>
+            <tr><td>Recomendar el tamaño adecuado de instancias, volúmenes o funciones</td><td><a href="compute-optimizer.html">Compute Optimizer</a></td></tr>
             <tr><td>Evaluar reglas de configuración propias y guardar el historial</td><td><a href="config.html">AWS Config</a></td></tr>
-            <tr><td>Consultar y solicitar aumentos de cuotas</td><td><a href="../servicio.html?id=service-quotas">Service Quotas</a></td></tr>
-            <tr><td>Avisos sobre incidencias de AWS que afectan a tus recursos</td><td><a href="../servicio.html?id=health-dashboard">Health Dashboard</a></td></tr>
+            <tr><td>Consultar y solicitar aumentos de cuotas</td><td><a href="service-quotas.html">Service Quotas</a></td></tr>
+            <tr><td>Avisos sobre incidencias de AWS que afectan a tus recursos</td><td><a href="health-dashboard.html">Health Dashboard</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -157,11 +157,11 @@
         <li><strong>"¿Qué plan de soporte da acceso a todas las comprobaciones?"</strong>: en las guías vigentes, Business
           o Enterprise (hoy, Business Support+ o superior). El básico solo da una parte.</li>
         <li><strong>"Saber si la cuenta se acerca a una cuota"</strong>: Trusted Advisor (límites de servicio). Para
-          <em>aumentarla</em>, <a href="../servicio.html?id=service-quotas">Service Quotas</a>.</li>
-        <li><strong>"Instancias de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> infrautilizadas"</strong>: Trusted Advisor o <a href="../servicio.html?id=compute-optimizer">Compute Optimizer</a>; si piden un tamaño
+          <em>aumentarla</em>, <a href="service-quotas.html">Service Quotas</a>.</li>
+        <li><strong>"Instancias de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> infrautilizadas"</strong>: Trusted Advisor o <a href="compute-optimizer.html">Compute Optimizer</a>; si piden un tamaño
           concreto recomendado, Compute Optimizer.</li>
         <li><strong>No confundir con <a href="../servicio.html?id=inspector">Inspector</a></strong> (vulnerabilidades), <strong><a href="config.html">AWS Config</a></strong> (cumplimiento de
-          reglas propias) ni <strong><a href="../servicio.html?id=well-architected-tool">Well-Architected Tool</a></strong> (cuestionario por carga de trabajo).</li>
+          reglas propias) ni <strong><a href="well-architected-tool.html">Well-Architected Tool</a></strong> (cuestionario por carga de trabajo).</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

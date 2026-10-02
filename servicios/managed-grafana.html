@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Managed Grafana — Apuntes AWS</title>
+<meta name="description" content="Grafana como servicio gestionado: paneles que combinan métricas, logs y trazas de CloudWatch, Prometheus, OpenSearch y otras fuentes, con inicio de sesión único. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/managed-grafana.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Managed Grafana — Apuntes AWS">
+<meta property="og:description" content="Grafana como servicio gestionado: paneles que combinan métricas, logs y trazas de CloudWatch, Prometheus, OpenSearch y otras fuentes, con inicio de sesión único.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/managed-grafana.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/managed-grafana.svg" alt="" width="56" height="56"><span>Amazon Managed Grafana</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Paneles de observabilidad de código abierto gestionados, con varias fuentes de datos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/grafana/" target="_blank" rel="noopener">Documentación de Amazon Managed Grafana ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Managed Grafana es <strong>Grafana</strong>, la herramienta de código abierto de paneles de
+        observabilidad, ofrecida como servicio gestionado. AWS se ocupa de los servidores, las actualizaciones, el
+        escalado y la alta disponibilidad; tú creas <strong>espacios de trabajo</strong> y montas paneles que consultan
+        y <strong>correlacionan</strong> métricas, logs y trazas de muchas fuentes a la vez, de AWS y de fuera.
+        <strong>No almacena los datos</strong>: los lee de las fuentes.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Espacio de trabajo</strong> (<em>workspace</em>): un servidor de Grafana aislado, con su <abbr class="sigla sigla-1" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL<span class="sigla-exp"> (Uniform Resource Locator: dirección web)</span></abbr>, sus
+          usuarios y sus paneles.</li>
+        <li><strong>Fuentes de datos:</strong> de AWS (<a href="cloudwatch.html">CloudWatch</a>, <a href="managed-service-for-prometheus.html">Amazon Managed Service for Prometheus</a>, <a href="opensearch-service.html">OpenSearch</a>
+          Service, <a href="../servicio.html?id=x-ray">X-Ray</a>, <a href="../servicio.html?id=timestream">Timestream</a>, <a href="athena.html">Athena</a>, <a href="redshift.html">Redshift</a>…) y de terceros o propias (Prometheus autogestionado, Graphite,
+          Datadog, Splunk y otras mediante complementos).</li>
+        <li><strong>Autenticación de usuarios:</strong> no usa usuarios de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>. Se entra con <strong>IAM Identity
+          Center</strong> o con un proveedor de identidad compatible con <strong><abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr> 2.0</strong> (o con ambos).</li>
+        <li><strong>Roles de Grafana:</strong> administrador, editor y lector.</li>
+        <li><strong>Permisos hacia las fuentes:</strong> <strong>gestionados por el servicio</strong> (crea por ti los
+          roles de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> para leer las fuentes de AWS) o <strong>gestionados por el cliente</strong>.</li>
+        <li><strong>Varias cuentas:</strong> con <a href="organizations.html">AWS Organizations</a>, un espacio de trabajo puede leer las fuentes de
+          las cuentas de las <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr> que indiques; los roles se despliegan con <a href="cloudformation.html">CloudFormation</a> StackSets.</li>
+        <li><strong>Alertas:</strong> reglas de alerta de Grafana sobre cualquier fuente, con avisos a <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> y a otros
+          canales.</li>
+        <li><strong>Red:</strong> el espacio de trabajo puede conectarse a una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> para llegar a fuentes privadas, y el
+          acceso de los usuarios se puede restringir por red.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Observabilidad de <strong>contenedores</strong>: métricas de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a> o <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> guardadas en Amazon Managed Service
+          for Prometheus y vistas en Grafana.</li>
+        <li>Un <strong>panel único</strong> para varias cuentas, regiones y herramientas.</li>
+        <li>Equipos que ya usan Grafana y quieren dejar de mantener sus servidores.</li>
+        <li>Correlacionar una métrica con sus logs y sus trazas en la misma pantalla.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si solo usas métricas de AWS y unos pocos paneles: los paneles de <a href="cloudwatch.html">CloudWatch</a> bastan y no añaden otro
+          servicio.</li>
+        <li>Para <strong>almacenar</strong> métricas: <a href="managed-service-for-prometheus.html">Amazon Managed Service for Prometheus</a> o CloudWatch. Grafana solo
+          visualiza.</li>
+        <li>Para informes de negocio e inteligencia empresarial: <a href="../servicio.html?id=quick">Amazon Quick</a>.</li>
+        <li>Para buscar en logs con paneles propios de <a href="opensearch-service.html">OpenSearch</a>: OpenSearch Dashboards.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Paneles de observabilidad con muchas fuentes, de AWS y de terceros</td><td>Managed Grafana</td></tr>
+            <tr><td>Paneles y alarmas nativos sobre métricas y logs de AWS</td><td><a href="cloudwatch.html">CloudWatch</a></td></tr>
+            <tr><td>Almacenar y consultar métricas con PromQL</td><td><a href="managed-service-for-prometheus.html">Amazon Managed Service for Prometheus</a></td></tr>
+            <tr><td>Paneles de negocio para usuarios no técnicos</td><td><a href="../servicio.html?id=quick">Amazon Quick</a></td></tr>
+            <tr><td>Explorar y visualizar datos indexados en <a href="opensearch-service.html">OpenSearch</a></td><td>OpenSearch Dashboards</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>usuario activo</strong> al mes en cada espacio de trabajo, con dos tarifas: editor
+        (administradores y editores) y lector. Cada espacio de trabajo factura como mínimo una licencia de editor. Las
+        consultas a las fuentes se pagan en cada fuente (por ejemplo, las llamadas a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de <a href="cloudwatch.html">CloudWatch</a>).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Inicio de sesión único con el directorio corporativo; no hay contraseñas locales que gestionar.</li>
+        <li>El espacio de trabajo accede a las fuentes de AWS con roles de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>, sin claves de larga duración.</li>
+        <li>Cada espacio de trabajo se despliega en <strong>varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr></strong> y AWS aplica las actualizaciones.</li>
+        <li>Los datos se cifran en tránsito y en reposo.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Grafana" o "paneles de código abierto sin gestionar servidores"</strong>: Managed Grafana.</li>
+        <li><strong>La pareja habitual:</strong> <a href="managed-service-for-prometheus.html">Amazon Managed Service for Prometheus</a> <em>guarda</em> las métricas y
+          Managed Grafana las <em>muestra</em>.</li>
+        <li><strong>"Visualizar en un solo panel datos de <a href="cloudwatch.html">CloudWatch</a>, Prometheus y una herramienta de
+          terceros"</strong>: Managed Grafana.</li>
+        <li><strong>Los usuarios entran con <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a> o <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr></strong>, no con usuarios de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>.</li>
+        <li><strong>Si el enunciado pide lo nativo y más sencillo</strong> para métricas de AWS, la respuesta suele ser
+          CloudWatch.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="managed-grafana"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/grafana/latest/userguide/what-is-Amazon-Managed-Service-Grafana.html" target="_blank" rel="noopener">What is Amazon Managed Grafana?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/grafana/latest/userguide/authentication-in-AMG.html" target="_blank" rel="noopener">Authenticate users in Amazon Managed Grafana workspaces</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/grafana/latest/userguide/AMG-and-Organizations.html" target="_blank" rel="noopener">How Amazon Managed Grafana works with AWS Organizations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/grafana/features/" target="_blank" rel="noopener">Amazon Managed Grafana Features</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/grafana/faqs/" target="_blank" rel="noopener">Amazon Managed Grafana FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

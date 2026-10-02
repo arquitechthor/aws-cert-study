@@ -1,0 +1,178 @@
+[
+  {
+    "id": "well-architected-tool-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Cuáles son los seis pilares del AWS Well-Architected Framework?",
+    "opciones": [
+      "Excelencia operativa, seguridad, fiabilidad, eficiencia del rendimiento, optimización de costes y sostenibilidad.",
+      "Cómputo, almacenamiento, redes, bases de datos, seguridad y análisis.",
+      "Agilidad, elasticidad, alcance global, economía de escala, seguridad y soporte.",
+      "Planificación, migración, modernización, operación, optimización y gobierno."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El marco se organiza en esos seis pilares; la sostenibilidad fue el último en incorporarse. Las otras opciones mezclan categorías de servicios, ventajas de la nube y fases de adopción.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+    ]
+  },
+  {
+    "id": "well-architected-tool-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere evaluar una de sus aplicaciones frente a las buenas prácticas de arquitectura de AWS y obtener una lista de mejoras priorizadas. ¿Qué herramienta debe usar?",
+    "opciones": [
+      "AWS Compute Optimizer.",
+      "AWS Well-Architected Tool.",
+      "AWS Artifact.",
+      "AWS Health Dashboard."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Well-Architected Tool guía una revisión de la carga de trabajo mediante preguntas sobre los pilares del marco y genera un plan de mejora. Compute Optimizer ajusta el tamaño de recursos, Artifact ofrece informes de cumplimiento y Health Dashboard informa de incidencias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/userguide/intro.html"
+    ]
+  },
+  {
+    "id": "well-architected-tool-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "Diseñar una aplicación para que se recupere automáticamente de los fallos y pueda cubrir los picos de demanda corresponde principalmente a qué pilar del AWS Well-Architected Framework.",
+    "opciones": [
+      "Optimización de costes.",
+      "Excelencia operativa.",
+      "Fiabilidad.",
+      "Sostenibilidad."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El pilar de fiabilidad trata de que la carga cumpla su función de forma correcta y constante: recuperarse de los fallos y escalar para atender la demanda. La excelencia operativa se centra en operar y mejorar los procesos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+    ]
+  },
+  {
+    "id": "well-architected-tool-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Antes de pasar una carga a producción, un arquitecto quiere identificar de forma estructurada los riesgos de su diseño y registrar el estado para compararlo dentro de seis meses. ¿Qué debe usar?",
+    "opciones": [
+      "Una auditoría manual con una hoja de cálculo propia.",
+      "Las comprobaciones de AWS Trusted Advisor exportadas a S3.",
+      "Un paquete de conformidad de AWS Config.",
+      "Una revisión en AWS Well-Architected Tool, guardando un hito al terminar."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La herramienta clasifica los riesgos por pilar y permite guardar hitos, que son una foto del estado de la revisión para medir el avance. Trusted Advisor y Config hacen comprobaciones automáticas, pero no revisan las decisiones de diseño.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/userguide/intro.html"
+    ]
+  },
+  {
+    "id": "well-architected-tool-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa quiere que todas las revisiones de arquitectura incluyan, además de las buenas prácticas de AWS, sus propios requisitos internos de cumplimiento. ¿Qué función de AWS Well-Architected Tool lo permite?",
+    "opciones": [
+      "Los hitos.",
+      "Las lentes personalizadas.",
+      "Los perfiles.",
+      "El plan de mejora."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las lentes personalizadas permiten definir pilares, preguntas y buenas prácticas propios, aplicarlos a las cargas como cualquier otra lente y compartirlos con otras cuentas. Los hitos guardan el estado y los perfiles priorizan preguntas según objetivos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-custom.html"
+    ]
+  },
+  {
+    "id": "well-architected-tool-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "¿Qué diferencia hay entre AWS Well-Architected Tool y AWS Trusted Advisor?",
+    "opciones": [
+      "Well-Architected Tool es de pago y Trusted Advisor es siempre gratuito y completo.",
+      "Well-Architected Tool solo revisa la seguridad y Trusted Advisor solo los costes.",
+      "Well-Architected Tool se basa en las respuestas del equipo a un cuestionario; Trusted Advisor inspecciona automáticamente la cuenta.",
+      "Well-Architected Tool corrige los problemas por sí solo y Trusted Advisor solo los señala."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La primera es una revisión guiada que depende de lo que responda el equipo sobre su carga; la segunda ejecuta comprobaciones automáticas sobre los recursos. Well-Architected Tool es gratuita, cubre los seis pilares y ninguna de las dos aplica cambios.",
+    "fuentes": [
+      "https://aws.amazon.com/well-architected-tool/features/"
+    ]
+  },
+  {
+    "id": "well-architected-tool-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Un equipo va a poner en producción una aplicación de IA generativa y quiere revisar su diseño frente a buenas prácticas específicas de ese tipo de cargas. ¿Qué opción de AWS encaja?",
+    "opciones": [
+      "Aplicar en AWS Well-Architected Tool una lente del catálogo orientada a IA generativa.",
+      "Ejecutar un trabajo de evaluación de modelos en Amazon Bedrock.",
+      "Activar Amazon Macie sobre los datos de entrenamiento.",
+      "Crear una alarma de CloudWatch sobre la latencia del modelo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El catálogo de lentes de Well-Architected Tool incluye lentes especializadas, entre ellas las de aprendizaje automático y de IA generativa, que añaden preguntas propias a la revisión de la carga. La evaluación de modelos mide la calidad del modelo, no el diseño de la carga.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses.html"
+    ]
+  },
+  {
+    "id": "well-architected-tool-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Directrices para una IA responsable",
+    "enunciado": "¿Qué pilar del AWS Well-Architected Framework aborda la reducción del consumo de energía y del impacto ambiental de una carga de entrenamiento de modelos?",
+    "opciones": [
+      "Fiabilidad.",
+      "Eficiencia del rendimiento.",
+      "Excelencia operativa.",
+      "Sostenibilidad."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El pilar de sostenibilidad se centra en minimizar el impacto ambiental de las cargas en la nube, por ejemplo reduciendo los recursos necesarios para entrenar e inferir. La eficiencia del rendimiento trata de usar bien los recursos, pero con el foco en el rendimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+    ]
+  }
+]

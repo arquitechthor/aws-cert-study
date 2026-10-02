@@ -1,0 +1,178 @@
+[
+  {
+    "id": "cli-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un administrador quiere automatizar con scripts la creación diaria de copias de sus recursos desde la terminal. ¿Qué forma de acceso a AWS debe usar?",
+    "opciones": [
+      "AWS Management Console.",
+      "AWS CLI.",
+      "AWS Artifact.",
+      "AWS Health Dashboard."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La CLI permite llamar a las API de AWS desde la terminal y encadenar comandos en scripts. La consola es una interfaz web interactiva, Artifact ofrece informes de cumplimiento y Health Dashboard informa de incidencias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html"
+    ]
+  },
+  {
+    "id": "cli-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué necesita un usuario de IAM para ejecutar comandos de la AWS CLI desde su portátil, si no usa inicio de sesión único?",
+    "opciones": [
+      "Su nombre de usuario y su contraseña de la consola.",
+      "Un par de claves de EC2 en formato PEM.",
+      "Un identificador de clave de acceso y su clave de acceso secreta.",
+      "Un certificado emitido por AWS Certificate Manager."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El acceso programático de un usuario de IAM usa claves de acceso (identificador y clave secreta). La contraseña es para la consola, el par de claves de EC2 sirve para conectarse a instancias y los certificados de ACM son para TLS. Aun así, lo recomendado son credenciales temporales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html"
+    ]
+  },
+  {
+    "id": "cli-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un script que usa la AWS CLI en una instancia de EC2 debe leer objetos de un bucket de S3. ¿Cuál es la forma más segura de darle credenciales?",
+    "opciones": [
+      "Asociar a la instancia un rol de IAM con permiso de lectura sobre el bucket.",
+      "Ejecutar aws configure con las claves de un usuario de IAM administrador.",
+      "Guardar las claves de acceso en un fichero del propio script.",
+      "Pasar las claves de acceso en los datos de usuario de la instancia."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con un rol en el perfil de instancia, la CLI obtiene credenciales temporales que se renuevan solas y no hay claves que custodiar. Guardar claves de larga duración en la instancia, en el script o en los datos de usuario las expone.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html"
+    ]
+  },
+  {
+    "id": "cli-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un desarrollador ejecuta un comando de la AWS CLI que lista decenas de miles de recursos y recibe errores de tiempo de espera agotado. ¿Qué opción ayuda sin cambiar el resultado final?",
+    "opciones": [
+      "Añadir --max-items 10 para acortar la respuesta.",
+      "Añadir --query para filtrar la salida en el cliente.",
+      "Añadir --output text para aligerar el formato.",
+      "Añadir --page-size con un valor más pequeño."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La CLI sigue pidiendo todas las páginas, pero con --page-size cada llamada trae menos elementos y es menos probable que agote el tiempo. --max-items recorta el resultado, y --query y --output solo cambian lo que se muestra después de recibir los datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-pagination.html"
+    ]
+  },
+  {
+    "id": "cli-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un desarrollador tiene configurado un perfil por defecto en ~/.aws/credentials, pero la CLI actúa con otra identidad. Descubre que tiene definidas AWS_ACCESS_KEY_ID y AWS_SECRET_ACCESS_KEY en el entorno. ¿Por qué ocurre?",
+    "opciones": [
+      "Porque el fichero de credenciales solo se lee cuando la CLI se ejecuta en instancias de EC2.",
+      "Porque las variables de entorno tienen precedencia sobre los ficheros de credenciales y de configuración.",
+      "Porque la CLI elige siempre, entre las disponibles, las credenciales con más permisos.",
+      "Porque el perfil por defecto caduca a las 12 horas y pasa a usarse el entorno."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "En el orden de precedencia de la CLI, las opciones del comando van primero y después las variables de entorno, por delante de los ficheros. Basta con quitar esas variables o indicar el perfil con --profile.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html"
+    ]
+  },
+  {
+    "id": "cli-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "La política de un usuario de IAM exige MFA para las llamadas a la API. ¿Cómo puede usar la AWS CLI cumpliendo esa condición?",
+    "opciones": [
+      "Añadiendo el código de MFA como una opción más en cada comando que ejecute.",
+      "No es posible: el MFA solo se puede exigir en la consola, no en la CLI.",
+      "Obteniendo credenciales temporales con sts get-session-token y su código de MFA, y usándolas en la CLI.",
+      "Desactivando el MFA del usuario mientras dure la sesión de terminal."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Para cumplir una condición de MFA en llamadas programáticas se piden a STS credenciales temporales indicando el dispositivo y el código; esas credenciales llevan la marca de MFA. No existe una opción de MFA por comando.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html"
+    ]
+  },
+  {
+    "id": "cli-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un ingeniero administra 30 cuentas de una organización desde la AWS CLI y no quiere guardar claves de larga duración en su equipo. ¿Qué configuración es la recomendada?",
+    "opciones": [
+      "Perfiles con nombre vinculados a AWS IAM Identity Center e inicio de sesión con aws sso login.",
+      "Un usuario de IAM por cuenta, con sus claves en el fichero de credenciales.",
+      "Las claves del usuario raíz de la cuenta de administración.",
+      "Un único usuario de IAM con una política de administrador en todas las cuentas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La versión 2 de la CLI se integra con IAM Identity Center: cada perfil apunta a una cuenta y un conjunto de permisos, y el inicio de sesión entrega credenciales temporales. Las claves de larga duración, y más las del usuario raíz, son justo lo que se quiere evitar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html"
+    ]
+  },
+  {
+    "id": "cli-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un script lista las instancias de EC2 de una cuenta con miles de ellas, pero solo necesita las que tienen una etiqueta concreta. ¿Qué opción reduce los datos que devuelve la API?",
+    "opciones": [
+      "--query, con una expresión JMESPath sobre la etiqueta.",
+      "--output table, para ver solo las columnas necesarias.",
+      "--no-paginate, para recibir una sola página.",
+      "--filters, para que el servicio devuelva solo las instancias con esa etiqueta."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El filtrado en el servidor con --filters hace que la API devuelva solo los recursos que cumplen la condición. --query se aplica en el cliente cuando ya se ha recibido todo, y --no-paginate dejaría el listado incompleto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html"
+    ]
+  }
+]

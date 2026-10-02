@@ -75,7 +75,7 @@
       <h2 id="conceptos">Capacidades más preguntadas</h2>
       <ul>
         <li><strong>Session Manager:</strong> abre una terminal en la instancia desde la consola o la
-          <a href="../servicio.html?id=cli"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> <strong>sin <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr>, sin puerto 22 abierto, sin bastión y sin claves</strong>; cada sesión queda
+          <a href="cli.html"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> <strong>sin <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr>, sin puerto 22 abierto, sin bastión y sin claves</strong>; cada sesión queda
           registrada en <a href="cloudtrail.html">CloudTrail</a> y, si se quiere, grabada en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o <a href="cloudwatch.html">CloudWatch</a> Logs.</li>
         <li><strong>Run Command:</strong> ejecuta scripts o comandos en muchas instancias a la vez,
           elegidas por etiquetas, con control de concurrencia y errores.</li>
@@ -105,7 +105,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Secretos que deben rotarse automáticamente: <a href="secrets-manager.html">Secrets Manager</a>.</li>
-        <li>Infraestructura como código: <a href="cloudformation.html">CloudFormation</a> o <a href="../servicio.html?id=cdk">CDK</a>.</li>
+        <li>Infraestructura como código: <a href="cloudformation.html">CloudFormation</a> o <a href="cdk.html">CDK</a>.</li>
         <li>Si no quieres gestionar servidores en absoluto: <a href="lambda.html">Lambda</a>, <a href="fargate.html">Fargate</a> o servicios gestionados.</li>
       </ul>
 

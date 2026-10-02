@@ -1,0 +1,134 @@
+[
+  {
+    "id": "service-quotas-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa necesita lanzar más instancias de EC2 de las que permite el límite actual de su cuenta. ¿Dónde puede consultar ese límite y pedir que se lo aumenten?",
+    "opciones": [
+      "En AWS Budgets.",
+      "En AWS Artifact.",
+      "En Service Quotas.",
+      "En AWS Health Dashboard."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Service Quotas centraliza las cuotas de los servicios y permite solicitar aumentos de las ajustables. Budgets controla el gasto, Artifact ofrece informes de cumplimiento y Health Dashboard informa de incidencias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html"
+    ]
+  },
+  {
+    "id": "service-quotas-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Por qué aplica AWS cuotas por defecto a los recursos de cada cuenta?",
+    "opciones": [
+      "Para proteger a los clientes de un consumo no intencionado y garantizar la disponibilidad del servicio.",
+      "Para obligar a los clientes a contratar un plan de soporte de pago.",
+      "Porque la capacidad de cada región está reservada de antemano para cada cliente.",
+      "Para impedir que una misma cuenta use más de una región a la vez."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las cuotas evitan que un error o un abuso disparen el consumo y el gasto, y ayudan a que el servicio siga disponible para todos. Muchas se pueden aumentar si hay una necesidad justificada, sin depender del plan de soporte.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html"
+    ]
+  },
+  {
+    "id": "service-quotas-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa aumentó en una región su cuota de direcciones IP elásticas. Al desplegar en otra región, vuelve a encontrarse con el límite por defecto. ¿Por qué?",
+    "opciones": [
+      "Porque los aumentos caducan a los 30 días.",
+      "Porque la mayoría de las cuotas se aplican por región y hay que pedir el aumento en cada una.",
+      "Porque los aumentos solo se aplican a los recursos ya existentes.",
+      "Porque las direcciones IP elásticas no admiten aumentos."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Casi todas las cuotas son regionales: el valor aplicado en una región no se traslada a las demás. Solo unas pocas cuotas son globales, de cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html"
+    ]
+  },
+  {
+    "id": "service-quotas-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización crea cuentas nuevas cada semana y todas necesitan los mismos cinco aumentos de cuota. ¿Qué opción evita pedirlos a mano en cada cuenta?",
+    "opciones": [
+      "Una SCP asociada a la OU que aumente las cuotas de las cuentas nuevas.",
+      "Una regla de AWS Config con corrección automática sobre las cuotas.",
+      "Un producto de AWS Service Catalog por cada cuota que haya que aumentar.",
+      "Una plantilla de solicitudes de cuota de Service Quotas asociada a la organización."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La plantilla de solicitudes de cuota define hasta 10 aumentos que se piden automáticamente en cada cuenta nueva de la organización, que debe tener todas las funciones activadas. Las SCP limitan permisos, no cambian cuotas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicequotas/latest/userguide/organization-templates.html"
+    ]
+  },
+  {
+    "id": "service-quotas-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "El equipo de operaciones quiere recibir un aviso cuando el uso de vCPU bajo demanda de EC2 supere el 80 % de la cuota, para pedir el aumento con tiempo. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Revisar cada mes el historial de solicitudes de aumento en Service Quotas.",
+      "Una regla de AWS Config que cuente el número de instancias en ejecución.",
+      "Una alarma de Amazon CloudWatch sobre la métrica de uso de esa cuota, creada desde Service Quotas.",
+      "Un presupuesto de AWS Budgets con un umbral de alerta del 80 % del gasto."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las métricas de uso de muchas cuotas se publican en CloudWatch, y desde Service Quotas se puede crear una alarma que salte al superar un porcentaje de la cuota. Budgets mide gasto, no uso de cuotas, y Config evalúa configuración.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicequotas/latest/userguide/configure-cloudwatch.html"
+    ]
+  },
+  {
+    "id": "service-quotas-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una arquitectura de recuperación ante desastres conmuta a una segunda región, pero en la prueba el escalado falla allí al lanzar instancias. La cuenta nunca había usado esa región. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "La cuota de vCPU de EC2 de la región de respaldo sigue en su valor por defecto.",
+      "Las AMI no se pueden usar en una región distinta de la original.",
+      "Service Quotas bloquea las regiones que no se han usado antes.",
+      "Los grupos de Auto Scaling solo funcionan en la región principal."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las cuotas son regionales, así que un aumento conseguido en la región principal no existe en la de respaldo. Los diseños multirregión deben igualar de antemano las cuotas en la región de recuperación. Las AMI se pueden copiar entre regiones y Auto Scaling funciona en todas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html"
+    ]
+  }
+]

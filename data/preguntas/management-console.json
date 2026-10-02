@@ -1,0 +1,156 @@
+[
+  {
+    "id": "management-console-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué opción ofrece una interfaz web para crear y administrar recursos de AWS desde el navegador?",
+    "opciones": [
+      "AWS CLI.",
+      "Los SDK de AWS.",
+      "AWS Management Console.",
+      "AWS CloudFormation."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La consola es la interfaz web de AWS. La CLI se usa desde la terminal, los SDK desde el código de las aplicaciones y CloudFormation define infraestructura con plantillas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/what-is.html"
+    ]
+  },
+  {
+    "id": "management-console-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Un usuario de IAM va a entrar en la AWS Management Console. ¿Qué credenciales utiliza?",
+    "opciones": [
+      "Su nombre de usuario y su contraseña, y el código de MFA si lo tiene activado.",
+      "Su identificador de clave de acceso y su clave secreta.",
+      "El par de claves de EC2 de la cuenta.",
+      "El correo electrónico con el que se creó la cuenta."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El acceso a la consola usa usuario y contraseña, con MFA como segundo factor. Las claves de acceso son para la CLI y los SDK, el par de claves de EC2 para conectarse a instancias, y el correo de la cuenta identifica al usuario raíz.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/what-is.html"
+    ]
+  },
+  {
+    "id": "management-console-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un administrador quiere consultar el estado de sus recursos y recibir avisos de sus alarmas mientras está fuera de la oficina, desde el teléfono. ¿Qué debe usar?",
+    "opciones": [
+      "AWS CloudShell.",
+      "AWS Console Mobile Application.",
+      "AWS Artifact.",
+      "AWS Snowball."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La aplicación móvil de la consola permite ver recursos, alarmas de CloudWatch y facturación, y recibir notificaciones. CloudShell es una terminal en el navegador, Artifact ofrece informes de cumplimiento y Snowball es un dispositivo de transferencia de datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/consolemobileapp/latest/userguide/what-is-consolemobileapp.html"
+    ]
+  },
+  {
+    "id": "management-console-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un desarrollador crea instancias de EC2 y, al volver a la consola más tarde, la lista aparece vacía aunque nadie las ha borrado. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Las instancias se detienen y se ocultan solas al cerrar la sesión de la consola.",
+      "Una SCP de la organización oculta las instancias a los usuarios de IAM.",
+      "El usuario ha perdido el acceso programático y la consola no puede listarlas.",
+      "La consola tiene seleccionada una región distinta de aquella en la que se crearon."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "EC2 es un servicio regional y la consola solo lista los recursos de la región elegida en el selector. Cerrar la sesión no afecta a las instancias, y el acceso programático no interviene en la consola.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/what-is.html"
+    ]
+  },
+  {
+    "id": "management-console-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa quiere que sus empleados entren en la consola de varias cuentas con su identidad corporativa y sin usuarios de IAM con contraseña en cada cuenta. ¿Qué debe usar?",
+    "opciones": [
+      "Un usuario de IAM compartido por equipo.",
+      "El usuario raíz de cada cuenta con MFA.",
+      "AWS IAM Identity Center conectado al directorio corporativo.",
+      "Claves de acceso distribuidas a cada empleado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "IAM Identity Center ofrece un portal de inicio de sesión único desde el que cada persona entra en la consola de las cuentas asignadas con un rol temporal. Compartir usuarios o usar el usuario raíz va contra las buenas prácticas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/what-is.html"
+    ]
+  },
+  {
+    "id": "management-console-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un equipo crea a mano en la consola los recursos de cada entorno nuevo y los entornos acaban siendo distintos entre sí. ¿Qué cambio resuelve el problema de fondo?",
+    "opciones": [
+      "Dar a todo el equipo permisos de administrador en la consola.",
+      "Definir los entornos como infraestructura como código con CloudFormation o CDK.",
+      "Documentar los pasos de la consola con capturas de pantalla.",
+      "Crear los recursos desde la aplicación móvil de la consola."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La consola es adecuada para explorar y para tareas puntuales, pero lo creado a mano no es reproducible. Con infraestructura como código, cada entorno sale de la misma definición versionada. La documentación manual no evita los errores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/what-is.html"
+    ]
+  },
+  {
+    "id": "management-console-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un ingeniero trabaja en la consola y necesita ejecutar unos comandos de la AWS CLI sin instalar nada en su equipo ni configurar claves. ¿Qué opción tiene?",
+    "opciones": [
+      "Crear una instancia de EC2 con un par de claves nuevo.",
+      "Pedir claves de acceso del usuario raíz.",
+      "Usar la búsqueda unificada de la consola.",
+      "Abrir AWS CloudShell desde la consola."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "CloudShell abre en el navegador una terminal con la CLI preinstalada y autenticada con las credenciales de la sesión de la consola. No hace falta crear instancias ni claves.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/what-is.html"
+    ]
+  }
+]

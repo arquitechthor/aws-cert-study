@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 52 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 64 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -24,13 +24,9 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   **Computación (7):** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda
   ECS Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
   `serverless-application-repository`, `vmware-cloud-on-aws` (aviso: AWS dejó de revenderlo el
-  30/04/2024, se contrata con Broadcom) y `wavelength`. **Administración y gobernanza (12;
-  publicados el 02/10/2026 `organizations`, `config`, `control-tower`, `trusted-advisor` y `proton`):**
-  `cdk`, `cli`, `well-architected-tool`, `compute-optimizer`, `health-dashboard`, `license-manager`,
-  `service-catalog` (AppRegistry sin clientes nuevos), `service-quotas`, `management-console`
-  (myApplications sin clientes nuevos), `managed-grafana`, `managed-service-for-prometheus` y
-  `appconfig`. **Revisar tras el 07/10/2026:** el aviso de `proton` (ese día termina su soporte:
-  pasar el texto a pasado). Luego, la cola "Prioridad 0".
+  30/04/2024, se contrata con Broadcom) y `wavelength`. **Administración y gobernanza: completa** (los 21 servicios
+  de la categoría están publicados desde el 02/10/2026). **Revisar tras el 07/10/2026:** el aviso de
+  `proton` (ese día termina su soporte: pasar el texto a pasado). Luego, la cola "Prioridad 0".
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
 - **Última actualización:** 2026-10-02
@@ -315,7 +311,7 @@ esta lista es solo el orden de trabajo.
 - [ ] `cost-explorer` AWS Cost Explorer — Administración financiera en la nube (SAA-C03, SAP-C02, AIF-C01)
 - [x] `config` AWS Config — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
 - [x] `trusted-advisor` AWS Trusted Advisor — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
-- [ ] `well-architected-tool` AWS Well-Architected Tool — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
+- [x] `well-architected-tool` AWS Well-Architected Tool — Administración y gobernanza (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `s3-glacier` Amazon S3 Glacier — Almacenamiento (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `data-exchange` AWS Data Exchange — Análisis (SAA-C03, SAP-C02, AIF-C01)
 - [ ] `emr` Amazon EMR — Análisis (SAA-C03, SAP-C02, AIF-C01)
@@ -346,16 +342,16 @@ esta lista es solo el orden de trabajo.
 
 - [ ] `cost-and-usage-report` AWS Cost and Usage Report — Administración financiera en la nube (SAA-C03, SAP-C02)
 - [x] `savings-plans` Savings Plans — Administración financiera en la nube (SAA-C03, SAP-C02)
-- [ ] `cli` AWS CLI — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `cli` AWS CLI — Administración y gobernanza (SAA-C03, SAP-C02)
 - [x] `cloudformation` AWS CloudFormation — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `compute-optimizer` AWS Compute Optimizer — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `compute-optimizer` AWS Compute Optimizer — Administración y gobernanza (SAA-C03, SAP-C02)
 - [x] `control-tower` AWS Control Tower — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `health-dashboard` AWS Health Dashboard — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `license-manager` AWS License Manager — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `managed-grafana` Amazon Managed Grafana — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `managed-service-for-prometheus` Amazon Managed Service for Prometheus — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `management-console` AWS Management Console — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `service-catalog` AWS Service Catalog — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `health-dashboard` AWS Health Dashboard — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `license-manager` AWS License Manager — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `managed-grafana` Amazon Managed Grafana — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `managed-service-for-prometheus` Amazon Managed Service for Prometheus — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `management-console` AWS Management Console — Administración y gobernanza (SAA-C03, SAP-C02)
+- [x] `service-catalog` AWS Service Catalog — Administración y gobernanza (SAA-C03, SAP-C02)
 - [x] `systems-manager` AWS Systems Manager — Administración y gobernanza (SAA-C03, SAP-C02)
 - [ ] `backup` AWS Backup — Almacenamiento (SAA-C03, SAP-C02)
 - [ ] `fsx` Amazon FSx — Almacenamiento (SAA-C03, SAP-C02)
@@ -412,7 +408,7 @@ esta lista es solo el orden de trabajo.
 #### Prioridad 3: solo SAP-C02 (fecha límite 17/11/2026) (33)
 
 - [x] `proton` AWS Proton — Administración y gobernanza (SAP-C02)
-- [ ] `service-quotas` Service Quotas — Administración y gobernanza (SAP-C02)
+- [x] `service-quotas` Service Quotas — Administración y gobernanza (SAP-C02)
 - [ ] `elastic-disaster-recovery` AWS Elastic Disaster Recovery — Almacenamiento (SAP-C02)
 - [ ] `managed-service-for-apache-flink` Amazon Managed Service for Apache Flink — Análisis (SAP-C02)
 - [x] `ses` Amazon SES — Aplicaciones empresariales (SAP-C02)
@@ -462,8 +458,8 @@ Primero los de DVA-C02 por su fecha límite (01/12/2026). Las certificaciones en
 resto de la cola son las de cuando se creó; las actuales están en `servicios.json`.
 
 - [ ] `amazon-q` Amazon Q — Machine learning (CLF-C02, DVA-C02)
-- [ ] `appconfig` AWS AppConfig — Administración y gobernanza (DVA-C02)
-- [ ] `cdk` AWS CDK — Administración y gobernanza (DVA-C02)
+- [x] `appconfig` AWS AppConfig — Administración y gobernanza (DVA-C02)
+- [x] `cdk` AWS CDK — Administración y gobernanza (DVA-C02)
 - [ ] `cloudshell` AWS CloudShell — Herramientas para desarrolladores (DVA-C02)
 - [ ] `connect` Amazon Connect — Aplicaciones empresariales (CLF-C02)
 - [ ] `marketplace` AWS Marketplace — Administración financiera en la nube (CLF-C02)
@@ -651,3 +647,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-09-28 | Menú y pie homologados con `kopi-web` y la web personal: 24 px entre enlaces, 16 px de margen en móvil, enlace activo con `aria-current` (`nav.js`) y línea común "Kopi Tools · Apuntes AWS · Sobre mí" al final del pie. El buscador del catálogo también busca en la frase ("cola" encuentra SQS), con las coincidencias por nombre primero. |
 | 2026-10-02 | Fase 4: juego de memoria publicado (`memoria.html` + `assets/memoria.js`) con los modos categorías y funciones, panel de configuración (modo, certificación, tamaño, categorías, modo difícil) reflejado en la URL y recordado en `localStorage`, pantalla final con repaso y enlaces, mejores marcas, teclado (Tab, flechas, Intro) y `aria-label` por carta. Enlace "Memoria" en el menú de todas las páginas y botón en la portada; aviso legal actualizado. Probado en navegador a 1280 px y 375 px (sin desplazamiento horizontal). Tareas 4.4–4.10 y 4.12–4.15. |
 | 2026-10-02 | Fase 2: publicadas 5 guías de Administración y gobernanza (Organizations, Config, Control Tower, Trusted Advisor y Proton), con 38 preguntas originales (52 de 164). Datos contrastados con la documentación actual: Proton termina su soporte el 07/10/2026 (cerrado a clientes nuevos desde el 07/10/2025; alternativas: Git sync de CloudFormation, CodePipeline + CodeBuild, GitHub Actions, Harmonix); Organizations con 10 SCP por raíz, OU o cuenta, 5 niveles de OU, RCP y políticas declarativas; Control Tower con controles preventivos (SCP/RCP), de detección (Config) y proactivos (hooks) y la landing zone 4.0 sin OU de seguridad obligatoria; Config con grabación continua o diaria; Trusted Advisor con seis categorías y los planes nuevos (Business Support+, Enterprise, Unified Operations; Developer, Business y Enterprise On-Ramp se retiran el 01/01/2027). |
+| 2026-10-02 | Fase 2: categoría Administración y gobernanza completa con 12 guías más (AppConfig, CDK, CLI, Compute Optimizer, Health Dashboard, License Manager, Managed Grafana, Managed Service for Prometheus, Management Console, Service Catalog, Service Quotas y Well-Architected Tool) y 81 preguntas originales (64 de 164). Avisos: AppRegistry de Service Catalog sin clientes nuevos desde el 30/07/2026 y myApplications de la consola sin aplicaciones nuevas. Datos contrastados: Compute Optimizer analiza 14 días (93 con métricas mejoradas, de pago), retención de Prometheus de 150 días ampliable a 3 años, API de AWS Health solo con Business Support+ o superior, plantilla de cuotas con hasta 10 aumentos, precedencia de credenciales de la CLI. Service Quotas no tiene icono propio y usa el de su categoría. |
