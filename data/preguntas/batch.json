@@ -1,0 +1,156 @@
+[
+  {
+    "id": "batch-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa necesita ejecutar cada noche miles de tareas de cálculo que duran varias horas, sin administrar el planificador ni los servidores. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "AWS Lambda.",
+      "Amazon Lightsail.",
+      "AWS Batch.",
+      "Amazon CloudFront."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Batch gestiona las colas, la planificación y el aprovisionamiento del cómputo para trabajos por lotes de cualquier duración. Lambda tiene un límite de 15 minutos por ejecución, Lightsail ofrece servidores virtuales sencillos y CloudFront es una red de entrega de contenido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html"
+    ]
+  },
+  {
+    "id": "batch-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Cómo se factura AWS Batch?",
+    "opciones": [
+      "No tiene coste adicional: se pagan los recursos de cómputo que utilizan los trabajos.",
+      "Con una cuota fija mensual por cada cola de trabajos creada.",
+      "Por cada trabajo enviado, con independencia de su duración.",
+      "Por hora de uso del planificador, además del cómputo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Batch no cobra por el servicio; se pagan las instancias de EC2, Fargate y demás recursos que crea para ejecutar los trabajos, y se pueden aplicar Spot, instancias reservadas y Savings Plans.",
+    "fuentes": [
+      "https://aws.amazon.com/batch/pricing/"
+    ]
+  },
+  {
+    "id": "batch-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un proceso de análisis genómico lanza miles de trabajos independientes que pueden reiniciarse si se interrumpen. La empresa quiere el menor coste posible. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "AWS Batch con un entorno de cómputo gestionado de instancias bajo demanda.",
+      "Funciones Lambda con el tiempo máximo ampliado.",
+      "Un clúster fijo de instancias reservadas encendido siempre.",
+      "AWS Batch con un entorno de cómputo gestionado de instancias Spot y reintentos."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los trabajos son independientes y repetibles, así que toleran las interrupciones de Spot, que ofrece el precio más bajo; Batch reintenta los trabajos interrumpidos. El clúster fijo se paga también cuando no hay trabajos y Lambda no admite ejecuciones de horas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_batch-readme.html"
+    ]
+  },
+  {
+    "id": "batch-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un proceso de transformación de ficheros tarda unos 40 minutos por fichero y se lanza cuando llega un objeto a S3. El equipo no quiere gestionar servidores. ¿Qué opción cumple los requisitos?",
+    "opciones": [
+      "Una función Lambda con 10 GB de memoria y el tiempo de espera máximo configurado.",
+      "Un trabajo de AWS Batch en un entorno de cómputo de Fargate, enviado desde una regla de EventBridge.",
+      "Una instancia de EC2 siempre encendida que sondee el bucket cada minuto.",
+      "Una API de API Gateway con integración directa con S3 y una plantilla de mapeo."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Batch sobre Fargate ejecuta contenedores sin límite de 15 minutos y sin instancias que administrar, y EventBridge puede enviar el trabajo al llegar el objeto. Lambda no llega a 40 minutos y una instancia encendida supone gestionar un servidor.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/batch/latest/userguide/batch_components.html"
+    ]
+  },
+  {
+    "id": "batch-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Hay que procesar 10 000 ficheros con el mismo programa, uno por trabajo, y enviarlos de una sola vez. ¿Qué función de AWS Batch está pensada para ello?",
+    "opciones": [
+      "Un trabajo en matriz (array job), en el que cada hijo recibe su índice.",
+      "Un trabajo paralelo de varios nodos, con un nodo principal.",
+      "Una política de reparto equitativo asociada a la cola.",
+      "Un entorno de cómputo no gestionado con 10 000 instancias."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Un trabajo en matriz genera con un único envío muchos trabajos hijos idénticos, cada uno con un índice que sirve para elegir su fichero. Los trabajos de varios nodos son para una única carga repartida entre instancias que se comunican.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html"
+    ]
+  },
+  {
+    "id": "batch-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Varios equipos comparten una cola de AWS Batch y los trabajos de un equipo que envía grandes lotes dejan bloqueados durante horas a los demás. ¿Qué cambio lo resuelve sin crear una infraestructura por equipo?",
+    "opciones": [
+      "Aumentar sin límite el máximo de vCPU del entorno de cómputo compartido.",
+      "Pasar todos los trabajos de todos los equipos a funciones Lambda.",
+      "Asociar a la cola una política de planificación de reparto equitativo con identificadores por equipo.",
+      "Cambiar la estrategia de asignación del entorno a la de menor coste por vCPU."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Por defecto la cola atiende en orden de llegada. Una política de reparto equitativo distribuye la capacidad entre identificadores de reparto (por equipo o carga), de modo que nadie monopoliza la cola. Subir el máximo aumenta el coste y no garantiza el reparto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/batch/latest/userguide/job_scheduling.html"
+    ]
+  },
+  {
+    "id": "batch-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migra una simulación de dinámica de fluidos que reparte un único cálculo entre decenas de servidores que intercambian mensajes continuamente. ¿Qué función de AWS Batch corresponde a este patrón?",
+    "opciones": [
+      "Los trabajos en matriz con dependencias.",
+      "Los entornos de cómputo de Fargate Spot.",
+      "Las colas con varias prioridades.",
+      "Los trabajos paralelos de varios nodos."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los trabajos paralelos de varios nodos ejecutan una sola carga fuertemente acoplada en varias instancias de EC2 que se comunican, que es el patrón típico de HPC. Los trabajos en matriz son para tareas independientes, y este tipo de trabajo no se ejecuta en Fargate.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html"
+    ]
+  }
+]

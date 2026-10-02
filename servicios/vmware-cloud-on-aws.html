@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VMware Cloud on AWS — Apuntes AWS</title>
+<meta name="description" content="Entorno VMware (vSphere, vSAN y NSX) gestionado que se ejecuta sobre hardware dedicado de AWS, para llevar cargas virtualizadas a la nube sin rehacerlas. Desde el 30/04/2024 se contrata con Broadcom. Apuntes y preguntas de práctica para SAA-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/vmware-cloud-on-aws.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="VMware Cloud on AWS — Apuntes AWS">
+<meta property="og:description" content="Entorno VMware (vSphere, vSAN y NSX) gestionado que se ejecuta sobre hardware dedicado de AWS, para llevar cargas virtualizadas a la nube sin rehacerlas. Desde el 30/04/2024 se contrata con Broadcom.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/vmware-cloud-on-aws.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/computacion.svg" alt="" width="56" height="56"><span>VMware Cloud on AWS</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Lleva tus cargas vSphere a hardware de AWS sin cambiar herramientas ni procesos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://techdocs.broadcom.com/us/en/vmware-cis/cloud/vmware-cloud-on-aws/SaaS.html" target="_blank" rel="noopener">Documentación de VMware Cloud on AWS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> desde el <strong>30/04/2024 AWS ya no revende</strong>
+        VMware Cloud on AWS: el servicio sigue existiendo, pero las suscripciones nuevas y las renovaciones se
+        contratan con <strong>Broadcom</strong> (propietaria de VMware) o sus distribuidores. AWS ofrece ahora su propio
+        servicio, <strong>Amazon Elastic VMware Service (Amazon EVS)</strong>, que ejecuta VMware Cloud Foundation dentro
+        de tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>. VMware Cloud on AWS sigue en la guía de SAA-C03.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>VMware Cloud on AWS es un servicio que ejecuta la plataforma de virtualización de <strong>VMware</strong> sobre
+        <strong>servidores dedicados de AWS</strong>. Las empresas que tienen sus centros de datos virtualizados con
+        vSphere pueden <strong>trasladar o ampliar</strong> sus máquinas virtuales a la nube sin convertirlas ni
+        rediseñar las aplicaciones, y seguir usando las mismas herramientas, procesos y conocimientos. El entorno
+        VMware lo opera el proveedor, y desde él se llega con baja latencia a los servicios nativos de AWS.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Centro de datos definido por software:</strong> el conjunto de productos de VMware que se despliega:
+          <strong>vSphere</strong> (cómputo), <strong>vSAN</strong> (almacenamiento) y <strong>NSX</strong> (red), con
+          <strong>vCenter</strong> como consola de gestión.</li>
+        <li><strong>Hardware dedicado:</strong> se ejecuta sobre instancias sin virtualizar (<em>bare metal</em>) de
+          <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, en la infraestructura de AWS, por clústeres de hosts.</li>
+        <li><strong>Mismas herramientas:</strong> el equipo sigue trabajando con vCenter, y puede gestionar juntos el
+          entorno local y el de la nube.</li>
+        <li><strong>Migración sin conversión:</strong> las máquinas virtuales se mueven tal cual, incluso en caliente,
+          entre el centro de datos y la nube.</li>
+        <li><strong>Acceso a servicios de AWS:</strong> el entorno se conecta a una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> del cliente, de modo que las
+          máquinas virtuales usan <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a> y el resto de servicios.</li>
+        <li><strong>Capacidad elástica por hosts:</strong> se añaden o se quitan hosts del clúster según la
+          demanda.</li>
+        <li><strong>Clústeres extendidos:</strong> un clúster repartido entre dos <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr> para sobrevivir a la caída de
+          una.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Salida rápida de un centro de datos</strong> (fin de contrato, cierre): mover cientos de máquinas
+          virtuales sin rehacerlas.</li>
+        <li><strong>Recuperación ante desastres</strong> del entorno VMware local en la nube.</li>
+        <li><strong>Ampliar capacidad</strong> de forma temporal sin comprar hardware.</li>
+        <li><strong>Modernización gradual:</strong> primero se mueve tal cual y después se adoptan servicios
+          nativos.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si puedes <strong>convertir</strong> las máquinas a instancias de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>: <a href="../servicio.html?id=application-migration-service">Application Migration Service</a>, más
+          barato a largo plazo y sin licencias de VMware.</li>
+        <li>Para aplicaciones nuevas: servicios nativos (<abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, contenedores, sin servidor).</li>
+        <li>Si quieres VMware dentro de tu propia <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> y contratado con AWS: Amazon EVS.</li>
+        <li>Si necesitas AWS dentro de tu centro de datos, no VMware en AWS: <a href="outposts.html">Outposts</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>Mover cargas vSphere a la nube sin cambiarlas, con las mismas herramientas</td><td>VMware Cloud on AWS (o Amazon EVS)</td></tr>
+            <tr><td>Convertir servidores en instancias de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (realojar)</td><td><a href="../servicio.html?id=application-migration-service">Application Migration Service</a></td></tr>
+            <tr><td>Infraestructura de AWS en el centro de datos propio</td><td><a href="outposts.html">Outposts</a></td></tr>
+            <tr><td>Inventariar servidores y dependencias antes de migrar</td><td><a href="../servicio.html?id=application-discovery-service">Application Discovery Service</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por host</strong>, bajo demanda o con suscripciones de uno o tres años, e incluye el hardware y
+        el software de VMware. Desde abril de 2024 la contratación y la facturación de las suscripciones nuevas son con
+        Broadcom. El uso de servicios nativos de AWS se factura aparte en la cuenta de AWS.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los hosts son de uso exclusivo del cliente.</li>
+        <li>El proveedor gestiona y parchea la plataforma VMware; el cliente administra sus máquinas virtuales, sus
+          redes lógicas y sus datos.</li>
+        <li>Si un host falla, se sustituye automáticamente; los clústeres extendidos protegen frente a la caída de una
+          <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>.</li>
+        <li>La conexión con el centro de datos se hace con <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr> o con <a href="../servicio.html?id=direct-connect">Direct Connect</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Migrar cargas de VMware sin modificarlas"</strong> o "seguir usando vCenter y las mismas
+          herramientas": VMware Cloud on AWS.</li>
+        <li><strong>"Evacuar rápido un centro de datos virtualizado con VMware"</strong>: VMware Cloud on AWS.</li>
+        <li><strong>"Recuperación ante desastres de un entorno vSphere"</strong> con el mínimo cambio: VMware Cloud on
+          AWS.</li>
+        <li><strong>Si se aceptan cambios y se busca el menor coste a largo plazo</strong>, la respuesta suele ser
+          realojar en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> con <a href="../servicio.html?id=application-migration-service">Application Migration Service</a>.</li>
+        <li><strong>No es <a href="outposts.html">Outposts</a>:</strong> aquí VMware corre en los centros de datos de AWS; en Outposts, AWS corre
+          en el tuyo.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="vmware-cloud-on-aws"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://aws.amazon.com/vmware/vmwarecloudonaws/" target="_blank" rel="noopener">VMware Cloud on AWS</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/transitioning-from-vmware-to-the-aws-cloud/introduction.html" target="_blank" rel="noopener">Transitioning from VMware to the AWS Cloud</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/08/aws-general-availability-amazon-elastic-evs/" target="_blank" rel="noopener">AWS announces general availability of Amazon Elastic VMware Service (Amazon EVS)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-microsoft-workloads-aws/aws-partners.html" target="_blank" rel="noopener">AWS Partners (migración de cargas de Microsoft)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

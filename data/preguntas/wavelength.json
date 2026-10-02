@@ -1,0 +1,134 @@
+[
+  {
+    "id": "wavelength-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa de videojuegos necesita latencias de pocos milisegundos para los jugadores que se conectan desde sus teléfonos por la red 5G de una operadora. ¿Qué opción de AWS es la adecuada?",
+    "opciones": [
+      "Amazon CloudFront.",
+      "AWS Wavelength.",
+      "AWS Outposts.",
+      "Amazon Lightsail."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Wavelength sitúa el cómputo dentro de la red 5G de la operadora, de modo que el tráfico de los dispositivos no sale a internet. CloudFront acelera contenido cacheable, Outposts lleva AWS al centro de datos del cliente y Lightsail son servidores virtuales en la región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wavelength/latest/developerguide/what-is-wavelength.html"
+    ]
+  },
+  {
+    "id": "wavelength-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Para que los dispositivos de la red de la operadora lleguen a las instancias de una subred situada en una zona de AWS Wavelength, ¿qué componente debe figurar en la tabla de rutas de esa subred?",
+    "opciones": [
+      "Una puerta de enlace de internet.",
+      "Una NAT gateway.",
+      "Una puerta de enlace de operadora (carrier gateway).",
+      "Una puerta de enlace privada virtual."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La puerta de enlace de operadora permite el tráfico entrante desde la red de la operadora y el saliente hacia esa red e internet, y es específica de las subredes de Wavelength. La puerta de enlace de internet sirve para las subredes públicas de la región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wavelength/latest/developerguide/how-wavelengths-work.html"
+    ]
+  },
+  {
+    "id": "wavelength-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación de realidad aumentada desplegada en una zona de AWS Wavelength necesita además una base de datos de Amazon DynamoDB. ¿Cómo se plantea la arquitectura?",
+    "opciones": [
+      "La lógica sensible a la latencia en instancias de la zona de Wavelength y DynamoDB en la región, a la que la zona está conectada.",
+      "Todo en la zona de Wavelength, creando también la tabla de DynamoDB dentro de la propia zona.",
+      "Todo en la región, usando la zona de Wavelength únicamente como caché de DNS para los dispositivos.",
+      "La base de datos de DynamoDB en la zona de Wavelength y la lógica de la aplicación en la región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En las zonas de Wavelength se pueden crear instancias de EC2, volúmenes de EBS y subredes, y servicios que se apoyan en ellos. Servicios como DynamoDB o RDS se consumen desde la región, a través de la conexión de alta capacidad entre la zona y la región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/subnet-wavelength.html"
+    ]
+  },
+  {
+    "id": "wavelength-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "¿Qué debe hacerse antes de poder crear una subred en una zona de AWS Wavelength?",
+    "opciones": [
+      "Solicitar un rack de hardware a AWS.",
+      "Firmar un contrato con la operadora de telecomunicaciones.",
+      "Crear una VPC nueva exclusiva para Wavelength.",
+      "Habilitar la zona de Wavelength en la cuenta."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las zonas de Wavelength no están activas por defecto: hay que habilitarlas en la cuenta. Después se crea en ellas una subred de una VPC existente. No hay hardware que pedir ni contrato aparte con la operadora.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/subnet-wavelength.html"
+    ]
+  },
+  {
+    "id": "wavelength-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa de transmisión de vídeo en directo quiere baja latencia para los espectadores de una gran ciudad que se conectan por fibra y wifi, no por una red móvil concreta. ¿Qué opción es más adecuada que AWS Wavelength?",
+    "opciones": [
+      "AWS Snowball Edge.",
+      "Una Local Zone de AWS en esa ciudad.",
+      "Un rack de AWS Outposts en la sede de la empresa.",
+      "Una segunda región con replicación."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las Local Zones acercan el cómputo a los usuarios de un área metropolitana que llegan por internet. Wavelength solo aporta su ventaja a los dispositivos conectados a la red 5G de la operadora donde está la zona.",
+    "fuentes": [
+      "https://aws.amazon.com/compare/local-zones-and-wavelength/"
+    ]
+  },
+  {
+    "id": "wavelength-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un arquitecto despliega una aplicación crítica en una única zona de AWS Wavelength. ¿Qué riesgo debe abordar en el diseño?",
+    "opciones": [
+      "Que las instancias de la zona no admiten grupos de seguridad ni ACL de red.",
+      "Que la zona no puede comunicarse con el resto de la VPC ni con la región.",
+      "Que la zona es una sola ubicación, así que debe desplegar en más de una zona o prever la conmutación a la región.",
+      "Que el tráfico entre la zona y los dispositivos 5G pasa siempre por internet pública."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Una zona de Wavelength es una única ubicación en las instalaciones de la operadora. Para tolerar su caída hay que repartir la carga entre varias zonas o conmutar a la región. Los grupos de seguridad funcionan igual, y la zona forma parte de la VPC.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wavelength/latest/developerguide/how-wavelengths-work.html"
+    ]
+  }
+]

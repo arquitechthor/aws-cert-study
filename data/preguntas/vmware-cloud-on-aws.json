@@ -1,0 +1,112 @@
+[
+  {
+    "id": "vmware-cloud-on-aws-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa con cientos de máquinas virtuales en vSphere debe abandonar su centro de datos en pocos meses y no tiene tiempo de rediseñar ni convertir las aplicaciones. Quiere seguir usando sus herramientas actuales. ¿Qué opción encaja?",
+    "opciones": [
+      "Reescribir las aplicaciones como funciones Lambda.",
+      "Instalar un rack de AWS Outposts en el centro de datos.",
+      "Trasladar las máquinas virtuales a VMware Cloud on AWS.",
+      "Empaquetar todas las aplicaciones en contenedores para EKS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "VMware Cloud on AWS ejecuta la plataforma de VMware sobre infraestructura de AWS, de modo que las máquinas virtuales se mueven tal cual y se siguen gestionando con vCenter. Reescribir o contenerizar exige tiempo, y Outposts mantiene la carga en el centro de datos que se va a abandonar.",
+    "fuentes": [
+      "https://aws.amazon.com/vmware/vmwarecloudonaws/"
+    ]
+  },
+  {
+    "id": "vmware-cloud-on-aws-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa quiere un sitio de recuperación ante desastres para su entorno VMware local, sin mantener un segundo centro de datos y con el mínimo cambio en sus procedimientos. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Usar VMware Cloud on AWS como sitio de recuperación.",
+      "Copiar las máquinas virtuales a S3 Glacier Deep Archive.",
+      "Replicar las bases de datos a DynamoDB.",
+      "Montar un clúster de Kubernetes en otra región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Al ser la misma plataforma que en local, el entorno VMware en la nube sirve de destino de recuperación con las mismas herramientas y sin convertir las máquinas. Un archivo en Glacier no ofrece un entorno donde arrancarlas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/transitioning-from-vmware-to-the-aws-cloud/introduction.html"
+    ]
+  },
+  {
+    "id": "vmware-cloud-on-aws-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Las máquinas virtuales trasladadas a VMware Cloud on AWS necesitan guardar ficheros en Amazon S3 y consultar una base de datos de Amazon RDS. ¿Es posible?",
+    "opciones": [
+      "No: el entorno VMware está aislado de los servicios de AWS.",
+      "Solo a través de internet y con direcciones IP públicas.",
+      "Solo después de convertir las máquinas virtuales en instancias de EC2.",
+      "Sí: el entorno se conecta a una VPC del cliente y desde ella se accede a los servicios nativos de AWS."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Una de las ventajas del servicio es la proximidad a los servicios nativos: el entorno VMware se enlaza con una VPC del cliente, lo que da acceso con baja latencia a S3, RDS y los demás servicios, sin convertir las máquinas.",
+    "fuentes": [
+      "https://aws.amazon.com/vmware/vmwarecloudonaws/"
+    ]
+  },
+  {
+    "id": "vmware-cloud-on-aws-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa va a migrar servidores virtualizados y acepta convertirlos en instancias de EC2 para no seguir pagando licencias de virtualización. ¿Qué servicio es el adecuado?",
+    "opciones": [
+      "VMware Cloud on AWS.",
+      "AWS Application Migration Service.",
+      "AWS Outposts.",
+      "Amazon Lightsail."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Application Migration Service replica los servidores y los lanza como instancias de EC2 nativas (realojamiento), lo que evita la capa y las licencias de VMware. VMware Cloud on AWS es la opción cuando se quiere conservar la plataforma VMware sin cambios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/transitioning-from-vmware-to-the-aws-cloud/introduction.html"
+    ]
+  },
+  {
+    "id": "vmware-cloud-on-aws-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un cliente quiere contratar hoy una suscripción nueva de VMware Cloud on AWS. ¿Qué debe saber?",
+    "opciones": [
+      "Que el servicio se ha retirado por completo y ya no se puede usar.",
+      "Que solo se puede contratar como oferta privada desde AWS Marketplace.",
+      "Que AWS dejó de revenderlo en abril de 2024 y las suscripciones nuevas se contratan con Broadcom o sus distribuidores.",
+      "Que va incluido sin coste adicional en el plan Enterprise Support de AWS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El servicio sigue disponible, pero desde el 30/04/2024 AWS ya no lo revende: las altas y las renovaciones se gestionan con Broadcom. AWS ofrece como alternativa propia Amazon Elastic VMware Service.",
+    "fuentes": [
+      "https://aws.amazon.com/vmware/vmwarecloudonaws/"
+    ]
+  }
+]

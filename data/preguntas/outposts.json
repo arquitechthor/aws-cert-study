@@ -1,0 +1,156 @@
+[
+  {
+    "id": "outposts-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere usar las mismas API y herramientas de AWS para cargas que, por normativa, deben ejecutarse en su propio centro de datos. ¿Qué servicio lo permite?",
+    "opciones": [
+      "AWS Outposts.",
+      "Amazon Lightsail.",
+      "AWS Direct Connect.",
+      "Amazon CloudFront."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Outposts instala en las instalaciones del cliente infraestructura de AWS gestionada por AWS, con los mismos servicios y API. Direct Connect es una conexión de red dedicada, Lightsail son servidores virtuales en la nube y CloudFront es una red de entrega de contenido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/outposts/latest/network-userguide/what-is-outposts.html"
+    ]
+  },
+  {
+    "id": "outposts-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "Usar AWS Outposts junto con los servicios de una región de AWS es un ejemplo de qué modelo de despliegue.",
+    "opciones": [
+      "Nube pública pura.",
+      "Multinube.",
+      "Nube híbrida.",
+      "Despliegue solo local sin nube."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El modelo híbrido combina recursos en las instalaciones del cliente con recursos en la nube, gestionados de forma coherente. Outposts extiende una VPC de la región al centro de datos propio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/outposts/latest/network-userguide/what-is-outposts.html"
+    ]
+  },
+  {
+    "id": "outposts-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "En AWS Outposts, ¿de qué es responsable el cliente que no lo sería al usar una región de AWS?",
+    "opciones": [
+      "De parchear el hipervisor y el firmware de los servidores del Outpost.",
+      "De la seguridad física del sitio, la alimentación eléctrica y la conectividad de red.",
+      "De sustituir por su cuenta los discos y los servidores que se averíen.",
+      "De actualizar el software de la infraestructura de AWS del Outpost."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "En Outposts el hardware está en las instalaciones del cliente, que aporta espacio, energía, refrigeración, red y seguridad física. AWS sigue encargándose del hardware, de su mantenimiento y del software de infraestructura.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/outposts/latest/network-userguide/how-outposts-works.html"
+    ]
+  },
+  {
+    "id": "outposts-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una fábrica necesita que una aplicación responda en pocos milisegundos a la maquinaria de la planta y quiere usar EC2 y RDS con las mismas herramientas que en la nube. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Desplegar en la región más cercana y poner delante AWS Global Accelerator.",
+      "Usar una zona de AWS Wavelength de la operadora móvil de la fábrica.",
+      "Usar Amazon CloudFront con funciones en el borde para la lógica de control.",
+      "Instalar un rack de AWS Outposts en la planta, con una puerta de enlace local hacia la red de la fábrica."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Outposts coloca el cómputo y la base de datos junto a la maquinaria, y la puerta de enlace local conecta sus subredes con la red de la planta con latencia mínima. La región queda demasiado lejos, Wavelength es para dispositivos 5G y CloudFront acelera contenido web.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/outposts/latest/network-userguide/how-outposts-works.html"
+    ]
+  },
+  {
+    "id": "outposts-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una entidad debe guardar ciertos objetos dentro de su edificio por requisitos de residencia de datos, pero quiere acceder a ellos con la API de S3. ¿Qué opción cumple el requisito?",
+    "opciones": [
+      "Amazon S3 en AWS Outposts.",
+      "Un bucket de S3 en la región más cercana con cifrado.",
+      "La clase de almacenamiento S3 One Zone-IA.",
+      "Un bucket con replicación entre regiones."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "S3 en Outposts almacena los objetos en el propio Outpost, dentro de las instalaciones, y se usa con la API de S3. Las demás opciones guardan los datos en centros de datos de AWS, fuera del edificio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html"
+    ]
+  },
+  {
+    "id": "outposts-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un arquitecto diseña una carga crítica sobre un único rack de AWS Outposts. ¿Qué debe tener en cuenta sobre la capacidad y la disponibilidad?",
+    "opciones": [
+      "La capacidad es ilimitada porque el Outpost toma recursos de la región automáticamente.",
+      "AWS garantiza la misma disponibilidad que una región con varias AZ.",
+      "La capacidad es la contratada y el Outpost es un único punto físico: hay que planificarla y prever respaldo en otro Outpost o en la región.",
+      "El Outpost puede funcionar indefinidamente sin conexión con la región, con todas sus funciones."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Un Outpost tiene la capacidad que se encargó, no la elasticidad de la región, y es una única ubicación. Para alta disponibilidad hacen falta varios Outposts o respaldo en la región. Además depende de su conexión con la región de anclaje para el plano de control.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/outposts/latest/network-userguide/what-is-outposts.html"
+    ]
+  },
+  {
+    "id": "outposts-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa debe migrar una aplicación con dependencias de baja latencia hacia un sistema central que seguirá años en su centro de datos. Quiere modernizarla ya con servicios de AWS. ¿Qué enfoque encaja?",
+    "opciones": [
+      "Migrar toda la aplicación a la región y conectar con el sistema central por una VPN.",
+      "Desplegar la aplicación en AWS Outposts en el mismo centro de datos y moverla a la región cuando desaparezca la dependencia.",
+      "Esperar a que se retire el sistema central antes de empezar la modernización.",
+      "Usar dispositivos Snowball Edge como plataforma permanente para la aplicación."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Outposts permite ejecutar la aplicación con servicios y API de AWS junto al sistema del que depende, sin la latencia de un enlace hasta la región, y facilita trasladarla más adelante. Una VPN añade latencia y los Snowball están pensados para sitios sin conexión o para transferencias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/outposts/latest/network-userguide/what-is-outposts.html"
+    ]
+  }
+]

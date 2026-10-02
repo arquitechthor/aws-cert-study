@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 64 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 71 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -20,13 +20,12 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 - **Fase 4 (juego de memoria):** publicada el 2026-10-02 en `memoria.html` con los dos modos
   (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
 - **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
-  parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después, seguir con las guías pendientes:
-  **Computación (7):** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda
-  ECS Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
-  `serverless-application-repository`, `vmware-cloud-on-aws` (aviso: AWS dejó de revenderlo el
-  30/04/2024, se contrata con Broadcom) y `wavelength`. **Administración y gobernanza: completa** (los 21 servicios
-  de la categoría están publicados desde el 02/10/2026). **Revisar tras el 07/10/2026:** el aviso de
-  `proton` (ese día termina su soporte: pasar el texto a pasado). Luego, la cola "Prioridad 0".
+  parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después, seguir con las guías pendientes
+  (93). Las categorías **Computación** y **Administración y gobernanza** están completas desde el
+  02/10/2026, y la cola "Prioridad 0" también. Siguiente bloque: "Prioridad 1" (`budgets`,
+  `cost-explorer`, `s3-glacier`, `data-exchange`, `emr`, `lake-formation`, `quick`, `documentdb`,
+  `neptune` y los de Machine learning y Seguridad). **Revisar tras el 07/10/2026:** el aviso de
+  `proton` (ese día termina su soporte: pasar el texto a pasado).
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
 - **Última actualización:** 2026-10-02
@@ -362,13 +361,13 @@ esta lista es solo el orden de trabajo.
 - [ ] `msk` Amazon MSK — Análisis (SAA-C03, SAP-C02)
 - [ ] `keyspaces` Amazon Keyspaces — Base de datos (SAA-C03, SAP-C02)
 - [x] `auto-scaling` AWS Auto Scaling — Computación (SAA-C03, SAP-C02)
-- [ ] `batch` AWS Batch — Computación (SAA-C03, SAP-C02)
+- [x] `batch` AWS Batch — Computación (SAA-C03, SAP-C02)
 - [x] `elastic-beanstalk` AWS Elastic Beanstalk — Computación (SAA-C03, SAP-C02)
 - [x] `fargate` AWS Fargate — Computación (SAA-C03, SAP-C02)
-- [ ] `outposts` AWS Outposts — Computación (SAA-C03, SAP-C02)
-- [ ] `serverless-application-repository` AWS Serverless Application Repository — Computación (SAA-C03)
-- [ ] `vmware-cloud-on-aws` VMware Cloud on AWS — Computación (SAA-C03)
-- [ ] `wavelength` AWS Wavelength — Computación (SAA-C03, SAP-C02)
+- [x] `outposts` AWS Outposts — Computación (SAA-C03, SAP-C02)
+- [x] `serverless-application-repository` AWS Serverless Application Repository — Computación (SAA-C03)
+- [x] `vmware-cloud-on-aws` VMware Cloud on AWS — Computación (SAA-C03)
+- [x] `wavelength` AWS Wavelength — Computación (SAA-C03, SAP-C02)
 - [ ] `ecr` Amazon ECR — Contenedores (SAA-C03, SAP-C02)
 - [x] `api-gateway` Amazon API Gateway — Frontend web y móvil (SAA-C03, SAP-C02)
 - [ ] `amplify` AWS Amplify — Frontend web y móvil (SAA-C03, SAP-C02)
@@ -414,8 +413,8 @@ esta lista es solo el orden de trabajo.
 - [x] `ses` Amazon SES — Aplicaciones empresariales (SAP-C02)
 - [ ] `timestream` Amazon Timestream — Base de datos (SAP-C02)
 - [ ] `managed-blockchain` Amazon Managed Blockchain — Blockchain (SAP-C02)
-- [ ] `app-runner` AWS App Runner — Computación (SAP-C02)
-- [ ] `lightsail` Amazon Lightsail — Computación (SAP-C02)
+- [x] `app-runner` AWS App Runner — Computación (SAP-C02)
+- [x] `lightsail` Amazon Lightsail — Computación (SAP-C02)
 - [ ] `appstream-2-0` Amazon AppStream 2.0 — Computación para usuarios finales (SAP-C02)
 - [ ] `workspaces` Amazon WorkSpaces — Computación para usuarios finales (SAP-C02)
 - [ ] `pinpoint` Amazon Pinpoint — Frontend web y móvil (SAP-C02)
@@ -648,3 +647,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-02 | Fase 4: juego de memoria publicado (`memoria.html` + `assets/memoria.js`) con los modos categorías y funciones, panel de configuración (modo, certificación, tamaño, categorías, modo difícil) reflejado en la URL y recordado en `localStorage`, pantalla final con repaso y enlaces, mejores marcas, teclado (Tab, flechas, Intro) y `aria-label` por carta. Enlace "Memoria" en el menú de todas las páginas y botón en la portada; aviso legal actualizado. Probado en navegador a 1280 px y 375 px (sin desplazamiento horizontal). Tareas 4.4–4.10 y 4.12–4.15. |
 | 2026-10-02 | Fase 2: publicadas 5 guías de Administración y gobernanza (Organizations, Config, Control Tower, Trusted Advisor y Proton), con 38 preguntas originales (52 de 164). Datos contrastados con la documentación actual: Proton termina su soporte el 07/10/2026 (cerrado a clientes nuevos desde el 07/10/2025; alternativas: Git sync de CloudFormation, CodePipeline + CodeBuild, GitHub Actions, Harmonix); Organizations con 10 SCP por raíz, OU o cuenta, 5 niveles de OU, RCP y políticas declarativas; Control Tower con controles preventivos (SCP/RCP), de detección (Config) y proactivos (hooks) y la landing zone 4.0 sin OU de seguridad obligatoria; Config con grabación continua o diaria; Trusted Advisor con seis categorías y los planes nuevos (Business Support+, Enterprise, Unified Operations; Developer, Business y Enterprise On-Ramp se retiran el 01/01/2027). |
 | 2026-10-02 | Fase 2: categoría Administración y gobernanza completa con 12 guías más (AppConfig, CDK, CLI, Compute Optimizer, Health Dashboard, License Manager, Managed Grafana, Managed Service for Prometheus, Management Console, Service Catalog, Service Quotas y Well-Architected Tool) y 81 preguntas originales (64 de 164). Avisos: AppRegistry de Service Catalog sin clientes nuevos desde el 30/07/2026 y myApplications de la consola sin aplicaciones nuevas. Datos contrastados: Compute Optimizer analiza 14 días (93 con métricas mejoradas, de pago), retención de Prometheus de 150 días ampliable a 3 años, API de AWS Health solo con Business Support+ o superior, plantilla de cuotas con hasta 10 aumentos, precedencia de credenciales de la CLI. Service Quotas no tiene icono propio y usa el de su categoría. |
+| 2026-10-02 | Fase 2: categoría Computación completa con 7 guías más (App Runner, Batch, Lightsail, Outposts, Serverless Application Repository, VMware Cloud on AWS y Wavelength) y 41 preguntas originales (71 de 164). Avisos: App Runner sin clientes nuevos desde el 30/04/2026 (alternativa: ECS Express Mode), servidores Outposts de 1U y 2U fuera de venta, VMware Cloud on AWS contratado con Broadcom desde el 30/04/2024 (alternativa de AWS: Amazon EVS). Siglas nuevas en el glosario: 5G, RDP y LAMP. VMware Cloud on AWS no tiene icono propio y usa el de su categoría. |

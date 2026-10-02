@@ -1,0 +1,112 @@
+[
+  {
+    "id": "serverless-application-repository-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un equipo ha creado una aplicación sin servidor (funciones Lambda, una API y una tabla) y quiere que otros equipos de la empresa puedan desplegarla en sus cuentas sin copiar el código. ¿Qué servicio está pensado para ello?",
+    "opciones": [
+      "Amazon ECR.",
+      "AWS CodeCommit.",
+      "AWS Serverless Application Repository.",
+      "Amazon S3 con un sitio web estático."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El repositorio de aplicaciones sin servidor permite publicar una aplicación definida con SAM y compartirla con otras cuentas, que la despliegan directamente. ECR guarda imágenes de contenedor y CodeCommit guarda código fuente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverlessrepo/latest/devguide/what-is-serverlessrepo.html"
+    ]
+  },
+  {
+    "id": "serverless-application-repository-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un desarrollador publica una aplicación en AWS Serverless Application Repository y un compañero de otra cuenta no la encuentra. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Las aplicaciones nuevas son privadas por defecto y hay que compartirlas con esa cuenta.",
+      "El repositorio solo admite aplicaciones públicas verificadas por AWS.",
+      "La aplicación tarda 24 horas en indexarse.",
+      "Las aplicaciones solo se pueden desplegar desde la cuenta de administración."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una aplicación recién publicada solo es visible para la cuenta que la creó. Para que otros la vean hay que compartirla de forma privada con cuentas concretas o con la organización, o hacerla pública. Además, las privadas solo existen en la región donde se publicaron.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-publishing-applications.html"
+    ]
+  },
+  {
+    "id": "serverless-application-repository-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Antes de desplegar en producción una aplicación pública de AWS Serverless Application Repository, ¿qué conviene revisar?",
+    "opciones": [
+      "Que la aplicación use instancias reservadas.",
+      "La plantilla, los permisos de IAM que crea y quién es el autor.",
+      "Que el repositorio tenga activado el cifrado.",
+      "Que la aplicación esté publicada en todas las regiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Desplegar una aplicación crea recursos y roles en tu cuenta, así que hay que revisar su plantilla y los permisos que solicita, y valorar al autor. Por eso el despliegue exige reconocer las capacidades cuando se crean roles o políticas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverlessrepo/latest/devguide/application-deployment-permissions.html"
+    ]
+  },
+  {
+    "id": "serverless-application-repository-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un arquitecto quiere reutilizar en su plantilla de SAM un componente de autenticación que otro equipo mantiene y publica en el repositorio, para recibir sus nuevas versiones sin copiar el código. ¿Qué debe usar?",
+    "opciones": [
+      "Una capa de Lambda copiada a mano en cada nueva versión.",
+      "Un módulo de Terraform guardado en un bucket de S3 compartido.",
+      "Una imagen de contenedor compartida en un repositorio de ECR.",
+      "Una aplicación anidada, con el recurso AWS::Serverless::Application."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las aplicaciones anidadas permiten incluir en una plantilla de SAM una aplicación del repositorio indicando su identificador y su versión semántica; se despliega como una pila anidada. Así cada equipo mantiene su pieza por separado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-nested-applications.html"
+    ]
+  },
+  {
+    "id": "serverless-application-repository-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "¿Qué coste tiene usar AWS Serverless Application Repository?",
+    "opciones": [
+      "Una cuota mensual por cada aplicación publicada en el repositorio.",
+      "Un porcentaje del coste de los recursos que despliega cada consumidor.",
+      "Ninguno por el repositorio: solo se pagan los recursos que crea la aplicación desplegada.",
+      "Un pago por cada despliegue que realice otra cuenta de la aplicación."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Publicar, compartir y desplegar desde el repositorio no tiene coste. Se factura el uso de los recursos que la aplicación crea en la cuenta de quien la despliega, como Lambda o API Gateway.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverlessrepo/latest/devguide/what-is-serverlessrepo.html"
+    ]
+  }
+]

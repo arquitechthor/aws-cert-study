@@ -1,0 +1,134 @@
+[
+  {
+    "id": "lightsail-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una persona sin experiencia en la nube quiere publicar un blog de WordPress en AWS con un coste mensual fijo y la configuración más sencilla posible. ¿Qué servicio encaja mejor?",
+    "opciones": [
+      "Amazon EC2 con Auto Scaling.",
+      "Amazon Lightsail.",
+      "Amazon EKS.",
+      "AWS Outposts."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Lightsail ofrece servidores privados virtuales con imágenes de aplicaciones como WordPress ya instaladas, a precio mensual fijo y con una consola simplificada. EC2 y EKS exigen más conocimientos, y Outposts es hardware en el centro de datos del cliente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html"
+    ]
+  },
+  {
+    "id": "lightsail-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué caracteriza el modelo de precios de Amazon Lightsail?",
+    "opciones": [
+      "Se paga por segundo de uso de cada componente por separado, sin planes cerrados.",
+      "Es gratuito mientras la instancia no reciba tráfico y se cobra por petición atendida.",
+      "Planes de precio mensual previsible que incluyen cómputo, almacenamiento y una cuota de transferencia de datos.",
+      "Exige un compromiso mínimo de uno o tres años a cambio de un descuento."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Lightsail agrupa cómputo, disco SSD y transferencia de datos en planes de precio cerrado, lo que hace el gasto previsible. No requiere compromisos de permanencia.",
+    "fuentes": [
+      "https://aws.amazon.com/lightsail/faq/"
+    ]
+  },
+  {
+    "id": "lightsail-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Cuál de estos recursos se puede crear en Amazon Lightsail además de servidores virtuales?",
+    "opciones": [
+      "Bases de datos gestionadas MySQL o PostgreSQL.",
+      "Clústeres de almacén de datos de Amazon Redshift.",
+      "Racks de AWS Outposts para el centro de datos.",
+      "Zonas de AWS Wavelength en redes 5G."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Lightsail incluye bases de datos gestionadas, servicios de contenedores, balanceadores, discos, buckets y distribuciones de entrega de contenido, todo con su consola simplificada. Redshift, Outposts y Wavelength son servicios independientes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html"
+    ]
+  },
+  {
+    "id": "lightsail-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una aplicación que empezó en una instancia de Amazon Lightsail necesita ahora escalado automático y tipos de instancia que Lightsail no ofrece. ¿Cuál es el camino con menos trabajo?",
+    "opciones": [
+      "Reinstalar la aplicación desde cero en una instancia de EC2.",
+      "Pedir a AWS Support que convierta la instancia.",
+      "Copiar el disco a S3 y montarlo en una función Lambda.",
+      "Crear una instantánea de la instancia y exportarla a Amazon EC2."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Lightsail permite exportar una instantánea a EC2, donde aparece como una AMI y una instantánea de EBS; a partir de ella se lanzan instancias y se montan Auto Scaling y lo demás. No hace falta reinstalar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-exporting-snapshots.html"
+    ]
+  },
+  {
+    "id": "lightsail-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una instancia de Amazon Lightsail debe conectarse de forma privada a una base de datos de Amazon RDS situada en la VPC por defecto de la misma cuenta y región. ¿Qué hay que activar?",
+    "opciones": [
+      "Una conexión de AWS Direct Connect.",
+      "La interconexión de VPC (VPC peering) de Lightsail.",
+      "Un punto de enlace de interfaz de PrivateLink.",
+      "Una VPN de sitio a sitio entre ambos."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los recursos de Lightsail viven en una red gestionada aparte; al activar la interconexión de VPC en la cuenta de Lightsail pueden hablar por IP privada con los recursos de la VPC por defecto. Direct Connect y la VPN son para conectar redes locales.",
+    "fuentes": [
+      "https://aws.amazon.com/lightsail/faq/"
+    ]
+  },
+  {
+    "id": "lightsail-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa evalúa Amazon Lightsail para una aplicación con picos de tráfico imprevisibles que multiplican por diez la carga durante minutos. ¿Por qué no es la opción adecuada?",
+    "opciones": [
+      "Porque Lightsail no admite instancias con Linux, solo con Windows.",
+      "Porque Lightsail no ofrece balanceadores ni certificados TLS.",
+      "Porque Lightsail no escala automáticamente y sus planes son de capacidad y precio fijos.",
+      "Porque Lightsail solo está disponible en una región de AWS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Lightsail prioriza la sencillez: cambiar de capacidad implica pasar a otro plan mediante una instantánea, y no hay escalado automático. Para cargas elásticas encajan EC2 con Auto Scaling, contenedores o servicios sin servidor. Lightsail sí admite Linux y balanceadores.",
+    "fuentes": [
+      "https://aws.amazon.com/lightsail/faq/"
+    ]
+  }
+]

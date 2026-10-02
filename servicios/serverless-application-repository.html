@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Serverless Application Repository — Apuntes AWS</title>
+<meta name="description" content="Repositorio gestionado para publicar, compartir y desplegar aplicaciones sin servidor empaquetadas con plantillas de AWS SAM, de forma privada o pública. Apuntes y preguntas de práctica para SAA-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/serverless-application-repository.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Serverless Application Repository — Apuntes AWS">
+<meta property="og:description" content="Repositorio gestionado para publicar, compartir y desplegar aplicaciones sin servidor empaquetadas con plantillas de AWS SAM, de forma privada o pública.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/serverless-application-repository.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/serverless-application-repository.svg" alt="" width="56" height="56"><span>AWS Serverless Application Repository</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Publica y reutiliza aplicaciones sin servidor ya empaquetadas por ti o por la comunidad</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/serverlessrepo/" target="_blank" rel="noopener">Documentación de AWS Serverless Application Repository ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Serverless Application Repository es un <strong>repositorio gestionado de aplicaciones sin
+        servidor</strong>. Quien publica empaqueta una aplicación (funciones <a href="lambda.html">Lambda</a>, <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>, tablas, colas…) descrita con
+        una plantilla de <strong>AWS <abbr class="sigla sigla-1" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM<span class="sigla-exp"> (Serverless Application Model: extensión de CloudFormation para aplicaciones sin servidores)</span></abbr></strong>, y quien consume la <strong>busca y la despliega</strong> en su cuenta
+        en unos clics, sin clonar repositorios ni compilar nada. Sirve tanto para reutilizar aplicaciones de la
+        comunidad y de AWS como para compartir componentes propios dentro de una empresa.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Aplicación:</strong> una plantilla de <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> con su código y metadatos (nombre, autor, descripción,
+          licencia, fichero de ayuda).</li>
+        <li><strong>Versiones semánticas:</strong> cada publicación lleva un número de versión (por ejemplo, 1.2.0), y
+          el consumidor elige cuál desplegar.</li>
+        <li><strong>Tres niveles de visibilidad:</strong>
+          <ul>
+            <li><strong>Privada:</strong> solo la cuenta que la publicó. Es el estado inicial.</li>
+            <li><strong>Compartida de forma privada:</strong> con cuentas concretas o con una organización de AWS
+              <a href="organizations.html">Organizations</a>.</li>
+            <li><strong>Pública:</strong> cualquiera puede encontrarla y desplegarla.</li>
+          </ul>
+        </li>
+        <li><strong>Ámbito regional:</strong> las aplicaciones privadas y las compartidas de forma privada solo existen
+          en la región donde se publicaron; las públicas están disponibles en todas.</li>
+        <li><strong>Política de la aplicación:</strong> una política basada en recursos que define quién puede
+          desplegarla.</li>
+        <li><strong>Despliegue:</strong> por debajo es una pila de <a href="cloudformation.html">CloudFormation</a>. Si la aplicación crea roles de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> o
+          políticas de recursos, el consumidor debe <strong>reconocer esas capacidades</strong> al desplegar.</li>
+        <li><strong>Aplicaciones anidadas:</strong> una plantilla de <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> puede incluir una aplicación del repositorio
+          como componente, con el recurso <code>AWS::Serverless::Application</code>. La aplicación que anida hereda
+          las restricciones de quien la comparte.</li>
+        <li><strong>Publicación:</strong> desde la consola, con la <a href="cli.html"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> de <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> (<code>sam publish</code>) o desde un
+          pipeline.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Empezar rápido con un patrón ya resuelto: una función que redimensiona imágenes, un conector, una
+          autenticación.</li>
+        <li><strong>Catálogo interno</strong> de componentes sin servidor aprobados, compartido con las cuentas de la
+          empresa.</li>
+        <li>Proveedores que distribuyen integraciones para que sus clientes las desplieguen en su cuenta.</li>
+        <li>Componer aplicaciones a partir de piezas mantenidas por otros equipos (aplicaciones anidadas).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para guardar <strong>imágenes de contenedor</strong>: <a href="../servicio.html?id=ecr"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>. Para paquetes de software (npm, Maven):
+          <a href="../servicio.html?id=codeartifact">CodeArtifact</a>.</li>
+        <li>Para un catálogo de productos de cualquier tipo con restricciones de lanzamiento: <a href="service-catalog.html">Service Catalog</a>.</li>
+        <li>Para software comercial de terceros con facturación: <a href="../servicio.html?id=marketplace">AWS Marketplace</a>.</li>
+        <li>Para construir y desplegar tu propia aplicación: <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> o <a href="cdk.html">CDK</a>; el repositorio es para compartirla.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Publicar y reutilizar aplicaciones sin servidor completas</td><td>Serverless Application Repository</td></tr>
+            <tr><td>Definir y desplegar una aplicación sin servidor</td><td><abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> (sobre <a href="cloudformation.html">CloudFormation</a>)</td></tr>
+            <tr><td>Catálogo de productos aprobados con permisos delegados</td><td><a href="service-catalog.html">Service Catalog</a></td></tr>
+            <tr><td>Registro de imágenes de contenedor</td><td><a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a></td></tr>
+            <tr><td>Comprar software de terceros</td><td><a href="../servicio.html?id=marketplace">AWS Marketplace</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El repositorio es <strong>gratuito</strong>. Se pagan los recursos de AWS que crea cada aplicación al
+        desplegarla (invocaciones de <a href="lambda.html">Lambda</a>, peticiones de <a href="api-gateway.html">API Gateway</a>, almacenamiento…).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li><strong>Revisa lo que despliegas:</strong> una aplicación pública crea recursos y roles en tu cuenta. Mira
+          la plantilla, los permisos que pide y el autor (AWS marca los autores verificados).</li>
+        <li>El reconocimiento de capacidades evita crear roles de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> sin que el consumidor lo sepa.</li>
+        <li>La política de la aplicación controla quién puede desplegarla; el acceso de quien publica se controla con
+          <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>.</li>
+        <li>Lo desplegado hereda la disponibilidad de los servicios sin servidor que usa.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Compartir una aplicación sin servidor con otras cuentas o con toda la organización"</strong>:
+          Serverless Application Repository.</li>
+        <li><strong>"Reutilizar una aplicación sin servidor ya hecha"</strong> o desplegarla sin escribir código: el
+          repositorio.</li>
+        <li><strong>Las aplicaciones se definen con <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr></strong>, no con imágenes de contenedor.</li>
+        <li><strong>Por defecto una aplicación publicada es privada</strong>; hay que compartirla expresamente.</li>
+        <li><strong>"Incluir una aplicación del repositorio dentro de otra"</strong>: aplicaciones anidadas.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="serverless-application-repository"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/serverlessrepo/latest/devguide/what-is-serverlessrepo.html" target="_blank" rel="noopener">What Is the AWS Serverless Application Repository?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-publishing-applications.html" target="_blank" rel="noopener">Publishing Applications</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/serverlessrepo/latest/devguide/application-deployment-permissions.html" target="_blank" rel="noopener">Application Deployment Permissions</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-nested-applications.html" target="_blank" rel="noopener">Reuse code and resources using nested applications in AWS SAM</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Outposts — Apuntes AWS</title>
+<meta name="description" content="Infraestructura de AWS (racks gestionados) instalada en tu centro de datos para ejecutar servicios de AWS en local con baja latencia y residencia de datos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/outposts.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Outposts — Apuntes AWS">
+<meta property="og:description" content="Infraestructura de AWS (racks gestionados) instalada en tu centro de datos para ejecutar servicios de AWS en local con baja latencia y residencia de datos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/outposts.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/outposts.svg" alt="" width="56" height="56"><span>AWS Outposts</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Racks y servidores de AWS instalados en tu centro de datos para baja latencia local</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/outposts/" target="_blank" rel="noopener">Documentación de AWS Outposts ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> AWS ha dejado de vender los <strong>servidores
+        Outposts</strong> de 1U y 2U y no acepta clientes nuevos para ese formato; se centra en los
+        <strong>racks</strong>, que ahora tienen también una configuración de un solo rack para sitios con poco
+        espacio. Las guías de examen siguen mencionando los dos formatos.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Outposts lleva la <strong>infraestructura de AWS a tus instalaciones</strong>. AWS entrega e instala en tu
+        centro de datos hardware propio, lo <strong>opera, vigila y actualiza</strong> a distancia, y tú lo usas con las
+        mismas <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>, consola y herramientas que en la nube. Es la respuesta de AWS a la <strong>nube híbrida</strong>:
+        para las cargas que deben quedarse en local por latencia, por residencia de datos o porque dependen de sistemas
+        que no se pueden mover.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Racks Outposts:</strong> armarios estándar de 42U con cómputo, almacenamiento y red. La segunda
+          generación se ofrece en configuración de <strong>un solo rack</strong> (todo integrado, sin ampliación con
+          más racks) o de <strong>varios racks</strong> (un rack de red más los de cómputo que hagan falta).</li>
+        <li><strong>Servicios en local:</strong> <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a> y balanceadores de aplicación, entre otros, y
+          <strong><a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> en Outposts</strong> en las configuraciones que lo admiten. El resto de servicios se usan desde la
+          región.</li>
+        <li><strong>Región de anclaje:</strong> cada Outpost depende de una región (y de una <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>) de AWS, que aloja su
+          <strong>plano de control</strong>.</li>
+        <li><strong>Enlace de servicio</strong> (<em>service link</em>): la conexión cifrada entre el Outpost y su
+          región, por internet o por <a href="../servicio.html?id=direct-connect">Direct Connect</a>. Por ella van la gestión y el tráfico con el resto de la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.
+          Outposts está diseñado para funcionar con esa conexión <strong>constante</strong>.</li>
+        <li><strong>Extensión de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>:</strong> creas una <strong>subred en el Outpost</strong> dentro de una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de
+          la región; las instancias locales son parte de la misma red.</li>
+        <li><strong>Puerta de enlace local</strong> (<em>local gateway</em>): conecta las subredes del Outpost con tu
+          red local, para que tus sistemas hablen con las instancias con latencia mínima.</li>
+        <li><strong>Reparto de tareas:</strong> AWS pone, instala y mantiene el hardware. Tú aportas el espacio, la
+          alimentación, la refrigeración, la red y la seguridad física, y decides la <strong>capacidad</strong>: es
+          finita, no elástica como en la región.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Latencia muy baja</strong> hacia equipos locales: fábricas, hospitales, mercados financieros.</li>
+        <li><strong>Residencia de datos:</strong> información que por ley o por contrato no puede salir de un país o de
+          un edificio.</li>
+        <li><strong>Procesamiento local</strong> de grandes volúmenes de datos antes de enviarlos a la nube.</li>
+        <li><strong>Migración por fases:</strong> aplicaciones con dependencias locales que se modernizan con las
+          herramientas de AWS antes de moverse.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si solo necesitas acercar el cómputo a los usuarios de una gran ciudad: una Local Zone, sin hardware en tu
+          casa.</li>
+        <li>Para dispositivos de redes móviles <abbr class="sigla sigla-1" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G<span class="sigla-exp"> (quinta generación de redes móviles)</span></abbr>: <a href="wavelength.html">Wavelength</a>.</li>
+        <li>Para lugares <strong>sin conexión</strong> estable o para mover datos físicamente: <a href="../servicio.html?id=snow-family">Snow Family</a>.</li>
+        <li>Si lo que quieres es conservar tu entorno VMware: <a href="vmware-cloud-on-aws.html">VMware Cloud on AWS</a> o Amazon EVS.</li>
+        <li>Si no hay requisito de latencia ni de residencia: la región es más barata y elástica.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Dónde está el hardware</th><th>Para qué</th></tr></thead>
+          <tbody>
+            <tr><td>Outposts</td><td>En tu centro de datos, gestionado por AWS</td><td>Latencia local, residencia de datos, híbrido</td></tr>
+            <tr><td>Local Zones</td><td>En una ciudad, operado por AWS</td><td>Baja latencia para usuarios de esa zona</td></tr>
+            <tr><td><a href="wavelength.html">Wavelength</a></td><td>En la red de una operadora de telecomunicaciones</td><td>Latencia mínima para dispositivos <abbr class="sigla" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G</abbr></td></tr>
+            <tr><td><a href="../servicio.html?id=snow-family">Snow Family</a></td><td>Dispositivos portátiles que te envían</td><td>Sitios sin conexión y transferencia de datos</td></tr>
+            <tr><td><a href="../servicio.html?id=storage-gateway">Storage Gateway</a></td><td>Un dispositivo o una máquina virtual tuyos</td><td>Almacenamiento híbrido hacia <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se contrata una <strong>configuración de capacidad por un plazo de tres años</strong>, con pago total por
+        adelantado, parcial o mensual. El precio incluye la entrega, la instalación, el mantenimiento y las
+        actualizaciones. Los sistemas operativos con licencia, los servicios gestionados que uses y la transferencia de
+        datos se facturan según su tarifa.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li><strong>Responsabilidad compartida ampliada:</strong> AWS responde del hardware y del software de la
+          infraestructura; tú, además de lo habitual, de la <strong>seguridad física</strong> del sitio, la energía y
+          la conectividad.</li>
+        <li>Los datos se cifran en reposo y el enlace de servicio va cifrado.</li>
+        <li>Un Outpost es un único punto físico: para alta disponibilidad se necesitan <strong>varios
+          Outposts</strong> o respaldo en la región, además de energía y red redundantes.</li>
+        <li>Si se pierde el enlace de servicio, las instancias en marcha siguen funcionando, pero no se pueden hacer
+          cambios mediante las <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> hasta recuperarlo.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Ejecutar servicios de AWS en el centro de datos propio"</strong> con las mismas <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>: Outposts.</li>
+        <li><strong>"Los datos deben permanecer en las instalaciones"</strong> y se quiere seguir usando <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> o
+          <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>: Outposts.</li>
+        <li><strong>"Latencia de milisegundos hacia la maquinaria de la fábrica"</strong>: Outposts con puerta de
+          enlace local.</li>
+        <li><strong>AWS gestiona el hardware; el cliente pone el sitio</strong>, la energía y la red.</li>
+        <li><strong>No es una región aislada:</strong> necesita conexión con su región de anclaje.</li>
+        <li><strong>No confundir con Local Zones</strong> (infraestructura de AWS en una ciudad) ni con
+          <strong><a href="wavelength.html">Wavelength</a></strong> (en la red <abbr class="sigla" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G</abbr>).</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="outposts"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/outposts/latest/network-userguide/what-is-outposts.html" target="_blank" rel="noopener">What is AWS Outposts?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/outposts/latest/network-userguide/how-outposts-works.html" target="_blank" rel="noopener">How AWS Outposts works</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/outposts/" target="_blank" rel="noopener">AWS Outposts Family</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/s3-outposts/S3onOutposts.html" target="_blank" rel="noopener">What is Amazon S3 on Outposts?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/compare/local-zones-and-outposts-rack/" target="_blank" rel="noopener">AWS Local Zones and AWS Outposts Rack comparison</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

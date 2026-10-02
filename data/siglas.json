@@ -1,5 +1,9 @@
 {
  "siglas": {
+  "5G": {
+   "en": null,
+   "es": "quinta generación de redes móviles"
+  },
   "ACID": {
    "en": null,
    "es": "atomicidad, consistencia, aislamiento y durabilidad de las transacciones"
@@ -412,6 +416,10 @@
    "en": "Kinesis Producer Library",
    "es": "biblioteca para escribir productores de Kinesis"
   },
+  "LAMP": {
+   "en": null,
+   "es": "Linux, Apache, MySQL y PHP"
+  },
   "LCU": {
    "en": "Load Balancer Capacity Unit",
    "es": "unidad de facturación del balanceador"
@@ -579,6 +587,10 @@
   "RCU": {
    "en": "Read Capacity Unit",
    "es": "unidad de capacidad de lectura"
+  },
+  "RDP": {
+   "en": "Remote Desktop Protocol",
+   "es": "escritorio remoto de Windows"
   },
   "RDS": {
    "en": "Relational Database Service",

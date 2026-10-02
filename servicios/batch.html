@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Batch — Apuntes AWS</title>
+<meta name="description" content="Ejecuta trabajos por lotes en contenedores a cualquier escala: gestiona las colas, la planificación y el aprovisionamiento del cómputo en EC2, Spot o Fargate. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/batch.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Batch — Apuntes AWS">
+<meta property="og:description" content="Ejecuta trabajos por lotes en contenedores a cualquier escala: gestiona las colas, la planificación y el aprovisionamiento del cómputo en EC2, Spot o Fargate.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/batch.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/batch.svg" alt="" width="56" height="56"><span>AWS Batch</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Ejecuta miles de trabajos por lotes en cola eligiendo y escalando el cómputo por ti</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/batch/" target="_blank" rel="noopener">Documentación de AWS Batch ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Batch ejecuta <strong>trabajos por lotes</strong>: tareas que empiezan, hacen su cálculo y terminan, sin
+        atender peticiones en vivo. Tú envías los trabajos a una cola y Batch decide <strong>cuándo y dónde</strong> se
+        ejecutan, <strong>aprovisiona</strong> el cómputo necesario y lo libera al acabar. Los trabajos corren como
+        <strong>contenedores</strong>, así que no hay límite de duración como en <a href="lambda.html">Lambda</a>. Sustituye a los planificadores
+        de lotes y clústeres de cálculo que antes había que montar y operar a mano.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Trabajo</strong> (<em>job</em>): la unidad de trabajo, que se ejecuta como contenedor con los
+          parámetros de su definición. Puede <strong>depender</strong> de que otros terminen bien.</li>
+        <li><strong>Definición de trabajo:</strong> la plantilla: imagen, vCPU y memoria, rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>, variables de
+          entorno, volúmenes, reintentos y tiempo máximo.</li>
+        <li><strong>Cola de trabajos:</strong> donde esperan los trabajos. Cada cola tiene una prioridad y uno o varios
+          entornos de cómputo asociados, en orden.</li>
+        <li><strong>Entorno de cómputo:</strong> los recursos donde se ejecutan los trabajos.
+          <ul>
+            <li><strong>Gestionado:</strong> Batch crea y escala la capacidad entre un mínimo y un máximo de vCPU.
+              Puede ser de <strong><a href="fargate.html">Fargate</a></strong> (sin servidores) o de <strong><a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a></strong>, bajo demanda o
+              <strong>Spot</strong>.</li>
+            <li><strong>No gestionado:</strong> tú administras las instancias de un clúster de <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>.</li>
+          </ul>
+        </li>
+        <li><strong>Estrategias de asignación</strong> (en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>): elegir el tipo de instancia de menor coste que encaje,
+          ir probando tipos alternativos para no frenar la cola o, con Spot, priorizar los tipos con menos probabilidad
+          de interrupción y mejor precio.</li>
+        <li><strong>Trabajos en matriz</strong> (<em>array jobs</em>): un envío que genera miles de trabajos hijos
+          iguales, cada uno con su índice (por ejemplo, un fichero por trabajo).</li>
+        <li><strong>Trabajos paralelos de varios nodos:</strong> un único trabajo que se reparte entre varias instancias
+          que se comunican entre sí, para cargas de <abbr class="sigla sigla-1" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC<span class="sigla-exp"> (High Performance Computing: cómputo de alto rendimiento)</span></abbr>.</li>
+        <li><strong>Planificación:</strong> por defecto, en orden de llegada. Las <strong>políticas de reparto
+          equitativo</strong> (<em>fair share</em>) evitan que un equipo o una carga acapare la cola.</li>
+        <li><strong>Orquestadores:</strong> los trabajos se ejecutan sobre <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> (<abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> o Fargate) o sobre clústeres de
+          <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Procesos nocturnos: informes, conversión de ficheros, cargas de datos.</li>
+        <li>Cálculo científico y de ingeniería: genómica, simulaciones, análisis de riesgo.</li>
+        <li>Renderizado y procesamiento de vídeo o imágenes en lote.</li>
+        <li>Entrenamiento e inferencia por lotes de modelos de aprendizaje automático.</li>
+        <li>Pasos pesados de un flujo orquestado con <a href="step-functions.html">Step Functions</a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Tareas cortas (menos de 15 minutos) lanzadas por eventos: <a href="lambda.html">Lambda</a> es más sencillo.</li>
+        <li>Servicios que atienden peticiones de forma continua: <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> o Lambda.</li>
+        <li>Procesamiento de datos con Spark o Hadoop: <a href="../servicio.html?id=emr"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a> o <a href="glue.html">Glue</a>.</li>
+        <li>Coordinar varios servicios con lógica de estados: <a href="step-functions.html">Step Functions</a> (que puede lanzar trabajos de
+          Batch).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Muchos trabajos en contenedor, de cualquier duración, con colas y prioridades</td><td>AWS Batch</td></tr>
+            <tr><td>Código corto por evento, hasta 15 minutos</td><td><a href="lambda.html">Lambda</a></td></tr>
+            <tr><td>Servicios y tareas en contenedor de larga vida</td><td><a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> o <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a></td></tr>
+            <tr><td>Procesamiento distribuido de datos (Spark)</td><td><a href="../servicio.html?id=emr"><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></a> o <a href="glue.html">Glue</a></td></tr>
+            <tr><td>Orquestar pasos, reintentos y ramas</td><td><a href="step-functions.html">Step Functions</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Batch <strong>no tiene coste propio</strong>: se pagan los recursos que usa (instancias de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, <a href="fargate.html">Fargate</a>,
+        volúmenes). Admite instancias Spot, instancias reservadas y <a href="savings-plans.html">Savings Plans</a>, por lo que es habitual abaratar
+        mucho los trabajos que toleran interrupciones.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cada definición de trabajo lleva su <strong>rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a></strong>, con los permisos justos para ese
+          trabajo.</li>
+        <li>Los entornos de cómputo se crean en las subredes de tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> que indiques, repartidas entre varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>.</li>
+        <li>Los <strong>reintentos automáticos</strong> absorben fallos puntuales y las interrupciones de Spot; los
+          trabajos deben poder repetirse sin efectos indeseados.</li>
+        <li>Los logs de los trabajos van a <a href="cloudwatch.html">CloudWatch</a> Logs.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Trabajos por lotes"</strong>, "cola de trabajos" o "procesos que duran horas": AWS Batch.</li>
+        <li><strong>"Supera los 15 minutos de <a href="lambda.html">Lambda</a>"</strong> y no es un servicio continuo: Batch (o una tarea de
+          <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>).</li>
+        <li><strong>"Minimizar el coste de trabajos que toleran interrupciones"</strong>: entorno de cómputo con
+          instancias Spot.</li>
+        <li><strong>"Sin gestionar servidores para los lotes"</strong>: entorno de cómputo de <a href="fargate.html">Fargate</a>.</li>
+        <li><strong>"Cálculo de alto rendimiento con nodos que se comunican"</strong>: trabajos paralelos de varios
+          nodos.</li>
+        <li><strong>Batch planifica y aprovisiona; no es un orquestador de flujos</strong>: para eso, Step
+          Functions.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="batch"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/batch/latest/userguide/what-is-batch.html" target="_blank" rel="noopener">What is AWS Batch?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/batch/latest/userguide/batch_components.html" target="_blank" rel="noopener">Components of AWS Batch</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/batch/latest/userguide/job_scheduling.html" target="_blank" rel="noopener">Fair-share scheduling policies</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/batch/pricing/" target="_blank" rel="noopener">AWS Batch Pricing</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_batch-readme.html" target="_blank" rel="noopener">AWS Batch Construct Library (allocation strategies)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

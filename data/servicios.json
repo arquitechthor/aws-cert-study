@@ -82,8 +82,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Despliega aplicaciones web y API en contenedores a partir del código fuente o de una imagen, con HTTPS, balanceo y escalado automáticos. Cerrado a clientes nuevos desde el 30/04/2026.",
     "frase": "Lanza una web desde código o imagen de contenedor con HTTPS y escalado incluidos",
     "documentacion": "https://docs.aws.amazon.com/apprunner/"
   },
@@ -279,8 +279,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Ejecuta trabajos por lotes en contenedores a cualquier escala: gestiona las colas, la planificación y el aprovisionamiento del cómputo en EC2, Spot o Fargate.",
     "frase": "Ejecuta miles de trabajos por lotes en cola eligiendo y escalando el cómputo por ti",
     "documentacion": "https://docs.aws.amazon.com/batch/"
   },
@@ -1512,8 +1512,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servidores privados virtuales y otros recursos sencillos (bases de datos, contenedores, balanceadores) con precio mensual fijo y una consola simplificada.",
     "frase": "Servidores privados virtuales con precio mensual fijo para webs y apps sencillas",
     "documentacion": "https://docs.aws.amazon.com/lightsail/"
   },
@@ -1756,8 +1756,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Infraestructura de AWS (racks gestionados) instalada en tu centro de datos para ejecutar servicios de AWS en local con baja latencia y residencia de datos.",
     "frase": "Racks y servidores de AWS instalados en tu centro de datos para baja latencia local",
     "documentacion": "https://docs.aws.amazon.com/outposts/"
   },
@@ -2058,8 +2058,8 @@
     "certificaciones": [
       "SAA-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Repositorio gestionado para publicar, compartir y desplegar aplicaciones sin servidor empaquetadas con plantillas de AWS SAM, de forma privada o pública.",
     "frase": "Publica y reutiliza aplicaciones sin servidor ya empaquetadas por ti o por la comunidad",
     "documentacion": "https://docs.aws.amazon.com/serverlessrepo/"
   },
@@ -2400,8 +2400,8 @@
     "certificaciones": [
       "SAA-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Entorno VMware (vSphere, vSAN y NSX) gestionado que se ejecuta sobre hardware dedicado de AWS, para llevar cargas virtualizadas a la nube sin rehacerlas. Desde el 30/04/2024 se contrata con Broadcom.",
     "frase": "Lleva tus cargas vSphere a hardware de AWS sin cambiar herramientas ni procesos",
     "documentacion": "https://techdocs.broadcom.com/us/en/vmware-cis/cloud/vmware-cloud-on-aws/SaaS.html"
   },
@@ -2448,8 +2448,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Zonas con cómputo y almacenamiento de AWS dentro de las redes 5G de las operadoras, para aplicaciones que necesitan latencia mínima hacia dispositivos móviles.",
     "frase": "Lleva cómputo al borde de las redes 5G de las operadoras para latencia mínima",
     "documentacion": "https://docs.aws.amazon.com/wavelength/"
   },

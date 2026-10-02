@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS App Runner — Apuntes AWS</title>
+<meta name="description" content="Despliega aplicaciones web y API en contenedores a partir del código fuente o de una imagen, con HTTPS, balanceo y escalado automáticos. Cerrado a clientes nuevos desde el 30/04/2026. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/app-runner.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS App Runner — Apuntes AWS">
+<meta property="og:description" content="Despliega aplicaciones web y API en contenedores a partir del código fuente o de una imagen, con HTTPS, balanceo y escalado automáticos. Cerrado a clientes nuevos desde el 30/04/2026.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/app-runner.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/app-runner.svg" alt="" width="56" height="56"><span>AWS App Runner</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Lanza una web desde código o imagen de contenedor con <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> y escalado incluidos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/apprunner/" target="_blank" rel="noopener">Documentación de AWS App Runner ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> App Runner <strong>no admite clientes nuevos desde el
+        30/04/2026</strong>. Quienes ya lo usaban pueden seguir, incluso creando servicios nuevos, y AWS mantiene la
+        seguridad y la disponibilidad, pero no añadirá funciones. Para aplicaciones nuevas AWS recomienda
+        <strong><a href="ecs.html">Amazon <abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> Express Mode</strong>: a partir de una imagen de contenedor crea de una vez un servicio de
+        <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> en <a href="fargate.html">Fargate</a> con su balanceador, escalado y red, sin coste adicional sobre los recursos. Sigue en la guía de
+        SAP-C02, que se puede presentar hasta el 17/11/2026.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS App Runner es un servicio totalmente gestionado para poner en marcha <strong>aplicaciones web y <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> en
+        contenedores</strong> sin conocer la infraestructura de contenedores. Le das el <strong>código fuente</strong> o
+        una <strong>imagen</strong>, y él construye, despliega, pone un balanceador con <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr>, escala según el tráfico
+        y vigila la salud del servicio. No hay clústeres, instancias ni balanceadores que configurar.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Dos orígenes:</strong> un <strong>repositorio de código</strong> (App Runner construye la imagen con
+          un entorno de ejecución gestionado, como Python o Node.js) o una <strong>imagen de contenedor</strong> en
+          <a href="../servicio.html?id=ecr"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>.</li>
+        <li><strong>Despliegue automático:</strong> opcionalmente, cada cambio en la rama del repositorio o cada imagen
+          nueva en <abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr> lanza un despliegue.</li>
+        <li><strong>Servicio:</strong> la unidad que se despliega. Recibe una <abbr class="sigla sigla-1" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL<span class="sigla-exp"> (Uniform Resource Locator: dirección web)</span></abbr> con <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> y admite
+          <strong>dominios propios</strong> con certificado gestionado.</li>
+        <li><strong>Escalado automático por concurrencia:</strong> se define cuántas peticiones simultáneas atiende cada
+          instancia y un mínimo y un máximo de instancias. App Runner añade instancias al superarse la
+          concurrencia.</li>
+        <li><strong>Instancias aprovisionadas y activas:</strong> el mínimo de instancias queda siempre aprovisionado
+          (se paga solo su memoria); cuando hay tráfico pasan a activas (se paga también la <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr>). Así no hay arranque
+          en frío desde cero.</li>
+        <li><strong>Red:</strong> el servicio es público por defecto. Con un <strong>conector de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></strong> llega a
+          recursos privados (una base de datos de <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>), y también puede exponerse solo de forma privada dentro de una
+          <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li><strong>Pausa:</strong> un servicio se puede pausar para dejar de pagar el cómputo.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> y aplicaciones web con peticiones <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>, cuando el equipo no quiere gestionar <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> ni Kubernetes.</li>
+        <li>Prototipos y entornos de pruebas que deben estar en línea en minutos.</li>
+        <li>Microservicios sencillos con despliegue continuo desde el repositorio.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li><strong>En cuentas nuevas</strong> ya no está disponible: <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> Express Mode.</li>
+        <li>Si necesitas control fino de red, de tareas o de despliegues: <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> o <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a> con <a href="fargate.html">Fargate</a>.</li>
+        <li>Para código que responde a eventos y puede escalar a cero: <a href="lambda.html">Lambda</a>.</li>
+        <li>Para trabajos por lotes o procesos largos sin peticiones <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>: <a href="batch.html">AWS Batch</a> o tareas de <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>.</li>
+        <li>Para aplicaciones en instancias de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> con acceso al sistema operativo: <a href="elastic-beanstalk.html">Elastic Beanstalk</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Web o <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> en contenedor con lo mínimo que configurar</td><td>App Runner (clientes existentes) o <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> Express Mode</td></tr>
+            <tr><td>Contenedores sin servidores, con control de tareas, red y despliegue</td><td><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> o <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> con <a href="fargate.html">Fargate</a></td></tr>
+            <tr><td>Funciones por evento, con escala a cero</td><td><a href="lambda.html">Lambda</a></td></tr>
+            <tr><td>Aplicación web en instancias de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> gestionadas</td><td><a href="elastic-beanstalk.html">Elastic Beanstalk</a></td></tr>
+            <tr><td>Servidor privado virtual de precio fijo</td><td><a href="lightsail.html">Lightsail</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga la <strong>memoria</strong> de las instancias aprovisionadas y, mientras atienden peticiones, también la
+        <strong><abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr></strong> de las instancias activas. Aparte se cobran la construcción desde código (por minuto) y
+        los despliegues automáticos (cuota mensual por aplicación).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li><abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> con certificado gestionado en la <abbr class="sigla" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL</abbr> del servicio y en los dominios propios.</li>
+        <li>El servicio usa un <strong>rol de instancia</strong> de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para llamar a otros servicios, y un rol de
+          acceso para leer la imagen de <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>.</li>
+        <li>Las instancias se reparten entre varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>; un mínimo de instancias más alto mejora ese reparto.</li>
+        <li>Los secretos y parámetros se inyectan desde <a href="secrets-manager.html">Secrets Manager</a> y <a href="systems-manager.html">Parameter Store</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Desplegar una web en contenedor desde el código fuente o una imagen, con el menor esfuerzo
+          operativo"</strong>: App Runner.</li>
+        <li><strong>"Sin gestionar clústeres, balanceadores ni escalado"</strong> y con tráfico <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>: App Runner; si
+          piden más control, <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> con <a href="fargate.html">Fargate</a>.</li>
+        <li><strong>"Acceder a una base de datos privada desde App Runner"</strong>: conector de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>.</li>
+        <li><strong>No escala a cero por completo:</strong> mantiene instancias aprovisionadas; para escala a cero,
+          <a href="lambda.html">Lambda</a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="app-runner"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/apprunner/latest/dg/what-is-apprunner.html" target="_blank" rel="noopener">What is AWS App Runner?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/apprunner/latest/dg/apprunner-availability-change.html" target="_blank" rel="noopener">AWS App Runner availability change</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/apprunner/pricing/" target="_blank" rel="noopener">AWS App Runner Pricing</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-apprunner-autoscalingconfiguration.html" target="_blank" rel="noopener">AWS::AppRunner::AutoScalingConfiguration</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/apprunner/faqs/" target="_blank" rel="noopener">AWS App Runner FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

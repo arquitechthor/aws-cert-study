@@ -1,0 +1,112 @@
+[
+  {
+    "id": "app-runner-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo pequeño, sin experiencia en contenedores, tiene una API web en un repositorio de código y quiere publicarla con HTTPS y escalado automático sin configurar clústeres ni balanceadores. Ya usa AWS App Runner en su cuenta. ¿Qué opción requiere menos esfuerzo operativo?",
+    "opciones": [
+      "Un clúster de Amazon EKS con nodos gestionados.",
+      "Un servicio de AWS App Runner conectado al repositorio.",
+      "Un grupo de Auto Scaling de EC2 con un balanceador.",
+      "Un clúster de Amazon ECS sobre instancias de EC2."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "App Runner construye la imagen desde el código, la despliega y añade balanceo, HTTPS y escalado sin infraestructura que gestionar. Las demás opciones exigen diseñar y operar clústeres, instancias o balanceadores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/apprunner/latest/dg/what-is-apprunner.html"
+    ]
+  },
+  {
+    "id": "app-runner-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un servicio de AWS App Runner debe consultar una base de datos de Amazon RDS situada en subredes privadas. ¿Qué hay que configurar?",
+    "opciones": [
+      "Hacer la base de datos accesible desde internet.",
+      "Una interconexión de VPC con la red de App Runner.",
+      "Un conector de VPC asociado al servicio de App Runner.",
+      "Una NAT gateway en la VPC de la base de datos."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El conector de VPC permite que el tráfico saliente del servicio entre en la VPC y alcance recursos privados. Exponer la base de datos a internet es un riesgo innecesario, y una NAT gateway da salida a internet, no entrada desde App Runner.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/apprunner/latest/dg/what-is-apprunner.html"
+    ]
+  },
+  {
+    "id": "app-runner-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa nueva en AWS quería usar AWS App Runner, pero el servicio ya no acepta clientes nuevos. ¿Qué alternativa recomienda AWS para desplegar una aplicación en contenedor con una simplicidad parecida?",
+    "opciones": [
+      "AWS Elastic Beanstalk con plataforma Docker.",
+      "Amazon Lightsail con un servidor virtual.",
+      "AWS Batch con un entorno de Fargate.",
+      "Amazon ECS Express Mode."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "ECS Express Mode crea, a partir de una imagen de contenedor, un servicio de ECS en Fargate con balanceador, escalado y red ya configurados, y da acceso al resto de funciones de ECS. Es la vía de migración que indica AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/apprunner/latest/dg/apprunner-availability-change.html"
+    ]
+  },
+  {
+    "id": "app-runner-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "¿Cómo escala AWS App Runner un servicio cuando aumenta el tráfico?",
+    "opciones": [
+      "Añade instancias cuando se supera el número de peticiones simultáneas configurado por instancia, hasta el máximo definido.",
+      "Aumenta la CPU y la memoria de la instancia existente hasta el tamaño máximo disponible.",
+      "Crea un clúster nuevo en otra región y reparte el tráfico con Route 53.",
+      "No escala: hay que cambiar el número de instancias a mano en cada despliegue."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El escalado de App Runner se basa en la concurrencia: al superarse las peticiones simultáneas por instancia añade instancias, entre el mínimo y el máximo configurados. Es escalado horizontal dentro de la región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-apprunner-autoscalingconfiguration.html"
+    ]
+  },
+  {
+    "id": "app-runner-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un servicio de AWS App Runner de pruebas solo recibe tráfico dos horas al día. ¿Qué describe mejor cómo se factura el resto del tiempo si no se pausa?",
+    "opciones": [
+      "No se factura nada, porque escala a cero instancias.",
+      "Se factura la memoria de las instancias aprovisionadas, pero no su CPU.",
+      "Se factura igual que en las horas con tráfico.",
+      "Se factura una cuota fija mensual por servicio."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "App Runner mantiene un mínimo de instancias aprovisionadas, de las que cobra la memoria; la CPU solo se paga mientras están activas atendiendo peticiones. Para no pagar el cómputo hay que pausar el servicio.",
+    "fuentes": [
+      "https://aws.amazon.com/apprunner/pricing/"
+    ]
+  }
+]

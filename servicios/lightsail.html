@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Lightsail — Apuntes AWS</title>
+<meta name="description" content="Servidores privados virtuales y otros recursos sencillos (bases de datos, contenedores, balanceadores) con precio mensual fijo y una consola simplificada. Apuntes y preguntas de práctica para SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/lightsail.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Lightsail — Apuntes AWS">
+<meta property="og:description" content="Servidores privados virtuales y otros recursos sencillos (bases de datos, contenedores, balanceadores) con precio mensual fijo y una consola simplificada.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/lightsail.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/lightsail.svg" alt="" width="56" height="56"><span>Amazon Lightsail</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Servidores privados virtuales con precio mensual fijo para webs y apps sencillas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/lightsail/" target="_blank" rel="noopener">Documentación de Amazon Lightsail ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Lightsail es la forma más <strong>sencilla</strong> de empezar en AWS. Ofrece servidores privados
+        virtuales y unos cuantos recursos alrededor, en <strong>planes de precio mensual fijo y previsible</strong>, con
+        una consola propia mucho más simple que la de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>. Está pensado para webs, blogs, tiendas pequeñas, entornos de
+        pruebas y aplicaciones sencillas, y para quien no quiere aprender redes, grupos de seguridad ni tipos de
+        instancia.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Instancias:</strong> servidores virtuales Linux o Windows. Se eligen por <strong>plan</strong>
+          (<em>bundle</em>), que incluye <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr>, memoria, disco <abbr class="sigla sigla-1" data-s="SSD" data-en="Solid-State Drive" data-es="disco de estado sólido" tabindex="0">SSD<span class="sigla-exp"> (Solid-State Drive: disco de estado sólido)</span></abbr> y una <strong>cuota de transferencia de datos</strong>,
+          todo en un precio.</li>
+        <li><strong>Imágenes prediseñadas</strong> (<em>blueprints</em>): solo el sistema operativo o una aplicación ya
+          instalada, como WordPress, o una pila de desarrollo como <abbr class="sigla sigla-1" data-s="LAMP" data-es="Linux, Apache, MySQL y PHP" tabindex="0">LAMP<span class="sigla-exp"> (Linux, Apache, MySQL y PHP)</span></abbr> o Node.js.</li>
+        <li><strong>Bases de datos gestionadas:</strong> MySQL o PostgreSQL, con opción de alta disponibilidad.</li>
+        <li><strong>Servicios de contenedores:</strong> despliegue de contenedores con un punto de enlace <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr>, sin
+          gestionar la infraestructura.</li>
+        <li><strong>Red:</strong> <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> estáticas, zonas de <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr>, balanceadores con certificado gratuito y distribuciones de
+          red de entrega de contenido.</li>
+        <li><strong>Almacenamiento:</strong> discos adicionales de bloque y almacenamiento de objetos (buckets).</li>
+        <li><strong>Instantáneas</strong> (<em>snapshots</em>): manuales o automáticas, para copias y para clonar o
+          cambiar de plan.</li>
+        <li><strong>Camino de crecimiento:</strong> una instantánea se puede <strong>exportar a <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></strong> (se
+          convierte en una <abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr> y una instantánea de <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>), y la <strong>interconexión de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></strong> conecta los
+          recursos de Lightsail con los de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> por defecto de la cuenta, por ejemplo una base de datos de <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Sitios web y blogs (WordPress), tiendas pequeñas, páginas de empresa.</li>
+        <li>Entornos de desarrollo y pruebas baratos y rápidos de crear.</li>
+        <li>Aplicaciones de negocio sencillas con una base de datos.</li>
+        <li>Primer proyecto en la nube de alguien sin experiencia en AWS.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Arquitecturas que deben <strong>escalar automáticamente</strong> o que necesitan muchos tipos de instancia,
+          redes complejas o integración fina con otros servicios: <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> con <a href="ec2-auto-scaling.html">Auto Scaling</a>.</li>
+        <li>Aplicaciones en contenedor a escala: <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> o <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>.</li>
+        <li>Cargas con picos imprevisibles: los planes fijos encajan mal; mejor servicios de pago por uso.</li>
+        <li>Requisitos de red avanzados (varias subredes, <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr>, <a href="../servicio.html?id=transit-gateway">Transit Gateway</a>): <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> con <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>Lightsail</th><th><a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></th></tr></thead>
+          <tbody>
+            <tr><td>Público</td><td>Proyectos sencillos, poca experiencia</td><td>Cualquier carga, control total</td></tr>
+            <tr><td>Precio</td><td>Plan mensual fijo con transferencia incluida</td><td>Pago por uso de cada componente</td></tr>
+            <tr><td>Configuración</td><td>Consola simplificada, pocas decisiones</td><td>Red, almacenamiento y seguridad a medida</td></tr>
+            <tr><td>Escalado</td><td>Manual (cambiar de plan con una instantánea)</td><td>Automático con <a href="ec2-auto-scaling.html">Auto Scaling</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Frente a <strong><a href="elastic-beanstalk.html">Elastic Beanstalk</a></strong>, que despliega y escala una aplicación sobre <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, Lightsail da un
+        servidor completo a precio cerrado. Frente a <strong><a href="../servicio.html?id=amplify">Amplify</a></strong>, orientado a aplicaciones web y móviles
+        con backend sin servidor, Lightsail es el servidor tradicional.</p>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p><strong>Precio mensual fijo por plan</strong>, que incluye cómputo, disco y una cuota de transferencia de
+        datos; lo que supere la cuota se cobra aparte. Bases de datos, contenedores, balanceadores, discos y buckets
+        tienen también planes de precio cerrado.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cada instancia tiene un <strong>firewall</strong> sencillo por puertos, en lugar de grupos de seguridad.</li>
+        <li>Acceso por <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr> o <abbr class="sigla sigla-1" data-s="RDP" data-en="Remote Desktop Protocol" data-es="escritorio remoto de Windows" tabindex="0">RDP<span class="sigla-exp"> (Remote Desktop Protocol: escritorio remoto de Windows)</span></abbr> desde el navegador, con pares de claves gestionados.</li>
+        <li>Certificados <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> gratuitos en los balanceadores y distribuciones.</li>
+        <li>La alta disponibilidad hay que montarla: varias instancias en distintas <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr> detrás de un balanceador y una
+          base de datos en plan de alta disponibilidad.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Precio mensual fijo y previsible"</strong>, "servidor privado virtual" o "la forma más sencilla
+          de lanzar una web": Lightsail.</li>
+        <li><strong>"Usuario con poca experiencia en la nube que quiere un WordPress"</strong>: Lightsail.</li>
+        <li><strong>"La aplicación ha crecido y necesita más funciones"</strong>: exportar la instantánea a <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>.</li>
+        <li><strong>"Conectar la instancia de Lightsail con una base de datos de <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>"</strong>: interconexión de
+          <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>.</li>
+        <li><strong>Si el enunciado pide escalado automático o control fino</strong>, no es Lightsail.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="lightsail"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/lightsail/latest/userguide/what-is-amazon-lightsail.html" target="_blank" rel="noopener">What is Amazon Lightsail?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/lightsail/faq/" target="_blank" rel="noopener">Amazon Lightsail FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-exporting-snapshots.html" target="_blank" rel="noopener">Export Lightsail snapshots to Amazon EC2</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-faq-data-transfer-allowance.html" target="_blank" rel="noopener">Data transfer in Lightsail</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
