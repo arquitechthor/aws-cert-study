@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Firewall Manager — Apuntes AWS</title>
+<meta name="description" content="Administración centralizada de las reglas de WAF, Shield Advanced, grupos de seguridad, Network Firewall y DNS Firewall en todas las cuentas de una organización. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/firewall-manager.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Firewall Manager — Apuntes AWS">
+<meta property="og:description" content="Administración centralizada de las reglas de WAF, Shield Advanced, grupos de seguridad, Network Firewall y DNS Firewall en todas las cuentas de una organización.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/firewall-manager.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/firewall-manager.svg" alt="" width="56" height="56"><span>AWS Firewall Manager</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Aplica reglas de <abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr>, Shield y grupos de seguridad a todas las cuentas de tu organización</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/waf/" target="_blank" rel="noopener">Documentación de AWS Firewall Manager ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Firewall Manager permite <strong>definir una vez</strong> las reglas de protección de red y de aplicación,
+        y <strong>aplicarlas automáticamente en todas las cuentas</strong> de una organización de <a href="organizations.html">AWS Organizations</a>.
+        No es un cortafuegos más: es la capa de gestión que despliega y vigila los que ya existen (<a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>, <a href="shield.html">Shield</a>
+        Advanced, grupos de seguridad…). Su valor está en que cubre también las cuentas y los recursos que se creen
+        <strong>en el futuro</strong>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Requisitos previos:</strong> <a href="organizations.html">AWS Organizations</a> con <strong>todas las funciones</strong>, una cuenta
+          designada como <strong>administrador de Firewall Manager</strong> y <strong><a href="config.html">AWS Config</a> activado</strong> en
+          las cuentas (lo usa para descubrir los recursos).</li>
+        <li><strong>Política de seguridad:</strong> la unidad de trabajo. Indica el tipo de protección, las reglas y
+          el <strong>alcance</strong>: qué cuentas u <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr>, qué tipos de recurso y, si se quiere, qué etiquetas.</li>
+        <li><strong>Tipos de política:</strong>
+          <ul>
+            <li><strong><a href="waf.html">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>:</strong> grupos de reglas en los balanceadores de aplicación, <a href="api-gateway.html">API Gateway</a> y
+              <a href="cloudfront.html">CloudFront</a>.</li>
+            <li><strong><a href="shield.html">Shield</a> Advanced:</strong> protección frente a <abbr class="sigla sigla-1" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS<span class="sigla-exp"> (Distributed Denial of Service: ataque que satura un servicio desde muchos orígenes)</span></abbr> en los recursos del alcance.</li>
+            <li><strong>Grupos de seguridad:</strong> un grupo común en todos los recursos, o auditoría de grupos
+              demasiado permisivos o sin usar.</li>
+            <li><strong><abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr> de red.</strong></li>
+            <li><strong><a href="network-firewall.html">AWS Network Firewall</a>:</strong> despliega cortafuegos y reglas en las <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
+            <li><strong>DNS Firewall de <a href="route-53.html">Route 53</a> Resolver:</strong> asocia grupos de reglas a las <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+            <li><strong>Cortafuegos de terceros</strong> contratados en <a href="../servicio.html?id=marketplace">AWS Marketplace</a>.</li>
+          </ul>
+        </li>
+        <li><strong>Corrección automática:</strong> la política puede solo <strong>informar</strong> de los recursos
+          que no cumplen o <strong>aplicar</strong> la protección automáticamente.</li>
+        <li><strong>Panel de cumplimiento:</strong> qué cuentas y recursos cumplen cada política.</li>
+        <li><strong>Las políticas son regionales</strong>, salvo las de CloudFront, que se crean en la región
+          global.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Garantizar que <strong>todos</strong> los balanceadores y <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de la organización llevan las reglas básicas
+          de <a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>.</li>
+        <li>Proteger con <a href="shield.html">Shield</a> Advanced todos los recursos expuestos, incluidos los nuevos.</li>
+        <li>Detectar y corregir grupos de seguridad que abren puertos a todo internet.</li>
+        <li>Desplegar <a href="network-firewall.html">Network Firewall</a> de forma uniforme en las <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> de la organización.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Con una sola cuenta o pocos recursos: configura <a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> o <a href="shield.html">Shield</a> directamente.</li>
+        <li>Para limitar <strong>permisos</strong> en las cuentas: <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> de <a href="organizations.html">AWS Organizations</a>.</li>
+        <li>Para evaluar cualquier otra configuración de los recursos: <a href="config.html">AWS Config</a>.</li>
+        <li>Para ver hallazgos de seguridad agregados: <a href="security-hub.html">Security Hub</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Aplicar reglas de cortafuegos y protección en todas las cuentas</td><td>Firewall Manager</td></tr>
+            <tr><td>Filtrar peticiones web maliciosas</td><td><a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a></td></tr>
+            <tr><td>Proteger frente a <abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr></td><td><a href="shield.html">Shield</a></td></tr>
+            <tr><td>Inspeccionar el tráfico de red de una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a></td><td><a href="network-firewall.html">Network Firewall</a></td></tr>
+            <tr><td>Limitar las acciones permitidas en las cuentas</td><td><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> de <a href="organizations.html">AWS Organizations</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga una <strong>cuota mensual por política y región</strong>, más lo que cuesten los recursos que la
+        política crea (reglas de <a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>, cortafuegos, reglas de <a href="config.html">AWS Config</a>). Las políticas de <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr> y de <a href="shield.html">Shield</a> Advanced no
+        tienen coste adicional para los clientes suscritos a Shield Advanced.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El administrador de Firewall Manager es una cuenta muy sensible: conviene que sea la de seguridad, no la
+          de administración de la organización.</li>
+        <li>Se pueden designar varios administradores, cada uno con un alcance (cuentas, regiones, tipos de
+          política).</li>
+        <li>Los equipos de cada cuenta no pueden quitar las protecciones impuestas por una política.</li>
+        <li>Los incumplimientos se envían a <a href="security-hub.html">Security Hub</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Gestionar de forma centralizada las reglas de <a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> en varias cuentas"</strong>: Firewall
+          Manager.</li>
+        <li><strong>"Que los recursos nuevos queden protegidos automáticamente"</strong>: política de Firewall Manager
+          con corrección automática.</li>
+        <li><strong>"Auditar los grupos de seguridad de toda la organización"</strong>: política de grupos de
+          seguridad de Firewall Manager.</li>
+        <li><strong>Requisitos:</strong> <a href="organizations.html">Organizations</a> y <a href="config.html">AWS Config</a>.</li>
+        <li><strong><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr>, <a href="shield.html">Shield</a> y <a href="network-firewall.html">Network Firewall</a> protegen; Firewall Manager los administra.</strong></li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="firewall-manager"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/waf/latest/developerguide/fms-chapter.html" target="_blank" rel="noopener">AWS Firewall Manager</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/security/use-aws-firewall-manager-to-deploy-protection-at-scale-in-aws-organizations/" target="_blank" rel="noopener">Use AWS Firewall Manager to deploy protection at scale in AWS Organizations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/firewall-manager/faqs/" target="_blank" rel="noopener">AWS Firewall Manager FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/security/enforce-your-aws-network-firewall-protections-at-scale-with-aws-firewall-manager/" target="_blank" rel="noopener">Enforce your AWS Network Firewall protections at scale with AWS Firewall Manager</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -133,5 +133,93 @@
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html"
     ]
+  },
+  {
+    "id": "cloudwatch-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere supervisar el uso de CPU de sus instancias de EC2 y recibir un aviso cuando supere el 80 %. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "AWS CloudTrail.",
+      "Amazon CloudWatch.",
+      "AWS Config.",
+      "AWS Trusted Advisor."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CloudWatch recoge las métricas de los recursos y permite crear alarmas sobre ellas. CloudTrail registra las llamadas a la API, Config el historial de configuración y Trusted Advisor da recomendaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html"
+    ]
+  },
+  {
+    "id": "cloudwatch-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa quiere que se la avise cuando los cargos estimados de su cuenta de AWS superen un importe. Además de AWS Budgets, ¿qué otra opción ofrece AWS?",
+    "opciones": [
+      "Una regla de AWS Config que evalúe la factura de la cuenta cada día.",
+      "Un informe de AWS Artifact con los cargos del mes en curso.",
+      "Una alarma de facturación de Amazon CloudWatch sobre la métrica de cargos estimados.",
+      "Una comprobación de Amazon Inspector sobre los recursos más caros."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "CloudWatch publica una métrica con los cargos estimados de la cuenta, sobre la que se puede crear una alarma que avise por SNS. Budgets es más flexible (previsiones, filtros), pero la alarma de facturación es la opción clásica.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html"
+    ]
+  },
+  {
+    "id": "cloudwatch-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una función Lambda falla de forma intermitente y el desarrollador necesita buscar en sus logs todas las líneas con la palabra ERROR de la última hora y contarlas por tipo. ¿Qué herramienta es la adecuada?",
+    "opciones": [
+      "CloudWatch Logs Insights, con una consulta sobre el grupo de logs de la función.",
+      "AWS CloudTrail, filtrando por el nombre de la función.",
+      "AWS X-Ray, con el mapa de servicios.",
+      "AWS Config, con la línea de tiempo del recurso."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Logs Insights permite consultar y agregar de forma interactiva los logs guardados en CloudWatch Logs con un lenguaje de consulta propio. CloudTrail registra llamadas a la API de gestión, X-Ray traza peticiones y Config guarda cambios de configuración.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html"
+    ]
+  },
+  {
+    "id": "cloudwatch-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una aplicación debe publicar en Amazon CloudWatch una métrica de negocio propia, el número de pedidos procesados, para crear alarmas sobre ella. ¿Cómo se hace?",
+    "opciones": [
+      "Activando la monitorización detallada de EC2 en las instancias de la aplicación.",
+      "Creando un trail de CloudTrail con eventos de datos para la aplicación.",
+      "Instalando el agente de Systems Manager y registrando la instancia.",
+      "Publicándola como métrica personalizada, con PutMetricData o con métricas integradas en los logs."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las métricas personalizadas se envían con PutMetricData desde el código o el agente, o se generan a partir de los logs con el formato de métricas integradas. La monitorización detallada solo aumenta la frecuencia de las métricas estándar de EC2.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html"
+    ]
   }
 ]

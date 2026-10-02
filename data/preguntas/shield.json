@@ -1,0 +1,156 @@
+[
+  {
+    "id": "shield-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué servicio de AWS protege las aplicaciones frente a ataques de denegación de servicio distribuida (DDoS)?",
+    "opciones": [
+      "Amazon Inspector.",
+      "Amazon Macie.",
+      "AWS Shield.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Shield es el servicio de protección frente a DDoS. Inspector busca vulnerabilidades, Macie descubre datos sensibles en S3 y Artifact ofrece informes de cumplimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/waf/latest/developerguide/shield-chapter.html"
+    ]
+  },
+  {
+    "id": "shield-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué nivel de AWS Shield tienen todos los clientes de AWS sin coste adicional y sin activar nada?",
+    "opciones": [
+      "Shield Advanced, durante el primer año.",
+      "Shield Standard.",
+      "Ninguno: Shield siempre es de pago.",
+      "Shield Advanced, solo en la región us-east-1."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Shield Standard se aplica automáticamente a todos los clientes y protege frente a los ataques DDoS más comunes de red y transporte. Shield Advanced es una suscripción de pago con funciones adicionales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html"
+    ]
+  },
+  {
+    "id": "shield-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Cuál de estas ventajas es exclusiva de AWS Shield Advanced?",
+    "opciones": [
+      "El acceso al equipo de respuesta de Shield durante un ataque.",
+      "La protección frente a inundaciones SYN.",
+      "La mitigación automática en el borde de la red.",
+      "La detección siempre activa del tráfico de red."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El equipo de respuesta de Shield, la protección de costes y los informes detallados de los ataques solo están en Shield Advanced. La detección continua y la mitigación de ataques comunes como las inundaciones SYN ya están en Standard.",
+    "fuentes": [
+      "https://aws.amazon.com/shield/getting-started/"
+    ]
+  },
+  {
+    "id": "shield-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una tienda en línea muy conocida sufre ataques DDoS frecuentes. Quiere mitigación avanzada, ayuda de expertos durante los ataques y no pagar el escalado que estos provoquen. ¿Qué debe contratar?",
+    "opciones": [
+      "AWS Shield Standard con un plan de soporte básico.",
+      "Amazon GuardDuty con todos los planes de protección.",
+      "AWS Network Firewall en cada VPC.",
+      "AWS Shield Advanced."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Shield Advanced añade mitigaciones más sofisticadas, acceso al equipo de respuesta y protección de costes frente al escalado causado por un ataque. GuardDuty detecta amenazas y Network Firewall inspecciona tráfico, pero no ofrecen esas garantías frente a DDoS.",
+    "fuentes": [
+      "https://aws.amazon.com/shield/faqs/"
+    ]
+  },
+  {
+    "id": "shield-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una aplicación web sufre a la vez un ataque volumétrico de red y peticiones HTTP diseñadas para explotar una inyección SQL. ¿Qué combinación de servicios aborda ambos problemas?",
+    "opciones": [
+      "AWS Shield para ambos ataques.",
+      "AWS Shield para el ataque volumétrico y AWS WAF para las peticiones maliciosas.",
+      "AWS WAF para ambos ataques.",
+      "Amazon Inspector para el ataque volumétrico y Amazon Macie para la inyección SQL."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Shield mitiga los ataques DDoS de red y transporte, y WAF filtra las peticiones web según su contenido, como los intentos de inyección SQL. Son complementarios; Inspector y Macie no bloquean tráfico.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html"
+    ]
+  },
+  {
+    "id": "shield-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización se suscribe a AWS Shield Advanced y quiere que todos los balanceadores y distribuciones de CloudFront de sus cuentas, presentes y futuros, queden protegidos. ¿Cuál es la forma con menos esfuerzo operativo?",
+    "opciones": [
+      "Añadir cada recurso a mano en la consola de Shield de cada cuenta.",
+      "Una función Lambda programada que recorra las cuentas cada día.",
+      "Una política de Shield Advanced en AWS Firewall Manager.",
+      "Una regla de AWS Config que avise de los recursos sin proteger."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Firewall Manager aplica las protecciones de Shield Advanced a los recursos del alcance en todas las cuentas de la organización, incluidos los que se crean después. Una regla de Config solo avisaría y el código propio hay que mantenerlo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/network.html"
+    ]
+  },
+  {
+    "id": "shield-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación protegida con AWS Shield Advanced tiene una distribución de CloudFront delante de un balanceador de aplicación. Para evitar pagar dos veces la transferencia de datos de Shield, ¿qué recurso conviene registrar como protegido?",
+    "opciones": [
+      "La distribución de CloudFront, que es el punto de entrada.",
+      "El balanceador de aplicación únicamente.",
+      "Las instancias de EC2 que hay detrás del balanceador.",
+      "Tanto la distribución como el balanceador y las instancias."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cuando hay varios recursos en el flujo de datos, AWS recomienda proteger solo el punto de entrada para no incurrir dos veces en el cargo por transferencia de datos de salida de Shield. Aquí el punto de entrada es CloudFront.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/network.html"
+    ]
+  }
+]

@@ -103,8 +103,8 @@
         <li><strong>Facturación unificada</strong> (<em>consolidated billing</em>): una factura para todas las cuentas. El
           consumo se <strong>suma</strong> para los descuentos por volumen, y las instancias reservadas y los Savings
           Plans se comparten entre cuentas (se puede desactivar por cuenta).</li>
-        <li><strong>Acceso de confianza y administrador delegado:</strong> otros servicios (<a href="cloudtrail.html">CloudTrail</a>, <a href="config.html">AWS Config</a>, <a href="../servicio.html?id=guardduty">GuardDuty</a>,
-          <a href="../servicio.html?id=security-hub">Security Hub</a>, <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>, <a href="../servicio.html?id=ram"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a>, <a href="cloudformation.html">CloudFormation</a> StackSets…) operan sobre toda la organización, y su
+        <li><strong>Acceso de confianza y administrador delegado:</strong> otros servicios (<a href="cloudtrail.html">CloudTrail</a>, <a href="config.html">AWS Config</a>, <a href="guardduty.html">GuardDuty</a>,
+          <a href="security-hub.html">Security Hub</a>, <a href="iam-identity-center.html">IAM Identity Center</a>, <a href="ram.html"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a>, <a href="cloudformation.html">CloudFormation</a> StackSets…) operan sobre toda la organización, y su
           administración se puede delegar en una cuenta miembro para no usar la de administración.</li>
         <li><strong><code>OrganizationAccountAccessRole</code>:</strong> rol de administrador que Organizations crea en las
           cuentas que <em>crea</em>. En las cuentas <em>invitadas</em> no existe: hay que crearlo a mano.</li>
@@ -178,7 +178,7 @@
           facturación unificada.</li>
         <li><strong>"Obligar a etiquetar de forma coherente"</strong>: políticas de etiquetas (normalizan); para
           <em>impedir</em> crear recursos sin etiqueta hace falta además una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>.</li>
-        <li><strong>"Compartir subredes o un <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> con toda la organización"</strong>: <a href="../servicio.html?id=ram"><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></a>, con el uso
+        <li><strong>"Compartir subredes o un <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> con toda la organización"</strong>: <a href="ram.html"><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></a>, con el uso
           compartido dentro de la organización activado.</li>
       </ul>
 

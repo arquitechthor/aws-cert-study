@@ -1,0 +1,134 @@
+[
+  {
+    "id": "iam-identity-center-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa con veinte cuentas de AWS quiere que sus empleados inicien sesión una sola vez y accedan a todas las cuentas que tengan asignadas. ¿Qué servicio debe usar?",
+    "opciones": [
+      "Amazon Cognito.",
+      "AWS Directory Service.",
+      "AWS IAM Identity Center.",
+      "AWS Secrets Manager."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "IAM Identity Center ofrece inicio de sesión único para la plantilla en varias cuentas de AWS y aplicaciones. Cognito es para usuarios de aplicaciones, Directory Service proporciona directorios y Secrets Manager guarda secretos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "iam-identity-center-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué ventaja de seguridad aporta AWS IAM Identity Center frente a crear un usuario de IAM para cada empleado en cada cuenta?",
+    "opciones": [
+      "Los empleados reciben credenciales temporales, sin claves de larga duración que gestionar.",
+      "Los empleados no necesitan autenticación multifactor.",
+      "Las contraseñas se guardan en cada cuenta por separado.",
+      "Los permisos se conceden siempre con acceso de administrador."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Identity Center entrega credenciales temporales al entrar en cada cuenta y centraliza altas, bajas y permisos. Admite MFA y permite aplicar el mínimo privilegio; no reparte permisos de administrador por defecto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "iam-identity-center-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa gestiona sus empleados en Microsoft Entra ID y quiere que accedan a sus cuentas de AWS con esas identidades, y que las altas y bajas se reflejen automáticamente. ¿Qué configuración es la adecuada?",
+    "opciones": [
+      "Crear en cada cuenta usuarios de IAM con el mismo nombre que en Entra ID.",
+      "Un grupo de usuarios de Amazon Cognito por cada cuenta, federado con Entra ID.",
+      "Compartir una clave de acceso de IAM por departamento y rotarla cada mes.",
+      "IAM Identity Center con Entra ID como proveedor externo, con SAML y SCIM."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Identity Center admite un proveedor de identidad externo: SAML 2.0 para la autenticación y SCIM para sincronizar automáticamente usuarios y grupos. Crear usuarios de IAM o compartir claves multiplica el trabajo y el riesgo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source.html"
+    ]
+  },
+  {
+    "id": "iam-identity-center-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "El equipo de plataforma quiere que el grupo \"Analistas\" tenga acceso de solo lectura en treinta cuentas, definido una sola vez. ¿Qué elemento de AWS IAM Identity Center debe usar?",
+    "opciones": [
+      "Un usuario de IAM compartido por todo el grupo.",
+      "Un conjunto de permisos asignado al grupo en esas cuentas.",
+      "Una política de bucket en cada cuenta.",
+      "Una SCP asociada a la raíz de la organización."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un conjunto de permisos es una plantilla que, al asignarse a un grupo en varias cuentas, crea en cada una el rol de IAM correspondiente. Una SCP limita permisos, pero no los concede.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/permissionsetsconcept.html"
+    ]
+  },
+  {
+    "id": "iam-identity-center-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización quiere gestionar el acceso de su plantilla a todas sus cuentas con AWS IAM Identity Center, sin que los administradores de identidades trabajen a diario en la cuenta de administración. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Una instancia de cuenta de Identity Center en cada cuenta miembro.",
+      "Usuarios de IAM federados con SAML en cada cuenta, sin Identity Center.",
+      "Una instancia de organización de Identity Center con la administración delegada en una cuenta miembro.",
+      "Un directorio de Simple AD compartido con todas las cuentas mediante RAM."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La instancia de organización, habilitada desde la cuenta de administración, es la que permite asignar acceso a varias cuentas, y su gestión puede delegarse en una cuenta miembro. Las instancias de cuenta solo sirven para aplicaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-overall-prerequisites.html"
+    ]
+  },
+  {
+    "id": "iam-identity-center-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa quiere que cada empleado solo pueda actuar sobre los recursos etiquetados con su propio proyecto, sin crear un conjunto de permisos por proyecto. ¿Qué capacidad de AWS IAM Identity Center lo permite?",
+    "opciones": [
+      "El control de acceso basado en atributos, con los atributos como etiquetas de sesión.",
+      "La autenticación multifactor obligatoria en el portal de acceso de AWS.",
+      "La duración máxima de la sesión configurada en cada conjunto de permisos.",
+      "El aprovisionamiento automático de usuarios y grupos mediante SCIM."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con el control de acceso basado en atributos, Identity Center envía atributos del usuario (como el proyecto) como etiquetas de sesión, y un único conjunto de permisos puede condicionar el acceso a que coincidan con las etiquetas del recurso.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html"
+    ]
+  }
+]

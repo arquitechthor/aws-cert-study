@@ -144,6 +144,10 @@
    "en": "Cross-Region Replication",
    "es": "replicación a otra región"
   },
+  "CSPM": {
+   "en": "Cloud Security Posture Management",
+   "es": "gestión de la postura de seguridad en la nube"
+  },
   "CSS": {
    "en": "Cascading Style Sheets",
    "es": "hojas de estilo de una web"
@@ -508,6 +512,10 @@
    "en": "Network File System",
    "es": "protocolo para compartir ficheros en red"
   },
+  "NIST": {
+   "en": "National Institute of Standards and Technology",
+   "es": "organismo de normas de EE. UU."
+  },
   "NLB": {
    "en": "Network Load Balancer",
    "es": "balanceador TCP/UDP"
@@ -531,6 +539,10 @@
   "OAI": {
    "en": "Origin Access Identity",
    "es": "mecanismo anterior a OAC"
+  },
+  "OCSF": {
+   "en": "Open Cybersecurity Schema Framework",
+   "es": "esquema abierto para datos de seguridad"
   },
   "OCU": {
    "en": "OpenSearch Compute Unit",
@@ -595,6 +607,10 @@
   "POSIX": {
    "en": "Portable Operating System Interface",
    "es": "estándar de ficheros y permisos tipo Unix"
+  },
+  "RADIUS": {
+   "en": "Remote Authentication Dial-In User Service",
+   "es": "protocolo de autenticación en red"
   },
   "RAG": {
    "en": "Retrieval-Augmented Generation",
@@ -671,6 +687,10 @@
   "SBOM": {
    "en": "Software Bill of Materials",
    "es": "inventario de los componentes de un software"
+  },
+  "SCIM": {
+   "en": "System for Cross-domain Identity Management",
+   "es": "protocolo para sincronizar usuarios y grupos"
   },
   "SCP": {
    "en": "Service Control Policy",
@@ -755,6 +775,10 @@
   "SRR": {
    "en": "Same-Region Replication",
    "es": "replicación en la misma región"
+  },
+  "SRT": {
+   "en": "Shield Response Team",
+   "es": "equipo de respuesta de AWS Shield"
   },
   "SSD": {
    "en": "Solid-State Drive",

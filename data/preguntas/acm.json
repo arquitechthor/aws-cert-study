@@ -89,5 +89,49 @@
     "fuentes": [
       "https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html"
     ]
+  },
+  {
+    "id": "acm-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa quiere servir su sitio web por HTTPS y que los certificados se renueven solos, sin comprarlos ni instalarlos a mano. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "AWS Certificate Manager (ACM).",
+      "AWS Secrets Manager.",
+      "AWS CloudHSM.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "ACM emite certificados TLS públicos, los despliega en servicios integrados como CloudFront o los balanceadores y los renueva automáticamente. Secrets Manager guarda secretos, CloudHSM ofrece módulos de hardware e Inspector busca vulnerabilidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html"
+    ]
+  },
+  {
+    "id": "acm-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué coste tienen los certificados TLS públicos que AWS Certificate Manager emite para usarlos con servicios integrados como CloudFront o Elastic Load Balancing?",
+    "opciones": [
+      "Una cuota anual por cada certificado emitido.",
+      "Ninguno: solo se pagan los recursos de AWS que usan el certificado.",
+      "Un cargo por cada renovación automática.",
+      "Un cargo por cada dominio incluido en el certificado."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los certificados públicos de ACM usados con los servicios integrados no tienen coste; se paga por los recursos que los utilizan. Sí se cobran las autoridades de certificación privadas y los certificados públicos exportables.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html"
+    ]
   }
 ]

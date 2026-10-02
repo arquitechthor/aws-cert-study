@@ -233,6 +233,12 @@ G = {
     'MLOps': ('Machine Learning Operations', 'prácticas para llevar y mantener modelos en producción'),
     'GraphRAG': (None, 'generación aumentada por recuperación apoyada en un grafo de conocimiento'),
     'E/S': (None, 'entrada y salida: lecturas y escrituras'),
+    'SCIM': ('System for Cross-domain Identity Management', 'protocolo para sincronizar usuarios y grupos'),
+    'NIST': ('National Institute of Standards and Technology', 'organismo de normas de EE. UU.'),
+    'RADIUS': ('Remote Authentication Dial-In User Service', 'protocolo de autenticación en red'),
+    'OCSF': ('Open Cybersecurity Schema Framework', 'esquema abierto para datos de seguridad'),
+    'CSPM': ('Cloud Security Posture Management', 'gestión de la postura de seguridad en la nube'),
+    'SRT': ('Shield Response Team', 'equipo de respuesta de AWS Shield'),
 }
 # RAM es la memoria en EC2 y el servicio AWS RAM en el resto de páginas. IA es Infrequent Access en EFS y S3.
 POR_PAGINA = {

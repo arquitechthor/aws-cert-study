@@ -211,8 +211,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio que recopila evidencias de forma continua y las organiza por controles de marcos como PCI DSS, HIPAA o SOC 2 para preparar auditorías. Cerrado a clientes nuevos desde el 30/04/2026.",
     "frase": "Recoge evidencias automáticas para preparar auditorías frente a marcos como PCI DSS",
     "documentacion": "https://docs.aws.amazon.com/audit-manager/"
   },
@@ -422,8 +422,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Módulos de seguridad de hardware dedicados a un solo cliente, validados según FIPS 140 nivel 3, en los que tú controlas por completo las claves criptográficas.",
     "frase": "Módulos de hardware dedicados de un solo cliente para guardar tus claves criptográficas",
     "documentacion": "https://docs.aws.amazon.com/cloudhsm/"
   },
@@ -727,8 +727,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio para investigar hallazgos de seguridad: reúne los logs en un grafo de comportamiento y muestra el alcance, la cronología y la causa raíz de un incidente.",
     "frase": "Investiga el origen de hallazgos de seguridad con gráficos de relaciones entre eventos",
     "documentacion": "https://docs.aws.amazon.com/detective/"
   },
@@ -771,8 +771,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Directorios gestionados en AWS: Microsoft Active Directory real (AWS Managed Microsoft AD), un conector hacia tu directorio local (AD Connector) y Simple AD.",
     "frase": "Controladores de dominio de Microsoft AD gestionados o un conector hacia tu AD local",
     "documentacion": "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html"
   },
@@ -1088,8 +1088,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Administración centralizada de las reglas de WAF, Shield Advanced, grupos de seguridad, Network Firewall y DNS Firewall en todas las cuentas de una organización.",
     "frase": "Aplica reglas de WAF, Shield y grupos de seguridad a todas las cuentas de tu organización",
     "documentacion": "https://docs.aws.amazon.com/waf/"
   },
@@ -1176,8 +1176,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de detección de amenazas que analiza de forma continua los logs de CloudTrail, de flujo de la VPC y de DNS con inteligencia de amenazas y aprendizaje automático.",
     "frase": "Detecta amenazas analizando logs de red, DNS y actividad de la cuenta con ML",
     "documentacion": "https://docs.aws.amazon.com/guardduty/"
   },
@@ -1225,8 +1225,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Inicio de sesión único para la plantilla en todas las cuentas de AWS y aplicaciones, con usuarios de su propio directorio, de Active Directory o de un proveedor de identidad externo.",
     "frase": "Inicio de sesión único para todas tus cuentas y apps, con usuarios de tu directorio",
     "documentacion": "https://docs.aws.amazon.com/singlesignon/"
   },
@@ -1696,8 +1696,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Cortafuegos de red gestionado para las VPC, con reglas sin estado y con estado compatibles con Suricata, filtrado por dominios y prevención de intrusiones.",
     "frase": "Cortafuegos gestionado con inspección de paquetes e IPS para el tráfico de tu VPC",
     "documentacion": "https://docs.aws.amazon.com/network-firewall/"
   },
@@ -1861,8 +1861,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio gratuito para compartir recursos de AWS (subredes, Transit Gateway, licencias y otros) con otras cuentas, OU o toda la organización, sin duplicarlos.",
     "frase": "Comparte subredes, licencias y otros recursos con otras cuentas sin duplicarlos",
     "documentacion": "https://docs.aws.amazon.com/ram/"
   },
@@ -2045,8 +2045,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Vista unificada de la seguridad en AWS: agrega los hallazgos de GuardDuty, Inspector, Macie y otros, y evalúa las cuentas frente a estándares como CIS, PCI DSS o las buenas prácticas de AWS.",
     "frase": "Reúne hallazgos de seguridad de varios servicios y puntúa tu cumplimiento de normas",
     "documentacion": "https://docs.aws.amazon.com/securityhub/"
   },
@@ -2117,8 +2117,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Protección gestionada frente a ataques DDoS: Shield Standard, automática y gratuita para todos los clientes, y Shield Advanced, de pago, con mitigación avanzada, equipo de respuesta y protección de costes.",
     "frase": "Protege contra ataques DDoS, gratis en capa básica y con equipo de respuesta en avanzada",
     "documentacion": "https://docs.aws.amazon.com/waf/"
   },
@@ -2240,8 +2240,8 @@
       "SAP-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio que emite credenciales temporales de seguridad para asumir roles de IAM, federar identidades externas y acceder a otras cuentas sin claves de larga duración.",
     "frase": "Emite credenciales temporales para asumir roles o federar identidades externas",
     "documentacion": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html"
   },

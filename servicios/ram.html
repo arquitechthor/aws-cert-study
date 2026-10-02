@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS RAM — Apuntes AWS</title>
+<meta name="description" content="Servicio gratuito para compartir recursos de AWS (subredes, Transit Gateway, licencias y otros) con otras cuentas, OU o toda la organización, sin duplicarlos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/ram.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS RAM — Apuntes AWS">
+<meta property="og:description" content="Servicio gratuito para compartir recursos de AWS (subredes, Transit Gateway, licencias y otros) con otras cuentas, OU o toda la organización, sin duplicarlos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/ram.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/ram.svg" alt="" width="56" height="56"><span>AWS RAM</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Comparte subredes, licencias y otros recursos con otras cuentas sin duplicarlos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/ram/" target="_blank" rel="noopener">Documentación de AWS RAM ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Resource Access Manager (AWS <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>) permite <strong>compartir recursos</strong> que tienes en una cuenta con
+        otras cuentas de AWS, de forma segura y centralizada. El recurso <strong>se crea una vez</strong> y lo usan
+        varias cuentas, en lugar de duplicarlo en cada una. Es una pieza básica de las arquitecturas con muchas
+        cuentas: una red central que usan todos, un <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> común, las mismas reglas de licencias.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Recurso compartido</strong> (<em>resource share</em>): la unidad de trabajo. Reúne
+          <strong>recursos</strong>, <strong>principales</strong> con quienes se comparten y los
+          <strong>permisos</strong> que reciben.</li>
+        <li><strong>Con quién se comparte:</strong> cuentas concretas, <strong><abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr></strong> o <strong>toda la
+          organización</strong> de <a href="organizations.html">AWS Organizations</a> y, en algunos tipos de recurso, roles y usuarios de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li><strong>Dentro de la organización:</strong> si se activa el uso compartido con AWS Organizations, la
+          compartición es <strong>automática</strong>, sin invitaciones. Fuera de ella, la otra cuenta debe
+          <strong>aceptar</strong> una invitación.</li>
+        <li><strong>Permisos gestionados:</strong> definen qué acciones pueden hacer los participantes sobre el
+          recurso; también hay permisos gestionados por el cliente para afinar.</li>
+        <li><strong>Propietario y participante:</strong> el propietario conserva el control del recurso (lo modifica
+          y lo borra). El participante lo <strong>usa</strong> dentro de lo permitido, pero no lo administra.</li>
+        <li><strong>Qué se puede compartir</strong> (entre otros): <strong>subredes de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></strong>,
+          <strong><a href="../servicio.html?id=transit-gateway">Transit Gateway</a></strong>, reglas de <a href="route-53.html">Route 53</a> Resolver, configuraciones de <a href="license-manager.html">License Manager</a>, clústeres
+          de <a href="aurora.html">Aurora</a>, reservas de capacidad y hosts dedicados de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, listas de prefijos, recursos de <a href="network-firewall.html">Network Firewall</a> y
+          de <a href="glue.html">Glue</a>.</li>
+        <li><strong><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> compartida:</strong> la cuenta de red crea la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y comparte sus subredes; las demás cuentas
+          lanzan sus instancias en ellas. Cada cuenta ve y gestiona solo sus recursos, pero todas comparten la
+          red.</li>
+        <li><strong>Regional:</strong> un recurso compartido incluye recursos de su región (salvo los globales).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Red centralizada:</strong> una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> compartida, gestionada por el equipo de redes, para las cuentas
+          de aplicación.</li>
+        <li>Un único <strong><a href="../servicio.html?id=transit-gateway">Transit Gateway</a></strong> para toda la organización.</li>
+        <li>Reglas de <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> comunes (<a href="route-53.html">Route 53</a> Resolver) para todas las <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li>Compartir las reglas de licencias de <a href="license-manager.html">License Manager</a>.</li>
+        <li>Aprovechar en otras cuentas una reserva de capacidad de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para recursos que se comparten con <strong>políticas basadas en recursos</strong>: buckets de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, claves de
+          <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>, colas de <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, secretos. Se usa la política del propio recurso.</li>
+        <li>Para dar acceso a una cuenta completa o a acciones genéricas: roles de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> entre cuentas.</li>
+        <li>Para exponer un servicio a otras <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> sin compartir la red: <a href="privatelink.html">PrivateLink</a>.</li>
+        <li>Para compartir tablas de un lago de datos con permisos finos: <a href="lake-formation.html">Lake Formation</a> (que usa <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr> por
+          debajo).</li>
+        <li>Para compartir una <abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr> o una instantánea: sus propios permisos de lanzamiento o de uso compartido.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Mecanismo</th></tr></thead>
+          <tbody>
+            <tr><td>Compartir subredes, <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> y otros recursos admitidos</td><td><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></td></tr>
+            <tr><td>Acceso a un bucket, una clave o una cola desde otra cuenta</td><td>Política basada en recursos</td></tr>
+            <tr><td>Actuar en otra cuenta con ciertos permisos</td><td>Rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> entre cuentas</td></tr>
+            <tr><td>Conectar dos <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> completas</td><td>Interconexión de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> o Transit Gateway</td></tr>
+            <tr><td>Exponer un servicio de forma privada a otras cuentas</td><td><a href="privatelink.html">PrivateLink</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr> es <strong>gratuito</strong>. Los recursos compartidos se pagan como siempre: en general los paga su
+        propietario, y cada participante paga lo que crea sobre ellos (por ejemplo, sus instancias en una subred
+        compartida).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Se puede <strong>restringir la compartición a la propia organización</strong>, para que nadie comparta
+          recursos con cuentas externas.</li>
+        <li>Los participantes no pueden modificar ni borrar el recurso compartido, ni volver a compartirlo.</li>
+        <li>En una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> compartida, los grupos de seguridad y las instancias siguen siendo de cada cuenta; el aislamiento
+          entre cuentas se mantiene a nivel de recursos.</li>
+        <li>Las operaciones quedan registradas en <a href="cloudtrail.html">CloudTrail</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Compartir recursos entre cuentas sin duplicarlos"</strong>: <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>.</li>
+        <li><strong>"Varias cuentas deben desplegar en la misma <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>"</strong> o "red centralizada": compartir las
+          subredes con <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr> (<abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> compartida).</li>
+        <li><strong>"Compartir un <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> con las cuentas de la organización"</strong>: <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>.</li>
+        <li><strong>"Sin tener que aceptar invitaciones"</strong>: activar el uso compartido con AWS
+          <a href="organizations.html">Organizations</a>.</li>
+        <li><strong><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a> y <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> se comparten con políticas de recurso</strong>, no con <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>.</li>
+        <li><strong>No confundir con la memoria <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></strong> de las instancias.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="ram"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/ram/latest/userguide/what-is.html" target="_blank" rel="noopener">What is AWS Resource Access Manager?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/tgw/working-with-transit-gateways.html" target="_blank" rel="noopener">Work with AWS Transit Gateway (shared transit gateways)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/mt/share-systems-manager-documents-across-your-aws-organization-with-aws-ram/" target="_blank" rel="noopener">Share Systems Manager documents across your AWS Organization with AWS RAM</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/integrate-third-party-services/architecture-3-1.html" target="_blank" rel="noopener">Architecture 3.1: Transit Gateway with AWS RAM</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

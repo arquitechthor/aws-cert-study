@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Detective — Apuntes AWS</title>
+<meta name="description" content="Servicio para investigar hallazgos de seguridad: reúne los logs en un grafo de comportamiento y muestra el alcance, la cronología y la causa raíz de un incidente. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/detective.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Detective — Apuntes AWS">
+<meta property="og:description" content="Servicio para investigar hallazgos de seguridad: reúne los logs en un grafo de comportamiento y muestra el alcance, la cronología y la causa raíz de un incidente.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/detective.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/detective.svg" alt="" width="56" height="56"><span>Amazon Detective</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Investiga el origen de hallazgos de seguridad con gráficos de relaciones entre eventos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/detective/" target="_blank" rel="noopener">Documentación de Amazon Detective ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Detective ayuda a <strong>investigar</strong> un problema de seguridad cuando ya se ha detectado.
+        Recoge automáticamente los registros de tus cuentas y construye con ellos un <strong>grafo de
+        comportamiento</strong>: quién hizo qué, desde dónde y con qué recursos, a lo largo del tiempo. Así el analista
+        responde con rapidez a lo que importa tras una alerta: ¿es real?, ¿qué más tocó?, ¿desde cuándo? Sin Detective,
+        eso supone cruzar a mano millones de líneas de log.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Grafo de comportamiento:</strong> el conjunto de datos enlazados de una o varias cuentas. La cuenta
+          que activa Detective es su administradora e invita a las cuentas miembro (hasta 1200).</li>
+        <li><strong>Fuentes de datos:</strong> eventos de <strong><a href="cloudtrail.html">CloudTrail</a></strong>, <strong>registros de flujo de la
+          <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></strong>, hallazgos de <strong><a href="guardduty.html">GuardDuty</a></strong> y, de forma opcional, registros de auditoría de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a> y
+          hallazgos de <a href="security-hub.html">Security Hub</a>. Detective los lee directamente: no hay que activarlos ni guardarlos aparte.</li>
+        <li><strong>Entidades y perfiles:</strong> cada usuario, rol, dirección <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr>, instancia o clúster tiene un perfil
+          con su actividad y su comportamiento habitual, para ver qué es anómalo.</li>
+        <li><strong>Grupos de hallazgos:</strong> agrupa los hallazgos que parecen formar parte del mismo incidente y
+          los muestra de forma visual.</li>
+        <li><strong>Investigaciones:</strong> analiza de forma automática un usuario o rol y resume los indicadores de
+          compromiso.</li>
+        <li><strong>Un año de historia:</strong> conserva hasta un año de datos agregados para mirar hacia atrás.</li>
+        <li><strong>Integración:</strong> desde un hallazgo de GuardDuty, Security Hub o <a href="inspector.html">Inspector</a> se salta a
+          Detective para investigarlo; también consulta los registros guardados en Security Lake.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Triaje:</strong> decidir si un hallazgo de <a href="guardduty.html">GuardDuty</a> es un falso positivo.</li>
+        <li><strong>Alcance de un incidente:</strong> qué recursos y qué cuentas tocó una credencial
+          comprometida.</li>
+        <li><strong>Causa raíz:</strong> reconstruir la cronología de un ataque.</li>
+        <li><strong>Búsqueda proactiva de amenazas</strong> a partir de una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> o un usuario sospechoso.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>detectar</strong> amenazas: <a href="guardduty.html">GuardDuty</a>. Detective investiga lo ya detectado.</li>
+        <li>Para una vista agregada de hallazgos y cumplimiento: <a href="security-hub.html">Security Hub</a>.</li>
+        <li>Para vulnerabilidades de software: <a href="inspector.html">Inspector</a>. Para datos sensibles en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>: <a href="macie.html">Macie</a>.</li>
+        <li>Para consultas libres sobre logs guardados: <a href="athena.html">Athena</a>, <a href="cloudwatch.html">CloudWatch</a> Logs Insights o Security Lake.</li>
+        <li>Para <strong>responder</strong> o contener: <a href="eventbridge.html">EventBridge</a> con <a href="lambda.html">Lambda</a> o <a href="systems-manager.html">Systems Manager</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Fase</th><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Detectar</td><td>¿Está pasando algo malicioso?</td><td><a href="guardduty.html">GuardDuty</a></td></tr>
+            <tr><td>Agregar y priorizar</td><td>¿Qué hallazgos tengo en total?</td><td><a href="security-hub.html">Security Hub</a></td></tr>
+            <tr><td>Investigar</td><td>¿Qué ocurrió, cuándo y qué alcance tiene?</td><td>Detective</td></tr>
+            <tr><td>Evaluar vulnerabilidades</td><td>¿Qué software es vulnerable?</td><td><a href="inspector.html">Inspector</a></td></tr>
+            <tr><td>Auditar</td><td>¿Quién llamó a qué <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>?</td><td><a href="cloudtrail.html">CloudTrail</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por el <strong>volumen de datos ingeridos</strong> de cada fuente, por gigabyte y con tramos. No hay
+        que pagar aparte por activar o almacenar las fuentes para Detective. Incluye un periodo de prueba gratuito.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Requiere tener <strong><a href="guardduty.html">GuardDuty</a> activado</strong> en la cuenta.</li>
+        <li>Es regional: hay un grafo de comportamiento por región.</li>
+        <li>Con <a href="organizations.html">AWS Organizations</a>, un administrador delegado incorpora las cuentas de la organización.</li>
+        <li>Los datos del grafo se cifran y solo los ve la cuenta administradora.</li>
+        <li>Un grafo nuevo necesita unas dos semanas para aprender el comportamiento habitual.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Investigar"</strong>, "causa raíz" o "analizar el alcance de un hallazgo de seguridad": Detective.</li>
+        <li><strong>"Detectar"</strong> amenazas: <a href="guardduty.html">GuardDuty</a>. La pareja habitual es GuardDuty detecta y Detective
+          investiga.</li>
+        <li><strong>"Visualizar las relaciones entre recursos, usuarios e <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> tras un incidente"</strong>:
+          Detective.</li>
+        <li><strong>"Vista única del estado de seguridad"</strong>: <a href="security-hub.html">Security Hub</a>, no Detective.</li>
+        <li><strong>No hay que configurar la recogida de logs:</strong> Detective la hace por su cuenta.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="detective"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/detective/latest/userguide/what-is-detective.html" target="_blank" rel="noopener">What is Amazon Detective?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/detective/latest/userguide/behavior-graph-data-about.html" target="_blank" rel="noopener">Data in a Detective behavior graph</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/detective/latest/userguide/behavior-graph-population-about.html" target="_blank" rel="noopener">How Detective populates a behavior graph</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/detective/features/" target="_blank" rel="noopener">Amazon Detective features</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -93,7 +93,7 @@
         <li><strong>Reglas de supresión:</strong> ocultan los hallazgos que has decidido aceptar.</li>
         <li><strong>Varias cuentas:</strong> con <a href="organizations.html">AWS Organizations</a>, un <strong>administrador delegado</strong> activa
           y gestiona Inspector en todas las cuentas.</li>
-        <li><strong>Integraciones:</strong> los hallazgos van a <strong><a href="../servicio.html?id=security-hub">Security Hub</a></strong> y a
+        <li><strong>Integraciones:</strong> los hallazgos van a <strong><a href="security-hub.html">Security Hub</a></strong> y a
           <strong><a href="eventbridge.html">EventBridge</a></strong>, para avisar o corregir automáticamente.</li>
         <li><strong>Inventario de software</strong> (<abbr class="sigla" data-s="SBOM" data-en="Software Bill of Materials" data-es="inventario de los componentes de un software" tabindex="0">SBOM</abbr>): exporta la lista de componentes de los recursos
           analizados.</li>
@@ -113,12 +113,12 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Para detectar <strong>amenazas activas</strong> y comportamiento malicioso: <a href="../servicio.html?id=guardduty">GuardDuty</a>.</li>
+        <li>Para detectar <strong>amenazas activas</strong> y comportamiento malicioso: <a href="guardduty.html">GuardDuty</a>.</li>
         <li>Para encontrar <strong>datos sensibles</strong> en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>: <a href="macie.html">Macie</a>.</li>
         <li>Para evaluar la <strong>configuración</strong> de los recursos de AWS frente a reglas: <a href="config.html">AWS Config</a>.</li>
         <li>Para <strong>aplicar</strong> los parches: <a href="systems-manager.html">Patch Manager</a> de Systems Manager. Inspector detecta, no
           corrige.</li>
-        <li>Para proteger frente a ataques web: <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> y <a href="../servicio.html?id=shield">Shield</a>.</li>
+        <li>Para proteger frente a ataques web: <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> y <a href="shield.html">Shield</a>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -127,10 +127,10 @@
           <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
           <tbody>
             <tr><td>¿Tiene mi software vulnerabilidades conocidas?</td><td>Inspector</td></tr>
-            <tr><td>¿Hay actividad maliciosa o cuentas comprometidas?</td><td><a href="../servicio.html?id=guardduty">GuardDuty</a></td></tr>
+            <tr><td>¿Hay actividad maliciosa o cuentas comprometidas?</td><td><a href="guardduty.html">GuardDuty</a></td></tr>
             <tr><td>¿Hay datos personales expuestos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>?</td><td><a href="macie.html">Macie</a></td></tr>
             <tr><td>¿Están mis recursos configurados según mis reglas?</td><td><a href="config.html">AWS Config</a></td></tr>
-            <tr><td>¿Cuál es mi postura de seguridad, con todo junto?</td><td><a href="../servicio.html?id=security-hub">Security Hub</a></td></tr>
+            <tr><td>¿Cuál es mi postura de seguridad, con todo junto?</td><td><a href="security-hub.html">Security Hub</a></td></tr>
             <tr><td>¿Sigo las buenas prácticas generales?</td><td><a href="trusted-advisor.html">Trusted Advisor</a></td></tr>
           </tbody>
         </table>
@@ -154,7 +154,7 @@
         <li><strong>"Vulnerabilidades de software"</strong>, "<abbr class="sigla" data-s="CVE" data-en="Common Vulnerabilities and Exposures" data-es="catálogo público de vulnerabilidades conocidas" tabindex="0">CVE</abbr>" o "exposición de red" en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, contenedores o <a href="lambda.html">Lambda</a>:
           Inspector.</li>
         <li><strong>"Analizar las imágenes de contenedor al subirlas al registro"</strong>: Inspector con <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>.</li>
-        <li><strong>"Amenazas", "comportamiento anómalo", "minería de criptomonedas"</strong>: <a href="../servicio.html?id=guardduty">GuardDuty</a>, no
+        <li><strong>"Amenazas", "comportamiento anómalo", "minería de criptomonedas"</strong>: <a href="guardduty.html">GuardDuty</a>, no
           Inspector.</li>
         <li><strong>"Datos personales en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: <a href="macie.html">Macie</a>.</li>
         <li><strong>Inspector detecta; <a href="systems-manager.html">Patch Manager</a> parchea.</strong></li>

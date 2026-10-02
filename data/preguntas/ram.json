@@ -1,0 +1,134 @@
+[
+  {
+    "id": "ram-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa quiere que varias de sus cuentas de AWS usen un mismo recurso, como una subred, sin tener que crearlo en cada cuenta. ¿Qué servicio lo permite?",
+    "opciones": [
+      "AWS Artifact.",
+      "Amazon Macie.",
+      "AWS Budgets.",
+      "AWS Resource Access Manager (AWS RAM)."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "RAM comparte recursos admitidos, como subredes o Transit Gateway, con otras cuentas u OU, sin duplicarlos. Artifact ofrece informes de cumplimiento, Macie descubre datos sensibles y Budgets controla el gasto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ram/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "ram-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué coste tiene usar AWS RAM para compartir recursos entre cuentas?",
+    "opciones": [
+      "Ninguno: el servicio es gratuito y solo se pagan los recursos.",
+      "Una cuota mensual por cada recurso compartido.",
+      "Un cargo por cada cuenta con la que se comparte.",
+      "Un porcentaje del coste del recurso compartido."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "RAM no tiene coste adicional. Los recursos se facturan como siempre a su propietario, y cada participante paga lo que despliega sobre ellos.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/share-systems-manager-documents-across-your-aws-organization-with-aws-ram/"
+    ]
+  },
+  {
+    "id": "ram-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "El equipo de redes gestiona una VPC central y quiere que las cuentas de las aplicaciones lancen sus instancias en las subredes de esa VPC, sin crear una VPC por cuenta. ¿Qué solución es la adecuada?",
+    "opciones": [
+      "Una interconexión de VPC entre cada cuenta y la cuenta de redes.",
+      "Compartir las subredes con esas cuentas mediante AWS RAM.",
+      "Una VPN de sitio a sitio entre las cuentas.",
+      "Copiar la configuración de la VPC con un StackSet de CloudFormation."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con RAM, la cuenta propietaria comparte subredes y las cuentas participantes crean en ellas sus recursos (VPC compartida). Las interconexiones y las VPN unen redes distintas, que es justo lo que se quiere evitar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ram/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "ram-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "En una VPC compartida mediante AWS RAM, ¿qué puede hacer una cuenta participante en las subredes que recibe?",
+    "opciones": [
+      "Borrar la subred y la VPC cuando ya no las necesite.",
+      "Modificar las tablas de rutas y las ACL de red de la VPC.",
+      "Crear y gestionar sus propios recursos, como instancias, pero no modificar la red compartida.",
+      "Volver a compartir las subredes con cuentas de fuera de la organización."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El propietario conserva el control de la VPC, las subredes, las rutas y las ACL de red. Los participantes despliegan y administran sus propios recursos en las subredes compartidas, pero no gestionan ni vuelven a compartir la red.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ram/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "ram-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización tiene un Transit Gateway en la cuenta de redes y quiere que todas las cuentas, incluidas las futuras, puedan asociar sus VPC sin aceptar invitaciones. ¿Cómo debe configurarlo?",
+    "opciones": [
+      "Creando un Transit Gateway por cuenta y uniéndolos con interconexiones.",
+      "Enviando una invitación de RAM a cada cuenta y aceptándola a mano.",
+      "Concediendo permisos de administrador sobre la cuenta de redes a todas las cuentas.",
+      "Activando el uso compartido con AWS Organizations en RAM y compartiendo el Transit Gateway con la organización."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con el uso compartido con Organizations activado, los recursos compartidos con la organización o con una OU quedan disponibles automáticamente para sus cuentas, también las nuevas, sin invitaciones. Las invitaciones son necesarias solo para cuentas externas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/tgw/working-with-transit-gateways.html"
+    ]
+  },
+  {
+    "id": "ram-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa quiere dar a otra cuenta acceso de lectura a un bucket de S3 y a la clave de KMS que lo cifra. Un ingeniero propone usar AWS RAM. ¿Es la herramienta adecuada?",
+    "opciones": [
+      "Sí: RAM es el único mecanismo para compartir recursos entre cuentas.",
+      "Sí, pero solo si ambas cuentas están en la misma región.",
+      "No: RAM solo funciona con cuentas de la misma organización.",
+      "No: los buckets y las claves se comparten con sus políticas basadas en recursos, no con RAM."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "S3 y KMS no son tipos de recurso de RAM: su acceso entre cuentas se concede con la política del bucket y la política de la clave, junto con los permisos de IAM de la otra cuenta. RAM sí puede compartir con cuentas externas, mediante invitación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ram/latest/userguide/what-is.html"
+    ]
+  }
+]

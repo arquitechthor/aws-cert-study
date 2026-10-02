@@ -111,5 +111,71 @@
     "fuentes": [
       "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html"
     ]
+  },
+  {
+    "id": "cognito-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa quiere añadir a su aplicación móvil el registro y el inicio de sesión de usuarios, también con cuentas de Google o Apple, sin desarrollar ese sistema. ¿Qué servicio de AWS debe usar?",
+    "opciones": [
+      "AWS IAM Identity Center.",
+      "AWS Directory Service.",
+      "Amazon Cognito.",
+      "AWS Secrets Manager."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Cognito proporciona el registro, el inicio de sesión y la federación con proveedores sociales para aplicaciones web y móviles. IAM Identity Center es para la plantilla, Directory Service ofrece Active Directory y Secrets Manager guarda secretos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html"
+    ]
+  },
+  {
+    "id": "cognito-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Tras iniciar sesión en un grupo de usuarios de Amazon Cognito, una aplicación recibe tres tokens. ¿Cuál debe enviar a una API protegida para demostrar a qué recursos tiene acceso el usuario?",
+    "opciones": [
+      "El token de identidad, que contiene los atributos del perfil del usuario.",
+      "El token de actualización, que sirve para obtener tokens nuevos.",
+      "La contraseña del usuario cifrada con KMS.",
+      "El token de acceso, que contiene los ámbitos y grupos autorizados."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El token de acceso está pensado para autorizar llamadas a las API: incluye los ámbitos y los grupos. El token de identidad describe quién es el usuario y el de actualización solo sirve para renovar los otros dos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html"
+    ]
+  },
+  {
+    "id": "cognito-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador quiere ejecutar lógica propia cada vez que un usuario se registra en un grupo de usuarios de Amazon Cognito, por ejemplo para validar el dominio del correo. ¿Qué mecanismo ofrece el servicio?",
+    "opciones": [
+      "Los desencadenadores de Lambda del grupo de usuarios, como el de antes del registro.",
+      "Una regla de AWS Config que evalúe el grupo de usuarios en cada cambio.",
+      "Una política de bucket asociada al grupo de usuarios de Cognito.",
+      "Un documento de automatización de Systems Manager lanzado a mano."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los grupos de usuarios permiten asociar funciones Lambda a distintos momentos del flujo (antes del registro, tras la confirmación, antes de emitir los tokens) para personalizarlo. Config y Systems Manager no intervienen en el flujo de autenticación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-working-with-lambda-triggers.html"
+    ]
   }
 ]

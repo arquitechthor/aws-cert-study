@@ -103,7 +103,7 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Para dar acceso de los empleados a la consola o a cuentas de AWS: eso es <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
+        <li>Para dar acceso de los empleados a la consola o a cuentas de AWS: eso es <a href="iam-identity-center.html">IAM Identity Center</a>.</li>
         <li>Para permisos entre servicios de AWS: eso son roles <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>.</li>
         <li>Si ya tienes un proveedor de identidad completo y solo necesitas validar sus <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr>, <a href="api-gateway.html">API Gateway</a>
           puede hacerlo directamente con un autorizador <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr> sin Cognito.</li>
@@ -112,7 +112,7 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>User pool</th><th>Identity pool</th><th><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>User pool</th><th>Identity pool</th><th><a href="iam-identity-center.html">IAM Identity Center</a></th></tr></thead>
           <tbody>
             <tr><td>¿Para quién?</td><td>Clientes de tu app</td><td>Clientes de tu app</td><td>Empleados</td></tr>
             <tr><td>¿Qué entrega?</td><td>Tokens <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr></td><td>Credenciales temporales de AWS</td><td>Acceso <abbr class="sigla sigla-1" data-s="SSO" data-en="Single Sign-On" data-es="un único inicio de sesión para varias aplicaciones" tabindex="0">SSO<span class="sigla-exp"> (Single Sign-On: un único inicio de sesión para varias aplicaciones)</span></abbr> a cuentas y apps</td></tr>
@@ -147,7 +147,7 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Usuarios de la aplicación"</strong> o <strong>"login social"</strong>: Cognito
-          (user pool). <strong>"Empleados"</strong> o <strong>"<abbr class="sigla" data-s="SSO" data-en="Single Sign-On" data-es="un único inicio de sesión para varias aplicaciones" tabindex="0">SSO</abbr> a cuentas"</strong>: <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>.</li>
+          (user pool). <strong>"Empleados"</strong> o <strong>"<abbr class="sigla" data-s="SSO" data-en="Single Sign-On" data-es="un único inicio de sesión para varias aplicaciones" tabindex="0">SSO</abbr> a cuentas"</strong>: <a href="iam-identity-center.html">IAM Identity Center</a>.</li>
         <li><strong>"Acceso directo desde la app móvil a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="dynamodb.html">DynamoDB</a>"</strong>: identity pool
           (credenciales temporales), nunca claves embebidas en la app.</li>
         <li><strong>"Usuarios invitados o no autenticados"</strong>: identity pool con identidades no autenticadas.</li>

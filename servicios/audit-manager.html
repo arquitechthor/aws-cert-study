@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Audit Manager — Apuntes AWS</title>
+<meta name="description" content="Servicio que recopila evidencias de forma continua y las organiza por controles de marcos como PCI DSS, HIPAA o SOC 2 para preparar auditorías. Cerrado a clientes nuevos desde el 30/04/2026. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/audit-manager.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Audit Manager — Apuntes AWS">
+<meta property="og:description" content="Servicio que recopila evidencias de forma continua y las organiza por controles de marcos como PCI DSS, HIPAA o SOC 2 para preparar auditorías. Cerrado a clientes nuevos desde el 30/04/2026.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/audit-manager.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/audit-manager.svg" alt="" width="56" height="56"><span>AWS Audit Manager</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Recoge evidencias automáticas para preparar auditorías frente a marcos como <abbr class="sigla sigla-1" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS<span class="sigla-exp"> (Payment Card Industry Data Security Standard: norma de seguridad para datos de tarjetas)</span></abbr></span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/audit-manager/" target="_blank" rel="noopener">Documentación de AWS Audit Manager ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> Audit Manager está en modo de mantenimiento:
+        <strong>desde el 30/04/2026 no se puede activar en cuentas nuevas</strong> ni extender a más regiones. Quien ya
+        lo usaba puede seguir, incluso creando evaluaciones, pero AWS no añadirá marcos ni funciones. La alternativa
+        que propone AWS son los <strong>paquetes de conformidad de <a href="config.html">AWS Config</a></strong>, que tienen plantillas para
+        marcos como <abbr class="sigla sigla-1" data-s="HIPAA" data-en="Health Insurance Portability and Accountability Act" data-es="ley de EE. UU. que protege los datos de salud" tabindex="0">HIPAA<span class="sigla-exp"> (Health Insurance Portability and Accountability Act: ley de EE. UU. que protege los datos de salud)</span></abbr>, <abbr class="sigla sigla-1" data-s="NIST" data-en="National Institute of Standards and Technology" data-es="organismo de normas de EE. UU." tabindex="0">NIST<span class="sigla-exp"> (National Institute of Standards and Technology: organismo de normas de EE. UU.)</span></abbr> o <abbr class="sigla" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS</abbr> (no para todos: faltan, por ejemplo, <abbr class="sigla sigla-1" data-s="SOC" data-en="System and Organization Controls" data-es="informes de auditoría sobre los controles de un proveedor" tabindex="0">SOC<span class="sigla-exp"> (System and Organization Controls: informes de auditoría sobre los controles de un proveedor)</span></abbr> 2 y el RGPD) y no generan un informe
+        de auditoría equivalente. Sigue en la guía de SAP-C02, que se puede presentar hasta el 17/11/2026.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Audit Manager automatiza la parte más tediosa de una auditoría: <strong>reunir las evidencias</strong>.
+        Recoge de forma continua datos de tu uso de AWS, los asocia a los <strong>controles</strong> de un marco de
+        cumplimiento y los deja ordenados para que el auditor los revise. Audita <strong>tu</strong> entorno, a
+        diferencia de <a href="artifact.html">AWS Artifact</a>, que entrega los informes sobre el cumplimiento de AWS.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Marco</strong> (<em>framework</em>): un conjunto de controles agrupados. Hay marcos
+          <strong>estándar</strong> ya preparados (<abbr class="sigla" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS</abbr>, <abbr class="sigla" data-s="HIPAA" data-en="Health Insurance Portability and Accountability Act" data-es="ley de EE. UU. que protege los datos de salud" tabindex="0">HIPAA</abbr>, <abbr class="sigla" data-s="SOC" data-en="System and Organization Controls" data-es="informes de auditoría sobre los controles de un proveedor" tabindex="0">SOC</abbr> 2, RGPD, <abbr class="sigla sigla-1" data-s="CIS" data-en="Center for Internet Security" data-es="organización que publica referencias de configuración segura" tabindex="0">CIS<span class="sigla-exp"> (Center for Internet Security: organización que publica referencias de configuración segura)</span></abbr>, buenas prácticas de AWS) y
+          <strong>personalizados</strong>.</li>
+        <li><strong>Control:</strong> un requisito concreto, con las fuentes de datos de las que se obtiene su
+          evidencia.</li>
+        <li><strong>Evaluación</strong> (<em>assessment</em>): la aplicación de un marco a un alcance: unas cuentas y
+          unos servicios. Desde que se crea, empieza a acumular evidencias.</li>
+        <li><strong>Evidencias automáticas:</strong> salen de <a href="config.html">AWS Config</a> (resultados de reglas), <a href="security-hub.html">Security Hub</a>
+          (controles), <a href="cloudtrail.html">CloudTrail</a> (actividad de los usuarios) y llamadas a las <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de los servicios (instantáneas de
+          configuración).</li>
+        <li><strong>Evidencias manuales:</strong> documentos que subes tú, para los controles que no se pueden
+          comprobar de forma automática (políticas, actas, formación).</li>
+        <li><strong>Delegación:</strong> un conjunto de controles se asigna a un experto para que lo revise.</li>
+        <li><strong>Informe de evaluación:</strong> el resumen final con las evidencias seleccionadas, que se guarda en
+          <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> con una suma de comprobación para verificar su integridad.</li>
+        <li><strong>Varias cuentas:</strong> con <a href="organizations.html">AWS Organizations</a>, una evaluación abarca cuentas de toda la
+          organización, gestionada desde un administrador delegado.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Preparar una auditoría de <abbr class="sigla" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS</abbr>, <abbr class="sigla" data-s="SOC" data-en="System and Organization Controls" data-es="informes de auditoría sobre los controles de un proveedor" tabindex="0">SOC</abbr> 2 o <abbr class="sigla" data-s="HIPAA" data-en="Health Insurance Portability and Accountability Act" data-es="ley de EE. UU. que protege los datos de salud" tabindex="0">HIPAA</abbr> sin recopilar capturas de pantalla a mano.</li>
+        <li>Mantener el cumplimiento <strong>de forma continua</strong>, en lugar de reunirlo todo antes de cada
+          auditoría.</li>
+        <li>Auditorías internas con controles propios de la empresa.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li><strong>En cuentas nuevas</strong> ya no se puede activar: paquetes de conformidad de <a href="config.html">AWS Config</a>.</li>
+        <li>Para descargar los informes de cumplimiento <strong>de AWS</strong>: <a href="artifact.html">AWS Artifact</a>.</li>
+        <li>Para detectar y corregir configuraciones incorrectas: AWS Config y <a href="security-hub.html">Security Hub</a>. Audit Manager reúne
+          pruebas; no corrige.</li>
+        <li>Para saber quién hizo una acción: <a href="cloudtrail.html">CloudTrail</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Reunir y ordenar evidencias de mi entorno para una auditoría</td><td>Audit Manager</td></tr>
+            <tr><td>Informes y certificaciones del cumplimiento de AWS</td><td><a href="artifact.html">AWS Artifact</a></td></tr>
+            <tr><td>Evaluar de forma continua la configuración frente a reglas</td><td><a href="config.html">AWS Config</a> (paquetes de conformidad)</td></tr>
+            <tr><td>Postura de seguridad frente a estándares y hallazgos agregados</td><td><a href="security-hub.html">Security Hub</a></td></tr>
+            <tr><td>Registro de la actividad de la cuenta</td><td><a href="cloudtrail.html">CloudTrail</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>evaluación de recursos</strong>: cada vez que el servicio recoge una evidencia de un
+        recurso para una evaluación activa. Aparte, el almacenamiento en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> de los informes y el coste de las fuentes
+        (reglas de <a href="config.html">AWS Config</a>, <a href="security-hub.html">Security Hub</a>).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las evidencias se cifran con una clave de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>, de AWS o propia.</li>
+        <li>Las evidencias son de solo lectura y los informes llevan una suma de comprobación, lo que respalda su
+          integridad ante el auditor.</li>
+        <li>El acceso se controla con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>, con permisos distintos para el responsable de la auditoría y para los
+          delegados.</li>
+        <li>Es regional: cada evaluación recoge evidencias de la región donde se crea.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Automatizar la recopilación de evidencias para una auditoría"</strong> o "preparar informes listos
+          para el auditor": Audit Manager.</li>
+        <li><strong>"Descargar el informe <abbr class="sigla" data-s="SOC" data-en="System and Organization Controls" data-es="informes de auditoría sobre los controles de un proveedor" tabindex="0">SOC</abbr> de AWS"</strong>: <a href="artifact.html">AWS Artifact</a>. Audit Manager audita lo tuyo; AWS Artifact
+          documenta lo de AWS.</li>
+        <li><strong>"Comprobar si los recursos cumplen una regla y corregirlos"</strong>: <a href="config.html">AWS Config</a>.</li>
+        <li><strong>Audit Manager no garantiza el cumplimiento:</strong> reúne pruebas; valorar si se cumple es cosa
+          del auditor.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="audit-manager"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/audit-manager/latest/userguide/what-is.html" target="_blank" rel="noopener">What is AWS Audit Manager?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/audit-manager/latest/userguide/audit-manager-availability-change.html" target="_blank" rel="noopener">AWS Audit Manager availability change</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/audit-manager/latest/userguide/using-auditmanager.html" target="_blank" rel="noopener">Using AWS Audit Manager</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

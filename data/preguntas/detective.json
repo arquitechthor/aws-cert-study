@@ -1,0 +1,134 @@
+[
+  {
+    "id": "detective-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Tras recibir una alerta de seguridad, el equipo quiere analizar qué ocurrió y determinar la causa raíz usando gráficos de la actividad relacionada. ¿Qué servicio de AWS está pensado para ello?",
+    "opciones": [
+      "Amazon Inspector.",
+      "Amazon Detective.",
+      "AWS Shield.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Detective construye un grafo con los registros de la cuenta y facilita investigar el origen y el alcance de un hallazgo. Inspector busca vulnerabilidades, Shield protege frente a DDoS y Artifact ofrece informes de cumplimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/detective/latest/userguide/what-is-detective.html"
+    ]
+  },
+  {
+    "id": "detective-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Cuál es la relación habitual entre Amazon GuardDuty y Amazon Detective?",
+    "opciones": [
+      "GuardDuty corrige los problemas y Detective los documenta para el auditor.",
+      "GuardDuty analiza vulnerabilidades y Detective aplica los parches.",
+      "GuardDuty cifra los datos y Detective gestiona las claves.",
+      "GuardDuty detecta las amenazas y Detective ayuda a investigarlas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "GuardDuty genera hallazgos sobre actividad sospechosa, y desde ellos se pasa a Detective para investigar el contexto, la cronología y los recursos implicados. Ninguno de los dos aplica parches ni gestiona claves.",
+    "fuentes": [
+      "https://aws.amazon.com/detective/features/"
+    ]
+  },
+  {
+    "id": "detective-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "GuardDuty avisa de que un rol de IAM hace llamadas desde una IP inusual. El equipo necesita saber qué otras llamadas hizo ese rol las últimas semanas y a qué recursos accedió, sin escribir consultas sobre los logs. ¿Qué debe usar?",
+    "opciones": [
+      "Amazon Detective, consultando el perfil de ese rol.",
+      "AWS Config, con la línea de tiempo del rol.",
+      "AWS Trusted Advisor, en la categoría de seguridad.",
+      "Amazon Macie, con un trabajo de descubrimiento."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Detective mantiene perfiles de entidades como roles, usuarios e IP con su actividad histórica y sus anomalías, listos para explorar sin consultas manuales. Config muestra cambios de configuración, no las llamadas realizadas por el rol.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/detective/latest/userguide/behavior-graph-data-about.html"
+    ]
+  },
+  {
+    "id": "detective-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "¿Qué hay que hacer con los registros de flujo de la VPC y con CloudTrail para que Amazon Detective pueda analizarlos?",
+    "opciones": [
+      "Activarlos en cada VPC y enviarlos a un bucket de S3 que Detective pueda leer.",
+      "Exportarlos cada día a CloudWatch Logs con un filtro de suscripción hacia Detective.",
+      "Nada: Detective los recoge directamente al activarse, sin configurarlos ni almacenarlos.",
+      "Cargarlos a mano en el grafo de comportamiento una vez por semana."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Detective ingiere por su cuenta los eventos de CloudTrail, los registros de flujo de la VPC y los hallazgos de GuardDuty, mediante flujos independientes. No hace falta habilitar esas fuentes ni pagar su almacenamiento para que funcione.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/detective/latest/userguide/behavior-graph-population-about.html"
+    ]
+  },
+  {
+    "id": "detective-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "El equipo de seguridad de una organización con 300 cuentas quiere investigar incidentes que cruzan varias cuentas desde un único sitio. ¿Cómo debe configurar Amazon Detective?",
+    "opciones": [
+      "Activarlo por separado en cada cuenta y exportar los resultados a un bucket de S3 común.",
+      "Designar un administrador delegado en AWS Organizations y añadir las cuentas a su grafo.",
+      "Crear un grafo de comportamiento por cada OU y unirlos después con AWS RAM.",
+      "Usar un agregador de AWS Config como fuente de datos del grafo de comportamiento."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con Organizations, la cuenta de administrador delegado de Detective incorpora las cuentas miembro a un grafo de comportamiento común, lo que permite seguir la actividad entre cuentas. Los grafos separados impiden ver el incidente completo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/detective/latest/userguide/behavior-graph-data-about.html"
+    ]
+  },
+  {
+    "id": "detective-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa recibe cada día decenas de hallazgos de seguridad sueltos y tarda mucho en ver cuáles pertenecen a un mismo ataque. ¿Qué función de Amazon Detective ayuda?",
+    "opciones": [
+      "Las reglas de supresión de hallazgos.",
+      "Los paquetes de conformidad.",
+      "Los identificadores de datos gestionados.",
+      "Los grupos de hallazgos."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los grupos de hallazgos reúnen los hallazgos y las entidades que probablemente corresponden al mismo incidente y los muestran de forma visual, lo que acelera el análisis. Las otras opciones pertenecen a Inspector o GuardDuty, a Config y a Macie.",
+    "fuentes": [
+      "https://aws.amazon.com/detective/features/"
+    ]
+  }
+]

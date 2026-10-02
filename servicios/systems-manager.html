@@ -109,6 +109,22 @@
         <li>Si no quieres gestionar servidores en absoluto: <a href="lambda.html">Lambda</a>, <a href="fargate.html">Fargate</a> o servicios gestionados.</li>
       </ul>
 
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>Acceso de shell a instancias sin abrir puertos ni gestionar claves</td><td>Session Manager (frente a un bastión con <abbr class="sigla" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH</abbr>)</td></tr>
+            <tr><td>Guardar parámetros de configuración</td><td>Parameter Store</td></tr>
+            <tr><td>Guardar secretos con rotación automática</td><td><a href="secrets-manager.html">Secrets Manager</a></td></tr>
+            <tr><td>Desplegar cambios de configuración de forma gradual y con marcha atrás</td><td><a href="appconfig.html">AppConfig</a></td></tr>
+            <tr><td>Aplicar parches</td><td>Patch Manager (<a href="inspector.html">Inspector</a> detecta las vulnerabilidades)</td></tr>
+            <tr><td>Evaluar la configuración de los recursos de AWS frente a reglas</td><td><a href="config.html">AWS Config</a> (que corrige con Automation)</td></tr>
+            <tr><td>Crear la infraestructura</td><td><a href="cloudformation.html">CloudFormation</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Muchas capacidades no tienen coste adicional para instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (Session Manager, Run Command,
         Patch Manager, Inventory, Parameter Store estándar). Se pagan los parámetros avanzados y sus

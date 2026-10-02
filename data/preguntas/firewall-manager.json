@@ -1,0 +1,134 @@
+[
+  {
+    "id": "firewall-manager-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa con muchas cuentas de AWS quiere configurar y mantener de forma centralizada sus reglas de AWS WAF en todas ellas. ¿Qué servicio debe usar?",
+    "opciones": [
+      "Amazon Inspector.",
+      "AWS Firewall Manager.",
+      "AWS Artifact.",
+      "Amazon Detective."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Firewall Manager administra de forma centralizada las reglas de WAF, Shield Advanced, grupos de seguridad y otros cortafuegos en las cuentas de una organización. Inspector busca vulnerabilidades, Artifact ofrece informes y Detective investiga incidentes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/waf/latest/developerguide/fms-chapter.html"
+    ]
+  },
+  {
+    "id": "firewall-manager-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Cuál es el requisito previo para poder usar AWS Firewall Manager?",
+    "opciones": [
+      "Tener contratado un plan de soporte de nivel Enterprise.",
+      "Usar una única región de AWS en todas las cuentas.",
+      "Tener desactivado AWS Config en todas las cuentas miembro.",
+      "Que las cuentas pertenezcan a una organización de AWS Organizations."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Firewall Manager funciona sobre AWS Organizations con todas las funciones activadas, y además requiere AWS Config en las cuentas para descubrir los recursos. No depende del plan de soporte ni limita las regiones.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/security/use-aws-firewall-manager-to-deploy-protection-at-scale-in-aws-organizations/"
+    ]
+  },
+  {
+    "id": "firewall-manager-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una organización exige que todo balanceador de aplicación, incluidos los que se creen en el futuro en cualquier cuenta, tenga asociadas las reglas corporativas de AWS WAF. ¿Qué solución lo garantiza con menos esfuerzo?",
+    "opciones": [
+      "Una política de AWS WAF en Firewall Manager con corrección automática.",
+      "Un procedimiento escrito para que cada equipo asocie las reglas a mano.",
+      "Una función Lambda en cada cuenta que revise los balanceadores cada hora.",
+      "Una SCP que deniegue la creación de balanceadores de aplicación."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una política de Firewall Manager aplica el conjunto de reglas a los recursos del alcance y, con la corrección automática, también a los que se creen después. Los procesos manuales o el código propio no escalan, y una SCP impediría crear los balanceadores.",
+    "fuentes": [
+      "https://aws.amazon.com/firewall-manager/faqs/"
+    ]
+  },
+  {
+    "id": "firewall-manager-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "El equipo de seguridad quiere localizar en todas las cuentas los grupos de seguridad que permiten SSH desde cualquier dirección IP y corregirlos. ¿Qué opción de AWS Firewall Manager es la adecuada?",
+    "opciones": [
+      "Una política de Shield Advanced para toda la organización.",
+      "Una política de DNS Firewall de Route 53 Resolver.",
+      "Una política de auditoría del contenido de los grupos de seguridad.",
+      "Una política de AWS WAF con un grupo de reglas gestionado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las políticas de grupos de seguridad de Firewall Manager pueden auditar las reglas de los grupos existentes frente a un criterio (por ejemplo, sin puertos de administración abiertos a internet) y corregir los que no cumplen.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/waf/latest/developerguide/fms-chapter.html"
+    ]
+  },
+  {
+    "id": "firewall-manager-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Tras activar AWS Firewall Manager, una política no detecta los recursos de varias cuentas miembro. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Que esas cuentas no tienen un plan de soporte de pago.",
+      "Que AWS Config no está activado en esas cuentas para registrar los recursos.",
+      "Que las cuentas tienen activado AWS CloudTrail.",
+      "Que la política se creó desde la cuenta de administrador de Firewall Manager."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Firewall Manager se apoya en AWS Config para descubrir los recursos y evaluar su cumplimiento; si Config no graba los tipos de recurso necesarios en una cuenta, la política no los ve. Crear la política desde la cuenta de administrador es lo correcto.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/security/use-aws-firewall-manager-to-deploy-protection-at-scale-in-aws-organizations/"
+    ]
+  },
+  {
+    "id": "firewall-manager-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización quiere que la inspección de tráfico con AWS Network Firewall se despliegue con las mismas reglas en todas las VPC de sus cuentas de producción, sin que los equipos puedan desactivarla. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Compartir un único cortafuegos con todas las cuentas mediante AWS RAM.",
+      "Un StackSet de CloudFormation que cada equipo pueda modificar.",
+      "Una regla de AWS Config que avise cuando falte el cortafuegos.",
+      "Una política de Network Firewall en Firewall Manager dirigida a la OU de producción."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Firewall Manager admite políticas de Network Firewall que despliegan los cortafuegos y sus grupos de reglas en las VPC del alcance, y los equipos de las cuentas no pueden retirar lo que impone la política. Una regla de Config solo avisaría.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/security/enforce-your-aws-network-firewall-protections-at-scale-with-aws-firewall-manager/"
+    ]
+  }
+]

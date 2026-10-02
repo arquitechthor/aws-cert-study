@@ -1,0 +1,134 @@
+[
+  {
+    "id": "directory-service-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa quiere ejecutar en AWS aplicaciones de Windows que dependen de Microsoft Active Directory, sin instalar ni mantener controladores de dominio. ¿Qué servicio debe usar?",
+    "opciones": [
+      "Amazon Cognito.",
+      "AWS IAM.",
+      "AWS Directory Service.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Directory Service ofrece Active Directory gestionado en AWS. Cognito es para los usuarios de aplicaciones web y móviles, IAM gestiona permisos sobre recursos de AWS y Artifact ofrece informes de cumplimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html"
+    ]
+  },
+  {
+    "id": "directory-service-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Cuál de estas opciones de AWS Directory Service proporciona un Microsoft Active Directory real, gestionado por AWS y desplegado en varias AZ?",
+    "opciones": [
+      "AWS Managed Microsoft AD.",
+      "AD Connector.",
+      "Simple AD.",
+      "Amazon Cognito user pools."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS Managed Microsoft AD ejecuta Active Directory sobre Windows Server con controladores en dos AZ. AD Connector es un proxy hacia un directorio existente, Simple AD se basa en Samba y Cognito no es un directorio corporativo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/simple-ad-availability-change.html"
+    ]
+  },
+  {
+    "id": "directory-service-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa quiere que sus empleados usen las credenciales de su Active Directory local para acceder a servicios de AWS, y su política prohíbe copiar o sincronizar las identidades en la nube. ¿Qué opción cumple el requisito?",
+    "opciones": [
+      "AWS Managed Microsoft AD con una confianza bidireccional.",
+      "AD Connector.",
+      "Simple AD con los usuarios recreados.",
+      "Un grupo de usuarios de Amazon Cognito."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "AD Connector actúa como proxy hacia el directorio local y no almacena ni replica datos del directorio en AWS. AWS Managed Microsoft AD crea un directorio en la nube, y Simple AD o Cognito obligarían a crear las identidades de nuevo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_connector_best_practices.html"
+    ]
+  },
+  {
+    "id": "directory-service-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa usa AD Connector para autenticar a sus usuarios contra el Active Directory del centro de datos a través de una única VPN. ¿Qué riesgo de disponibilidad tiene este diseño?",
+    "opciones": [
+      "Que AD Connector pierde los datos del directorio si se reinicia.",
+      "Que AD Connector solo admite 500 usuarios simultáneos.",
+      "Que las contraseñas caducan cada vez que se corta la conexión.",
+      "Que, si cae la conexión con el centro de datos, los usuarios no pueden autenticarse."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "AD Connector reenvía cada petición al directorio local, así que depende por completo de la conectividad con el centro de datos. Se mitiga con conexiones redundantes. No guarda datos del directorio, así que no puede perderlos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_connector_best_practices.html"
+    ]
+  },
+  {
+    "id": "directory-service-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa quiere desplegar recursos de Windows en AWS en un dominio propio de la nube, pero que los usuarios sigan gestionándose en el Active Directory local y entren con sus credenciales actuales. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "AWS Managed Microsoft AD como bosque de recursos, con una confianza hacia el AD local.",
+      "Simple AD, sincronizando los usuarios del dominio local con un script nocturno.",
+      "AD Connector en cada VPC, con una copia local de los usuarios del dominio.",
+      "Un directorio de IAM Identity Center con los usuarios creados a mano."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS Managed Microsoft AD admite relaciones de confianza: actúa como bosque de recursos en AWS mientras las identidades permanecen en el dominio local. Simple AD no admite confianzas y AD Connector no crea un dominio en la nube.",
+    "fuentes": [
+      "https://aws.amazon.com/directoryservice/pricing/"
+    ]
+  },
+  {
+    "id": "directory-service-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Al migrar a AWS, una empresa quiere que sus bases de datos SQL Server en Amazon RDS acepten la autenticación de Windows de los usuarios del dominio. ¿Qué necesita?",
+    "opciones": [
+      "Un grupo de usuarios de Amazon Cognito federado con el dominio.",
+      "Un rol de IAM por cada usuario del dominio.",
+      "Un directorio de AWS Managed Microsoft AD al que se una la instancia de RDS.",
+      "Un secreto de Secrets Manager por cada usuario del dominio."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "RDS para SQL Server admite la autenticación de Windows uniendo la instancia a un dominio de AWS Managed Microsoft AD, que puede tener una confianza con el dominio local. Cognito e IAM no proporcionan autenticación Kerberos de Active Directory.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html"
+    ]
+  }
+]

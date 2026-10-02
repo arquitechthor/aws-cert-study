@@ -133,5 +133,115 @@
     "fuentes": [
       "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
     ]
+  },
+  {
+    "id": "iam-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Cuál de estas prácticas recomienda AWS para el usuario raíz de una cuenta?",
+    "opciones": [
+      "Usarlo para las tareas diarias de administración.",
+      "Protegerlo con MFA y usarlo solo para las pocas tareas que lo requieren.",
+      "Crear claves de acceso para automatizar con él.",
+      "Compartir sus credenciales con el equipo de operaciones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El usuario raíz tiene acceso total y no se puede limitar con políticas de IAM: debe protegerse con MFA, no tener claves de acceso y usarse solo cuando es imprescindible. Para el día a día se usan identidades con los permisos justos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ]
+  },
+  {
+    "id": "iam-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué significa aplicar el principio de mínimo privilegio en AWS IAM?",
+    "opciones": [
+      "Conceder a todos los usuarios acceso de administrador para evitar bloqueos.",
+      "Usar una única identidad compartida para toda la empresa.",
+      "Conceder solo los permisos necesarios para realizar una tarea, y ninguno más.",
+      "Denegar todo el acceso salvo al usuario raíz."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El mínimo privilegio consiste en dar a cada identidad únicamente los permisos que necesita. Reduce el daño posible de un error o de unas credenciales comprometidas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ]
+  },
+  {
+    "id": "iam-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué coste tiene usar AWS IAM para crear usuarios, grupos, roles y políticas?",
+    "opciones": [
+      "Ninguno: IAM se ofrece sin coste adicional.",
+      "Una cuota mensual por cada usuario creado.",
+      "Un cargo por cada política asociada.",
+      "Un cargo por cada inicio de sesión en la consola."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "IAM es una función de la cuenta de AWS sin coste adicional. Solo se paga el uso de los demás servicios al que acceden esas identidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html"
+    ]
+  },
+  {
+    "id": "iam-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una función Lambda debe escribir en una tabla de DynamoDB. ¿Cuál es la forma correcta de darle permiso?",
+    "opciones": [
+      "Guardar las claves de acceso de un usuario de IAM en las variables de entorno de la función.",
+      "Incluir las claves de acceso en el código y cifrarlas con base64.",
+      "Usar las credenciales del usuario raíz de la cuenta.",
+      "Asociar a la función un rol de ejecución con una política que permita esas acciones sobre la tabla."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las funciones Lambda asumen su rol de ejecución y reciben credenciales temporales de forma automática. Guardar claves de larga duración en variables de entorno o en el código las expone y obliga a rotarlas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html"
+    ]
+  },
+  {
+    "id": "iam-011",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una llamada a la API desde una aplicación devuelve AccessDenied. La política de identidad del rol permite la acción. ¿Qué otra causa debe revisar el desarrollador?",
+    "opciones": [
+      "Que la aplicación use la versión más reciente del SDK de AWS para su lenguaje.",
+      "Que haya una denegación explícita en otra política (de recurso, límite de permisos o SCP).",
+      "Que el rol tenga menos de diez políticas gestionadas asociadas.",
+      "Que la llamada se haga desde la región us-east-1, donde se aloja IAM."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "En la evaluación de políticas, una denegación explícita gana siempre, venga de una política de identidad, de recurso, de un límite de permisos o de una SCP. Además, sin un permiso explícito la respuesta por defecto es denegar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    ]
   }
 ]

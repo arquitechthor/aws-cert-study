@@ -100,7 +100,7 @@
         <li><strong>Claves multirregión:</strong> réplicas con el mismo material en varias regiones
           para cifrar en una y descifrar en otra sin volver a cifrar.</li>
         <li><strong>Almacenes de claves personalizados:</strong> respaldados por un clúster de
-          <a href="../servicio.html?id=cloudhsm">CloudHSM</a> propio o por un gestor de claves externo (<abbr class="sigla" data-s="XKS" data-en="External Key Store" data-es="almacén de claves externo a AWS" tabindex="0">XKS</abbr>).</li>
+          <a href="cloudhsm.html">CloudHSM</a> propio o por un gestor de claves externo (<abbr class="sigla" data-s="XKS" data-en="External Key Store" data-es="almacén de claves externo a AWS" tabindex="0">XKS</abbr>).</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -115,7 +115,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Si necesitas un <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> de un solo inquilino con control exclusivo y acceso por <abbr class="sigla sigla-1" data-s="PKCS" data-en="Public-Key Cryptography Standards" data-es="estándares de criptografía de clave pública" tabindex="0">PKCS<span class="sigla-exp"> (Public-Key Cryptography Standards: estándares de criptografía de clave pública)</span></abbr>#11 o <abbr class="sigla sigla-1" data-s="JCE" data-en="Java Cryptography Extension" data-es="interfaz criptográfica de Java" tabindex="0">JCE<span class="sigla-exp"> (Java Cryptography Extension: interfaz criptográfica de Java)</span></abbr>:
-          <a href="../servicio.html?id=cloudhsm">CloudHSM</a>.</li>
+          <a href="cloudhsm.html">CloudHSM</a>.</li>
         <li>Para guardar contraseñas o claves de <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>: <a href="secrets-manager.html">Secrets Manager</a> (que usa <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> por debajo).</li>
         <li>Para certificados <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>: <a href="acm.html">AWS Certificate Manager</a>.</li>
       </ul>
@@ -126,7 +126,7 @@
           <thead><tr><th>Necesidad</th><th>Servicio adecuado</th></tr></thead>
           <tbody>
             <tr><td>Claves gestionadas e integradas con los servicios de AWS</td><td><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></td></tr>
-            <tr><td><abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> dedicado bajo tu control exclusivo</td><td><a href="../servicio.html?id=cloudhsm">CloudHSM</a></td></tr>
+            <tr><td><abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> dedicado bajo tu control exclusivo</td><td><a href="cloudhsm.html">CloudHSM</a></td></tr>
             <tr><td>Guardar y rotar secretos (contraseñas, tokens)</td><td><a href="secrets-manager.html">Secrets Manager</a></td></tr>
             <tr><td>Certificados SSL/TLS</td><td><a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a></td></tr>
             <tr><td>Parámetros de configuración, algunos cifrados</td><td><a href="systems-manager.html">Systems Manager</a> Parameter Store</td></tr>
@@ -155,7 +155,7 @@
         <li><strong>"Controlar la rotación, la política o compartir la clave con otra cuenta"</strong>: clave gestionada por el cliente, no gestionada por AWS.</li>
         <li><strong>"Cifrar un fichero de más de 4 KB con <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr>"</strong>: cifrado de sobre con <code>GenerateDataKey</code>.</li>
         <li><strong>"Borrar la clave de inmediato"</strong>: no se puede; espera de 7 a 30 días (desactivarla sí es inmediato).</li>
-        <li><strong>"<abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> de un solo inquilino"</strong> o <strong>"<abbr class="sigla sigla-1" data-s="FIPS" data-en="Federal Information Processing Standards" data-es="normas de seguridad del gobierno de EE. UU." tabindex="0">FIPS<span class="sigla-exp"> (Federal Information Processing Standards: normas de seguridad del gobierno de EE. UU.)</span></abbr> 140 nivel 3 bajo control exclusivo"</strong>: <a href="../servicio.html?id=cloudhsm">CloudHSM</a>.</li>
+        <li><strong>"<abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> de un solo inquilino"</strong> o <strong>"<abbr class="sigla sigla-1" data-s="FIPS" data-en="Federal Information Processing Standards" data-es="normas de seguridad del gobierno de EE. UU." tabindex="0">FIPS<span class="sigla-exp"> (Federal Information Processing Standards: normas de seguridad del gobierno de EE. UU.)</span></abbr> 140 nivel 3 bajo control exclusivo"</strong>: <a href="cloudhsm.html">CloudHSM</a>.</li>
         <li><strong>"AccessDenied al descifrar aunque <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> lo permite"</strong>: falta el permiso en la política de la clave.</li>
         <li><strong>"Descifrar en otra región sin recifrar"</strong>: clave multirregión.</li>
         <li><strong>"Demasiadas llamadas a <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> desde <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: S3 Bucket Keys.</li>

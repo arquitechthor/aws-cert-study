@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Shield — Apuntes AWS</title>
+<meta name="description" content="Protección gestionada frente a ataques DDoS: Shield Standard, automática y gratuita para todos los clientes, y Shield Advanced, de pago, con mitigación avanzada, equipo de respuesta y protección de costes. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/shield.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Shield — Apuntes AWS">
+<meta property="og:description" content="Protección gestionada frente a ataques DDoS: Shield Standard, automática y gratuita para todos los clientes, y Shield Advanced, de pago, con mitigación avanzada, equipo de respuesta y protección de costes.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/shield.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/shield.svg" alt="" width="56" height="56"><span>AWS Shield</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Protege contra ataques <abbr class="sigla sigla-1" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS<span class="sigla-exp"> (Distributed Denial of Service: ataque que satura un servicio desde muchos orígenes)</span></abbr>, gratis en capa básica y con equipo de respuesta en avanzada</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/waf/" target="_blank" rel="noopener">Documentación de AWS Shield ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Shield protege las aplicaciones frente a ataques de <strong>denegación de servicio distribuida</strong>
+        (<abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr>), que intentan tumbarlas saturándolas de tráfico. Tiene dos niveles. <strong>Shield Standard</strong>
+        está <strong>activado para todos los clientes, sin coste</strong>, y mitiga los ataques más comunes de red y
+        transporte. <strong>Shield Advanced</strong> es un servicio <strong>de pago</strong> con detección y mitigación
+        más sofisticadas, acceso a un equipo de expertos y protección frente a los costes del ataque.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Shield Standard:</strong> automático y siempre activo. Protege frente a los ataques frecuentes de
+          las capas 3 y 4 (inundaciones SYN y <abbr class="sigla sigla-1" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP<span class="sigla-exp"> (User Datagram Protocol: protocolo de transporte sin conexión)</span></abbr>, ataques de reflexión). Rinde al máximo con <a href="cloudfront.html">CloudFront</a> y Route
+          53.</li>
+        <li><strong>Shield Advanced</strong> añade:
+          <ul>
+            <li><strong>Recursos protegidos:</strong> distribuciones de CloudFront, zonas alojadas de <a href="route-53.html">Route 53</a>,
+              aceleradores de <a href="../servicio.html?id=global-accelerator">Global Accelerator</a>, balanceadores de <a href="elb.html"><abbr class="sigla sigla-1" data-s="ELB" data-en="Elastic Load Balancing" tabindex="0">ELB<span class="sigla-exp"> (Elastic Load Balancing)</span></abbr></a> y direcciones <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> elásticas de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>.</li>
+            <li><strong>Mitigación automática en la capa de aplicación</strong> (capa 7): crea reglas de <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> durante el
+              ataque.</li>
+            <li><strong>Equipo de respuesta de Shield</strong> (<abbr class="sigla" data-s="SRT" data-en="Shield Response Team" data-es="equipo de respuesta de AWS Shield" tabindex="0">SRT</abbr>): expertos disponibles a todas horas durante un
+              ataque. Para contactarlos hace falta un plan de soporte de nivel Business o superior.</li>
+            <li><strong>Protección de costes:</strong> AWS abona los cargos por el escalado que provoque el
+              ataque.</li>
+            <li><strong>Visibilidad:</strong> métricas, avisos e informes de los eventos.</li>
+            <li><strong><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr> y <a href="firewall-manager.html">Firewall Manager</a></strong> incluidos para los recursos protegidos.</li>
+            <li><strong>Intervención proactiva:</strong> el equipo de respuesta te llama si una comprobación de estado
+              de Route 53 falla durante un ataque.</li>
+          </ul>
+        </li>
+        <li><strong>Suscripción:</strong> Shield Advanced exige un compromiso de <strong>un año</strong>, con una cuota
+          mensual que cubre toda la organización si se paga de forma unificada.</li>
+        <li><strong>Buenas prácticas de resiliencia frente a <abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr>:</strong> servir a través de CloudFront y Route 53,
+          escalar automáticamente, reducir la superficie expuesta y usar <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr> con reglas de limitación de
+          peticiones.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Shield Standard: la protección de base de cualquier aplicación, sin hacer nada.</li>
+        <li>Shield Advanced: sitios de alta visibilidad o que sufren ataques frecuentes (comercio, juegos, medios,
+          finanzas).</li>
+        <li>Empresas que no pueden asumir la factura de un escalado masivo provocado por un ataque.</li>
+        <li>Organizaciones que quieren apoyo experto durante el ataque.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para filtrar peticiones web maliciosas (inyección <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>, robots): <a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>.</li>
+        <li>Para inspeccionar el tráfico de red de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>: <a href="network-firewall.html">Network Firewall</a>.</li>
+        <li>Para detectar cuentas o instancias comprometidas: <a href="guardduty.html">GuardDuty</a>.</li>
+        <li>Shield Advanced no compensa en aplicaciones pequeñas o internas: su cuota es alta y Standard ya
+          protege.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>Shield Standard</th><th>Shield Advanced</th></tr></thead>
+          <tbody>
+            <tr><td>Coste</td><td>Gratuito, automático</td><td>Cuota mensual, compromiso de un año</td></tr>
+            <tr><td>Ataques cubiertos</td><td>Comunes de las capas 3 y 4</td><td>Capas 3, 4 y 7, ataques grandes y sofisticados</td></tr>
+            <tr><td>Equipo de respuesta</td><td>No</td><td>Sí, a todas horas</td></tr>
+            <tr><td>Protección de costes</td><td>No</td><td>Sí</td></tr>
+            <tr><td>Informes y avisos de ataques</td><td>No</td><td>Sí</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Frente a <strong><a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a></strong>: Shield se ocupa del volumen (<abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr>); <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr>, del contenido de las peticiones web.
+        Se usan juntos.</p>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Shield Standard no tiene coste. Shield Advanced cobra una <strong>cuota mensual fija</strong> con compromiso
+        anual, más un cargo por la <strong>transferencia de datos de salida</strong> de los recursos protegidos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>La mitigación ocurre en el borde de la red de AWS, antes de que el tráfico llegue a tus recursos.</li>
+        <li>Con <a href="firewall-manager.html">Firewall Manager</a> se aplica Shield Advanced a todos los recursos de la organización.</li>
+        <li>Si hay varios recursos en cadena (<a href="cloudfront.html">CloudFront</a> delante de un balanceador), se protege el punto de
+          entrada.</li>
+        <li>Shield Advanced publica métricas en <a href="cloudwatch.html">CloudWatch</a> para crear alarmas sobre ataques.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"<abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr>"</strong>: Shield.</li>
+        <li><strong>"Protección frente a <abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> sin coste adicional"</strong>: Shield Standard, que ya está
+          activo.</li>
+        <li><strong>"Acceso a expertos durante el ataque"</strong>, "protección frente a los costes del escalado" o
+          "ataques sofisticados": Shield Advanced.</li>
+        <li><strong>"Inyección <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> o <em>cross-site scripting</em>"</strong>: <a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>, no Shield.</li>
+        <li><strong>"Aplicar la protección en todas las cuentas"</strong>: <a href="firewall-manager.html">Firewall Manager</a>.</li>
+        <li><strong>Para resistir mejor un <abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr>:</strong> <a href="cloudfront.html">CloudFront</a> y <a href="route-53.html">Route 53</a> delante de la aplicación.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="shield"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/waf/latest/developerguide/shield-chapter.html" target="_blank" rel="noopener">AWS Shield</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/shield/getting-started/" target="_blank" rel="noopener">Getting started with AWS Shield (comparativa de niveles)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/shield/faqs/" target="_blank" rel="noopener">AWS Shield FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/waf/latest/developerguide/what-is-aws-waf.html" target="_blank" rel="noopener">What are AWS WAF, AWS Shield Advanced and AWS Firewall Manager?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/network.html" target="_blank" rel="noopener">Infrastructure OU – Network account (AWS SRA)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

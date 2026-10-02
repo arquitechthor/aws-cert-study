@@ -1,0 +1,112 @@
+[
+  {
+    "id": "audit-manager-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Antes de cada auditoría de PCI DSS, un equipo dedica semanas a reunir capturas de pantalla y exportaciones de configuración de decenas de cuentas. La empresa ya usa AWS Audit Manager. ¿Cómo reduce ese trabajo?",
+    "opciones": [
+      "Con un trabajo de descubrimiento de Amazon Macie sobre todos los buckets de la organización.",
+      "Con una evaluación de Audit Manager basada en el marco de PCI DSS, que recoge las evidencias de forma continua.",
+      "Descargando el informe de cumplimiento de PCI DSS de AWS desde AWS Artifact.",
+      "Con una regla de EventBridge que copie los logs de CloudTrail a un bucket central."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Audit Manager asocia evidencias automáticas (AWS Config, Security Hub, CloudTrail y llamadas a las API) a los controles del marco elegido y las mantiene al día. El informe de Artifact acredita el cumplimiento de AWS, no el del entorno del cliente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/audit-manager/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "audit-manager-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un auditor pide dos cosas: el informe SOC 2 del proveedor de nube y las pruebas de que los recursos de la empresa cumplen sus propios controles. ¿Qué servicios corresponden a cada una?",
+    "opciones": [
+      "AWS Config para el informe SOC 2 y AWS Artifact para las pruebas de los recursos propios.",
+      "Amazon Inspector para el informe SOC 2 y AWS CloudTrail para las pruebas de los recursos propios.",
+      "AWS Artifact para el informe SOC 2 de AWS y AWS Audit Manager para las evidencias del entorno propio.",
+      "AWS Audit Manager para el informe SOC 2 de AWS y AWS Artifact para las evidencias del entorno propio."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Artifact ofrece los informes de auditoría de AWS como proveedor. Audit Manager recopila las evidencias del uso que el cliente hace de AWS, organizadas por controles. Es la misma división que marca la responsabilidad compartida.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/audit-manager/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "audit-manager-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa que nunca ha usado AWS Audit Manager quiere empezar hoy a evaluar de forma continua sus recursos frente a un marco como HIPAA en todas sus cuentas. ¿Qué opción indica AWS?",
+    "opciones": [
+      "Activar Audit Manager en la cuenta de administración y delegar su gestión.",
+      "Abrir un caso en AWS Support para que habilite Audit Manager en la organización.",
+      "Crear una evaluación de Audit Manager en otra región donde siga disponible.",
+      "Desplegar paquetes de conformidad de AWS Config en la organización."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Audit Manager no admite clientes nuevos desde el 30/04/2026, ni se puede extender a cuentas o regiones nuevas. AWS remite a los paquetes de conformidad de AWS Config, que despliegan reglas por marco en varias cuentas y regiones, aunque no cubren todos los marcos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/audit-manager/latest/userguide/audit-manager-availability-change.html"
+    ]
+  },
+  {
+    "id": "audit-manager-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "En una evaluación de AWS Audit Manager hay controles, como la existencia de un plan de formación en seguridad, que no se pueden verificar consultando la configuración de AWS. ¿Cómo se cubren?",
+    "opciones": [
+      "Subiendo evidencias manuales, como el documento del plan, y asociándolas al control.",
+      "Creando una regla personalizada de AWS Config que busque el documento en S3.",
+      "Marcando el control como no aplicable para que no aparezca en el informe.",
+      "Activando Amazon Macie para que clasifique los documentos de formación."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Audit Manager admite evidencias manuales para los controles que no se pueden comprobar automáticamente: se sube el documento y queda vinculado al control. Excluir el control dejaría un hueco ante el auditor.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/audit-manager/latest/userguide/using-auditmanager.html"
+    ]
+  },
+  {
+    "id": "audit-manager-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Cuál de estas afirmaciones describe correctamente el alcance de AWS Audit Manager?",
+    "opciones": [
+      "Corrige automáticamente los recursos que incumplen un control del marco elegido.",
+      "Reúne y ordena las evidencias, pero no certifica por sí mismo que la empresa cumpla la norma.",
+      "Sustituye al auditor externo al emitir un certificado oficial de cumplimiento.",
+      "Solo recoge evidencias de la infraestructura física de los centros de datos de AWS."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Audit Manager automatiza la recogida y la organización de evidencias. La valoración de si se cumple una norma corresponde al auditor, y la corrección de los recursos, a servicios como AWS Config o Systems Manager.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/audit-manager/latest/userguide/what-is.html"
+    ]
+  }
+]

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CloudHSM — Apuntes AWS</title>
+<meta name="description" content="Módulos de seguridad de hardware dedicados a un solo cliente, validados según FIPS 140 nivel 3, en los que tú controlas por completo las claves criptográficas. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cloudhsm.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CloudHSM — Apuntes AWS">
+<meta property="og:description" content="Módulos de seguridad de hardware dedicados a un solo cliente, validados según FIPS 140 nivel 3, en los que tú controlas por completo las claves criptográficas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cloudhsm.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/cloudhsm.svg" alt="" width="56" height="56"><span>AWS CloudHSM</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Módulos de hardware dedicados de un solo cliente para guardar tus claves criptográficas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cloudhsm/" target="_blank" rel="noopener">Documentación de AWS CloudHSM ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS CloudHSM proporciona <strong>módulos de seguridad de hardware</strong> (<abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>) en la nube
+        <strong>dedicados a un solo cliente</strong>. Un <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> es un dispositivo físico que genera y guarda claves
+        criptográficas y hace operaciones con ellas sin que las claves salgan de él. Con CloudHSM, <strong>solo tú
+        tienes acceso a las claves</strong>: AWS gestiona el hardware, pero no puede verlas ni usarlas. Es la opción
+        cuando una norma o un contrato exige <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> de uso exclusivo.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Un solo inquilino</strong> (<em>single-tenant</em>): el <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> no se comparte con otros clientes, a
+          diferencia de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>, que usa <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> compartidos.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="FIPS" data-en="Federal Information Processing Standards" data-es="normas de seguridad del gobierno de EE. UU." tabindex="0">FIPS<span class="sigla-exp"> (Federal Information Processing Standards: normas de seguridad del gobierno de EE. UU.)</span></abbr> 140 nivel 3:</strong> los <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> están validados en ese nivel (140-2 o 140-3) cuando el clúster
+          funciona en modo <abbr class="sigla" data-s="FIPS" data-en="Federal Information Processing Standards" data-es="normas de seguridad del gobierno de EE. UU." tabindex="0">FIPS</abbr>. También hay un modo no <abbr class="sigla" data-s="FIPS" data-en="Federal Information Processing Standards" data-es="normas de seguridad del gobierno de EE. UU." tabindex="0">FIPS</abbr> con más algoritmos.</li>
+        <li><strong>Clúster:</strong> un conjunto de <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> sincronizados. Para alta disponibilidad se colocan
+          <strong>al menos dos <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> en distintas <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr></strong>; CloudHSM replica las claves entre ellos.</li>
+        <li><strong>Dentro de tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>:</strong> cada <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> tiene una interfaz de red en una subred tuya.</li>
+        <li><strong>Usuarios del <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>:</strong> los gestionas tú dentro del propio <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>, <strong>fuera de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a></strong>.
+          <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> solo controla quién puede crear o borrar clústeres. Si pierdes las credenciales de los usuarios del <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>,
+          AWS no puede recuperarlas.</li>
+        <li><strong>Interfaces estándar:</strong> <abbr class="sigla sigla-1" data-s="PKCS" data-en="Public-Key Cryptography Standards" data-es="estándares de criptografía de clave pública" tabindex="0">PKCS<span class="sigla-exp"> (Public-Key Cryptography Standards: estándares de criptografía de clave pública)</span></abbr> #11, <abbr class="sigla sigla-1" data-s="JCE" data-en="Java Cryptography Extension" data-es="interfaz criptográfica de Java" tabindex="0">JCE<span class="sigla-exp"> (Java Cryptography Extension: interfaz criptográfica de Java)</span></abbr>, CNG y KSP, y OpenSSL, lo que facilita migrar
+          aplicaciones que ya usaban un <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>.</li>
+        <li><strong>Copias de seguridad:</strong> automáticas y cifradas; se pueden copiar a otra región.</li>
+        <li><strong>Almacén de claves personalizado de <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr>:</strong> <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> puede usar un clúster de CloudHSM para
+          guardar el material de sus claves. Así usas las integraciones de <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> con los servicios de AWS, pero las
+          claves viven en tus <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>.</li>
+        <li><strong>Claves simétricas y asimétricas,</strong> y posibilidad de exportarlas si lo decides.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Requisitos normativos o contractuales de <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> dedicado y validación <abbr class="sigla" data-s="FIPS" data-en="Federal Information Processing Standards" data-es="normas de seguridad del gobierno de EE. UU." tabindex="0">FIPS</abbr> 140 nivel 3.</li>
+        <li><strong>Descarga de <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>:</strong> la clave privada del servidor web se queda en el <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>.</li>
+        <li>Clave privada de una <strong>autoridad de certificación</strong> propia.</li>
+        <li><strong>Cifrado transparente de datos</strong> de bases de datos Oracle.</li>
+        <li>Firma de código o de documentos, y migración de aplicaciones que usaban un <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> local.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para cifrar datos en los servicios de AWS sin requisitos especiales: <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a>, más sencillo, más barato e
+          integrado.</li>
+        <li>Para certificados <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> públicos gestionados: <a href="acm.html"><abbr class="sigla sigla-1" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM<span class="sigla-exp"> (AWS Certificate Manager)</span></abbr></a>.</li>
+        <li>Para guardar contraseñas o secretos de aplicaciones: <a href="secrets-manager.html">Secrets Manager</a>.</li>
+        <li>Si no hay equipo para operar <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> (usuarios, copias, capacidad): la responsabilidad es mayor que en
+          <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th><a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a></th><th>CloudHSM</th></tr></thead>
+          <tbody>
+            <tr><td><abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr></td><td>Compartidos entre clientes, gestionados por AWS</td><td>Dedicados a un solo cliente</td></tr>
+            <tr><td>Quién controla las claves</td><td>Tú, mediante políticas; AWS opera el servicio</td><td>Solo tú; AWS no tiene acceso</td></tr>
+            <tr><td>Control de acceso</td><td><a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> y políticas de clave</td><td>Usuarios propios del <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr></td></tr>
+            <tr><td>Integración con servicios de AWS</td><td>Nativa</td><td>A través de un almacén de claves personalizado de <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></td></tr>
+            <tr><td>Alta disponibilidad</td><td>Gestionada por AWS</td><td>La diseñas tú: varios <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> en varias <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr></td></tr>
+            <tr><td>Precio</td><td>Por clave y por petición</td><td>Por hora de cada <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por hora de cada <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr></strong> en ejecución, sin compromiso. Un clúster con alta disponibilidad
+        necesita al menos dos, así que el coste fijo es notablemente mayor que el de <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>AWS vigila la salud del hardware y la red, pero <strong>no tiene acceso a tus claves</strong>.</li>
+        <li>La comunicación entre la aplicación y el <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> va cifrada de extremo a extremo.</li>
+        <li>Con dos o más <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> en distintas <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>, el cliente reparte la carga y sigue funcionando si cae uno.</li>
+        <li>Con un solo <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>, si falla, las claves creadas desde la última copia se pierden.</li>
+        <li>Las llamadas de gestión quedan en <a href="cloudtrail.html">CloudTrail</a>; las operaciones dentro del <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr>, en los registros de
+          auditoría del <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> (<a href="cloudwatch.html">CloudWatch</a> Logs).</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"<abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> dedicado"</strong>, "de un solo inquilino" o "control exclusivo de las claves": CloudHSM.</li>
+        <li><strong>"<abbr class="sigla" data-s="FIPS" data-en="Federal Information Processing Standards" data-es="normas de seguridad del gobierno de EE. UU." tabindex="0">FIPS</abbr> 140 nivel 3"</strong>: CloudHSM.</li>
+        <li><strong>"Usar esas claves con los servicios de AWS"</strong>: almacén de claves personalizado de <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a>
+          respaldado por CloudHSM.</li>
+        <li><strong>"Menor esfuerzo operativo para cifrar"</strong>, sin requisitos de <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> dedicado: <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr>.</li>
+        <li><strong>"Alta disponibilidad"</strong>: <abbr class="sigla" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM</abbr> en al menos dos <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>.</li>
+        <li><strong>"Descargar el <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> manteniendo la clave privada en hardware"</strong>: CloudHSM.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cloudhsm"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/cloudhsm/latest/userguide/introduction.html" target="_blank" rel="noopener">What is AWS CloudHSM?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cloudhsm/latest/userguide/clusters.html" target="_blank" rel="noopener">AWS CloudHSM clusters</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/keystore-cloudhsm.html" target="_blank" rel="noopener">AWS CloudHSM key stores (AWS KMS)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-store-overview.html" target="_blank" rel="noopener">Key stores (AWS KMS)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

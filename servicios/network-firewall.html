@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Network Firewall — Apuntes AWS</title>
+<meta name="description" content="Cortafuegos de red gestionado para las VPC, con reglas sin estado y con estado compatibles con Suricata, filtrado por dominios y prevención de intrusiones. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/network-firewall.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Network Firewall — Apuntes AWS">
+<meta property="og:description" content="Cortafuegos de red gestionado para las VPC, con reglas sin estado y con estado compatibles con Suricata, filtrado por dominios y prevención de intrusiones.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/network-firewall.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/network-firewall.svg" alt="" width="56" height="56"><span>AWS Network Firewall</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Cortafuegos gestionado con inspección de paquetes e <abbr class="sigla sigla-1" data-s="IPS" data-en="Intrusion Prevention System" data-es="sistema que detecta y bloquea intrusiones en la red" tabindex="0">IPS<span class="sigla-exp"> (Intrusion Prevention System: sistema que detecta y bloquea intrusiones en la red)</span></abbr> para el tráfico de tu <abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/network-firewall/" target="_blank" rel="noopener">Documentación de AWS Network Firewall ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Network Firewall es un <strong>cortafuegos de red gestionado</strong> para tus <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>. Inspecciona el tráfico
+        que entra, sale o circula entre redes, y lo permite, lo bloquea o avisa según tus reglas. Va más allá de los
+        grupos de seguridad y las <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr> de red: hace <strong>inspección profunda de paquetes</strong>, filtra por
+        <strong>nombre de dominio</strong> y actúa como sistema de <strong>prevención de intrusiones</strong>. AWS
+        gestiona la infraestructura, que escala sola con el tráfico.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Cortafuegos y punto de enlace:</strong> el cortafuegos se despliega en una <strong>subred
+          dedicada</strong> por cada <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>. Para que inspeccione, hay que <strong>dirigir el tráfico</strong> hacia su
+          punto de enlace con las tablas de rutas de la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>.</li>
+        <li><strong>Política de cortafuegos:</strong> el conjunto de grupos de reglas y acciones por defecto; se puede
+          compartir entre varios cortafuegos.</li>
+        <li><strong>Reglas sin estado:</strong> evalúan cada paquete por separado (<abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr>, puerto, protocolo), como una <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr>
+          de red, con prioridad numérica.</li>
+        <li><strong>Reglas con estado:</strong> evalúan el paquete dentro de su conexión. Usan el motor de
+          <strong>Suricata</strong>, de código abierto. Tres formas de escribirlas: reglas estándar sencillas,
+          <strong>listas de dominios</strong> y reglas en sintaxis de Suricata.</li>
+        <li><strong>Filtrado por dominio:</strong> permite o bloquea el tráfico saliente por nombre de dominio, tanto
+          <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr> como <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> (lee el nombre en la negociación de <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>, sin descifrar).</li>
+        <li><strong>Inspección de <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr>:</strong> opcionalmente descifra el tráfico para inspeccionar su contenido y lo
+          vuelve a cifrar.</li>
+        <li><strong>Grupos de reglas gestionados:</strong> mantenidos por AWS (dominios e <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> maliciosos, firmas de
+          amenazas) o por socios, para no escribirlo todo a mano.</li>
+        <li><strong>Registros:</strong> de alertas y de flujos, hacia <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="cloudwatch.html">CloudWatch</a> Logs o <a href="data-firehose.html">Data Firehose</a>.</li>
+        <li><strong>Modelos de despliegue:</strong> <strong>distribuido</strong> (un cortafuegos en cada <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>) o
+          <strong>centralizado</strong>, con una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de inspección por la que pasa todo el tráfico a través de Transit
+          Gateway.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Filtrar la salida a internet:</strong> las cargas solo pueden llegar a una lista de dominios
+          aprobados.</li>
+        <li>Inspeccionar el tráfico <strong>entre <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a></strong> o hacia el centro de datos (<a href="../servicio.html?id=direct-connect">Direct Connect</a>, <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr>).</li>
+        <li>Prevención de intrusiones con firmas conocidas.</li>
+        <li>Cumplir requisitos normativos de inspección y segmentación de red.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para control básico por <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> y puerto: grupos de seguridad (por recurso) y <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> de red (por subred), que son
+          gratuitos.</li>
+        <li>Para ataques a aplicaciones web (inyección <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>, <em>cross-site scripting</em>): <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a>.</li>
+        <li>Para <abbr class="sigla sigla-1" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS<span class="sigla-exp"> (Distributed Denial of Service: ataque que satura un servicio desde muchos orígenes)</span></abbr>: <a href="shield.html">Shield</a>.</li>
+        <li>Para filtrar solo las consultas de <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr>: DNS Firewall de <a href="route-53.html">Route 53</a> Resolver.</li>
+        <li>Para <strong>detectar</strong> amenazas a partir de los registros, sin estar en el camino del tráfico:
+          <a href="guardduty.html">GuardDuty</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Control</th><th>Dónde actúa</th><th>Qué mira</th></tr></thead>
+          <tbody>
+            <tr><td>Grupo de seguridad</td><td>Interfaz de red del recurso</td><td><abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>, puerto y protocolo, con estado; solo permite</td></tr>
+            <tr><td><abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> de red</td><td>Subred</td><td><abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>, puerto y protocolo, sin estado; permite y deniega</td></tr>
+            <tr><td>Network Firewall</td><td><a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>, en el camino del tráfico</td><td>Paquetes, conexiones, dominios, firmas de intrusión</td></tr>
+            <tr><td><a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a></td><td><a href="cloudfront.html">CloudFront</a>, balanceador de aplicación, <a href="api-gateway.html">API Gateway</a></td><td>Peticiones <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> y <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr></td></tr>
+            <tr><td><a href="elb.html">Gateway Load Balancer</a></td><td><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></td><td>Lo que inspeccione el dispositivo de terceros que haya detrás</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por hora de cada punto de enlace</strong> del cortafuegos y <strong>por gigabyte de tráfico
+        procesado</strong>. La inspección de <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> y algunos grupos de reglas gestionados tienen cargos adicionales.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Un punto de enlace por <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>: para alta disponibilidad, despliega el cortafuegos en todas las <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr> que uses y
+          mantén el tráfico de cada <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr> en su propio punto de enlace.</li>
+        <li>El enrutamiento debe ser <strong>simétrico</strong>: la ida y la vuelta de una conexión tienen que pasar
+          por el mismo cortafuegos.</li>
+        <li>Con <a href="firewall-manager.html">Firewall Manager</a> se despliega y se mantiene de forma uniforme en toda la organización.</li>
+        <li>Escala automáticamente con el tráfico.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Permitir la salida solo a determinados dominios"</strong>: Network Firewall con una lista de
+          dominios.</li>
+        <li><strong>"Inspección profunda de paquetes"</strong>, "prevención de intrusiones" o "reglas de Suricata":
+          Network Firewall.</li>
+        <li><strong>"Inspeccionar de forma centralizada el tráfico entre <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>"</strong>: <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de inspección con Network
+          Firewall y <a href="../servicio.html?id=transit-gateway">Transit Gateway</a>.</li>
+        <li><strong>"Inyección <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> en una aplicación web"</strong>: <a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>, no Network Firewall.</li>
+        <li><strong>"Usar un cortafuegos de un proveedor externo"</strong>: <a href="elb.html">Gateway Load Balancer</a>.</li>
+        <li><strong>El tráfico no se inspecciona solo:</strong> hay que modificar las tablas de rutas.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="network-firewall"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/what-is-aws-network-firewall.html" target="_blank" rel="noopener">What is AWS Network Firewall?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/rule-groups.html" target="_blank" rel="noopener">Managing your own rule groups in AWS Network Firewall</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/network-firewall/latest/developerguide/stateful-rule-group-options.html" target="_blank" rel="noopener">Options for stateful rules in Network Firewall</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/network-firewall/faqs" target="_blank" rel="noopener">AWS Network Firewall FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://repost.aws/knowledge-center/network-firewall-configure-domain-rules" target="_blank" rel="noopener">How do I configure Network Firewall rules to block or allow specific domains?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

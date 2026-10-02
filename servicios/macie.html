@@ -106,7 +106,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para datos fuera de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> (bases de datos, discos de instancias): no los analiza.</li>
-        <li>Para detectar <strong>amenazas</strong> y accesos anómalos a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>: <a href="../servicio.html?id=guardduty">GuardDuty</a>.</li>
+        <li>Para detectar <strong>amenazas</strong> y accesos anómalos a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>: <a href="guardduty.html">GuardDuty</a>.</li>
         <li>Para <strong>vulnerabilidades</strong> de software: <a href="inspector.html">Inspector</a>.</li>
         <li>Para detectar o enmascarar datos personales <strong>en un texto dentro de una aplicación</strong>:
           <a href="comprehend.html">Comprehend</a>.</li>
@@ -120,7 +120,7 @@
           <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
           <tbody>
             <tr><td>¿Qué datos sensibles hay en mis buckets de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>?</td><td>Macie</td></tr>
-            <tr><td>¿Alguien está accediendo a mis datos de forma sospechosa?</td><td><a href="../servicio.html?id=guardduty">GuardDuty</a></td></tr>
+            <tr><td>¿Alguien está accediendo a mis datos de forma sospechosa?</td><td><a href="guardduty.html">GuardDuty</a></td></tr>
             <tr><td>¿Tiene mi software vulnerabilidades?</td><td><a href="inspector.html">Inspector</a></td></tr>
             <tr><td>¿Hay datos personales en este texto?</td><td><a href="comprehend.html">Comprehend</a></td></tr>
             <tr><td>¿Quién puede acceder a mis buckets desde fuera?</td><td><a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> Access Analyzer</td></tr>
@@ -151,7 +151,7 @@
         <li><strong>"Avisar cuando se detecten datos sensibles"</strong>: hallazgo de Macie hacia <a href="eventbridge.html">EventBridge</a> y
           <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>.</li>
         <li><strong>"Formato de dato propio de la empresa"</strong>: identificador de datos personalizado.</li>
-        <li><strong>"Actividad sospechosa"</strong>: <a href="../servicio.html?id=guardduty">GuardDuty</a>. <strong>"Vulnerabilidades"</strong>: <a href="inspector.html">Inspector</a>.</li>
+        <li><strong>"Actividad sospechosa"</strong>: <a href="guardduty.html">GuardDuty</a>. <strong>"Vulnerabilidades"</strong>: <a href="inspector.html">Inspector</a>.</li>
         <li><strong>Macie solo analiza <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</strong></li>
       </ul>
 

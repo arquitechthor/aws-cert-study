@@ -1,0 +1,156 @@
+[
+  {
+    "id": "sts-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una aplicación de la cuenta A debe leer objetos de un bucket de la cuenta B sin usar claves de larga duración. ¿Qué enfoque es el recomendado?",
+    "opciones": [
+      "Crear un usuario de IAM en la cuenta B y guardar sus claves en la aplicación.",
+      "Hacer público el bucket y filtrar por dirección IP.",
+      "Crear en la cuenta B un rol que confíe en la cuenta A y asumirlo con sts:AssumeRole.",
+      "Copiar los objetos cada hora a un bucket de la cuenta A."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El acceso entre cuentas se resuelve con un rol en la cuenta de destino cuya política de confianza permita a la cuenta de origen asumirlo; STS devuelve credenciales temporales. Las claves de un usuario de IAM son de larga duración y hay que custodiarlas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.html"
+    ]
+  },
+  {
+    "id": "sts-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Un pipeline de GitHub Actions debe desplegar en AWS sin guardar claves de acceso como secretos. El proveedor OIDC de GitHub ya está registrado en IAM. ¿Qué operación de STS usa el pipeline?",
+    "opciones": [
+      "AssumeRoleWithWebIdentity.",
+      "GetSessionToken.",
+      "AssumeRoleWithSAML.",
+      "GetFederationToken."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AssumeRoleWithWebIdentity canjea el token emitido por un proveedor OIDC por credenciales temporales de un rol cuya política de confianza acepte ese proveedor. AssumeRoleWithSAML es para proveedores SAML y GetSessionToken para usuarios de IAM.",
+    "fuentes": [
+      "https://repost.aws/knowledge-center/iam-oidc-idp-federation"
+    ]
+  },
+  {
+    "id": "sts-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un desarrollador no está seguro de con qué identidad se ejecutan sus comandos de la AWS CLI. ¿Qué llamada lo indica sin necesidad de permisos especiales?",
+    "opciones": [
+      "aws iam list-users",
+      "aws sts get-session-token",
+      "aws sts decode-authorization-message",
+      "aws sts get-caller-identity"
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "GetCallerIdentity devuelve la cuenta, el identificador y el ARN de la identidad cuyas credenciales firman la petición, y no requiere permisos. Es la forma habitual de comprobar qué perfil o rol se está usando.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/STS/latest/APIReference/welcome.html"
+    ]
+  },
+  {
+    "id": "sts-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una llamada a sts:AssumeRole devuelve un error de acceso denegado, aunque la política de IAM del usuario permite sts:AssumeRole sobre ese rol. ¿Qué conviene revisar?",
+    "opciones": [
+      "Que el rol tenga asociada la política AdministratorAccess.",
+      "Que la política de confianza del rol incluya al usuario o a su cuenta como principal.",
+      "Que el usuario tenga claves de acceso con menos de 90 días.",
+      "Que la región configurada en la CLI sea us-east-1."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Para asumir un rol hacen falta dos permisos: el de la identidad que llama y el de la política de confianza del rol, que debe nombrar a ese principal. También pueden impedirlo una SCP o una condición, como exigir MFA o un identificador externo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.html"
+    ]
+  },
+  {
+    "id": "sts-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Un proveedor de software necesita acceder a recursos de las cuentas de muchos clientes asumiendo un rol en cada una. ¿Qué mecanismo evita que un cliente consiga que el proveedor actúe sobre la cuenta de otro (el problema del suplente confundido)?",
+    "opciones": [
+      "Un identificador externo único por cliente, exigido en la política de confianza del rol.",
+      "Una duración de sesión de 15 minutos en el rol de cada cliente.",
+      "Un usuario de IAM por cliente, con MFA obligatorio y claves rotadas cada mes.",
+      "Una política de sesión que deniegue todas las acciones excepto las de S3."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El identificador externo es un valor que el proveedor presenta al asumir el rol y que la política de confianza del cliente exige con una condición. Como es único por cliente, otro cliente no puede hacer que el proveedor asuma un rol ajeno.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html"
+    ]
+  },
+  {
+    "id": "sts-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación asume un rol con permisos amplios, pero para una operación concreta quiere limitar la sesión a un único prefijo de S3. ¿Qué puede usar sin crear un rol nuevo?",
+    "opciones": [
+      "Un límite de permisos asociado al usuario que llama a AssumeRole.",
+      "Una etiqueta de sesión con el nombre del prefijo, sin cambiar las políticas.",
+      "Una política de sesión al llamar a AssumeRole, que restringe los permisos de esa sesión.",
+      "Una SCP temporal asociada a la cuenta mientras dure la operación."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Al asumir un rol se puede pasar una política de sesión; los permisos efectivos son la intersección entre los del rol y esa política, así que solo puede restringir. Las etiquetas de sesión requieren que las políticas las usen en condiciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.html"
+    ]
+  },
+  {
+    "id": "sts-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Se sospecha que las credenciales temporales emitidas a partir de un rol se han filtrado. ¿Cómo se invalida el acceso de esas sesiones sin borrar el rol?",
+    "opciones": [
+      "Rotando las claves de acceso del rol desde la consola de IAM.",
+      "Cambiando el nombre del rol para que cambie su ARN y las sesiones dejen de valer.",
+      "Esperando a que venza el plazo máximo de 12 horas de las sesiones.",
+      "Revocando las sesiones activas del rol, lo que deniega las emitidas antes de ese momento."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "IAM permite revocar las sesiones de un rol: añade una política que deniega todo a las credenciales emitidas antes de un instante. Los roles no tienen claves de larga duración que rotar, y esperar deja el acceso abierto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html"
+    ]
+  }
+]

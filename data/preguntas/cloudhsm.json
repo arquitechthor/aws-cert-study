@@ -1,0 +1,134 @@
+[
+  {
+    "id": "cloudhsm-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una entidad financiera necesita, por exigencia normativa, guardar sus claves de cifrado en hardware dedicado que no comparta con ningún otro cliente. ¿Qué servicio de AWS lo ofrece?",
+    "opciones": [
+      "AWS CloudHSM.",
+      "AWS Secrets Manager.",
+      "AWS Certificate Manager.",
+      "Amazon Macie."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CloudHSM proporciona módulos de seguridad de hardware de uso exclusivo para un cliente. Secrets Manager guarda secretos de aplicaciones, ACM gestiona certificados TLS y Macie descubre datos sensibles en S3.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudhsm/latest/userguide/introduction.html"
+    ]
+  },
+  {
+    "id": "cloudhsm-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Quién tiene acceso a las claves criptográficas guardadas en un clúster de AWS CloudHSM?",
+    "opciones": [
+      "AWS y el cliente, de forma compartida, mediante políticas de IAM.",
+      "El equipo de AWS Support, cuando hay un caso abierto.",
+      "Solo el cliente; AWS gestiona el hardware, pero no puede acceder a las claves.",
+      "Cualquier usuario de IAM con permisos de administrador en la cuenta."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "En CloudHSM el cliente administra los usuarios y las claves dentro del propio HSM, y AWS no tiene acceso a ellas. Por eso, si se pierden las credenciales de los usuarios del HSM, AWS no puede recuperarlas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudhsm/latest/userguide/introduction.html"
+    ]
+  },
+  {
+    "id": "cloudhsm-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa debe cifrar sus volúmenes de EBS con claves guardadas en HSM de un solo inquilino bajo su control, pero quiere seguir usando la integración de KMS con EBS. ¿Qué solución cumple ambos requisitos?",
+    "opciones": [
+      "Una clave gestionada por AWS en KMS, con rotación automática cada año.",
+      "Un almacén de claves personalizado de KMS respaldado por un clúster de CloudHSM.",
+      "Un secreto de Secrets Manager con la clave, leído por las instancias al arrancar.",
+      "Una clave de KMS con material importado y fecha de caducidad."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un almacén de claves personalizado hace que el material de las claves de KMS se genere y se use dentro del clúster de CloudHSM del cliente, manteniendo la integración de KMS con servicios como EBS. Las claves normales de KMS residen en HSM compartidos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/keystore-cloudhsm.html"
+    ]
+  },
+  {
+    "id": "cloudhsm-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un arquitecto despliega AWS CloudHSM para una aplicación crítica. ¿Qué configuración garantiza que las claves sigan disponibles si falla una AZ?",
+    "opciones": [
+      "Un único HSM con una copia de seguridad diaria en S3.",
+      "Un único HSM de mayor tamaño en una subred pública.",
+      "Dos clústeres independientes, sin sincronizar, en la misma AZ.",
+      "Un clúster con al menos dos HSM en AZ distintas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Un clúster de CloudHSM replica las claves entre sus HSM; con dos o más en distintas AZ, las operaciones continúan aunque caiga una. Con un solo HSM hay que restaurar desde una copia, con interrupción y posible pérdida de claves recientes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudhsm/latest/userguide/clusters.html"
+    ]
+  },
+  {
+    "id": "cloudhsm-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migra a AWS una aplicación que firma documentos mediante la interfaz PKCS #11 de un HSM local, y la normativa exige mantener HSM dedicados. ¿Qué opción minimiza los cambios en la aplicación?",
+    "opciones": [
+      "AWS CloudHSM, que ofrece esa misma interfaz estándar.",
+      "AWS KMS, reescribiendo la aplicación para usar su API.",
+      "AWS Certificate Manager, emitiendo un certificado por documento.",
+      "AWS Secrets Manager, guardando la clave privada como secreto."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CloudHSM admite interfaces estándar como PKCS #11, JCE y CNG, de modo que las aplicaciones que ya trabajaban con un HSM se migran con pocos cambios y siguen usando hardware dedicado. KMS exigiría reescribir la integración y no es de un solo inquilino.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudhsm/latest/userguide/introduction.html"
+    ]
+  },
+  {
+    "id": "cloudhsm-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo valora usar un almacén de claves personalizado de KMS sobre AWS CloudHSM para cifrar una tabla de DynamoDB con miles de operaciones por segundo. ¿Qué debe tener en cuenta?",
+    "opciones": [
+      "Que DynamoDB no admite cifrado con claves gestionadas por el cliente.",
+      "Que el almacén de claves personalizado solo funciona con claves asimétricas.",
+      "Que ese tipo de almacén ofrece menos rendimiento y su disponibilidad depende del clúster del cliente.",
+      "Que CloudHSM replica las claves a todas las regiones automáticamente."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los almacenes de claves sobre CloudHSM tienen menos capacidad de transacciones y más latencia que las claves estándar de KMS, y su disponibilidad depende de cómo el cliente configure el clúster. AWS los recomienda solo para cargas de pocas operaciones por segundo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kms/latest/developerguide/key-store-overview.html"
+    ]
+  }
+]

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Security Hub — Apuntes AWS</title>
+<meta name="description" content="Vista unificada de la seguridad en AWS: agrega los hallazgos de GuardDuty, Inspector, Macie y otros, y evalúa las cuentas frente a estándares como CIS, PCI DSS o las buenas prácticas de AWS. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/security-hub.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Security Hub — Apuntes AWS">
+<meta property="og:description" content="Vista unificada de la seguridad en AWS: agrega los hallazgos de GuardDuty, Inspector, Macie y otros, y evalúa las cuentas frente a estándares como CIS, PCI DSS o las buenas prácticas de AWS.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/security-hub.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/security-hub.svg" alt="" width="56" height="56"><span>AWS Security Hub</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Reúne hallazgos de seguridad de varios servicios y puntúa tu cumplimiento de normas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/securityhub/" target="_blank" rel="noopener">Documentación de AWS Security Hub ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> AWS ha dividido el servicio en dos que se complementan.
+        <strong>Security Hub <abbr class="sigla sigla-1" data-s="CSPM" data-en="Cloud Security Posture Management" data-es="gestión de la postura de seguridad en la nube" tabindex="0">CSPM<span class="sigla-exp"> (Cloud Security Posture Management: gestión de la postura de seguridad en la nube)</span></abbr></strong> es lo que las guías de examen llaman "AWS Security Hub": la gestión de la
+        postura de seguridad, con estándares, controles y hallazgos agregados. El nuevo <strong>Security Hub</strong>
+        (a secas) correlaciona esos hallazgos con los de otros servicios para priorizar los riesgos como
+        <strong>exposiciones</strong>. En los exámenes, "Security Hub" sigue significando la vista única de hallazgos y
+        de cumplimiento de estándares.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Security Hub da una <strong>visión completa del estado de seguridad</strong> de tus cuentas en un solo
+        sitio. Hace dos cosas: <strong>agrega y normaliza los hallazgos</strong> de los servicios de seguridad de AWS
+        y de productos de terceros, y <strong>comprueba automáticamente</strong> si tus recursos siguen las buenas
+        prácticas de <strong>estándares de seguridad</strong>, con una puntuación. Así el equipo no tiene que saltar
+        entre consolas ni formatos distintos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Estándares de seguridad:</strong> conjuntos de controles. Entre ellos, las <strong>buenas prácticas
+          fundamentales de seguridad de AWS</strong>, las referencias del <strong><abbr class="sigla sigla-1" data-s="CIS" data-en="Center for Internet Security" data-es="organización que publica referencias de configuración segura" tabindex="0">CIS<span class="sigla-exp"> (Center for Internet Security: organización que publica referencias de configuración segura)</span></abbr></strong> para AWS,
+          <strong><abbr class="sigla sigla-1" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS<span class="sigla-exp"> (Payment Card Industry Data Security Standard: norma de seguridad para datos de tarjetas)</span></abbr></strong> y <abbr class="sigla sigla-1" data-s="NIST" data-en="National Institute of Standards and Technology" data-es="organismo de normas de EE. UU." tabindex="0">NIST<span class="sigla-exp"> (National Institute of Standards and Technology: organismo de normas de EE. UU.)</span></abbr>.</li>
+        <li><strong>Controles:</strong> cada comprobación concreta (por ejemplo, "los buckets no permiten lectura
+          pública"). Se apoyan en <strong>reglas de <a href="config.html">AWS Config</a></strong>, así que AWS Config debe estar activado.</li>
+        <li><strong>Puntuación de seguridad:</strong> el porcentaje de controles superados, por estándar y en
+          total.</li>
+        <li><strong>Hallazgos agregados:</strong> recibe los de <strong><a href="guardduty.html">GuardDuty</a></strong>, <strong><a href="inspector.html">Inspector</a></strong>,
+          <strong><a href="macie.html">Macie</a></strong>, <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> Access Analyzer, <a href="firewall-manager.html">Firewall Manager</a>, <a href="systems-manager.html">Systems Manager</a> y productos de socios, en un
+          formato común (el formato de hallazgos de AWS en la parte de postura; el esquema abierto <abbr class="sigla sigla-1" data-s="OCSF" data-en="Open Cybersecurity Schema Framework" data-es="esquema abierto para datos de seguridad" tabindex="0">OCSF<span class="sigla-exp"> (Open Cybersecurity Schema Framework: esquema abierto para datos de seguridad)</span></abbr> en el nuevo
+          Security Hub).</li>
+        <li><strong>Exposiciones:</strong> el nuevo Security Hub cruza vulnerabilidades, configuraciones y amenazas
+          para señalar los riesgos que de verdad son explotables.</li>
+        <li><strong>Agregación entre regiones:</strong> los hallazgos de varias regiones se ven en una región de
+          agregación.</li>
+        <li><strong>Varias cuentas:</strong> con <a href="organizations.html">AWS Organizations</a>, un administrador delegado ve y gestiona todas las
+          cuentas, con configuración central.</li>
+        <li><strong>Automatización:</strong> reglas de automatización que modifican hallazgos (cambiar gravedad,
+          suprimir) y envío a <strong><a href="eventbridge.html">EventBridge</a></strong> para avisar, abrir incidencias o corregir.</li>
+        <li><strong>Información</strong> (<em>insights</em>): agrupaciones de hallazgos para ver tendencias.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Panel único de seguridad para toda la organización.</li>
+        <li>Medir y seguir el cumplimiento de <abbr class="sigla" data-s="CIS" data-en="Center for Internet Security" data-es="organización que publica referencias de configuración segura" tabindex="0">CIS</abbr> o <abbr class="sigla" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS</abbr>.</li>
+        <li>Priorizar: qué hay que arreglar primero entre miles de hallazgos.</li>
+        <li>Enviar los hallazgos a la herramienta de incidencias o al sistema de gestión de eventos de seguridad de la
+          empresa.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>detectar</strong> amenazas: <a href="guardduty.html">GuardDuty</a>. Security Hub agrega; no analiza registros.</li>
+        <li>Para <strong>investigar</strong> un incidente: <a href="detective.html">Detective</a>.</li>
+        <li>Para reglas de configuración propias con corrección: <a href="config.html">AWS Config</a>.</li>
+        <li>Para reunir evidencias de auditoría: <a href="audit-manager.html">Audit Manager</a> o los paquetes de conformidad de AWS Config.</li>
+        <li>Para centralizar los registros de seguridad en bruto: Security Lake.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Función</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Agregar hallazgos y puntuar frente a estándares</td><td>Security Hub</td></tr>
+            <tr><td>Detectar amenazas</td><td><a href="guardduty.html">GuardDuty</a></td></tr>
+            <tr><td>Encontrar vulnerabilidades</td><td><a href="inspector.html">Inspector</a></td></tr>
+            <tr><td>Descubrir datos sensibles</td><td><a href="macie.html">Macie</a></td></tr>
+            <tr><td>Investigar incidentes</td><td><a href="detective.html">Detective</a></td></tr>
+            <tr><td>Evaluar reglas de configuración</td><td><a href="config.html">AWS Config</a></td></tr>
+            <tr><td>Recomendaciones generales de buenas prácticas</td><td><a href="trusted-advisor.html">Trusted Advisor</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por el número de <strong>comprobaciones de seguridad</strong> realizadas y por los
+        <strong>eventos de ingesta de hallazgos</strong>, con tramos por volumen (los hallazgos de las comprobaciones
+        propias no se cobran como ingesta). Hay un periodo de prueba gratuito. Aparte está el coste de <a href="config.html">AWS Config</a>, que
+        debe estar activo.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Es <strong>regional</strong>: se activa en cada región y se agrega en una.</li>
+        <li>Requiere <strong><a href="config.html">AWS Config</a></strong> grabando los recursos para evaluar los controles.</li>
+        <li>Usa roles vinculados al servicio y no modifica tus recursos: informa.</li>
+        <li>Se pueden desactivar controles que no apliquen, con su justificación.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Vista única"</strong>, "panel centralizado de seguridad" o "agregar hallazgos de varios
+          servicios": Security Hub.</li>
+        <li><strong>"Comprobar el cumplimiento de <abbr class="sigla" data-s="CIS" data-en="Center for Internet Security" data-es="organización que publica referencias de configuración segura" tabindex="0">CIS</abbr> o de <abbr class="sigla" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS</abbr> automáticamente"</strong>: estándares de Security
+          Hub.</li>
+        <li><strong>"Hallazgos de todas las cuentas y regiones en un solo lugar"</strong>: administrador delegado y
+          agregación entre regiones.</li>
+        <li><strong>Requisito:</strong> <a href="config.html">AWS Config</a> activado.</li>
+        <li><strong><a href="guardduty.html">GuardDuty</a> detecta, <a href="inspector.html">Inspector</a> analiza, <a href="macie.html">Macie</a> clasifica, Security Hub agrega, <a href="detective.html">Detective</a>
+          investiga.</strong></li>
+        <li><strong>"Responder automáticamente a un hallazgo"</strong>: <a href="eventbridge.html">EventBridge</a> con <a href="lambda.html">Lambda</a> o Systems
+          Manager.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="security-hub"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/securityhub/latest/userguide/what-are-securityhub-services.html" target="_blank" rel="noopener">What are Security Hub and Security Hub CSPM?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html" target="_blank" rel="noopener">Introduction to AWS Security Hub CSPM</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-ocsf.html" target="_blank" rel="noopener">Security Hub and the Open Cybersecurity Schema Framework (OCSF)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/securityhub/latest/userguide/finding-aggregation.html" target="_blank" rel="noopener">Understanding cross-Region aggregation in Security Hub CSPM</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

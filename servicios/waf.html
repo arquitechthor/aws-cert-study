@@ -85,7 +85,7 @@
           cuentas.</li>
         <li><strong>Registro:</strong> envía los registros de peticiones a <a href="cloudwatch.html">CloudWatch</a> Logs, <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o
           <a href="data-firehose.html">Firehose</a> para analizarlas.</li>
-        <li><strong>Gestión centralizada:</strong> <a href="../servicio.html?id=firewall-manager">AWS Firewall Manager</a> aplica las mismas Web <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> en
+        <li><strong>Gestión centralizada:</strong> <a href="firewall-manager.html">AWS Firewall Manager</a> aplica las mismas Web <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> en
           todas las cuentas de una organización.</li>
       </ul>
 
@@ -99,9 +99,9 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Ataques <abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de red y transporte (capas 3 y 4): <a href="../servicio.html?id=shield">AWS Shield</a> (Standard incluido, Advanced de
+        <li>Ataques <abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de red y transporte (capas 3 y 4): <a href="shield.html">AWS Shield</a> (Standard incluido, Advanced de
           pago).</li>
-        <li>Filtrar tráfico que no es <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> o inspeccionar el tráfico de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>: <a href="../servicio.html?id=network-firewall">AWS Network Firewall</a>.</li>
+        <li>Filtrar tráfico que no es <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> o inspeccionar el tráfico de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>: <a href="network-firewall.html">AWS Network Firewall</a>.</li>
         <li>Controlar el acceso entre recursos dentro de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>: security groups y <abbr class="sigla sigla-1" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL<span class="sigla-exp"> (Network Access Control List: firewall a nivel de subred)</span></abbr>.</li>
       </ul>
 
@@ -111,9 +111,9 @@
           <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
           <tbody>
             <tr><td>Ataques web (capa 7): inyección <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>, <abbr class="sigla" data-s="XSS" data-en="Cross-Site Scripting" data-es="inyección de scripts en una web" tabindex="0">XSS</abbr>, bots, límites por <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr></td><td>AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></td></tr>
-            <tr><td><abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de red y transporte</td><td><a href="../servicio.html?id=shield">AWS Shield</a></td></tr>
-            <tr><td>Filtrado con estado de todo el tráfico de una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a></td><td><a href="../servicio.html?id=network-firewall">AWS Network Firewall</a></td></tr>
-            <tr><td>Aplicar reglas en toda la organización</td><td><a href="../servicio.html?id=firewall-manager">AWS Firewall Manager</a></td></tr>
+            <tr><td><abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de red y transporte</td><td><a href="shield.html">AWS Shield</a></td></tr>
+            <tr><td>Filtrado con estado de todo el tráfico de una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a></td><td><a href="network-firewall.html">AWS Network Firewall</a></td></tr>
+            <tr><td>Aplicar reglas en toda la organización</td><td><a href="firewall-manager.html">AWS Firewall Manager</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -135,8 +135,8 @@
         <li><strong>"Inyección <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>"</strong>, <strong>"<abbr class="sigla" data-s="XSS" data-en="Cross-Site Scripting" data-es="inyección de scripts en una web" tabindex="0">XSS</abbr>"</strong> o <strong>"capa 7"</strong>: AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr>.</li>
         <li><strong>"Una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> hace miles de peticiones por minuto"</strong>: regla basada en frecuencia.</li>
         <li><strong>"Bloquear un país"</strong>: regla de geocoincidencia (o la restricción geográfica de <a href="cloudfront.html">CloudFront</a>).</li>
-        <li><strong>"<abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de capas 3 y 4"</strong>: <a href="../servicio.html?id=shield">Shield</a>, no <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr>.</li>
-        <li><strong>"Mismas reglas en todas las cuentas"</strong>: <a href="../servicio.html?id=firewall-manager">Firewall Manager</a>.</li>
+        <li><strong>"<abbr class="sigla" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS</abbr> de capas 3 y 4"</strong>: <a href="shield.html">Shield</a>, no <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr>.</li>
+        <li><strong>"Mismas reglas en todas las cuentas"</strong>: <a href="firewall-manager.html">Firewall Manager</a>.</li>
         <li><strong>"Dónde se asocia"</strong>: CloudFront, <a href="elb.html"><abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr></a>, <a href="api-gateway.html">API Gateway</a>, <a href="appsync.html">AppSync</a>, <a href="cognito.html">Cognito</a>, <a href="app-runner.html">App Runner</a>; no a un <abbr class="sigla sigla-1" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB<span class="sigla-exp"> (Network Load Balancer: balanceador TCP/UDP)</span></abbr> ni a una instancia <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>.</li>
       </ul>
 

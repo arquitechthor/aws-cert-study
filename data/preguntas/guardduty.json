@@ -1,0 +1,156 @@
+[
+  {
+    "id": "guardduty-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué servicio de AWS vigila de forma continua las cuentas en busca de actividad maliciosa, como el uso de credenciales comprometidas o instancias que minan criptomonedas?",
+    "opciones": [
+      "Amazon GuardDuty.",
+      "Amazon Inspector.",
+      "AWS Artifact.",
+      "AWS Budgets."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "GuardDuty es el servicio de detección de amenazas: analiza registros con inteligencia de amenazas y aprendizaje automático. Inspector busca vulnerabilidades, Artifact ofrece informes de cumplimiento y Budgets controla el gasto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html"
+    ]
+  },
+  {
+    "id": "guardduty-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué hay que instalar o configurar para que Amazon GuardDuty empiece a analizar los eventos de CloudTrail, los registros de flujo de la VPC y los de DNS?",
+    "opciones": [
+      "Un agente en cada instancia de EC2 de la cuenta.",
+      "Los registros de flujo en cada VPC, con destino a un bucket de S3.",
+      "Nada más que activar el servicio: accede a esas fuentes por su cuenta.",
+      "Un trail de CloudTrail multirregión con eventos de datos."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "GuardDuty obtiene esas fuentes básicas mediante flujos independientes, sin que el cliente tenga que activarlas ni almacenarlas, y sin agentes. Solo la supervisión en tiempo de ejecución usa un agente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/security-tooling.html"
+    ]
+  },
+  {
+    "id": "guardduty-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Cuando Amazon GuardDuty detecte una instancia de EC2 comprometida, la empresa quiere aislarla automáticamente cambiando su grupo de seguridad. ¿Qué diseño es el adecuado?",
+    "opciones": [
+      "Una alarma de CloudWatch sobre el uso de CPU de la instancia, con una acción de parada.",
+      "Una regla de Amazon EventBridge para los hallazgos de GuardDuty que invoque una función Lambda.",
+      "Una regla de AWS Config que compruebe el grupo de seguridad deseado cada 24 horas.",
+      "Una comprobación semanal de AWS Trusted Advisor revisada por el equipo de seguridad."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "GuardDuty publica sus hallazgos en EventBridge; una regla filtra el tipo de hallazgo y lanza una función Lambda (o un flujo de Step Functions) que aísla la instancia. Una alarma de CPU no identifica un compromiso de seguridad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html"
+    ]
+  },
+  {
+    "id": "guardduty-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una aplicación permite a los usuarios subir ficheros a un bucket de S3. La empresa quiere detectar los que contengan malware sin gestionar un antivirus propio. ¿Qué debe usar?",
+    "opciones": [
+      "Amazon Macie, con identificadores de datos gestionados.",
+      "Amazon Inspector, con el análisis de Lambda.",
+      "AWS WAF, con un grupo de reglas gestionado.",
+      "La protección contra malware para S3 de Amazon GuardDuty."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "GuardDuty analiza los objetos recién subidos a los buckets protegidos, los etiqueta según el resultado y genera un hallazgo si detecta malware. Macie busca datos sensibles, Inspector vulnerabilidades y WAF filtra peticiones web.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/security/navigating-amazon-guardduty-protection-plans-and-extended-threat-detection/"
+    ]
+  },
+  {
+    "id": "guardduty-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización quiere que Amazon GuardDuty esté activo en todas sus cuentas, también en las que se creen después, y que el equipo de seguridad vea todos los hallazgos sin usar la cuenta de administración. ¿Qué debe configurar?",
+    "opciones": [
+      "Un administrador delegado de GuardDuty en AWS Organizations, con activación automática.",
+      "Una invitación manual desde cada cuenta miembro a la cuenta de seguridad.",
+      "Una SCP que impida desactivar GuardDuty en las cuentas miembro.",
+      "Un trail de organización de CloudTrail dirigido a la cuenta de seguridad."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con Organizations, la cuenta de administrador delegado gestiona GuardDuty para todas las cuentas y puede activarlo automáticamente en las nuevas, centralizando los hallazgos. Una SCP protege la configuración, pero no activa el servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/security-tooling.html"
+    ]
+  },
+  {
+    "id": "guardduty-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa solo usa dos regiones de AWS. ¿Por qué se recomienda activar Amazon GuardDuty también en las demás regiones?",
+    "opciones": [
+      "Porque los hallazgos se replican entre regiones y se necesita quorum.",
+      "Porque el precio por región baja al activarlo en todas.",
+      "Porque así se detecta la actividad no autorizada en regiones donde no debería haber nada.",
+      "Porque GuardDuty solo analiza CloudTrail desde la región us-east-1."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "GuardDuty es regional. Un atacante con credenciales robadas puede lanzar recursos en una región que no se usa; con GuardDuty activo allí, esa actividad genera hallazgos. En regiones sin actividad el coste es mínimo.",
+    "fuentes": [
+      "https://aws.amazon.com/guardduty/faqs"
+    ]
+  },
+  {
+    "id": "guardduty-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa ejecuta contenedores en Amazon ECS sobre Fargate y quiere detectar comportamientos maliciosos dentro de los contenedores, como la ejecución de procesos sospechosos. ¿Qué capacidad de Amazon GuardDuty lo cubre?",
+    "opciones": [
+      "La protección de S3.",
+      "La supervisión en tiempo de ejecución (Runtime Monitoring).",
+      "La protección de RDS.",
+      "Las fuentes de datos básicas, sin planes adicionales."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Runtime Monitoring observa los eventos del sistema operativo en EKS, ECS (incluido Fargate) y EC2 mediante un agente de seguridad gestionado. Las fuentes básicas ven la red y las llamadas a la API, pero no lo que ocurre dentro del contenedor.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/security/navigating-amazon-guardduty-protection-plans-and-extended-threat-detection/"
+    ]
+  }
+]

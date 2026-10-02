@@ -10,21 +10,24 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 91 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 103 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
-  Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). Las preguntas de los 6
-  ya publicados antes de añadir CLF-C02 y DVA-C02 aún no cubren esas dos guías. La tarea 0.9 sigue
+  Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). De los publicados antes de
+  añadir CLF-C02 y DVA-C02, ya tienen preguntas de esas dos guías IAM, Cognito, ACM y CloudWatch
+  (añadidas el 02/10/2026); faltan las de API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES y
+  Bedrock, por comprobar. La tarea 0.9 sigue
   programada para el 27/10/2026.
 - **Fase 4 (juego de memoria):** publicada el 2026-10-02 en `memoria.html` con los dos modos
   (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
 - **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
   parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después, seguir con las guías pendientes
-  (73). Las categorías **Computación** y **Administración y gobernanza** y las colas "Prioridad 0" y
-  "Prioridad 1" están completas desde el 02/10/2026. Siguiente bloque: lo que queda de "Prioridad 2"
-  (SAA-C03 + SAP-C02): `cost-and-usage-report`, almacenamiento (`backup`, `fsx`, `storage-gateway`),
-  `msk`, `keyspaces`, `ecr`, `amplify`, `device-farm`, `x-ray`, migración, redes y seguridad.
+  (61). Las categorías **Computación**, **Administración y gobernanza** y **Seguridad, identidad y
+  cumplimiento** y las colas "Prioridad 0" y "Prioridad 1" están completas desde el 02/10/2026. Siguiente
+  bloque: lo que queda de "Prioridad 2" (SAA-C03 + SAP-C02): `cost-and-usage-report`, almacenamiento
+  (`backup`, `fsx`, `storage-gateway`), `msk`, `keyspaces`, `ecr`, `amplify`, `device-farm`, `x-ray`,
+  migración y redes.
   **Revisar tras el 07/10/2026:** el aviso de `proton` (ese día termina su soporte: pasar el texto a
   pasado).
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
@@ -390,17 +393,17 @@ esta lista es solo el orden de trabajo.
 - [ ] `site-to-site-vpn` AWS Site-to-Site VPN — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [ ] `transit-gateway` AWS Transit Gateway — Redes y entrega de contenido (SAA-C03, SAP-C02)
 - [x] `acm` AWS Certificate Manager (ACM) — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `cloudhsm` AWS CloudHSM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `cloudhsm` AWS CloudHSM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [x] `cognito` Amazon Cognito — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `detective` Amazon Detective — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `directory-service` AWS Directory Service — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `firewall-manager` AWS Firewall Manager — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `guardduty` Amazon GuardDuty — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `iam-identity-center` AWS IAM Identity Center — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `network-firewall` AWS Network Firewall — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `ram` AWS RAM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `security-hub` AWS Security Hub — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `shield` AWS Shield — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `detective` Amazon Detective — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `directory-service` AWS Directory Service — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `firewall-manager` AWS Firewall Manager — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `guardduty` Amazon GuardDuty — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `iam-identity-center` AWS IAM Identity Center — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `network-firewall` AWS Network Firewall — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `ram` AWS RAM — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `security-hub` AWS Security Hub — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
+- [x] `shield` AWS Shield — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [x] `waf` AWS WAF — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [ ] `elastic-transcoder` Amazon Elastic Transcoder — Servicios multimedia (SAA-C03, SAP-C02)
 - [ ] `kinesis-video-streams` Amazon Kinesis Video Streams — Servicios multimedia (SAA-C03, SAP-C02)
@@ -438,8 +441,8 @@ esta lista es solo el orden de trabajo.
 - [ ] `application-discovery-service` AWS Application Discovery Service — Migración y transferencia (SAP-C02)
 - [ ] `migration-hub` AWS Migration Hub — Migración y transferencia (SAP-C02)
 - [ ] `sct` AWS SCT — Migración y transferencia (SAP-C02)
-- [ ] `audit-manager` AWS Audit Manager — Seguridad, identidad y cumplimiento (SAP-C02)
-- [ ] `sts` AWS STS — Seguridad, identidad y cumplimiento (SAP-C02)
+- [x] `audit-manager` AWS Audit Manager — Seguridad, identidad y cumplimiento (SAP-C02)
+- [x] `sts` AWS STS — Seguridad, identidad y cumplimiento (SAP-C02)
 
 #### Prioridad 4: AI Practitioner (AIF-C01) (8)
 
@@ -650,3 +653,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-02 | Fase 2: categoría Administración y gobernanza completa con 12 guías más (AppConfig, CDK, CLI, Compute Optimizer, Health Dashboard, License Manager, Managed Grafana, Managed Service for Prometheus, Management Console, Service Catalog, Service Quotas y Well-Architected Tool) y 81 preguntas originales (64 de 164). Avisos: AppRegistry de Service Catalog sin clientes nuevos desde el 30/07/2026 y myApplications de la consola sin aplicaciones nuevas. Datos contrastados: Compute Optimizer analiza 14 días (93 con métricas mejoradas, de pago), retención de Prometheus de 150 días ampliable a 3 años, API de AWS Health solo con Business Support+ o superior, plantilla de cuotas con hasta 10 aumentos, precedencia de credenciales de la CLI. Service Quotas no tiene icono propio y usa el de su categoría. |
 | 2026-10-02 | Fase 2: categoría Computación completa con 7 guías más (App Runner, Batch, Lightsail, Outposts, Serverless Application Repository, VMware Cloud on AWS y Wavelength) y 41 preguntas originales (71 de 164). Avisos: App Runner sin clientes nuevos desde el 30/04/2026 (alternativa: ECS Express Mode), servidores Outposts de 1U y 2U fuera de venta, VMware Cloud on AWS contratado con Broadcom desde el 30/04/2024 (alternativa de AWS: Amazon EVS). Siglas nuevas en el glosario: 5G, RDP y LAMP. VMware Cloud on AWS no tiene icono propio y usa el de su categoría. |
 | 2026-10-02 | Fase 2: cola "Prioridad 1" completa con 20 guías más (Budgets, Cost Explorer, S3 Glacier, Data Exchange, EMR, Lake Formation, Quick, DocumentDB, Neptune, Artifact, Comprehend, Lex, Polly, Rekognition, SageMaker AI, Textract, Transcribe, Translate, Inspector y Macie) y 126 preguntas originales, todas con al menos una pregunta de AIF-C01 (91 de 164). Avisos: Amazon Quick es el nombre actual de QuickSight (ahora Quick Sight, dentro de Quick); el servicio Amazon Glacier de bóvedas no admite clientes nuevos desde el 07/11/2025; Comprehend (modelado de temas, detección de eventos y seguridad de prompts) y Rekognition (vídeo en streaming y análisis masivo de imágenes) cerraron funciones a clientes nuevos el 30/04/2026. 13 siglas nuevas en el glosario (SSML, SOC, BAA, HIPAA, HDFS, RDF, SBOM, CIS, SPICE, SaaS, MLOps, GraphRAG, E/S). |
+| 2026-10-02 | Fase 2: categoría Seguridad, identidad y cumplimiento completa con 12 guías más (Audit Manager, CloudHSM, Detective, Directory Service, Firewall Manager, GuardDuty, IAM Identity Center, Network Firewall, RAM, Security Hub, Shield y STS) y 74 preguntas originales (103 de 164). Avisos: Audit Manager sin clientes nuevos desde el 30/04/2026 (alternativa: paquetes de conformidad de AWS Config), Simple AD sin clientes nuevos, y Security Hub dividido en Security Hub CSPM (lo que describen los exámenes) y el nuevo Security Hub de exposiciones. Además: 14 preguntas de CLF-C02 y DVA-C02 añadidas a IAM, Cognito, ACM y CloudWatch (ACM pasa de 4 a 6), sección "Comparativa" añadida a CloudFormation y Systems Manager, y 6 siglas nuevas (SCIM, NIST, RADIUS, OCSF, CSPM, SRT). |

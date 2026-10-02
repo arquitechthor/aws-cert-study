@@ -1,0 +1,134 @@
+[
+  {
+    "id": "network-firewall-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Las instancias de una subred privada solo deben poder conectarse por HTTPS a una lista concreta de dominios externos; el resto de la salida a internet debe bloquearse. ¿Qué solución lo consigue?",
+    "opciones": [
+      "Un grupo de seguridad con reglas de salida por nombre de dominio.",
+      "AWS Network Firewall con un grupo de reglas de lista de dominios permitidos.",
+      "Una ACL de red con una regla por cada dominio.",
+      "AWS WAF asociado a la NAT gateway."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Network Firewall filtra el tráfico saliente por nombre de dominio leyendo la cabecera HTTP o el nombre indicado en la negociación de TLS. Los grupos de seguridad y las ACL de red solo trabajan con direcciones IP, y WAF no se asocia a una NAT gateway.",
+    "fuentes": [
+      "https://repost.aws/knowledge-center/network-firewall-configure-domain-rules"
+    ]
+  },
+  {
+    "id": "network-firewall-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Después de crear un cortafuegos de AWS Network Firewall en una VPC, el tráfico sigue sin inspeccionarse. ¿Qué paso falta con más probabilidad?",
+    "opciones": [
+      "Asociar el cortafuegos a un grupo de seguridad que permita todo el tráfico.",
+      "Activar los registros de flujo de la VPC con destino a CloudWatch Logs.",
+      "Modificar las tablas de rutas para dirigir el tráfico al punto de enlace del cortafuegos.",
+      "Crear una distribución de CloudFront delante de las subredes de la VPC."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El cortafuegos solo inspecciona el tráfico que se le enruta: hay que cambiar las tablas de rutas de las subredes y de la puerta de enlace para que pase por su punto de enlace. Los registros de flujo no afectan al camino del tráfico.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-firewall/latest/developerguide/what-is-aws-network-firewall.html"
+    ]
+  },
+  {
+    "id": "network-firewall-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa quiere proteger una aplicación web frente a inyección SQL y, además, inspeccionar el resto del tráfico de red de la VPC con firmas de intrusión. ¿Qué combinación es la adecuada?",
+    "opciones": [
+      "AWS WAF para las peticiones web y AWS Network Firewall para el tráfico de red.",
+      "AWS Shield Standard para ambas necesidades.",
+      "Grupos de seguridad para la inyección SQL y ACL de red para las firmas.",
+      "Amazon GuardDuty para bloquear ambos tipos de tráfico."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "WAF analiza las peticiones HTTP y bloquea ataques de capa de aplicación como la inyección SQL; Network Firewall inspecciona el tráfico de red con reglas compatibles con Suricata. Shield protege frente a DDoS y GuardDuty detecta, pero no bloquea.",
+    "fuentes": [
+      "https://aws.amazon.com/network-firewall/faqs"
+    ]
+  },
+  {
+    "id": "network-firewall-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una organización con decenas de VPC conectadas mediante Transit Gateway quiere inspeccionar todo el tráfico entre VPC y hacia internet en un único punto. ¿Qué arquitectura es la adecuada?",
+    "opciones": [
+      "Un cortafuegos de Network Firewall en una sola VPC, sin cambiar las rutas del resto.",
+      "Interconexiones de VPC entre todas las redes, con ACL de red.",
+      "Un grupo de seguridad compartido por todas las VPC con RAM.",
+      "Una VPC de inspección con AWS Network Firewall, por la que Transit Gateway enruta el tráfico."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "En el modelo centralizado, el tráfico entre VPC y de salida se encamina mediante Transit Gateway hacia una VPC de inspección donde está Network Firewall. Sin cambiar las rutas, el cortafuegos no ve el tráfico de las demás VPC.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-firewall/latest/developerguide/what-is-aws-network-firewall.html"
+    ]
+  },
+  {
+    "id": "network-firewall-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "El equipo de seguridad ya dispone de un amplio conjunto de reglas de detección de intrusiones en formato Suricata y quiere reutilizarlas en AWS con un servicio gestionado. ¿Qué opción encaja?",
+    "opciones": [
+      "Grupos de reglas sin estado de AWS Network Firewall, con prioridad numérica.",
+      "Grupos de reglas con estado de AWS Network Firewall, que usan el motor de Suricata.",
+      "Reglas personalizadas de AWS WAF asociadas a un balanceador de aplicación.",
+      "Reglas de AWS Config con corrección automática mediante Systems Manager."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los grupos de reglas con estado de Network Firewall se procesan con Suricata y admiten reglas escritas en su sintaxis, por lo que se pueden reutilizar las existentes. Las reglas sin estado solo evalúan paquetes sueltos por IP, puerto y protocolo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-firewall/latest/developerguide/stateful-rule-group-options.html"
+    ]
+  },
+  {
+    "id": "network-firewall-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa despliega AWS Network Firewall en una sola AZ para una carga que usa tres. ¿Qué problema tiene el diseño?",
+    "opciones": [
+      "Que el cortafuegos no puede inspeccionar tráfico HTTPS si está en una sola AZ.",
+      "Que las reglas con estado no funcionan cuando hay más de una subred.",
+      "Que el punto de enlace es un punto único de fallo del que dependen las otras AZ.",
+      "Que el cortafuegos deja de escalar automáticamente con el tráfico."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Network Firewall crea un punto de enlace por cada AZ en la que se despliega. Con una sola AZ, si esta falla se pierde la inspección o la conectividad de toda la carga, y el tráfico de las demás cruza entre zonas. Lo recomendable es un punto de enlace por AZ.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-firewall/latest/developerguide/what-is-aws-network-firewall.html"
+    ]
+  }
+]

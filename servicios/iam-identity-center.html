@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS IAM Identity Center — Apuntes AWS</title>
+<meta name="description" content="Inicio de sesión único para la plantilla en todas las cuentas de AWS y aplicaciones, con usuarios de su propio directorio, de Active Directory o de un proveedor de identidad externo. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/iam-identity-center.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS IAM Identity Center — Apuntes AWS">
+<meta property="og:description" content="Inicio de sesión único para la plantilla en todas las cuentas de AWS y aplicaciones, con usuarios de su propio directorio, de Active Directory o de un proveedor de identidad externo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/iam-identity-center.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/iam-identity-center.svg" alt="" width="56" height="56"><span>AWS IAM Identity Center</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Inicio de sesión único para todas tus cuentas y apps, con usuarios de tu directorio</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/singlesignon/" target="_blank" rel="noopener">Documentación de AWS IAM Identity Center ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS IAM Identity Center (antes AWS Single Sign-On) es la forma recomendada de dar acceso a las
+        <strong>personas de la plantilla</strong> a AWS. Cada empleado inicia sesión <strong>una sola vez</strong> en un
+        portal y desde ahí entra en las <strong>cuentas de AWS</strong> y en las <strong>aplicaciones</strong> que
+        tenga asignadas, con credenciales temporales. Se gestiona de forma central para toda la organización, sin
+        crear usuarios de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> en cada cuenta.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Fuente de identidades:</strong> de dónde salen los usuarios y grupos. Tres opciones: el
+          <strong>directorio propio</strong> de Identity Center, <strong>Active Directory</strong> (mediante AWS
+          Managed Microsoft <abbr class="sigla" data-s="AD" data-en="Active Directory" data-es="directorio de usuarios y equipos de Microsoft" tabindex="0">AD</abbr> o AD Connector) o un <strong>proveedor de identidad externo</strong> con <abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr> 2.0 (Okta,
+          Microsoft Entra ID…), con aprovisionamiento automático de usuarios mediante el protocolo <abbr class="sigla sigla-1" data-s="SCIM" data-en="System for Cross-domain Identity Management" data-es="protocolo para sincronizar usuarios y grupos" tabindex="0">SCIM<span class="sigla-exp"> (System for Cross-domain Identity Management: protocolo para sincronizar usuarios y grupos)</span></abbr>.</li>
+        <li><strong>Conjunto de permisos</strong> (<em>permission set</em>): una plantilla de permisos (políticas
+          gestionadas o propias, duración de la sesión). Al asignarlo a un usuario o grupo en una cuenta, Identity
+          Center crea en esa cuenta el <strong>rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a></strong> correspondiente.</li>
+        <li><strong>Asignación:</strong> la combinación de usuario o grupo, cuenta y conjunto de permisos.</li>
+        <li><strong>Portal de acceso de AWS:</strong> la página donde cada persona ve sus cuentas y aplicaciones. La
+          <a href="cli.html"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> también inicia sesión por aquí (<code>aws sso login</code>).</li>
+        <li><strong>Aplicaciones:</strong> inicio de sesión único en aplicaciones de AWS (<a href="quick.html">Amazon Quick</a>, <a href="sagemaker-ai.html">SageMaker AI</a>,
+          <a href="../servicio.html?id=amazon-q">Amazon Q</a>) y en aplicaciones de terceros compatibles con <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr> 2.0 u OAuth 2.0.</li>
+        <li><strong>Instancia de organización o de cuenta:</strong> la de organización, creada en la cuenta de
+          administración, es la recomendada y la única que gestiona el acceso a varias cuentas. La de cuenta sirve
+          solo para aplicaciones.</li>
+        <li><strong>Control de acceso basado en atributos:</strong> los atributos del usuario (departamento,
+          proyecto) se pasan como etiquetas de sesión para escribir permisos que dependan de ellos.</li>
+        <li><strong>Propagación de identidad de confianza:</strong> la identidad del usuario viaja hasta servicios de
+          datos como <a href="redshift.html">Redshift</a> o <a href="lake-formation.html">Lake Formation</a>, que autorizan según el usuario y no según un rol.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr></strong> integrado y administración delegada en una cuenta miembro.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Acceso de los empleados a decenas de cuentas con su identidad corporativa y permisos por grupo.</li>
+        <li>Eliminar los usuarios de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> con claves de larga duración.</li>
+        <li>Inicio de sesión único en aplicaciones de negocio.</li>
+        <li>Altas y bajas automáticas: al salir alguien de la empresa, pierde el acceso en todas partes.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para los <strong>clientes</strong> de tu aplicación web o móvil: <a href="cognito.html">Cognito</a>.</li>
+        <li>Para que una <strong>aplicación o un servicio</strong> acceda a recursos: roles de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>.</li>
+        <li>Para una única cuenta con federación ya montada, la federación directa con <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> también vale, aunque
+          Identity Center es lo recomendado.</li>
+        <li>Para tener un Active Directory: <a href="directory-service.html">Directory Service</a> (Identity Center puede usarlo como fuente).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Quién accede</th><th>A qué</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Empleados</td><td>Varias cuentas de AWS y aplicaciones</td><td>IAM Identity Center</td></tr>
+            <tr><td>Clientes de una aplicación</td><td>Tu aplicación web o móvil</td><td><a href="cognito.html">Cognito</a></td></tr>
+            <tr><td>Aplicaciones y servicios</td><td>Recursos de AWS</td><td>Roles de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a></td></tr>
+            <tr><td>Equipos y usuarios de Windows</td><td>Un dominio de Active Directory</td><td><a href="directory-service.html">Directory Service</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>IAM Identity Center es <strong>gratuito</strong>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las personas reciben <strong>credenciales temporales</strong>; no hay claves de larga duración que
+          rotar.</li>
+        <li>Asignar permisos a <strong>grupos</strong>, no a usuarios, y aplicar el mínimo privilegio en los conjuntos
+          de permisos.</li>
+        <li>Los inicios de sesión y los cambios quedan en <a href="cloudtrail.html">CloudTrail</a>.</li>
+        <li>Se configura en una región; conviene prever un acceso de emergencia (por ejemplo, un rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>) por si
+          falla el proveedor de identidad o la región.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Inicio de sesión único para varias cuentas de AWS"</strong> o "gestionar de forma central el
+          acceso de los empleados": IAM Identity Center.</li>
+        <li><strong>"Usar las identidades de Okta o de Microsoft Entra ID"</strong>: Identity Center con un proveedor
+          externo, <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr> y <abbr class="sigla" data-s="SCIM" data-en="System for Cross-domain Identity Management" data-es="protocolo para sincronizar usuarios y grupos" tabindex="0">SCIM</abbr>.</li>
+        <li><strong>"Usar el Active Directory existente"</strong>: Identity Center conectado a AWS Managed Microsoft <abbr class="sigla" data-s="AD" data-en="Active Directory" data-es="directorio de usuarios y equipos de Microsoft" tabindex="0">AD</abbr>
+          o a AD Connector.</li>
+        <li><strong>"Los mismos permisos en muchas cuentas"</strong>: conjuntos de permisos.</li>
+        <li><strong>"Usuarios de una aplicación móvil"</strong>: <a href="cognito.html">Cognito</a>.</li>
+        <li><strong>Necesita <a href="organizations.html">AWS Organizations</a></strong> para el acceso a varias cuentas.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="iam-identity-center"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html" target="_blank" rel="noopener">What is IAM Identity Center?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/permissionsetsconcept.html" target="_blank" rel="noopener">Permission sets</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source.html" target="_blank" rel="noopener">Manage your identity source</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-overall-prerequisites.html" target="_blank" rel="noopener">Trusted identity propagation: prerequisites and considerations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

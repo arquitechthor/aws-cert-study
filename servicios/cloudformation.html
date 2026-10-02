@@ -112,6 +112,22 @@
         <li>Para desplegar solo una web sencilla sin gestionar la infraestructura: <a href="elastic-beanstalk.html">Elastic Beanstalk</a>.</li>
       </ul>
 
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Herramienta</th></tr></thead>
+          <tbody>
+            <tr><td>Describir la infraestructura en plantillas declarativas y gestionarla como pilas</td><td>CloudFormation</td></tr>
+            <tr><td>Definir la infraestructura con un lenguaje de programación (genera plantillas de CloudFormation)</td><td><a href="cdk.html">CDK</a></td></tr>
+            <tr><td>Sintaxis abreviada para aplicaciones sin servidor (se transforma en CloudFormation)</td><td><abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr></td></tr>
+            <tr><td>Desplegar una aplicación web sin diseñar la infraestructura</td><td><a href="elastic-beanstalk.html">Elastic Beanstalk</a></td></tr>
+            <tr><td>Ofrecer plantillas aprobadas en autoservicio, con permisos delegados</td><td><a href="service-catalog.html">Service Catalog</a></td></tr>
+            <tr><td>Configurar y operar el software dentro de las instancias</td><td><a href="systems-manager.html">Systems Manager</a></td></tr>
+            <tr><td>Detectar cambios de configuración y evaluar reglas</td><td><a href="config.html">AWS Config</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>CloudFormation no tiene coste para los recursos de AWS: se pagan los recursos que crea. Solo se
         cobran las operaciones con extensiones de terceros (registro de CloudFormation) por encima del

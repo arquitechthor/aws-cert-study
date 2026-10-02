@@ -1,0 +1,134 @@
+[
+  {
+    "id": "security-hub-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa usa Amazon GuardDuty, Amazon Inspector y Amazon Macie, y quiere ver todos sus hallazgos de seguridad en un único panel. ¿Qué servicio debe usar?",
+    "opciones": [
+      "AWS Security Hub.",
+      "AWS Artifact.",
+      "AWS Shield.",
+      "AWS CloudTrail."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Security Hub agrega y normaliza los hallazgos de los servicios de seguridad de AWS y de productos de terceros. Artifact ofrece informes de cumplimiento, Shield protege frente a DDoS y CloudTrail registra las llamadas a la API.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html"
+    ]
+  },
+  {
+    "id": "security-hub-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Además de agregar hallazgos, ¿qué otra función ofrece AWS Security Hub?",
+    "opciones": [
+      "Cifrar automáticamente todos los recursos de la cuenta con claves de KMS.",
+      "Bloquear en tiempo real el tráfico malicioso que llega a las aplicaciones.",
+      "Comprobar automáticamente los recursos frente a estándares de seguridad y puntuarlos.",
+      "Emitir certificados de cumplimiento oficiales para entregar a los auditores."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Security Hub ejecuta comprobaciones automáticas basadas en estándares como las buenas prácticas de AWS, CIS o PCI DSS, y calcula una puntuación de seguridad. No cifra, no bloquea tráfico ni emite certificados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html"
+    ]
+  },
+  {
+    "id": "security-hub-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Tras activar AWS Security Hub, los controles de los estándares de seguridad no muestran resultados. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Que Amazon GuardDuty no está activado en la cuenta.",
+      "Que AWS Config no está activado para grabar los recursos.",
+      "Que la cuenta no pertenece a una organización.",
+      "Que no hay ningún trail de CloudTrail multirregión."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La mayoría de los controles de Security Hub se evalúan con reglas de AWS Config, de modo que Config debe estar activado y grabando los recursos. GuardDuty aporta hallazgos, pero no es necesario para evaluar los controles.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html"
+    ]
+  },
+  {
+    "id": "security-hub-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "El equipo de seguridad quiere recibir un mensaje en su canal cada vez que AWS Security Hub registre un hallazgo de gravedad crítica. ¿Qué diseño lo consigue con servicios gestionados?",
+    "opciones": [
+      "Una consulta programada de Athena sobre los logs de CloudTrail de la organización.",
+      "Un panel de CloudWatch que alguien del equipo revise cada mañana.",
+      "Una regla de AWS Config con corrección automática mediante Systems Manager.",
+      "Una regla de Amazon EventBridge que filtre los hallazgos críticos y publique en SNS."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Security Hub envía sus hallazgos a EventBridge, donde una regla puede filtrar por gravedad y dirigirlos a SNS, a una función Lambda o a una herramienta de incidencias. Las otras opciones no reaccionan a los hallazgos en el momento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html"
+    ]
+  },
+  {
+    "id": "security-hub-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización opera en cinco regiones y cientos de cuentas. El equipo de seguridad quiere consultar todos los hallazgos de AWS Security Hub desde una sola cuenta y una sola región. ¿Qué debe configurar?",
+    "opciones": [
+      "Un administrador delegado de Security Hub para la organización y la agregación entre regiones.",
+      "Una exportación diaria de los hallazgos de cada cuenta a un bucket de S3.",
+      "Una cuenta de Security Hub por región, con acceso de lectura para el equipo.",
+      "Un agregador de AWS Config en la cuenta de administración."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El administrador delegado ve y gestiona los hallazgos de todas las cuentas de la organización, y la agregación entre regiones los reúne en una región de agregación. Un agregador de Config recoge datos de configuración, no hallazgos de seguridad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/securityhub/latest/userguide/finding-aggregation.html"
+    ]
+  },
+  {
+    "id": "security-hub-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo recibe miles de hallazgos y no sabe cuáles suponen un riesgo real. ¿Qué aporta el nuevo AWS Security Hub sobre Security Hub CSPM para priorizar?",
+    "opciones": [
+      "Sustituye a GuardDuty analizando directamente los registros de red.",
+      "Aplica automáticamente los parches de las vulnerabilidades detectadas.",
+      "Correlaciona hallazgos de postura, vulnerabilidades y amenazas para señalar exposiciones.",
+      "Elimina los hallazgos de gravedad baja para reducir el volumen."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Security Hub recibe los hallazgos de Security Hub CSPM y los correlaciona con los de servicios como Inspector para generar exposiciones, que indican los riesgos más críticos. No sustituye a los servicios de detección ni corrige por sí mismo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/securityhub/latest/userguide/what-are-securityhub-services.html"
+    ]
+  }
+]

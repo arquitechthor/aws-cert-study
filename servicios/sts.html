@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS STS — Apuntes AWS</title>
+<meta name="description" content="Servicio que emite credenciales temporales de seguridad para asumir roles de IAM, federar identidades externas y acceder a otras cuentas sin claves de larga duración. Apuntes y preguntas de práctica para SAP-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/sts.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS STS — Apuntes AWS">
+<meta property="og:description" content="Servicio que emite credenciales temporales de seguridad para asumir roles de IAM, federar identidades externas y acceder a otras cuentas sin claves de larga duración.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/sts.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="56" height="56"><span>AWS STS</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Emite credenciales temporales para asumir roles o federar identidades externas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html" target="_blank" rel="noopener">Documentación de AWS STS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Security Token Service (AWS <abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr>) es el servicio que emite <strong>credenciales temporales de
+        seguridad</strong>. Cada vez que algo o alguien <strong>asume un rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a></strong>, es <abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr> quien entrega las
+        credenciales: un identificador de clave de acceso, una clave secreta y un <strong>token de sesión</strong>, con
+        fecha de caducidad. Es la base de casi todo el acceso moderno a AWS: roles de servicio, acceso entre cuentas,
+        federación e inicio de sesión único. No tiene consola propia: se usa a través de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>, la <a href="cli.html"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> o los <abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Por qué temporales:</strong> caducan solas, no se guardan con el usuario y no hay que rotarlas ni
+          revocarlas a mano.</li>
+        <li><strong>Operaciones principales:</strong>
+          <ul>
+            <li><strong><code>AssumeRole</code>:</strong> asumir un rol en la misma cuenta o en otra. Es la base del
+              acceso entre cuentas.</li>
+            <li><strong><code>AssumeRoleWithWebIdentity</code>:</strong> federación con un proveedor <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr> (Google,
+              GitHub Actions, roles de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> para cuentas de servicio de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>).</li>
+            <li><strong><code>AssumeRoleWithSAML</code>:</strong> federación con un proveedor <abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr> 2.0 corporativo.</li>
+            <li><strong><code>GetSessionToken</code>:</strong> credenciales temporales para un usuario de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>,
+              normalmente para cumplir una condición de <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr>.</li>
+            <li><strong><code>GetFederationToken</code>:</strong> credenciales para un usuario federado mediante un
+              intermediario propio.</li>
+            <li><strong><code>GetCallerIdentity</code>:</strong> devuelve quién eres (cuenta, <abbr class="sigla sigla-1" data-s="ARN" data-en="Amazon Resource Name" data-es="identificador único de un recurso de AWS" tabindex="0">ARN<span class="sigla-exp"> (Amazon Resource Name: identificador único de un recurso de AWS)</span></abbr>); útil para
+              comprobar qué identidad se está usando.</li>
+            <li><strong><code>DecodeAuthorizationMessage</code>:</strong> descifra el mensaje codificado de un error
+              de autorización.</li>
+          </ul>
+        </li>
+        <li><strong>Política de confianza del rol:</strong> indica <strong>quién puede asumirlo</strong>. Hacen falta
+          las dos partes: que la política de confianza lo permita y que quien llama tenga permiso para
+          <code>sts:AssumeRole</code>.</li>
+        <li><strong>Duración de la sesión:</strong> por defecto una hora; configurable desde 15 minutos hasta el máximo
+          del rol (12 horas como mucho). Al <strong>encadenar roles</strong>, el máximo es una hora.</li>
+        <li><strong>Identificador externo</strong> (<em>external ID</em>): valor que un tercero debe presentar al asumir
+          un rol en tu cuenta; evita el problema del <strong>suplente confundido</strong>.</li>
+        <li><strong>Políticas de sesión:</strong> restringen aún más los permisos de una sesión concreta; nunca los
+          amplían.</li>
+        <li><strong>Etiquetas de sesión e identidad de origen:</strong> atributos que acompañan a la sesión, para
+          control de acceso por atributos y para auditar quién actuó.</li>
+        <li><strong>Puntos de enlace regionales:</strong> recomendados frente al global por latencia y
+          resiliencia.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Acceso entre cuentas:</strong> un rol en la cuenta de destino que asumen identidades de otra
+          cuenta.</li>
+        <li><strong>Roles de servicio:</strong> <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, <a href="lambda.html">Lambda</a> y <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> obtienen sus credenciales así, sin que lo veas.</li>
+        <li><strong>Federación:</strong> empleados con el directorio corporativo, pipelines de <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> con <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr>, usuarios
+          de aplicaciones a través de <a href="cognito.html">Cognito</a>.</li>
+        <li><strong>Acceso de terceros</strong> (proveedores de software) a tu cuenta, con identificador
+          externo.</li>
+        <li>Elevar permisos de forma temporal, con <abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para el acceso de la plantilla a muchas cuentas, no montes la federación a mano: <a href="iam-identity-center.html">IAM Identity Center</a>, que
+          usa <abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr> por debajo.</li>
+        <li>Para los usuarios de una aplicación móvil o web: <a href="cognito.html">Cognito</a>, que canjea sus tokens por credenciales
+          temporales.</li>
+        <li>Para guardar contraseñas o claves de <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de terceros: <a href="secrets-manager.html">Secrets Manager</a>.</li>
+        <li><abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr> no define permisos: los permisos son los del rol asumido.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Situación</th><th>Operación de <abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr></th></tr></thead>
+          <tbody>
+            <tr><td>Un rol o usuario de AWS asume un rol (también en otra cuenta)</td><td><code>AssumeRole</code></td></tr>
+            <tr><td>Identidad de un proveedor <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr> (Google, GitHub, <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>)</td><td><code>AssumeRoleWithWebIdentity</code></td></tr>
+            <tr><td>Identidad de un proveedor <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr> corporativo</td><td><code>AssumeRoleWithSAML</code></td></tr>
+            <tr><td>Usuario de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> que debe acreditar <abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr></td><td><code>GetSessionToken</code></td></tr>
+            <tr><td>Saber con qué identidad estoy llamando</td><td><code>GetCallerIdentity</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p><abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr> es <strong>gratuito</strong>. Solo se pagan los servicios a los que se accede con las credenciales.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las credenciales temporales no se pueden revocar una a una, pero sí invalidar todas las sesiones de un rol
+          anteriores a un momento, con una política de denegación.</li>
+        <li>Los permisos efectivos son la <strong>intersección</strong> de la política del rol, la política de sesión,
+          el límite de permisos y las <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr>.</li>
+        <li>Cada llamada queda en <a href="cloudtrail.html">CloudTrail</a>, con el nombre de la sesión: ponle uno que identifique a quien
+          actúa.</li>
+        <li>Las credenciales se pueden reutilizar mientras sean válidas, lo que evita llamadas innecesarias a
+          <abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr>.</li>
+        <li>Usar los puntos de enlace regionales reduce la dependencia de una sola región.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Credenciales temporales"</strong>: <abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr>.</li>
+        <li><strong>"Acceso entre cuentas"</strong>: rol en la cuenta de destino y <code>sts:AssumeRole</code>.</li>
+        <li><strong>"Un tercero accede a nuestra cuenta"</strong>: rol con identificador externo.</li>
+        <li><strong>"Federar con un proveedor <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr>"</strong>: <code>AssumeRoleWithWebIdentity</code>.
+          <strong>"Con <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr>"</strong>: <code>AssumeRoleWithSAML</code>.</li>
+        <li><strong>"La <a href="cli.html"><abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a> con <abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr>"</strong>: <code>GetSessionToken</code>.</li>
+        <li><strong>"Error de acceso denegado al asumir un rol"</strong>: revisa la política de confianza del rol y
+          el permiso <code>sts:AssumeRole</code> de quien llama.</li>
+        <li><strong>"Mensaje de error de autorización codificado"</strong>:
+          <code>DecodeAuthorizationMessage</code>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="sts"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html" target="_blank" rel="noopener">Temporary security credentials in IAM</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/STS/latest/APIReference/welcome.html" target="_blank" rel="noopener">AWS STS API Reference</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.html" target="_blank" rel="noopener">Request temporary security credentials</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html" target="_blank" rel="noopener">The confused deputy problem</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://repost.aws/knowledge-center/iam-oidc-idp-federation" target="_blank" rel="noopener">How do I resolve OIDC IdP federation errors in IAM?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/security/how-to-monitor-and-query-iam-resources-at-scale-part-2/" target="_blank" rel="noopener">How to monitor and query IAM resources at scale – Part 2</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon GuardDuty — Apuntes AWS</title>
+<meta name="description" content="Servicio de detección de amenazas que analiza de forma continua los logs de CloudTrail, de flujo de la VPC y de DNS con inteligencia de amenazas y aprendizaje automático. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/guardduty.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon GuardDuty — Apuntes AWS">
+<meta property="og:description" content="Servicio de detección de amenazas que analiza de forma continua los logs de CloudTrail, de flujo de la VPC y de DNS con inteligencia de amenazas y aprendizaje automático.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/guardduty.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/guardduty.svg" alt="" width="56" height="56"><span>Amazon GuardDuty</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Detecta amenazas analizando logs de red, <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> y actividad de la cuenta con <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr></span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/guardduty/" target="_blank" rel="noopener">Documentación de Amazon GuardDuty ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon GuardDuty es el servicio de <strong>detección de amenazas</strong> de AWS. Vigila de forma continua tus
+        cuentas y cargas de trabajo en busca de <strong>actividad maliciosa o no autorizada</strong>: credenciales
+        comprometidas, instancias que minan criptomonedas, comunicación con servidores maliciosos, accesos anómalos a
+        los datos. Se activa con un clic, <strong>sin agentes ni configuración de logs</strong>, y genera
+        <strong>hallazgos</strong> con su gravedad.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Fuentes de datos básicas:</strong> eventos de gestión de <strong><a href="cloudtrail.html">CloudTrail</a></strong>,
+          <strong>registros de flujo de la <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></strong> y <strong>registros de consultas de <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr></strong>. GuardDuty los
+          lee por un canal propio: <strong>no hace falta activarlos</strong> ni se te cobra su almacenamiento.</li>
+        <li><strong>Cómo detecta:</strong> listas de inteligencia de amenazas (<abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> y dominios maliciosos), detección de
+          anomalías y aprendizaje automático sobre el comportamiento habitual de la cuenta.</li>
+        <li><strong>Planes de protección opcionales:</strong>
+          <ul>
+            <li><strong><a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>:</strong> eventos de datos de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> (acceso anómalo, exfiltración).</li>
+            <li><strong><a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>:</strong> registros de auditoría de Kubernetes.</li>
+            <li><strong>Supervisión en tiempo de ejecución</strong> (<em>Runtime Monitoring</em>): actividad del
+              sistema operativo en <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> (también <a href="fargate.html">Fargate</a>) y <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, mediante un agente.</li>
+            <li><strong>Protección contra malware:</strong> analiza sin agente los volúmenes de <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> de una instancia
+              sospechosa, los objetos nuevos de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> y las copias de <a href="../servicio.html?id=backup">AWS Backup</a>.</li>
+            <li><strong><a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>:</strong> inicios de sesión anómalos en <a href="aurora.html">Aurora</a> y <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr>.</li>
+            <li><strong><a href="lambda.html">Lambda</a>:</strong> actividad de red de las funciones.</li>
+          </ul>
+        </li>
+        <li><strong>Hallazgos:</strong> con gravedad baja, media, alta o crítica, y un tipo que describe la amenaza.
+          Se pueden archivar automáticamente con <strong>reglas de supresión</strong>.</li>
+        <li><strong>Detección ampliada de amenazas:</strong> correlaciona señales para identificar ataques en varias
+          fases como una única secuencia.</li>
+        <li><strong>Listas propias:</strong> <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> de confianza y listas de amenazas tuyas.</li>
+        <li><strong>Respuesta:</strong> los hallazgos se publican en <strong><a href="eventbridge.html">EventBridge</a></strong>, desde donde se avisa
+          (<a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>) o se corrige (Lambda, <a href="step-functions.html">Step Functions</a>), y se envían a <a href="security-hub.html">Security Hub</a> y <a href="detective.html">Detective</a>.</li>
+        <li><strong>Varias cuentas:</strong> con <a href="organizations.html">AWS Organizations</a>, un administrador delegado activa GuardDuty en todas
+          las cuentas, también en las nuevas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Detectar credenciales de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> usadas desde ubicaciones o de formas inusuales.</li>
+        <li>Detectar instancias o contenedores comprometidos: minería de criptomonedas, puertas traseras, escaneos de
+          puertos.</li>
+        <li>Detectar accesos sospechosos a buckets de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o desactivación de registros.</li>
+        <li>Analizar en busca de malware los ficheros que suben los usuarios a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</li>
+        <li>Base de la monitorización de seguridad de toda la organización.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>vulnerabilidades</strong> de software sin explotar: <a href="inspector.html">Inspector</a>.</li>
+        <li>Para descubrir <strong>datos sensibles</strong> en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>: <a href="macie.html">Macie</a>.</li>
+        <li>Para <strong>bloquear</strong> tráfico: <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a>, <a href="network-firewall.html">Network Firewall</a>, grupos de seguridad. GuardDuty detecta, no
+          bloquea.</li>
+        <li>Para <strong>investigar</strong> a fondo un hallazgo: <a href="detective.html">Detective</a>.</li>
+        <li>Para evaluar la configuración frente a normas: <a href="config.html">AWS Config</a> y <a href="security-hub.html">Security Hub</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Hay actividad maliciosa en mis cuentas ahora?</td><td>GuardDuty</td></tr>
+            <tr><td>¿Qué software tiene vulnerabilidades conocidas?</td><td><a href="inspector.html">Inspector</a></td></tr>
+            <tr><td>¿Dónde tengo datos sensibles en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>?</td><td><a href="macie.html">Macie</a></td></tr>
+            <tr><td>¿Qué pasó exactamente y qué alcance tuvo?</td><td><a href="detective.html">Detective</a></td></tr>
+            <tr><td>¿Cómo veo todos los hallazgos juntos?</td><td><a href="security-hub.html">Security Hub</a></td></tr>
+            <tr><td>¿Cómo bloqueo ataques web?</td><td><a href="waf.html"><abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por el <strong>volumen de datos analizados</strong>: eventos de <a href="cloudtrail.html">CloudTrail</a>, gigabytes de registros de
+        flujo y de <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr>, y lo que corresponda a cada plan de protección (eventos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, vCPU supervisadas, gigabytes
+        analizados en busca de malware). Hay un periodo de prueba gratuito de 30 días.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Es <strong>regional</strong>: conviene activarlo en todas las regiones, incluidas las que no usas, para
+          detectar actividad no autorizada en ellas.</li>
+        <li>No afecta al rendimiento de las cargas: analiza copias de los registros, sin agentes en las fuentes
+          básicas.</li>
+        <li>Usa roles vinculados al servicio; desactivarlo borra sus hallazgos y su configuración, mientras que
+          suspenderlo los conserva.</li>
+        <li>Los hallazgos se conservan 90 días; para más tiempo, exportarlos a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Detección de amenazas"</strong>, "actividad maliciosa", "comportamiento anómalo", "minería de
+          criptomonedas" o "credenciales comprometidas": GuardDuty.</li>
+        <li><strong>Analiza <a href="cloudtrail.html">CloudTrail</a>, registros de flujo de la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> y <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr></strong> sin que los tengas activados.</li>
+        <li><strong>"Responder automáticamente a un hallazgo"</strong>: <a href="eventbridge.html">EventBridge</a> con <a href="lambda.html">Lambda</a>.</li>
+        <li><strong>"Activarlo en toda la organización"</strong>: administrador delegado con alta automática.</li>
+        <li><strong>"Malware en los ficheros que se suben a un bucket"</strong>: protección contra malware para
+          <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li><strong>GuardDuty no bloquea ni parchea:</strong> detecta.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="guardduty"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html" target="_blank" rel="noopener">What is Amazon GuardDuty?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/guardduty/faqs" target="_blank" rel="noopener">Amazon GuardDuty FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/security/navigating-amazon-guardduty-protection-plans-and-extended-threat-detection/" target="_blank" rel="noopener">Navigating Amazon GuardDuty protection plans and Extended Threat Detection</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/security-tooling.html" target="_blank" rel="noopener">Security OU – Security Tooling account (AWS SRA)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
