@@ -376,6 +376,108 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 .quiz-question.is-acertada .chip-ok { display: inline-flex; }
 .quiz-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
 
+/* ── Juego de memoria (memoria.html) ─────────────────────── */
+.memo-filter-row { grid-template-columns: auto 1.4fr 1fr; align-items: end; }
+@media (max-width: 760px) { .memo-filter-row { grid-template-columns: 1fr; align-items: stretch; } }
+.memo-filter-row .segmented { align-self: flex-start; }
+.memo-filter-row .segmented button { padding: 10px 14px; font-size: 13.5px; }
+
+/* Marcador pegado bajo el menú: en tableros altos el resultado de cada jugada sigue a la vista. */
+.memo-hud {
+  position: sticky; top: var(--nav-h, 58px); scroll-margin-top: var(--nav-h, 58px); z-index: 40; display: grid; gap: 4px;
+  padding: 10px 0; margin-bottom: 12px; background: rgba(7, 10, 20, 0.92); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.memo-hud[hidden], .memo-final[hidden] { display: none; }
+.memo-marcador { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 13.5px; color: var(--text-muted); }
+.memo-marcador strong { color: var(--text); font-variant-numeric: tabular-nums; margin-left: 4px; }
+.memo-mensaje { margin: 0; font-size: 14px; min-height: 1.6em; color: var(--text-muted); }
+.memo-mensaje.ok { color: var(--green); }
+.memo-mensaje.ko { color: var(--magenta); }
+
+/* El tamaño del tablero fija el número de cartas, no la disposición: en pantallas estrechas las
+   columnas se reducen y el tablero crece en vertical, sin desplazamiento horizontal. */
+.memo-tablero {
+  display: grid; gap: 8px; margin: 0 auto;
+  grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr));
+}
+.memo-tablero > p { grid-column: 1 / -1; }
+.memo-tablero.memo-categorias { max-width: calc(var(--cols, 6) * 104px); }
+.memo-tablero.memo-funciones { max-width: calc(var(--cols, 4) * 200px); }
+@media (max-width: 760px) {
+  .memo-tablero { gap: 6px; }
+  .memo-tablero.memo-categorias { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .memo-tablero.memo-funciones { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  /* Con nombres hacen falta cartas más anchas; en modo difícil (solo icono) caben 6. */
+  .memo-tablero.memo-categorias:not(.memo-dificil) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .memo-tablero.memo-funciones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.memo-carta {
+  position: relative; display: block; min-width: 0; padding: 0; border: 0; background: none;
+  color: inherit; font: inherit; cursor: pointer; perspective: 600px;
+  aspect-ratio: 5 / 6; border-radius: var(--radius-sm);
+}
+a.memo-carta:hover { text-decoration: none; }
+.memo-dificil.memo-categorias .memo-carta { aspect-ratio: 1; }
+.memo-funciones .memo-carta { aspect-ratio: auto; height: 148px; }
+.memo-carta.is-hecha:not(a) { cursor: default; }
+.memo-inner { position: absolute; inset: 0; transition: transform .35s ease; transform-style: preserve-3d; }
+.memo-carta.is-vuelta .memo-inner { transform: rotateY(180deg); }
+.memo-dorso, .memo-cara {
+  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-sm); border: 1px solid var(--border-strong);
+}
+.memo-dorso {
+  display: grid; place-items: center; background: var(--gradient-radial), var(--surface-2);
+}
+.memo-dorso::after { content: "?"; font-size: 22px; font-weight: 800; color: var(--text-faint); }
+.memo-carta:hover .memo-dorso { border-color: var(--cyan); }
+.memo-cara {
+  transform: rotateY(180deg); background: var(--surface); overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; padding: 6px; text-align: center;
+}
+.memo-carta.is-hecha .memo-cara { border-color: rgba(74, 222, 128, 0.6); }
+.memo-carta.is-fallo .memo-cara { border-color: rgba(251, 113, 133, 0.7); }
+/* Iconos oficiales de AWS: solo se escalan, sin recolorear ni recortar. */
+.memo-icono { width: 52%; max-width: 48px; height: auto; flex: none; border-radius: 6px; }
+.memo-nombre {
+  font-size: 11px; line-height: 1.2; color: var(--text); overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+/* Modo difícil: el nombre solo aparece cuando la pareja ya está hecha. */
+.memo-dificil .memo-carta:not(.is-hecha) .memo-nombre { display: none; }
+.memo-dificil.memo-categorias .memo-carta.is-hecha .memo-icono { width: 40%; }
+/* Modo funciones: los dos tipos de carta se distinguen por la etiqueta y el color del borde. */
+.memo-funciones .memo-cara { padding: 10px; gap: 8px; }
+.memo-funciones .memo-icono { width: 44px; }
+.memo-funciones .memo-nombre { font-size: 13px; font-weight: 600; }
+.memo-tipo { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan-strong); }
+.memo-funcion .memo-tipo { color: var(--violet-strong); }
+.memo-funcion:not(.is-hecha):not(.is-fallo) .memo-cara { border-color: rgba(168, 85, 247, 0.55); }
+.memo-servicio:not(.is-hecha):not(.is-fallo) .memo-cara { border-color: rgba(34, 211, 238, 0.45); }
+.memo-frase { font-size: 12.5px; line-height: 1.35; color: var(--text); overflow-wrap: break-word; }
+@media (prefers-reduced-motion: reduce) { .memo-inner { transition: none; } }
+
+.memo-final {
+  margin-top: 32px; padding: 24px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.memo-final h2:focus { outline: none; }
+.memo-final h3 { margin: 24px 0 12px; }
+.memo-resumen { display: flex; flex-wrap: wrap; gap: 12px 32px; margin-bottom: 12px; }
+.memo-resumen div { display: grid; }
+.memo-resumen strong { font-size: 26px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.memo-resumen span { font-size: 13px; color: var(--text-muted); }
+.memo-marca { font-size: 14px; }
+.memo-repaso { margin: 0; padding-left: 1.2em; color: var(--text-muted); font-size: 14.5px; }
+.memo-repaso li { margin: 6px 0; }
+.memo-repaso-cat { margin: 16px 0 4px; font-size: 14.5px; font-weight: 600; }
+.memo-repaso-servicios { margin: 0; font-size: 14.5px; }
+
 /* ── Footer ──────────────────────────────────────────────── */
 footer { padding: 36px 0; border-top: 1px solid var(--border); }
 .footer-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }

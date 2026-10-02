@@ -33,6 +33,11 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   answers per service in `localStorage` (`apuntes-aws.progreso`). `quiz.js` writes it; a
   published service whose questions are all answered correctly shows as "Finalizado" in the
   catalog. It is derived in the browser, never stored in `servicios.json`.
+- `memoria.html` + `assets/memoria.js`: memory game with two modes, `categorias` (two service
+  cards match when they share the main `categoria`) and `funciones` (a service card matches the
+  card with its `frase`). Only services with `"icono": true`. Config lives in the URL
+  (`?modo=funciones&tablero=16&cert=DVA-C02&cat=a,b&dificil=1`); last config and best scores in
+  `localStorage` (`apuntes-aws.memoria`). Rules and sizes in `PLAN.md` (Fase 4).
 - `servicio.html` + `assets/servicio.js`: generic "Próximamente disponible" page
   (`?id=<id>`), used for every service with `estado: "pendiente"`. It redirects to
   `servicios/<id>.html` once the service is `publicado`.

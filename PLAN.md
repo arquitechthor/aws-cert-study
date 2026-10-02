@@ -17,8 +17,10 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). Las preguntas de los 6
   ya publicados antes de añadir CLF-C02 y DVA-C02 aún no cubren esas dos guías. La tarea 0.9 sigue
   programada para el 27/10/2026.
+- **Fase 4 (juego de memoria):** publicada el 2026-10-02 en `memoria.html` con los dos modos
+  (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
 - **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
-  parejas que se confunden fácilmente (lo demás está hecho). Después, seguir con las guías pendientes:
+  parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después, seguir con las guías pendientes:
   **Computación (7):** `app-runner` (aviso: sin clientes nuevos desde el 30/04/2026, AWS recomienda
   ECS Express Mode), `batch`, `lightsail`, `outposts` (racks de 42U y servidores de 1U/2U),
   `serverless-application-repository`, `vmware-cloud-on-aws` (aviso: AWS dejó de revenderlo el
@@ -30,7 +32,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   `appconfig` y `proton` (aviso: en retirada desde oct. 2025). Luego, la cola "Prioridad 0".
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-09-28
+- **Última actualización:** 2026-10-02
 
 ---
 
@@ -68,7 +70,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 aws-cert-study/
 ├── index.html                # portada: buscador + filtros + tarjetas de servicios
 ├── servicio.html             # "Próximamente disponible" genérica (?id=<id>)
-├── memoria.html              # juego de memoria por categorías (Fase 4)
+├── memoria.html              # juego de memoria: modos categorías y funciones (Fase 4)
 ├── servicios/<id>.html       # una página por servicio publicado
 ├── data/
 │   ├── servicios.json        # catálogo: única fuente de verdad
@@ -578,11 +580,11 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
       `revisar_texto.py` inserta la fila desde `servicios.json` y marca sus siglas; 15 siglas
       nuevas en el glosario); revisar a mano las parejas que se
       confunden fácilmente.
-- [ ] **4.12** Selector de modo (categorías / funciones) en el panel de configuración y en la URL.
-- [ ] **4.13** Generador del modo funciones: N servicios al azar del filtro que tengan icono y
+- [x] **4.12** Selector de modo (categorías / funciones) en el panel de configuración y en la URL.
+- [x] **4.13** Generador del modo funciones: N servicios al azar del filtro que tengan icono y
       `frase`, dos cartas por servicio, barajadas; tamaños 12 a 24 cartas.
-- [ ] **4.14** Diseño de las dos caras (servicio y función) legible a 375 px y en modo difícil.
-- [ ] **4.15** Accesibilidad del modo 2: `aria-label` con el tipo de carta ("Servicio: Amazon SQS"
+- [x] **4.14** Diseño de las dos caras (servicio y función) legible a 375 px y en modo difícil.
+- [x] **4.15** Accesibilidad del modo 2: `aria-label` con el tipo de carta ("Servicio: Amazon SQS"
       / "Función: …") y juego completo con teclado.
 
 **Tareas (comunes y modo 1):**
@@ -599,18 +601,26 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 - [x] **4.3** Aviso de marcas (el aviso legal general ya existe desde la tarea 1.12): "Amazon Web Services, AWS y los iconos de sus servicios son marcas
       de Amazon.com, Inc. o sus filiales. Este sitio no está afiliado ni patrocinado por AWS."
       Va en el pie del juego y del sitio, con la excepción de licencia en `LICENSE`/`README`.
-- [ ] **4.4** `memoria.html` + `memoria.js`: tablero con CSS grid responsive (columnas
+- [x] **4.4** `memoria.html` + `memoria.js`: tablero con CSS grid responsive (columnas
       según el ancho, máximo 6 en móvil, solo desplazamiento vertical), animación de volteo,
       contador de movimientos y temporizador.
-- [ ] **4.5** Panel de configuración: tamaño de tablero, certificación, categorías, modo difícil.
-- [ ] **4.6** Generador de tablero: N servicios distintos al azar con un número par por
+- [x] **4.5** Panel de configuración: tamaño de tablero, certificación, categorías, modo difícil.
+- [x] **4.6** Generador de tablero: N servicios distintos al azar con un número par por
       categoría; cálculo del tamaño máximo disponible para el filtro elegido.
-- [ ] **4.7** Pantalla final con resumen y, para cada pareja acertada, enlace a la página
+- [x] **4.7** Pantalla final con resumen y, para cada pareja acertada, enlace a la página
       del servicio (o a "Próximamente" si aún está pendiente).
-- [ ] **4.8** Accesibilidad: cartas como `<button>` con `aria-label` ("Carta boca abajo" /
+- [x] **4.8** Accesibilidad: cartas como `<button>` con `aria-label` ("Carta boca abajo" /
       nombre y categoría al voltear) y juego completo con teclado.
-- [ ] **4.9** Enlace al juego en la navegación y en la portada.
-- [ ] **4.10** Opcional: mejores marcas por tamaño de tablero en `localStorage`.
+- [x] **4.9** Enlace al juego en la navegación y en la portada.
+- [x] **4.10** Opcional: mejores marcas por tamaño de tablero en `localStorage`.
+      *Hecho el 2026-10-02 junto con 4.4–4.9 y 4.12–4.15. Detalles de implementación: clave
+      `apuntes-aws.memoria` (`config` y `marcas` por modo, número de cartas y modo difícil); filtro de
+      categorías en la URL como `cat=a,b`; si el filtro no llega al tamaño mínimo (36 o 12 cartas)
+      se ofrece un único tablero con las cartas que haya; en móvil (≤480 px) el modo categorías usa
+      4 columnas con nombres y 6 en modo difícil, y el modo funciones 2 columnas; el marcador y el
+      mensaje de cada jugada quedan pegados bajo el menú; en modo difícil el nombre aparece al
+      acertar la pareja; solo en el modo funciones la carta de servicio acertada pasa a ser enlace
+      (en el modo categorías los enlaces están en la pantalla final).*
 
 ---
 
@@ -638,3 +648,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-09-28 | Tarea 4.11 (primera parte): campo `frase` en los 164 servicios de `servicios.json` (60–90 caracteres, sin nombre, sigla ni id del servicio, distinguiendo vecinos como SQS/SNS, EBS/EFS, Athena/Redshift) y comprobador `scripts/revisar_frases.py`. Pendiente: mostrarla en guías, "Próximamente" y catálogo. |
 | 2026-09-28 | Tarea 4.11 (segunda parte): fila "En una frase:" en las 47 guías (la inserta `revisar_texto.py` desde `servicios.json`, con siglas marcadas), en "Próximamente" y en la plantilla; las tarjetas del catálogo muestran la frase en lugar del resumen; 15 siglas nuevas en el glosario. Menú homologado con `kopi-web` y la web personal: "Sobre mí" primero y sin el botón "Ir a Kopi". |
 | 2026-09-28 | Menú y pie homologados con `kopi-web` y la web personal: 24 px entre enlaces, 16 px de margen en móvil, enlace activo con `aria-current` (`nav.js`) y línea común "Kopi Tools · Apuntes AWS · Sobre mí" al final del pie. El buscador del catálogo también busca en la frase ("cola" encuentra SQS), con las coincidencias por nombre primero. |
+| 2026-10-02 | Fase 4: juego de memoria publicado (`memoria.html` + `assets/memoria.js`) con los modos categorías y funciones, panel de configuración (modo, certificación, tamaño, categorías, modo difícil) reflejado en la URL y recordado en `localStorage`, pantalla final con repaso y enlaces, mejores marcas, teclado (Tab, flechas, Intro) y `aria-label` por carta. Enlace "Memoria" en el menú de todas las páginas y botón en la portada; aviso legal actualizado. Probado en navegador a 1280 px y 375 px (sin desplazamiento horizontal). Tareas 4.4–4.10 y 4.12–4.15. |

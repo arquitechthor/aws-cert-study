@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego de memoria — Apuntes AWS</title>
+<meta name="description" content="Juego de memoria para aprender los servicios de AWS: empareja servicios de la misma categoría o cada servicio con la frase que describe lo que hace. Filtra por certificación y categoría.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/memoria.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Juego de memoria — Apuntes AWS">
+<meta property="og:description" content="Empareja servicios de AWS por categoría o por lo que hacen. Proyecto personal y educativo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/memoria.html">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="index.html#certificaciones">Certificaciones</a>
+      <a href="index.html#catalogo">Catálogo</a>
+      <a href="memoria.html" aria-current="page">Memoria</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <div class="section-head">
+      <h1>Juego de <span class="gradient-text">memoria</span></h1>
+      <p>Voltea las cartas de dos en dos y encuentra las parejas. Sirve para aprender a qué
+        categoría pertenece cada servicio de AWS y qué hace cada uno.</p>
+    </div>
+
+    <form class="filters" id="memo-config" onsubmit="return false">
+      <div class="filter-row memo-filter-row">
+        <div class="field">
+          <span class="field-label" id="m-modo-label">Modo</span>
+          <div class="segmented" id="m-modo" role="radiogroup" aria-labelledby="m-modo-label">
+            <button type="button" role="radio" aria-checked="true" data-modo="categorias">Categorías</button>
+            <button type="button" role="radio" aria-checked="false" data-modo="funciones">Funciones</button>
+          </div>
+        </div>
+        <label class="field">
+          <span class="field-label">Certificación</span>
+          <select class="select" id="m-cert">
+            <option value="">Todo el catálogo</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="field-label">Tamaño del tablero</span>
+          <select class="select" id="m-tablero"></select>
+        </label>
+      </div>
+      <p class="field-hint" id="m-ayuda" aria-live="polite"></p>
+      <div class="field">
+        <span class="field-label" id="m-cats-label">Categorías (puedes elegir varias)</span>
+        <div class="chips" id="m-cats" role="group" aria-labelledby="m-cats-label"></div>
+      </div>
+      <div class="filters-foot">
+        <div class="chips">
+          <button class="chip" type="button" id="m-dificil" aria-pressed="false"
+            title="Las cartas de servicio muestran solo el icono, sin el nombre">Modo difícil: solo iconos</button>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" id="m-nueva">Nueva partida</button>
+      </div>
+    </form>
+
+    <div class="memo-hud" id="memo-hud" hidden>
+      <div class="memo-marcador">
+        <span>Movimientos <strong id="memo-movimientos">0</strong></span>
+        <span>Parejas <strong id="memo-parejas">0/0</strong></span>
+        <span>Tiempo <strong id="memo-tiempo">0:00</strong></span>
+      </div>
+      <p class="memo-mensaje" id="memo-mensaje" aria-live="polite"></p>
+    </div>
+
+    <div class="memo-tablero" id="memo-tablero">
+      <p class="text-faint">Cargando…</p>
+    </div>
+
+    <div class="memo-final" id="memo-final" hidden></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/nav.js" defer></script>
+<script src="assets/datos.js" defer></script>
+<script src="assets/memoria.js" defer></script>
+</body>
+</html>
