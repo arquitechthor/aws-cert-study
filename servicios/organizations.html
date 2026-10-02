@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Organizations — Apuntes AWS</title>
+<meta name="description" content="Gestión central de varias cuentas de AWS: unidades organizativas, facturación unificada y políticas (SCP, RCP y otras) que se aplican a toda la organización. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/organizations.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Organizations — Apuntes AWS">
+<meta property="og:description" content="Gestión central de varias cuentas de AWS: unidades organizativas, facturación unificada y políticas (SCP, RCP y otras) que se aplican a toda la organización.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/organizations.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/organizations.svg" alt="" width="56" height="56"><span>AWS Organizations</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Agrupa cuentas en unidades, unifica la factura y aplica <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> a todas a la vez</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/organizations/" target="_blank" rel="noopener">Documentación de AWS Organizations ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Organizations agrupa varias cuentas de AWS en una <strong>organización</strong> que se administra desde un
+        solo sitio. Permite crear cuentas, ordenarlas en <strong>unidades organizativas</strong>, recibir <strong>una
+        sola factura</strong> y aplicar <strong>políticas</strong> que limitan lo que se puede hacer en todas las
+        cuentas a la vez. Es la base de cualquier estrategia multicuenta: separar cargas, entornos y equipos en cuentas
+        distintas es el aislamiento más fuerte que ofrece AWS.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Cuenta de administración</strong> (<em>management account</em>): la que crea la organización y paga la
+          factura. Conviene no desplegar cargas de trabajo en ella.</li>
+        <li><strong>Cuentas miembro:</strong> el resto. Se <strong>crean</strong> desde la organización o se
+          <strong>invitan</strong> cuentas existentes. Una cuenta solo pertenece a una organización.</li>
+        <li><strong>Raíz y <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr>:</strong> hay una única raíz, de la que cuelgan las <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr>, que se pueden anidar hasta
+          <strong>cinco niveles</strong>. Las políticas se asocian a la raíz, a una <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> o a una cuenta y se
+          <strong>heredan</strong> hacia abajo.</li>
+        <li><strong>Dos conjuntos de funciones:</strong> <strong>todas las funciones</strong> (<em>all features</em>, el
+          valor por defecto, necesario para las políticas) o solo <strong>facturación unificada</strong>. Se puede pasar
+          de la segunda a la primera, pero no al revés.</li>
+        <li><strong><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>:</strong> fija el <strong>máximo de permisos</strong> que pueden tener los usuarios y roles de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>
+          de las cuentas miembro. <strong>No concede permisos</strong>: el permiso efectivo es la intersección entre la
+          <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> y las políticas de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>. Afecta también al usuario raíz de las cuentas miembro, pero <strong>no a la cuenta
+          de administración</strong> ni a los roles vinculados a servicios.
+          <ul>
+            <li>Al activar las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>, todo lleva asociada <code>FullAWSAccess</code>. Lo habitual es añadir denegaciones
+              (<strong>lista de denegación</strong>); la alternativa es quitar <code>FullAWSAccess</code> y permitir
+              solo ciertos servicios (<strong>lista de permitidos</strong>).</li>
+            <li>Para que una acción esté permitida debe permitirla cada nivel, desde la raíz hasta la cuenta. Una
+              denegación explícita en cualquier nivel gana siempre.</li>
+          </ul>
+        </li>
+        <li><strong><abbr class="sigla sigla-1" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP<span class="sigla-exp"> (Resource Control Policy: política de Organizations que limita el acceso a los recursos)</span></abbr>:</strong> el equivalente para los <strong>recursos</strong>: fija el máximo de permisos sobre los
+          recursos de la organización (en un conjunto limitado de servicios), también frente a identidades
+          <strong>externas</strong>. Sirve para montar un perímetro de datos, por ejemplo "nadie de fuera de la
+          organización accede a nuestros buckets".</li>
+        <li><strong>Políticas de administración:</strong> <strong>declarativas</strong> (imponen una configuración base de
+          un servicio, por ejemplo bloquear el acceso público a las <abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr>), de <strong>copias de seguridad</strong>
+          (planes de <a href="../servicio.html?id=backup">AWS Backup</a> para toda la organización), de <strong>etiquetas</strong> (normalizan claves y valores)
+          y de exclusión de los servicios de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> (impiden que AWS use tu contenido para mejorarlos).</li>
+        <li><strong>Facturación unificada</strong> (<em>consolidated billing</em>): una factura para todas las cuentas. El
+          consumo se <strong>suma</strong> para los descuentos por volumen, y las instancias reservadas y los Savings
+          Plans se comparten entre cuentas (se puede desactivar por cuenta).</li>
+        <li><strong>Acceso de confianza y administrador delegado:</strong> otros servicios (<a href="cloudtrail.html">CloudTrail</a>, <a href="config.html">AWS Config</a>, <a href="../servicio.html?id=guardduty">GuardDuty</a>,
+          <a href="../servicio.html?id=security-hub">Security Hub</a>, <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>, <a href="../servicio.html?id=ram"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a>, <a href="cloudformation.html">CloudFormation</a> StackSets…) operan sobre toda la organización, y su
+          administración se puede delegar en una cuenta miembro para no usar la de administración.</li>
+        <li><strong><code>OrganizationAccountAccessRole</code>:</strong> rol de administrador que Organizations crea en las
+          cuentas que <em>crea</em>. En las cuentas <em>invitadas</em> no existe: hay que crearlo a mano.</li>
+        <li><strong>Cuotas:</strong> 10 cuentas por defecto (ampliable), 10 <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> asociadas directamente a cada raíz, <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> o
+          cuenta, y 10&nbsp;240 caracteres por <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Separar producción, desarrollo, seguridad y registros en cuentas distintas, con <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> por entorno o por unidad
+          de negocio.</li>
+        <li>Prohibir acciones en toda la organización: usar regiones no aprobadas, desactivar <a href="cloudtrail.html">CloudTrail</a>, salir de la
+          organización.</li>
+        <li>Una sola factura con descuentos por volumen y reservas compartidas.</li>
+        <li>Activar servicios de seguridad en todas las cuentas y un registro de auditoría único (<em>organization
+          trail</em>).</li>
+        <li>Limitar una política de recurso a la organización con la clave de condición
+          <code>aws:PrincipalOrgID</code>, sin enumerar cuentas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>conceder</strong> permisos: una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> solo limita. Los permisos se dan con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> o con IAM Identity
+          Center.</li>
+        <li>Para montar de golpe un entorno multicuenta con buenas prácticas ya aplicadas: <a href="control-tower.html">Control Tower</a>, que se apoya en
+          Organizations.</li>
+        <li>Para <strong>detectar</strong> recursos mal configurados que ya existen: <a href="config.html">AWS Config</a>. Las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> impiden acciones,
+          no auditan el estado.</li>
+        <li>Para restringir la cuenta de administración: las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> no le afectan; por eso se deja sin cargas de trabajo.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Mecanismo</th><th>Sobre qué actúa</th><th>¿Concede permisos?</th></tr></thead>
+          <tbody>
+            <tr><td><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr></td><td>Identidades de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> de las cuentas miembro</td><td>No, solo pone el techo</td></tr>
+            <tr><td><abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr></td><td>Recursos de las cuentas miembro, también frente a identidades externas</td><td>No, solo pone el techo</td></tr>
+            <tr><td>Política de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> basada en identidad</td><td>Un usuario, grupo o rol</td><td>Sí</td></tr>
+            <tr><td>Límite de permisos (<em>permissions boundary</em>)</td><td>Un usuario o rol concreto</td><td>No, solo pone el techo</td></tr>
+            <tr><td><a href="control-tower.html">Control Tower</a></td><td>Toda la organización: usa <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>, <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> y reglas de <a href="config.html">AWS Config</a> por ti</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Organizations es <strong>gratuito</strong>. Se paga el consumo de cada cuenta, agregado en la factura de la
+        cuenta de administración.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>La cuenta de administración es la más sensible: <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr> en el usuario raíz, acceso mínimo y ninguna carga de
+          trabajo.</li>
+        <li>Las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> se evalúan antes que las políticas de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>: ni un administrador de una cuenta miembro puede saltarse
+          una denegación.</li>
+        <li>Es un servicio <strong>global</strong> (su <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> se aloja en us-east-1): la estructura y las políticas se
+          aplican en todas las regiones.</li>
+        <li>Una cuenta creada desde la organización debe tener al menos unos días de antigüedad para poder sacarla, y
+          necesita datos de pago propios para funcionar como cuenta independiente.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Impedir que cualquier usuario, incluso un administrador, haga X en varias cuentas"</strong>: <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> en
+          la <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> o en la raíz.</li>
+        <li><strong>Una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> que permite algo no basta</strong>: además hace falta una política de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> que lo conceda.</li>
+        <li><strong>La cuenta de administración queda fuera</strong> de las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> y de las <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr>.</li>
+        <li><strong>"Impedir el acceso a nuestros recursos desde fuera de la organización"</strong>: <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> (o
+          <code>aws:PrincipalOrgID</code> en la política del recurso).</li>
+        <li><strong>"Descuentos por volumen sumando el consumo de todas las cuentas"</strong> o "una sola factura":
+          facturación unificada.</li>
+        <li><strong>"Obligar a etiquetar de forma coherente"</strong>: políticas de etiquetas (normalizan); para
+          <em>impedir</em> crear recursos sin etiqueta hace falta además una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>.</li>
+        <li><strong>"Compartir subredes o un <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> con toda la organización"</strong>: <a href="../servicio.html?id=ram"><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></a>, con el uso
+          compartido dentro de la organización activado.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="organizations"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html" target="_blank" rel="noopener">What is AWS Organizations?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_reference_limits.html" target="_blank" rel="noopener">Quotas and service limits for AWS Organizations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_authorization_policies.html" target="_blank" rel="noopener">Authorization policies in AWS Organizations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html" target="_blank" rel="noopener">Service control policies (SCPs)</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html" target="_blank" rel="noopener">Enabling all features for an organization</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/organizations/faqs/" target="_blank" rel="noopener">AWS Organizations FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html" target="_blank" rel="noopener">Consolidating billing for AWS Organizations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

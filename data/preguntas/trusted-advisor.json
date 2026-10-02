@@ -1,0 +1,178 @@
+[
+  {
+    "id": "trusted-advisor-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS revisa una cuenta y ofrece recomendaciones basadas en buenas prácticas para reducir costes, mejorar la seguridad y aumentar la tolerancia a fallos?",
+    "opciones": [
+      "AWS Trusted Advisor.",
+      "AWS CloudTrail.",
+      "Amazon Macie.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Trusted Advisor compara la cuenta con buenas prácticas en seis categorías, entre ellas coste, seguridad y tolerancia a fallos. CloudTrail registra llamadas a la API, Macie descubre datos sensibles en S3 y Artifact ofrece informes de cumplimiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/get-started-with-aws-trusted-advisor.html"
+    ]
+  },
+  {
+    "id": "trusted-advisor-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa con el plan de soporte básico entra en AWS Trusted Advisor. ¿Qué comprobaciones tiene disponibles?",
+    "opciones": [
+      "Todas las comprobaciones de las seis categorías, sin restricciones.",
+      "Ninguna: Trusted Advisor no está disponible hasta contratar un plan de pago.",
+      "Solo las de optimización de costes y las de rendimiento.",
+      "Las de límites de servicio y un grupo reducido de comprobaciones de seguridad y tolerancia a fallos."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Todas las cuentas ven las comprobaciones de límites de servicio y una selección básica de seguridad y tolerancia a fallos. El conjunto completo, con optimización de costes y rendimiento, requiere un plan de soporte de pago de nivel Business o superior.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html"
+    ]
+  },
+  {
+    "id": "trusted-advisor-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué categoría de AWS Trusted Advisor señala instancias de EC2 con poco uso y direcciones IP elásticas sin asociar?",
+    "opciones": [
+      "Tolerancia a fallos.",
+      "Optimización de costes.",
+      "Límites de servicio.",
+      "Seguridad."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La categoría de optimización de costes destaca recursos sin usar o infrautilizados que se pueden eliminar o reducir. Tolerancia a fallos revisa la redundancia, límites de servicio las cuotas y seguridad la exposición.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/get-started-with-aws-trusted-advisor.html"
+    ]
+  },
+  {
+    "id": "trusted-advisor-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un arquitecto quiere una lista rápida de recursos que generan gasto sin aportar valor (volúmenes de EBS sin asociar, balanceadores sin tráfico) en una cuenta con plan de soporte de nivel Business. ¿Qué herramienta la ofrece directamente?",
+    "opciones": [
+      "AWS Budgets.",
+      "AWS Config.",
+      "Las comprobaciones de optimización de costes de AWS Trusted Advisor.",
+      "Amazon CloudWatch Logs Insights."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Trusted Advisor incluye comprobaciones de optimización de costes que detectan recursos ociosos. Budgets avisa cuando el gasto supera un umbral, Config evalúa reglas de configuración y Logs Insights consulta logs.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/get-started-with-aws-trusted-advisor.html"
+    ]
+  },
+  {
+    "id": "trusted-advisor-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Antes de una campaña, una empresa quiere que se la avise si el número de instancias de EC2 en uso se acerca a la cuota de la cuenta. ¿Qué opción lo cubre sin desarrollo propio?",
+    "opciones": [
+      "Las comprobaciones de límites de servicio de AWS Trusted Advisor.",
+      "AWS Artifact.",
+      "Amazon Inspector.",
+      "Los registros de flujo de la VPC."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La categoría de límites de servicio compara el uso con las cuotas y avisa al acercarse a ellas. El aumento se solicita después en Service Quotas. Artifact, Inspector y los registros de flujo no vigilan cuotas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/get-started-with-aws-trusted-advisor.html"
+    ]
+  },
+  {
+    "id": "trusted-advisor-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "El equipo de FinOps de una organización con 150 cuentas quiere un informe único con los resultados de AWS Trusted Advisor de todas ellas. ¿Qué debe usar?",
+    "opciones": [
+      "Iniciar sesión cuenta por cuenta y exportar cada informe.",
+      "Un agregador de AWS Config.",
+      "AWS Cost and Usage Report.",
+      "La vista de organización de Trusted Advisor, desde la cuenta de administración."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La vista de organización genera un informe agregado de las comprobaciones de todas las cuentas de la organización. El agregador de Config reúne datos de Config, no de Trusted Advisor, y Cost and Usage Report detalla la facturación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/organizational-view.html"
+    ]
+  },
+  {
+    "id": "trusted-advisor-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa con Enterprise Support quiere que, cuando una comprobación de seguridad de AWS Trusted Advisor pase a estado de alerta, se abra automáticamente una incidencia en su herramienta interna. ¿Cómo se consigue?",
+    "opciones": [
+      "Con una regla de Amazon EventBridge sobre los cambios de estado de las comprobaciones, que invoque una función Lambda.",
+      "No es posible: los resultados de Trusted Advisor solo se pueden consultar en la consola.",
+      "Con una SCP asociada a la raíz que reenvíe los hallazgos a la herramienta.",
+      "Con un agregador de AWS Config que recoja las comprobaciones de Trusted Advisor."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con los planes que dan acceso completo, Trusted Advisor emite eventos de cambio de estado que EventBridge puede enrutar a Lambda u otros destinos. Las SCP limitan permisos y el agregador de Config no recibe eventos de Trusted Advisor.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html"
+    ]
+  },
+  {
+    "id": "trusted-advisor-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Un equipo que despliega una aplicación de IA generativa quiere una revisión automática de su cuenta que señale buckets de S3 con datos accesibles públicamente y la falta de MFA en el usuario raíz. ¿Qué servicio ofrece esas comprobaciones de seguridad?",
+    "opciones": [
+      "Amazon SageMaker Model Monitor.",
+      "AWS Trusted Advisor.",
+      "Amazon Bedrock Guardrails.",
+      "Amazon Rekognition."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las comprobaciones de seguridad de Trusted Advisor incluyen los permisos de los buckets de S3 y el MFA del usuario raíz. Model Monitor vigila la calidad de los modelos, Bedrock Guardrails filtra contenido y Rekognition analiza imágenes.",
+    "fuentes": [
+      "https://aws.amazon.com/premiumsupport/faqs/"
+    ]
+  }
+]

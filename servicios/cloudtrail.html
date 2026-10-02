@@ -88,7 +88,7 @@
           <strong><a href="cloudwatch.html">CloudWatch</a> Logs</strong> para crear filtros de métricas y alarmas. Puede cubrir todas
           las regiones.</li>
         <li><strong>Registro de organización:</strong> creado en la cuenta de administración (o en una
-          administradora delegada), registra todas las cuentas de <a href="../servicio.html?id=organizations">AWS Organizations</a> y los miembros no
+          administradora delegada), registra todas las cuentas de <a href="organizations.html">AWS Organizations</a> y los miembros no
           pueden desactivarlo.</li>
         <li><strong>Validación de integridad de los ficheros de registro:</strong> ficheros de
           resumen firmados que permiten demostrar que nadie modificó ni borró los registros.</li>
@@ -112,7 +112,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para métricas de rendimiento o registros de la aplicación: <a href="cloudwatch.html">CloudWatch</a>.</li>
-        <li>Para ver el historial de configuración de un recurso y si cumple reglas: <a href="../servicio.html?id=config">AWS Config</a>.</li>
+        <li>Para ver el historial de configuración de un recurso y si cumple reglas: <a href="config.html">AWS Config</a>.</li>
         <li>Para el tráfico de red <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>: <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> Flow Logs.</li>
         <li>Para detectar amenazas automáticamente: <a href="../servicio.html?id=guardduty">GuardDuty</a> (que analiza, entre otros, los eventos de CloudTrail).</li>
       </ul>
@@ -123,7 +123,7 @@
           <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
           <tbody>
             <tr><td>¿Quién hizo este cambio y cuándo?</td><td>CloudTrail</td></tr>
-            <tr><td>¿Cómo estaba configurado el recurso el martes y cumple la norma?</td><td><a href="../servicio.html?id=config">AWS Config</a></td></tr>
+            <tr><td>¿Cómo estaba configurado el recurso el martes y cumple la norma?</td><td><a href="config.html">AWS Config</a></td></tr>
             <tr><td>¿Cuánta <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> usa y qué dicen los registros de la aplicación?</td><td><a href="cloudwatch.html">CloudWatch</a></td></tr>
             <tr><td>¿Qué tráfico de red se aceptó o rechazó?</td><td><a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> Flow Logs</td></tr>
             <tr><td>¿Hay actividad maliciosa?</td><td><a href="../servicio.html?id=guardduty">GuardDuty</a></td></tr>
@@ -154,7 +154,7 @@
         <li><strong>"Demostrar que los registros no se han alterado"</strong>: validación de integridad.</li>
         <li><strong>"Todas las cuentas de la organización, sin que puedan desactivarlo"</strong>: trail de organización.</li>
         <li><strong>"Alarma cuando se usa el usuario raíz"</strong>: CloudTrail hacia <a href="cloudwatch.html">CloudWatch</a> Logs con filtro de métrica, o <a href="eventbridge.html">EventBridge</a>.</li>
-        <li><strong>"Historial de configuración de un recurso"</strong>: <a href="../servicio.html?id=config">AWS Config</a>, no CloudTrail.</li>
+        <li><strong>"Historial de configuración de un recurso"</strong>: <a href="config.html">AWS Config</a>, no CloudTrail.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

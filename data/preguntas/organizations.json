@@ -1,0 +1,200 @@
+[
+  {
+    "id": "organizations-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa tiene doce cuentas de AWS y quiere recibir una única factura y beneficiarse de los descuentos por volumen sumando el consumo de todas. ¿Qué debe usar?",
+    "opciones": [
+      "AWS Budgets.",
+      "La facturación unificada de AWS Organizations.",
+      "AWS Cost Explorer.",
+      "AWS Trusted Advisor."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La facturación unificada de Organizations agrega el consumo de todas las cuentas en la factura de la cuenta de administración y aplica los descuentos por volumen sobre el total. Budgets avisa de desviaciones, Cost Explorer analiza el gasto y Trusted Advisor da recomendaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html"
+    ]
+  },
+  {
+    "id": "organizations-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué función de AWS Organizations permite limitar de forma centralizada los servicios y acciones que pueden usarse en las cuentas miembro?",
+    "opciones": [
+      "Los grupos de seguridad.",
+      "Las políticas de bucket.",
+      "Los roles vinculados a servicios.",
+      "Las políticas de control de servicios (SCP)."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las SCP fijan el máximo de permisos disponible en las cuentas de una organización. Los grupos de seguridad filtran tráfico de red, las políticas de bucket controlan el acceso a un bucket de S3 y los roles vinculados a servicios los usan los propios servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+    ]
+  },
+  {
+    "id": "organizations-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una SCP asociada a una OU permite todas las acciones de Amazon S3. Un usuario de una cuenta de esa OU no tiene ninguna política de IAM. ¿Puede leer objetos de un bucket de su cuenta?",
+    "opciones": [
+      "Sí, porque la SCP de la OU le concede el permiso de lectura sobre S3.",
+      "Sí, pero solo desde la consola y sobre buckets creados después de asociar la SCP.",
+      "No: la SCP solo marca el máximo; además necesita una política que le conceda el permiso.",
+      "No, porque las SCP no se aplican a S3 y hay que usar una política de bucket."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Una SCP nunca concede permisos: delimita lo máximo que pueden conceder las políticas de IAM. El permiso efectivo es la intersección de ambas, así que sin una política que lo permita, el acceso se deniega.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+    ]
+  },
+  {
+    "id": "organizations-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa quiere garantizar que nadie, ni siquiera los administradores de las cuentas miembro, pueda crear recursos fuera de dos regiones aprobadas. ¿Cuál es la solución con menos esfuerzo operativo?",
+    "opciones": [
+      "Asociar a la raíz o a las OU una SCP que deniegue las acciones cuando la región solicitada no sea una de las aprobadas.",
+      "Añadir una política de denegación por región a cada usuario y rol de IAM de cada cuenta.",
+      "Crear una regla de AWS Config que detecte los recursos creados en otras regiones y avise.",
+      "Desactivar las demás regiones desde la configuración de la cuenta de administración."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una SCP con una condición sobre la región solicitada se aplica a todas las identidades de las cuentas afectadas y nadie de esas cuentas puede saltársela. Las políticas usuario a usuario no escalan, Config solo detecta después y lo que se configure en la cuenta de administración no restringe a las miembro.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+    ]
+  },
+  {
+    "id": "organizations-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una cuenta de una organización tiene Savings Plans sin aprovechar del todo. ¿Qué ocurre con la parte no usada si la organización tiene la facturación unificada con el uso compartido activado?",
+    "opciones": [
+      "Se pierde al final de cada hora, porque el compromiso es por cuenta.",
+      "Se reembolsa a final de mes en la factura de la cuenta compradora.",
+      "Solo puede aplicarse al consumo de la cuenta de administración.",
+      "Se aplica al consumo que cumpla las condiciones en otras cuentas de la organización."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con la facturación unificada, los descuentos de Savings Plans e instancias reservadas se comparten: lo que no usa la cuenta compradora se aplica al uso de otras cuentas. El uso compartido puede desactivarse por cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html"
+    ]
+  },
+  {
+    "id": "organizations-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Tras asociar a la raíz una SCP que deniega desactivar AWS CloudTrail, un administrador comprueba que desde la cuenta de administración todavía se puede detener el registro. ¿Por qué?",
+    "opciones": [
+      "Porque las SCP tardan 24 horas en propagarse a todas las cuentas.",
+      "Porque las SCP no afectan a los usuarios ni roles de la cuenta de administración.",
+      "Porque las SCP solo se pueden asociar a OU y cuentas, no a la raíz.",
+      "Porque CloudTrail es un servicio global y queda fuera de las SCP."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las SCP no restringen la cuenta de administración, aunque estén asociadas a la raíz. Por eso se recomienda no usar esa cuenta para cargas de trabajo y protegerla con controles propios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html"
+    ]
+  },
+  {
+    "id": "organizations-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa quiere asegurarse de que ninguna identidad ajena a la organización pueda acceder a sus buckets de S3, aunque el equipo de una cuenta escriba una política de bucket demasiado abierta. ¿Qué mecanismo lo impone de forma centralizada?",
+    "opciones": [
+      "Una SCP que deniegue s3:GetObject a los principales de fuera de la organización.",
+      "Una política de etiquetas que marque los buckets como internos.",
+      "Una política de control de recursos (RCP) que deniegue el acceso a principales de fuera de la organización.",
+      "Un límite de permisos (permissions boundary) en cada rol de las cuentas miembro."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las RCP limitan los permisos sobre los recursos de la organización y se aplican también a identidades externas. Una SCP solo afecta a las identidades de las propias cuentas miembro, no a principales de fuera; las políticas de etiquetas normalizan etiquetas y los límites de permisos actúan sobre identidades concretas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_authorization_policies.html"
+    ]
+  },
+  {
+    "id": "organizations-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa adquirida tiene una cuenta de AWS que se invita a la organización. El equipo central no consigue asumir en ella el rol OrganizationAccountAccessRole. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "El rol solo se crea automáticamente en las cuentas creadas desde la organización; en las invitadas hay que crearlo.",
+      "Las cuentas invitadas no admiten roles entre cuentas hasta pasar a todas las funciones.",
+      "El rol tarda unos días en estar disponible tras aceptar la invitación.",
+      "Hay que activar antes la facturación unificada para que el rol se propague."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Organizations crea ese rol de administrador solo en las cuentas que crea. En una cuenta invitada hay que crear manualmente un rol que confíe en la cuenta de administración.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html"
+    ]
+  },
+  {
+    "id": "organizations-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "El equipo de seguridad debe administrar Amazon GuardDuty y AWS Security Hub para toda la organización sin usar la cuenta de administración a diario. ¿Qué debe configurarse?",
+    "opciones": [
+      "Una SCP que permita esos servicios en la cuenta de seguridad.",
+      "Un usuario de IAM compartido en la cuenta de administración.",
+      "Una organización independiente para seguridad.",
+      "Una cuenta miembro como administrador delegado de esos servicios."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los servicios integrados con Organizations permiten registrar una cuenta miembro como administrador delegado, de modo que se gestionan para toda la organización sin entrar en la cuenta de administración. Las SCP no conceden permisos y compartir un usuario va contra las buenas prácticas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html"
+    ]
+  }
+]

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Control Tower — Apuntes AWS</title>
+<meta name="description" content="Monta y gobierna un entorno multicuenta (landing zone) con buenas prácticas: orquesta Organizations, IAM Identity Center y Config, y aplica controles preventivos, de detección y proactivos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/control-tower.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Control Tower — Apuntes AWS">
+<meta property="og:description" content="Monta y gobierna un entorno multicuenta (landing zone) con buenas prácticas: orquesta Organizations, IAM Identity Center y Config, y aplica controles preventivos, de detección y proactivos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/control-tower.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/control-tower.svg" alt="" width="56" height="56"><span>AWS Control Tower</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Monta una landing zone multicuenta con barreras de protección predefinidas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/controltower/" target="_blank" rel="noopener">Documentación de AWS Control Tower ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Control Tower es la forma más rápida de montar y gobernar un entorno de <strong>varias cuentas</strong>
+        siguiendo las buenas prácticas de AWS. No sustituye a otros servicios: los <strong>orquesta</strong>. Usa
+        <a href="organizations.html">Organizations</a> para las cuentas y las <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr>, <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a> para el acceso, <a href="../servicio.html?id=service-catalog">Service Catalog</a> para crear cuentas,
+        <a href="cloudformation.html">CloudFormation</a> StackSets para desplegar la configuración base, y <a href="config.html">AWS Config</a> y <a href="cloudtrail.html">CloudTrail</a> para vigilar. El resultado
+        es una <strong><em>landing zone</em></strong>: un entorno multicuenta ya preparado, con registro centralizado y
+        reglas de gobierno aplicadas.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong><em>Landing zone</em>:</strong> el contenedor de toda la organización gobernada: <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr>, cuentas, usuarios
+          y controles. Se crea desde la cuenta de administración de <a href="organizations.html">Organizations</a> y tiene versiones que se
+          actualizan.</li>
+        <li><strong>Cuentas compartidas:</strong> además de la de administración, lo habitual es una cuenta de
+          <strong>archivo de registros</strong> (<em>Log Archive</em>, con los logs de <a href="cloudtrail.html">CloudTrail</a> y <a href="config.html">AWS Config</a> de todas las
+          cuentas) y otra de <strong>auditoría</strong> (<em>Audit</em>, con acceso entre cuentas para el equipo de
+          seguridad), dentro de una <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> de seguridad. En las versiones recientes de la landing zone esa estructura ya no
+          es obligatoria y puedes definir la tuya.</li>
+        <li><strong>Controles</strong> (antes <em>guardrails</em>): reglas de gobierno que se activan <strong>sobre una
+          <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr></strong> y afectan a todas sus cuentas. Hay tres comportamientos:
+          <ul>
+            <li><strong>Preventivos:</strong> impiden la acción. Se implementan con <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> o <abbr class="sigla sigla-1" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP<span class="sigla-exp"> (Resource Control Policy: política de Organizations que limita el acceso a los recursos)</span></abbr> de Organizations.</li>
+            <li><strong>De detección:</strong> señalan los recursos que incumplen. Se implementan con reglas de
+              AWS Config.</li>
+            <li><strong>Proactivos:</strong> revisan los recursos <em>antes</em> de que <a href="cloudformation.html">CloudFormation</a> los cree y
+              bloquean los que no cumplen. Se implementan con <em>hooks</em> de CloudFormation.</li>
+          </ul>
+        </li>
+        <li><strong>Nivel de recomendación:</strong> cada control es <strong>obligatorio</strong> (siempre activo),
+          <strong>muy recomendado</strong> u <strong>optativo</strong>.</li>
+        <li><strong>Account Factory:</strong> la "máquina expendedora" de cuentas: crea cuentas nuevas ya inscritas, con
+          la configuración base y los controles de su <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr>. Está construida sobre <a href="../servicio.html?id=service-catalog">Service Catalog</a>. Con <strong>Account
+          Factory for Terraform</strong> (AFT) las cuentas se piden desde un pipeline de Terraform.</li>
+        <li><strong>Inscripción:</strong> las <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> y cuentas ya existentes se pueden <strong>registrar</strong> para que
+          queden bajo gobierno.</li>
+        <li><strong>Desviación</strong> (<em>drift</em>): cambios hechos por fuera de Control Tower (mover una cuenta de
+          <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr>, tocar una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> gestionada) que dejan la landing zone en un estado inesperado. Se detectan y hay que
+          repararlos.</li>
+        <li><strong>Panel:</strong> vista única de las cuentas, los controles activos y los recursos no conformes.</li>
+        <li><strong>Control de denegación de regiones:</strong> impide operar en las regiones que no elijas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Empezar una estrategia multicuenta desde cero en horas en lugar de semanas.</li>
+        <li>Dar a los equipos cuentas nuevas en autoservicio que nacen ya conformes.</li>
+        <li>Imponer residencia de datos limitando las regiones.</li>
+        <li>Centralizar registros y auditoría para toda la organización.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Con una o dos cuentas y sin requisitos de gobierno: basta <a href="organizations.html">Organizations</a> (o ni eso).</li>
+        <li>Si necesitas una estructura muy a medida que choca con lo que Control Tower gestiona: puedes construirla
+          directamente con Organizations, <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>, <a href="config.html">AWS Config</a> y StackSets, a cambio de más trabajo.</li>
+        <li>Para personalizaciones propias dentro de Control Tower, usa los mecanismos previstos (personalizaciones de
+          la landing zone, AFT) y no modifiques a mano los recursos que gestiona.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Entorno multicuenta completo con buenas prácticas ya aplicadas y creación de cuentas estandarizada</td><td>Control Tower</td></tr>
+            <tr><td>Solo agrupar cuentas, factura única y políticas escritas por ti</td><td><a href="organizations.html">Organizations</a></td></tr>
+            <tr><td>Solo evaluar la configuración de los recursos</td><td><a href="config.html">AWS Config</a></td></tr>
+            <tr><td>Solo inicio de sesión único en varias cuentas</td><td><a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a></td></tr>
+            <tr><td>Catálogo de productos aprobados dentro de las cuentas</td><td><a href="../servicio.html?id=service-catalog">Service Catalog</a></td></tr>
+            <tr><td>Vista agregada de hallazgos de seguridad</td><td><a href="../servicio.html?id=security-hub">Security Hub</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Control Tower <strong>no tiene coste adicional</strong>. Se pagan los servicios que activa y usa: las reglas y
+        los elementos de configuración de <a href="config.html">AWS Config</a>, los registros de <a href="cloudtrail.html">CloudTrail</a>, el almacenamiento en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> de los logs,
+        <a href="../servicio.html?id=service-catalog">Service Catalog</a>… En cuentas con recursos efímeros, el coste de AWS Config puede crecer.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los controles preventivos <strong>no se aplican a la cuenta de administración</strong> (es la misma
+          limitación de las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>).</li>
+        <li>Los controles obligatorios protegen los propios recursos de gobierno: nadie en las cuentas miembro puede
+          desactivar el registro ni borrar el archivo de logs.</li>
+        <li>Se elige una <strong>región de origen</strong> (<em>home region</em>) y las regiones gobernadas; los controles
+          de detección solo actúan en las regiones gobernadas.</li>
+        <li>El acceso de las personas se gestiona con <a href="../servicio.html?id=iam-identity-center">IAM Identity Center</a>, con su directorio propio o conectado a un
+          proveedor de identidad externo.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Configurar rápidamente un entorno multicuenta seguro siguiendo buenas prácticas"</strong> o
+          "<em>landing zone</em>": Control Tower.</li>
+        <li><strong>Preventivo = <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr></strong> (o <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr>), <strong>de detección = regla de <a href="config.html">AWS Config</a></strong>,
+          <strong>proactivo = hook de <a href="cloudformation.html">CloudFormation</a></strong>.</li>
+        <li><strong>"Crear cuentas nuevas estandarizadas en autoservicio"</strong>: Account Factory.</li>
+        <li><strong>Control Tower se apoya en <a href="organizations.html">Organizations</a></strong>, no lo reemplaza: se puede activar sobre una
+          organización existente e inscribir sus cuentas.</li>
+        <li><strong>"Restringir las regiones en toda la organización con el menor esfuerzo"</strong>, si ya hay Control
+          Tower: el control de denegación de regiones.</li>
+        <li><strong>Cambios hechos directamente en Organizations</strong> sobre recursos gestionados provocan
+          desviación.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="control-tower"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html" target="_blank" rel="noopener">What Is AWS Control Tower?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/controltower/latest/userguide/how-control-tower-works.html" target="_blank" rel="noopener">How AWS Control Tower works</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/controltower/latest/controlreference/controls.html" target="_blank" rel="noopener">About controls in AWS Control Tower</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/deploy-and-manage-aws-control-tower-controls-by-using-terraform.html" target="_blank" rel="noopener">Deploy and manage AWS Control Tower controls by using Terraform</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/controltower/latest/userguide/pricing.html" target="_blank" rel="noopener">Pricing</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/controltower/faqs/" target="_blank" rel="noopener">AWS Control Tower FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

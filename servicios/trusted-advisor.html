@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Trusted Advisor — Apuntes AWS</title>
+<meta name="description" content="Revisa tu cuenta frente a las buenas prácticas de AWS y recomienda mejoras de coste, rendimiento, seguridad, tolerancia a fallos, cuotas y excelencia operativa. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/trusted-advisor.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Trusted Advisor — Apuntes AWS">
+<meta property="og:description" content="Revisa tu cuenta frente a las buenas prácticas de AWS y recomienda mejoras de coste, rendimiento, seguridad, tolerancia a fallos, cuotas y excelencia operativa.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/trusted-advisor.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/trusted-advisor.svg" alt="" width="56" height="56"><span>AWS Trusted Advisor</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Revisa tu cuenta y recomienda ahorros, mejoras de seguridad y límites a punto de agotarse</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html" target="_blank" rel="noopener">Documentación de AWS Trusted Advisor ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> AWS está cambiando sus planes de soporte. Los planes
+        Developer, Business y Enterprise On-Ramp se retiran el 01/01/2027, y el conjunto completo de comprobaciones de
+        Trusted Advisor pasa a estar ligado a <strong>Business Support+</strong>, <strong>Enterprise Support</strong> y
+        <strong>Unified Operations</strong>. Las guías de examen vigentes siguen hablando de "Business o Enterprise" como
+        los planes con todas las comprobaciones: la idea que se pregunta es la misma (el plan básico solo ve una
+        parte).</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Trusted Advisor inspecciona tu cuenta y la compara con las <strong>buenas prácticas</strong> que AWS ha
+        aprendido de sus clientes. El resultado es una lista de <strong>comprobaciones</strong> (<em>checks</em>) con un
+        semáforo: acción recomendada (rojo), conviene investigar (amarillo) o sin problemas (verde). Trusted Advisor
+        <strong>recomienda, no cambia nada</strong>: aplicar la mejora es cosa tuya.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Seis categorías de comprobaciones:</strong>
+          <ul>
+            <li><strong>Optimización de costes:</strong> recursos sin usar o infrautilizados (instancias ociosas,
+              volúmenes de <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> sin asociar, direcciones <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> elásticas sueltas) y oportunidades de reserva.</li>
+            <li><strong>Rendimiento:</strong> recursos sobrecargados o mal dimensionados.</li>
+            <li><strong>Seguridad:</strong> buckets de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> abiertos, grupos de seguridad con puertos sin restricción, <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr>
+              en el usuario raíz, instantáneas públicas.</li>
+            <li><strong>Tolerancia a fallos:</strong> falta de redundancia (una sola <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>, sin copias de seguridad).</li>
+            <li><strong>Límites de servicio:</strong> avisa cuando el uso se acerca a una cuota o la supera.</li>
+            <li><strong>Excelencia operativa:</strong> prácticas para operar a escala (registros activados, protección
+              contra borrado…).</li>
+          </ul>
+        </li>
+        <li><strong>Depende del plan de soporte:</strong> con el plan <strong>básico</strong> solo se ven las
+          comprobaciones de límites de servicio y un grupo reducido de comprobaciones de seguridad y tolerancia a fallos,
+          y hay que actualizarlas a mano. El <strong>conjunto completo</strong>, la actualización automática, la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> y
+          la integración con <a href="eventbridge.html">EventBridge</a> exigen un plan de pago de nivel Business o superior.</li>
+        <li><strong>Vista de organización:</strong> informe agregado de las comprobaciones de todas las cuentas de una
+          organización de <a href="organizations.html">AWS Organizations</a>.</li>
+        <li><strong>Trusted Advisor Priority:</strong> en los planes de nivel Enterprise, recomendaciones priorizadas y
+          con contexto por tu equipo de cuenta de AWS.</li>
+        <li><strong>Fuentes integradas:</strong> además de sus propias comprobaciones, muestra otras alimentadas por
+          reglas gestionadas de <a href="config.html">AWS Config</a>, por controles de <a href="../servicio.html?id=security-hub">Security Hub</a> y por las recomendaciones de Compute
+          Optimizer.</li>
+        <li><strong>Exclusiones y avisos:</strong> puedes excluir recursos de una comprobación y recibir un resumen
+          semanal por correo.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Revisión rápida de una cuenta: qué se está pagando sin usar y qué está expuesto.</li>
+        <li>Vigilar las cuotas antes de un lanzamiento para no quedarse sin capacidad.</li>
+        <li>Automatizar reacciones: un cambio de estado de una comprobación llega a <a href="eventbridge.html">EventBridge</a> y dispara una función
+          <a href="lambda.html">Lambda</a> o un aviso.</li>
+        <li>Punto de partida para una revisión de arquitectura junto con <a href="../servicio.html?id=well-architected-tool">Well-Architected Tool</a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para definir <strong>tus propias</strong> reglas de configuración y auditar su historial: <a href="config.html">AWS Config</a>.</li>
+        <li>Para analizar el gasto en detalle y hacer previsiones: <a href="../servicio.html?id=cost-explorer">Cost Explorer</a>. Para alertas de presupuesto:
+          <a href="../servicio.html?id=budgets">AWS Budgets</a>.</li>
+        <li>Para recomendaciones detalladas de tamaño de instancias basadas en métricas: <a href="../servicio.html?id=compute-optimizer">Compute Optimizer</a>.</li>
+        <li>Para buscar vulnerabilidades de software: <a href="../servicio.html?id=inspector">Inspector</a>. Para detectar amenazas activas: <a href="../servicio.html?id=guardduty">GuardDuty</a>.</li>
+        <li>Para pedir un aumento de cuota: <a href="../servicio.html?id=service-quotas">Service Quotas</a> (Trusted Advisor solo avisa).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Recomendaciones generales y automáticas sobre coste, seguridad, rendimiento, resiliencia y cuotas</td><td>Trusted Advisor</td></tr>
+            <tr><td>Revisar una carga concreta contra los pilares de buena arquitectura, respondiendo un cuestionario</td><td><a href="../servicio.html?id=well-architected-tool">Well-Architected Tool</a></td></tr>
+            <tr><td>Recomendar el tamaño adecuado de instancias, volúmenes o funciones</td><td><a href="../servicio.html?id=compute-optimizer">Compute Optimizer</a></td></tr>
+            <tr><td>Evaluar reglas de configuración propias y guardar el historial</td><td><a href="config.html">AWS Config</a></td></tr>
+            <tr><td>Consultar y solicitar aumentos de cuotas</td><td><a href="../servicio.html?id=service-quotas">Service Quotas</a></td></tr>
+            <tr><td>Avisos sobre incidencias de AWS que afectan a tus recursos</td><td><a href="../servicio.html?id=health-dashboard">Health Dashboard</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Trusted Advisor no se factura aparte: lo que ves depende del <strong>plan de <a href="../servicio.html?id=support">AWS Support</a></strong> contratado.
+        Las comprobaciones básicas están en todas las cuentas; el resto llega con los planes de pago.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El acceso a la consola y a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> se controla con políticas de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Trusted Advisor solo lee: no modifica recursos ni corrige nada por sí mismo.</li>
+        <li>La vista de organización requiere activar el acceso de confianza en <a href="organizations.html">Organizations</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Recomendaciones basadas en buenas prácticas"</strong> sobre coste, rendimiento, seguridad,
+          tolerancia a fallos y límites de servicio: Trusted Advisor.</li>
+        <li><strong>"¿Qué plan de soporte da acceso a todas las comprobaciones?"</strong>: en las guías vigentes, Business
+          o Enterprise (hoy, Business Support+ o superior). El básico solo da una parte.</li>
+        <li><strong>"Saber si la cuenta se acerca a una cuota"</strong>: Trusted Advisor (límites de servicio). Para
+          <em>aumentarla</em>, <a href="../servicio.html?id=service-quotas">Service Quotas</a>.</li>
+        <li><strong>"Instancias de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> infrautilizadas"</strong>: Trusted Advisor o <a href="../servicio.html?id=compute-optimizer">Compute Optimizer</a>; si piden un tamaño
+          concreto recomendado, Compute Optimizer.</li>
+        <li><strong>No confundir con <a href="../servicio.html?id=inspector">Inspector</a></strong> (vulnerabilidades), <strong><a href="config.html">AWS Config</a></strong> (cumplimiento de
+          reglas propias) ni <strong><a href="../servicio.html?id=well-architected-tool">Well-Architected Tool</a></strong> (cuestionario por carga de trabajo).</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="trusted-advisor"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html" target="_blank" rel="noopener">AWS Trusted Advisor</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/awssupport/latest/user/get-started-with-aws-trusted-advisor.html" target="_blank" rel="noopener">Get started with Trusted Advisor Recommendations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/premiumsupport/faqs/" target="_blank" rel="noopener">AWS Premium Support FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/awssupport/latest/user/organizational-view.html" target="_blank" rel="noopener">Organizational view for AWS Trusted Advisor</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

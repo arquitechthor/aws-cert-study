@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Proton — Apuntes AWS</title>
+<meta name="description" content="Plantillas de entorno y de servicio con las que el equipo de plataforma estandariza cómo los desarrolladores despliegan infraestructura. AWS lo retira el 07/10/2026. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/proton.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Proton — Apuntes AWS">
+<meta property="og:description" content="Plantillas de entorno y de servicio con las que el equipo de plataforma estandariza cómo los desarrolladores despliegan infraestructura. AWS lo retira el 07/10/2026.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/proton.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/proton.svg" alt="" width="56" height="56"><span>AWS Proton</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Plantillas de plataforma para que los equipos desplieguen servicios estandarizados</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/proton/" target="_blank" rel="noopener">Documentación de AWS Proton ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> AWS retira Proton. No admite clientes nuevos desde el
+        07/10/2025 y el <strong>07/10/2026 termina el soporte</strong>: a partir de ese día ya no se puede entrar en la
+        consola ni en los recursos de Proton, y sus datos se borran. La infraestructura ya desplegada (las pilas de
+        <a href="cloudformation.html">CloudFormation</a> y sus recursos) <strong>sigue funcionando</strong>; lo que desaparece son las plantillas, los
+        pipelines y el propio servicio. AWS propone como alternativas la sincronización con Git de CloudFormation
+        (<em>Git sync</em>), <a href="../servicio.html?id=codepipeline">CodePipeline</a> con <a href="../servicio.html?id=codebuild">CodeBuild</a>, GitHub Actions o el portal de desarrolladores Harmonix on AWS
+        (basado en Backstage). Sigue en la guía de SAP-C02, que se puede presentar hasta el 17/11/2026, así que conviene
+        saber qué problema resolvía.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Proton es un servicio de <strong>ingeniería de plataforma</strong>: el equipo de plataforma define, como
+        infraestructura como código, <strong>plantillas</strong> aprobadas de entornos y de servicios, y los equipos de
+        desarrollo las usan en autoservicio para desplegar sus aplicaciones (contenedores o sin servidor) sin escribir
+        la infraestructura ni el pipeline. El desarrollador solo rellena unos parámetros; Proton aprovisiona los
+        recursos, crea el pipeline de <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> y avisa cuando una plantilla tiene una versión nueva.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Dos papeles:</strong> el <strong>equipo de plataforma</strong> (administradores) crea y versiona las
+          plantillas; los <strong>desarrolladores</strong> eligen una plantilla y despliegan.</li>
+        <li><strong>Plantilla de entorno:</strong> la infraestructura <em>compartida</em> por varias aplicaciones: red
+          (<a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>), clúster, roles… Un <strong>entorno</strong> es una plantilla de entorno desplegada con unos parámetros
+          concretos (por ejemplo desarrollo, preproducción y producción).</li>
+        <li><strong>Plantilla de servicio:</strong> la infraestructura de <em>una</em> aplicación o microservicio (por
+          ejemplo un servicio de <a href="fargate.html">Fargate</a> detrás de un balanceador, o una función <a href="lambda.html">Lambda</a> con su <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>) y, opcionalmente, su
+          pipeline. Cada plantilla de servicio declara con qué plantillas de entorno es compatible.</li>
+        <li><strong>Servicio e instancias de servicio:</strong> un <strong>servicio</strong> es una plantilla de servicio
+          instanciada; cada <strong>instancia de servicio</strong> es ese servicio desplegado en un entorno concreto. Las
+          instancias se despliegan <em>dentro</em> de los entornos.</li>
+        <li><strong>Paquete de plantilla</strong> (<em>template bundle</em>): los ficheros de <abbr class="sigla sigla-1" data-s="IaC" data-en="Infrastructure as Code" data-es="infraestructura como código" tabindex="0">IaC<span class="sigla-exp"> (Infrastructure as Code: infraestructura como código)</span></abbr> y el esquema de sus
+          parámetros. Se sube desde un bucket de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o se sincroniza desde un repositorio Git.</li>
+        <li><strong>Versiones:</strong> las plantillas tienen versión mayor y menor. Cuando el equipo de plataforma
+          publica una versión, Proton muestra qué entornos e instancias se han quedado atrás para actualizarlos.</li>
+        <li><strong>Proveedores de <abbr class="sigla" data-s="IaC" data-en="Infrastructure as Code" data-es="infraestructura como código" tabindex="0">IaC</abbr>:</strong> <a href="cloudformation.html">CloudFormation</a> (lo aprovisiona Proton) o Terraform (Proton abre una
+          <em>pull request</em> en tu repositorio y el despliegue lo ejecuta tu propia automatización).</li>
+        <li><strong>Componentes:</strong> recursos adicionales que un desarrollador puede añadir a una instancia de
+          servicio (una cola, un bucket) si la plantilla lo permite, sin cambiar la plantilla.</li>
+        <li><strong>Conexiones de cuenta de entorno:</strong> permiten gestionar desde una cuenta los entornos que viven
+          en otras cuentas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Dar a muchos equipos de desarrollo un <strong>autoservicio con barreras</strong>: despliegan solos, pero solo
+          arquitecturas aprobadas.</li>
+        <li>Estandarizar microservicios en contenedores (<a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="fargate.html">Fargate</a>) o sin servidor (<a href="lambda.html">Lambda</a>) con su pipeline incluido.</li>
+        <li>Propagar una mejora (un parche de seguridad en la plantilla) a todos los servicios que la usan.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li><strong>En proyectos nuevos:</strong> el servicio está en retirada; usa las alternativas del aviso.</li>
+        <li>Para ofrecer un catálogo de productos aprobados de cualquier tipo (no solo aplicaciones con pipeline):
+          <a href="../servicio.html?id=service-catalog">Service Catalog</a>.</li>
+        <li>Para desplegar la misma plantilla en muchas cuentas y regiones: <a href="cloudformation.html">CloudFormation</a> StackSets.</li>
+        <li>Para una sola aplicación web sin equipo de plataforma: <a href="elastic-beanstalk.html">Elastic Beanstalk</a> o <a href="../servicio.html?id=app-runner">App Runner</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Plantillas de entorno y de servicio con pipeline, en autoservicio para desarrolladores</td><td>Proton</td></tr>
+            <tr><td>Catálogo de productos de <abbr class="sigla sigla-1" data-s="TI" data-es="tecnologías de la información: el departamento de sistemas" tabindex="0">TI<span class="sigla-exp"> (tecnologías de la información: el departamento de sistemas)</span></abbr> aprobados (plantillas de <a href="cloudformation.html">CloudFormation</a> o Terraform) que los usuarios lanzan con permisos limitados</td><td><a href="../servicio.html?id=service-catalog">Service Catalog</a></td></tr>
+            <tr><td>Describir y desplegar infraestructura como código, sin capa de autoservicio</td><td>CloudFormation</td></tr>
+            <tr><td>Montar el pipeline de <abbr class="sigla" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD</abbr> pieza a pieza</td><td><a href="../servicio.html?id=codepipeline">CodePipeline</a> con <a href="../servicio.html?id=codebuild">CodeBuild</a> y <a href="../servicio.html?id=codedeploy">CodeDeploy</a></td></tr>
+            <tr><td>Plataforma gestionada para una aplicación web sin diseñar la infraestructura</td><td><a href="elastic-beanstalk.html">Elastic Beanstalk</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Proton no tiene coste propio: se pagan los recursos que aprovisionan las plantillas (cómputo, redes, bases de
+        datos, ejecuciones de pipeline) al precio de cada servicio.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Proton aprovisiona con un <strong>rol de servicio</strong> de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> por entorno, así que los desarrolladores no
+          necesitan permisos directos sobre la infraestructura: basta con permiso para usar Proton.</li>
+        <li>Las plantillas son el punto de control: lo que no esté en una plantilla aprobada no se puede desplegar.</li>
+        <li>La disponibilidad de las aplicaciones depende de lo que definan las plantillas (varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>, escalado), no de
+          Proton, que solo interviene al desplegar.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Equipo de plataforma" + "plantillas estandarizadas" + "autoservicio para desarrolladores" +
+          "contenedores o sin servidor"</strong>: Proton.</li>
+        <li><strong>Entorno frente a servicio:</strong> el entorno es lo compartido (red, clúster); el servicio es la
+          aplicación, que se despliega dentro de un entorno.</li>
+        <li>Si el enunciado habla de un <strong>catálogo de productos</strong> con restricciones de lanzamiento y sin
+          pipeline, es <a href="../servicio.html?id=service-catalog">Service Catalog</a>.</li>
+        <li>Fuera del examen, recuerda que el servicio se retira el 07/10/2026: no lo propongas en diseños reales.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="proton"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/proton/latest/userguide/proton-end-of-support.html" target="_blank" rel="noopener">AWS Proton Service Deprecation and Migration Guide</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/proton/latest/userguide/Welcome.html" target="_blank" rel="noopener">What is AWS Proton?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/proton/latest/userguide/ag-works-objects.html" target="_blank" rel="noopener">AWS Proton objects</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

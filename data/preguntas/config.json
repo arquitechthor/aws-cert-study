@@ -1,0 +1,178 @@
+[
+  {
+    "id": "config-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Un auditor pide ver cómo ha cambiado la configuración de un grupo de seguridad durante los últimos meses. ¿Qué servicio guarda ese historial?",
+    "opciones": [
+      "Amazon CloudWatch.",
+      "AWS Trusted Advisor.",
+      "AWS Config.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Config graba los cambios de configuración de los recursos y permite ver su línea de tiempo. CloudWatch recoge métricas y logs, Trusted Advisor da recomendaciones e Inspector busca vulnerabilidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html"
+    ]
+  },
+  {
+    "id": "config-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio permite evaluar de forma continua si los recursos de una cuenta cumplen las normas internas de configuración de la empresa?",
+    "opciones": [
+      "AWS Config.",
+      "AWS Artifact.",
+      "AWS Shield.",
+      "AWS Budgets."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las reglas de Config comparan la configuración grabada con la deseada y marcan cada recurso como conforme o no. Artifact ofrece informes de cumplimiento de AWS, Shield protege frente a DDoS y Budgets vigila el gasto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html"
+    ]
+  },
+  {
+    "id": "config-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa exige que ningún bucket de S3 permita lectura pública. Si alguien lo abre, debe volver a cerrarse sin intervención humana. ¿Qué solución lo consigue con menos desarrollo propio?",
+    "opciones": [
+      "Revisar cada semana el informe de seguridad de AWS Trusted Advisor y corregir a mano.",
+      "Una regla gestionada de AWS Config con corrección automática mediante un documento de automatización de Systems Manager.",
+      "Una función Lambda propia, programada cada hora, que recorra y corrija todos los buckets.",
+      "Una alarma de Amazon CloudWatch sobre el número de peticiones a cada bucket."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Config tiene reglas gestionadas para el acceso público de S3 y puede lanzar automáticamente una automatización de Systems Manager sobre el recurso no conforme. La revisión manual no corrige, la función programada exige código y mantenimiento, y la alarma no mide la configuración.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/digital-sovereignty-lens/dsops05-bp02.html"
+    ]
+  },
+  {
+    "id": "config-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Tras un incidente, el equipo necesita saber qué cambió en la configuración de un balanceador y qué usuario hizo el cambio. ¿Qué combinación de servicios responde a las dos preguntas?",
+    "opciones": [
+      "Amazon CloudWatch para el cambio y AWS Config para el usuario.",
+      "Amazon GuardDuty para ambas.",
+      "AWS Trusted Advisor para el cambio y Amazon Inspector para el usuario.",
+      "AWS Config para el cambio de configuración y AWS CloudTrail para quién hizo la llamada."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Config muestra el antes y el después de la configuración del recurso; CloudTrail registra la llamada a la API con la identidad que la hizo. Config enlaza cada elemento de configuración con su evento de CloudTrail.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html"
+    ]
+  },
+  {
+    "id": "config-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una cuenta de desarrollo crea y destruye miles de recursos al día y la factura de AWS Config se ha disparado. No necesita seguimiento en tiempo real. ¿Qué cambio reduce el coste manteniendo el inventario?",
+    "opciones": [
+      "Pasar la frecuencia de grabación a diaria para esos tipos de recurso.",
+      "Sustituir Config por CloudTrail.",
+      "Mover el bucket de entrega a S3 Glacier Deep Archive.",
+      "Añadir un agregador."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Config cobra por elemento de configuración grabado. La grabación diaria guarda como mucho el último estado de cada recurso en 24 horas y no genera elementos de los recursos creados y borrados dentro de ese periodo. CloudTrail no da inventario de configuración, el almacenamiento no es la partida principal y un agregador no reduce lo grabado.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/how-to-record-resource-configuration-changes-periodically-with-aws-config/"
+    ]
+  },
+  {
+    "id": "config-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "El equipo de cumplimiento de una organización con 200 cuentas necesita un panel único con el estado de cumplimiento de las reglas de AWS Config en todas las cuentas y regiones. ¿Qué debe configurar?",
+    "opciones": [
+      "Un bucket de S3 central al que todas las cuentas repliquen sus instantáneas de configuración.",
+      "Una regla personalizada de Config en la cuenta de administración que consulte las demás.",
+      "Un agregador de AWS Config para la organización, en una cuenta de administrador delegado.",
+      "Una SCP asociada a la raíz que obligue a tener activado Config en cada cuenta."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El agregador reúne los datos de configuración y cumplimiento de varias cuentas y regiones, y con Organizations se puede crear para toda la organización desde un administrador delegado. Un bucket central guarda ficheros pero no ofrece la vista de cumplimiento, y una SCP no agrega datos.",
+    "fuentes": [
+      "https://aws.amazon.com/config/faqs/"
+    ]
+  },
+  {
+    "id": "config-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa quiere desplegar en todas sus cuentas el mismo conjunto de 40 reglas de AWS Config con sus correcciones, y que los equipos de cada cuenta no puedan modificarlas ni borrarlas. ¿Qué opción lo resuelve?",
+    "opciones": [
+      "Crear las reglas a mano en cada cuenta y documentarlo.",
+      "Un paquete de conformidad desplegado a nivel de organización.",
+      "Un agregador de Config.",
+      "Una política de etiquetas de Organizations."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un paquete de conformidad agrupa reglas y correcciones en una unidad que se despliega en toda la organización, y las cuentas miembro no pueden alterar su contenido. El agregador solo lee, y las políticas de etiquetas normalizan etiquetas.",
+    "fuentes": [
+      "https://aws.amazon.com/config/faqs/"
+    ]
+  },
+  {
+    "id": "config-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una empresa entrena modelos con datos sensibles guardados en Amazon S3 y debe demostrar de forma continua que esos buckets siguen cifrados y sin acceso público. ¿Qué servicio aporta esa evidencia?",
+    "opciones": [
+      "Amazon SageMaker Clarify.",
+      "Amazon Comprehend.",
+      "AWS Config.",
+      "Amazon Bedrock Guardrails."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Config evalúa de forma continua la configuración de los recursos frente a reglas y conserva el historial, lo que sirve de evidencia para auditorías. Clarify analiza sesgos y explicabilidad, Comprehend procesa texto y Bedrock Guardrails filtra entradas y salidas de modelos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html"
+    ]
+  }
+]

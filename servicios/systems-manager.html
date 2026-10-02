@@ -85,7 +85,7 @@
           <code>SecureString</code>, cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>) en una jerarquía de nombres; el nivel estándar es
           gratuito. Sin rotación automática (para eso, <a href="secrets-manager.html">Secrets Manager</a>).</li>
         <li><strong>Automation:</strong> runbooks (documentos) para tareas repetitivas, como crear una
-          <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> parcheada o reiniciar un servicio; se pueden lanzar como remedio de <a href="../servicio.html?id=config">AWS Config</a>.</li>
+          <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> parcheada o reiniciar un servicio; se pueden lanzar como remedio de <a href="config.html">AWS Config</a>.</li>
         <li><strong>Inventory y State Manager:</strong> recogen el software instalado y mantienen un
           estado deseado (agentes instalados, configuración).</li>
         <li><strong>Fleet Manager:</strong> gestionar los servidores desde la consola (ficheros,
@@ -130,7 +130,7 @@
         <li><strong>"Ejecutar un comando en 500 instancias"</strong>: Run Command.</li>
         <li><strong>"Configuración centralizada y barata"</strong>: Parameter Store; <strong>"con rotación"</strong>: <a href="secrets-manager.html">Secrets Manager</a>.</li>
         <li><strong>"La instancia no aparece en <abbr class="sigla" data-s="SSM" data-en="Systems Manager" data-es="nombre corto de AWS Systems Manager y de su agente" tabindex="0">SSM</abbr>"</strong>: falta el agente, el rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> o la salida a los endpoints de <abbr class="sigla" data-s="SSM" data-en="Systems Manager" data-es="nombre corto de AWS Systems Manager y de su agente" tabindex="0">SSM</abbr>.</li>
-        <li><strong>"Remediar automáticamente un recurso no conforme"</strong>: regla de <a href="../servicio.html?id=config">AWS Config</a> con un runbook de Automation.</li>
+        <li><strong>"Remediar automáticamente un recurso no conforme"</strong>: regla de <a href="config.html">AWS Config</a> con un runbook de Automation.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

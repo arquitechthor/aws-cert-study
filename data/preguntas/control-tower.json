@@ -1,0 +1,178 @@
+[
+  {
+    "id": "control-tower-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa que empieza en AWS quiere montar en poco tiempo un entorno de varias cuentas, seguro y basado en las buenas prácticas de AWS. ¿Qué servicio lo automatiza?",
+    "opciones": [
+      "AWS Config.",
+      "AWS Control Tower.",
+      "AWS Systems Manager.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Control Tower crea una landing zone: un entorno multicuenta con registro centralizado, acceso unificado y controles de gobierno. Config evalúa configuraciones, Systems Manager opera recursos e Inspector busca vulnerabilidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html"
+    ]
+  },
+  {
+    "id": "control-tower-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "En AWS Control Tower, ¿qué son los controles (antes llamados guardrails)?",
+    "opciones": [
+      "Copias de seguridad automáticas de las cuentas.",
+      "Reglas de firewall para las VPC.",
+      "Informes de cumplimiento de AWS descargables.",
+      "Reglas de gobierno que previenen o detectan incumplimientos en las cuentas de una OU."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Un control es una regla de alto nivel que se activa sobre una unidad organizativa y gobierna todas sus cuentas, impidiendo acciones o detectando recursos no conformes. Los informes de cumplimiento de AWS están en Artifact.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/controltower/latest/controlreference/controls.html"
+    ]
+  },
+  {
+    "id": "control-tower-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa con AWS Control Tower necesita que los equipos puedan pedir cuentas nuevas que nazcan con la red, el registro y los controles corporativos ya aplicados. ¿Qué función debe usar?",
+    "opciones": [
+      "Account Factory.",
+      "AWS RAM.",
+      "Un agregador de AWS Config.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Account Factory aprovisiona cuentas nuevas con una configuración base aprobada y las inscribe en la landing zone, de modo que heredan los controles de su OU. RAM comparte recursos, el agregador reúne datos de Config y Artifact ofrece informes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html"
+    ]
+  },
+  {
+    "id": "control-tower-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un arquitecto activa en una OU un control de detección de AWS Control Tower sobre buckets de S3 con lectura pública. Un desarrollador abre un bucket al público. ¿Qué ocurre?",
+    "opciones": [
+      "La operación se deniega con un error de acceso denegado.",
+      "El bucket se elimina automáticamente a los pocos minutos.",
+      "La operación se completa y el recurso aparece como no conforme en el panel.",
+      "La cuenta queda suspendida hasta que un administrador lo corrija."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los controles de detección se implementan con reglas de Config: no impiden la acción, sino que señalan el incumplimiento. Para bloquear la acción haría falta un control preventivo, basado en SCP.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/deploy-and-manage-aws-control-tower-controls-by-using-terraform.html"
+    ]
+  },
+  {
+    "id": "control-tower-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización gobernada con AWS Control Tower despliega todo con CloudFormation y quiere que un recurso no conforme ni siquiera llegue a crearse, sin escribir SCP propias. ¿Qué tipo de control debe activar?",
+    "opciones": [
+      "De detección.",
+      "Proactivo.",
+      "Optativo.",
+      "Obligatorio."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los controles proactivos evalúan los recursos antes de que CloudFormation los aprovisione, mediante hooks, y bloquean los que no cumplen. Los de detección actúan después. Optativo y obligatorio son niveles de recomendación, no comportamientos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/deploy-and-manage-aws-control-tower-controls-by-using-terraform.html"
+    ]
+  },
+  {
+    "id": "control-tower-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa ya tiene una organización de AWS Organizations con 60 cuentas y quiere adoptar AWS Control Tower. ¿Qué afirmación es correcta?",
+    "opciones": [
+      "Debe crear una organización nueva con Control Tower y migrar a ella todas las cuentas.",
+      "Control Tower solo gobierna las cuentas que crea con Account Factory, no las existentes.",
+      "Debe eliminar antes todas las SCP y OU existentes para evitar conflictos.",
+      "Puede activar Control Tower sobre la organización existente y registrar sus OU e inscribir sus cuentas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Control Tower puede desplegarse en una organización existente, usando su cuenta de administración, y las OU y cuentas se registran después para quedar bajo gobierno. No exige una organización nueva.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html"
+    ]
+  },
+  {
+    "id": "control-tower-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Por requisitos de residencia de datos, una organización con AWS Control Tower debe impedir el uso de regiones fuera de la Unión Europea en todas las cuentas miembro. ¿Qué opción requiere menos esfuerzo operativo?",
+    "opciones": [
+      "Activar el control de denegación de regiones de Control Tower.",
+      "Crear una regla de Config en cada región no permitida.",
+      "Eliminar las VPC por defecto de las demás regiones.",
+      "Configurar alarmas de CloudWatch en cada región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El control de denegación de regiones es un control preventivo ya preparado que prohíbe operar en las regiones no seleccionadas. Las reglas de Config y las alarmas solo detectan, y borrar las VPC por defecto no impide crear recursos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/controltower/latest/controlreference/controls.html"
+    ]
+  },
+  {
+    "id": "control-tower-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un administrador mueve una cuenta a otra OU directamente desde la consola de AWS Organizations, sin pasar por AWS Control Tower. ¿Qué consecuencia tiene?",
+    "opciones": [
+      "Ninguna: Control Tower no supervisa los cambios hechos en Organizations.",
+      "La cuenta se cierra automáticamente y hay que volver a crearla con Account Factory.",
+      "Se produce una desviación (drift) de la landing zone, que Control Tower detecta y que hay que resolver.",
+      "Se desactivan todos los controles de la organización hasta actualizar la landing zone."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los cambios hechos por fuera sobre recursos que Control Tower gestiona generan desviación: la cuenta puede no tener los controles de su nueva OU. Control Tower la detecta y ofrece repararla, por ejemplo volviendo a inscribir la cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html"
+    ]
+  }
+]

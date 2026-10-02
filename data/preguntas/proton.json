@@ -1,0 +1,112 @@
+[
+  {
+    "id": "proton-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa con 40 equipos de desarrollo quiere que cada equipo despliegue por su cuenta microservicios en Fargate, pero siempre con la red, el registro de logs y el pipeline que define el equipo de plataforma. ¿Qué servicio estaba pensado para este modelo?",
+    "opciones": [
+      "AWS Elastic Beanstalk.",
+      "AWS Proton.",
+      "AWS Config.",
+      "AWS Systems Manager."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Proton separa los papeles: el equipo de plataforma publica plantillas de entorno y de servicio (con pipeline) y los desarrolladores las usan en autoservicio. Elastic Beanstalk despliega una aplicación sin esa capa de plantillas compartidas, Config evalúa configuraciones y Systems Manager opera recursos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/proton/latest/userguide/Welcome.html"
+    ]
+  },
+  {
+    "id": "proton-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En AWS Proton, ¿qué define una plantilla de entorno?",
+    "opciones": [
+      "El código de la aplicación y sus dependencias.",
+      "La infraestructura compartida por varios servicios, como la VPC o el clúster.",
+      "Los permisos de IAM de cada desarrollador.",
+      "La infraestructura de un único microservicio y su pipeline."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La plantilla de entorno describe los recursos compartidos (red, clúster, roles) en los que después se despliegan las instancias de servicio. La infraestructura de un microservicio y su pipeline corresponden a la plantilla de servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/proton/latest/userguide/ag-works-objects.html"
+    ]
+  },
+  {
+    "id": "proton-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa usa AWS Proton y AWS ha anunciado el fin del soporte del servicio. ¿Qué ocurre con las aplicaciones ya desplegadas cuando llegue esa fecha?",
+    "opciones": [
+      "Se eliminan junto con las plantillas.",
+      "Pasan automáticamente a AWS Service Catalog.",
+      "Las pilas de CloudFormation y sus recursos siguen funcionando, pero ya no se pueden gestionar ni actualizar desde Proton.",
+      "Siguen funcionando y se pueden seguir actualizando desde la consola de Proton en modo de solo mantenimiento."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La retirada afecta al servicio y a sus pipelines, no a la infraestructura desplegada: las pilas siguen activas, pero hay que gestionarlas con otra herramienta. No hay migración automática y tras la fecha no se puede acceder a la consola.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/proton/latest/userguide/proton-end-of-support.html"
+    ]
+  },
+  {
+    "id": "proton-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo de plataforma debe sustituir AWS Proton. Usa plantillas de CloudFormation y quiere conservar un flujo en el que los desarrolladores cambian un fichero de parámetros en Git y la pila se actualiza sola. ¿Qué alternativa propone AWS para este caso?",
+    "opciones": [
+      "La sincronización con Git de CloudFormation (Git sync).",
+      "Una landing zone nueva de AWS Control Tower.",
+      "Una programación diaria de Amazon EventBridge Scheduler.",
+      "Un paquete de conformidad de AWS Config."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Git sync vincula una pila de CloudFormation a un repositorio: al cambiar la plantilla o el fichero de parámetros, la pila se actualiza. Es la alternativa que AWS recomienda para un flujo GitOps sencillo. Control Tower gobierna cuentas y EventBridge Scheduler programa tareas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/proton/latest/userguide/proton-end-of-support.html"
+    ]
+  },
+  {
+    "id": "proton-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa quiere ofrecer a sus departamentos un catálogo de productos aprobados (por ejemplo, una base de datos o un entorno de análisis) que cada usuario pueda lanzar sin tener permisos sobre los recursos, sin pipelines de aplicación. ¿Qué servicio encaja mejor?",
+    "opciones": [
+      "AWS Proton.",
+      "AWS CodePipeline.",
+      "AWS Service Catalog.",
+      "AWS Trusted Advisor."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Service Catalog publica carteras de productos aprobados con restricciones de lanzamiento. Proton se centraba en plantillas de entorno y de servicio con pipeline para equipos de desarrollo. CodePipeline orquesta despliegues y Trusted Advisor da recomendaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html"
+    ]
+  }
+]

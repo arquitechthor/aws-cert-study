@@ -608,8 +608,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Inventario e historial de la configuración de tus recursos de AWS, con reglas que evalúan de forma continua si cumplen tus normas y corrección automática.",
     "frase": "Guarda el historial de configuración de tus recursos y evalúa si cumplen tus reglas",
     "documentacion": "https://docs.aws.amazon.com/config/"
   },
@@ -636,8 +636,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Monta y gobierna un entorno multicuenta (landing zone) con buenas prácticas: orquesta Organizations, IAM Identity Center y Config, y aplica controles preventivos, de detección y proactivos.",
     "frase": "Monta una landing zone multicuenta con barreras de protección predefinidas",
     "documentacion": "https://docs.aws.amazon.com/controltower/"
   },
@@ -1741,8 +1741,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Gestión central de varias cuentas de AWS: unidades organizativas, facturación unificada y políticas (SCP, RCP y otras) que se aplican a toda la organización.",
     "frase": "Agrupa cuentas en unidades, unifica la factura y aplica SCP a todas a la vez",
     "documentacion": "https://docs.aws.amazon.com/organizations/"
   },
@@ -1827,8 +1827,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Plantillas de entorno y de servicio con las que el equipo de plataforma estandariza cómo los desarrolladores despliegan infraestructura. AWS lo retira el 07/10/2026.",
     "frase": "Plantillas de plataforma para que los equipos desplieguen servicios estandarizados",
     "documentacion": "https://docs.aws.amazon.com/proton/"
   },
@@ -2388,8 +2388,8 @@
       "AIF-C01",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Revisa tu cuenta frente a las buenas prácticas de AWS y recomienda mejoras de coste, rendimiento, seguridad, tolerancia a fallos, cuotas y excelencia operativa.",
     "frase": "Revisa tu cuenta y recomienda ahorros, mejoras de seguridad y límites a punto de agotarse",
     "documentacion": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html"
   },

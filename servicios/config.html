@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Config — Apuntes AWS</title>
+<meta name="description" content="Inventario e historial de la configuración de tus recursos de AWS, con reglas que evalúan de forma continua si cumplen tus normas y corrección automática. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/config.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Config — Apuntes AWS">
+<meta property="og:description" content="Inventario e historial de la configuración de tus recursos de AWS, con reglas que evalúan de forma continua si cumplen tus normas y corrección automática.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/config.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/config.svg" alt="" width="56" height="56"><span>AWS Config</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Guarda el historial de configuración de tus recursos y evalúa si cumplen tus reglas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/config/" target="_blank" rel="noopener">Documentación de AWS Config ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Config registra <strong>cómo están configurados</strong> tus recursos de AWS, cómo se relacionan entre sí y
+        <strong>cómo ha cambiado</strong> esa configuración con el tiempo. Sobre ese registro evalúa
+        <strong>reglas</strong> que dicen si cada recurso cumple o no la configuración deseada. Responde a preguntas como
+        "¿qué buckets no están cifrados?", "¿cómo estaba este grupo de seguridad el martes?" o "¿qué cambió antes de la
+        avería?".</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Grabador de configuración</strong> (<em>configuration recorder</em>): detecta los cambios de los tipos
+          de recurso que elijas. Hay que activarlo <strong>en cada región</strong> y cuenta: Config es un servicio
+          regional.</li>
+        <li><strong>Elemento de configuración</strong> (<em>configuration item</em>): la foto de un recurso en un momento:
+          atributos, relaciones y, cuando lo hay, el evento de <a href="cloudtrail.html">CloudTrail</a> asociado. La sucesión de elementos forma la
+          <strong>línea de tiempo</strong> del recurso.</li>
+        <li><strong>Frecuencia de grabación:</strong> <strong>continua</strong> (cada cambio, lo adecuado para seguridad
+          y cumplimiento) o <strong>diaria</strong> (el último estado de las 24 horas si cambió; más barata para
+          entornos que no son de producción).</li>
+        <li><strong>Canal de entrega:</strong> un bucket de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> para el historial y las instantáneas de configuración y,
+          opcionalmente, un tema de <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> para avisar de los cambios.</li>
+        <li><strong>Reglas:</strong> <strong>gestionadas</strong> por AWS (por ejemplo, "los volúmenes de <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> están
+          cifrados") o <strong>personalizadas</strong>, escritas con una función <a href="lambda.html">Lambda</a> o con el lenguaje de políticas
+          Guard. Se evalúan <strong>al cambiar</strong> un recurso o <strong>de forma periódica</strong>, y marcan cada
+          recurso como conforme o no conforme.</li>
+        <li><strong>Corrección</strong> (<em>remediation</em>): cada regla puede lanzar un documento de automatización de
+          <a href="systems-manager.html">Systems Manager</a> sobre los recursos no conformes, de forma manual o <strong>automática</strong>.</li>
+        <li><strong>Paquetes de conformidad</strong> (<em>conformance packs</em>): un conjunto de reglas y correcciones que
+          se despliega como una unidad en una cuenta o en toda una organización. Las cuentas miembro no pueden modificarlo.
+          AWS publica plantillas para marcos como <abbr class="sigla sigla-1" data-s="PCI DSS" data-en="Payment Card Industry Data Security Standard" data-es="norma de seguridad para datos de tarjetas" tabindex="0">PCI DSS<span class="sigla-exp"> (Payment Card Industry Data Security Standard: norma de seguridad para datos de tarjetas)</span></abbr> o las buenas prácticas de un servicio.</li>
+        <li><strong>Agregador:</strong> reúne en una cuenta los datos de configuración y cumplimiento de
+          <strong>varias cuentas y regiones</strong> (o de toda la organización). Es de solo lectura.</li>
+        <li><strong>Consultas avanzadas:</strong> preguntas con sintaxis <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> sobre el estado actual de los recursos,
+          también a través de un agregador.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Auditoría y cumplimiento:</strong> demostrar que los recursos cumplen una norma y desde cuándo.</li>
+        <li><strong>Detectar y corregir desviaciones:</strong> un grupo de seguridad que abre <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr> a internet se detecta
+          y se cierra solo.</li>
+        <li><strong>Análisis de cambios:</strong> ver qué se modificó en un recurso y en los relacionados antes de un
+          incidente.</li>
+        <li><strong>Inventario</strong> de recursos de toda la organización.</li>
+        <li><strong>Gobernanza de cargas de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr>:</strong> comprobar de forma continua que los recursos que usan (buckets
+          con datos de entrenamiento, puntos de enlace de <a href="../servicio.html?id=sagemaker-ai">SageMaker AI</a>) mantienen la configuración exigida.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>impedir</strong> una acción: Config detecta después de que ocurra. Para prevenir, una <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> de
+          <a href="organizations.html">Organizations</a> o una política de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Para saber <strong>quién</strong> hizo una llamada a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>: <a href="cloudtrail.html">CloudTrail</a>. Config cuenta <em>qué</em> cambió y
+          enlaza con el evento.</li>
+        <li>Para métricas de rendimiento y alarmas: <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li>Para buscar vulnerabilidades de software en instancias o imágenes: <a href="../servicio.html?id=inspector">Inspector</a>.</li>
+        <li>Para gestionar la configuración <em>dentro</em> del sistema operativo: <a href="systems-manager.html">Systems Manager</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Cómo está configurado el recurso, cómo estaba antes y cumple mis reglas?</td><td>Config</td></tr>
+            <tr><td>¿Quién llamó a qué <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>, cuándo y desde dónde?</td><td><a href="cloudtrail.html">CloudTrail</a></td></tr>
+            <tr><td>¿Cómo rinde el recurso (<abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr>, errores, latencia)?</td><td><a href="cloudwatch.html">CloudWatch</a></td></tr>
+            <tr><td>¿Sigo las buenas prácticas generales de coste, seguridad y cuotas?</td><td><a href="trusted-advisor.html">Trusted Advisor</a></td></tr>
+            <tr><td>¿Cuál es mi postura de seguridad agregada frente a estándares?</td><td><a href="../servicio.html?id=security-hub">Security Hub</a> (se alimenta de reglas de Config)</td></tr>
+            <tr><td>¿Cómo evito que la acción llegue a ejecutarse?</td><td><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> de <a href="organizations.html">Organizations</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>elemento de configuración grabado</strong> (con tarifa distinta para la grabación continua y
+        la diaria), por <strong>evaluación de regla</strong> y por <strong>evaluación de paquete de conformidad</strong>.
+        Aparte van <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a> y las funciones <a href="lambda.html">Lambda</a> de las reglas personalizadas. En cuentas con recursos efímeros (muchos
+        cambios) el coste sube: se controla limitando los tipos de recurso grabados o usando la grabación diaria.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Config usa un rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> para leer la configuración de los recursos y escribir en el bucket y en el tema.</li>
+        <li>El bucket de entrega se puede cifrar con una clave de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y conviene que esté en una cuenta de registros
+          separada.</li>
+        <li>Es regional: para una visión global hay que activarlo en todas las regiones en uso y sumar un agregador.</li>
+        <li>Los recursos globales (como los de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>) basta con grabarlos en una región para no duplicar elementos.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Historial de configuración"</strong>, "cómo estaba configurado", "evaluar el cumplimiento de forma
+          continua": Config.</li>
+        <li><strong>"Quién hizo el cambio"</strong>: <a href="cloudtrail.html">CloudTrail</a>. Muchos enunciados combinan los dos.</li>
+        <li><strong>"Corregir automáticamente los recursos no conformes"</strong>: regla de Config con corrección
+          automática mediante un documento de automatización de <a href="systems-manager.html">Systems Manager</a>.</li>
+        <li><strong>"Visión del cumplimiento de todas las cuentas y regiones"</strong>: agregador.</li>
+        <li><strong>"Desplegar el mismo conjunto de reglas en toda la organización"</strong>: paquete de conformidad.</li>
+        <li><strong>Config no bloquea nada</strong>: si piden <em>impedir</em>, la respuesta es una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> o <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>.</li>
+        <li><strong>"Avisar cuando un recurso deja de cumplir"</strong>: cambio de cumplimiento de Config hacia
+          <a href="eventbridge.html">EventBridge</a> o <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="config"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html" target="_blank" rel="noopener">What Is AWS Config?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/config/faqs/" target="_blank" rel="noopener">AWS Config FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/mt/how-to-record-resource-configuration-changes-periodically-with-aws-config/" target="_blank" rel="noopener">How to record resource configuration changes periodically with AWS Config</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/config/latest/developerguide/update-dc-console.html" target="_blank" rel="noopener">Updating the Delivery Channel</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://repost.aws/knowledge-center/optimize-aws-config" target="_blank" rel="noopener">How can I optimize AWS Config costs?</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/wellarchitected/latest/digital-sovereignty-lens/dsops05-bp02.html" target="_blank" rel="noopener">DSOPS05-BP02 Automate compliance remediation</a>, documentación de AWS (consultada el 02/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
