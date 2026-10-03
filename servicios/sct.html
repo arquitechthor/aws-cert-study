@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS SCT — Apuntes AWS</title>
+<meta name="description" content="Aplicación de escritorio que convierte esquemas y código SQL entre motores de bases de datos y almacenes de datos, con informes de lo que no puede convertir. Apuntes y preguntas de práctica para CLF-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/sct.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS SCT — Apuntes AWS">
+<meta property="og:description" content="Aplicación de escritorio que convierte esquemas y código SQL entre motores de bases de datos y almacenes de datos, con informes de lo que no puede convertir.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/sct.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="56" height="56"><span>AWS SCT</span></h1>
+      <p class="full-name">AWS Schema Conversion Tool (AWS SCT)</p>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Traduce esquemas y código <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> de un motor de bases de datos a otro distinto</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/SchemaConversionTool/" target="_blank" rel="noopener">Documentación de AWS SCT ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Schema Conversion Tool (<abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr>) es una <strong>aplicación de escritorio</strong> que traduce el
+        <strong>esquema</strong> (tablas, índices, vistas) y el <strong>código</strong> de la base de datos
+        (procedimientos, funciones, disparadores) de un motor a otro distinto, por ejemplo de Oracle o SQL Server a
+        <a href="aurora.html">Aurora</a> PostgreSQL, o de Teradata a <a href="redshift.html">Redshift</a>. Genera un <strong>informe de evaluación</strong> que indica qué
+        se convierte solo y qué hay que rehacer a mano. No mueve los datos de las tablas: eso lo hace <a href="dms.html"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Migración heterogénea:</strong> entre motores distintos; es cuando hace falta <abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr>. Entre motores
+          iguales no hace falta convertir.</li>
+        <li><strong>Informe de evaluación:</strong> resume la complejidad, las acciones manuales y el esfuerzo
+          estimado; útil para decidir el motor de destino.</li>
+        <li><strong>Conversión de código de aplicación:</strong> también puede convertir sentencias <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> incrustadas en
+          el código de la aplicación.</li>
+        <li><strong>Agentes de extracción de datos:</strong> para almacenes de datos grandes (Teradata, Netezza, Oracle,
+          etc.), extraen los datos en paralelo y los cargan en <a href="redshift.html">Redshift</a> a través de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
+        <li><strong>Integración con <a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a>:</strong> desde <abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr> se pueden crear las tareas de <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr> que moverán los datos.</li>
+        <li><strong>DMS Schema Conversion:</strong> la versión gestionada en la consola de <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr>, sin instalar nada y con
+          ayuda de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> generativa; cubre las conversiones más habituales, mientras <abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr> admite más orígenes.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Salir de un motor comercial (Oracle, SQL Server) hacia <a href="aurora.html">Aurora</a> o <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a> con PostgreSQL o MySQL.</li>
+        <li>Migrar un almacén de datos local (Teradata, Netezza, Vertica…) o de otra nube (BigQuery, Snowflake,
+          Azure Synapse) a <a href="redshift.html">Redshift</a>.</li>
+        <li>Evaluar el coste de una migración antes de decidirla.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si el origen y el destino usan el mismo motor: basta con <a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a> o con las herramientas nativas.</li>
+        <li>Para copiar los datos y replicar cambios: <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr>.</li>
+        <li>Si prefieres no instalar nada y tu combinación está soportada: DMS Schema Conversion.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th><abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr></th><th><a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a> Schema Conversion</th><th><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></th></tr></thead>
+          <tbody>
+            <tr><td>Qué hace</td><td>Convierte esquema y código</td><td>Convierte esquema y código</td><td>Mueve datos y cambios</td></tr>
+            <tr><td>Dónde se ejecuta</td><td>Tu equipo (escritorio)</td><td>Consola de AWS, gestionado</td><td>Instancia o sin servidor en AWS</td></tr>
+            <tr><td>Orígenes</td><td>Muy amplios, incluidos almacenes de datos</td><td>Los más habituales</td><td>Muchos motores</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p><abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr> es <strong>gratuito</strong>. Se pagan los recursos de AWS que uses con él, como <a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a>, <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="redshift.html">Redshift</a>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Se conecta a las bases de datos con sus propias credenciales; usa conexiones cifradas cuando el motor lo
+          admite.</li>
+        <li>Los agentes de extracción se instalan cerca del origen y suben los datos a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> cifrados.</li>
+        <li>Al ser una herramienta de escritorio, no tiene alta disponibilidad propia: el proyecto se guarda en local.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Convertir el esquema" o "motores distintos"</strong>: <abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr> (o <a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a> Schema Conversion), y <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr> para los
+          datos.</li>
+        <li><strong>"Mismo motor"</strong>: <abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr> no hace falta.</li>
+        <li><strong>"Evaluar cuánto código hay que reescribir"</strong>: informe de evaluación de <abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr>.</li>
+        <li><strong>"Almacén de datos local a <a href="redshift.html">Redshift</a>"</strong>: <abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr> con agentes de extracción de datos.</li>
+        <li><abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr> <strong>no</strong> migra los datos ni replica cambios.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="sct"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html" target="_blank" rel="noopener">What is the AWS Schema Conversion Tool?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Source.html" target="_blank" rel="noopener">Connecting to source databases with the AWS Schema Conversion Tool</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/agents.html" target="_blank" rel="noopener">Migrating data from an on-premises data warehouse to Amazon Redshift with AWS SCT</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/dms/latest/userguide/schema-conversion-convert.databaseobjects.html" target="_blank" rel="noopener">Converting database objects with generative AI (DMS Schema Conversion)</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

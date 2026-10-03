@@ -1,0 +1,134 @@
+[
+  {
+    "id": "application-migration-service-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa debe trasladar 300 máquinas virtuales VMware a EC2 sin modificar las aplicaciones y con una parada de minutos en el corte. ¿Qué servicio usa?",
+    "opciones": [
+      "AWS DMS.",
+      "AWS DataSync.",
+      "AWS Application Migration Service (AWS Transform MGN).",
+      "Exportar las máquinas como imágenes y crear AMI a mano."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "MGN replica los discos de cada servidor de forma continua y permite cortar con una parada de minutos, sin cambiar las aplicaciones. DMS migra bases de datos y DataSync ficheros.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html"
+    ]
+  },
+  {
+    "id": "application-migration-service-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Durante una migración con Application Migration Service, el equipo quiere comprobar que los servidores arrancan bien en AWS sin parar los de origen ni la replicación. ¿Qué hace?",
+    "opciones": [
+      "Lanzar instancias de prueba desde la consola del servicio.",
+      "Hacer el corte y volver atrás si falla.",
+      "Crear instantáneas manuales de EBS.",
+      "Detener el agente de replicación durante la prueba."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "MGN permite lanzar instancias de prueba en cualquier momento; la replicación continúa y el origen no se toca. El corte se hace después, cuando las pruebas son correctas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/mgn/latest/ug/migration_at_scale.html"
+    ]
+  },
+  {
+    "id": "application-migration-service-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Tras lanzar cada servidor migrado, hay que instalar el agente de CloudWatch y cambiar una configuración, sin hacerlo a mano en cada uno. ¿Qué característica de MGN se usa?",
+    "opciones": [
+      "Las reglas de ciclo de vida de EBS.",
+      "Las plantillas de lanzamiento de EC2 con datos de usuario manuales.",
+      "AWS Config.",
+      "Las acciones posteriores al lanzamiento, basadas en documentos de Systems Manager."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las acciones posteriores al lanzamiento ejecutan automáticamente documentos de Systems Manager (instalar agentes, scripts) en las instancias de prueba o de corte.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/mgn/latest/ug/post-launch-settings.html"
+    ]
+  },
+  {
+    "id": "application-migration-service-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "¿Qué coste tiene Application Migration Service para un servidor que se migra en un mes?",
+    "opciones": [
+      "Una licencia anual por servidor.",
+      "Nada por el servicio (tiene 2160 horas gratis por servidor), pero sí los recursos que crea, como volúmenes EBS e instancias.",
+      "Todo es gratuito, incluidos los volúmenes y las instancias.",
+      "Un pago por GB replicado desde el primer día."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Cada servidor tiene 2160 horas gratis de servicio (90 días continuos). Los recursos del área de preparación y las instancias de prueba y corte se cobran con las tarifas normales.",
+    "fuentes": [
+      "https://aws.amazon.com/application-migration-service/faqs/"
+    ]
+  },
+  {
+    "id": "application-migration-service-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa ya migró sus servidores a EC2 con MGN y ahora quiere poder recuperarlos en otra región si la principal falla, con replicación continua. ¿Qué servicio usa?",
+    "opciones": [
+      "AWS Application Migration Service otra vez.",
+      "AWS Elastic Disaster Recovery.",
+      "AWS DMS.",
+      "AWS DataSync."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Elastic Disaster Recovery usa una replicación continua parecida, pero está pensado para mantener réplicas listas y recuperar servidores ante un desastre, no para una migración puntual.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
+    ]
+  },
+  {
+    "id": "application-migration-service-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Qué servicio de AWS se recomienda para trasladar servidores a AWS tal cual (lift and shift) con la mínima parada?",
+    "opciones": [
+      "AWS Application Migration Service.",
+      "AWS Schema Conversion Tool.",
+      "Amazon Lightsail.",
+      "AWS Transfer Family."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Application Migration Service (hoy AWS Transform MGN) automatiza el rehospedaje de servidores en EC2. SCT convierte esquemas de bases de datos y Transfer Family ofrece servidores SFTP gestionados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html"
+    ]
+  }
+]

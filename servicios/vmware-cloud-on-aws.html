@@ -103,7 +103,7 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si puedes <strong>convertir</strong> las máquinas a instancias de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>: <a href="../servicio.html?id=application-migration-service">Application Migration Service</a>, más
+        <li>Si puedes <strong>convertir</strong> las máquinas a instancias de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>: <a href="application-migration-service.html">Application Migration Service</a>, más
           barato a largo plazo y sin licencias de VMware.</li>
         <li>Para aplicaciones nuevas: servicios nativos (<abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, contenedores, sin servidor).</li>
         <li>Si quieres VMware dentro de tu propia <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> y contratado con AWS: Amazon EVS.</li>
@@ -116,9 +116,9 @@
           <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
           <tbody>
             <tr><td>Mover cargas vSphere a la nube sin cambiarlas, con las mismas herramientas</td><td>VMware Cloud on AWS (o Amazon EVS)</td></tr>
-            <tr><td>Convertir servidores en instancias de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (realojar)</td><td><a href="../servicio.html?id=application-migration-service">Application Migration Service</a></td></tr>
+            <tr><td>Convertir servidores en instancias de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (realojar)</td><td><a href="application-migration-service.html">Application Migration Service</a></td></tr>
             <tr><td>Infraestructura de AWS en el centro de datos propio</td><td><a href="outposts.html">Outposts</a></td></tr>
-            <tr><td>Inventariar servidores y dependencias antes de migrar</td><td><a href="../servicio.html?id=application-discovery-service">Application Discovery Service</a></td></tr>
+            <tr><td>Inventariar servidores y dependencias antes de migrar</td><td><a href="application-discovery-service.html">Application Discovery Service</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -146,7 +146,7 @@
         <li><strong>"Recuperación ante desastres de un entorno vSphere"</strong> con el mínimo cambio: VMware Cloud on
           AWS.</li>
         <li><strong>Si se aceptan cambios y se busca el menor coste a largo plazo</strong>, la respuesta suele ser
-          realojar en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> con <a href="../servicio.html?id=application-migration-service">Application Migration Service</a>.</li>
+          realojar en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> con <a href="application-migration-service.html">Application Migration Service</a>.</li>
         <li><strong>No es <a href="outposts.html">Outposts</a>:</strong> aquí VMware corre en los centros de datos de AWS; en Outposts, AWS corre
           en el tuyo.</li>
       </ul>

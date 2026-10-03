@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS DataSync — Apuntes AWS</title>
+<meta name="description" content="Copia en línea, programada y verificada de ficheros y objetos entre almacenamiento local, otras nubes y S3, EFS o FSx. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/datasync.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS DataSync — Apuntes AWS">
+<meta property="og:description" content="Copia en línea, programada y verificada de ficheros y objetos entre almacenamiento local, otras nubes y S3, EFS o FSx.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/datasync.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/datasync.svg" alt="" width="56" height="56"><span>AWS DataSync</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Copia en línea grandes volúmenes desde <abbr class="sigla sigla-1" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS<span class="sigla-exp"> (Network Attached Storage: almacenamiento de ficheros conectado a la red)</span></abbr> o servidores de ficheros a <abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr>, <abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr> o FSx</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/datasync/" target="_blank" rel="noopener">Documentación de AWS DataSync ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS DataSync es un servicio de <strong>transferencia de datos en línea</strong>. Copia ficheros y objetos entre
+        tu almacenamiento local (<abbr class="sigla" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS</abbr> con <abbr class="sigla sigla-1" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS<span class="sigla-exp"> (Network File System: protocolo para compartir ficheros en red)</span></abbr> o <abbr class="sigla sigla-1" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB<span class="sigla-exp"> (Server Message Block: protocolo de ficheros compartidos de Windows)</span></abbr>, <abbr class="sigla sigla-1" data-s="HDFS" data-en="Hadoop Distributed File System" data-es="sistema de ficheros distribuido de Hadoop" tabindex="0">HDFS<span class="sigla-exp"> (Hadoop Distributed File System: sistema de ficheros distribuido de Hadoop)</span></abbr>, almacenamiento de objetos), otras nubes y los servicios de
+        almacenamiento de AWS: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> y todos los tipos de <a href="../servicio.html?id=fsx">FSx</a>. Se encarga del paralelismo, el cifrado, los reintentos y
+        la <strong>verificación de integridad</strong>, y puede ejecutarse de forma <strong>programada</strong> copiando
+        solo lo que ha cambiado.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Agente:</strong> máquina virtual (VMware, Hyper-V, <abbr class="sigla sigla-1" data-s="KVM" data-en="Kernel-based Virtual Machine" data-es="hipervisor de Linux" tabindex="0">KVM<span class="sigla-exp"> (Kernel-based Virtual Machine: hipervisor de Linux)</span></abbr>) o instancia <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> que se despliega cerca del
+          almacenamiento de origen para leerlo. Entre servicios de AWS no hace falta agente.</li>
+        <li><strong>Ubicaciones:</strong> el origen y el destino de la copia.</li>
+        <li><strong>Tarea:</strong> la configuración de una transferencia: ubicaciones, filtros de inclusión y exclusión,
+          límite de ancho de banda, verificación y programación.</li>
+        <li><strong>Transferencias incrementales:</strong> tras la primera copia completa, solo se copian los cambios.</li>
+        <li><strong>Conserva metadatos:</strong> permisos, marcas de tiempo y propietarios de los ficheros.</li>
+        <li><strong>Rendimiento:</strong> una sola tarea puede aprovechar un enlace de 10 Gbps; para más, se reparten los
+          datos entre varias tareas y agentes.</li>
+        <li><strong>Red:</strong> puede ir por internet, <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr> o <a href="direct-connect.html">Direct Connect</a>, y usar puntos de enlace de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> para no salir
+          a internet.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Migrar un <abbr class="sigla" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS</abbr> local a <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> o a <a href="../servicio.html?id=fsx">FSx</a>.</li>
+        <li>Mover datos a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> para analizarlos o archivarlos (incluidas clases Glacier).</li>
+        <li>Replicar periódicamente datos entre centros de datos y AWS, o entre servicios de AWS de distintas regiones.</li>
+        <li>Traer datos desde otra nube.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si la red no da para mover el volumen en un plazo razonable: transferencia física (<a href="snow-family.html">Snow Family</a> para clientes
+          existentes, Data Transfer Terminal para nuevos).</li>
+        <li>Para que las aplicaciones locales sigan accediendo a los datos en AWS de forma continua, con caché local:
+          <a href="../servicio.html?id=storage-gateway">Storage Gateway</a>.</li>
+        <li>Para que socios externos suban ficheros por <abbr class="sigla sigla-1" data-s="SFTP" data-en="SSH File Transfer Protocol" data-es="transferencia de ficheros sobre SSH" tabindex="0">SFTP<span class="sigla-exp"> (SSH File Transfer Protocol: transferencia de ficheros sobre SSH)</span></abbr>: <a href="transfer-family.html">Transfer Family</a>.</li>
+        <li>Para migrar bases de datos: <a href="dms.html"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>DataSync</th><th><a href="../servicio.html?id=storage-gateway">Storage Gateway</a></th><th><a href="transfer-family.html">Transfer Family</a></th></tr></thead>
+          <tbody>
+            <tr><td>Uso</td><td>Copiar o migrar datos</td><td>Acceso híbrido continuo</td><td>Intercambio por <abbr class="sigla" data-s="SFTP" data-en="SSH File Transfer Protocol" data-es="transferencia de ficheros sobre SSH" tabindex="0">SFTP</abbr>, <abbr class="sigla sigla-1" data-s="FTPS" data-en="FTP Secure" data-es="FTP cifrado con TLS" tabindex="0">FTPS<span class="sigla-exp"> (FTP Secure: FTP cifrado con TLS)</span></abbr>, <abbr class="sigla sigla-1" data-s="FTP" data-en="File Transfer Protocol" data-es="protocolo clásico de transferencia de ficheros" tabindex="0">FTP<span class="sigla-exp"> (File Transfer Protocol: protocolo clásico de transferencia de ficheros)</span></abbr> o <abbr class="sigla sigla-1" data-s="AS2" data-en="Applicability Statement 2" data-es="protocolo para intercambiar documentos de negocio entre empresas" tabindex="0">AS2<span class="sigla-exp"> (Applicability Statement 2: protocolo para intercambiar documentos de negocio entre empresas)</span></abbr></td></tr>
+            <tr><td>Quién inicia</td><td>Tareas programadas</td><td>Las aplicaciones locales</td><td>Usuarios y socios externos</td></tr>
+            <tr><td>Caché local</td><td>No</td><td>Sí</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por gigabyte copiado</strong> (con tarifas distintas según el modo de la tarea), más las
+        peticiones y el almacenamiento de los servicios de destino y la transferencia de datos que corresponda.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>; los datos en destino se cifran según el servicio (por ejemplo <abbr class="sigla sigla-1" data-s="SSE" data-en="Server-Side Encryption" data-es="cifrado en el servidor" tabindex="0">SSE<span class="sigla-exp"> (Server-Side Encryption: cifrado en el servidor)</span></abbr> en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>).</li>
+        <li>Verificación de integridad durante y después de la copia.</li>
+        <li>Acceso a los destinos con roles de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Puntos de enlace de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> (<a href="privatelink.html">PrivateLink</a>) para que la transferencia no pase por internet.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Copiar un <abbr class="sigla" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS</abbr> (<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> o <abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr>) a <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>, <a href="../servicio.html?id=fsx">FSx</a> o <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: DataSync.</li>
+        <li><strong>"Copia programada e incremental con verificación"</strong>: DataSync.</li>
+        <li><strong>"Que la copia no sature la red en horario laboral"</strong>: límite de ancho de banda y programación.</li>
+        <li><strong>"Seguir usando los ficheros desde local con caché"</strong>: <a href="../servicio.html?id=storage-gateway">Storage Gateway</a>, no DataSync.</li>
+        <li><strong>"Petabytes con poca red"</strong>: transferencia física, no DataSync.</li>
+        <li><strong>"Sin pasar por internet"</strong>: agente con punto de enlace de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> sobre <a href="direct-connect.html">Direct Connect</a> o <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="datasync"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html" target="_blank" rel="noopener">What is AWS DataSync?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/datasync/faqs/" target="_blank" rel="noopener">AWS DataSync FAQs</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/datasync/latest/userguide/datasync-in-vpc.html" target="_blank" rel="noopener">Using VPC service endpoints with AWS DataSync</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "snow-family-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa debe trasladar 400 TB a S3 en tres semanas y solo dispone de un enlace de 100 Mbps que comparte con otros servicios. Ya trabaja con dispositivos de Snow Family. ¿Qué usa?",
+    "opciones": [
+      "AWS DataSync por el enlace actual.",
+      "Varios dispositivos Snowball Edge optimizados para almacenamiento.",
+      "S3 Transfer Acceleration.",
+      "Una Site-to-Site VPN."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "A 100 Mbps, 400 TB tardarían más de un año. Una transferencia física con Snowball Edge cumple el plazo. Un cliente nuevo usaría hoy otras opciones, como Data Transfer Terminal o soluciones de socios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/snowball/latest/developer-guide/whatisedge.html"
+    ]
+  },
+  {
+    "id": "snow-family-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un barco de investigación recoge datos durante meses sin conexión y necesita procesarlos a bordo con instancias EC2 antes de traerlos a AWS. ¿Qué dispositivo encaja?",
+    "opciones": [
+      "Snowball Edge optimizado para cómputo.",
+      "AWS Outposts en rack.",
+      "Storage Gateway.",
+      "Snowmobile."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Snowball Edge optimizado para cómputo ejecuta instancias EC2 en local sin conexión y guarda los datos para enviarlos después. Outposts necesita conexión continua con su región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/snowball/latest/developer-guide/whatisedge.html"
+    ]
+  },
+  {
+    "id": "snow-family-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "¿Cómo protege Snow Family los datos durante el envío del dispositivo?",
+    "opciones": [
+      "No los cifra; depende de la empresa de mensajería.",
+      "Los cifra con una clave que se guarda en el propio dispositivo.",
+      "Los cifra con claves de KMS que nunca se guardan en el dispositivo, que además es resistente a manipulaciones.",
+      "Solo cifra los nombres de los ficheros."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los datos se cifran con claves gestionadas en KMS que no viajan con el dispositivo; el hardware es resistente a manipulaciones y AWS lo borra tras la carga.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/snowball/latest/developer-guide/whatisedge.html"
+    ]
+  },
+  {
+    "id": "snow-family-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "En 2026, una empresa que nunca ha usado Snow Family necesita llevar a AWS 300 TB que ya tiene en sus propios discos, porque su red es insuficiente. ¿Qué opción de AWS considera?",
+    "opciones": [
+      "Pedir un Snowmobile.",
+      "Pedir un Snowcone.",
+      "AWS Data Transfer Terminal, llevando sus discos a una instalación de AWS para cargarlos a alta velocidad.",
+      "AWS Transfer Family."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Snow Family ya no admite clientes nuevos, y Snowcone y Snowmobile están retirados. Data Transfer Terminal permite subir datos desde tus propios dispositivos en una instalación de AWS (o se puede recurrir a socios).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/datatransferterminal/latest/userguide/what-is-dtt.html"
+    ]
+  },
+  {
+    "id": "snow-family-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "¿Cuándo suele ser preferible una transferencia física frente a una transferencia por la red?",
+    "opciones": [
+      "Siempre que los datos superen 1 TB.",
+      "Cuando la transferencia por la red tardaría demasiado (por ejemplo, más de una semana) para el plazo disponible.",
+      "Cuando los datos están en S3.",
+      "Cuando se necesita replicación continua."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La regla práctica es calcular el tiempo por la red con el ancho de banda real disponible. Si no cabe en el plazo, la transferencia física sale más rápida y barata.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/snowball/latest/developer-guide/whatisedge.html"
+    ]
+  }
+]

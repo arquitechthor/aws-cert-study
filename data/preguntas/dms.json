@@ -1,0 +1,135 @@
+[
+  {
+    "id": "dms-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa migra una base de datos MySQL local de 2 TB a Amazon RDS for MySQL. La aplicación solo puede estar parada unos minutos. ¿Qué solución usa?",
+    "opciones": [
+      "Exportar con mysqldump un fin de semana e importar en RDS.",
+      "AWS SCT para convertir el esquema y después copiar los ficheros.",
+      "AWS DMS con una tarea de carga completa más replicación continua de cambios, y cortar cuando el destino esté al día.",
+      "AWS DataSync hacia el volumen de RDS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "DMS copia los datos mientras el origen sigue en uso y después aplica los cambios (CDC), así el corte dura minutos. Al ser el mismo motor, no hace falta convertir el esquema. DataSync copia ficheros, no bases de datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html"
+    ]
+  },
+  {
+    "id": "dms-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa quiere pasar de Oracle local a Aurora PostgreSQL, con procedimientos almacenados incluidos. ¿Qué combinación es la adecuada?",
+    "opciones": [
+      "Solo AWS DMS, que convierte también los procedimientos.",
+      "DMS Schema Conversion (o AWS SCT) para el esquema y el código, y AWS DMS para los datos.",
+      "AWS Application Migration Service para el servidor de Oracle.",
+      "AWS DataSync para los ficheros de datos de Oracle."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "En una migración heterogénea, el esquema y el código se convierten con DMS Schema Conversion o SCT, y los datos se mueven con DMS. Application Migration Service rehospeda el servidor tal cual, sin cambiar de motor.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html"
+    ]
+  },
+  {
+    "id": "dms-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere enviar casi en tiempo real los cambios de su base de datos SQL Server a un flujo para que otros sistemas los consuman, sin tocar la aplicación. ¿Qué usa?",
+    "opciones": [
+      "Una tarea de solo CDC de AWS DMS con Kinesis Data Streams como destino.",
+      "Copias de seguridad diarias a S3.",
+      "AWS Backup con copia entre regiones.",
+      "Una réplica de lectura de RDS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "DMS lee los cambios del registro de transacciones del origen y puede escribirlos en Kinesis Data Streams, sin cambios en la aplicación. Ten en cuenta que la latencia de CDC no está garantizada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.Kinesis.html"
+    ]
+  },
+  {
+    "id": "dms-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una tarea de DMS replica cambios de forma continua durante semanas. ¿Qué se configura para que siga funcionando si falla la AZ de la instancia de replicación?",
+    "opciones": [
+      "Una instancia de replicación Multi-AZ.",
+      "Más memoria en la instancia.",
+      "La validación de datos.",
+      "Una tarea de solo carga completa."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Una instancia de replicación Multi-AZ mantiene una réplica en espera en otra AZ y conmuta automáticamente si la principal falla.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.html"
+    ]
+  },
+  {
+    "id": "dms-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Un equipo va a ejecutar muchas migraciones de bases de datos con cargas variables y no quiere dimensionar ni vigilar instancias de replicación. ¿Qué opción de DMS elige?",
+    "opciones": [
+      "Instancias de replicación del mayor tamaño.",
+      "AWS SCT.",
+      "DMS Serverless.",
+      "Una tarea de solo CDC."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "DMS Serverless aprovisiona y ajusta la capacidad automáticamente según la carga de la migración, y se paga por la capacidad usada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.html"
+    ]
+  },
+  {
+    "id": "dms-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS ayuda a migrar bases de datos a AWS manteniendo la base de datos de origen operativa durante la migración?",
+    "opciones": [
+      "AWS DataSync.",
+      "AWS Database Migration Service.",
+      "AWS Backup.",
+      "Amazon RDS Proxy."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "DMS migra bases de datos con el origen en marcha y replica los cambios hasta el corte. DataSync mueve ficheros y AWS Backup hace copias de seguridad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html"
+    ]
+  }
+]

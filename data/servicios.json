@@ -123,14 +123,14 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Recoge el inventario, el rendimiento y las conexiones de red de los servidores locales para planificar una migración. Cerrado a clientes nuevos.",
     "frase": "Inventaría los servidores de tu centro de datos y sus dependencias antes de migrar",
     "documentacion": "https://docs.aws.amazon.com/application-discovery/"
   },
   {
     "id": "application-migration-service",
-    "nombre": "AWS Application Migration Service",
+    "nombre": "AWS Transform MGN",
     "categoria": "migracion-transferencia",
     "icono": true,
     "certificaciones": [
@@ -138,10 +138,13 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Rehospeda servidores físicos, virtuales o de otras nubes en EC2 replicando sus discos de forma continua, con pruebas y un corte de minutos.",
     "frase": "Replica servidores físicos o virtuales a la nube tal cual, para migrarlos sin rehacer",
-    "documentacion": "https://docs.aws.amazon.com/mgn/"
+    "documentacion": "https://docs.aws.amazon.com/mgn/",
+    "alias": [
+      "AWS Application Migration Service"
+    ]
   },
   {
     "id": "appstream-2-0",
@@ -712,8 +715,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Copia en línea, programada y verificada de ficheros y objetos entre almacenamiento local, otras nubes y S3, EFS o FSx.",
     "frase": "Copia en línea grandes volúmenes desde NAS o servidores de ficheros a S3, EFS o FSx",
     "documentacion": "https://docs.aws.amazon.com/datasync/"
   },
@@ -787,8 +790,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Migra bases de datos a AWS con la de origen en marcha: carga completa y replicación continua de cambios (CDC) entre motores iguales o distintos.",
     "frase": "Migra bases de datos con la de origen en marcha y replica los cambios hasta el corte",
     "documentacion": "https://docs.aws.amazon.com/dms/"
   },
@@ -1637,8 +1640,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Panel único para seguir el progreso de las migraciones hechas con distintas herramientas, con inventario de descubrimiento y recomendaciones. Cerrado a clientes nuevos.",
     "frase": "Panel único para seguir el progreso de todas tus migraciones de aplicaciones",
     "documentacion": "https://docs.aws.amazon.com/migrationhub/"
   },
@@ -2013,8 +2016,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Aplicación de escritorio que convierte esquemas y código SQL entre motores de bases de datos y almacenes de datos, con informes de lo que no puede convertir.",
     "frase": "Traduce esquemas y código SQL de un motor de bases de datos a otro distinto",
     "documentacion": "https://docs.aws.amazon.com/SchemaConversionTool/"
   },
@@ -2149,8 +2152,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Dispositivos físicos resistentes (Snowball Edge) para mover muchos terabytes sin red o procesar datos en el borde. Ya no admite clientes nuevos.",
     "frase": "Dispositivos físicos resistentes para mover terabytes sin red o procesar en el borde",
     "documentacion": "https://docs.aws.amazon.com/snowball/"
   },
@@ -2328,8 +2331,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servidores SFTP, FTPS, FTP y AS2 gestionados que guardan los ficheros directamente en S3 o EFS, con usuarios propios o de tu proveedor de identidad.",
     "frase": "Servidores SFTP, FTPS y FTP gestionados que guardan los ficheros en S3 o EFS",
     "documentacion": "https://docs.aws.amazon.com/transfer/"
   },

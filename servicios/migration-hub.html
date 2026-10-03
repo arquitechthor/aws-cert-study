@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Migration Hub — Apuntes AWS</title>
+<meta name="description" content="Panel único para seguir el progreso de las migraciones hechas con distintas herramientas, con inventario de descubrimiento y recomendaciones. Cerrado a clientes nuevos. Apuntes y preguntas de práctica para CLF-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/migration-hub.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Migration Hub — Apuntes AWS">
+<meta property="og:description" content="Panel único para seguir el progreso de las migraciones hechas con distintas herramientas, con inventario de descubrimiento y recomendaciones. Cerrado a clientes nuevos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/migration-hub.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/migration-hub.svg" alt="" width="56" height="56"><span>AWS Migration Hub</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Panel único para seguir el progreso de todas tus migraciones de aplicaciones</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/migrationhub/" target="_blank" rel="noopener">Documentación de AWS Migration Hub ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> AWS Migration Hub <strong>no admite clientes nuevos</strong> desde el 07/11/2025; los clientes actuales
+        pueden seguir usándolo. Para capacidades parecidas, AWS recomienda <strong><a href="../servicio.html?id=transform">AWS Transform</a></strong>. El servicio
+        sigue apareciendo en las guías de examen.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Migration Hub es un <strong>panel central</strong> para planificar y <strong>seguir el progreso</strong> de
+        una migración a AWS. Reúne el inventario recogido por <a href="application-discovery-service.html">Application Discovery Service</a>, permite agrupar servidores
+        en aplicaciones y muestra el estado de cada uno mientras se migra con herramientas de AWS (Application Migration
+        Service, <a href="dms.html"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a>) o de socios. No migra nada por sí mismo.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Región de inicio:</strong> la región donde Migration Hub guarda los datos de descubrimiento y de
+          seguimiento; se elige al empezar.</li>
+        <li><strong>Aplicaciones:</strong> grupos de servidores que se migran y se siguen juntos.</li>
+        <li><strong>Herramientas integradas:</strong> envían su estado a Migration Hub para verlo en un solo sitio.</li>
+        <li><strong>Recomendaciones de instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>:</strong> propone tipos de instancia según el uso real recogido.</li>
+        <li><strong>Funciones relacionadas:</strong> Strategy Recommendations (qué estrategia usar para cada aplicación),
+          Orchestrator (plantillas de flujos de migración), Journeys y Refactor Spaces (modernización gradual hacia
+          microservicios).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Seguir una migración grande con varios equipos y herramientas.</li>
+        <li>Agrupar servidores descubiertos en aplicaciones y planificar olas.</li>
+        <li>Informar a la dirección del avance de la migración.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si eres cliente nuevo: usa <a href="../servicio.html?id=transform">AWS Transform</a>.</li>
+        <li>Para migrar servidores o bases de datos: <a href="application-migration-service.html">Application Migration Service</a> o <a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a>; Migration Hub solo los sigue.</li>
+        <li>Para inventariar el entorno: <a href="application-discovery-service.html">Application Discovery Service</a> (que vuelca sus datos aquí).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Fase</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Descubrir y evaluar</td><td><a href="application-discovery-service.html">Application Discovery Service</a> (y <a href="../servicio.html?id=transform">AWS Transform</a>)</td></tr>
+            <tr><td>Seguir el progreso</td><td>Migration Hub</td></tr>
+            <tr><td>Migrar servidores</td><td><a href="application-migration-service.html">Application Migration Service</a> (Transform MGN)</td></tr>
+            <tr><td>Migrar bases de datos</td><td><a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a> y <a href="sct.html"><abbr class="sigla sigla-1" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT<span class="sigla-exp"> (Schema Conversion Tool)</span></abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Migration Hub <strong>no tiene coste</strong>; se pagan las herramientas de migración y los recursos que
+        usen.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Control de acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Los datos se guardan en la región de inicio elegida.</li>
+        <li>Solo guarda metadatos de seguimiento, no los datos migrados.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Un único lugar para seguir el estado de la migración"</strong>: Migration Hub.</li>
+        <li>Migration Hub <strong>no migra</strong>: las herramientas hacen el trabajo y le envían su estado.</li>
+        <li><strong>"Dónde ver los datos de <a href="application-discovery-service.html">Application Discovery Service</a>"</strong>: Migration Hub, en la región de
+          inicio.</li>
+        <li><strong>"Qué estrategia de migración usar para cada aplicación"</strong>: Strategy Recommendations.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="migration-hub"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/migrationhub/latest/ug/migrationhub-availability-change.html" target="_blank" rel="noopener">AWS Migration Hub availability change</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/migrationhub/latest/ug/whatishub.html" target="_blank" rel="noopener">What is AWS Migration Hub?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/" target="_blank" rel="noopener">AWS Service Availability Updates</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

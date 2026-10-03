@@ -1,0 +1,112 @@
+[
+  {
+    "id": "transfer-family-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Los proveedores de una empresa envían ficheros por SFTP a un servidor local que quiere retirar. Los ficheros deben acabar en S3 y los proveedores no pueden cambiar su forma de trabajar. ¿Qué solución usa?",
+    "opciones": [
+      "AWS DataSync.",
+      "AWS Transfer Family con SFTP y S3 como almacenamiento.",
+      "URL prefirmadas de S3.",
+      "S3 File Gateway."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Transfer Family ofrece un servidor SFTP gestionado que guarda los ficheros directamente en S3, de modo que los proveedores siguen usando su cliente SFTP. DataSync no recibe ficheros de terceros.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transfer/latest/userguide/what-is-aws-transfer-family.html"
+    ]
+  },
+  {
+    "id": "transfer-family-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un socio solo permite conexiones salientes hacia IP concretas que se registran en su cortafuegos. ¿Cómo se configura el servidor de Transfer Family?",
+    "opciones": [
+      "Con un punto de enlace público.",
+      "Con un punto de enlace de VPC accesible desde internet, con IP elásticas asociadas.",
+      "Con FTP en lugar de SFTP.",
+      "Detrás de CloudFront."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un punto de enlace de VPC accesible desde internet usa IP elásticas, que son fijas y pueden registrarse en el cortafuegos del socio. El punto de enlace público no da IP estáticas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html"
+    ]
+  },
+  {
+    "id": "transfer-family-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Los usuarios de un servidor SFTP de Transfer Family deben iniciar sesión con usuario y contraseña de un directorio LDAP propio, no de Active Directory. ¿Qué tipo de proveedor de identidad se usa?",
+    "opciones": [
+      "Gestionado por el servicio.",
+      "AWS Managed Microsoft AD.",
+      "Un proveedor de identidad propio, integrado mediante una función Lambda.",
+      "IAM Identity Center sin más."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Con un proveedor de identidad propio, Transfer Family llama a una función Lambda (o a API Gateway) que valida las credenciales contra cualquier sistema y devuelve el rol y el directorio del usuario. El gestionado por el servicio solo admite claves SSH.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transfer/latest/userguide/custom-idp-intro.html"
+    ]
+  },
+  {
+    "id": "transfer-family-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Cada fichero que llega por SFTP debe descifrarse con PGP, copiarse a otra carpeta y etiquetarse antes de procesarse, sin servidores propios. ¿Qué usa?",
+    "opciones": [
+      "Un flujo gestionado de Transfer Family.",
+      "Una regla de ciclo de vida de S3.",
+      "AWS DataSync programado.",
+      "AWS Backup."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los flujos gestionados ejecutan pasos automáticos tras cada subida: copiar, etiquetar, descifrar o llamar a una función Lambda para lógica propia.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transfer/latest/userguide/transfer-workflows.html"
+    ]
+  },
+  {
+    "id": "transfer-family-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un sistema antiguo solo admite FTP sin cifrar y debe enviar ficheros a S3. ¿Qué restricción tiene Transfer Family?",
+    "opciones": [
+      "FTP no está disponible en Transfer Family.",
+      "FTP solo funciona con EFS.",
+      "FTP requiere AS2.",
+      "FTP solo se admite en puntos de enlace de VPC internos, no expuestos a internet."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Como FTP no cifra, Transfer Family solo lo permite en puntos de enlace de VPC internos. Desde internet hay que usar SFTP o FTPS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transfer/latest/userguide/sftp-for-transfer-family.html"
+    ]
+  }
+]

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS DMS — Apuntes AWS</title>
+<meta name="description" content="Migra bases de datos a AWS con la de origen en marcha: carga completa y replicación continua de cambios (CDC) entre motores iguales o distintos. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/dms.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS DMS — Apuntes AWS">
+<meta property="og:description" content="Migra bases de datos a AWS con la de origen en marcha: carga completa y replicación continua de cambios (CDC) entre motores iguales o distintos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/dms.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/dms.svg" alt="" width="56" height="56"><span>AWS DMS</span></h1>
+      <p class="full-name">AWS Database Migration Service (AWS DMS)</p>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Migra bases de datos con la de origen en marcha y replica los cambios hasta el corte</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/dms/" target="_blank" rel="noopener">Documentación de AWS DMS ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Database Migration Service (<abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr>) copia datos de una base de datos de origen a un destino mientras el origen
+        <strong>sigue funcionando</strong>. Hace una <strong>carga completa</strong> inicial y después
+        <strong>replica los cambios</strong> que se producen, lo que se conoce como <abbr class="sigla sigla-1" data-s="CDC" data-en="Change Data Capture" data-es="captura de los cambios de una base de datos para replicarlos" tabindex="0">CDC<span class="sigla-exp"> (Change Data Capture: captura de los cambios de una base de datos para replicarlos)</span></abbr>, de modo que el corte final dura minutos. Sirve
+        entre motores iguales (homogénea, por ejemplo de Oracle a Oracle) o distintos (heterogénea, por ejemplo de
+        Oracle a PostgreSQL); en este último caso, el esquema y el código se convierten antes con DMS Schema Conversion
+        o con <a href="sct.html"><abbr class="sigla sigla-1" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT<span class="sigla-exp"> (Schema Conversion Tool)</span></abbr></a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Instancia de replicación:</strong> instancia gestionada que ejecuta las tareas; se elige su tamaño y
+          puede ser Multi-AZ. Alternativa: <strong>DMS Serverless</strong>, que ajusta la capacidad sola.</li>
+        <li><strong>Puntos de enlace:</strong> la conexión al origen y al destino. Además de bases de datos, el destino
+          puede ser <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a>, <a href="redshift.html">Redshift</a>, <a href="opensearch-service.html">OpenSearch Service</a> o <a href="kinesis-data-streams.html">Kinesis Data Streams</a>.</li>
+        <li><strong>Tareas:</strong> tres tipos de migración: solo carga completa, carga completa más <abbr class="sigla" data-s="CDC" data-en="Change Data Capture" data-es="captura de los cambios de una base de datos para replicarlos" tabindex="0">CDC</abbr>, o solo <abbr class="sigla" data-s="CDC" data-en="Change Data Capture" data-es="captura de los cambios de una base de datos para replicarlos" tabindex="0">CDC</abbr>.</li>
+        <li><strong><abbr class="sigla" data-s="CDC" data-en="Change Data Capture" data-es="captura de los cambios de una base de datos para replicarlos" tabindex="0">CDC</abbr>:</strong> lee los registros de transacciones del origen (por ejemplo, el <em>binlog</em> de
+          MySQL), por lo que suele requerir configurarlos. No es replicación en tiempo real ni tiene <abbr class="sigla sigla-1" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA<span class="sigla-exp"> (Service Level Agreement: compromiso de disponibilidad)</span></abbr> de latencia.</li>
+        <li><strong>Reglas de selección y transformación:</strong> qué tablas migrar y cambios sencillos de nombres o
+          columnas.</li>
+        <li><strong>Validación de datos:</strong> compara filas de origen y destino.</li>
+        <li><strong>Migraciones homogéneas:</strong> para algunos motores, <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr> usa las herramientas nativas del motor.</li>
+        <li><strong>DMS Schema Conversion:</strong> conversión de esquemas y código dentro de la consola de <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr>, con
+          ayuda de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> generativa para el código difícil.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Migrar una base de datos local a <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a> o <a href="aurora.html">Aurora</a> con una parada mínima.</li>
+        <li>Cambiar de motor comercial a uno de código abierto (con conversión de esquema).</li>
+        <li>Replicación continua hacia un lago de datos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o un almacén en <a href="redshift.html">Redshift</a>.</li>
+        <li>Consolidar varias bases de datos en una.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para convertir el esquema, procedimientos y funciones entre motores: <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr> no lo hace en sus tareas de datos; hace
+          falta DMS Schema Conversion o <a href="sct.html"><abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr></a>.</li>
+        <li>Para migrar servidores completos (sistema operativo y aplicación): <a href="application-migration-service.html">Application Migration Service</a>.</li>
+        <li>Para replicación continua de baja latencia y bidireccional en producción, valora la replicación nativa del
+          motor.</li>
+        <li>Si la base de datos ya está en <a href="aurora.html">Aurora</a> y solo necesitas otra región: base de datos global de Aurora.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></th><th><a href="sct.html"><abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr></a> / DMS Schema Conversion</th><th><a href="application-migration-service.html">Application Migration Service</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué mueve</td><td>Datos (filas) y cambios</td><td>Esquema y código <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr></td><td>Servidores enteros</td></tr>
+            <tr><td>Cuándo</td><td>Durante la migración y después</td><td>Antes de mover los datos</td><td>Rehospedar sin cambios</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Con instancias de replicación se paga <strong>por hora de instancia</strong> (según tamaño y si es Multi-AZ)
+        y por su almacenamiento. Con DMS Serverless se paga por la <strong>capacidad usada por hora</strong>. La
+        transferencia de datos de entrada a AWS no se cobra.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> en las conexiones a los puntos de enlace.</li>
+        <li>Credenciales de las bases de datos en <a href="secrets-manager.html">Secrets Manager</a>.</li>
+        <li>Instancia de replicación Multi-AZ para que la tarea siga si cae una <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>.</li>
+        <li>La instancia de replicación vive en tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>; el origen local se alcanza por <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr> o <a href="direct-connect.html">Direct Connect</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Migrar con el mínimo tiempo de parada"</strong>: <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr> con carga completa más <abbr class="sigla" data-s="CDC" data-en="Change Data Capture" data-es="captura de los cambios de una base de datos para replicarlos" tabindex="0">CDC</abbr>.</li>
+        <li><strong>"Oracle a <a href="aurora.html">Aurora</a> PostgreSQL"</strong>: primero <a href="sct.html"><abbr class="sigla" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT</abbr></a> o DMS Schema Conversion (esquema), después <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr>
+          (datos).</li>
+        <li><strong>"Mismo motor"</strong>: no hace falta convertir el esquema.</li>
+        <li><strong>"Base de datos de muchos terabytes y poca red"</strong>: carga inicial por otro medio y <abbr class="sigla" data-s="CDC" data-en="Change Data Capture" data-es="captura de los cambios de una base de datos para replicarlos" tabindex="0">CDC</abbr> con <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr>.</li>
+        <li><strong>"Replicar cambios hacia <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o Kinesis"</strong>: <abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr> admite esos destinos.</li>
+        <li><strong>"Sin gestionar la capacidad de la instancia de replicación"</strong>: DMS Serverless.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="dms"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html" target="_blank" rel="noopener">What is AWS Database Migration Service?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html" target="_blank" rel="noopener">Creating tasks for ongoing replication using AWS DMS</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/dms/latest/userguide/schema-conversion-convert.databaseobjects.html" target="_blank" rel="noopener">Converting database objects with generative AI</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.html" target="_blank" rel="noopener">Working with AWS DMS Serverless</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

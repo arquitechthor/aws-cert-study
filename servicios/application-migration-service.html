@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Transform MGN — Apuntes AWS</title>
+<meta name="description" content="Rehospeda servidores físicos, virtuales o de otras nubes en EC2 replicando sus discos de forma continua, con pruebas y un corte de minutos. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/application-migration-service.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Transform MGN — Apuntes AWS">
+<meta property="og:description" content="Rehospeda servidores físicos, virtuales o de otras nubes en EC2 replicando sus discos de forma continua, con pruebas y un corte de minutos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/application-migration-service.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/application-migration-service.svg" alt="" width="56" height="56"><span>AWS Transform MGN</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Replica servidores físicos o virtuales a la nube tal cual, para migrarlos sin rehacer</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/mgn/" target="_blank" rel="noopener">Documentación de AWS Transform MGN ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> <strong>AWS Transform MGN</strong> es el nombre actual de AWS Application Migration Service (MGN),
+        renombrado en junio de 2026 al convertirse en el motor de replicación de <a href="../servicio.html?id=transform">AWS Transform</a>. El servicio y su
+        funcionamiento no cambian, y en los exámenes verás "Application Migration Service": es esto mismo.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Transform MGN, antes llamado AWS Application Migration Service, es el servicio recomendado para
+        <strong>rehospedar</strong> (<em>lift and shift</em>) servidores en AWS. Un agente instalado en cada servidor de
+        origen <strong>replica sus discos bloque a bloque y de forma continua</strong> a AWS. Cuando quieras, lanzas
+        instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> de prueba y, al final, haces el <strong>corte</strong> con una parada de minutos. Sirve para
+        servidores físicos, máquinas virtuales (VMware, Hyper-V) y servidores en otras nubes, con Windows o Linux.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Agente de replicación:</strong> se instala en cada servidor de origen y envía los cambios de sus
+          discos de forma continua.</li>
+        <li><strong>Área de preparación (<em>staging area</em>):</strong> subred de tu cuenta con servidores de
+          replicación ligeros y volúmenes <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> de bajo coste que reciben los datos.</li>
+        <li><strong>Plantillas de lanzamiento:</strong> definen el tipo de instancia, la subred y los grupos de
+          seguridad de las instancias de prueba y de corte; MGN convierte el arranque y los controladores para <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>.</li>
+        <li><strong>Prueba y corte:</strong> primero se lanzan instancias de prueba sin afectar a la replicación; en el
+          corte se detiene el origen, se lanza la instancia definitiva y se finaliza.</li>
+        <li><strong>Acciones posteriores al lanzamiento:</strong> scripts y tareas de <a href="systems-manager.html">Systems Manager</a> que se ejecutan en
+          la instancia nueva (instalar agentes, cambiar configuración…).</li>
+        <li><strong>Olas y aplicaciones:</strong> agrupar servidores para migrarlos juntos.</li>
+        <li><strong><a href="../servicio.html?id=transform">AWS Transform</a>:</strong> flujo con agentes de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> que planifica olas, prepara la red y usa MGN para
+          rehospedar.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Mover un centro de datos a AWS sin cambiar las aplicaciones.</li>
+        <li>Migrar desde otra nube a <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>.</li>
+        <li>Mover instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> entre regiones o cuentas.</li>
+        <li>Primer paso de una modernización: rehospedar ahora y optimizar después.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para migrar solo una base de datos o cambiar de motor: <a href="dms.html"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a> (y <a href="sct.html"><abbr class="sigla sigla-1" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT<span class="sigla-exp"> (Schema Conversion Tool)</span></abbr></a>).</li>
+        <li>Para recuperación ante desastres continua (no una migración): <a href="../servicio.html?id=elastic-disaster-recovery">Elastic Disaster Recovery</a>, que usa una
+          tecnología parecida.</li>
+        <li>Para mover ficheros o recursos compartidos: <a href="datasync.html">DataSync</a>.</li>
+        <li>Si vas a reescribir la aplicación (por ejemplo, a contenedores o sin servidor), rehospedar el servidor tal
+          cual no aporta.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Transform MGN</th><th><a href="../servicio.html?id=elastic-disaster-recovery">Elastic Disaster Recovery</a></th><th><a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a></th></tr></thead>
+          <tbody>
+            <tr><td>Objetivo</td><td>Migrar servidores una vez</td><td>Recuperarse de un desastre, de forma continua</td><td>Migrar bases de datos</td></tr>
+            <tr><td>Qué replica</td><td>Discos enteros, bloque a bloque</td><td>Discos enteros, bloque a bloque</td><td>Filas y cambios</td></tr>
+            <tr><td>Resultado</td><td>Instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> definitivas</td><td>Instancias de recuperación cuando hacen falta</td><td>Base de datos de destino</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Cada servidor de origen tiene <strong>2160 horas gratis</strong> (90 días de replicación continua); después se
+        paga por hora de replicación. Siempre se pagan los recursos que crea en tu cuenta: servidores de replicación,
+        volúmenes <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a>, instantáneas e instancias de prueba y de corte.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos cifrados en tránsito (<abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr>) y en los volúmenes <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>La replicación puede ir por internet, <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr> o <a href="direct-connect.html">Direct Connect</a>, y usar <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> privadas.</li>
+        <li>Las pruebas no interrumpen la replicación ni el origen.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Lift and shift", "rehospedar", "sin cambios en la aplicación"</strong>: Application Migration
+          Service (hoy Transform MGN).</li>
+        <li><strong>"Cientos de servidores VMware a <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> con poca parada"</strong>: MGN.</li>
+        <li><strong>"Probar antes del corte sin afectar al origen"</strong>: instancias de prueba de MGN.</li>
+        <li>Si aparecen <strong>Server Migration Service</strong> o CloudEndure Migration: son sus predecesores; la
+          respuesta actual es MGN.</li>
+        <li><strong>"Recuperación ante desastres"</strong>: <a href="../servicio.html?id=elastic-disaster-recovery">Elastic Disaster Recovery</a>, no MGN.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="application-migration-service"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2026/06/aws-transform-mgn-rebrand/" target="_blank" rel="noopener">AWS Application Migration Service is now AWS Transform MGN</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html" target="_blank" rel="noopener">What is AWS Application Migration Service?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/mgn/latest/ug/migration_at_scale.html" target="_blank" rel="noopener">Migration at scale</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/application-migration-service/faqs/" target="_blank" rel="noopener">AWS Transform MGN FAQs</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Application Discovery Service — Apuntes AWS</title>
+<meta name="description" content="Recoge el inventario, el rendimiento y las conexiones de red de los servidores locales para planificar una migración. Cerrado a clientes nuevos. Apuntes y preguntas de práctica para CLF-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/application-discovery-service.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Application Discovery Service — Apuntes AWS">
+<meta property="og:description" content="Recoge el inventario, el rendimiento y las conexiones de red de los servidores locales para planificar una migración. Cerrado a clientes nuevos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/application-discovery-service.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/application-discovery-service.svg" alt="" width="56" height="56"><span>AWS Application Discovery Service</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Inventaría los servidores de tu centro de datos y sus dependencias antes de migrar</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/application-discovery/" target="_blank" rel="noopener">Documentación de AWS Application Discovery Service ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> AWS Application Discovery Service <strong>no admite clientes nuevos</strong> desde el 07/11/2025;
+        los clientes actuales pueden seguir usándolo. Para descubrir y evaluar el entorno local, AWS recomienda
+        <strong><a href="../servicio.html?id=transform">AWS Transform</a></strong>. Además, el antiguo Discovery Connector para VMware dejó de funcionar el
+        17/11/2025 y lo sustituye el recolector sin agente. El servicio sigue apareciendo en las guías de examen.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Application Discovery Service recopila información de los servidores de tu centro de datos para
+        <strong>planificar una migración</strong>: qué servidores hay, su configuración, cuánto los usas y
+        <strong>de qué otros servidores dependen</strong>. Con esos datos se agrupan servidores en aplicaciones, se
+        dimensionan las instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> de destino y se estima el coste. Los datos se ven en <a href="migration-hub.html">Migration Hub</a> y se pueden
+        exportar para analizarlos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Agente de descubrimiento:</strong> se instala en cada servidor (Windows o Linux, físico o virtual) y
+          recoge configuración, rendimiento, <strong>procesos y conexiones de red</strong>. Es la opción que permite ver
+          las dependencias entre servidores.</li>
+        <li><strong>Recolector sin agente (<em>Agentless Collector</em>):</strong> una máquina virtual que se despliega en
+          vCenter y recoge inventario y rendimiento de las máquinas VMware sin instalar nada en ellas; tiene módulos
+          adicionales para bases de datos y conexiones de red.</li>
+        <li><strong>Importación:</strong> se pueden subir datos de otras herramientas con una plantilla.</li>
+        <li><strong>Exploración de datos:</strong> exporta lo recogido a <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> para consultarlo con <a href="athena.html">Athena</a>.</li>
+        <li><strong>Región de inicio de <a href="migration-hub.html">Migration Hub</a>:</strong> los datos de descubrimiento se guardan en esa región.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Inventariar un centro de datos antes de migrarlo.</li>
+        <li>Descubrir dependencias para decidir qué servidores migrar juntos en cada ola.</li>
+        <li>Dimensionar las instancias de destino según el uso real, no la capacidad aprovisionada.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si eres cliente nuevo: no está disponible; usa <a href="../servicio.html?id=transform">AWS Transform</a> para el descubrimiento y la evaluación.</li>
+        <li>Para migrar los servidores en sí: <a href="application-migration-service.html">Application Migration Service</a> (Transform MGN).</li>
+        <li>Para estimar solo el coste de un entorno a partir de un inventario existente: herramientas de evaluación como
+          <a href="../servicio.html?id=migration-evaluator">Migration Evaluator</a> o AWS Transform.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Agente de descubrimiento</th><th>Recolector sin agente</th></tr></thead>
+          <tbody>
+            <tr><td>Instalación</td><td>En cada servidor</td><td>Una máquina virtual en vCenter</td></tr>
+            <tr><td>Entornos</td><td>Físicos y virtuales, Windows y Linux</td><td>VMware</td></tr>
+            <tr><td>Procesos y dependencias</td><td>Sí</td><td>Limitado (módulo de red)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El servicio <strong>no tiene coste</strong>. Solo se pagan los servicios que uses para analizar los datos,
+        como <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y <a href="athena.html">Athena</a>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los datos viajan cifrados (<abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr>) y se guardan cifrados en AWS.</li>
+        <li>El recolector sin agente permite revisar los datos antes de enviarlos.</li>
+        <li>No recoge el contenido de los ficheros ni de las bases de datos, solo metadatos y métricas.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Descubrir dependencias entre servidores"</strong>: agente de descubrimiento (no el recolector sin
+          agente).</li>
+        <li><strong>"VMware sin instalar nada en las máquinas"</strong>: recolector sin agente.</li>
+        <li><strong>"Analizar los datos de descubrimiento con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>"</strong>: exportar y consultar con <a href="athena.html">Athena</a>.</li>
+        <li><strong>"Planificar", "inventariar", "antes de migrar"</strong>: Application Discovery Service; migrar en sí es
+          otro servicio.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="application-discovery-service"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/" target="_blank" rel="noopener">AWS Service Availability Updates</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html" target="_blank" rel="noopener">What is AWS Application Discovery Service?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/migration-and-modernization/deprecation-of-aws-application-discovery-service-discovery-connector/" target="_blank" rel="noopener">Deprecation of AWS Application Discovery Service Discovery Connector</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/transform/migrations/" target="_blank" rel="noopener">AWS Transform for migrations</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

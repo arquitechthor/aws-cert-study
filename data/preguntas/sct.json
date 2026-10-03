@@ -1,0 +1,112 @@
+[
+  {
+    "id": "sct-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Antes de aprobar el paso de SQL Server a Aurora PostgreSQL, la dirección quiere saber cuánto código de la base de datos habrá que reescribir a mano. ¿Qué herramienta da esa información?",
+    "opciones": [
+      "El informe de evaluación de AWS SCT (o de DMS Schema Conversion).",
+      "AWS Application Discovery Service.",
+      "AWS Migration Hub.",
+      "Una tarea de validación de AWS DMS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El informe de evaluación indica qué objetos se convierten automáticamente y cuáles requieren acciones manuales, con una estimación del esfuerzo. Application Discovery Service inventaría servidores, no código SQL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_AssessmentReport.html"
+    ]
+  },
+  {
+    "id": "sct-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migra un almacén de datos Teradata de 200 TB a Amazon Redshift. ¿Qué enfoque recomienda AWS?",
+    "opciones": [
+      "AWS DMS con una tarea de CDC directamente a Redshift.",
+      "Exportar a CSV con scripts manuales y cargar con COPY.",
+      "AWS Application Migration Service.",
+      "AWS SCT para convertir el esquema y sus agentes de extracción para extraer los datos en paralelo y cargarlos en Redshift a través de S3."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "SCT convierte el esquema de Teradata a Redshift y sus agentes de extracción leen los datos en paralelo, los suben a S3 y los cargan en Redshift, lo que escala mejor para almacenes de datos grandes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/agents.html"
+    ]
+  },
+  {
+    "id": "sct-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una base de datos PostgreSQL local se va a mover a Amazon RDS for PostgreSQL de la misma versión. ¿Hace falta AWS SCT?",
+    "opciones": [
+      "Sí, siempre que el destino sea RDS.",
+      "No: es una migración homogénea; basta con DMS o con las herramientas nativas de PostgreSQL.",
+      "Sí, para convertir los índices.",
+      "No, porque SCT solo funciona con Oracle."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "SCT se usa en migraciones heterogéneas, entre motores distintos. Entre el mismo motor, el esquema es compatible y se migra con las herramientas del motor o con DMS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html"
+    ]
+  },
+  {
+    "id": "sct-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué herramienta de AWS convierte el esquema de una base de datos de un motor a otro distinto, por ejemplo de Oracle a PostgreSQL?",
+    "opciones": [
+      "AWS DataSync.",
+      "Amazon RDS.",
+      "AWS Schema Conversion Tool.",
+      "AWS Snow Family."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "SCT convierte esquemas y código SQL entre motores distintos. Después, DMS mueve los datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html"
+    ]
+  },
+  {
+    "id": "sct-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo quiere convertir el esquema de SQL Server a Aurora PostgreSQL sin instalar software en sus equipos y con ayuda para el código que no se convierte automáticamente. ¿Qué usa?",
+    "opciones": [
+      "AWS SCT en un portátil.",
+      "AWS DMS Schema Conversion, con la opción de IA generativa.",
+      "Una tarea de carga completa de DMS.",
+      "AWS Glue."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "DMS Schema Conversion es la versión gestionada en la consola de DMS y puede usar IA generativa para proponer el código que la conversión por reglas no resuelve, en combinaciones como SQL Server u Oracle a PostgreSQL.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dms/latest/userguide/schema-conversion-convert.databaseobjects.html"
+    ]
+  }
+]

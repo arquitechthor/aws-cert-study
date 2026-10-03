@@ -1,0 +1,112 @@
+[
+  {
+    "id": "application-discovery-service-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Antes de migrar, una empresa necesita saber qué servidores físicos y virtuales se comunican entre sí y qué procesos ejecutan, para agruparlos en olas. ¿Qué opción de Application Discovery Service usa?",
+    "opciones": [
+      "El recolector sin agente en vCenter.",
+      "La importación de una hoja de cálculo.",
+      "El agente de descubrimiento instalado en cada servidor.",
+      "AWS Config."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El agente recoge procesos y conexiones de red de cada servidor, con lo que se ven las dependencias. El recolector sin agente ve las máquinas desde vCenter y no entra en ellas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
+    ]
+  },
+  {
+    "id": "application-discovery-service-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Un equipo tiene 2000 máquinas virtuales VMware y no se le permite instalar software en ellas. Necesita inventario y uso de CPU y memoria para dimensionar EC2. ¿Qué usa?",
+    "opciones": [
+      "El recolector sin agente desplegado en vCenter.",
+      "El agente de descubrimiento.",
+      "Amazon Inspector.",
+      "AWS Systems Manager Inventory."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El recolector sin agente es una máquina virtual que se conecta a vCenter y recoge inventario y rendimiento de todas las máquinas VMware sin instalar nada en ellas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/application-discovery/latest/userguide/agentless-collector.html"
+    ]
+  },
+  {
+    "id": "application-discovery-service-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Un arquitecto quiere consultar con SQL los datos recogidos por Application Discovery Service para encontrar servidores infrautilizados. ¿Qué hace?",
+    "opciones": [
+      "Conectarse a la base de datos interna de Migration Hub.",
+      "Activar la exploración de datos para exportarlos a S3 y consultarlos con Athena.",
+      "Usar CloudWatch Logs Insights.",
+      "Descargarlos en PDF."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La exploración de datos envía lo recogido a S3 de forma continua y crea las tablas para consultarlo con Athena o visualizarlo con herramientas de BI.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/application-discovery/latest/userguide/explore-data.html"
+    ]
+  },
+  {
+    "id": "application-discovery-service-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS recopila información de los servidores locales (configuración, uso y dependencias) para planificar una migración?",
+    "opciones": [
+      "AWS Trusted Advisor.",
+      "AWS Application Migration Service.",
+      "AWS Backup.",
+      "AWS Application Discovery Service."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Application Discovery Service hace el inventario y descubre dependencias antes de migrar. Application Migration Service es el que migra los servidores. (Para clientes nuevos, AWS recomienda ahora AWS Transform.)",
+    "fuentes": [
+      "https://docs.aws.amazon.com/application-discovery/latest/userguide/what-is-appdiscovery.html"
+    ]
+  },
+  {
+    "id": "application-discovery-service-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa que nunca ha usado AWS quiere empezar hoy el descubrimiento y la evaluación de su centro de datos con ayuda de AWS. ¿Qué debe tener en cuenta?",
+    "opciones": [
+      "Solo puede usar el Discovery Connector para VMware.",
+      "Debe contratar primero Direct Connect.",
+      "Application Discovery Service no admite clientes nuevos; AWS recomienda AWS Transform para descubrir y evaluar.",
+      "Application Discovery Service solo funciona con servidores ya en AWS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Desde el 07/11/2025, Application Discovery Service y Migration Hub no admiten clientes nuevos, y AWS Transform ofrece el descubrimiento y la evaluación. El Discovery Connector dejó de funcionar en noviembre de 2025.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/"
+    ]
+  }
+]

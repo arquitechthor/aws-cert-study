@@ -1,0 +1,112 @@
+[
+  {
+    "id": "migration-hub-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migra servidores con Application Migration Service y bases de datos con DMS. La dirección quiere ver el estado de toda la migración en un único panel. ¿Qué servicio lo ofrece?",
+    "opciones": [
+      "AWS Migration Hub.",
+      "Amazon CloudWatch.",
+      "AWS Trusted Advisor.",
+      "AWS Config."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Migration Hub reúne el estado que le envían las herramientas de migración integradas y lo muestra por servidor y por aplicación. Para clientes nuevos, AWS recomienda ahora AWS Transform.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/migrationhub/latest/ug/whatishub.html"
+    ]
+  },
+  {
+    "id": "migration-hub-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Un equipo ha recogido datos con Application Discovery Service, pero no los encuentra en la consola de Migration Hub. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Los datos tardan 30 días en aparecer.",
+      "Está mirando una región distinta de la región de inicio de Migration Hub.",
+      "Falta activar CloudTrail.",
+      "Migration Hub solo muestra servidores ya migrados."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los datos de descubrimiento y de seguimiento se guardan en la región de inicio de Migration Hub. En otras regiones no aparecen.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/migrationhub/latest/ug/home-region.html"
+    ]
+  },
+  {
+    "id": "migration-hub-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué hace AWS Migration Hub?",
+    "opciones": [
+      "Migra automáticamente los servidores a EC2.",
+      "Convierte esquemas de bases de datos.",
+      "Ofrece un lugar central para seguir el progreso de las migraciones hechas con varias herramientas.",
+      "Transfiere ficheros por SFTP."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Migration Hub no migra nada: centraliza el seguimiento y el inventario. La migración la hacen servicios como Application Migration Service o DMS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/migrationhub/latest/ug/whatishub.html"
+    ]
+  },
+  {
+    "id": "migration-hub-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Para decidir si cada aplicación se rehospeda, se replataforma o se refactoriza, un equipo quiere recomendaciones basadas en el análisis de sus servidores y código. ¿Qué función de Migration Hub lo hace?",
+    "opciones": [
+      "Refactor Spaces.",
+      "Orchestrator.",
+      "La región de inicio.",
+      "Strategy Recommendations."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Strategy Recommendations analiza los servidores y aplicaciones y propone una estrategia de migración y modernización para cada una. Refactor Spaces ayuda a ejecutar una refactorización gradual.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/migrationhub-strategy/latest/userguide/what-is-mhub-strategy.html"
+    ]
+  },
+  {
+    "id": "migration-hub-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa que empieza ahora su primera migración a AWS quiere una herramienta de AWS que la ayude a descubrir su entorno, planificar las olas y seguir el avance. ¿Qué le recomienda AWS?",
+    "opciones": [
+      "AWS Migration Hub, que es la opción para clientes nuevos.",
+      "AWS Transform, ya que Migration Hub no admite clientes nuevos desde noviembre de 2025.",
+      "AWS Trusted Advisor.",
+      "AWS Systems Manager Explorer."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Migration Hub (y Application Discovery Service) dejaron de admitir clientes nuevos el 07/11/2025. AWS Transform cubre el descubrimiento, la evaluación y la planificación con agentes de IA, y usa Transform MGN para rehospedar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/migrationhub/latest/ug/migrationhub-availability-change.html"
+    ]
+  }
+]

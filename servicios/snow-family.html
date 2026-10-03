@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Snow Family — Apuntes AWS</title>
+<meta name="description" content="Dispositivos físicos resistentes (Snowball Edge) para mover muchos terabytes sin red o procesar datos en el borde. Ya no admite clientes nuevos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/snow-family.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Snow Family — Apuntes AWS">
+<meta property="og:description" content="Dispositivos físicos resistentes (Snowball Edge) para mover muchos terabytes sin red o procesar datos en el borde. Ya no admite clientes nuevos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/snow-family.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/snow-family.svg" alt="" width="56" height="56"><span>AWS Snow Family</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Dispositivos físicos resistentes para mover terabytes sin red o procesar en el borde</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/snowball/" target="_blank" rel="noopener">Documentación de AWS Snow Family ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> AWS Snowball Edge <strong>no admite clientes nuevos</strong>, así que AWS ya no ofrece ningún dispositivo de
+        Snow Family a quien no los usara (los clientes actuales pueden seguir pidiéndolos). Antes se retiraron Snowcone y
+        Snowmobile. Alternativas para clientes nuevos: <strong><a href="datasync.html">DataSync</a></strong> para transferencias en línea,
+        <strong>AWS Data Transfer Terminal</strong> para llevar tus propios discos a una instalación de AWS, soluciones
+        de socios y <strong><a href="outposts.html">Outposts</a></strong> para cómputo en el borde. Las guías de examen todavía lo incluyen.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Snow Family son <strong>dispositivos físicos</strong>, resistentes y cifrados, que AWS envía a tus
+        instalaciones. Copias en ellos los datos en local, los devuelves por mensajería y AWS los carga en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>. Sirven
+        cuando la red no permite mover el volumen en un plazo razonable, y también para <strong>procesar datos en el
+        borde</strong> en lugares sin conexión fiable (barcos, minas, zonas remotas). El dispositivo actual es
+        <strong>Snowball Edge</strong>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Snowball Edge optimizado para almacenamiento:</strong> mucha capacidad para migraciones de datos.</li>
+        <li><strong>Snowball Edge optimizado para cómputo:</strong> más <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr>, memoria y opción de <abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr> para ejecutar
+          instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> y procesar en el borde.</li>
+        <li><strong>Tipos de trabajo:</strong> importar a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, exportar desde <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, o solo cómputo y almacenamiento local.</li>
+        <li><strong>Interfaces de copia:</strong> adaptador compatible con <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, recurso <abbr class="sigla sigla-1" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS<span class="sigla-exp"> (Network File System: protocolo para compartir ficheros en red)</span></abbr>, y la herramienta gráfica AWS
+          OpsHub.</li>
+        <li><strong>Clústeres:</strong> varios dispositivos juntos para más capacidad y durabilidad local.</li>
+        <li><strong>Regla práctica:</strong> si por la red tardarías más de una semana, valora una transferencia física.</li>
+        <li><strong>Retirados:</strong> Snowcone (pequeño, portátil) y Snowmobile (un camión para exabytes) ya no se
+          ofrecen.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Migrar cientos de terabytes o petabytes con poca red.</li>
+        <li>Recogida de datos en lugares remotos (sensores, vídeo) y envío periódico a AWS.</li>
+        <li>Procesamiento local con <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> en el borde, desconectado.</li>
+        <li>Recuperar grandes volúmenes desde <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> a un centro de datos (exportación).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si eres cliente nuevo: no está disponible.</li>
+        <li>Si la red permite hacer la transferencia en días: <a href="datasync.html">DataSync</a>.</li>
+        <li>Para cómputo en el borde permanente, conectado a una región: <a href="outposts.html">Outposts</a>.</li>
+        <li>Para replicación continua (no puntual): DataSync o <a href="../servicio.html?id=storage-gateway">Storage Gateway</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Snow Family</th><th><a href="datasync.html">DataSync</a></th><th>Data Transfer Terminal</th></tr></thead>
+          <tbody>
+            <tr><td>Medio</td><td>Dispositivo de AWS enviado por mensajería</td><td>Red</td><td>Tus discos en una instalación de AWS</td></tr>
+            <tr><td>Cuándo</td><td>Mucho volumen y poca red; borde desconectado</td><td>Red suficiente</td><td>Datos ya en tus discos, cerca de una instalación</td></tr>
+            <tr><td>Disponibilidad</td><td>Solo clientes actuales</td><td>General</td><td>Clientes con Enterprise Support (o bajo petición)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga una <strong>tarifa por trabajo</strong> que incluye unos días de uso, los <strong>días
+        adicionales</strong>, el envío y, en exportaciones, la transferencia de datos desde <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>. La importación a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> no
+        tiene cargo de transferencia. Para uso prolongado hay precios por compromiso de 1 o 3 años.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los datos se cifran con claves de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> que nunca se guardan en el dispositivo.</li>
+        <li>Carcasa resistente a manipulaciones, con <abbr class="sigla sigla-1" data-s="TPM" data-en="Trusted Platform Module" data-es="chip que protege claves y comprueba la integridad del equipo" tabindex="0">TPM<span class="sigla-exp"> (Trusted Platform Module: chip que protege claves y comprueba la integridad del equipo)</span></abbr> y etiqueta electrónica de envío.</li>
+        <li>Tras cargar los datos, AWS borra el dispositivo siguiendo las directrices del <abbr class="sigla sigla-1" data-s="NIST" data-en="National Institute of Standards and Technology" data-es="organismo de normas de EE. UU." tabindex="0">NIST<span class="sigla-exp"> (National Institute of Standards and Technology: organismo de normas de EE. UU.)</span></abbr>.</li>
+        <li>Un solo dispositivo no es redundante: conserva los datos de origen hasta confirmar la carga.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Petabytes y conexión lenta" o "tardaría meses por la red"</strong>: Snowball Edge.</li>
+        <li><strong>"Procesar en un lugar sin conexión"</strong>: Snowball Edge optimizado para cómputo.</li>
+        <li><strong>"Exabytes"</strong>: era Snowmobile (ya retirado).</li>
+        <li><strong>"Red suficiente y copia recurrente"</strong>: <a href="datasync.html">DataSync</a>, no Snow.</li>
+        <li>Fuera del examen, recuerda que hoy un cliente nuevo usaría DataSync, Data Transfer Terminal o socios.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="snow-family"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html" target="_blank" rel="noopener">AWS Snowball Edge availability change</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/snowball/latest/developer-guide/whatisedge.html" target="_blank" rel="noopener">What is AWS Snowball Edge?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/datatransferterminal/latest/userguide/what-is-dtt.html" target="_blank" rel="noopener">What is Data Transfer Terminal?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/" target="_blank" rel="noopener">AWS Service Availability Updates</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

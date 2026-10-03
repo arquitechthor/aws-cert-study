@@ -52,6 +52,10 @@
    "en": "Amazon Resource Name",
    "es": "identificador único de un recurso de AWS"
   },
+  "AS2": {
+   "en": "Applicability Statement 2",
+   "es": "protocolo para intercambiar documentos de negocio entre empresas"
+  },
   "ASL": {
    "en": "Amazon States Language",
    "es": "lenguaje JSON con el que se definen los flujos de Step Functions"
@@ -99,6 +103,10 @@
   "CAPTCHA": {
    "en": null,
    "es": "prueba para distinguir personas de bots"
+  },
+  "CDC": {
+   "en": "Change Data Capture",
+   "es": "captura de los cambios de una base de datos para replicarlos"
   },
   "CDN": {
    "en": "Content Delivery Network",
@@ -259,6 +267,10 @@
   "EDA": {
    "en": "Event-Driven Architecture",
    "es": "arquitectura dirigida por eventos"
+  },
+  "EDI": {
+   "en": "Electronic Data Interchange",
+   "es": "intercambio electrónico de documentos comerciales"
   },
   "EFS": {
    "en": "Elastic File System",
@@ -488,6 +500,10 @@
    "en": "Kinesis Producer Library",
    "es": "biblioteca para escribir productores de Kinesis"
   },
+  "KVM": {
+   "en": "Kernel-based Virtual Machine",
+   "es": "hipervisor de Linux"
+  },
   "LAG": {
    "en": "Link Aggregation Group",
    "es": "varios enlaces que funcionan como uno"
@@ -639,6 +655,10 @@
   "PDF": {
    "en": "Portable Document Format",
    "es": null
+  },
+  "PGP": {
+   "en": "Pretty Good Privacy",
+   "es": "cifrado y firma de ficheros"
   },
   "PII": {
    "en": "Personally Identifiable Information",
@@ -840,6 +860,10 @@
    "en": "Solid-State Drive",
    "es": "disco de estado sólido"
   },
+  "SSE": {
+   "en": "Server-Side Encryption",
+   "es": "cifrado en el servidor"
+  },
   "SSE-C": {
    "en": "Server-Side Encryption with Customer-provided keys",
    "es": "cifrado en el servidor con claves que aporta el cliente"
@@ -911,6 +935,10 @@
   "TOTP": {
    "en": "Time-based One-Time Password",
    "es": "código temporal de una app autenticadora"
+  },
+  "TPM": {
+   "en": "Trusted Platform Module",
+   "es": "chip que protege claves y comprueba la integridad del equipo"
   },
   "TTL": {
    "en": "Time To Live",

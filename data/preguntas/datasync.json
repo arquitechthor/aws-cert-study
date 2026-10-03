@@ -1,0 +1,112 @@
+[
+  {
+    "id": "datasync-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa quiere migrar 50 TB desde un NAS local con SMB a Amazon FSx for Windows File Server, conservando los permisos, por un enlace de 1 Gbps. ¿Qué usa?",
+    "opciones": [
+      "AWS DataSync con un agente cerca del NAS.",
+      "AWS Transfer Family.",
+      "Una copia manual con robocopy desde una instancia EC2 por internet.",
+      "AWS Storage Gateway de tipo volumen."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "DataSync copia en paralelo desde SMB a FSx for Windows, conserva permisos y metadatos y verifica la integridad. Transfer Family es para intercambio por SFTP y FTP.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html"
+    ]
+  },
+  {
+    "id": "datasync-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una copia diaria de un servidor de ficheros local a S3 con DataSync satura la red durante el horario laboral. ¿Qué ajusta?",
+    "opciones": [
+      "Cambiar a Snow Family.",
+      "Programar la tarea fuera de horario y fijar un límite de ancho de banda.",
+      "Reducir el tamaño de los ficheros.",
+      "Activar S3 Transfer Acceleration."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las tareas de DataSync pueden programarse y tienen un límite de ancho de banda ajustable, incluso durante la ejecución, para no afectar a otros usos de la red.",
+    "fuentes": [
+      "https://aws.amazon.com/datasync/faqs/"
+    ]
+  },
+  {
+    "id": "datasync-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa con Direct Connect debe copiar datos con DataSync a S3 sin que el tráfico pase por internet. ¿Qué configura?",
+    "opciones": [
+      "Un agente que use un punto de enlace de VPC de DataSync, alcanzado por Direct Connect.",
+      "Un agente con punto de enlace público.",
+      "S3 Transfer Acceleration.",
+      "Un bucket con acceso público."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con un punto de enlace de servicio de VPC (PrivateLink), el agente se comunica con DataSync por direcciones privadas, a través de Direct Connect o VPN.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/datasync/latest/userguide/datasync-in-vpc.html"
+    ]
+  },
+  {
+    "id": "datasync-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migra 5 PB a S3 y su enlace de 10 Gbps está casi libre. Una sola tarea de DataSync no basta para cumplir el plazo. ¿Qué hace?",
+    "opciones": [
+      "Comprar más ancho de banda de internet para la misma tarea.",
+      "Usar FTP en paralelo.",
+      "Repartir los datos entre varias tareas y agentes que se ejecuten en paralelo.",
+      "Cambiar el destino a EBS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Para escalar, se divide el conjunto de datos en varias tareas (con filtros o por carpetas) y agentes que trabajan en paralelo y aprovechan mejor el enlace.",
+    "fuentes": [
+      "https://aws.amazon.com/datasync/faqs/"
+    ]
+  },
+  {
+    "id": "datasync-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Los empleados deben seguir abriendo desde la oficina, con baja latencia, ficheros que ahora se guardan en S3. ¿Es DataSync la solución adecuada?",
+    "opciones": [
+      "Sí, porque DataSync monta S3 como unidad de red.",
+      "Sí, programando una copia cada minuto.",
+      "No: lo adecuado es S3 File Gateway de Storage Gateway, que da acceso por NFS o SMB con caché local.",
+      "No: lo adecuado es Transfer Family."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "DataSync copia datos, pero no ofrece acceso continuo. S3 File Gateway presenta S3 como recurso compartido NFS o SMB y guarda en caché los ficheros recientes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/filegateway/latest/files3/what-is-file-s3.html"
+    ]
+  }
+]
