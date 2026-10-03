@@ -1260,8 +1260,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Gestionaba dispositivos sencillos de un botón que, al pulsarse, invocaban una función Lambda. Servicio retirado; hoy se usa IoT Core.",
     "frase": "Dispositivos de un botón que lanzan una función con una simple pulsación",
     "documentacion": "https://docs.aws.amazon.com/iot-1-click/"
   },
@@ -1274,8 +1274,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Conecta dispositivos de IoT a AWS con MQTT o HTTPS, autentica cada uno con certificados X.509 y enruta sus mensajes a otros servicios con reglas.",
     "frase": "Conecta millones de dispositivos por MQTT y enruta sus mensajes con reglas",
     "documentacion": "https://docs.aws.amazon.com/iot/"
   },
@@ -1287,8 +1287,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Audita la configuración de seguridad de una flota de IoT y detecta comportamientos anómalos de los dispositivos, con alertas y acciones de mitigación.",
     "frase": "Audita la configuración de tu flota de sensores y alerta de comportamientos anómalos",
     "documentacion": "https://docs.aws.amazon.com/iot-device-defender/"
   },
@@ -1300,8 +1300,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Registra, organiza, busca, actualiza (OTA) y gestiona en remoto flotas de dispositivos IoT a escala.",
     "frase": "Registra, organiza, actualiza por OTA y controla en remoto flotas de sensores",
     "documentacion": "https://docs.aws.amazon.com/iot-device-management/"
   },
@@ -1313,9 +1313,10 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
-    "frase": "Detecta patrones en datos de sensores y dispara alertas o acciones al cambiar de estado"
+    "estado": "publicado",
+    "resumen": "Detectaba patrones en los datos de sensores con máquinas de estados y disparaba alertas o acciones. Retirado tras el aviso de fin de soporte de 2025.",
+    "frase": "Detecta patrones en datos de sensores y dispara alertas o acciones al cambiar de estado",
+    "documentacion": "https://aws.amazon.com/about-aws/whats-new/2025/05/aws-service-changes/"
   },
   {
     "id": "iot-greengrass",
@@ -1325,8 +1326,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Software para ejecutar lógica, contenedores y modelos de ML en dispositivos del borde, con comunicación local y sincronización con AWS incluso sin conexión.",
     "frase": "Ejecuta funciones y modelos de ML en dispositivos del borde, incluso sin conexión",
     "documentacion": "https://docs.aws.amazon.com/greengrass/"
   },
@@ -1338,8 +1339,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Recoge, organiza y analiza datos de equipos industriales a escala, con modelos de activos, métricas calculadas y pasarelas en planta.",
     "frase": "Recoge y modela datos de equipos industriales para vigilar el rendimiento de plantas",
     "documentacion": "https://docs.aws.amazon.com/iot-sitewise/"
   },
@@ -1350,8 +1351,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Permitía conectar visualmente dispositivos y servicios web en flujos sin programar. Retirado en 2022; AWS orienta a IoT TwinMaker.",
     "frase": "Conecta visualmente dispositivos y servicios web en flujos sin programar",
     "documentacion": "https://docs.aws.amazon.com/thingsgraph/"
   },

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS IoT Things Graph — Apuntes AWS</title>
+<meta name="description" content="Permitía conectar visualmente dispositivos y servicios web en flujos sin programar. Retirado en 2022; AWS orienta a IoT TwinMaker. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/iot-things-graph.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS IoT Things Graph — Apuntes AWS">
+<meta property="og:description" content="Permitía conectar visualmente dispositivos y servicios web en flujos sin programar. Retirado en 2022; AWS orienta a IoT TwinMaker.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/iot-things-graph.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/iot.svg" alt="" width="56" height="56"><span>AWS IoT Things Graph</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Conecta visualmente dispositivos y servicios web en flujos sin programar</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=iot#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/iot.svg" alt="" width="18" height="18">Internet de las cosas (IoT) <span class="cat-en">(Internet of Things (IoT))</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/thingsgraph/" target="_blank" rel="noopener">Documentación de AWS IoT Things Graph ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> <strong>AWS IoT Things Graph se retiró en 2022</strong> (sus <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> se marcaron como obsoletas el 30/08/2022) y
+        AWS orienta ahora a <strong>AWS IoT TwinMaker</strong>; su documentación redirige allí. La guía se mantiene porque
+        el servicio aparece en la guía de SAP-C02.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS IoT Things Graph era una herramienta para crear <strong>aplicaciones de <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr> de forma visual</strong>:
+        arrastrando <strong>modelos</strong> de dispositivos (cámaras, sensores, pantallas) y de servicios web a un
+        lienzo y conectándolos en <strong>flujos</strong>. Los flujos se desplegaban en la nube o en un dispositivo con
+        Greengrass. Se retiró en 2022.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Modelos:</strong> representaban dispositivos y servicios con sus acciones, eventos y estados,
+          ocultando las diferencias entre marcas.</li>
+        <li><strong>Flujos:</strong> la lógica que conectaba modelos.</li>
+        <li><strong>Despliegue:</strong> en la nube o en el borde con Greengrass.</li>
+        <li><strong>Hoy:</strong> IoT TwinMaker para gemelos digitales que conectan datos de equipos; la lógica se construye
+          con <a href="iot-core.html">IoT Core</a>, Greengrass y <a href="step-functions.html">Step Functions</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Conectar sin programar una cámara y un sensor de movimiento para que la cámara grabe al detectar algo.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Ya no se puede usar.</li>
+        <li>Para gemelos digitales de instalaciones: IoT TwinMaker.</li>
+        <li>Para orquestar flujos visuales en la nube: <a href="step-functions.html">Step Functions</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción actual</th></tr></thead>
+          <tbody>
+            <tr><td>Gemelo digital de equipos y espacios</td><td>IoT TwinMaker</td></tr>
+            <tr><td>Flujos visuales entre servicios</td><td><a href="step-functions.html">Step Functions</a></td></tr>
+            <tr><td>Lógica en el borde</td><td><a href="iot-greengrass.html">IoT Greengrass</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se cobraba por pasos de flujo ejecutados y por mensajes.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Usaba la identidad y los permisos de <a href="iot-core.html">IoT Core</a> y Greengrass.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Conectar visualmente dispositivos de distintos fabricantes sin programar"</strong>: en la guía, <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr>
+          Things Graph.</li>
+        <li><strong>"Gemelo digital"</strong>: IoT TwinMaker.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="iot-things-graph"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://aws.amazon.com/blogs/aws/now-available-aws-iot-things-graph/" target="_blank" rel="noopener">Now Available – AWS IoT Things Graph (con la nota de transición a IoT TwinMaker)</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/iot-twinmaker/" target="_blank" rel="noopener">AWS IoT TwinMaker documentation</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

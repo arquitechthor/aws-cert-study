@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS IoT Greengrass — Apuntes AWS</title>
+<meta name="description" content="Software para ejecutar lógica, contenedores y modelos de ML en dispositivos del borde, con comunicación local y sincronización con AWS incluso sin conexión. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/iot-greengrass.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS IoT Greengrass — Apuntes AWS">
+<meta property="og:description" content="Software para ejecutar lógica, contenedores y modelos de ML en dispositivos del borde, con comunicación local y sincronización con AWS incluso sin conexión.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/iot-greengrass.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/iot-greengrass.svg" alt="" width="56" height="56"><span>AWS IoT Greengrass</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Ejecuta funciones y modelos de <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr> en dispositivos del borde, incluso sin conexión</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=iot#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/iot.svg" alt="" width="18" height="18">Internet de las cosas (IoT) <span class="cat-en">(Internet of Things (IoT))</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/greengrass/" target="_blank" rel="noopener">Documentación de AWS IoT Greengrass ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> <strong>AWS IoT Greengrass V1 termina su soporte el 07/10/2026</strong>; después no se podrá acceder a su
+        consola ni a sus recursos. La versión actual es <strong>Greengrass V2</strong>, que es la que describe esta guía.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS IoT Greengrass lleva capacidades de la nube a los <strong>dispositivos del borde</strong> (pasarelas,
+        equipos industriales, ordenadores de a bordo). Instalas el software de Greengrass en el dispositivo y despliegas
+        en él <strong>componentes</strong>: código propio, funciones <a href="lambda.html">Lambda</a>, contenedores o modelos de aprendizaje
+        automático. El dispositivo puede procesar y decidir <strong>sin conexión</strong> y sincronizarse con AWS cuando
+        la recupera.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Núcleo (<em>nucleus</em>):</strong> el software que gestiona los componentes en el dispositivo.</li>
+        <li><strong>Componentes:</strong> unidades desplegables (propias, públicas de AWS o de la comunidad).</li>
+        <li><strong>Despliegues:</strong> se envían desde la nube a dispositivos o grupos de dispositivos.</li>
+        <li><strong>Mensajería local:</strong> comunicación entre componentes y con dispositivos cercanos por <abbr class="sigla sigla-1" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT<span class="sigla-exp"> (Message Queuing Telemetry Transport: protocolo ligero de mensajería para dispositivos)</span></abbr> local.</li>
+        <li><strong>Gestor de flujos (<em>stream manager</em>):</strong> guarda datos en local y los exporta a Kinesis, <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o
+          <a href="iot-sitewise.html">IoT SiteWise</a> cuando hay conexión.</li>
+        <li><strong>Inferencia de <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> en el borde:</strong> con modelos entrenados en <a href="sagemaker-ai.html">SageMaker AI</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Plantas industriales que deben reaccionar en milisegundos sin depender de la conexión.</li>
+        <li>Filtrar y resumir datos en el borde para enviar menos a la nube.</li>
+        <li>Visión artificial en cámaras o pasarelas con modelos locales.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si los dispositivos siempre tienen conexión y no procesan nada: basta con <a href="iot-core.html">IoT Core</a>.</li>
+        <li>Para ejecutar servicios de AWS completos en un centro de datos propio: <a href="outposts.html">Outposts</a>.</li>
+        <li>Para dispositivos muy pequeños sin sistema operativo completo: FreeRTOS con IoT Core.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Lógica y <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> en dispositivos del borde</td><td>IoT Greengrass</td></tr>
+            <tr><td>Infraestructura de AWS en tu centro de datos</td><td><a href="outposts.html">Outposts</a></td></tr>
+            <tr><td>Conectar dispositivos a la nube</td><td><a href="iot-core.html">IoT Core</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por dispositivo activo al mes</strong> que se conecta a Greengrass, además de los servicios de
+        AWS que usen los componentes.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Identidad del dispositivo con certificados de <a href="iot-core.html">IoT Core</a>.</li>
+        <li>Permisos hacia AWS mediante un alias de rol (credenciales temporales).</li>
+        <li>Funcionamiento autónomo sin conexión; sincroniza al volver.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Procesar en el borde aunque se corte la conexión"</strong>: Greengrass.</li>
+        <li><strong>"Inferencia de <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> en el dispositivo"</strong>: Greengrass con un modelo desplegado.</li>
+        <li><strong>"Enviar menos datos a la nube"</strong>: filtrar en el borde con Greengrass.</li>
+        <li><strong>"Greengrass V1"</strong>: fin de soporte el 07/10/2026; usa V2.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="iot-greengrass"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html" target="_blank" rel="noopener">What is AWS IoT Greengrass?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/greengrass/v2/developerguide/migrate-from-v1.html" target="_blank" rel="noopener">Migrate from AWS IoT Greengrass Version 1</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

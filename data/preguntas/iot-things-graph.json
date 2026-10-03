@@ -1,0 +1,112 @@
+[
+  {
+    "id": "iot-things-graph-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quería conectar, sin escribir código, cámaras y sensores de distintos fabricantes en un flujo visual que se ejecutara en una pasarela. ¿Qué servicio de la guía lo ofrecía?",
+    "opciones": [
+      "Amazon Pinpoint.",
+      "AWS IoT Device Defender.",
+      "AWS IoT Things Graph.",
+      "AWS Transfer Family."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Things Graph permitía crear flujos visuales con modelos de dispositivos y desplegarlos en la nube o en Greengrass. Se retiró en 2022.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/aws/now-available-aws-iot-things-graph/"
+    ]
+  },
+  {
+    "id": "iot-things-graph-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "¿Hacia qué servicio orientó AWS a los usuarios de IoT Things Graph?",
+    "opciones": [
+      "IoT 1-Click.",
+      "IoT Events.",
+      "Amazon Lightsail.",
+      "AWS IoT TwinMaker."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "AWS indica que Things Graph pasó a IoT TwinMaker, y su documentación redirige allí.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/aws/now-available-aws-iot-things-graph/"
+    ]
+  },
+  {
+    "id": "iot-things-graph-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En Things Graph, ¿para qué servían los modelos?",
+    "opciones": [
+      "Para representar dispositivos y servicios con sus acciones y eventos, ocultando las diferencias entre fabricantes.",
+      "Para entrenar redes neuronales.",
+      "Para cifrar datos.",
+      "Para facturar."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los modelos abstraían cada tipo de dispositivo o servicio, de modo que el flujo no dependía de una marca concreta.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/aws/now-available-aws-iot-things-graph/"
+    ]
+  },
+  {
+    "id": "iot-things-graph-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Hoy, para orquestar visualmente pasos entre servicios de AWS en la nube, ¿qué servicio se usa?",
+    "opciones": [
+      "IoT Things Graph.",
+      "AWS Step Functions.",
+      "AWS IoT 1-Click.",
+      "Amazon Kendra."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Step Functions define flujos de trabajo visuales entre servicios. Things Graph está retirado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-twinmaker/"
+    ]
+  },
+  {
+    "id": "iot-things-graph-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Dónde podían ejecutarse los flujos de Things Graph?",
+    "opciones": [
+      "Solo en EC2.",
+      "Solo en el navegador.",
+      "En la nube o en dispositivos del borde con IoT Greengrass.",
+      "En Outposts."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los flujos podían desplegarse en la nube o en un dispositivo con Greengrass para ejecutarse localmente.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/aws/now-available-aws-iot-things-graph/"
+    ]
+  }
+]

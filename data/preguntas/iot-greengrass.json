@@ -1,0 +1,112 @@
+[
+  {
+    "id": "iot-greengrass-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una fábrica debe detectar fallos en sus máquinas en milisegundos aunque se corte la conexión a internet, y enviar a AWS solo un resumen. ¿Qué solución encaja?",
+    "opciones": [
+      "Enviar todos los datos a IoT Core y procesarlos en Lambda.",
+      "IoT Device Defender.",
+      "AWS Direct Connect.",
+      "IoT Greengrass en una pasarela local con la lógica de detección."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Greengrass ejecuta la lógica en el borde sin depender de la conexión y puede enviar solo lo necesario a la nube.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html"
+    ]
+  },
+  {
+    "id": "iot-greengrass-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Unas cámaras en un almacén deben reconocer objetos localmente con un modelo entrenado en SageMaker AI. ¿Cómo se despliega el modelo en las pasarelas?",
+    "opciones": [
+      "Con un componente de Greengrass desplegado desde la nube.",
+      "Copiándolo a mano por USB.",
+      "Con IoT Events.",
+      "Con una regla de IoT Core."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Greengrass despliega componentes, incluidos modelos de ML, a los dispositivos o grupos de dispositivos desde la nube.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html"
+    ]
+  },
+  {
+    "id": "iot-greengrass-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una pasarela de Greengrass recoge datos durante cortes de red de horas. ¿Qué característica los guarda y los exporta a Kinesis al volver la conexión?",
+    "opciones": [
+      "La sombra del dispositivo.",
+      "El gestor de flujos (stream manager).",
+      "Una regla de IoT.",
+      "AWS Backup."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El gestor de flujos guarda los datos en local y los exporta a destinos como Kinesis, S3 o IoT SiteWise cuando hay conexión.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html"
+    ]
+  },
+  {
+    "id": "iot-greengrass-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa sigue usando AWS IoT Greengrass V1 en octubre de 2026. ¿Qué debe hacer?",
+    "opciones": [
+      "Nada: V1 tiene soporte indefinido.",
+      "Migrar a IoT 1-Click.",
+      "Migrar a Greengrass V2, porque V1 termina su soporte el 07/10/2026.",
+      "Migrar a IoT Things Graph."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Greengrass V1 deja de estar disponible el 07/10/2026; la migración es a Greengrass V2. IoT 1-Click y Things Graph ya están retirados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/greengrass/v2/developerguide/migrate-from-v1.html"
+    ]
+  },
+  {
+    "id": "iot-greengrass-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué diferencia principal hay entre IoT Greengrass y AWS Outposts?",
+    "opciones": [
+      "Ninguna.",
+      "Outposts es para dispositivos pequeños.",
+      "Greengrass solo funciona en EC2.",
+      "Greengrass ejecuta lógica en dispositivos del borde; Outposts lleva infraestructura de AWS (racks o servidores) a tu centro de datos."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Greengrass es software para dispositivos IoT y pasarelas; Outposts es hardware gestionado por AWS que ofrece servicios como EC2 en tus instalaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html"
+    ]
+  }
+]

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS IoT Device Defender — Apuntes AWS</title>
+<meta name="description" content="Audita la configuración de seguridad de una flota de IoT y detecta comportamientos anómalos de los dispositivos, con alertas y acciones de mitigación. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/iot-device-defender.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS IoT Device Defender — Apuntes AWS">
+<meta property="og:description" content="Audita la configuración de seguridad de una flota de IoT y detecta comportamientos anómalos de los dispositivos, con alertas y acciones de mitigación.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/iot-device-defender.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/iot-device-defender.svg" alt="" width="56" height="56"><span>AWS IoT Device Defender</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Audita la configuración de tu flota de sensores y alerta de comportamientos anómalos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=iot#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/iot.svg" alt="" width="18" height="18">Internet de las cosas (IoT) <span class="cat-en">(Internet of Things (IoT))</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/iot-device-defender/" target="_blank" rel="noopener">Documentación de AWS IoT Device Defender ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS IoT Device Defender vigila la <strong>seguridad de una flota de dispositivos <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr></strong>. Por un lado
+        <strong>audita</strong> la configuración (certificados, políticas demasiado permisivas…) frente a buenas
+        prácticas. Por otro, <strong>detecta comportamientos anómalos</strong> de los dispositivos, como un aumento de
+        mensajes o conexiones a direcciones extrañas, que pueden indicar que uno está comprometido.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Auditoría:</strong> comprobaciones periódicas o bajo demanda, por ejemplo certificados compartidos
+          entre dispositivos, a punto de caducar o revocados, o políticas de <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr> demasiado amplias.</li>
+        <li><strong>Detección por reglas:</strong> perfiles de seguridad con umbrales sobre métricas (mensajes enviados,
+          fallos de autorización, puertos abiertos…).</li>
+        <li><strong>Detección con <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>:</strong> aprende el comportamiento normal y avisa de desviaciones sin fijar
+          umbrales.</li>
+        <li><strong>Métricas del lado del dispositivo</strong> con un agente, además de las de la nube.</li>
+        <li><strong>Acciones de mitigación:</strong> mover el dispositivo a un grupo en cuarentena, revocar su
+          certificado, actualizar la política…</li>
+        <li>Alertas por <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> y hallazgos en <a href="security-hub.html">Security Hub</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Cumplir requisitos de seguridad en flotas grandes.</li>
+        <li>Detectar dispositivos comprometidos que envían tráfico anómalo.</li>
+        <li>Encontrar certificados compartidos o políticas con comodines.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para detectar amenazas en cuentas, <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> o <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>: <a href="guardduty.html">GuardDuty</a>.</li>
+        <li>Para actualizar el software de los dispositivos: <a href="iot-device-management.html">IoT Device Management</a> (trabajos <abbr class="sigla sigla-1" data-s="OTA" data-en="Over-The-Air" data-es="actualización remota por la red, sin conectar el dispositivo" tabindex="0">OTA<span class="sigla-exp"> (Over-The-Air: actualización remota por la red, sin conectar el dispositivo)</span></abbr>).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Seguridad de la flota <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr></td><td>IoT Device Defender</td></tr>
+            <tr><td>Amenazas en la cuenta y las cargas de AWS</td><td><a href="guardduty.html">GuardDuty</a></td></tr>
+            <tr><td>Organizar y actualizar dispositivos</td><td><a href="iot-device-management.html">IoT Device Management</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Auditoría: <strong>por dispositivo y mes</strong>. Detección: <strong>por métrica evaluada</strong> por
+        dispositivo (la detección con <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> tiene su propia tarifa).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Integración con <a href="security-hub.html">Security Hub</a> y <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a> para responder.</li>
+        <li>Mitigación automatizada con grupos de cuarentena.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Varios dispositivos comparten certificado"</strong>: auditoría de Device Defender.</li>
+        <li><strong>"Dispositivo que envía mucho más tráfico de lo normal"</strong>: detección (con reglas o <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr>).</li>
+        <li><strong>"Aislar un dispositivo sospechoso"</strong>: acción de mitigación a un grupo en cuarentena.</li>
+        <li><strong>"Amenazas en cuentas de AWS"</strong>: <a href="guardduty.html">GuardDuty</a>, no Device Defender.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="iot-device-defender"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/iot-device-defender/latest/devguide/what-is-device-defender.html" target="_blank" rel="noopener">What is AWS IoT Device Defender?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/iot-device-defender/latest/devguide/dd-detect-ml.html" target="_blank" rel="noopener">ML Detect</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

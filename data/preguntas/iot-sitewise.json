@@ -1,0 +1,112 @@
+[
+  {
+    "id": "iot-sitewise-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa con diez plantas quiere recoger datos de sus máquinas por OPC UA, organizarlos por planta, línea y máquina y calcular la eficacia de los equipos. ¿Qué servicio usa?",
+    "opciones": [
+      "IoT Core con reglas.",
+      "AWS IoT Device Defender.",
+      "Amazon Kinesis Video Streams.",
+      "AWS IoT SiteWise con pasarelas SiteWise Edge."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "IoT SiteWise recoge datos industriales mediante pasarelas, los organiza en modelos de activos jerárquicos y calcula métricas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html"
+    ]
+  },
+  {
+    "id": "iot-sitewise-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En IoT SiteWise, ¿qué tipo de propiedad calcula la temperatura media por hora de una máquina?",
+    "opciones": [
+      "Una métrica, que agrega datos por intervalos.",
+      "Un atributo.",
+      "Una medida.",
+      "Una alarma."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las métricas agregan valores en ventanas de tiempo; las medidas son datos en bruto y las transformaciones aplican fórmulas a cada dato.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html"
+    ]
+  },
+  {
+    "id": "iot-sitewise-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un cliente nuevo de IoT SiteWise quiere dar paneles a los operarios con los datos de planta. ¿Qué opción recomienda AWS?",
+    "opciones": [
+      "SiteWise Monitor.",
+      "Amazon Managed Grafana con el complemento de IoT SiteWise.",
+      "AWS Device Farm.",
+      "IoT Events."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "SiteWise Monitor no admite clientes nuevos desde el 07/11/2025; AWS propone el complemento de SiteWise para Managed Grafana.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-sitewise/latest/appguide/iotsitewise-monitor-availability-change.html"
+    ]
+  },
+  {
+    "id": "iot-sitewise-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "La conexión de una planta a internet se corta a menudo y no se pueden perder lecturas. ¿Qué componente de SiteWise ayuda?",
+    "opciones": [
+      "Una réplica de lectura.",
+      "Un tema de SNS.",
+      "SiteWise Edge en la planta, que guarda y procesa los datos en local.",
+      "CloudFront."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La pasarela SiteWise Edge recoge y guarda los datos en local, y los envía a la nube cuando vuelve la conexión.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html"
+    ]
+  },
+  {
+    "id": "iot-sitewise-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué servicio de IoT es más adecuado para modelar equipos industriales y sus jerarquías que IoT Core por sí solo?",
+    "opciones": [
+      "IoT 1-Click.",
+      "IoT Things Graph.",
+      "Amazon Connect.",
+      "IoT SiteWise."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "IoT SiteWise está pensado para datos industriales con modelos de activos. IoT 1-Click y Things Graph están retirados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html"
+    ]
+  }
+]

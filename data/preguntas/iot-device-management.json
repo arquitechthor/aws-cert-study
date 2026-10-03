@@ -1,0 +1,112 @@
+[
+  {
+    "id": "iot-device-management-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa debe actualizar el firmware de 80 000 dispositivos, empezando por el 1 % y deteniéndose si más del 5 % falla. ¿Qué usa?",
+    "opciones": [
+      "Un trabajo de IoT Device Management con despliegue gradual y criterios de cancelación.",
+      "Un script que se conecte a cada dispositivo.",
+      "AWS CodeDeploy.",
+      "Una regla de IoT Core."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los trabajos de IoT Device Management permiten desplegar por tandas y cancelar automáticamente si se supera un porcentaje de fallos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-management.html"
+    ]
+  },
+  {
+    "id": "iot-device-management-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un técnico necesita conectarse por SSH a un dispositivo instalado en la red de un cliente, detrás de un cortafuegos que no admite conexiones entrantes. ¿Qué usa?",
+    "opciones": [
+      "Abrir el puerto 22 en el cortafuegos.",
+      "Los túneles seguros de IoT Device Management.",
+      "Una IP elástica.",
+      "Una Site-to-Site VPN por dispositivo."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los túneles seguros establecen una conexión bidireccional a través de AWS IoT sin abrir puertos de entrada en la red del dispositivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/secure-tunneling.html"
+    ]
+  },
+  {
+    "id": "iot-device-management-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un operador quiere encontrar todos los dispositivos desconectados con una versión de firmware anterior a la 2.0. ¿Qué función lo permite?",
+    "opciones": [
+      "AWS Config.",
+      "CloudWatch Logs Insights.",
+      "La indexación de la flota con una consulta.",
+      "La auditoría de Device Defender."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La indexación de la flota permite buscar por atributos, estado de conectividad o valores de la sombra, y crear grupos dinámicos con esas consultas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-management.html"
+    ]
+  },
+  {
+    "id": "iot-device-management-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué tipo de grupo de cosas se actualiza solo según una consulta, por ejemplo \"dispositivos con batería por debajo del 20 %\"?",
+    "opciones": [
+      "Un grupo estático.",
+      "Un grupo de seguridad.",
+      "Un grupo de Auto Scaling.",
+      "Un grupo dinámico."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los grupos dinámicos se definen con una consulta de indexación y sus miembros cambian según el estado de los dispositivos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-management.html"
+    ]
+  },
+  {
+    "id": "iot-device-management-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo usaba la aplicación web Fleet Hub para ver su flota. ¿Qué ocurrió con ella?",
+    "opciones": [
+      "Se retiró el 18/10/2025; sus funciones están en la consola de IoT Device Management.",
+      "Sigue igual.",
+      "Se movió a Amazon Connect.",
+      "Se convirtió en IoT Events."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Fleet Hub llegó al fin de su vida el 18/10/2025. La consola de IoT Device Management ofrece las mismas capacidades.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/iot/announcing-end-of-life-for-aws-iot-device-management-fleet-hub-effective-october-18th-2025/"
+    ]
+  }
+]

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS IoT SiteWise — Apuntes AWS</title>
+<meta name="description" content="Recoge, organiza y analiza datos de equipos industriales a escala, con modelos de activos, métricas calculadas y pasarelas en planta. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/iot-sitewise.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS IoT SiteWise — Apuntes AWS">
+<meta property="og:description" content="Recoge, organiza y analiza datos de equipos industriales a escala, con modelos de activos, métricas calculadas y pasarelas en planta.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/iot-sitewise.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/iot-sitewise.svg" alt="" width="56" height="56"><span>AWS IoT SiteWise</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Recoge y modela datos de equipos industriales para vigilar el rendimiento de plantas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=iot#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/iot.svg" alt="" width="18" height="18">Internet de las cosas (IoT) <span class="cat-en">(Internet of Things (IoT))</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/iot-sitewise/" target="_blank" rel="noopener">Documentación de AWS IoT SiteWise ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> La función <strong>SiteWise Monitor</strong> (portales web para ver los datos) no admite clientes nuevos desde
+        el 07/11/2025; la alternativa es el complemento de SiteWise para <strong><a href="managed-grafana.html">Amazon Managed Grafana</a></strong>.
+        IoT SiteWise sigue plenamente soportado.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS IoT SiteWise es un servicio para <strong>datos industriales</strong>: recoge medidas de máquinas y
+        sensores (normalmente a través de una <strong>pasarela</strong> en la planta que habla protocolos como <abbr class="sigla sigla-1" data-s="OPC UA" data-en="Open Platform Communications Unified Architecture" data-es="protocolo estándar de comunicación industrial" tabindex="0">OPC UA<span class="sigla-exp"> (Open Platform Communications Unified Architecture: protocolo estándar de comunicación industrial)</span></abbr>),
+        las organiza en <strong>modelos de activos</strong> (planta → línea → máquina) y calcula indicadores como la
+        disponibilidad o el rendimiento de los equipos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Modelos de activos y activos:</strong> plantillas de equipos con sus propiedades y jerarquías.</li>
+        <li><strong>Propiedades:</strong> medidas (datos en bruto), transformaciones (fórmulas sobre cada dato) y
+          métricas (agregados por intervalos, como la media por hora).</li>
+        <li><strong>SiteWise Edge:</strong> pasarela que recoge datos de los equipos (<abbr class="sigla" data-s="OPC UA" data-en="Open Platform Communications Unified Architecture" data-es="protocolo estándar de comunicación industrial" tabindex="0">OPC UA</abbr>, Modbus…) y los procesa en
+          local.</li>
+        <li><strong>Niveles de almacenamiento:</strong> caliente para datos recientes y frío en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> para históricos.</li>
+        <li><strong>Alarmas</strong> sobre las propiedades.</li>
+        <li><strong>Visualización:</strong> complemento para <a href="managed-grafana.html">Managed Grafana</a> (SiteWise Monitor ya no admite clientes
+          nuevos).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Medir la eficacia general de los equipos (<abbr class="sigla" data-s="OEE" data-en="Overall Equipment Effectiveness" data-es="eficacia global de un equipo: disponibilidad, rendimiento y calidad" tabindex="0">OEE</abbr>) de varias plantas.</li>
+        <li>Detectar desviaciones en la producción comparando líneas.</li>
+        <li>Centralizar en AWS los datos de historiadores industriales.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para dispositivos de consumo o telemetría genérica: <a href="iot-core.html">IoT Core</a>.</li>
+        <li>Para gemelos digitales con escenas 3D: IoT TwinMaker.</li>
+        <li>Para series temporales genéricas que no son industriales: <a href="../servicio.html?id=timestream">Timestream</a> for InfluxDB.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Datos de equipos industriales con modelos de activos</td><td>IoT SiteWise</td></tr>
+            <tr><td>Mensajes de dispositivos en general</td><td><a href="iot-core.html">IoT Core</a></td></tr>
+            <tr><td>Series temporales genéricas</td><td><a href="../servicio.html?id=timestream">Timestream</a> for InfluxDB</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por los <strong>datos ingeridos</strong>, el <strong>almacenamiento</strong> según el nivel, los cálculos
+        de métricas y transformaciones, las consultas y las pasarelas de SiteWise Edge.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos cifrados en tránsito y en reposo (<a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>).</li>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; la pasarela guarda datos en local durante los cortes.</li>
+        <li>Separación de la red industrial (<abbr class="sigla" data-s="OT" data-en="Operational Technology" data-es="sistemas que controlan equipos y procesos industriales" tabindex="0">OT</abbr>) y la de <abbr class="sigla sigla-1" data-s="TI" data-es="tecnologías de la información: el departamento de sistemas" tabindex="0">TI<span class="sigla-exp"> (tecnologías de la información: el departamento de sistemas)</span></abbr> mediante la pasarela.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Datos de equipos industriales", "<abbr class="sigla" data-s="OPC UA" data-en="Open Platform Communications Unified Architecture" data-es="protocolo estándar de comunicación industrial" tabindex="0">OPC UA</abbr>", "<abbr class="sigla" data-s="OEE" data-en="Overall Equipment Effectiveness" data-es="eficacia global de un equipo: disponibilidad, rendimiento y calidad" tabindex="0">OEE</abbr>"</strong>: IoT SiteWise.</li>
+        <li><strong>"Jerarquía de planta, línea y máquina"</strong>: modelos de activos.</li>
+        <li><strong>"Paneles para operarios"</strong>: <a href="managed-grafana.html">Managed Grafana</a> con el complemento de SiteWise.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="iot-sitewise"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html" target="_blank" rel="noopener">What is AWS IoT SiteWise?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/iot-sitewise/latest/appguide/iotsitewise-monitor-availability-change.html" target="_blank" rel="noopener">AWS IoT SiteWise Monitor availability change</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "iot-core-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa conecta 200 000 sensores que envían lecturas por MQTT cada minuto y quiere guardarlas en DynamoDB sin gestionar servidores. ¿Qué solución usa?",
+    "opciones": [
+      "Una flota de EC2 con un broker MQTT.",
+      "Kinesis Video Streams.",
+      "Amazon MQ.",
+      "IoT Core con una regla que escriba en DynamoDB."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "IoT Core recibe los mensajes MQTT a escala y su motor de reglas los envía directamente a DynamoDB (u otros servicios) sin código de servidor.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html"
+    ]
+  },
+  {
+    "id": "iot-core-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación móvil debe cambiar la temperatura deseada de un termostato que a veces está desconectado, y el termostato debe aplicarla al reconectarse. ¿Qué usa?",
+    "opciones": [
+      "La sombra del dispositivo de IoT Core.",
+      "Un tema SNS.",
+      "Una cola SQS.",
+      "Una tabla de DynamoDB consultada cada segundo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La sombra guarda el estado deseado y el notificado; el dispositivo recibe el cambio pendiente al reconectarse.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html"
+    ]
+  },
+  {
+    "id": "iot-core-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "En una flota, cualquier dispositivo puede publicar en los temas de los demás. ¿Cómo se aplica el mínimo privilegio?",
+    "opciones": [
+      "Con grupos de seguridad.",
+      "Con políticas de IoT que limiten cada dispositivo a sus propios temas, usando variables como el nombre de la cosa.",
+      "Con un único certificado compartido.",
+      "Con ACL de red."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las políticas de IoT pueden usar variables (por ejemplo, el nombre de la cosa o el ID de cliente) para que cada dispositivo solo use sus temas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html"
+    ]
+  },
+  {
+    "id": "iot-core-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS conecta dispositivos de IoT a la nube de forma segura y enruta sus mensajes a otros servicios?",
+    "opciones": [
+      "Amazon Connect.",
+      "AWS Direct Connect.",
+      "AWS IoT Core.",
+      "AWS IoT Greengrass."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "IoT Core conecta los dispositivos y gestiona sus mensajes. Greengrass ejecuta lógica en el borde.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html"
+    ]
+  },
+  {
+    "id": "iot-core-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una regla de IoT debe guardar en S3 todas las lecturas agrupadas en ficheros grandes para analizarlas con Athena. ¿Qué acción es la más adecuada?",
+    "opciones": [
+      "Escribir cada mensaje como un objeto de S3.",
+      "Guardar en la sombra.",
+      "Enviar a SNS.",
+      "Enviar a Data Firehose, que agrupa y entrega en S3."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Data Firehose agrupa los mensajes y los entrega en S3 (con compresión o conversión de formato), mucho más eficiente que un objeto por mensaje.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html"
+    ]
+  }
+]

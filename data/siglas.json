@@ -576,6 +576,10 @@
    "en": "Local Secondary Index",
    "es": "índice secundario local"
   },
+  "LoRaWAN": {
+   "en": "Long Range Wide Area Network",
+   "es": "red inalámbrica de largo alcance y bajo consumo para sensores"
+  },
   "MACsec": {
    "en": "Media Access Control Security",
    "es": "cifrado del enlace físico, en capa 2"
@@ -692,6 +696,10 @@
    "en": "OpenSearch Compute Unit",
    "es": "unidad de capacidad de OpenSearch Serverless"
   },
+  "OEE": {
+   "en": "Overall Equipment Effectiveness",
+   "es": "eficacia global de un equipo: disponibilidad, rendimiento y calidad"
+  },
   "OIDC": {
    "en": "OpenID Connect",
    "es": "estándar de identidad sobre OAuth 2.0"
@@ -704,6 +712,10 @@
    "en": "Online Transaction Processing",
    "es": "las transacciones del día a día de una aplicación"
   },
+  "OPC UA": {
+   "en": "Open Platform Communications Unified Architecture",
+   "es": "protocolo estándar de comunicación industrial"
+  },
   "ORC": {
    "en": "Optimized Row Columnar",
    "es": "formato de fichero por columnas"
@@ -711,6 +723,10 @@
   "OSS": {
    "en": "Open Source Software",
    "es": "la versión de código abierto"
+  },
+  "OT": {
+   "en": "Operational Technology",
+   "es": "sistemas que controlan equipos y procesos industriales"
   },
   "OTA": {
    "en": "Over-The-Air",
@@ -1043,6 +1059,10 @@
   "URL": {
    "en": "Uniform Resource Locator",
    "es": "dirección web"
+  },
+  "USB": {
+   "en": "Universal Serial Bus",
+   "es": "conector estándar para periféricos"
   },
   "UTC": {
    "en": "Coordinated Universal Time",

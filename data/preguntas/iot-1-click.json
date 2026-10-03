@@ -1,0 +1,112 @@
+[
+  {
+    "id": "iot-1-click-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un hotel quería poner un botón en cada habitación para pedir toallas, que al pulsarse creara un aviso en su sistema sin programar el botón. ¿Qué servicio de la guía estaba pensado para esto?",
+    "opciones": [
+      "AWS IoT SiteWise.",
+      "Amazon Connect.",
+      "AWS IoT 1-Click, que invocaba una función Lambda.",
+      "AWS Device Farm."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "IoT 1-Click gestionaba dispositivos sencillos que disparaban una Lambda al pulsarse. El servicio ya está retirado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html"
+    ]
+  },
+  {
+    "id": "iot-1-click-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "¿Cómo se implementa hoy un botón conectado que dispara una acción en AWS?",
+    "opciones": [
+      "Con IoT 1-Click.",
+      "Con IoT Things Graph.",
+      "Con Amazon Pinpoint.",
+      "Conectando el dispositivo a IoT Core con una regla que invoque una función Lambda."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "IoT 1-Click y Things Graph están retirados. El dispositivo publica un mensaje en IoT Core y una regla invoca Lambda.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html"
+    ]
+  },
+  {
+    "id": "iot-1-click-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En IoT 1-Click, ¿qué información recibía la función Lambda al pulsar un botón?",
+    "opciones": [
+      "El tipo de pulsación (simple, doble o larga) y los atributos de su ubicación.",
+      "Solo la hora.",
+      "La contraseña del usuario.",
+      "Un vídeo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La función recibía el tipo de pulsación y los atributos asignados al dispositivo (por ejemplo, la habitación), para decidir qué hacer.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html"
+    ]
+  },
+  {
+    "id": "iot-1-click-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué ventaja principal tenía IoT 1-Click frente a conectar el dispositivo a IoT Core por tu cuenta?",
+    "opciones": [
+      "Era más barato en grandes flotas de sensores.",
+      "Los dispositivos venían listos y no había que gestionar certificados ni programarlos.",
+      "Procesaba vídeo.",
+      "Permitía telemetría continua."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Su propuesta era la simplicidad para dispositivos de un solo propósito; para telemetría o flotas complejas siempre fue mejor IoT Core.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html"
+    ]
+  },
+  {
+    "id": "iot-1-click-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa necesita que sus sensores envíen lecturas cada segundo. ¿Habría sido IoT 1-Click adecuado?",
+    "opciones": [
+      "Sí, era su caso principal.",
+      "Sí, con Things Graph.",
+      "No: estaba pensado para eventos puntuales de dispositivos sencillos; la telemetría continua va a IoT Core.",
+      "No, porque solo funcionaba con Kinesis."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "IoT 1-Click era para acciones disparadas por pulsaciones. Para lecturas continuas, la opción es IoT Core.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html"
+    ]
+  }
+]

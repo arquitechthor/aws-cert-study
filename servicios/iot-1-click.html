@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS IoT 1-Click — Apuntes AWS</title>
+<meta name="description" content="Gestionaba dispositivos sencillos de un botón que, al pulsarse, invocaban una función Lambda. Servicio retirado; hoy se usa IoT Core. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/iot-1-click.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS IoT 1-Click — Apuntes AWS">
+<meta property="og:description" content="Gestionaba dispositivos sencillos de un botón que, al pulsarse, invocaban una función Lambda. Servicio retirado; hoy se usa IoT Core.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/iot-1-click.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/iot.svg" alt="" width="56" height="56"><span>AWS IoT 1-Click</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Dispositivos de un botón que lanzan una función con una simple pulsación</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=iot#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/iot.svg" alt="" width="18" height="18">Internet de las cosas (IoT) <span class="cat-en">(Internet of Things (IoT))</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/iot-1-click/" target="_blank" rel="noopener">Documentación de AWS IoT 1-Click ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> <strong>AWS <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr> 1-Click ya no está disponible.</strong> El servicio se retiró y su documentación redirige
+        ahora a <a href="iot-core.html">AWS IoT Core</a>. Los dispositivos de un botón pueden integrarse hoy directamente con IoT Core y sus reglas
+        (por ejemplo, para invocar una función <a href="lambda.html">Lambda</a>). La guía se mantiene porque aparece en la guía de SAP-C02.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr> 1-Click permitía usar <strong>dispositivos muy sencillos</strong>, sobre todo botones como el AWS <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr>
+        Enterprise Button, para <strong>disparar una función <a href="lambda.html">Lambda</a></strong> con una pulsación (simple, doble o larga), sin
+        programar el dispositivo ni gestionar certificados. Ya está retirado.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Dispositivos listos de fábrica:</strong> venían preconfigurados para conectarse de forma segura.</li>
+        <li><strong>Proyectos y ubicaciones:</strong> agrupaban dispositivos con atributos (por ejemplo, la sala donde
+          estaban).</li>
+        <li><strong>Acción:</strong> normalmente una función <a href="lambda.html">Lambda</a> que recibía el tipo de pulsación y los atributos.</li>
+        <li><strong>Hoy:</strong> dispositivos conectados a <a href="iot-core.html">IoT Core</a> con una regla que invoca Lambda.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Pedir reposición de material, avisar a limpieza o llamar a un técnico con un botón.</li>
+        <li>Registrar una incidencia en un sistema de tickets.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Ya no se puede usar: conecta los dispositivos a <a href="iot-core.html">IoT Core</a>.</li>
+        <li>Para dispositivos que envían telemetría continua: IoT Core desde el principio.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción actual</th></tr></thead>
+          <tbody>
+            <tr><td>Un botón que dispara una acción</td><td>Dispositivo en <a href="iot-core.html">IoT Core</a> + regla que invoca <a href="lambda.html">Lambda</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se cobraba <strong>por dispositivo activo y año</strong>, más la invocación de <a href="lambda.html">Lambda</a>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los dispositivos venían con credenciales seguras de fábrica; en <a href="iot-core.html">IoT Core</a> se usan certificados X.509.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Un botón que dispara una función <a href="lambda.html">Lambda</a> sin programar el dispositivo"</strong>: en la guía, <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr>
+          1-Click.</li>
+        <li><strong>"Hoy"</strong>: <a href="iot-core.html">IoT Core</a> con una regla.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="iot-1-click"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html" target="_blank" rel="noopener">What is AWS IoT? (destino actual de la documentación de IoT 1-Click)</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/iot/button/enterprise/terms/" target="_blank" rel="noopener">AWS IoT Button terms of use</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

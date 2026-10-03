@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS IoT Core — Apuntes AWS</title>
+<meta name="description" content="Conecta dispositivos de IoT a AWS con MQTT o HTTPS, autentica cada uno con certificados X.509 y enruta sus mensajes a otros servicios con reglas. Apuntes y preguntas de práctica para CLF-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/iot-core.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS IoT Core — Apuntes AWS">
+<meta property="og:description" content="Conecta dispositivos de IoT a AWS con MQTT o HTTPS, autentica cada uno con certificados X.509 y enruta sus mensajes a otros servicios con reglas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/iot-core.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/iot-core.svg" alt="" width="56" height="56"><span>AWS IoT Core</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Conecta millones de dispositivos por <abbr class="sigla sigla-1" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT<span class="sigla-exp"> (Message Queuing Telemetry Transport: protocolo ligero de mensajería para dispositivos)</span></abbr> y enruta sus mensajes con reglas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=iot#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/iot.svg" alt="" width="18" height="18">Internet de las cosas (IoT) <span class="cat-en">(Internet of Things (IoT))</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/iot/" target="_blank" rel="noopener">Documentación de AWS IoT Core ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS IoT Core es el servicio central de <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr> de AWS. Permite que <strong>miles de millones de dispositivos</strong>
+        se conecten de forma segura y publiquen o reciban mensajes mediante un <strong>agente de mensajes</strong>
+        (<abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr>, <abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr> sobre WebSocket o <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr>). Con el <strong>motor de reglas</strong>, los mensajes se filtran,
+        transforman y envían a otros servicios de AWS sin escribir servidores.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Agente de mensajes:</strong> modelo publicación-suscripción por temas <abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr>.</li>
+        <li><strong>Identidad de los dispositivos:</strong> certificados X.509 por dispositivo y <strong>políticas de
+          <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr></strong> que indican qué temas puede usar cada uno.</li>
+        <li><strong>Registro:</strong> inventario de "cosas" (dispositivos) con sus atributos.</li>
+        <li><strong>Sombra del dispositivo (<em>device shadow</em>):</strong> documento <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> con el estado notificado y
+          el deseado; las aplicaciones lo leen y lo cambian aunque el dispositivo esté desconectado.</li>
+        <li><strong>Motor de reglas:</strong> consultas tipo <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> sobre los mensajes con acciones hacia <a href="lambda.html">Lambda</a>, <a href="dynamodb.html">DynamoDB</a>,
+          <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, Kinesis, <a href="data-firehose.html">Data Firehose</a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="../servicio.html?id=timestream">Timestream</a> o <a href="iot-sitewise.html">IoT SiteWise</a>.</li>
+        <li><strong>Aprovisionamiento de flotas:</strong> los dispositivos obtienen su certificado la primera vez que se
+          conectan.</li>
+        <li><strong>IoT Core for <abbr class="sigla sigla-1" data-s="LoRaWAN" data-en="Long Range Wide Area Network" data-es="red inalámbrica de largo alcance y bajo consumo para sensores" tabindex="0">LoRaWAN<span class="sigla-exp"> (Long Range Wide Area Network: red inalámbrica de largo alcance y bajo consumo para sensores)</span></abbr></strong> para dispositivos inalámbricos de largo alcance y bajo consumo.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Telemetría de sensores enviada a un lago de datos o a paneles.</li>
+        <li>Control remoto de dispositivos (por ejemplo, encender o apagar un equipo) con la sombra.</li>
+        <li>Productos de consumo conectados (electrodomésticos, wearables).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para procesar datos en el propio dispositivo o en el borde sin conexión: <a href="iot-greengrass.html">IoT Greengrass</a>.</li>
+        <li>Para datos industriales con modelos de equipos y plantas: <a href="iot-sitewise.html">IoT SiteWise</a>.</li>
+        <li>Para mensajería entre aplicaciones (no dispositivos): <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>, <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a> o <a href="eventbridge.html">EventBridge</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Servicio</th><th>Para qué</th></tr></thead>
+          <tbody>
+            <tr><td>IoT Core</td><td>Conectar dispositivos y enrutar sus mensajes</td></tr>
+            <tr><td><a href="iot-greengrass.html">IoT Greengrass</a></td><td>Ejecutar lógica en el borde</td></tr>
+            <tr><td><a href="iot-device-management.html">IoT Device Management</a></td><td>Organizar y actualizar flotas</td></tr>
+            <tr><td><a href="iot-device-defender.html">IoT Device Defender</a></td><td>Auditar y vigilar la seguridad</td></tr>
+            <tr><td><a href="iot-sitewise.html">IoT SiteWise</a></td><td>Datos de equipos industriales</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>minutos de conexión</strong>, <strong>mensajes</strong>, operaciones de sombra y registro, y
+        <strong>reglas ejecutadas y acciones</strong>. No hay cuota mínima.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li><abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> en todas las conexiones y autenticación mutua con certificados X.509.</li>
+        <li>Políticas de <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr> por dispositivo con mínimo privilegio (por ejemplo, cada uno solo en su tema).</li>
+        <li>Servicio regional gestionado y escalable; la sombra guarda el estado durante las desconexiones.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Miles de sensores con <abbr class="sigla" data-s="MQTT" data-en="Message Queuing Telemetry Transport" data-es="protocolo ligero de mensajería para dispositivos" tabindex="0">MQTT</abbr>"</strong>: IoT Core.</li>
+        <li><strong>"Enviar los datos de los dispositivos a <a href="dynamodb.html">DynamoDB</a> o Kinesis sin servidores"</strong>: motor de reglas.</li>
+        <li><strong>"Cambiar el estado de un dispositivo desconectado"</strong>: sombra del dispositivo.</li>
+        <li><strong>"Autenticar cada dispositivo"</strong>: certificados X.509 y políticas de <abbr class="sigla" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT</abbr>.</li>
+        <li><strong>"Procesar sin conexión en el borde"</strong>: Greengrass.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="iot-core"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html" target="_blank" rel="noopener">What is AWS IoT?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html" target="_blank" rel="noopener">Rules for AWS IoT</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/iot/latest/developerguide/iot-device-shadows.html" target="_blank" rel="noopener">AWS IoT Device Shadow service</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

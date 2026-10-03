@@ -1,0 +1,112 @@
+[
+  {
+    "id": "iot-events-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quería enviar una alerta cuando un compresor superara 80 °C durante más de cinco minutos, con un estado por compresor. ¿Qué servicio de la guía de SAP-C02 estaba pensado para esto?",
+    "opciones": [
+      "Amazon Pinpoint.",
+      "Amazon Kinesis Video Streams.",
+      "AWS IoT 1-Click.",
+      "AWS IoT Events, con un modelo de detector."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "IoT Events modelaba estados y temporizadores por equipo y disparaba acciones. Hoy ya no está disponible.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/05/aws-service-changes/"
+    ]
+  },
+  {
+    "id": "iot-events-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "En 2026, ¿con qué combinación se construye hoy la lógica anterior?",
+    "opciones": [
+      "Con reglas de IoT Core que invoquen Lambda o Step Functions y guarden el estado en DynamoDB (o con alarmas de IoT SiteWise).",
+      "Con IoT Things Graph.",
+      "Con IoT Events.",
+      "Con AWS IoT 1-Click."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "IoT Events, IoT Things Graph e IoT 1-Click están retirados. La misma lógica se construye con reglas de IoT Core y procesamiento sin servidor, o con alarmas de SiteWise si los datos son industriales.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/05/aws-service-changes/"
+    ]
+  },
+  {
+    "id": "iot-events-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En IoT Events, ¿qué representaba una instancia de detector?",
+    "opciones": [
+      "Una región.",
+      "El estado de un equipo concreto dentro de un modelo de detector.",
+      "Un certificado.",
+      "Un tema MQTT."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Cada equipo (por ejemplo, cada compresor) tenía su instancia del modelo de detector, con su propio estado y variables.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/05/aws-service-changes/"
+    ]
+  },
+  {
+    "id": "iot-events-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Para detectar patrones complejos y con estado en flujos de datos de alta frecuencia, ¿qué servicio actual es más adecuado?",
+    "opciones": [
+      "Amazon Lightsail.",
+      "AWS Budgets.",
+      "Amazon Managed Service for Apache Flink.",
+      "AWS Artifact."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Managed Service for Apache Flink procesa flujos en tiempo real con estado y ventanas de tiempo, adecuado para detección de patrones.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/05/aws-service-changes/"
+    ]
+  },
+  {
+    "id": "iot-events-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Para una alarma sencilla cuando una métrica supera un umbral, ¿qué servicio basta sin construir máquinas de estados?",
+    "opciones": [
+      "IoT Events.",
+      "Amazon Managed Blockchain.",
+      "AWS Transfer Family.",
+      "Una alarma de CloudWatch (o de IoT SiteWise si son datos de equipos)."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las alarmas de CloudWatch o de SiteWise cubren umbrales simples. Las máquinas de estados solo hacen falta para lógica más compleja.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/general/latest/gr/service-lifecycle.html"
+    ]
+  }
+]

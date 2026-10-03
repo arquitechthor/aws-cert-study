@@ -1,0 +1,112 @@
+[
+  {
+    "id": "iot-device-defender-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo de seguridad sospecha que varios dispositivos de una flota usan el mismo certificado y que algunas políticas de IoT permiten todos los temas. ¿Qué función lo comprueba?",
+    "opciones": [
+      "La auditoría de IoT Device Defender.",
+      "AWS Config.",
+      "GuardDuty.",
+      "Trusted Advisor."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La auditoría de Device Defender incluye comprobaciones de certificados compartidos y de políticas de IoT demasiado permisivas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-device-defender/latest/devguide/what-is-device-defender.html"
+    ]
+  },
+  {
+    "id": "iot-device-defender-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una flota de cámaras conectadas debe generar una alerta si alguna empieza a enviar muchos más datos de lo habitual, sin fijar umbrales a mano. ¿Qué usa?",
+    "opciones": [
+      "Detección con reglas de umbral fijo.",
+      "ML Detect de IoT Device Defender.",
+      "CloudTrail.",
+      "IoT Device Management."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "ML Detect aprende el comportamiento normal de cada dispositivo a partir de sus métricas y avisa de las desviaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-device-defender/latest/devguide/dd-detect-ml.html"
+    ]
+  },
+  {
+    "id": "iot-device-defender-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Cuando Device Defender detecta un dispositivo comprometido, el equipo quiere aislarlo automáticamente. ¿Qué hace?",
+    "opciones": [
+      "Borrar la cuenta.",
+      "Apagar IoT Core.",
+      "Configurar una acción de mitigación que lo mueva a un grupo en cuarentena con una política restrictiva.",
+      "Cambiar la región."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las acciones de mitigación permiten, entre otras cosas, añadir la cosa a un grupo en cuarentena cuya política limita lo que puede hacer.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-device-defender/latest/devguide/what-is-device-defender.html"
+    ]
+  },
+  {
+    "id": "iot-device-defender-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué servicio vigila amenazas en las cuentas de AWS, EC2 y S3, a diferencia de Device Defender, que vigila dispositivos IoT?",
+    "opciones": [
+      "IoT Device Management.",
+      "Amazon Macie.",
+      "AWS Shield.",
+      "Amazon GuardDuty."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "GuardDuty analiza registros de la cuenta y las cargas de AWS para detectar amenazas. Device Defender se centra en la flota de IoT.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-device-defender/latest/devguide/what-is-device-defender.html"
+    ]
+  },
+  {
+    "id": "iot-device-defender-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo quiere detectar puertos abiertos inesperados en los propios dispositivos, algo que no se ve desde la nube. ¿Qué necesita?",
+    "opciones": [
+      "Métricas del lado del dispositivo enviadas con el agente de Device Defender.",
+      "Reglas de AWS WAF.",
+      "Registros de flujo de VPC.",
+      "Una auditoría de CloudTrail."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las métricas del lado del dispositivo (puertos de escucha, conexiones…) las recoge un agente en el dispositivo y Device Defender las evalúa.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/iot-device-defender/latest/devguide/what-is-device-defender.html"
+    ]
+  }
+]
