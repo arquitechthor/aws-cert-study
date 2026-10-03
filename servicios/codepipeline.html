@@ -65,7 +65,7 @@
       <p>AWS CodePipeline es un servicio de <strong>entrega continua</strong> gestionado. Defines una
         <strong>canalización</strong> (<em>pipeline</em>) con etapas (fuente, compilación, pruebas, despliegue) y cada
         cambio en el código la recorre de forma automática. No compila ni despliega por sí mismo: <strong>orquesta</strong>
-        otros servicios, como <a href="../servicio.html?id=codebuild">CodeBuild</a>, <a href="codedeploy.html">CodeDeploy</a>, <a href="cloudformation.html">CloudFormation</a>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="lambda.html">Lambda</a> o herramientas de terceros.</p>
+        otros servicios, como <a href="codebuild.html">CodeBuild</a>, <a href="codedeploy.html">CodeDeploy</a>, <a href="cloudformation.html">CloudFormation</a>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="lambda.html">Lambda</a> o herramientas de terceros.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
@@ -93,7 +93,7 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Si solo necesitas compilar y probar: <a href="../servicio.html?id=codebuild">CodeBuild</a> por sí solo.</li>
+        <li>Si solo necesitas compilar y probar: <a href="codebuild.html">CodeBuild</a> por sí solo.</li>
         <li>Si el equipo ya usa GitHub Actions o GitLab CI y no necesita integrarse con servicios de AWS más allá del
           despliegue.</li>
         <li>Para aplicaciones web frontales sencillas con su propio <abbr class="sigla" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD</abbr>: <a href="amplify.html">Amplify</a> Hosting.</li>
@@ -105,16 +105,16 @@
           <thead><tr><th>Servicio</th><th>Papel</th></tr></thead>
           <tbody>
             <tr><td>CodePipeline</td><td>Orquesta el flujo completo</td></tr>
-            <tr><td><a href="../servicio.html?id=codebuild">CodeBuild</a></td><td>Compila y ejecuta pruebas (buildspec)</td></tr>
+            <tr><td><a href="codebuild.html">CodeBuild</a></td><td>Compila y ejecuta pruebas (buildspec)</td></tr>
             <tr><td><a href="codedeploy.html">CodeDeploy</a></td><td>Despliega en <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, servidores locales, <a href="lambda.html">Lambda</a> o <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> con estrategias</td></tr>
-            <tr><td><a href="../servicio.html?id=codeartifact">CodeArtifact</a></td><td>Repositorio privado de paquetes</td></tr>
+            <tr><td><a href="codeartifact.html">CodeArtifact</a></td><td>Repositorio privado de paquetes</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
       <p>Canalizaciones V1: <strong>por canalización activa al mes</strong>. Canalizaciones V2: <strong>por minuto de
-        ejecución de acciones</strong>. Aparte se pagan los servicios que ejecutan las acciones (<a href="../servicio.html?id=codebuild">CodeBuild</a>, <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>…).</p>
+        ejecución de acciones</strong>. Aparte se pagan los servicios que ejecutan las acciones (<a href="codebuild.html">CodeBuild</a>, <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>…).</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
@@ -133,7 +133,7 @@
         <li><strong>"Desplegar en otra cuenta"</strong>: rol entre cuentas y clave de <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a> gestionada por el cliente para los
           artefactos.</li>
         <li><strong>"Ejecutar solo cuando se crea una etiqueta de Git"</strong>: disparadores de una canalización V2.</li>
-        <li><strong>"Compilar y ejecutar pruebas unitarias"</strong>: <a href="../servicio.html?id=codebuild">CodeBuild</a> (dentro de la canalización).</li>
+        <li><strong>"Compilar y ejecutar pruebas unitarias"</strong>: <a href="codebuild.html">CodeBuild</a> (dentro de la canalización).</li>
         <li><strong>"Despliegue canary o azul/verde"</strong>: lo hace <a href="codedeploy.html">CodeDeploy</a> (u otro servicio de despliegue), no
           CodePipeline.</li>
       </ul>

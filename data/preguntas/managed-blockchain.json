@@ -1,0 +1,112 @@
+[
+  {
+    "id": "managed-blockchain-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un consorcio de cinco empresas de logística quiere compartir un registro de envíos en el que ninguna sea la autoridad central y nadie pueda alterar el historial. ¿Qué solución encaja según las guías de examen?",
+    "opciones": [
+      "Una tabla de DynamoDB compartida.",
+      "Una red Hyperledger Fabric en Amazon Managed Blockchain.",
+      "Un bucket de S3 con versiones.",
+      "Una base de datos RDS con réplicas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Una red de blockchain con permisos como Hyperledger Fabric permite que varias organizaciones mantengan un registro común sin intermediario. Ten en cuenta el fin de soporte de AMB.",
+    "fuentes": [
+      "https://aws.amazon.com/managed-blockchain/"
+    ]
+  },
+  {
+    "id": "managed-blockchain-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una única empresa quiere un historial de cambios verificable de sus pedidos y es la única que escribe en él. ¿Es necesaria una blockchain?",
+    "opciones": [
+      "Sí, siempre que se quiera inmutabilidad.",
+      "Sí, con Ethereum.",
+      "No: al haber una sola autoridad, una base de datos con auditoría o registros inmutables en S3 es más simple.",
+      "No, porque las blockchains no guardan historial."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las blockchains aportan valor cuando varias partes sin confianza mutua comparten datos. Con una sola autoridad, una base de datos o registros con Object Lock bastan.",
+    "fuentes": [
+      "https://aws.amazon.com/managed-blockchain/"
+    ]
+  },
+  {
+    "id": "managed-blockchain-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación Web3 necesita leer saldos y enviar transacciones a Ethereum sin sincronizar ni mantener un nodo propio. ¿Qué parte de AMB lo cubre?",
+    "opciones": [
+      "AMB Access Ethereum.",
+      "Hyperledger Fabric.",
+      "AMB Query solo.",
+      "Amazon Quick."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AMB Access da nodos gestionados de blockchains públicas como Ethereum para enviar transacciones y consultar datos.",
+    "fuentes": [
+      "https://aws.amazon.com/managed-blockchain/"
+    ]
+  },
+  {
+    "id": "managed-blockchain-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Un cliente usa AMB Access Hyperledger Fabric. ¿Qué debe planificar según el anuncio de fin de soporte?",
+    "opciones": [
+      "Nada, el servicio no cambia.",
+      "Pasarse a AMB Query.",
+      "Migrar a Amazon Neptune obligatoriamente.",
+      "Migrar antes del 29/09/2027 a otra red Fabric gestionada, a Fabric en EC2 o EKS, o a una base de datos de AWS."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "AMB deja de funcionar el 29/09/2027 (y no admite clientes nuevos desde el 29/10/2026). Para Fabric, AWS propone otra red gestionada, Fabric autogestionado o una base de datos de AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/managed-blockchain/latest/hyperledger-fabric-dev/managed-blockchain-end-of-support.html"
+    ]
+  },
+  {
+    "id": "managed-blockchain-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En una red Hyperledger Fabric, ¿cómo se programan las reglas de negocio que validan las transacciones?",
+    "opciones": [
+      "Con funciones Lambda.",
+      "Con chaincode (contratos inteligentes) instalado en los nodos de pares.",
+      "Con reglas de AWS Config.",
+      "Con políticas de IAM."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "En Fabric la lógica de negocio se escribe como chaincode, que se ejecuta en los nodos de los miembros y valida las transacciones.",
+    "fuentes": [
+      "https://aws.amazon.com/managed-blockchain/"
+    ]
+  }
+]

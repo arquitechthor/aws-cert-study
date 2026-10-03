@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon WorkSpaces — Apuntes AWS</title>
+<meta name="description" content="Escritorios virtuales Windows o Linux en la nube (persistentes o en grupos), accesibles desde cualquier dispositivo, con pago mensual o por horas. Apuntes y preguntas de práctica para CLF-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/workspaces.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon WorkSpaces — Apuntes AWS">
+<meta property="og:description" content="Escritorios virtuales Windows o Linux en la nube (persistentes o en grupos), accesibles desde cualquier dispositivo, con pago mensual o por horas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/workspaces.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/workspaces.svg" alt="" width="56" height="56"><span>Amazon WorkSpaces</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Escritorios Windows o Linux completos en la nube accesibles desde cualquier equipo</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion-usuarios-finales#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion-usuarios-finales.svg" alt="" width="18" height="18">Computación para usuarios finales <span class="cat-en">(End User Computing)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/workspaces/" target="_blank" rel="noopener">Documentación de Amazon WorkSpaces ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon WorkSpaces ofrece <strong>escritorios virtuales en la nube</strong> (<abbr class="sigla sigla-1" data-s="VDI" data-en="Virtual Desktop Infrastructure" data-es="escritorios virtuales alojados en servidores" tabindex="0">VDI<span class="sigla-exp"> (Virtual Desktop Infrastructure: escritorios virtuales alojados en servidores)</span></abbr> gestionado). Cada usuario se
+        conecta desde su portátil, una tableta, un cliente ligero o el navegador a un escritorio Windows o Linux que vive
+        en AWS. Los datos no se quedan en el dispositivo, y AWS gestiona la infraestructura. Es parte de la familia
+        WorkSpaces, junto a <a href="appstream-2-0.html">WorkSpaces Applications</a> (antes AppStream 2.0) y <a href="workspaces-secure-browser.html">WorkSpaces Secure Browser</a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>WorkSpaces Personal:</strong> escritorio persistente asignado a cada usuario, que conserva sus datos
+          y aplicaciones.</li>
+        <li><strong>WorkSpaces Pools:</strong> escritorios no persistentes que se reparten entre usuarios; útiles para
+          turnos, formación o centros de contacto.</li>
+        <li><strong>Facturación:</strong> <strong>AlwaysOn</strong> (tarifa mensual, para uso a diario) o
+          <strong>AutoStop</strong> (cuota mensual pequeña más pago por horas, se apaga si no se usa).</li>
+        <li><strong>Paquetes (<em>bundles</em>):</strong> combinaciones de <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr>, memoria, almacenamiento y sistema
+          operativo, incluidos con <abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr>.</li>
+        <li><strong>Directorio:</strong> se integra con Active Directory mediante <a href="directory-service.html">Directory Service</a> (AD Connector o
+          Managed Microsoft <abbr class="sigla" data-s="AD" data-en="Active Directory" data-es="directorio de usuarios y equipos de Microsoft" tabindex="0">AD</abbr>); <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr> con <abbr class="sigla sigla-1" data-s="RADIUS" data-en="Remote Authentication Dial-In User Service" data-es="protocolo de autenticación en red" tabindex="0">RADIUS<span class="sigla-exp"> (Remote Authentication Dial-In User Service: protocolo de autenticación en red)</span></abbr> o <abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr>.</li>
+        <li><strong>Protocolos de streaming:</strong> <abbr class="sigla" data-s="DCV" data-en="Desktop Cloud Visualization" data-es="protocolo de AWS para transmitir escritorios" tabindex="0">DCV</abbr> (antes <abbr class="sigla sigla-1" data-s="WSP" data-en="WorkSpaces Streaming Protocol" data-es="nombre anterior del protocolo DCV en WorkSpaces" tabindex="0">WSP<span class="sigla-exp"> (WorkSpaces Streaming Protocol: nombre anterior del protocolo DCV en WorkSpaces)</span></abbr>) y <abbr class="sigla sigla-1" data-s="PCoIP" data-en="PC over IP" data-es="protocolo de Teradici para transmitir escritorios" tabindex="0">PCoIP<span class="sigla-exp"> (PC over IP: protocolo de Teradici para transmitir escritorios)</span></abbr>.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL<span class="sigla-exp"> (Bring Your Own License: usar tu propia licencia)</span></abbr>:</strong> llevar licencias propias de Windows.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Teletrabajo y contratistas que no deben guardar datos en sus equipos.</li>
+        <li>Fusiones y adquisiciones: dar escritorios estándar rápidamente.</li>
+        <li>Escritorios con <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr> para diseño o ingeniería.</li>
+        <li>Sustituir una <abbr class="sigla" data-s="VDI" data-en="Virtual Desktop Infrastructure" data-es="escritorios virtuales alojados en servidores" tabindex="0">VDI</abbr> local.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si solo hay que publicar una o varias aplicaciones, no un escritorio completo: <a href="appstream-2-0.html">WorkSpaces Applications</a>.</li>
+        <li>Si solo se necesita acceder de forma segura a webs internas: <a href="workspaces-secure-browser.html">WorkSpaces Secure Browser</a>.</li>
+        <li>Para dar acceso de red a las <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> desde el portátil: <a href="client-vpn.html">Client <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>WorkSpaces</th><th><a href="appstream-2-0.html">WorkSpaces Applications</a></th><th><a href="workspaces-secure-browser.html">WorkSpaces Secure Browser</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué se entrega</td><td>Escritorio completo</td><td>Aplicaciones concretas</td><td>Navegador aislado</td></tr>
+            <tr><td>Persistencia</td><td>Personal (persistente) o Pools</td><td>No persistente (salvo carpetas)</td><td>No persistente</td></tr>
+            <tr><td>Pago</td><td>Mensual o por horas</td><td>Por hora de instancia + usuario</td><td>Por usuario activo al mes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>WorkSpaces Personal: <strong>AlwaysOn</strong> con tarifa mensual por escritorio o <strong>AutoStop</strong> con
+        cuota mensual más horas de uso. Pools: por hora de uso y por usuario. Las licencias de Windows pueden ir incluidas
+        o ser propias (<abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr>).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los datos se quedan en AWS, no en el dispositivo del usuario.</li>
+        <li>Volúmenes cifrados con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>Control de acceso por <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> y por dispositivo de confianza (certificados).</li>
+        <li><abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr> a través del directorio o del proveedor <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr>.</li>
+        <li>Despliegue en subredes de dos <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>; los escritorios personales tienen copias automáticas de sus volúmenes.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Escritorios virtuales" o "<abbr class="sigla" data-s="VDI" data-en="Virtual Desktop Infrastructure" data-es="escritorios virtuales alojados en servidores" tabindex="0">VDI</abbr>"</strong>: WorkSpaces.</li>
+        <li><strong>"Usuarios que trabajan pocas horas al mes"</strong>: facturación AutoStop.</li>
+        <li><strong>"Uso diario a tiempo completo"</strong>: AlwaysOn.</li>
+        <li><strong>"Solo una aplicación en el navegador"</strong>: <a href="appstream-2-0.html">WorkSpaces Applications</a>, no un escritorio completo.</li>
+        <li><strong>"Usar las cuentas del Active Directory local"</strong>: AD Connector.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="workspaces"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces.html" target="_blank" rel="noopener">What is Amazon WorkSpaces?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/workspaces/pricing/" target="_blank" rel="noopener">Amazon WorkSpaces pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/workspaces/latest/adminguide/manage-workspaces-directory.html" target="_blank" rel="noopener">Manage directories for WorkSpaces Personal</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "codeguru-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una aplicación Java en producción consume mucha más CPU de lo esperado y el equipo quiere saber qué métodos son los responsables. ¿Qué usa?",
+    "opciones": [
+      "AWS X-Ray.",
+      "Amazon CodeGuru Profiler.",
+      "AWS Config.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CodeGuru Profiler muestrea la aplicación en ejecución y muestra en gráficos de llamas qué métodos consumen más CPU, con recomendaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeguru/latest/profiler-ug/what-is-codeguru-profiler.html"
+    ]
+  },
+  {
+    "id": "codeguru-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "En 2026 un equipo quiere asociar un repositorio nuevo a CodeGuru Reviewer para revisar su código. ¿Qué ocurre?",
+    "opciones": [
+      "Funciona igual que siempre.",
+      "Solo funciona con Python.",
+      "No es posible: desde el 07/11/2025 no se admiten asociaciones nuevas; AWS sugiere Inspector o Q Developer.",
+      "Debe pedir un aumento de cuota."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "CodeGuru Reviewer está en mantenimiento: solo funciona con las asociaciones ya existentes. Para revisión de código, AWS propone otros servicios como Inspector y Q Developer.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/codeguru-reviewer-availability-change.html"
+    ]
+  },
+  {
+    "id": "codeguru-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "¿Qué diferencia hay entre CodeGuru Profiler y X-Ray?",
+    "opciones": [
+      "Profiler analiza el código dentro de una aplicación en ejecución; X-Ray sigue las peticiones entre servicios.",
+      "Son el mismo servicio.",
+      "X-Ray analiza el código fuente y Profiler las llamadas a la API.",
+      "Profiler solo funciona en local."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Profiler busca las líneas de código costosas dentro de un proceso; X-Ray muestra el recorrido y la latencia de una petición a través de varios servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeguru/latest/profiler-ug/what-is-codeguru-profiler.html"
+    ]
+  },
+  {
+    "id": "codeguru-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo quiere reducir el coste de cómputo de una flota de servicios Python identificando código ineficiente, con el mínimo impacto en producción. ¿Qué solución encaja?",
+    "opciones": [
+      "Desplegar un depurador en cada instancia.",
+      "Revisar el código a mano.",
+      "Activar CloudTrail.",
+      "Añadir el agente de CodeGuru Profiler y seguir sus recomendaciones."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El agente de Profiler tiene poco impacto, recoge datos de forma continua y sus recomendaciones estiman el ahorro de corregir el código caro.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeguru/latest/profiler-ug/what-is-codeguru-profiler.html"
+    ]
+  },
+  {
+    "id": "codeguru-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo de seguridad quiere encontrar vulnerabilidades en el código de las funciones Lambda y en sus dependencias de forma automática. ¿Qué servicio usa hoy?",
+    "opciones": [
+      "CodeGuru Profiler.",
+      "Amazon Inspector.",
+      "AWS Trusted Advisor.",
+      "AWS Budgets."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Inspector analiza las funciones Lambda, incluido su código y sus paquetes, en busca de vulnerabilidades. Profiler mide rendimiento, no seguridad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/codeguru-reviewer-availability-change.html"
+    ]
+  }
+]

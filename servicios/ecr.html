@@ -88,14 +88,14 @@
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Guardar las imágenes que se despliegan en <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> o <a href="lambda.html">Lambda</a>.</li>
-        <li><abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr>: <a href="../servicio.html?id=codebuild">CodeBuild</a> construye la imagen y la sube; la canalización la despliega.</li>
+        <li><abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr>: <a href="codebuild.html">CodeBuild</a> construye la imagen y la sube; la canalización la despliega.</li>
         <li>Compartir imágenes base entre las cuentas de una organización.</li>
         <li>Publicar imágenes de código abierto en ECR Public.</li>
       </ul>
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Para paquetes de lenguajes (npm, Maven, PyPI): <a href="../servicio.html?id=codeartifact">CodeArtifact</a>.</li>
+        <li>Para paquetes de lenguajes (npm, Maven, PyPI): <a href="codeartifact.html">CodeArtifact</a>.</li>
         <li>Para ejecutar contenedores: <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> o <a href="fargate.html">Fargate</a>; <abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr> solo los guarda.</li>
       </ul>
 
@@ -105,7 +105,7 @@
           <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
           <tbody>
             <tr><td>Guardar imágenes de contenedores</td><td><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></td></tr>
-            <tr><td>Guardar paquetes de software</td><td><a href="../servicio.html?id=codeartifact">CodeArtifact</a></td></tr>
+            <tr><td>Guardar paquetes de software</td><td><a href="codeartifact.html">CodeArtifact</a></td></tr>
             <tr><td>Ejecutar contenedores</td><td><a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>, <a href="fargate.html">Fargate</a>, <a href="app-runner.html">App Runner</a></td></tr>
             <tr><td>Buscar vulnerabilidades de forma continua</td><td><a href="inspector.html">Inspector</a> (escaneo mejorado de <abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr>)</td></tr>
           </tbody>

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "workspaces-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa contrata 300 consultores externos que deben trabajar con escritorios Windows corporativos sin que los datos queden en sus portátiles. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon WorkSpaces.",
+      "AWS Client VPN.",
+      "Amazon EC2 con RDP abierto.",
+      "AWS Outposts."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "WorkSpaces da escritorios virtuales gestionados; el usuario solo recibe la imagen del escritorio y los datos se quedan en AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces.html"
+    ]
+  },
+  {
+    "id": "workspaces-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "La mayoría de los usuarios de WorkSpaces solo trabajan unas 20 horas al mes. ¿Qué cambio reduce el coste?",
+    "opciones": [
+      "Cambiar a paquetes más grandes.",
+      "Usar la facturación AutoStop para esos escritorios.",
+      "Usar AlwaysOn para todos.",
+      "Mover los escritorios a otra región."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "AutoStop cobra una cuota mensual pequeña más las horas de uso y apaga el escritorio cuando no se usa; compensa con poco uso. AlwaysOn compensa con uso diario.",
+    "fuentes": [
+      "https://aws.amazon.com/workspaces/pricing/"
+    ]
+  },
+  {
+    "id": "workspaces-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Los usuarios de WorkSpaces deben iniciar sesión con sus cuentas del Active Directory local, sin replicar el directorio en AWS. ¿Qué se usa?",
+    "opciones": [
+      "Cognito.",
+      "Managed Microsoft AD con una copia de todos los usuarios.",
+      "IAM.",
+      "AD Connector de Directory Service."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "AD Connector redirige las peticiones de autenticación al Active Directory local sin guardar los usuarios en AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/workspaces/latest/adminguide/manage-workspaces-directory.html"
+    ]
+  },
+  {
+    "id": "workspaces-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un centro de formación necesita escritorios iguales para grupos que cambian cada semana; no hace falta conservar nada entre sesiones. ¿Qué opción encaja mejor?",
+    "opciones": [
+      "WorkSpaces Personal con AlwaysOn.",
+      "Instancias EC2 dedicadas.",
+      "WorkSpaces Pools, con escritorios no persistentes compartidos.",
+      "Snowball Edge."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "WorkSpaces Pools ofrece escritorios no persistentes que se asignan a quien se conecta, adecuados para usuarios rotativos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces.html"
+    ]
+  },
+  {
+    "id": "workspaces-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS ofrece escritorios virtuales en la nube para los empleados?",
+    "opciones": [
+      "Amazon AppFlow.",
+      "Amazon WorkSpaces.",
+      "AWS Amplify.",
+      "Amazon Connect."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "WorkSpaces es el servicio de escritorios virtuales. Connect es un centro de contacto y Amplify sirve para crear aplicaciones web y móviles.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces.html"
+    ]
+  }
+]

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon CodeGuru — Apuntes AWS</title>
+<meta name="description" content="Herramientas con aprendizaje automático para el código: Profiler analiza el rendimiento en ejecución y Reviewer revisaba el código (sin asociaciones nuevas desde 2025). Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/codeguru.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon CodeGuru — Apuntes AWS">
+<meta property="og:description" content="Herramientas con aprendizaje automático para el código: Profiler analiza el rendimiento en ejecución y Reviewer revisaba el código (sin asociaciones nuevas desde 2025).">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/codeguru.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/codeguru.svg" alt="" width="56" height="56"><span>Amazon CodeGuru</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Revisa el código con aprendizaje automático y señala fallos y problemas de rendimiento</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=herramientas-desarrolladores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="18" height="18">Herramientas para desarrolladores <span class="cat-en">(Developer Tools)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/codeguru/" target="_blank" rel="noopener">Documentación de Amazon CodeGuru ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> <strong>CodeGuru Reviewer</strong> no permite crear asociaciones de repositorio nuevas desde el 07/11/2025;
+        solo sigue funcionando con las existentes. Para revisar código, AWS propone <a href="inspector.html">Amazon Inspector</a> (escaneo de código)
+        y <a href="../servicio.html?id=amazon-q">Amazon Q Developer</a>. <strong>CodeGuru Profiler</strong> sigue disponible.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon CodeGuru reúne dos herramientas que usan aprendizaje automático para mejorar el código.
+        <strong>CodeGuru Profiler</strong> recoge datos de rendimiento de aplicaciones en ejecución y señala las líneas
+        que más <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> o tiempo consumen, con recomendaciones. <strong>CodeGuru Reviewer</strong> revisaba automáticamente
+        el código de los repositorios y de las solicitudes de incorporación en busca de errores, problemas de seguridad
+        y malas prácticas; ya no admite repositorios nuevos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Profiler:</strong> un agente ligero en aplicaciones Java (<abbr class="sigla" data-s="JVM" data-en="Java Virtual Machine" data-es="entorno que ejecuta Java y lenguajes compatibles" tabindex="0">JVM</abbr>) o Python, en <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, contenedores, <a href="lambda.html">Lambda</a>
+          o servidores locales.</li>
+        <li><strong>Gráficos de llamas (<em>flame graphs</em>):</strong> muestran dónde se va el tiempo de <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr>.</li>
+        <li><strong>Recomendaciones y anomalías:</strong> detectan código caro o cambios de comportamiento, y estiman el
+          ahorro.</li>
+        <li><strong>Reviewer:</strong> comentarios automáticos en solicitudes de incorporación y escaneos completos del
+          repositorio (Java y Python), incluida la detección de secretos en el código.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Encontrar qué método provoca picos de <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr> en producción y reducir el coste de cómputo.</li>
+        <li>Analizar el uso de memoria (heap) de una aplicación Java.</li>
+        <li>(Clientes existentes) revisión automática de código en las solicitudes de incorporación.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para revisar el código de un repositorio nuevo: <a href="inspector.html">Amazon Inspector</a> (escaneo de código) o <a href="../servicio.html?id=amazon-q">Q Developer</a>.</li>
+        <li>Para trazar peticiones entre servicios: <a href="x-ray.html">X-Ray</a>.</li>
+        <li>Para métricas de infraestructura: <a href="cloudwatch.html">CloudWatch</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Qué líneas consumen más <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr>?</td><td>CodeGuru Profiler</td></tr>
+            <tr><td>¿Qué servicio retrasa la petición?</td><td><a href="x-ray.html">X-Ray</a></td></tr>
+            <tr><td>¿Hay vulnerabilidades en el código o las dependencias?</td><td><a href="inspector.html">Inspector</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Profiler se paga <strong>por hora de muestreo</strong> de cada aplicación perfilada (con capa gratuita para
+        <a href="lambda.html">Lambda</a>). Reviewer se pagaba por líneas de código analizadas al mes.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El agente envía datos de rendimiento, no el código ni los datos de negocio.</li>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> y cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>El agente tiene un impacto mínimo en la aplicación.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Las líneas de código más caras" o "reducir el uso de <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr>"</strong>: CodeGuru Profiler.</li>
+        <li><strong>"Revisión automática de código con <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>"</strong>: en preguntas antiguas, CodeGuru Reviewer; hoy, <a href="inspector.html">Inspector</a>
+          o <a href="../servicio.html?id=amazon-q">Q Developer</a> para repositorios nuevos.</li>
+        <li><strong>"Qué microservicio es lento"</strong>: <a href="x-ray.html">X-Ray</a>, no CodeGuru.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="codeguru"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/codeguru/latest/profiler-ug/what-is-codeguru-profiler.html" target="_blank" rel="noopener">What is Amazon CodeGuru Profiler?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/codeguru-reviewer-availability-change.html" target="_blank" rel="noopener">Amazon CodeGuru Reviewer availability change</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/" target="_blank" rel="noopener">AWS Service Availability Updates</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "appstream-2-0-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una universidad quiere que sus estudiantes usen un programa de CAD de Windows desde el navegador de cualquier equipo, sin instalarlo y sin dar un escritorio completo. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon WorkSpaces Personal.",
+      "AppStream 2.0 (WorkSpaces Applications).",
+      "AWS Client VPN.",
+      "Amazon Lightsail."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "AppStream 2.0, hoy WorkSpaces Applications, transmite aplicaciones concretas al navegador desde flotas en AWS. WorkSpaces da escritorios completos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html"
+    ]
+  },
+  {
+    "id": "appstream-2-0-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Los usuarios de una aplicación transmitida la usan de vez en cuando y aceptan esperar un par de minutos al conectarse. ¿Qué tipo de flota abarata el coste?",
+    "opciones": [
+      "Always-On.",
+      "On-Demand.",
+      "Una flota con más instancias de reserva.",
+      "Instancias dedicadas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "En una flota On-Demand las instancias esperan paradas, con una tarifa menor, y arrancan cuando el usuario se conecta. Always-On da acceso inmediato pero cuesta más.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html"
+    ]
+  },
+  {
+    "id": "appstream-2-0-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere que los usuarios de una aplicación transmitida no puedan copiar datos al portapapeles local ni descargar ficheros. ¿Dónde lo configura?",
+    "opciones": [
+      "En la política de IAM del usuario.",
+      "En un grupo de seguridad.",
+      "En la configuración de la pila (stack) de WorkSpaces Applications.",
+      "En el bucket de S3."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las pilas definen qué pueden hacer los usuarios en la sesión, como copiar y pegar, transferir ficheros o imprimir.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html"
+    ]
+  },
+  {
+    "id": "appstream-2-0-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS permite usar aplicaciones de escritorio desde un navegador web sin instalarlas en el equipo del usuario?",
+    "opciones": [
+      "Amazon AppStream 2.0 (WorkSpaces Applications).",
+      "AWS Elastic Beanstalk.",
+      "Amazon S3.",
+      "AWS Lambda."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AppStream 2.0, hoy WorkSpaces Applications, ejecuta las aplicaciones en AWS y las transmite al navegador.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html"
+    ]
+  },
+  {
+    "id": "appstream-2-0-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Los usuarios de una aplicación transmitida deben iniciar sesión con el proveedor de identidad corporativo y su MFA. ¿Qué se configura?",
+    "opciones": [
+      "Un grupo de usuarios local sin MFA.",
+      "Claves de acceso de IAM por usuario.",
+      "Un certificado autofirmado.",
+      "Federación SAML 2.0 con el proveedor corporativo."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "WorkSpaces Applications admite federación SAML 2.0, de modo que el inicio de sesión (con su MFA) lo hace el proveedor corporativo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html"
+    ]
+  }
+]

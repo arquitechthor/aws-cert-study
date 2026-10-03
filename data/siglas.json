@@ -36,6 +36,10 @@
    "en": "Application Load Balancer",
    "es": "balanceador HTTP/HTTPS"
   },
+  "AMB": {
+   "en": "Amazon Managed Blockchain",
+   "es": null
+  },
   "AMI": {
    "en": "Amazon Machine Image",
    "es": "plantilla con el sistema operativo para arrancar instancias"
@@ -103,6 +107,10 @@
   "CAA": {
    "en": "Certification Authority Authorization",
    "es": "registro DNS que indica qué autoridades pueden emitir certificados"
+  },
+  "CAD": {
+   "en": "Computer-Aided Design",
+   "es": "diseño asistido por ordenador"
   },
   "CAPTCHA": {
    "en": null,
@@ -203,6 +211,10 @@
   "DAX": {
    "en": "DynamoDB Accelerator",
    "es": "caché en memoria para DynamoDB"
+  },
+  "DCV": {
+   "en": "Desktop Cloud Visualization",
+   "es": "protocolo de AWS para transmitir escritorios"
   },
   "DDoS": {
    "en": "Distributed Denial of Service",
@@ -516,6 +528,10 @@
    "en": "JavaScript Object Notation",
    "es": "formato de datos en texto"
   },
+  "JVM": {
+   "en": "Java Virtual Machine",
+   "es": "entorno que ejecuta Java y lenguajes compatibles"
+  },
   "JWT": {
    "en": "JSON Web Token",
    "es": "token firmado con datos del usuario"
@@ -568,6 +584,10 @@
    "en": "Monthly Active Users",
    "es": "usuarios activos al mes"
   },
+  "MCP": {
+   "en": "Model Context Protocol",
+   "es": "protocolo abierto para dar herramientas y datos a agentes de IA"
+  },
   "MFA": {
    "en": "Multi-Factor Authentication",
    "es": "inicio de sesión con un segundo factor"
@@ -579,6 +599,10 @@
   "MLOps": {
    "en": "Machine Learning Operations",
    "es": "prácticas para llevar y mantener modelos en producción"
+  },
+  "MMS": {
+   "en": "Multimedia Messaging Service",
+   "es": "mensajes móviles con imágenes o vídeo"
   },
   "MPEG-DASH": {
    "en": "Dynamic Adaptive Streaming over HTTP",
@@ -692,6 +716,10 @@
    "en": "Over-The-Air",
    "es": "actualización remota por la red, sin conectar el dispositivo"
   },
+  "OTP": {
+   "en": "One-Time Password",
+   "es": "código de un solo uso"
+  },
   "OU": {
    "en": "Organizational Unit",
    "es": "unidad organizativa de AWS Organizations"
@@ -703,6 +731,10 @@
   "PCI DSS": {
    "en": "Payment Card Industry Data Security Standard",
    "es": "norma de seguridad para datos de tarjetas"
+  },
+  "PCoIP": {
+   "en": "PC over IP",
+   "es": "protocolo de Teradici para transmitir escritorios"
   },
   "PDF": {
    "en": "Portable Document Format",
@@ -1016,6 +1048,10 @@
    "en": "Coordinated Universal Time",
    "es": "hora universal coordinada"
   },
+  "VDI": {
+   "en": "Virtual Desktop Infrastructure",
+   "es": "escritorios virtuales alojados en servidores"
+  },
   "VIF": {
    "en": "Virtual Interface",
    "es": "interfaz virtual sobre la conexión física"
@@ -1059,6 +1095,10 @@
   "WORM": {
    "en": "Write Once, Read Many",
    "es": "se escribe una vez y no se puede modificar"
+  },
+  "WSP": {
+   "en": "WorkSpaces Streaming Protocol",
+   "es": "nombre anterior del protocolo DCV en WorkSpaces"
   },
   "WebRTC": {
    "en": "Web Real-Time Communication",

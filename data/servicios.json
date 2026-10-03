@@ -148,17 +148,20 @@
   },
   {
     "id": "appstream-2-0",
-    "nombre": "Amazon AppStream 2.0",
+    "nombre": "Amazon WorkSpaces Applications",
     "categoria": "computacion-usuarios-finales",
     "icono": true,
     "certificaciones": [
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Transmite aplicaciones de escritorio a cualquier navegador sin instalarlas en el equipo; las aplicaciones corren en flotas gestionadas en AWS.",
     "frase": "Transmite aplicaciones de escritorio al navegador sin instalarlas en el equipo",
-    "documentacion": "https://docs.aws.amazon.com/appstream2/"
+    "documentacion": "https://docs.aws.amazon.com/appstream2/",
+    "alias": [
+      "Amazon AppStream 2.0"
+    ]
   },
   {
     "id": "appsync",
@@ -490,8 +493,8 @@
       "SAP-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Repositorios privados y gestionados de paquetes (npm, PyPI, Maven, NuGet…) con conexión a los repositorios públicos y control de acceso con IAM.",
     "frase": "Repositorio privado de paquetes npm, Maven o PyPI para compartir dependencias",
     "documentacion": "https://docs.aws.amazon.com/codeartifact/"
   },
@@ -505,8 +508,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de compilación gestionado: compila, ejecuta pruebas y genera artefactos en entornos efímeros definidos en un buildspec, pagando por minuto.",
     "frase": "Compila el código, ejecuta las pruebas y genera artefactos en entornos efímeros",
     "documentacion": "https://docs.aws.amazon.com/codebuild/"
   },
@@ -532,8 +535,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Herramientas con aprendizaje automático para el código: Profiler analiza el rendimiento en ejecución y Reviewer revisaba el código (sin asociaciones nuevas desde 2025).",
     "frase": "Revisa el código con aprendizaje automático y señala fallos y problemas de rendimiento",
     "documentacion": "https://docs.aws.amazon.com/codeguru/"
   },
@@ -1545,8 +1548,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Acceso gestionado a blockchains públicas (Ethereum, Bitcoin, Polygon) y redes privadas Hyperledger Fabric sin operar nodos. Fin de soporte en 2027.",
     "frase": "Redes de libro mayor distribuido Hyperledger Fabric o Ethereum sin montar nodos",
     "documentacion": "https://docs.aws.amazon.com/managed-blockchain/"
   },
@@ -1787,8 +1790,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Campañas y recorridos de marketing por correo, SMS y push con segmentación de usuarios. Fin de soporte el 30/10/2026; sus canales siguen como End User Messaging.",
     "frase": "Campañas de marketing por correo, SMS y push segmentando a tus usuarios",
     "documentacion": "https://docs.aws.amazon.com/pinpoint/"
   },
@@ -2482,8 +2485,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Escritorios virtuales Windows o Linux en la nube (persistentes o en grupos), accesibles desde cualquier dispositivo, con pago mensual o por horas.",
     "frase": "Escritorios Windows o Linux completos en la nube accesibles desde cualquier equipo",
     "documentacion": "https://docs.aws.amazon.com/workspaces/"
   },
@@ -2494,8 +2497,8 @@
     "certificaciones": [
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Navegador aislado que se ejecuta en AWS para acceder a webs internas y SaaS sin dejar datos ni descargas en el equipo del usuario.",
     "frase": "Navegador aislado en la nube para usar webs internas sin dejar datos en el equipo",
     "documentacion": "https://docs.aws.amazon.com/workspaces-web/"
   },

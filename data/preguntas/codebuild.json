@@ -1,0 +1,112 @@
+[
+  {
+    "id": "codebuild-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo quiere que cada commit se compile y se ejecuten las pruebas unitarias sin mantener servidores de compilación. ¿Qué servicio usa y dónde define los comandos?",
+    "opciones": [
+      "CodeDeploy, en el archivo AppSpec.",
+      "CodeBuild, en el archivo buildspec.yml.",
+      "CodePipeline, en la definición de la canalización.",
+      "CloudFormation, en la plantilla."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CodeBuild ejecuta compilaciones en entornos gestionados y los comandos se definen por fases en buildspec.yml. AppSpec es el fichero de CodeDeploy.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html"
+    ]
+  },
+  {
+    "id": "codebuild-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una compilación necesita la contraseña de un registro privado. ¿Cuál es la forma más segura de dársela?",
+    "opciones": [
+      "Escribirla en el buildspec.",
+      "Guardarla en el repositorio cifrada en base64.",
+      "Referenciarla desde Secrets Manager en la sección env del buildspec, con permiso en el rol de servicio.",
+      "Pasarla como parámetro de la URL del webhook."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El buildspec puede leer valores de Secrets Manager o Parameter Store; CodeBuild los obtiene con su rol de servicio y no quedan en el código.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html"
+    ]
+  },
+  {
+    "id": "codebuild-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Cada compilación tarda varios minutos en descargar las mismas dependencias de npm. ¿Qué mejora tiene más impacto?",
+    "opciones": [
+      "Activar la caché (local o en S3) de las dependencias.",
+      "Usar un tipo de cómputo más pequeño.",
+      "Ejecutar las pruebas fuera de CodeBuild.",
+      "Desactivar los registros."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La caché de CodeBuild guarda directorios como node_modules o la caché del gestor de paquetes entre compilaciones, para no descargarlos cada vez.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/build-caching.html"
+    ]
+  },
+  {
+    "id": "codebuild-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Las pruebas de integración de una compilación deben conectarse a una base de datos RDS en subredes privadas. ¿Qué se configura?",
+    "opciones": [
+      "Hacer pública la base de datos.",
+      "Una VPN desde CodeBuild.",
+      "Un emparejamiento de VPC con la cuenta de CodeBuild.",
+      "La configuración de VPC del proyecto de CodeBuild (subredes y grupos de seguridad)."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Un proyecto de CodeBuild puede ejecutarse dentro de tu VPC indicando subredes y grupos de seguridad, de modo que alcanza recursos privados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html"
+    ]
+  },
+  {
+    "id": "codebuild-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS compila código fuente, ejecuta pruebas y genera paquetes listos para desplegar, sin servidores que gestionar?",
+    "opciones": [
+      "AWS CodeBuild.",
+      "AWS CodeCommit.",
+      "AWS Config.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CodeBuild es el servicio de compilación gestionado. CodeCommit es un repositorio Git y Config evalúa configuraciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html"
+    ]
+  }
+]

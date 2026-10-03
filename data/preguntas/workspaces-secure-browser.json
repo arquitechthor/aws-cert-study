@@ -1,0 +1,112 @@
+[
+  {
+    "id": "workspaces-secure-browser-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Unos contratistas deben usar varias aplicaciones web internas desde sus propios portátiles, sin VPN y sin que se descarguen datos en ellos. ¿Qué servicio encaja?",
+    "opciones": [
+      "Amazon WorkSpaces Secure Browser.",
+      "AWS Site-to-Site VPN.",
+      "Amazon CloudFront.",
+      "AWS Direct Connect."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Secure Browser ejecuta el navegador en AWS y solo transmite la imagen, con controles sobre descargas y portapapeles, sin necesidad de VPN.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/workspaces-web/latest/adminguide/what-is-workspaces-web.html"
+    ]
+  },
+  {
+    "id": "workspaces-secure-browser-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Cómo se cobra WorkSpaces Secure Browser?",
+    "opciones": [
+      "Por hora de instancia aprovisionada.",
+      "Por GB transferido.",
+      "Con una tarifa mensual por usuario activo.",
+      "Con una licencia anual por dispositivo."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Se paga por cada usuario que inicia sesión durante el mes, sin infraestructura que dimensionar.",
+    "fuentes": [
+      "https://aws.amazon.com/workspaces/secure-browser/pricing/"
+    ]
+  },
+  {
+    "id": "workspaces-secure-browser-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué ventaja de seguridad tiene WorkSpaces Secure Browser frente a abrir una web interna en el navegador local con una VPN?",
+    "opciones": [
+      "Cifra el disco del portátil.",
+      "Los datos, la caché y las descargas no quedan en el dispositivo, porque el navegador se ejecuta en AWS.",
+      "Sustituye al antivirus.",
+      "Evita tener que autenticarse."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Como la sesión del navegador se ejecuta en AWS y es efímera, la información no se guarda en el dispositivo del usuario.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/workspaces-web/latest/adminguide/what-is-workspaces-web.html"
+    ]
+  },
+  {
+    "id": "workspaces-secure-browser-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un usuario necesita una aplicación de escritorio de Windows, no una web. ¿Qué servicio de la familia WorkSpaces es el adecuado?",
+    "opciones": [
+      "WorkSpaces Secure Browser.",
+      "Amazon Connect.",
+      "AWS Amplify.",
+      "WorkSpaces Applications (antes AppStream 2.0)."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Secure Browser solo da un navegador. Para aplicaciones de escritorio se usa WorkSpaces Applications, o WorkSpaces si se necesita un escritorio completo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/workspaces-web/latest/adminguide/what-is-workspaces-web.html"
+    ]
+  },
+  {
+    "id": "workspaces-secure-browser-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Cómo inician sesión los usuarios en WorkSpaces Secure Browser?",
+    "opciones": [
+      "Con el usuario raíz de la cuenta.",
+      "Con claves de acceso de IAM.",
+      "Con el proveedor de identidad corporativo mediante SAML 2.0 (o IAM Identity Center).",
+      "Sin autenticación."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El portal se configura con un proveedor de identidad SAML 2.0 o con IAM Identity Center, que aplica sus políticas y MFA.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/workspaces-web/latest/adminguide/what-is-workspaces-web.html"
+    ]
+  }
+]

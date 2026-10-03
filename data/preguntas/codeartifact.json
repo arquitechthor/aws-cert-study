@@ -1,0 +1,112 @@
+[
+  {
+    "id": "codeartifact-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una empresa quiere publicar bibliotecas internas de Python y Node.js para sus equipos, con acceso controlado por IAM y sin mantener servidores. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon ECR.",
+      "Amazon S3 con alojamiento web.",
+      "AWS CodeArtifact.",
+      "AWS CodeCommit."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "CodeArtifact ofrece repositorios privados compatibles con pip y npm, entre otros, controlados con IAM. ECR guarda imágenes de contenedores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/welcome.html"
+    ]
+  },
+  {
+    "id": "codeartifact-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un equipo quiere que sus compilaciones descarguen paquetes de npmjs a través de su repositorio privado y que se guarde copia de cada paquete usado. ¿Qué configura?",
+    "opciones": [
+      "Una conexión externa del repositorio de CodeArtifact con npmjs.",
+      "Una regla de ciclo de vida.",
+      "Un punto de enlace de VPC de S3.",
+      "Una política de bucket."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La conexión externa permite obtener paquetes del repositorio público a través de CodeArtifact, que guarda la versión descargada para usos posteriores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/external-connection.html"
+    ]
+  },
+  {
+    "id": "codeartifact-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Por la mañana, npm install falla con un error 401 contra CodeArtifact, aunque ayer funcionaba. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "El repositorio se borró solo.",
+      "El token de autorización de CodeArtifact caducó y hay que pedir otro.",
+      "npm no es compatible con CodeArtifact.",
+      "Falta un punto de enlace de VPC."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los tokens de autorización son temporales (12 horas por defecto). Hay que obtener uno nuevo, por ejemplo con aws codeartifact login.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/welcome.html"
+    ]
+  },
+  {
+    "id": "codeartifact-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización quiere un único almacén de paquetes compartido por cuentas de varios equipos, sin duplicar el almacenamiento. ¿Qué diseño usa?",
+    "opciones": [
+      "Un bucket de S3 por cuenta.",
+      "Un dominio de CodeArtifact central con una política de dominio que permita el acceso a las cuentas de la organización.",
+      "Copiar los paquetes a cada cuenta.",
+      "ECR con replicación."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un dominio guarda cada paquete una vez aunque esté en varios repositorios, y su política de dominio permite que otras cuentas usen sus repositorios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/welcome.html"
+    ]
+  },
+  {
+    "id": "codeartifact-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un atacante podría publicar en npmjs un paquete con el mismo nombre que una biblioteca interna para que se descargue por error. ¿Qué característica de CodeArtifact lo evita?",
+    "opciones": [
+      "Las etiquetas inmutables.",
+      "El cifrado con KMS.",
+      "Los controles de origen de paquetes, que bloquean las versiones externas de ese paquete.",
+      "Los tokens de 12 horas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los controles de origen permiten que un paquete solo se publique internamente y no se ingieran versiones desde repositorios públicos, lo que frena la confusión de dependencias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/package-origin-controls.html"
+    ]
+  }
+]

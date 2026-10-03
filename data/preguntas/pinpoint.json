@@ -1,0 +1,112 @@
+[
+  {
+    "id": "pinpoint-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación móvil quería enviar campañas segmentadas por correo, SMS y push y medir las conversiones. ¿Qué servicio de AWS cubría este caso en las guías de examen?",
+    "opciones": [
+      "Amazon SNS.",
+      "Amazon Pinpoint.",
+      "Amazon SQS.",
+      "Amazon SES por sí solo."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Pinpoint combina segmentación, campañas multicanal y análisis. SNS envía notificaciones, pero sin segmentación ni campañas de marketing.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/pinpoint/latest/userguide/migrate.html"
+    ]
+  },
+  {
+    "id": "pinpoint-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa usa los recorridos y segmentos de Pinpoint. ¿Qué debe hacer antes del 30/10/2026?",
+    "opciones": [
+      "Nada: el servicio sigue para clientes existentes.",
+      "Pasarlos a SNS.",
+      "Migrar a las soluciones de interacción de Amazon Connect (campañas salientes y Customer Profiles).",
+      "Moverlos a otra región."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Pinpoint deja de funcionar el 30/10/2026. Para segmentos, campañas y recorridos, AWS recomienda Amazon Connect; los canales de envío siguen en End User Messaging.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/pinpoint/latest/userguide/migrate.html"
+    ]
+  },
+  {
+    "id": "pinpoint-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una aplicación usa la API de SMS de Pinpoint para enviar códigos de un solo uso. ¿Qué le afecta el fin de soporte de Pinpoint?",
+    "opciones": [
+      "Deja de funcionar el 30/10/2026.",
+      "Debe migrar a SES.",
+      "Debe migrar a SQS.",
+      "Nada: esas API siguen disponibles como AWS End User Messaging."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las API de SMS, voz, push, OTP y validación de teléfonos no se ven afectadas: siguen como AWS End User Messaging.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/pinpoint/latest/userguide/migrate.html"
+    ]
+  },
+  {
+    "id": "pinpoint-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa envía correos de marketing con Pinpoint. ¿A qué servicio recomienda AWS migrar esos envíos?",
+    "opciones": [
+      "Amazon SES.",
+      "Amazon SNS.",
+      "AWS End User Messaging.",
+      "Amazon MQ."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Para el correo, la recomendación es SES. End User Messaging cubre SMS, MMS, push, WhatsApp y voz.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/pinpoint/latest/userguide/migrate.html"
+    ]
+  },
+  {
+    "id": "pinpoint-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa nueva en AWS quiere en 2026 empezar a usar Pinpoint para campañas. ¿Qué ocurre?",
+    "opciones": [
+      "Puede usarlo sin restricciones.",
+      "No puede: Pinpoint no admite clientes nuevos desde el 20/05/2025.",
+      "Solo puede usar recorridos.",
+      "Debe contratar Enterprise Support."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Pinpoint cerró a clientes nuevos el 20/05/2025 y termina su soporte el 30/10/2026; un cliente nuevo debe usar las alternativas recomendadas.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/05/aws-service-changes/"
+    ]
+  }
+]

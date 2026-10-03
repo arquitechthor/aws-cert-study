@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon WorkSpaces Secure Browser — Apuntes AWS</title>
+<meta name="description" content="Navegador aislado que se ejecuta en AWS para acceder a webs internas y SaaS sin dejar datos ni descargas en el equipo del usuario. Apuntes y preguntas de práctica para CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/workspaces-secure-browser.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon WorkSpaces Secure Browser — Apuntes AWS">
+<meta property="og:description" content="Navegador aislado que se ejecuta en AWS para acceder a webs internas y SaaS sin dejar datos ni descargas en el equipo del usuario.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/workspaces-secure-browser.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/computacion-usuarios-finales.svg" alt="" width="56" height="56"><span>Amazon WorkSpaces Secure Browser</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Navegador aislado en la nube para usar webs internas sin dejar datos en el equipo</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion-usuarios-finales#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion-usuarios-finales.svg" alt="" width="18" height="18">Computación para usuarios finales <span class="cat-en">(End User Computing)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/workspaces-web/" target="_blank" rel="noopener">Documentación de Amazon WorkSpaces Secure Browser ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon WorkSpaces Secure Browser (antes <a href="workspaces.html">WorkSpaces</a> Web) ofrece un <strong>navegador que se ejecuta en
+        AWS</strong> y se transmite al navegador local del usuario. Sirve para acceder a <strong>sitios web internos y
+        aplicaciones <abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr></strong> sin <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr> y sin que los datos queden en el dispositivo: no hay caché, descargas ni
+        cookies locales. Es de pago por usuario y no hay infraestructura que gestionar.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Portal web:</strong> la dirección a la que se conectan los usuarios.</li>
+        <li><strong>Proveedor de identidad:</strong> inicio de sesión con <abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr> 2.0 (o <a href="iam-identity-center.html">IAM Identity Center</a>).</li>
+        <li><strong>Configuración de red:</strong> el navegador sale desde tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>, así que llega a webs internas.</li>
+        <li><strong>Políticas del navegador:</strong> qué sitios se permiten, marcadores y extensiones.</li>
+        <li><strong>Configuración de usuario:</strong> portapapeles, descargas, subidas e impresión.</li>
+        <li><strong>Registros de sesión</strong> para auditoría.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Contratistas o personal temporal que necesitan una web interna desde sus propios equipos.</li>
+        <li>Acceso seguro a <abbr class="sigla" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS</abbr> con datos sensibles sin que se descarguen.</li>
+        <li>Sustituir la <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> cuando solo se necesita navegar por aplicaciones web.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si se necesitan aplicaciones de escritorio: <a href="appstream-2-0.html">WorkSpaces Applications</a> o <a href="workspaces.html">WorkSpaces</a>.</li>
+        <li>Si se necesita acceso de red completo a la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>: <a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
+        <li>Para dar acceso a aplicaciones web propias con políticas de confianza cero, sin aislar el navegador: Verified
+          Access.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Navegar por webs internas sin dejar datos en el equipo</td><td>WorkSpaces Secure Browser</td></tr>
+            <tr><td>Aplicaciones de escritorio transmitidas</td><td><a href="appstream-2-0.html">WorkSpaces Applications</a></td></tr>
+            <tr><td>Escritorio completo</td><td><a href="workspaces.html">WorkSpaces</a></td></tr>
+            <tr><td>Acceso de red a la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a></td><td><a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga una <strong>tarifa mensual por usuario activo</strong> (quien inicia sesión al menos una vez en el mes),
+        sin compromisos ni cargos por infraestructura.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Sesiones efímeras: al cerrar, no queda nada en AWS ni en el dispositivo.</li>
+        <li>Inicio de sesión con el proveedor corporativo y <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr>.</li>
+        <li>Control de portapapeles, descargas e impresión para evitar fugas.</li>
+        <li>El tráfico hacia las webs internas sale de tu <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>; no hace falta exponerlas.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Acceder a webs internas desde equipos no gestionados sin dejar datos"</strong>: <a href="workspaces.html">WorkSpaces</a> Secure
+          Browser.</li>
+        <li><strong>"Sin <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>, solo navegación web"</strong>: Secure Browser.</li>
+        <li><strong>"Aplicación de escritorio"</strong>: <a href="appstream-2-0.html">WorkSpaces Applications</a>.</li>
+        <li><strong>"Pago por usuario al mes"</strong>: Secure Browser.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="workspaces-secure-browser"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/workspaces-web/latest/adminguide/what-is-workspaces-web.html" target="_blank" rel="noopener">What is Amazon WorkSpaces Secure Browser?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/workspaces/secure-browser/pricing/" target="_blank" rel="noopener">Amazon WorkSpaces Secure Browser pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

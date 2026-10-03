@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon WorkSpaces Applications — Apuntes AWS</title>
+<meta name="description" content="Transmite aplicaciones de escritorio a cualquier navegador sin instalarlas en el equipo; las aplicaciones corren en flotas gestionadas en AWS. Apuntes y preguntas de práctica para CLF-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/appstream-2-0.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon WorkSpaces Applications — Apuntes AWS">
+<meta property="og:description" content="Transmite aplicaciones de escritorio a cualquier navegador sin instalarlas en el equipo; las aplicaciones corren en flotas gestionadas en AWS.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/appstream-2-0.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/appstream-2-0.svg" alt="" width="56" height="56"><span>Amazon WorkSpaces Applications</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Transmite aplicaciones de escritorio al navegador sin instalarlas en el equipo</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion-usuarios-finales#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion-usuarios-finales.svg" alt="" width="18" height="18">Computación para usuarios finales <span class="cat-en">(End User Computing)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/appstream2/" target="_blank" rel="noopener">Documentación de Amazon WorkSpaces Applications ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> <strong>Amazon WorkSpaces Applications</strong> es el nombre actual de Amazon AppStream 2.0, renombrado a
+        finales de 2025 dentro de la familia <a href="workspaces.html">WorkSpaces</a>. El servicio y sus conceptos no cambian, y en los exámenes verás
+        "AppStream 2.0": es esto mismo.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon WorkSpaces Applications (antes AppStream 2.0) <strong>transmite aplicaciones de escritorio</strong>
+        (Windows o Linux) al navegador o a un cliente ligero. La aplicación se ejecuta en instancias gestionadas en AWS y
+        el usuario solo recibe la imagen; no hay que instalar nada en su equipo ni copiar datos en él. Hay una única
+        versión de cada aplicación que mantener y la capacidad escala con los usuarios.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Image Builder:</strong> instancia donde se instalan las aplicaciones para crear la imagen.</li>
+        <li><strong>Flotas:</strong> instancias que ejecutan la imagen. <strong>Always-On</strong> (arranque inmediato),
+          <strong>On-Demand</strong> (instancias paradas que arrancan en un par de minutos, más baratas) y
+          <strong>Elastic</strong> (sin gestionar capacidad, con aplicaciones en discos virtuales).</li>
+        <li><strong>Pila (<em>stack</em>):</strong> une una flota con políticas de usuario (portapapeles, descargas,
+          almacenamiento persistente).</li>
+        <li><strong>Usuarios:</strong> grupo de usuarios propio o federación <abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr> con el proveedor corporativo.</li>
+        <li><strong>Almacenamiento persistente:</strong> carpetas de usuario en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> u otros servicios conectados.</li>
+        <li><strong>Escalado automático</strong> de la flota según el uso.</li>
+        <li><strong>Acceso de agentes de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr></strong> a las aplicaciones mediante herramientas <abbr class="sigla" data-s="MCP" data-en="Model Context Protocol" data-es="protocolo abierto para dar herramientas y datos a agentes de IA" tabindex="0">MCP</abbr> (novedad reciente).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Llevar a la nube una aplicación de escritorio heredada sin reescribirla.</li>
+        <li>Software pesado (<abbr class="sigla sigla-1" data-s="CAD" data-en="Computer-Aided Design" data-es="diseño asistido por ordenador" tabindex="0">CAD<span class="sigla-exp"> (Computer-Aided Design: diseño asistido por ordenador)</span></abbr>, ingeniería) para estudiantes desde el navegador, con <abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr>.</li>
+        <li>Demostraciones y pruebas de software sin instalación.</li>
+        <li>Dar acceso a una aplicación a terceros sin entregarles datos.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si cada usuario necesita un escritorio completo y persistente: <a href="workspaces.html">WorkSpaces</a>.</li>
+        <li>Si la aplicación ya es una web: no hace falta transmitirla (o <a href="workspaces-secure-browser.html">WorkSpaces Secure Browser</a> si se quiere aislar).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Una aplicación de escritorio en el navegador</td><td>WorkSpaces Applications</td></tr>
+            <tr><td>Un escritorio completo por usuario</td><td><a href="workspaces.html">WorkSpaces</a></td></tr>
+            <tr><td>Webs internas desde un navegador aislado</td><td><a href="workspaces-secure-browser.html">WorkSpaces Secure Browser</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por hora de instancia</strong> de la flota (en marcha o parada, según el tipo) y, en Windows, una
+        <strong>tarifa mensual por usuario</strong> de la licencia de acceso de Microsoft. Las aplicaciones de Microsoft con
+        licencia incluida se cobran por usuario y mes.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los datos y la aplicación se quedan en AWS; solo viajan píxeles cifrados.</li>
+        <li>Políticas de pila para limitar portapapeles, descargas e impresión.</li>
+        <li>Flotas en varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr> y en tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>, con acceso a recursos privados.</li>
+        <li>Autenticación federada con <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr> y <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr> del proveedor.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Ejecutar una aplicación de escritorio desde el navegador sin instalarla"</strong>: AppStream 2.0 (hoy
+          WorkSpaces Applications).</li>
+        <li><strong>"Escritorio completo y persistente"</strong>: <a href="workspaces.html">WorkSpaces</a>.</li>
+        <li><strong>"Arranque inmediato para los usuarios"</strong>: flota Always-On.</li>
+        <li><strong>"Uso esporádico y más barato, se acepta esperar"</strong>: flota On-Demand.</li>
+        <li><strong>"Sin gestionar capacidad"</strong>: flota Elastic.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="appstream-2-0"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/appstream2/latest/developerguide/what-is-appstream.html" target="_blank" rel="noopener">What is Amazon WorkSpaces Applications?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/appstream2/latest/developerguide/doc-history.html" target="_blank" rel="noopener">Document history for Amazon WorkSpaces Applications</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/11/amazon-workspaces-applications-instances-storage-addition/" target="_blank" rel="noopener">Amazon WorkSpaces Applications adds new instance types and configurable storage options</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

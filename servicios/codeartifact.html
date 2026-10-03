@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CodeArtifact — Apuntes AWS</title>
+<meta name="description" content="Repositorios privados y gestionados de paquetes (npm, PyPI, Maven, NuGet…) con conexión a los repositorios públicos y control de acceso con IAM. Apuntes y preguntas de práctica para DVA-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/codeartifact.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CodeArtifact — Apuntes AWS">
+<meta property="og:description" content="Repositorios privados y gestionados de paquetes (npm, PyPI, Maven, NuGet…) con conexión a los repositorios públicos y control de acceso con IAM.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/codeartifact.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/codeartifact.svg" alt="" width="56" height="56"><span>AWS CodeArtifact</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Repositorio privado de paquetes npm, Maven o PyPI para compartir dependencias</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=herramientas-desarrolladores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="18" height="18">Herramientas para desarrolladores <span class="cat-en">(Developer Tools)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/codeartifact/" target="_blank" rel="noopener">Documentación de AWS CodeArtifact ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS CodeArtifact es un <strong>repositorio privado de paquetes de software</strong> gestionado. Los
+        desarrolladores y las compilaciones descargan y publican paquetes con sus herramientas de siempre (npm, pip,
+        Maven, Gradle, NuGet…), pero desde un lugar controlado por la empresa, que además puede guardar copia de los
+        paquetes públicos que se usan.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Dominio:</strong> agrupa repositorios y guarda los paquetes una sola vez aunque estén en varios
+          repositorios; se comparte entre cuentas con una política de dominio.</li>
+        <li><strong>Repositorio:</strong> conjunto de paquetes al que apuntan las herramientas.</li>
+        <li><strong>Repositorios ascendentes (<em>upstream</em>):</strong> si un paquete no está, se busca en el
+          repositorio ascendente.</li>
+        <li><strong>Conexión externa:</strong> enlaza un repositorio con uno público (npmjs, PyPI, Maven Central…) y guarda
+          copia de lo descargado, aunque después desaparezca del origen.</li>
+        <li><strong>Token de autorización:</strong> temporal (12 horas por defecto), se obtiene con la <a href="cli.html"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> y lo usan las
+          herramientas de paquetes.</li>
+        <li><strong>Controles de origen de paquetes:</strong> deciden si una versión puede venir de fuera o solo publicarse
+          internamente, para evitar ataques de confusión de dependencias.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Publicar bibliotecas internas para que las usen otros equipos.</li>
+        <li>Controlar qué paquetes públicos se usan y conservar copia de ellos.</li>
+        <li>Compilaciones de <a href="codebuild.html">CodeBuild</a> en subredes privadas que necesitan dependencias sin salir a internet.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para imágenes de contenedores: <a href="ecr.html"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>.</li>
+        <li>Para código fuente: un repositorio Git.</li>
+        <li>Para ficheros binarios arbitrarios sin un gestor de paquetes: <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Qué guardas</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Paquetes de lenguajes (npm, PyPI, Maven…)</td><td>CodeArtifact</td></tr>
+            <tr><td>Imágenes de contenedores</td><td><a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a></td></tr>
+            <tr><td>Artefactos de compilación sueltos</td><td><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga el <strong>almacenamiento</strong> de los paquetes por GB y mes, las <strong>peticiones</strong> y la
+        transferencia de datos de salida, con una capa gratuita mensual.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> y políticas de dominio y de repositorio; tokens temporales.</li>
+        <li>Paquetes cifrados con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>Puntos de enlace de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> para usarlo sin internet.</li>
+        <li>Controles de origen para frenar la confusión de dependencias.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Repositorio privado de npm, PyPI o Maven"</strong>: CodeArtifact.</li>
+        <li><strong>"Conservar copia de los paquetes públicos que usamos"</strong>: conexión externa.</li>
+        <li><strong>"Compartir paquetes entre cuentas"</strong>: un dominio con política de dominio.</li>
+        <li><strong>"npm install falla con 401"</strong>: el token caducó; obtener otro con la <a href="cli.html"><abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a>.</li>
+        <li><strong>"Imágenes Docker"</strong>: <a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>, no CodeArtifact.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="codeartifact"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/welcome.html" target="_blank" rel="noopener">What is AWS CodeArtifact?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/external-connection.html" target="_blank" rel="noopener">Connect a CodeArtifact repository to a public repository</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/package-origin-controls.html" target="_blank" rel="noopener">Editing package origin controls</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
