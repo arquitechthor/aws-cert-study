@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Managed Service for Apache Flink — Apuntes AWS</title>
+<meta name="description" content="Ejecuta aplicaciones de Apache Flink gestionadas para procesar flujos en tiempo real con estado, en Java, Python o SQL, sin servidores. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/managed-service-for-apache-flink.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Managed Service for Apache Flink — Apuntes AWS">
+<meta property="og:description" content="Ejecuta aplicaciones de Apache Flink gestionadas para procesar flujos en tiempo real con estado, en Java, Python o SQL, sin servidores.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/managed-service-for-apache-flink.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/managed-service-for-apache-flink.svg" alt="" width="56" height="56"><span>Amazon Managed Service for Apache Flink</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Procesa flujos en tiempo real con aplicaciones Java, <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> o Python con estado</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/managed-flink/" target="_blank" rel="noopener">Documentación de Amazon Managed Service for Apache Flink ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Managed Service for Apache Flink (antes Kinesis Data Analytics) ejecuta aplicaciones de
+        <strong>Apache Flink</strong>, el motor de código abierto para <strong>procesar flujos de datos en tiempo
+        real con estado</strong>: agregaciones por ventanas de tiempo, uniones de flujos, detección de patrones. AWS
+        gestiona la infraestructura, el escalado y las copias del estado; tú escribes la lógica en Java, Scala, Python o
+        <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Aplicación:</strong> el código de Flink, normalmente leído de <a href="kinesis-data-streams.html">Kinesis Data Streams</a> o <a href="msk.html"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a> y escrito en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>,
+          <a href="opensearch-service.html">OpenSearch</a>, <a href="dynamodb.html">DynamoDB</a> u otro flujo.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="KPU" data-en="Kinesis Processing Unit" data-es="unidad de capacidad de Managed Service for Apache Flink: vCPU y memoria" tabindex="0">KPU<span class="sigla-exp"> (Kinesis Processing Unit: unidad de capacidad de Managed Service for Apache Flink: vCPU y memoria)</span></abbr>:</strong> unidad de procesamiento (vCPU y memoria) en la que se mide y se cobra la capacidad; escala
+          automáticamente.</li>
+        <li><strong>Estado y puntos de control:</strong> Flink guarda el estado de forma duradera para recuperarse sin
+          perder ni duplicar resultados.</li>
+        <li><strong>Instantáneas (<em>snapshots</em>):</strong> copias del estado para actualizar o restaurar la
+          aplicación.</li>
+        <li><strong>Studio notebooks:</strong> cuadernos de Apache Zeppelin para consultar flujos de forma interactiva con
+          <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>, Python o Scala.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Paneles en tiempo real con métricas agregadas por minuto.</li>
+        <li>Detección de anomalías o fraude sobre flujos.</li>
+        <li>Enriquecer y transformar eventos antes de guardarlos.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para cargar datos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="redshift.html">Redshift</a> sin lógica compleja: <a href="data-firehose.html">Data Firehose</a>.</li>
+        <li>Para procesar cada registro de forma sencilla y sin estado: <a href="lambda.html">Lambda</a> con Kinesis o <a href="msk.html"><abbr class="sigla" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK</abbr></a>.</li>
+        <li>Para procesamiento por lotes: <a href="glue.html">Glue</a> o <a href="emr.html"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Procesamiento con estado y ventanas en tiempo real</td><td>Managed Service for Apache Flink</td></tr>
+            <tr><td>Entrega a destinos sin código</td><td><a href="data-firehose.html">Data Firehose</a></td></tr>
+            <tr><td>Procesar registro a registro, sin estado</td><td><a href="lambda.html">Lambda</a></td></tr>
+            <tr><td>Procesamiento por lotes</td><td><a href="glue.html">Glue</a> o <a href="emr.html"><abbr class="sigla" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR</abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por hora de <abbr class="sigla" data-s="KPU" data-en="Kinesis Processing Unit" data-es="unidad de capacidad de Managed Service for Apache Flink: vCPU y memoria" tabindex="0">KPU</abbr></strong> usada (más una <abbr class="sigla" data-s="KPU" data-en="Kinesis Processing Unit" data-es="unidad de capacidad de Managed Service for Apache Flink: vCPU y memoria" tabindex="0">KPU</abbr> adicional por aplicación para la orquestación) y por
+        el almacenamiento de la aplicación y de las copias del estado. Los Studio notebooks suman <abbr class="sigla" data-s="KPU" data-en="Kinesis Processing Unit" data-es="unidad de capacidad de Managed Service for Apache Flink: vCPU y memoria" tabindex="0">KPU</abbr> adicionales.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Acceso a orígenes y destinos con un rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; puede ejecutarse dentro de tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
+        <li>Puntos de control y reinicio automático ante fallos.</li>
+        <li>Escalado automático según la carga.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Agregaciones por ventanas de tiempo sobre un flujo"</strong>: Managed Service for Apache Flink.</li>
+        <li><strong>"Kinesis Data Analytics"</strong>: es el nombre anterior de este servicio.</li>
+        <li><strong>"Solo cargar en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: <a href="data-firehose.html">Data Firehose</a>.</li>
+        <li><strong>"Consultas interactivas con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> sobre un flujo"</strong>: Studio notebooks.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="managed-service-for-apache-flink"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/managed-flink/latest/java/what-is.html" target="_blank" rel="noopener">What is Amazon Managed Service for Apache Flink?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/managed-flink/latest/java/how-notebook.html" target="_blank" rel="noopener">Use a Studio notebook with Managed Service for Apache Flink</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/managed-service-apache-flink/pricing/" target="_blank" rel="noopener">Amazon Managed Service for Apache Flink pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

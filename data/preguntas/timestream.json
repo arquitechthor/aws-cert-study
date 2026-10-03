@@ -1,0 +1,112 @@
+[
+  {
+    "id": "timestream-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa nueva en AWS necesita guardar millones de lecturas por minuto de sensores con marca de tiempo y consultarlas en milisegundos para paneles en tiempo real. ¿Qué elige?",
+    "opciones": [
+      "Timestream for InfluxDB.",
+      "Timestream for LiveAnalytics.",
+      "Amazon RDS for MySQL.",
+      "Amazon Neptune."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Timestream for InfluxDB es la opción recomendada para series temporales; LiveAnalytics no admite clientes nuevos desde el 20/06/2025.",
+    "fuentes": [
+      "https://aws.amazon.com/timestream/faqs/"
+    ]
+  },
+  {
+    "id": "timestream-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Un equipo ya usa InfluxDB en servidores propios y quiere dejar de gestionarlos sin cambiar sus herramientas. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon DynamoDB.",
+      "Timestream for InfluxDB.",
+      "Amazon Keyspaces.",
+      "Amazon Redshift."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Timestream for InfluxDB gestiona instancias de InfluxDB compatibles con sus API y herramientas.",
+    "fuentes": [
+      "https://aws.amazon.com/timestream/faqs/"
+    ]
+  },
+  {
+    "id": "timestream-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué tipo de datos encaja mejor en una base de datos de series temporales?",
+    "opciones": [
+      "Pedidos con transacciones entre tablas.",
+      "Grafos de relaciones.",
+      "Métricas y lecturas de sensores con marca de tiempo.",
+      "Documentos JSON de perfiles."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las bases de series temporales están optimizadas para datos ordenados por tiempo, su ingesta continua y consultas por ventanas temporales.",
+    "fuentes": [
+      "https://aws.amazon.com/timestream/faqs/"
+    ]
+  },
+  {
+    "id": "timestream-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un cliente existente de Timestream for LiveAnalytics pregunta si puede seguir usándolo. ¿Qué le responde?",
+    "opciones": [
+      "Solo con Enterprise Support.",
+      "No: se apagó el 20/06/2025.",
+      "Solo en us-east-1.",
+      "Sí: el cierre afecta solo a clientes nuevos; sus cargas siguen funcionando."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Desde el 20/06/2025 no se admiten clientes nuevos, pero las cargas existentes no se ven afectadas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/timestream/latest/developerguide/AmazonTimestreamForLiveAnalytics-availability-change.html"
+    ]
+  },
+  {
+    "id": "timestream-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Para alta disponibilidad de una base de datos de Timestream for InfluxDB, ¿qué se configura?",
+    "opciones": [
+      "Un despliegue Multi-AZ.",
+      "Una tabla global.",
+      "Copias en Glacier.",
+      "Un emparejamiento de VPC."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Timestream for InfluxDB admite despliegues Multi-AZ con conmutación por error a una instancia en espera.",
+    "fuentes": [
+      "https://aws.amazon.com/timestream/faqs/"
+    ]
+  }
+]

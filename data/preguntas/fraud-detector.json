@@ -1,0 +1,112 @@
+[
+  {
+    "id": "fraud-detector-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una tienda online quiere puntuar el riesgo de fraude de cada pago en tiempo real, usando sus datos históricos y sin científicos de datos. ¿Qué servicio de la guía de SAP-C02 encaja?",
+    "opciones": [
+      "Amazon Macie.",
+      "Amazon GuardDuty.",
+      "Amazon Fraud Detector.",
+      "AWS Shield."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Fraud Detector entrena modelos con tus eventos históricos y devuelve una puntuación de riesgo por evento. Hoy no admite clientes nuevos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/frauddetector/latest/ug/frauddetector-availability-change.html"
+    ]
+  },
+  {
+    "id": "fraud-detector-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En 2026, una empresa nueva en AWS quiere detectar fraude en pagos con aprendizaje automático. ¿Qué le sugiere AWS?",
+    "opciones": [
+      "Amazon Fraud Detector.",
+      "Amazon Inspector.",
+      "AWS Config.",
+      "Construir su modelo con SageMaker AI o AutoGluon."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Fraud Detector no admite clientes nuevos desde el 07/11/2025; AWS sugiere SageMaker AI y AutoGluon para modelos propios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/frauddetector/latest/ug/frauddetector-availability-change.html"
+    ]
+  },
+  {
+    "id": "fraud-detector-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un sitio sufre la creación masiva de cuentas falsas por bots. ¿Qué servicio actual ayuda a frenarlo en el borde?",
+    "opciones": [
+      "AWS WAF, con su protección contra el fraude en la creación de cuentas.",
+      "AWS Backup.",
+      "Amazon Fraud Detector para clientes nuevos.",
+      "Amazon Kendra."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS WAF ofrece grupos de reglas gestionados para bots y para el fraude en altas e inicios de sesión, y es una de las alternativas que indica AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/frauddetector/latest/ug/frauddetector-availability-change.html"
+    ]
+  },
+  {
+    "id": "fraud-detector-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En Fraud Detector, ¿qué decidía el resultado final (aprobar, revisar o bloquear) de un evento?",
+    "opciones": [
+      "Una alarma de CloudWatch.",
+      "Las reglas del detector, aplicadas sobre las puntuaciones de los modelos.",
+      "Una política de IAM.",
+      "El tipo de instancia."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El detector combina las puntuaciones de los modelos con reglas que asignan un resultado, por ejemplo bloquear por encima de cierto umbral.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/frauddetector/latest/ug/frauddetector-availability-change.html"
+    ]
+  },
+  {
+    "id": "fraud-detector-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué servicio detecta amenazas en la propia cuenta de AWS (credenciales comprometidas, minería de criptomonedas), a diferencia del fraude en una aplicación?",
+    "opciones": [
+      "Amazon Fraud Detector.",
+      "Amazon Personalize.",
+      "Amazon GuardDuty.",
+      "Amazon Timestream."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "GuardDuty analiza la actividad de la cuenta y las cargas de AWS. El fraude en pagos o altas de una aplicación es otro problema.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/frauddetector/latest/ug/frauddetector-availability-change.html"
+    ]
+  }
+]

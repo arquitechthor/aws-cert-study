@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Timestream — Apuntes AWS</title>
+<meta name="description" content="Bases de datos de series temporales: Timestream for InfluxDB (gestiona InfluxDB) y Timestream for LiveAnalytics (sin servidor, cerrado a clientes nuevos). Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/timestream.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Timestream — Apuntes AWS">
+<meta property="og:description" content="Bases de datos de series temporales: Timestream for InfluxDB (gestiona InfluxDB) y Timestream for LiveAnalytics (sin servidor, cerrado a clientes nuevos).">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/timestream.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/timestream.svg" alt="" width="56" height="56"><span>Amazon Timestream</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Base de datos de series temporales para métricas y lecturas con marca de tiempo</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=base-de-datos#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/base-de-datos.svg" alt="" width="18" height="18">Base de datos <span class="cat-en">(Database)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/timestream/" target="_blank" rel="noopener">Documentación de Amazon Timestream ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> <strong>Timestream for LiveAnalytics</strong> (el motor sin servidor original) no admite clientes nuevos
+        desde el 20/06/2025. Para cualquier carga de series temporales, AWS recomienda <strong>Timestream for
+        InfluxDB</strong>.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Timestream es la familia de <strong>bases de datos de series temporales</strong> de AWS: datos con
+        marca de tiempo como métricas, lecturas de sensores o eventos. Tiene dos motores:
+        <strong>Timestream for InfluxDB</strong>, que gestiona por ti bases de datos InfluxDB de código abierto, y
+        <strong>Timestream for LiveAnalytics</strong>, sin servidor, que ya no admite clientes nuevos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Series temporales:</strong> medidas con marca de tiempo, normalmente con etiquetas (dispositivo,
+          región).</li>
+        <li><strong>Timestream for InfluxDB:</strong> instancias gestionadas (con Multi-AZ y réplicas de lectura), <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> y
+          herramientas de InfluxDB, consultas en milisegundos para análisis en tiempo real.</li>
+        <li><strong>Timestream for LiveAnalytics:</strong> sin servidor, con nivel de memoria para datos recientes y nivel
+          magnético para históricos, y consultas programadas.</li>
+        <li><strong>Integraciones:</strong> <a href="iot-core.html">IoT Core</a>, <a href="managed-service-for-apache-flink.html">Managed Service for Apache Flink</a>, Grafana.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Telemetría de dispositivos <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr>.</li>
+        <li>Métricas de aplicaciones e infraestructura.</li>
+        <li>Paneles de supervisión en tiempo real.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para datos transaccionales: <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="aurora.html">Aurora</a> o <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Para datos industriales con modelos de activos: <a href="iot-sitewise.html">IoT SiteWise</a>.</li>
+        <li>Para análisis históricos masivos con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>: <a href="redshift.html">Redshift</a> o <a href="athena.html">Athena</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Series temporales con InfluxDB</td><td>Timestream for InfluxDB</td></tr>
+            <tr><td>Datos de equipos industriales</td><td><a href="iot-sitewise.html">IoT SiteWise</a></td></tr>
+            <tr><td>Análisis histórico con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr></td><td><a href="athena.html">Athena</a> o <a href="redshift.html">Redshift</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>InfluxDB: <strong>por hora de instancia</strong> y por almacenamiento. LiveAnalytics: por escrituras,
+        almacenamiento en cada nivel y datos consultados.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
+        <li>InfluxDB en tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>, con Multi-AZ para conmutar ante fallos.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Datos con marca de tiempo de millones de dispositivos"</strong>: Timestream.</li>
+        <li><strong>"Ya usan InfluxDB"</strong>: Timestream for InfluxDB.</li>
+        <li><strong>"Cliente nuevo"</strong>: InfluxDB, no LiveAnalytics.</li>
+        <li><strong>"Datos transaccionales"</strong>: no es Timestream.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="timestream"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/timestream/latest/developerguide/AmazonTimestreamForLiveAnalytics-availability-change.html" target="_blank" rel="noopener">Amazon Timestream for LiveAnalytics availability change</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/timestream/faqs/" target="_blank" rel="noopener">Amazon Timestream FAQs</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

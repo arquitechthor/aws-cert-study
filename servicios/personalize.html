@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Personalize — Apuntes AWS</title>
+<meta name="description" content="Recomendaciones personalizadas en tiempo real o por lotes con aprendizaje automático, sin experiencia en ML, a partir de interacciones, artículos y usuarios. Apuntes y preguntas de práctica para AIF-C01, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/personalize.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Personalize — Apuntes AWS">
+<meta property="og:description" content="Recomendaciones personalizadas en tiempo real o por lotes con aprendizaje automático, sin experiencia en ML, a partir de interacciones, artículos y usuarios.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/personalize.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/personalize.svg" alt="" width="56" height="56"><span>Amazon Personalize</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Recomendaciones personalizadas en tiempo real como las de una tienda online</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/personalize/" target="_blank" rel="noopener">Documentación de Amazon Personalize ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Personalize crea <strong>recomendaciones personalizadas</strong> (productos, contenidos, rankings) con la
+        misma tecnología que usa Amazon.com, sin necesidad de saber de aprendizaje automático. Le das tus datos de
+        <strong>interacciones</strong> (qué vio o compró cada usuario), de <strong>artículos</strong> y de
+        <strong>usuarios</strong>; él entrena el modelo y lo sirve por <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> en tiempo real o por lotes.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Grupo de conjuntos de datos:</strong> interacciones, artículos y usuarios, importados desde <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o
+          enviados en tiempo real con un rastreador de eventos.</li>
+        <li><strong>Recetas:</strong> algoritmos según el caso: personalización por usuario, artículos similares,
+          ranking personalizado, populares o tendencias.</li>
+        <li><strong>Recomendadores de dominio:</strong> configuraciones listas para comercio electrónico o vídeo bajo
+          demanda.</li>
+        <li><strong>Solución y versión de la solución:</strong> el modelo entrenado.</li>
+        <li><strong>Campaña:</strong> despliegue para recomendaciones en tiempo real.</li>
+        <li><strong>Inferencia por lotes:</strong> recomendaciones para muchos usuarios a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, por ejemplo para correos.</li>
+        <li><strong>Filtros:</strong> reglas de negocio (excluir lo comprado o lo agotado).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>"Te puede interesar" en una tienda online.</li>
+        <li>Ordenar los resultados de búsqueda según cada usuario.</li>
+        <li>Recomendaciones en correos de marketing.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si necesitas un modelo propio con control total: <a href="sagemaker-ai.html">SageMaker AI</a>.</li>
+        <li>Para generar textos o descripciones de productos: modelos de <a href="bedrock.html">Bedrock</a>.</li>
+        <li>Para buscar en documentos: <a href="kendra.html">Kendra</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Recomendaciones sin experiencia en <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr></td><td>Personalize</td></tr>
+            <tr><td>Modelo de recomendación propio</td><td><a href="sagemaker-ai.html">SageMaker AI</a></td></tr>
+            <tr><td>Generar texto o imágenes</td><td><a href="bedrock.html">Bedrock</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por los <strong>datos ingeridos</strong>, las <strong>horas de entrenamiento</strong> y las
+        <strong>recomendaciones servidas</strong> (capacidad de campaña en tiempo real o número de recomendaciones por
+        lotes).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos cifrados con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y usados solo para tus modelos.</li>
+        <li>Acceso a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> mediante un rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Las campañas son puntos de enlace gestionados y escalables.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Recomendaciones de productos sin experiencia en <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr>"</strong>: Personalize.</li>
+        <li><strong>"Excluir artículos ya comprados"</strong>: filtros.</li>
+        <li><strong>"Recomendaciones para un envío masivo de correos"</strong>: inferencia por lotes.</li>
+        <li><strong>"Que las recomendaciones reaccionen a lo que hace el usuario ahora"</strong>: rastreador de eventos en
+          tiempo real.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="personalize"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/personalize/latest/dg/what-is-personalize.html" target="_blank" rel="noopener">What is Amazon Personalize?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/machine-learning/amazon-personalize-launches-new-recipes-supporting-larger-item-catalogs-with-lower-latency/" target="_blank" rel="noopener">Amazon Personalize launches new recipes supporting larger item catalogs with lower latency</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/personalize/latest/dg/batch-data-upload.html" target="_blank" rel="noopener">Preparing input data for batch recommendations</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

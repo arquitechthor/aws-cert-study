@@ -62,7 +62,7 @@
       <div class="callout callout-warn"><strong>Aviso:</strong> <strong>AWS IoT Events ya no está disponible.</strong> AWS anunció su fin de soporte en mayo de 2025 y el
         servicio se retiró en 2026: su web redirige a AWS <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr> y su documentación ya no está publicada. Hoy se construye
         la misma lógica con reglas de <a href="iot-core.html">IoT Core</a>, <a href="lambda.html">Lambda</a> o <a href="step-functions.html">Step Functions</a> (guardando el estado, por ejemplo, en <a href="dynamodb.html">DynamoDB</a>),
-        con alarmas de <a href="iot-sitewise.html">IoT SiteWise</a> o con <a href="../servicio.html?id=managed-service-for-apache-flink">Managed Service for Apache Flink</a>. Esta guía se mantiene porque el servicio
+        con alarmas de <a href="iot-sitewise.html">IoT SiteWise</a> o con <a href="managed-service-for-apache-flink.html">Managed Service for Apache Flink</a>. Esta guía se mantiene porque el servicio
         aparece en la guía de SAP-C02.</div>
 
       <h2 id="que-es">Qué es</h2>
@@ -78,7 +78,7 @@
         <li><strong>Instancias de detector:</strong> una por equipo, cada una con su estado.</li>
         <li><strong>Acciones:</strong> <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a>, <a href="lambda.html">Lambda</a>, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a>, IoT Core, etc.</li>
         <li><strong>Alternativas actuales:</strong> reglas de IoT Core con Lambda o <a href="step-functions.html">Step Functions</a> y estado en DynamoDB;
-          alarmas de IoT SiteWise; procesamiento con estado en <a href="../servicio.html?id=managed-service-for-apache-flink">Managed Service for Apache Flink</a>.</li>
+          alarmas de IoT SiteWise; procesamiento con estado en <a href="managed-service-for-apache-flink.html">Managed Service for Apache Flink</a>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -100,7 +100,7 @@
           <tbody>
             <tr><td>Alarmas sobre propiedades de equipos industriales</td><td>Alarmas de <a href="iot-sitewise.html">IoT SiteWise</a></td></tr>
             <tr><td>Lógica con estado por dispositivo</td><td>Reglas de <a href="iot-core.html">IoT Core</a> + <a href="lambda.html">Lambda</a> o <a href="step-functions.html">Step Functions</a> + <a href="dynamodb.html">DynamoDB</a></td></tr>
-            <tr><td>Patrones complejos sobre flujos de datos</td><td><a href="../servicio.html?id=managed-service-for-apache-flink">Managed Service for Apache Flink</a></td></tr>
+            <tr><td>Patrones complejos sobre flujos de datos</td><td><a href="managed-service-for-apache-flink.html">Managed Service for Apache Flink</a></td></tr>
           </tbody>
         </table>
       </div>

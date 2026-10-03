@@ -1,0 +1,112 @@
+[
+  {
+    "id": "managed-service-for-apache-flink-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una plataforma de pagos debe calcular en tiempo real el número de transacciones por tarjeta en ventanas de cinco minutos y avisar si se supera un umbral. ¿Qué servicio procesa el flujo?",
+    "opciones": [
+      "Amazon Managed Service for Apache Flink.",
+      "Amazon Data Firehose.",
+      "AWS Glue por lotes.",
+      "Amazon Athena."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Flink procesa flujos con estado y ventanas de tiempo. Firehose solo entrega datos y Glue o Athena trabajan por lotes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/managed-flink/latest/java/what-is.html"
+    ]
+  },
+  {
+    "id": "managed-service-for-apache-flink-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un analista quiere explorar un flujo de Kinesis con consultas SQL interactivas antes de convertirlas en una aplicación de producción. ¿Qué usa?",
+    "opciones": [
+      "Amazon Redshift.",
+      "Studio notebooks de Managed Service for Apache Flink.",
+      "Amazon QuickSight.",
+      "AWS CloudShell."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los Studio notebooks (Apache Zeppelin) permiten consultar flujos de forma interactiva y después desplegar la lógica como aplicación con estado duradero.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/managed-flink/latest/java/how-notebook.html"
+    ]
+  },
+  {
+    "id": "managed-service-for-apache-flink-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una aplicación de Flink debe actualizarse sin perder el estado acumulado (contadores por usuario). ¿Qué se usa?",
+    "opciones": [
+      "Borrar y recrear la aplicación.",
+      "Una réplica de lectura.",
+      "Una instantánea (snapshot) del estado, desde la que se reinicia la nueva versión.",
+      "AWS Backup."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las instantáneas guardan el estado de la aplicación y permiten reiniciarla, actualizada, desde ese punto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/managed-flink/latest/java/what-is.html"
+    ]
+  },
+  {
+    "id": "managed-service-for-apache-flink-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Con qué unidad se mide y se cobra la capacidad de una aplicación de Managed Service for Apache Flink?",
+    "opciones": [
+      "Con fragmentos (shards).",
+      "Con brokers.",
+      "Con unidades de capacidad de lectura.",
+      "Con KPU."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La capacidad se mide en KPU, cada una con vCPU y memoria; se cobra por hora de KPU y escala automáticamente.",
+    "fuentes": [
+      "https://aws.amazon.com/managed-service-apache-flink/pricing/"
+    ]
+  },
+  {
+    "id": "managed-service-for-apache-flink-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "En una pregunta antigua aparece \"Kinesis Data Analytics for Apache Flink\". ¿Qué servicio es hoy?",
+    "opciones": [
+      "Amazon Managed Service for Apache Flink.",
+      "Amazon MSK.",
+      "AWS Glue Streaming.",
+      "Amazon Data Firehose."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Kinesis Data Analytics se renombró como Managed Service for Apache Flink.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/managed-flink/latest/java/what-is.html"
+    ]
+  }
+]

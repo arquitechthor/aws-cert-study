@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Kendra — Apuntes AWS</title>
+<meta name="description" content="Búsqueda empresarial inteligente sobre los documentos internos, con conectores a decenas de fuentes, permisos por usuario y recuperación para RAG. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/kendra.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Kendra — Apuntes AWS">
+<meta property="og:description" content="Búsqueda empresarial inteligente sobre los documentos internos, con conectores a decenas de fuentes, permisos por usuario y recuperación para RAG.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/kendra.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/kendra.svg" alt="" width="56" height="56"><span>Amazon Kendra</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Buscador empresarial inteligente que responde preguntas sobre tus documentos internos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/kendra/" target="_blank" rel="noopener">Documentación de Amazon Kendra ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Kendra es un <strong>buscador empresarial con aprendizaje automático</strong>. Indexa documentos de
+        muchas fuentes (<a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, SharePoint, Confluence, bases de datos, webs…) y permite buscar con
+        <strong>preguntas en lenguaje natural</strong>: devuelve respuestas y fragmentos relevantes, no solo
+        coincidencias de palabras, y <strong>respeta los permisos</strong> de cada usuario. Hoy se usa mucho como
+        <strong>recuperador para <abbr class="sigla sigla-1" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG<span class="sigla-exp"> (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos)</span></abbr></strong> en asistentes de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> generativa.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Índice:</strong> el contenido indexado. Tipos: <strong>GenAI Enterprise Edition</strong> (el
+          recomendado, con búsqueda híbrida y pensado para <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr>), Enterprise y Developer.</li>
+        <li><strong>Conectores de origen de datos:</strong> más de 40 fuentes, con sincronización periódica.</li>
+        <li><strong>API Query y Retrieve:</strong> Query devuelve resultados de búsqueda; Retrieve devuelve fragmentos
+          largos para dar contexto a un modelo de lenguaje.</li>
+        <li><strong>Filtrado por usuario:</strong> los resultados respetan las <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr> de los documentos.</li>
+        <li><strong>Integraciones:</strong> como recuperador gestionado en bases de conocimiento de <a href="bedrock.html">Bedrock</a> y en <a href="../servicio.html?id=amazon-q">Amazon Q</a>
+          Business.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Buscador interno de políticas, manuales y procedimientos.</li>
+        <li>Asistente de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> que responde con documentos de la empresa (<abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr>).</li>
+        <li>Búsqueda en bases de conocimiento de soporte técnico.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para búsqueda de texto completo y análisis de registros con control total: <a href="opensearch-service.html">OpenSearch Service</a>.</li>
+        <li>Para un <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr> sencillo con documentos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>: bases de conocimiento de <a href="bedrock.html">Bedrock</a> con su almacén vectorial.</li>
+        <li>Para consultar datos estructurados con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr>: <a href="athena.html">Athena</a> o <a href="redshift.html">Redshift</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Kendra</th><th><a href="opensearch-service.html">OpenSearch Service</a></th></tr></thead>
+          <tbody>
+            <tr><td>Enfoque</td><td>Buscador gestionado de documentos con <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr></td><td>Motor de búsqueda y análisis configurable</td></tr>
+            <tr><td>Esfuerzo</td><td>Conectores y relevancia incluidos</td><td>Diseñas índices, mapeos y relevancia</td></tr>
+            <tr><td>Permisos por documento</td><td>Incluidos</td><td>Los implementas tú</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por hora de índice</strong> según la edición y las unidades de capacidad (consultas y
+        documentos), más la sincronización de los conectores.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y control de acceso con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Resultados filtrados según los permisos de cada usuario.</li>
+        <li>La edición Enterprise se despliega en varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Buscar en documentos internos con preguntas en lenguaje natural"</strong>: Kendra.</li>
+        <li><strong>"Respetar los permisos de SharePoint al buscar"</strong>: Kendra con filtrado por usuario.</li>
+        <li><strong>"Recuperador para <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr> con conectores empresariales"</strong>: índice GenAI de Kendra con <a href="bedrock.html">Bedrock</a>.</li>
+        <li><strong>"Analizar registros"</strong>: <a href="opensearch-service.html">OpenSearch</a>, no Kendra.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="kendra"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/kendra/latest/dg/hiw-index-types.html" target="_blank" rel="noopener">Index types in Amazon Kendra</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/kendra/faqs/" target="_blank" rel="noopener">Amazon Kendra FAQs</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-kendra-genai-index.html" target="_blank" rel="noopener">Build an Amazon Bedrock knowledge base with an Amazon Kendra GenAI index</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1108,8 +1108,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Modelos de aprendizaje automático gestionados que puntúan el riesgo de fraude en pagos, altas de cuentas o inicios de sesión. Cerrado a clientes nuevos.",
     "frase": "Modelos de aprendizaje automático que puntúan pagos y altas sospechosas de fraude",
     "documentacion": "https://docs.aws.amazon.com/frauddetector/"
   },
@@ -1364,8 +1364,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Búsqueda empresarial inteligente sobre los documentos internos, con conectores a decenas de fuentes, permisos por usuario y recuperación para RAG.",
     "frase": "Buscador empresarial inteligente que responde preguntas sobre tus documentos internos",
     "documentacion": "https://docs.aws.amazon.com/kendra/"
   },
@@ -1576,8 +1576,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Ejecuta aplicaciones de Apache Flink gestionadas para procesar flujos en tiempo real con estado, en Java, Python o SQL, sin servidores.",
     "frase": "Procesa flujos en tiempo real con aplicaciones Java, SQL o Python con estado",
     "documentacion": "https://docs.aws.amazon.com/managed-flink/"
   },
@@ -1778,8 +1778,8 @@
       "SAP-C02",
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Recomendaciones personalizadas en tiempo real o por lotes con aprendizaje automático, sin experiencia en ML, a partir de interacciones, artículos y usuarios.",
     "frase": "Recomendaciones personalizadas en tiempo real como las de una tienda online",
     "documentacion": "https://docs.aws.amazon.com/personalize/"
   },
@@ -2306,8 +2306,8 @@
     "certificaciones": [
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Bases de datos de series temporales: Timestream for InfluxDB (gestiona InfluxDB) y Timestream for LiveAnalytics (sin servidor, cerrado a clientes nuevos).",
     "frase": "Base de datos de series temporales para métricas y lecturas con marca de tiempo",
     "documentacion": "https://docs.aws.amazon.com/timestream/"
   },

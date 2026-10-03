@@ -1,0 +1,112 @@
+[
+  {
+    "id": "kendra-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Los empleados deben buscar en miles de documentos de SharePoint, S3 y Confluence con preguntas como \"¿cuántos días de vacaciones tengo?\", viendo solo lo que tienen permiso para ver. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon Comprehend.",
+      "Amazon Athena.",
+      "Amazon Kendra.",
+      "Amazon Textract."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Kendra indexa muchas fuentes con conectores, entiende preguntas en lenguaje natural y filtra los resultados por los permisos de cada usuario.",
+    "fuentes": [
+      "https://aws.amazon.com/kendra/faqs/"
+    ]
+  },
+  {
+    "id": "kendra-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un asistente de IA generativa en Bedrock debe responder con contenido de los repositorios internos, reutilizando conectores empresariales y permisos. ¿Qué componente de recuperación encaja?",
+    "opciones": [
+      "Un bucket de S3 sin índice.",
+      "Una tabla de DynamoDB.",
+      "Amazon Rekognition.",
+      "Un índice GenAI de Kendra usado como recuperador en una base de conocimiento de Bedrock."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El índice GenAI Enterprise de Kendra está pensado para RAG y puede usarse como recuperador gestionado en las bases de conocimiento de Bedrock.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-kendra-genai-index.html"
+    ]
+  },
+  {
+    "id": "kendra-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué API de Kendra devuelve fragmentos largos y relevantes para dar contexto a un modelo de lenguaje?",
+    "opciones": [
+      "Retrieve.",
+      "Query.",
+      "BatchPutDocument.",
+      "DescribeIndex."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Retrieve está pensada para RAG y devuelve pasajes más largos; Query devuelve resultados de búsqueda y respuestas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kendra/latest/dg/hiw-index-types.html"
+    ]
+  },
+  {
+    "id": "kendra-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo necesita analizar registros de aplicaciones con búsquedas de texto y paneles en tiempo real. ¿Es Kendra la opción adecuada?",
+    "opciones": [
+      "Sí, Kendra es para registros.",
+      "No: para análisis de registros se usa OpenSearch Service.",
+      "Sí, con la edición Developer.",
+      "No: se usa Amazon Lex."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Kendra busca en documentos empresariales con lenguaje natural; el análisis de registros y la búsqueda configurable son el terreno de OpenSearch.",
+    "fuentes": [
+      "https://aws.amazon.com/kendra/faqs/"
+    ]
+  },
+  {
+    "id": "kendra-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "¿Qué tipo de índice de Kendra recomienda AWS para la mejor precisión en casos de RAG?",
+    "opciones": [
+      "Developer Edition.",
+      "Enterprise Edition.",
+      "GenAI Enterprise Edition.",
+      "Un índice de OpenSearch."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El índice GenAI Enterprise Edition usa búsqueda híbrida y modelos de reordenación, y AWS lo recomienda para RAG.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kendra/latest/dg/hiw-index-types.html"
+    ]
+  }
+]

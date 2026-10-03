@@ -199,6 +199,7 @@ G = {
     'OPC UA': ('Open Platform Communications Unified Architecture', 'protocolo estándar de comunicación industrial'),
     'OT': ('Operational Technology', 'sistemas que controlan equipos y procesos industriales'),
     'USB': ('Universal Serial Bus', 'conector estándar para periféricos'),
+    'KPU': ('Kinesis Processing Unit', 'unidad de capacidad de Managed Service for Apache Flink: vCPU y memoria'),
     'WORM': ('Write Once, Read Many', 'se escribe una vez y no se puede modificar'),
     'XKS': ('External Key Store', 'almacén de claves externo a AWS'),
     'YAML': ("YAML Ain't Markup Language", 'formato de configuración legible'),

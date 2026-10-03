@@ -1,0 +1,112 @@
+[
+  {
+    "id": "personalize-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Una tienda online sin científicos de datos quiere mostrar recomendaciones de productos personalizadas basadas en el historial de cada cliente. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon Comprehend.",
+      "Amazon Personalize.",
+      "Amazon Kendra.",
+      "Amazon Textract."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Personalize entrena y sirve modelos de recomendación a partir de interacciones, artículos y usuarios sin necesidad de experiencia en ML.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/personalize/latest/dg/what-is-personalize.html"
+    ]
+  },
+  {
+    "id": "personalize-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un servicio de vídeo quiere no recomendar títulos que el usuario ya ha visto ni contenidos premium a quien no paga. ¿Qué usa en Personalize?",
+    "opciones": [
+      "Otra receta.",
+      "Un segundo grupo de conjuntos de datos.",
+      "Filtros con las reglas de negocio.",
+      "Una función Lambda que borre resultados."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los filtros permiten incluir o excluir artículos según interacciones o metadatos, al pedir recomendaciones en tiempo real o por lotes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/personalize/latest/dg/what-is-personalize.html"
+    ]
+  },
+  {
+    "id": "personalize-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Cada noche se envía un correo con diez recomendaciones a dos millones de usuarios. ¿Qué forma de obtenerlas es más eficiente en Personalize?",
+    "opciones": [
+      "Llamar a la campaña en tiempo real dos millones de veces.",
+      "Usar un filtro.",
+      "Exportar el modelo a EC2.",
+      "Un trabajo de inferencia por lotes que deje los resultados en S3."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La inferencia por lotes genera recomendaciones para muchos usuarios a la vez y las deja en S3, sin mantener una campaña en tiempo real dimensionada para ese pico.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/personalize/latest/dg/batch-data-upload.html"
+    ]
+  },
+  {
+    "id": "personalize-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "¿Qué servicio de AWS conviene para recomendar productos, y cuál para generar automáticamente sus descripciones?",
+    "opciones": [
+      "Personalize para recomendar y un modelo de Bedrock para generar las descripciones.",
+      "Bedrock para ambos.",
+      "Comprehend para ambos.",
+      "Kendra para recomendar y Polly para describir."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Personalize está especializado en recomendaciones; la generación de texto es un caso de IA generativa con modelos fundacionales en Bedrock.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/personalize/latest/dg/what-is-personalize.html"
+    ]
+  },
+  {
+    "id": "personalize-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Las recomendaciones deben reaccionar a los clics que el usuario hace en la sesión actual, no solo al historial del último entrenamiento. ¿Qué se configura?",
+    "opciones": [
+      "Un entrenamiento cada minuto.",
+      "Un rastreador de eventos que envíe las interacciones en tiempo real.",
+      "Una regla de ciclo de vida.",
+      "Una réplica de lectura."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con un rastreador de eventos, Personalize recibe las interacciones al momento y las recetas de personalización las tienen en cuenta sin reentrenar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/personalize/latest/dg/what-is-personalize.html"
+    ]
+  }
+]

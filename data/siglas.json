@@ -552,6 +552,10 @@
    "en": "Kinesis Producer Library",
    "es": "biblioteca para escribir productores de Kinesis"
   },
+  "KPU": {
+   "en": "Kinesis Processing Unit",
+   "es": "unidad de capacidad de Managed Service for Apache Flink: vCPU y memoria"
+  },
   "KVM": {
    "en": "Kernel-based Virtual Machine",
    "es": "hipervisor de Linux"

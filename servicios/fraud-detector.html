@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Fraud Detector — Apuntes AWS</title>
+<meta name="description" content="Modelos de aprendizaje automático gestionados que puntúan el riesgo de fraude en pagos, altas de cuentas o inicios de sesión. Cerrado a clientes nuevos. Apuntes y preguntas de práctica para SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/fraud-detector.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Fraud Detector — Apuntes AWS">
+<meta property="og:description" content="Modelos de aprendizaje automático gestionados que puntúan el riesgo de fraude en pagos, altas de cuentas o inicios de sesión. Cerrado a clientes nuevos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/fraud-detector.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/fraud-detector.svg" alt="" width="56" height="56"><span>Amazon Fraud Detector</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Modelos de aprendizaje automático que puntúan pagos y altas sospechosas de fraude</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/frauddetector/" target="_blank" rel="noopener">Documentación de Amazon Fraud Detector ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> Amazon Fraud Detector <strong>no admite clientes nuevos</strong> desde el 07/11/2025; los clientes actuales
+        pueden seguir usándolo. Para capacidades parecidas, AWS sugiere <a href="sagemaker-ai.html">SageMaker AI</a>, AutoGluon y <a href="waf.html">AWS <abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> (por ejemplo,
+        su protección contra el fraude en la creación de cuentas).</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Fraud Detector permite detectar <strong>actividad fraudulenta en línea</strong> (pagos, creación de
+        cuentas, inicios de sesión) con modelos de aprendizaje automático entrenados con tus datos históricos, sin
+        experiencia en <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>. Cada evento recibe una <strong>puntuación de riesgo</strong> y unas <strong>reglas</strong>
+        deciden el resultado (aprobar, revisar, bloquear). No admite clientes nuevos desde noviembre de 2025.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Tipo de evento:</strong> qué se evalúa (por ejemplo, un pago) y con qué variables.</li>
+        <li><strong>Modelo:</strong> entrenado con eventos pasados etiquetados como fraude o legítimos.</li>
+        <li><strong>Detector:</strong> combina modelos y reglas.</li>
+        <li><strong>Reglas y resultados:</strong> "si la puntuación supera 900, bloquear".</li>
+        <li><strong>Predicción en tiempo real</strong> por <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>, o por lotes.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Detectar pagos fraudulentos antes de aceptarlos.</li>
+        <li>Frenar la creación masiva de cuentas falsas.</li>
+        <li>Detectar la toma de control de cuentas en el inicio de sesión.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si eres cliente nuevo: <a href="sagemaker-ai.html">SageMaker AI</a> (o AutoGluon) para tus propios modelos, y <a href="waf.html">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> para proteger el registro
+          y el inicio de sesión.</li>
+        <li>Para detectar amenazas en la cuenta de AWS: <a href="guardduty.html">GuardDuty</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>Modelo de fraude propio</td><td><a href="sagemaker-ai.html">SageMaker AI</a> o AutoGluon</td></tr>
+            <tr><td>Bots y fraude en altas e inicios de sesión web</td><td><a href="waf.html">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a> (protección contra fraude)</td></tr>
+            <tr><td>Amenazas a la infraestructura de AWS</td><td><a href="guardduty.html">GuardDuty</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se pagaba por <strong>predicción</strong>, por <strong>horas de entrenamiento</strong> y por el
+        <strong>alojamiento de los modelos</strong>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Datos cifrados con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y acceso por <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Servicio gestionado y escalable para predicciones en tiempo real.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Detectar pagos o altas fraudulentas sin experiencia en <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr>"</strong>: en la guía, Fraud Detector.</li>
+        <li><strong>"Cliente nuevo hoy"</strong>: <a href="sagemaker-ai.html">SageMaker AI</a>, AutoGluon o <a href="waf.html">AWS <abbr class="sigla" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF</abbr></a>.</li>
+        <li><strong>"Amenazas en la cuenta de AWS"</strong>: <a href="guardduty.html">GuardDuty</a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="fraud-detector"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/frauddetector/latest/ug/frauddetector-availability-change.html" target="_blank" rel="noopener">Amazon Fraud Detector availability change</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/" target="_blank" rel="noopener">AWS Service Availability Updates</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
