@@ -1,0 +1,135 @@
+[
+  {
+    "id": "client-vpn-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una empresa quiere que sus empleados en teletrabajo accedan de forma segura a aplicaciones internas en una VPC, iniciando sesión con su proveedor de identidad corporativo. ¿Qué solución usa?",
+    "opciones": [
+      "Site-to-Site VPN desde cada casa.",
+      "Un punto de enlace de Client VPN con autenticación federada SAML.",
+      "IP públicas en las instancias con grupos de seguridad.",
+      "Un emparejamiento de VPC con cada portátil."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Client VPN está pensado para usuarios individuales y admite autenticación federada con SAML, de modo que se usa el inicio de sesión corporativo (con su MFA). Site-to-Site conecta redes, no dispositivos sueltos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html"
+    ]
+  },
+  {
+    "id": "client-vpn-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Los usuarios de Client VPN se quejan de que su navegación por internet va lenta, porque todo su tráfico pasa por AWS. Solo necesitan la VPN para las VPC. ¿Qué se configura?",
+    "opciones": [
+      "Túnel dividido en el punto de enlace de Client VPN.",
+      "Un punto de enlace más en otra región.",
+      "Una NAT gateway en cada AZ.",
+      "Un acelerador de Global Accelerator."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con el túnel dividido, solo las rutas de la tabla del punto de enlace (las de AWS) van por la VPN; el resto del tráfico sale directamente por la conexión del usuario.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/split-tunnel-vpn.html"
+    ]
+  },
+  {
+    "id": "client-vpn-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Los usuarios de Client VPN del grupo de Finanzas solo deben llegar a la subred de la aplicación financiera, y los de Ingeniería solo a las de desarrollo. ¿Qué se usa?",
+    "opciones": [
+      "Varios puntos de enlace de Client VPN en la misma VPC.",
+      "ACL de red en las subredes de los clientes.",
+      "Un Transit Gateway por grupo.",
+      "Reglas de autorización basadas en los grupos del directorio o del proveedor SAML."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las reglas de autorización de Client VPN limitan a qué redes de destino puede llegar cada grupo de usuarios, usando los grupos de Active Directory o los atributos de SAML.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-working-rules.html"
+    ]
+  },
+  {
+    "id": "client-vpn-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere dar acceso a varias aplicaciones web internas sin desplegar VPN, evaluando en cada petición la identidad del usuario y el estado de su dispositivo. ¿Qué servicio encaja mejor?",
+    "opciones": [
+      "AWS Client VPN.",
+      "AWS Site-to-Site VPN.",
+      "AWS Verified Access.",
+      "AWS Direct Connect."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Verified Access da acceso de confianza cero a aplicaciones concretas sin VPN, con políticas que tienen en cuenta identidad y dispositivo en cada petición. Client VPN da acceso de red completo según reglas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verified-access/latest/ug/what-is-verified-access.html"
+    ]
+  },
+  {
+    "id": "client-vpn-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un punto de enlace de Client VPN tiene una sola subred asociada. ¿Qué se recomienda para que una caída de AZ no deje a los usuarios sin VPN?",
+    "opciones": [
+      "Asociar subredes de al menos dos AZ.",
+      "Ampliar el CIDR de los clientes.",
+      "Activar el túnel dividido.",
+      "Usar autenticación mutua."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cada asociación de subred crea la presencia del punto de enlace en esa AZ. Con subredes en varias AZ, los clientes siguen conectando si una falla.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-working-target.html"
+    ]
+  },
+  {
+    "id": "client-vpn-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio permite a los empleados conectarse desde su portátil a los recursos de una VPC mediante una VPN gestionada?",
+    "opciones": [
+      "AWS Site-to-Site VPN.",
+      "AWS Client VPN.",
+      "Amazon WorkSpaces.",
+      "AWS Direct Connect."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Client VPN es una VPN de acceso remoto para usuarios individuales. Site-to-Site VPN conecta redes completas, y WorkSpaces da escritorios virtuales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/what-is.html"
+    ]
+  }
+]

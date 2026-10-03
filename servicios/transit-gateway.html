@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Transit Gateway — Apuntes AWS</title>
+<meta name="description" content="Router regional gestionado que conecta en estrella muchas VPC, VPN y Direct Connect, con tablas de rutas para segmentar el tráfico. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/transit-gateway.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Transit Gateway — Apuntes AWS">
+<meta property="og:description" content="Router regional gestionado que conecta en estrella muchas VPC, VPN y Direct Connect, con tablas de rutas para segmentar el tráfico.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/transit-gateway.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/transit-gateway.svg" alt="" width="56" height="56"><span>AWS Transit Gateway</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Hub central que interconecta cientos de <abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr> y redes locales en estrella</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/vpc/latest/tgw/" target="_blank" rel="noopener">Documentación de AWS Transit Gateway ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Transit Gateway es un <strong>router regional gestionado</strong> que actúa como centro de una
+        topología en estrella (<em>hub-and-spoke</em>). En lugar de conectar cada <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> con todas las demás, cada red
+        se conecta una sola vez al Transit Gateway y este enruta el tráfico entre ellas: <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, conexiones <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr>, Direct
+        Connect y otros Transit Gateway. AWS gestiona la disponibilidad y el escalado.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Adjuntos (<em>attachments</em>):</strong> cada red conectada. Tipos: <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>, <a href="site-to-site-vpn.html">Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>, puerta de
+          enlace de <a href="direct-connect.html">Direct Connect</a>, <strong>emparejamiento</strong> con otro Transit Gateway (de la misma u otra región)
+          y <strong>Connect</strong> (túneles <abbr class="sigla sigla-1" data-s="GRE" data-en="Generic Routing Encapsulation" data-es="túnel que encapsula paquetes entre routers" tabindex="0">GRE<span class="sigla-exp"> (Generic Routing Encapsulation: túnel que encapsula paquetes entre routers)</span></abbr> con <abbr class="sigla sigla-1" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP<span class="sigla-exp"> (Border Gateway Protocol: protocolo con el que los routers se anuncian las redes)</span></abbr> para dispositivos <abbr class="sigla sigla-1" data-s="SD-WAN" data-en="Software-Defined Wide Area Network" data-es="red extensa entre sedes gestionada por software" tabindex="0">SD-WAN<span class="sigla-exp"> (Software-Defined Wide Area Network: red extensa entre sedes gestionada por software)</span></abbr>).</li>
+        <li><strong>Tablas de rutas:</strong> un Transit Gateway puede tener varias. Cada adjunto se
+          <strong>asocia</strong> a una tabla (la que se consulta para su tráfico) y <strong>propaga</strong> sus
+          rutas a las tablas que quieras. Así se <strong>segmenta</strong>: por ejemplo, producción y desarrollo no se ven,
+          pero ambos llegan a los servicios compartidos.</li>
+        <li><strong>Rutas de agujero negro (<em>blackhole</em>):</strong> descartan el tráfico hacia un destino.</li>
+        <li><strong>Enrutamiento transitivo:</strong> a diferencia del emparejamiento de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> puede llegar a otra
+          (o al centro de datos) <em>pasando</em> por el Transit Gateway.</li>
+        <li><strong>Compartir entre cuentas:</strong> se comparte con otras cuentas u <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr> de la organización mediante
+          <a href="ram.html"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a>, de modo que un equipo de red central lo gestiona y las cuentas solo adjuntan sus <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="ECMP" data-en="Equal-Cost Multi-Path" data-es="reparte el tráfico entre varias rutas iguales" tabindex="0">ECMP<span class="sigla-exp"> (Equal-Cost Multi-Path: reparte el tráfico entre varias rutas iguales)</span></abbr>:</strong> reparte el tráfico entre varios túneles <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> con enrutamiento dinámico (<abbr class="sigla" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP</abbr>) para
+          sumar ancho de banda.</li>
+        <li><strong>Modo dispositivo (<em>appliance mode</em>):</strong> mantiene la ida y la vuelta de una conexión en
+          la misma <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>, necesario cuando hay un cortafuegos con estado en una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de inspección.</li>
+        <li><strong>Capacidad:</strong> miles de adjuntos por Transit Gateway y, por defecto, hasta 100 Gbps por adjunto de
+          <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y por <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr> en cada sentido.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Conectar decenas o cientos de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> de muchas cuentas sin una malla de emparejamientos.</li>
+        <li>Centralizar la conexión con el centro de datos: una sola conexión <a href="direct-connect.html">Direct Connect</a> o <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> para todas las <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de salida centralizada (<abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr> compartido) o <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de inspección con <a href="network-firewall.html">Network Firewall</a>.</li>
+        <li>Conectar regiones entre sí con emparejamiento entre Transit Gateway.</li>
+        <li>Integrar redes <abbr class="sigla" data-s="SD-WAN" data-en="Software-Defined Wide Area Network" data-es="red extensa entre sedes gestionada por software" tabindex="0">SD-WAN</abbr> con adjuntos Connect.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Solo dos o tres <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> que deben hablar entre sí: el <strong>emparejamiento de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></strong> es más simple y no
+          tiene cargo por hora ni por procesamiento.</li>
+        <li>Exponer un único servicio a otras <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> o cuentas sin abrir toda la red, incluso con rangos de <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> solapados:
+          <a href="privatelink.html">PrivateLink</a>.</li>
+        <li>Una red global con muchas regiones y sedes gestionada por políticas: AWS Cloud <abbr class="sigla sigla-1" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN<span class="sigla-exp"> (Wide Area Network: red de área extensa)</span></abbr>.</li>
+        <li><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> con <strong><abbr class="sigla sigla-1" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR<span class="sigla-exp"> (Classless Inter-Domain Routing: notación de rangos de IP como 10.0.0.0/16)</span></abbr> solapados</strong>: Transit Gateway no enruta entre ellos.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Emparejamiento de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a></th><th>Transit Gateway</th><th><a href="privatelink.html">PrivateLink</a></th></tr></thead>
+          <tbody>
+            <tr><td>Topología</td><td>Punto a punto, sin tránsito</td><td>Estrella, transitivo</td><td>Consumidor a servicio concreto</td></tr>
+            <tr><td>Escala</td><td>Pocas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></td><td>Miles de adjuntos</td><td>Muchos consumidores por servicio</td></tr>
+            <tr><td><abbr class="sigla" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR</abbr> solapados</td><td>No</td><td>No</td><td>Sí</td></tr>
+            <tr><td>Coste</td><td>Solo transferencia de datos</td><td>Hora por adjunto + GB procesado</td><td>Hora por punto de enlace + GB procesado</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por hora de cada adjunto</strong> y <strong>por gigabyte procesado</strong> por el Transit
+        Gateway, además de la transferencia de datos entre regiones cuando hay emparejamiento.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Es un servicio regional de alta disponibilidad. Para cada adjunto de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> eliges una subred por <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>; adjunta
+          una en cada <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr> que uses.</li>
+        <li>La segmentación se hace con tablas de rutas; los grupos de seguridad y las <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr> de red de cada <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> siguen
+          aplicando.</li>
+        <li>El tráfico entre regiones por emparejamiento va cifrado por la red troncal de AWS.</li>
+        <li>Los registros de flujo de Transit Gateway muestran el tráfico que pasa por él.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Cientos de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>" o "evitar una malla de emparejamientos"</strong>: Transit Gateway.</li>
+        <li><strong>"Enrutamiento transitivo"</strong>: el emparejamiento de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> no lo admite; Transit Gateway sí.</li>
+        <li><strong>"Aislar entornos pero compartir servicios comunes"</strong>: varias tablas de rutas con asociaciones y
+          propagaciones distintas.</li>
+        <li><strong>"Sumar ancho de banda de varias <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>"</strong>: <abbr class="sigla" data-s="ECMP" data-en="Equal-Cost Multi-Path" data-es="reparte el tráfico entre varias rutas iguales" tabindex="0">ECMP</abbr> sobre Transit Gateway, con <abbr class="sigla" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP</abbr> (no funciona con
+          rutas estáticas).</li>
+        <li><strong>"Compartir el Transit Gateway con otras cuentas"</strong>: <a href="ram.html"><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></a>.</li>
+        <li><strong>"Cortafuegos con estado en una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de inspección y tráfico asimétrico"</strong>: activa el modo
+          dispositivo.</li>
+        <li><strong>"Solo dos <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y el menor coste"</strong>: emparejamiento de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, no Transit Gateway.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="transit-gateway"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html" target="_blank" rel="noopener">What is a transit gateway?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html" target="_blank" rel="noopener">Transit gateway route tables</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-quotas.html" target="_blank" rel="noopener">AWS Transit Gateway quotas</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/transit-gateway/pricing/" target="_blank" rel="noopener">AWS Transit Gateway pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

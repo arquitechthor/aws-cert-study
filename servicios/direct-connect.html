@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Direct Connect — Apuntes AWS</title>
+<meta name="description" content="Conexión de red privada y dedicada entre el centro de datos y AWS, con ancho de banda constante y sin pasar por internet. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/direct-connect.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Direct Connect — Apuntes AWS">
+<meta property="og:description" content="Conexión de red privada y dedicada entre el centro de datos y AWS, con ancho de banda constante y sin pasar por internet.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/direct-connect.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/direct-connect.svg" alt="" width="56" height="56"><span>AWS Direct Connect</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Enlace de red dedicado y privado entre tu centro de datos y la nube, sin Internet</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/directconnect/" target="_blank" rel="noopener">Documentación de AWS Direct Connect ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Direct Connect es un <strong>enlace de red físico y privado</strong> entre tu centro de datos (u oficina, o
+        un centro de coubicación) y AWS. El cable termina en una <strong>ubicación de Direct Connect</strong>, desde
+        donde el tráfico entra en la red de AWS sin pasar por internet. Ofrece <strong>latencia y ancho de banda
+        constantes</strong> y una transferencia de salida más barata que por internet, pero tarda semanas en
+        instalarse.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Conexión dedicada:</strong> un puerto físico solo para ti, de 1, 10, 100 o 400 Gbps, que se pide a
+          AWS.</li>
+        <li><strong>Conexión alojada (<em>hosted</em>):</strong> la ofrece un socio de Direct Connect sobre sus propios
+          enlaces, desde 50 Mbps hasta 25 Gbps. Admite una sola interfaz virtual.</li>
+        <li><strong>Interfaces virtuales (<abbr class="sigla" data-s="VIF" data-en="Virtual Interface" data-es="interfaz virtual sobre la conexión física" tabindex="0">VIF</abbr>):</strong> conexiones lógicas (<abbr class="sigla sigla-1" data-s="VLAN" data-en="Virtual Local Area Network" data-es="red local virtual que separa tráfico en un mismo enlace" tabindex="0">VLAN<span class="sigla-exp"> (Virtual Local Area Network: red local virtual que separa tráfico en un mismo enlace)</span></abbr> con <abbr class="sigla sigla-1" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP<span class="sigla-exp"> (Border Gateway Protocol: protocolo con el que los routers se anuncian las redes)</span></abbr>) sobre el enlace físico.
+          <strong>Privada</strong>: llega a una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> por su puerta de enlace privada virtual. <strong>Pública</strong>:
+          llega a los puntos de enlace públicos de AWS (por ejemplo <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>) por el enlace privado. <strong>De
+          tránsito</strong>: llega a un <a href="transit-gateway.html">Transit Gateway</a>.</li>
+        <li><strong>Puerta de enlace de Direct Connect:</strong> recurso global que permite usar una misma conexión para
+          llegar a <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> o Transit Gateway de <strong>cualquier región</strong> (salvo China), incluso de otras cuentas.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="LAG" data-en="Link Aggregation Group" data-es="varios enlaces que funcionan como uno" tabindex="0">LAG<span class="sigla-exp"> (Link Aggregation Group: varios enlaces que funcionan como uno)</span></abbr>:</strong> agrupa varias conexiones dedicadas del mismo dispositivo para sumar ancho de banda. No
+          da alta disponibilidad, porque todas terminan en el mismo equipo de AWS.</li>
+        <li><strong>Cifrado:</strong> el enlace <strong>no va cifrado por defecto</strong>. Opciones: <abbr class="sigla" data-s="MACsec" data-en="Media Access Control Security" data-es="cifrado del enlace físico, en capa 2" tabindex="0">MACsec</abbr> (capa 2,
+          en conexiones dedicadas de 10, 100 y 400 Gbps de ubicaciones concretas) o una VPN <abbr class="sigla sigla-1" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec<span class="sigla-exp"> (Internet Protocol Security: cifrado de los paquetes IP en una VPN)</span></abbr> sobre Direct Connect.</li>
+        <li><strong>SiteLink:</strong> permite que tus propias sedes se comuniquen entre sí a través de las ubicaciones
+          de Direct Connect, sin pasar por una región.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Arquitecturas híbridas con tráfico constante y sensible a la latencia entre el centro de datos y AWS.</li>
+        <li>Mover grandes volúmenes de datos de forma continua, con un coste de salida menor.</li>
+        <li>Requisitos normativos de no usar internet para ciertos datos.</li>
+        <li>Acceder de forma privada a servicios públicos de AWS (<a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="dynamodb.html">DynamoDB</a>) con una <abbr class="sigla" data-s="VIF" data-en="Virtual Interface" data-es="interfaz virtual sobre la conexión física" tabindex="0">VIF</abbr> pública.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si la conexión hace falta <strong>ya</strong> (días, no semanas): <a href="site-to-site-vpn.html">Site-to-Site <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr></a>, que se configura en
+          minutos.</li>
+        <li>Para una migración puntual de muchos terabytes sin red suficiente: dispositivos de <a href="../servicio.html?id=snow-family">Snow Family</a>.</li>
+        <li>Para usuarios que se conectan desde casa: <a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
+        <li>Si el requisito es cifrar y no hay <abbr class="sigla" data-s="MACsec" data-en="Media Access Control Security" data-es="cifrado del enlace físico, en capa 2" tabindex="0">MACsec</abbr> disponible, Direct Connect solo no basta: añade una VPN <abbr class="sigla" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec</abbr>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Direct Connect</th><th><a href="site-to-site-vpn.html">Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a></th></tr></thead>
+          <tbody>
+            <tr><td>Medio</td><td>Enlace físico privado</td><td>Túneles <abbr class="sigla" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec</abbr> sobre internet</td></tr>
+            <tr><td>Puesta en marcha</td><td>Semanas</td><td>Minutos</td></tr>
+            <tr><td>Rendimiento</td><td>Constante, hasta 400 Gbps por puerto</td><td>Variable, 1,25 Gbps por túnel estándar</td></tr>
+            <tr><td>Cifrado</td><td>No por defecto (<abbr class="sigla" data-s="MACsec" data-en="Media Access Control Security" data-es="cifrado del enlace físico, en capa 2" tabindex="0">MACsec</abbr> o <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> encima)</td><td>Siempre</td></tr>
+            <tr><td>Uso típico</td><td>Conexión principal</td><td>Conexión de respaldo o inicial</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por hora de puerto</strong> (según velocidad y tipo de conexión) y por la
+        <strong>transferencia de datos de salida</strong> desde AWS, a una tarifa menor que la de internet. La entrada de
+        datos a AWS no se cobra. El circuito hasta la ubicación de Direct Connect lo cobra aparte tu proveedor.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Una sola conexión es un <strong>punto único de fallo</strong>. El kit de resiliencia propone niveles:
+          <strong>máxima</strong> (conexiones en dispositivos separados en al menos dos ubicaciones; <abbr class="sigla sigla-1" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA<span class="sigla-exp"> (Service Level Agreement: compromiso de disponibilidad)</span></abbr> del 99,99 %),
+          <strong>alta</strong> (conexiones en dos ubicaciones; <abbr class="sigla" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA</abbr> del 99,9 %) y desarrollo y pruebas (sin <abbr class="sigla" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA</abbr>).</li>
+        <li>Respaldo económico: una <a href="site-to-site-vpn.html">Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a> que toma el relevo si cae el enlace (<abbr class="sigla" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP</abbr> prefiere Direct
+          Connect mientras está disponible).</li>
+        <li><abbr class="sigla sigla-1" data-s="BFD" data-en="Bidirectional Forwarding Detection" data-es="detecta en milisegundos la caída de un enlace" tabindex="0">BFD<span class="sigla-exp"> (Bidirectional Forwarding Detection: detecta en milisegundos la caída de un enlace)</span></abbr> acelera la detección de fallos para conmutar antes.</li>
+        <li>Privacidad: el tráfico no pasa por internet, pero no va cifrado salvo con <abbr class="sigla" data-s="MACsec" data-en="Media Access Control Security" data-es="cifrado del enlace físico, en capa 2" tabindex="0">MACsec</abbr> o <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Rendimiento constante", "latencia predecible", "no usar internet"</strong>: Direct Connect.</li>
+        <li><strong>"Lo necesitamos esta semana"</strong>: <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>; Direct Connect tarda semanas.</li>
+        <li><strong>"Cifrar el tráfico de Direct Connect"</strong>: <abbr class="sigla" data-s="MACsec" data-en="Media Access Control Security" data-es="cifrado del enlace físico, en capa 2" tabindex="0">MACsec</abbr> o VPN <abbr class="sigla" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec</abbr> sobre Direct Connect; no está cifrado por
+          defecto.</li>
+        <li><strong>"Una conexión para <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> de varias regiones"</strong>: puerta de enlace de Direct Connect.</li>
+        <li><strong>"Muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y el centro de datos"</strong>: <abbr class="sigla" data-s="VIF" data-en="Virtual Interface" data-es="interfaz virtual sobre la conexión física" tabindex="0">VIF</abbr> de tránsito hacia <a href="transit-gateway.html">Transit Gateway</a>.</li>
+        <li><strong>"Acceder a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> por el enlace privado"</strong>: <abbr class="sigla" data-s="VIF" data-en="Virtual Interface" data-es="interfaz virtual sobre la conexión física" tabindex="0">VIF</abbr> pública.</li>
+        <li><strong>"Máxima resiliencia"</strong>: varias conexiones en ubicaciones distintas; un <abbr class="sigla" data-s="LAG" data-en="Link Aggregation Group" data-es="varios enlaces que funcionan como uno" tabindex="0">LAG</abbr> no sirve como alta
+          disponibilidad.</li>
+        <li><strong>"Respaldo barato de Direct Connect"</strong>: <a href="site-to-site-vpn.html">Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="direct-connect"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html" target="_blank" rel="noopener">What is Direct Connect?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/wellarchitected/latest/hybrid-networking-lens/aws-direct-connect.html" target="_blank" rel="noopener">AWS Direct Connect (Hybrid Networking Lens)</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/directconnect/latest/UserGuide/MACsec.html" target="_blank" rel="noopener">MAC Security in Direct Connect</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/directconnect/latest/UserGuide/resiliency_toolkit.html" target="_blank" rel="noopener">Direct Connect Resiliency Toolkit</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/directconnect/faqs/" target="_blank" rel="noopener">AWS Direct Connect FAQs</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

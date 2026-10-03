@@ -1,0 +1,135 @@
+[
+  {
+    "id": "direct-connect-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa necesita conectar su centro de datos con AWS con un ancho de banda constante de 10 Gbps y latencia predecible para replicar bases de datos de forma continua. ¿Qué solución elige?",
+    "opciones": [
+      "Una Site-to-Site VPN estándar.",
+      "AWS Client VPN.",
+      "Una conexión dedicada de Direct Connect.",
+      "AWS Global Accelerator."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Direct Connect ofrece un enlace privado con rendimiento constante, sin depender de internet. Un túnel VPN estándar llega a 1,25 Gbps y varía con internet; Client VPN es para usuarios individuales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "direct-connect-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una normativa exige que todo el tráfico entre el centro de datos y AWS vaya cifrado. La empresa ya usa una conexión Direct Connect de 1 Gbps. ¿Qué debe hacer?",
+    "opciones": [
+      "Nada: Direct Connect cifra el tráfico por defecto.",
+      "Activar MACsec en la conexión de 1 Gbps.",
+      "Mover la conexión a una VIF pública.",
+      "Establecer una VPN IPsec que viaje sobre la conexión Direct Connect."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Direct Connect no cifra el tráfico por defecto. MACsec solo está disponible en conexiones dedicadas de 10, 100 y 400 Gbps, así que con 1 Gbps la opción es una VPN IPsec sobre Direct Connect.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/MACsec.html"
+    ]
+  },
+  {
+    "id": "direct-connect-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa con una conexión Direct Connect quiere llegar con ella a VPC de us-east-1, eu-west-1 y ap-southeast-1, de varias cuentas. ¿Qué recurso lo permite?",
+    "opciones": [
+      "Una puerta de enlace de Direct Connect asociada a las puertas de enlace o Transit Gateway de esas regiones.",
+      "Una conexión Direct Connect distinta por región.",
+      "Un emparejamiento entre las VPC de las tres regiones.",
+      "Una VIF pública por cada VPC."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La puerta de enlace de Direct Connect es global: con una sola conexión llega a puertas de enlace privadas virtuales o Transit Gateway de cualquier región (salvo China) y de otras cuentas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html"
+    ]
+  },
+  {
+    "id": "direct-connect-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una aplicación crítica depende de una única conexión Direct Connect. La dirección exige la máxima resiliencia frente a la caída de un equipo o de una ubicación entera. ¿Qué diseño cumple el requisito?",
+    "opciones": [
+      "Un LAG con cuatro conexiones en el mismo dispositivo.",
+      "Una conexión más en la misma ubicación.",
+      "Conexiones en dispositivos separados en al menos dos ubicaciones de Direct Connect.",
+      "Una conexión alojada de un socio en la misma ubicación."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El modelo de máxima resiliencia usa conexiones independientes en dispositivos distintos de al menos dos ubicaciones, y permite optar al SLA del 99,99 %. Un LAG termina en un mismo equipo de AWS y no protege frente a su caída ni la de la ubicación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/resiliency_toolkit.html"
+    ]
+  },
+  {
+    "id": "direct-connect-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa con Direct Connect quiere un respaldo económico por si el enlace cae, aunque el rendimiento sea menor durante la incidencia. ¿Qué añade?",
+    "opciones": [
+      "Una segunda conexión Direct Connect en otra ubicación.",
+      "Una Site-to-Site VPN como ruta de respaldo.",
+      "AWS Global Accelerator.",
+      "Un LAG de dos conexiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Una VPN sobre internet es la opción de respaldo más barata: con BGP se prefiere Direct Connect y la VPN toma el relevo si cae. Una segunda conexión Direct Connect da más resiliencia, pero cuesta más.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "direct-connect-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS ofrece una conexión de red privada y dedicada entre un centro de datos y AWS, sin usar internet?",
+    "opciones": [
+      "AWS Direct Connect.",
+      "Amazon VPC.",
+      "AWS Site-to-Site VPN.",
+      "Amazon CloudFront."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Direct Connect es un enlace físico privado hasta AWS. Site-to-Site VPN también conecta el centro de datos, pero con túneles cifrados que viajan por internet.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html"
+    ]
+  }
+]

@@ -65,7 +65,7 @@
       <p>AWS Resource Access Manager (AWS <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>) permite <strong>compartir recursos</strong> que tienes en una cuenta con
         otras cuentas de AWS, de forma segura y centralizada. El recurso <strong>se crea una vez</strong> y lo usan
         varias cuentas, en lugar de duplicarlo en cada una. Es una pieza básica de las arquitecturas con muchas
-        cuentas: una red central que usan todos, un <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> común, las mismas reglas de licencias.</p>
+        cuentas: una red central que usan todos, un <a href="transit-gateway.html">Transit Gateway</a> común, las mismas reglas de licencias.</p>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
@@ -82,7 +82,7 @@
         <li><strong>Propietario y participante:</strong> el propietario conserva el control del recurso (lo modifica
           y lo borra). El participante lo <strong>usa</strong> dentro de lo permitido, pero no lo administra.</li>
         <li><strong>Qué se puede compartir</strong> (entre otros): <strong>subredes de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></strong>,
-          <strong><a href="../servicio.html?id=transit-gateway">Transit Gateway</a></strong>, reglas de <a href="route-53.html">Route 53</a> Resolver, configuraciones de <a href="license-manager.html">License Manager</a>, clústeres
+          <strong><a href="transit-gateway.html">Transit Gateway</a></strong>, reglas de <a href="route-53.html">Route 53</a> Resolver, configuraciones de <a href="license-manager.html">License Manager</a>, clústeres
           de <a href="aurora.html">Aurora</a>, reservas de capacidad y hosts dedicados de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, listas de prefijos, recursos de <a href="network-firewall.html">Network Firewall</a> y
           de <a href="glue.html">Glue</a>.</li>
         <li><strong><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> compartida:</strong> la cuenta de red crea la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y comparte sus subredes; las demás cuentas
@@ -95,7 +95,7 @@
       <ul>
         <li><strong>Red centralizada:</strong> una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> compartida, gestionada por el equipo de redes, para las cuentas
           de aplicación.</li>
-        <li>Un único <strong><a href="../servicio.html?id=transit-gateway">Transit Gateway</a></strong> para toda la organización.</li>
+        <li>Un único <strong><a href="transit-gateway.html">Transit Gateway</a></strong> para toda la organización.</li>
         <li>Reglas de <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> comunes (<a href="route-53.html">Route 53</a> Resolver) para todas las <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
         <li>Compartir las reglas de licencias de <a href="license-manager.html">License Manager</a>.</li>
         <li>Aprovechar en otras cuentas una reserva de capacidad de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>.</li>
@@ -117,7 +117,7 @@
         <table>
           <thead><tr><th>Necesidad</th><th>Mecanismo</th></tr></thead>
           <tbody>
-            <tr><td>Compartir subredes, <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> y otros recursos admitidos</td><td><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></td></tr>
+            <tr><td>Compartir subredes, <a href="transit-gateway.html">Transit Gateway</a> y otros recursos admitidos</td><td><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></td></tr>
             <tr><td>Acceso a un bucket, una clave o una cola desde otra cuenta</td><td>Política basada en recursos</td></tr>
             <tr><td>Actuar en otra cuenta con ciertos permisos</td><td>Rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> entre cuentas</td></tr>
             <tr><td>Conectar dos <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> completas</td><td>Interconexión de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> o Transit Gateway</td></tr>
@@ -146,7 +146,7 @@
         <li><strong>"Compartir recursos entre cuentas sin duplicarlos"</strong>: <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>.</li>
         <li><strong>"Varias cuentas deben desplegar en la misma <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>"</strong> o "red centralizada": compartir las
           subredes con <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr> (<abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> compartida).</li>
-        <li><strong>"Compartir un <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> con las cuentas de la organización"</strong>: <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>.</li>
+        <li><strong>"Compartir un <a href="transit-gateway.html">Transit Gateway</a> con las cuentas de la organización"</strong>: <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>.</li>
         <li><strong>"Sin tener que aceptar invitaciones"</strong>: activar el uso compartido con AWS
           <a href="organizations.html">Organizations</a>.</li>
         <li><strong><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a> y <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> se comparten con políticas de recurso</strong>, no con <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr>.</li>

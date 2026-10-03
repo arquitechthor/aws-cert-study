@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Site-to-Site VPN — Apuntes AWS</title>
+<meta name="description" content="Túneles IPsec cifrados sobre internet entre la red local y las VPC, rápidos de crear y útiles como conexión principal o de respaldo. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/site-to-site-vpn.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Site-to-Site VPN — Apuntes AWS">
+<meta property="og:description" content="Túneles IPsec cifrados sobre internet entre la red local y las VPC, rápidos de crear y útiles como conexión principal o de respaldo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/site-to-site-vpn.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/site-to-site-vpn.svg" alt="" width="56" height="56"><span>AWS Site-to-Site VPN</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Túnel <abbr class="sigla sigla-1" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec<span class="sigla-exp"> (Internet Protocol Security: cifrado de los paquetes IP en una VPN)</span></abbr> cifrado sobre Internet entre tu red local y tus redes privadas en AWS</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/vpn/" target="_blank" rel="noopener">Documentación de AWS Site-to-Site VPN ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Site-to-Site <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr> crea una <strong>conexión cifrada con <abbr class="sigla" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec</abbr></strong> entre tu red local (una sede o un
+        centro de datos) y tus redes en AWS, a través de <strong>internet</strong>. Se configura en minutos y cada
+        conexión trae <strong>dos túneles</strong> en equipos distintos de AWS para que la caída de uno no corte el
+        servicio.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Puerta de enlace de cliente (<em>customer gateway</em>):</strong> el recurso que representa tu router
+          o cortafuegos local (su <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> pública y, si usa <abbr class="sigla sigla-1" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP<span class="sigla-exp"> (Border Gateway Protocol: protocolo con el que los routers se anuncian las redes)</span></abbr>, su <abbr class="sigla sigla-1" data-s="ASN" data-en="Autonomous System Number" data-es="número que identifica una red en BGP" tabindex="0">ASN<span class="sigla-exp"> (Autonomous System Number: número que identifica una red en BGP)</span></abbr>).</li>
+        <li><strong>Lado de AWS:</strong> la conexión termina en una <strong>puerta de enlace privada virtual</strong>
+          (una sola <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>), en un <a href="transit-gateway.html">Transit Gateway</a> (muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>) o en Cloud <abbr class="sigla sigla-1" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN<span class="sigla-exp"> (Wide Area Network: red de área extensa)</span></abbr>.</li>
+        <li><strong>Dos túneles por conexión:</strong> conviene configurar ambos en tu equipo; AWS hace mantenimiento en
+          uno mientras el otro sigue activo.</li>
+        <li><strong>Enrutamiento estático o dinámico:</strong> rutas estáticas o <abbr class="sigla" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP</abbr>, que anuncia las redes y conmuta
+          solo entre túneles.</li>
+        <li><strong>Ancho de banda:</strong> hasta 1,25 Gbps por túnel estándar. Los <strong>túneles de gran ancho de
+          banda</strong> llegan a 5 Gbps, solo con Transit Gateway o Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr>. Con Transit Gateway y <abbr class="sigla" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP</abbr>, <abbr class="sigla sigla-1" data-s="ECMP" data-en="Equal-Cost Multi-Path" data-es="reparte el tráfico entre varias rutas iguales" tabindex="0">ECMP<span class="sigla-exp"> (Equal-Cost Multi-Path: reparte el tráfico entre varias rutas iguales)</span></abbr> suma
+          varios túneles.</li>
+        <li><strong><abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> acelerada:</strong> el tráfico entra en la red de AWS por la ubicación de borde más cercana
+          gracias a <a href="global-accelerator.html">Global Accelerator</a>. Solo con Transit Gateway.</li>
+        <li><strong><abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> sobre <a href="direct-connect.html">Direct Connect</a>:</strong> túneles <abbr class="sigla" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec</abbr> que viajan por Direct Connect para cifrar ese
+          enlace (también con <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> privadas).</li>
+        <li><strong>VPN CloudHub:</strong> varias sedes conectadas a la misma puerta de enlace privada virtual pueden
+          comunicarse entre sí a través de AWS.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Conectar rápidamente una sede o un centro de datos con AWS.</li>
+        <li><strong>Respaldo</strong> de una conexión <a href="direct-connect.html">Direct Connect</a>.</li>
+        <li>Conexión temporal mientras llega Direct Connect.</li>
+        <li>Cifrar el tráfico que viaja por Direct Connect.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si se necesita rendimiento constante o mucho ancho de banda de forma continua: <a href="direct-connect.html">Direct Connect</a>.</li>
+        <li>Para que empleados individuales se conecten desde su portátil: <a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
+        <li>Para conectar dos <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> de AWS entre sí: emparejamiento de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> o <a href="transit-gateway.html">Transit Gateway</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></th><th><a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a></th><th><a href="direct-connect.html">Direct Connect</a></th></tr></thead>
+          <tbody>
+            <tr><td>Conecta</td><td>Una red entera (sede)</td><td>Un usuario y su dispositivo</td><td>Una red entera por enlace físico</td></tr>
+            <tr><td>Medio</td><td>Internet, <abbr class="sigla" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec</abbr></td><td>Internet, <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> (OpenVPN)</td><td>Enlace privado</td></tr>
+            <tr><td>Puesta en marcha</td><td>Minutos</td><td>Minutos</td><td>Semanas</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por hora de cada conexión <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></strong> y por la <strong>transferencia de datos de
+        salida</strong>. La <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> acelerada añade los cargos de <a href="global-accelerator.html">Global Accelerator</a>, y con <a href="transit-gateway.html">Transit Gateway</a> se suman sus
+        cargos por adjunto y procesamiento.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado <abbr class="sigla" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec</abbr> con <abbr class="sigla sigla-1" data-s="IKEv1" data-en="Internet Key Exchange version 1" data-es="negociación de claves de IPsec" tabindex="0">IKEv1<span class="sigla-exp"> (Internet Key Exchange version 1: negociación de claves de IPsec)</span></abbr> o <abbr class="sigla sigla-1" data-s="IKEv2" data-en="Internet Key Exchange version 2" data-es="negociación de claves de IPsec" tabindex="0">IKEv2<span class="sigla-exp"> (Internet Key Exchange version 2: negociación de claves de IPsec)</span></abbr>; se pueden elegir algoritmos y usar certificados en lugar de claves
+          precompartidas.</li>
+        <li>Dos túneles por conexión; para evitar que tu equipo sea el punto único de fallo, usa dos puertas de enlace de
+          cliente con una conexión cada una.</li>
+        <li><abbr class="sigla" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP</abbr> permite la conmutación automática entre túneles y con <a href="direct-connect.html">Direct Connect</a>.</li>
+        <li>Métricas de estado de los túneles en <a href="cloudwatch.html">CloudWatch</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Conexión cifrada rápida con el centro de datos"</strong>: Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>.</li>
+        <li><strong>"Respaldo de <a href="direct-connect.html">Direct Connect</a>"</strong>: Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>.</li>
+        <li><strong>"Más de 1,25 Gbps por <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>"</strong>: <abbr class="sigla" data-s="ECMP" data-en="Equal-Cost Multi-Path" data-es="reparte el tráfico entre varias rutas iguales" tabindex="0">ECMP</abbr> con <a href="transit-gateway.html">Transit Gateway</a> y <abbr class="sigla" data-s="BGP" data-en="Border Gateway Protocol" data-es="protocolo con el que los routers se anuncian las redes" tabindex="0">BGP</abbr>, o túneles de gran ancho de banda.</li>
+        <li><strong>"Mejorar la <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> desde sedes lejanas"</strong>: <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> acelerada (con Transit Gateway).</li>
+        <li><strong>"Cifrar Direct Connect"</strong>: <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> sobre Direct Connect (o <abbr class="sigla sigla-1" data-s="MACsec" data-en="Media Access Control Security" data-es="cifrado del enlace físico, en capa 2" tabindex="0">MACsec<span class="sigla-exp"> (Media Access Control Security: cifrado del enlace físico, en capa 2)</span></abbr>).</li>
+        <li><strong>"Empleados en remoto"</strong>: <a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>, no Site-to-Site.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="site-to-site-vpn"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html" target="_blank" rel="noopener">What is AWS Site-to-Site VPN?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNTunnels.html" target="_blank" rel="noopener">Tunnel options for your AWS Site-to-Site VPN connection</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html" target="_blank" rel="noopener">AWS Site-to-Site VPN quotas</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpn/latest/s2svpn/accelerated-vpn.html" target="_blank" rel="noopener">Accelerated Site-to-Site VPN connections</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

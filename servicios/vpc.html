@@ -73,15 +73,15 @@
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Bloque <abbr class="sigla sigla-1" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR<span class="sigla-exp"> (Classless Inter-Domain Routing: notación de rangos de IP como 10.0.0.0/16)</span></abbr>:</strong> rango IPv4 de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, de <code>/16</code> a <code>/28</code>,
-          ampliable con bloques secundarios; opcionalmente también IPv6.</li>
+        <li><strong>Bloque <abbr class="sigla sigla-1" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR<span class="sigla-exp"> (Classless Inter-Domain Routing: notación de rangos de IP como 10.0.0.0/16)</span></abbr>:</strong> rango <abbr class="sigla sigla-1" data-s="IPv4" data-en="Internet Protocol version 4" data-es="direcciones IP de 32 bits" tabindex="0">IPv4<span class="sigla-exp"> (Internet Protocol version 4: direcciones IP de 32 bits)</span></abbr> de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, de <code>/16</code> a <code>/28</code>,
+          ampliable con bloques secundarios; opcionalmente también <abbr class="sigla sigla-1" data-s="IPv6" data-en="Internet Protocol version 6" data-es="direcciones IP de 128 bits" tabindex="0">IPv6<span class="sigla-exp"> (Internet Protocol version 6: direcciones IP de 128 bits)</span></abbr>.</li>
         <li><strong>Subred:</strong> parte del rango de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> que vive en <strong>una sola zona de
           disponibilidad</strong>. AWS reserva <strong>5 direcciones</strong> de cada subred.</li>
         <li><strong>Subred pública vs privada:</strong> es pública si su tabla de rutas envía
           <code>0.0.0.0/0</code> a un <strong>internet gateway</strong>. Las privadas no tienen esa ruta.</li>
         <li><strong><abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr>:</strong> permite que las instancias de subredes privadas salgan a
           internet (por ejemplo, para actualizaciones) sin aceptar conexiones entrantes. Es por zona:
-          para alta disponibilidad, uno en cada zona. Para IPv6, el equivalente es el
+          para alta disponibilidad, uno en cada zona. Para <abbr class="sigla" data-s="IPv6" data-en="Internet Protocol version 6" data-es="direcciones IP de 128 bits" tabindex="0">IPv6</abbr>, el equivalente es el
           <em>egress-only internet gateway</em>.</li>
         <li><strong>Security groups:</strong> firewall <strong>con estado</strong> en la interfaz de
           red; solo reglas de permitir; pueden referenciar otros security groups.</li>
@@ -93,10 +93,10 @@
           tipo <em>interface</em> (<a href="privatelink.html">PrivateLink</a>) crean una interfaz de red con <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> privada y tienen coste.</li>
         <li><strong><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> peering:</strong> une dos <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (incluso de otras cuentas o regiones) de forma
           privada. <strong>No es transitivo</strong> y los rangos no pueden solaparse.</li>
-        <li><strong><a href="../servicio.html?id=transit-gateway">Transit Gateway</a>:</strong> concentrador que conecta muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y redes locales en
+        <li><strong><a href="transit-gateway.html">Transit Gateway</a>:</strong> concentrador que conecta muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y redes locales en
           estrella, con tablas de rutas propias.</li>
-        <li><strong>Conectividad híbrida:</strong> <a href="../servicio.html?id=site-to-site-vpn">Site-to-Site <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr></a> (túneles IPsec por internet,
-          rápida de montar) y <a href="../servicio.html?id=direct-connect">Direct Connect</a> (enlace dedicado, latencia estable).</li>
+        <li><strong>Conectividad híbrida:</strong> <a href="site-to-site-vpn.html">Site-to-Site <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr></a> (túneles <abbr class="sigla sigla-1" data-s="IPsec" data-en="Internet Protocol Security" data-es="cifrado de los paquetes IP en una VPN" tabindex="0">IPsec<span class="sigla-exp"> (Internet Protocol Security: cifrado de los paquetes IP en una VPN)</span></abbr> por internet,
+          rápida de montar) y <a href="direct-connect.html">Direct Connect</a> (enlace dedicado, latencia estable).</li>
         <li><strong>VPC Flow Logs:</strong> registran metadatos del tráfico <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> (origen, destino,
           puertos, aceptado o rechazado) hacia <a href="cloudwatch.html">CloudWatch</a> Logs, <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> o <a href="data-firehose.html">Firehose</a>. No capturan el
           contenido de los paquetes.</li>
@@ -107,7 +107,7 @@
         <li>Arquitectura de tres capas: balanceador en subredes públicas, aplicación y base de datos
           en subredes privadas.</li>
         <li>Aislar entornos (producción, pruebas) o equipos en <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> distintas.</li>
-        <li>Extender el centro de datos a AWS con <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> o <a href="../servicio.html?id=direct-connect">Direct Connect</a>.</li>
+        <li>Extender el centro de datos a AWS con <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> o <a href="direct-connect.html">Direct Connect</a>.</li>
         <li>Acceso privado a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y <a href="dynamodb.html">DynamoDB</a> desde subredes sin salida a internet.</li>
         <li>Auditar tráfico y detectar conexiones rechazadas con Flow Logs.</li>
       </ul>
@@ -116,7 +116,7 @@
       <ul>
         <li>Para inspeccionar el contenido del tráfico o filtrar por dominio: <a href="network-firewall.html">Network Firewall</a> o
           appliances de terceros con <a href="elb.html">Gateway Load Balancer</a>, no solo security groups y <abbr class="sigla sigla-1" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL<span class="sigla-exp"> (Network Access Control List: firewall a nivel de subred)</span></abbr>.</li>
-        <li>Para conectar decenas de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> entre sí: <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> o Cloud <abbr class="sigla sigla-1" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN<span class="sigla-exp"> (Wide Area Network: red de área extensa)</span></abbr>, no una malla de peerings.</li>
+        <li>Para conectar decenas de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> entre sí: <a href="transit-gateway.html">Transit Gateway</a> o Cloud <abbr class="sigla sigla-1" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN<span class="sigla-exp"> (Wide Area Network: red de área extensa)</span></abbr>, no una malla de peerings.</li>
         <li>Para exponer un servicio concreto a otras cuentas sin unir las redes: <a href="privatelink.html">PrivateLink</a>
           (servicio de endpoint), no peering.</li>
       </ul>
@@ -138,7 +138,7 @@
       <h2 id="precios">Modelo de precios</h2>
       <p>Crear una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, subredes, tablas de rutas, security groups y <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr> no cuesta nada. Se paga por
         los componentes gestionados: <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr> gateways (por hora y por GB procesado), endpoints de tipo
-        interface, conexiones <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>, <a href="../servicio.html?id=transit-gateway">Transit Gateway</a> (por adjunto y por GB), direcciones IPv4 públicas,
+        interface, conexiones <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>, <a href="transit-gateway.html">Transit Gateway</a> (por adjunto y por GB), direcciones <abbr class="sigla" data-s="IPv4" data-en="Internet Protocol version 4" data-es="direcciones IP de 32 bits" tabindex="0">IPv4</abbr> públicas,
         Flow Logs (según el destino) y la transferencia de datos entre zonas o regiones. Los endpoints
         <em>gateway</em> de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y <a href="dynamodb.html">DynamoDB</a> son gratuitos y además ahorran tráfico por el <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr>.</p>
 
@@ -157,10 +157,10 @@
         <li><strong>"Instancias privadas deben descargar parches de internet"</strong>: <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway</abbr> en una subred pública.</li>
         <li><strong>"Acceder a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin pasar por internet y sin coste"</strong>: endpoint de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de tipo gateway.</li>
         <li><strong>"Bloquear una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> maliciosa concreta"</strong>: regla de denegar en la <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr> (los security groups no deniegan).</li>
-        <li><strong>"A conecta con B y B con C, pero A no llega a C"</strong>: el peering no es transitivo; <a href="../servicio.html?id=transit-gateway">Transit Gateway</a>.</li>
+        <li><strong>"A conecta con B y B con C, pero A no llega a C"</strong>: el peering no es transitivo; <a href="transit-gateway.html">Transit Gateway</a>.</li>
         <li><strong>"Muchas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y oficinas en estrella"</strong>: Transit Gateway.</li>
         <li><strong>"Diagnosticar tráfico rechazado"</strong>: VPC Flow Logs.</li>
-        <li><strong>"Conexión dedicada con latencia constante"</strong>: <a href="../servicio.html?id=direct-connect">Direct Connect</a>; <strong>"rápido y cifrado por internet"</strong>: <a href="../servicio.html?id=site-to-site-vpn">Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
+        <li><strong>"Conexión dedicada con latencia constante"</strong>: <a href="direct-connect.html">Direct Connect</a>; <strong>"rápido y cifrado por internet"</strong>: <a href="site-to-site-vpn.html">Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

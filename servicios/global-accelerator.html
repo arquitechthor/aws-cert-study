@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Global Accelerator — Apuntes AWS</title>
+<meta name="description" content="Dos IP estáticas anycast que llevan el tráfico TCP o UDP de los usuarios por la red de AWS hasta el punto de enlace sano más cercano. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/global-accelerator.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Global Accelerator — Apuntes AWS">
+<meta property="og:description" content="Dos IP estáticas anycast que llevan el tráfico TCP o UDP de los usuarios por la red de AWS hasta el punto de enlace sano más cercano.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/global-accelerator.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/global-accelerator.svg" alt="" width="56" height="56"><span>AWS Global Accelerator</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Dos <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> estáticas anycast que llevan a tus usuarios por la red troncal de AWS</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/global-accelerator/" target="_blank" rel="noopener">Documentación de AWS Global Accelerator ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Global Accelerator da a tu aplicación <strong>direcciones <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> estáticas anycast</strong> (dos <abbr class="sigla sigla-1" data-s="IPv4" data-en="Internet Protocol version 4" data-es="direcciones IP de 32 bits" tabindex="0">IPv4<span class="sigla-exp"> (Internet Protocol version 4: direcciones IP de 32 bits)</span></abbr>, o cuatro
+        en doble pila) que se anuncian desde las ubicaciones de borde de AWS. El tráfico del usuario entra en la
+        <strong>red troncal de AWS</strong> en la ubicación más cercana y viaja por ella hasta el punto de enlace
+        <strong>sano</strong> más adecuado, en una o varias regiones. Mejora la latencia y la estabilidad frente a
+        recorrer internet, y conmuta entre regiones sin depender del caché de <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Acelerador estándar:</strong> reparte el tráfico entre puntos de enlace regionales (balanceadores
+          de aplicación o de red, instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> o <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> elásticas) según cercanía, estado y pesos.</li>
+        <li><strong>Acelerador de enrutamiento personalizado:</strong> asigna cada usuario a una instancia <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> y un puerto
+          concretos de una subred (por ejemplo, partidas multijugador o sesiones de <abbr class="sigla sigla-1" data-s="VoIP" data-en="Voice over IP" data-es="llamadas de voz por internet" tabindex="0">VoIP<span class="sigla-exp"> (Voice over IP: llamadas de voz por internet)</span></abbr>).</li>
+        <li><strong>Agentes de escucha (<em>listeners</em>):</strong> puertos y protocolo (<abbr class="sigla sigla-1" data-s="TCP" data-en="Transmission Control Protocol" data-es="protocolo de transporte fiable" tabindex="0">TCP<span class="sigla-exp"> (Transmission Control Protocol: protocolo de transporte fiable)</span></abbr> o <abbr class="sigla sigla-1" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP<span class="sigla-exp"> (User Datagram Protocol: protocolo de transporte sin conexión)</span></abbr>) que acepta el
+          acelerador.</li>
+        <li><strong>Grupos de puntos de enlace:</strong> uno por región, con un <strong>dial de tráfico</strong> (qué
+          porcentaje recibe esa región) y <strong>pesos</strong> por punto de enlace.</li>
+        <li><strong>Comprobaciones de estado:</strong> si un punto de enlace o una región dejan de estar sanos, el
+          tráfico pasa a otros sin cambiar las <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>.</li>
+        <li><strong>Afinidad de cliente:</strong> envía siempre al mismo usuario al mismo punto de enlace.</li>
+        <li><strong>Conservar la <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> del cliente:</strong> con balanceadores de aplicación e instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, el
+          destino ve la <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> real del usuario.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="BYOIP" data-en="Bring Your Own IP" data-es="usar en AWS tus propios rangos de IP públicas" tabindex="0">BYOIP<span class="sigla-exp"> (Bring Your Own IP: usar en AWS tus propios rangos de IP públicas)</span></abbr>:</strong> puedes usar tus propios rangos de <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Aplicaciones <abbr class="sigla" data-s="TCP" data-en="Transmission Control Protocol" data-es="protocolo de transporte fiable" tabindex="0">TCP</abbr> o <abbr class="sigla" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP</abbr> no <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> (juegos, <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr>, <abbr class="sigla" data-s="VoIP" data-en="Voice over IP" data-es="llamadas de voz por internet" tabindex="0">VoIP</abbr>) para usuarios de todo el mundo.</li>
+        <li>Clientes que deben permitir <strong><abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> fijas</strong> en sus cortafuegos.</li>
+        <li>Conmutación por error entre regiones en segundos, sin esperar a que caduque el <abbr class="sigla sigla-1" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL<span class="sigla-exp"> (Time To Live: tiempo de vida antes de caducar)</span></abbr> del <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr>.</li>
+        <li>Despliegues azul/verde o pruebas por región moviendo el dial de tráfico.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>cachear</strong> contenido web estático o dinámico cerca del usuario: <a href="cloudfront.html">CloudFront</a>.</li>
+        <li>Si basta con resolver por latencia o conmutar por <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr> y se aceptan los tiempos del <abbr class="sigla" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL</abbr>: <a href="route-53.html">Route 53</a>.</li>
+        <li>Para una aplicación usada en una sola región por usuarios cercanos: probablemente no aporta lo que cuesta.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Global Accelerator</th><th><a href="cloudfront.html">CloudFront</a></th><th><a href="route-53.html">Route 53</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué hace</td><td>Lleva el tráfico por la red de AWS</td><td>Cachea contenido en el borde</td><td>Resuelve nombres (<abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr>)</td></tr>
+            <tr><td>Protocolos</td><td><abbr class="sigla" data-s="TCP" data-en="Transmission Control Protocol" data-es="protocolo de transporte fiable" tabindex="0">TCP</abbr> y <abbr class="sigla" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP</abbr></td><td><abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> y <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> (y WebSocket)</td><td><abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr></td></tr>
+            <tr><td><abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> estáticas</td><td>Sí (anycast)</td><td>No</td><td>No aplica</td></tr>
+            <tr><td>Conmutación</td><td>Segundos, sin depender del <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr></td><td>Grupos de orígenes</td><td>Según el <abbr class="sigla" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL</abbr></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga una <strong>tarifa fija por hora</strong> por cada acelerador (activo o no), un
+        <strong>recargo por GB</strong> (<em>Data Transfer-Premium</em>) en el sentido dominante del tráfico, que
+        depende de la región y la ubicación de borde, y las <strong><abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> públicas <abbr class="sigla" data-s="IPv4" data-en="Internet Protocol version 4" data-es="direcciones IP de 32 bits" tabindex="0">IPv4</abbr></strong> que usa.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> se sirven desde redes independientes (zonas de red aisladas); si una falla, la otra sigue.</li>
+        <li>Incluye la protección de <a href="shield.html">Shield</a> Standard frente a <abbr class="sigla sigla-1" data-s="DDoS" data-en="Distributed Denial of Service" data-es="ataque que satura un servicio desde muchos orígenes" tabindex="0">DDoS<span class="sigla-exp"> (Distributed Denial of Service: ataque que satura un servicio desde muchos orígenes)</span></abbr>, y se puede añadir Shield Advanced.</li>
+        <li>Los grupos de seguridad y las reglas de <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> de los balanceadores siguen funcionando.</li>
+        <li>Conmutación por error entre regiones con comprobaciones de estado.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"<abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> estáticas" o "lista blanca de <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> fijas"</strong> para una aplicación global: Global Accelerator.</li>
+        <li><strong>"<abbr class="sigla" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP</abbr>", "juegos", "<abbr class="sigla" data-s="VoIP" data-en="Voice over IP" data-es="llamadas de voz por internet" tabindex="0">VoIP</abbr>"</strong> con usuarios globales: Global Accelerator, no <a href="cloudfront.html">CloudFront</a>.</li>
+        <li><strong>"Conmutación entre regiones sin depender del caché de <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr>"</strong>: Global Accelerator.</li>
+        <li><strong>"Cachear imágenes o vídeo"</strong>: CloudFront.</li>
+        <li><strong>"Enviar a cada jugador a un servidor concreto"</strong>: acelerador de enrutamiento personalizado.</li>
+        <li><strong>"Probar una región nueva con el 10 % del tráfico"</strong>: dial de tráfico del grupo de puntos de enlace.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="global-accelerator"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html" target="_blank" rel="noopener">What is AWS Global Accelerator?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html" target="_blank" rel="noopener">How AWS Global Accelerator works</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-pricing.html" target="_blank" rel="noopener">Pricing for AWS Global Accelerator</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-aws-global-accelerator-custom-routing-accelerators/" target="_blank" rel="noopener">Introducing AWS Global Accelerator custom routing accelerators</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

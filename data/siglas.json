@@ -56,6 +56,10 @@
    "en": "Amazon States Language",
    "es": "lenguaje JSON con el que se definen los flujos de Step Functions"
   },
+  "ASN": {
+   "en": "Autonomous System Number",
+   "es": "número que identifica una red en BGP"
+  },
   "AZ": {
    "en": "Availability Zone",
    "es": "zona de disponibilidad"
@@ -64,9 +68,21 @@
    "en": "Business Associate Addendum",
    "es": "acuerdo que exige HIPAA para tratar datos de salud"
   },
+  "BFD": {
+   "en": "Bidirectional Forwarding Detection",
+   "es": "detecta en milisegundos la caída de un enlace"
+  },
+  "BGP": {
+   "en": "Border Gateway Protocol",
+   "es": "protocolo con el que los routers se anuncian las redes"
+  },
   "BI": {
    "en": "Business Intelligence",
    "es": "análisis de datos para el negocio"
+  },
+  "BYOIP": {
+   "en": "Bring Your Own IP",
+   "es": "usar en AWS tus propios rangos de IP públicas"
   },
   "BYOL": {
    "en": "Bring Your Own License",
@@ -224,6 +240,10 @@
    "en": "Elliptic Curve Cryptography",
    "es": "criptografía de curva elíptica"
   },
+  "ECMP": {
+   "en": "Equal-Cost Multi-Path",
+   "es": "reparte el tráfico entre varias rutas iguales"
+  },
   "ECPU": {
    "en": "ElastiCache Processing Unit",
    "es": "unidad de cómputo de ElastiCache Serverless"
@@ -296,6 +316,10 @@
    "en": "Graphics Processing Unit",
    "es": "procesador gráfico, muy usado en ML"
   },
+  "GRE": {
+   "en": "Generic Routing Encapsulation",
+   "es": "túnel que encapsula paquetes entre routers"
+  },
   "GSI": {
    "en": "Global Secondary Index",
    "es": "índice secundario global"
@@ -364,6 +388,14 @@
    "en": "Integrated Development Environment",
    "es": "editor de código con herramientas de desarrollo"
   },
+  "IKEv1": {
+   "en": "Internet Key Exchange version 1",
+   "es": "negociación de claves de IPsec"
+  },
+  "IKEv2": {
+   "en": "Internet Key Exchange version 2",
+   "es": "negociación de claves de IPsec"
+  },
   "IMDS": {
    "en": "Instance Metadata Service",
    "es": "servicio de metadatos de la instancia"
@@ -383,6 +415,18 @@
   "IPS": {
    "en": "Intrusion Prevention System",
    "es": "sistema que detecta y bloquea intrusiones en la red"
+  },
+  "IPsec": {
+   "en": "Internet Protocol Security",
+   "es": "cifrado de los paquetes IP en una VPN"
+  },
+  "IPv4": {
+   "en": "Internet Protocol version 4",
+   "es": "direcciones IP de 32 bits"
+  },
+  "IPv6": {
+   "en": "Internet Protocol version 6",
+   "es": "direcciones IP de 128 bits"
   },
   "IRSA": {
    "en": "IAM Roles for Service Accounts",
@@ -444,6 +488,10 @@
    "en": "Kinesis Producer Library",
    "es": "biblioteca para escribir productores de Kinesis"
   },
+  "LAG": {
+   "en": "Link Aggregation Group",
+   "es": "varios enlaces que funcionan como uno"
+  },
   "LAMP": {
    "en": null,
    "es": "Linux, Apache, MySQL y PHP"
@@ -459,6 +507,10 @@
   "LSI": {
    "en": "Local Secondary Index",
    "es": "índice secundario local"
+  },
+  "MACsec": {
+   "en": "Media Access Control Security",
+   "es": "cifrado del enlace físico, en capa 2"
   },
   "MAU": {
    "en": "Monthly Active Users",
@@ -700,6 +752,10 @@
    "en": "Schema Conversion Tool",
    "es": null
   },
+  "SD-WAN": {
+   "en": "Software-Defined Wide Area Network",
+   "es": "red extensa entre sedes gestionada por software"
+  },
   "SDK": {
    "en": "Software Development Kit",
    "es": "bibliotecas para programar contra AWS"
@@ -876,6 +932,14 @@
    "en": "Coordinated Universal Time",
    "es": "hora universal coordinada"
   },
+  "VIF": {
+   "en": "Virtual Interface",
+   "es": "interfaz virtual sobre la conexión física"
+  },
+  "VLAN": {
+   "en": "Virtual Local Area Network",
+   "es": "red local virtual que separa tráfico en un mismo enlace"
+  },
   "VPC": {
    "en": "Virtual Private Cloud",
    "es": null
@@ -891,6 +955,10 @@
   "VTL": {
    "en": "Velocity Template Language",
    "es": "lenguaje de plantillas"
+  },
+  "VoIP": {
+   "en": "Voice over IP",
+   "es": "llamadas de voz por internet"
   },
   "WAF": {
    "en": "Web Application Firewall",

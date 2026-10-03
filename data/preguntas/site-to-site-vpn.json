@@ -1,0 +1,137 @@
+[
+  {
+    "id": "site-to-site-vpn-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa necesita conectar su centro de datos con una VPC esta misma semana, con el tráfico cifrado. Más adelante contratará Direct Connect. ¿Qué usa mientras tanto?",
+    "opciones": [
+      "AWS Site-to-Site VPN.",
+      "AWS Client VPN.",
+      "Emparejamiento de VPC.",
+      "AWS PrivateLink."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Site-to-Site VPN se configura en minutos y cifra el tráfico con IPsec sobre internet. Después puede quedarse como respaldo de Direct Connect. Client VPN es para usuarios individuales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html"
+    ]
+  },
+  {
+    "id": "site-to-site-vpn-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una conexión Site-to-Site VPN se corta durante el mantenimiento de AWS, aunque la conexión tiene dos túneles. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "La VPN no admite mantenimiento sin corte.",
+      "El equipo local solo tiene configurado uno de los dos túneles.",
+      "La VPC no tiene puerta de enlace de internet.",
+      "Falta un registro DNS para la VPN."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Cada conexión ofrece dos túneles en equipos distintos de AWS precisamente para el mantenimiento y los fallos. Si el equipo local solo levanta uno, el corte de ese túnel deja sin servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNTunnels.html"
+    ]
+  },
+  {
+    "id": "site-to-site-vpn-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Unas sedes en otros continentes se conectan a AWS por VPN y sufren latencia y pérdidas por internet. Las VPN terminan en un Transit Gateway. ¿Qué mejora tiene menos impacto en la arquitectura?",
+    "opciones": [
+      "Cambiar a rutas estáticas.",
+      "Mover las VPN a una puerta de enlace privada virtual.",
+      "Activar la aceleración en las conexiones VPN para que entren en la red de AWS por la ubicación de borde más cercana.",
+      "Crear una VPC en cada sede."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La VPN acelerada usa Global Accelerator para que el tráfico entre en la red troncal de AWS cerca de la sede, en lugar de recorrer internet hasta la región. Solo está disponible con Transit Gateway.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/s2svpn/accelerated-vpn.html"
+    ]
+  },
+  {
+    "id": "site-to-site-vpn-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa debe cifrar el tráfico que viaja por su conexión Direct Connect de 1 Gbps hacia un Transit Gateway. ¿Qué solución es correcta?",
+    "opciones": [
+      "Activar MACsec en la conexión.",
+      "Usar una VIF pública sin más cambios.",
+      "Usar una VPN sobre Direct Connect, con túneles IPsec que viajan por el enlace privado.",
+      "Activar el cifrado por defecto de la VPC."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Direct Connect no cifra el tráfico. MACsec no está disponible en conexiones de 1 Gbps, así que se usa una VPN IPsec sobre Direct Connect, que puede usar direcciones IP privadas con Transit Gateway.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/s2svpn/private-ip-dx.html"
+    ]
+  },
+  {
+    "id": "site-to-site-vpn-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una VPN termina en un Transit Gateway y necesita unos 4 Gbps hacia AWS. ¿Qué opciones lo permiten? (Elige dos.)",
+    "opciones": [
+      "Varios túneles con BGP y ECMP en el Transit Gateway.",
+      "Túneles de gran ancho de banda, de hasta 5 Gbps.",
+      "Rutas estáticas en un único túnel estándar.",
+      "Una puerta de enlace privada virtual con dos conexiones.",
+      "Un emparejamiento de VPC."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Un túnel estándar llega a 1,25 Gbps. Con Transit Gateway se puede sumar con ECMP (requiere BGP) o usar túneles de gran ancho de banda de hasta 5 Gbps. La puerta de enlace privada virtual no reparte entre conexiones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html"
+    ]
+  },
+  {
+    "id": "site-to-site-vpn-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere unir su red local con su VPC con un túnel cifrado que viaja por internet. ¿Qué servicio usa?",
+    "opciones": [
+      "AWS Direct Connect.",
+      "AWS Site-to-Site VPN.",
+      "Amazon Route 53.",
+      "AWS Transit Gateway."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Site-to-Site VPN crea túneles IPsec cifrados por internet. Direct Connect es un enlace privado que no usa internet, y Transit Gateway es un router que puede terminar la VPN, no la VPN en sí.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html"
+    ]
+  }
+]

@@ -373,8 +373,8 @@
     "alias": [
       "AWS VPN"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "VPN gestionada para que los usuarios se conecten desde su dispositivo a las VPC y a la red local, con autenticación por certificados, Active Directory o SAML.",
     "frase": "Da a empleados en remoto un túnel cifrado desde su portátil hasta tus redes privadas",
     "documentacion": "https://docs.aws.amazon.com/vpn/"
   },
@@ -756,8 +756,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Conexión de red privada y dedicada entre el centro de datos y AWS, con ancho de banda constante y sin pasar por internet.",
     "frase": "Enlace de red dedicado y privado entre tu centro de datos y la nube, sin Internet",
     "documentacion": "https://docs.aws.amazon.com/directconnect/"
   },
@@ -1132,8 +1132,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Dos IP estáticas anycast que llevan el tráfico TCP o UDP de los usuarios por la red de AWS hasta el punto de enlace sano más cercano.",
     "frase": "Dos IP estáticas anycast que llevan a tus usuarios por la red troncal de AWS",
     "documentacion": "https://docs.aws.amazon.com/global-accelerator/"
   },
@@ -2135,8 +2135,8 @@
     "alias": [
       "AWS VPN"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Túneles IPsec cifrados sobre internet entre la red local y las VPC, rápidos de crear y útiles como conexión principal o de respaldo.",
     "frase": "Túnel IPsec cifrado sobre Internet entre tu red local y tus redes privadas en AWS",
     "documentacion": "https://docs.aws.amazon.com/vpn/"
   },
@@ -2356,8 +2356,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Router regional gestionado que conecta en estrella muchas VPC, VPN y Direct Connect, con tablas de rutas para segmentar el tráfico.",
     "frase": "Hub central que interconecta cientos de VPC y redes locales en estrella",
     "documentacion": "https://docs.aws.amazon.com/vpc/latest/tgw/"
   },

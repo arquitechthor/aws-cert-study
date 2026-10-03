@@ -1,0 +1,135 @@
+[
+  {
+    "id": "transit-gateway-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa tiene 60 VPC en varias cuentas y necesita que todas se comuniquen entre sí y con el centro de datos. Hoy gestiona una malla de emparejamientos de VPC difícil de mantener. ¿Qué solución simplifica la red?",
+    "opciones": [
+      "Más emparejamientos de VPC, uno por cada par nuevo.",
+      "Un Transit Gateway compartido con RAM, al que se adjuntan las VPC y la conexión con el centro de datos.",
+      "Un punto de enlace de PrivateLink en cada VPC.",
+      "Una VPN de Site-to-Site desde cada VPC hasta las demás."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Transit Gateway centraliza el enrutamiento en estrella y admite tráfico transitivo: cada VPC se adjunta una vez. Compartido con RAM, las cuentas adjuntan sus VPC sin gestionar el router. El emparejamiento no es transitivo y la malla crece con el cuadrado de las VPC.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html"
+    ]
+  },
+  {
+    "id": "transit-gateway-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03",
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Las VPC de producción y de desarrollo están adjuntas al mismo Transit Gateway. No deben poder comunicarse entre sí, pero ambas deben llegar a una VPC de servicios compartidos. ¿Cómo se configura?",
+    "opciones": [
+      "Con grupos de seguridad que denieguen el tráfico entre entornos.",
+      "Con dos Transit Gateway, uno por entorno, emparejados entre sí.",
+      "Con ACL de red en la VPC de servicios compartidos.",
+      "Con tablas de rutas separadas: cada entorno se asocia a la suya y solo recibe las rutas propagadas de la VPC compartida."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La segmentación en Transit Gateway se hace con varias tablas de rutas: cada adjunto se asocia a una tabla y propaga sus rutas solo a las tablas que deben conocerlo. Los grupos de seguridad no pueden denegar (solo permiten), y emparejar dos Transit Gateway volvería a unir los entornos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html"
+    ]
+  },
+  {
+    "id": "transit-gateway-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una conexión Site-to-Site VPN estándar se queda corta de ancho de banda hacia AWS. La empresa quiere sumar la capacidad de varios túneles sin contratar Direct Connect. ¿Qué hace?",
+    "opciones": [
+      "Terminar varias VPN en un Transit Gateway con enrutamiento dinámico (BGP) y activar ECMP.",
+      "Terminar varias VPN en la puerta de enlace privada virtual con rutas estáticas.",
+      "Aumentar el tamaño de las instancias EC2 de la VPC.",
+      "Activar el emparejamiento de VPC."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con Transit Gateway y BGP, ECMP reparte el tráfico entre varios túneles a la vez y suma su ancho de banda. ECMP no funciona con rutas estáticas, y una puerta de enlace privada virtual no reparte el tráfico entre conexiones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-quotas.html"
+    ]
+  },
+  {
+    "id": "transit-gateway-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa centraliza la inspección del tráfico entre VPC en una VPC de inspección con un cortafuegos con estado, conectada a un Transit Gateway. Algunas conexiones se cortan porque la respuesta vuelve por otra AZ. ¿Qué lo corrige?",
+    "opciones": [
+      "Desactivar la propagación de rutas.",
+      "Usar emparejamiento de VPC en lugar de Transit Gateway.",
+      "Activar el modo dispositivo en el adjunto de la VPC de inspección.",
+      "Añadir una ruta de agujero negro hacia la VPC de inspección."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El modo dispositivo hace que el Transit Gateway mantenga los dos sentidos de un flujo en la misma AZ del adjunto, de modo que el cortafuegos con estado ve la conexión completa. Sin él, el tráfico puede volver por otra AZ y el cortafuegos lo descarta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-appliance-scenario.html"
+    ]
+  },
+  {
+    "id": "transit-gateway-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Solo dos VPC de la misma región, sin rangos de IP solapados, deben comunicarse. Se busca la opción más barata y sencilla. ¿Cuál es?",
+    "opciones": [
+      "Un Transit Gateway con dos adjuntos.",
+      "Un emparejamiento de VPC.",
+      "Una conexión Direct Connect.",
+      "Dos conexiones Site-to-Site VPN."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El emparejamiento de VPC no tiene cargo por hora ni por procesamiento; solo se paga la transferencia de datos. Transit Gateway cobra por hora de adjunto y por GB procesado, y compensa cuando hay muchas VPC o se necesita tránsito.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html"
+    ]
+  },
+  {
+    "id": "transit-gateway-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS actúa como un centro de red regional que conecta muchas VPC y redes locales a través de un único punto?",
+    "opciones": [
+      "Amazon Route 53.",
+      "AWS Global Accelerator.",
+      "AWS Transit Gateway.",
+      "Amazon CloudFront."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Transit Gateway es un router en la nube que interconecta VPC, VPN y Direct Connect en una topología en estrella. Route 53 es DNS, Global Accelerator mejora el acceso de los usuarios desde internet y CloudFront es una CDN.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html"
+    ]
+  }
+]

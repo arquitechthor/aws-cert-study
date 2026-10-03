@@ -1,0 +1,134 @@
+[
+  {
+    "id": "global-accelerator-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un juego multijugador usa UDP con servidores en dos regiones. Los jugadores de todo el mundo sufren latencia variable y los clientes necesitan IP fijas. ¿Qué servicio lo resuelve?",
+    "opciones": [
+      "Amazon CloudFront.",
+      "Route 53 con enrutamiento por latencia.",
+      "Un balanceador de aplicación por región.",
+      "AWS Global Accelerator."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Global Accelerator da IP estáticas anycast, admite UDP y lleva el tráfico por la red de AWS desde el borde más cercano. CloudFront trabaja con HTTP, y Route 53 no da IP fijas ni evita internet.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html"
+    ]
+  },
+  {
+    "id": "global-accelerator-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación activa en dos regiones usa Route 53 para conmutar por error, pero algunos usuarios tardan minutos en llegar a la región sana por el caché de DNS. ¿Qué mejora la conmutación?",
+    "opciones": [
+      "Subir el TTL de los registros.",
+      "Poner Global Accelerator delante de los balanceadores de ambas regiones.",
+      "Usar enrutamiento por geolocalización.",
+      "Activar el caché de CloudFront."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con Global Accelerator los usuarios siempre usan las mismas IP y es el servicio el que redirige el tráfico al punto de enlace sano en segundos, sin depender del TTL que cachean los resolutores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/global-accelerator/latest/dg/introduction-how-it-works.html"
+    ]
+  },
+  {
+    "id": "global-accelerator-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una plataforma de partidas debe enviar a cada grupo de jugadores a una instancia EC2 y un puerto concretos, entre miles de servidores, aprovechando la red de AWS. ¿Qué usa?",
+    "opciones": [
+      "Un acelerador de enrutamiento personalizado de Global Accelerator.",
+      "Un acelerador estándar con afinidad de cliente.",
+      "CloudFront con Lambda@Edge.",
+      "Route 53 con enrutamiento ponderado."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El acelerador de enrutamiento personalizado asigna cada usuario a un destino concreto (IP y puerto de una instancia en una subred) según la lógica de la aplicación. El estándar elige el punto de enlace él mismo.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/networking-and-content-delivery/introducing-aws-global-accelerator-custom-routing-accelerators/"
+    ]
+  },
+  {
+    "id": "global-accelerator-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa despliega una versión nueva de su aplicación en otra región y quiere enviarle primero el 10 % del tráfico global, con vuelta atrás inmediata, sin cambiar las IP que usan los clientes. ¿Qué ajusta?",
+    "opciones": [
+      "El TTL de Route 53.",
+      "La política de caché de CloudFront.",
+      "El dial de tráfico del grupo de puntos de enlace de esa región en Global Accelerator.",
+      "El tamaño del grupo de Auto Scaling."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El dial de tráfico fija qué porcentaje del tráfico recibe cada grupo de puntos de enlace (región). Se puede subir o bajar al momento y las IP estáticas no cambian.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/global-accelerator/latest/dg/about-endpoint-groups-traffic-dial.html"
+    ]
+  },
+  {
+    "id": "global-accelerator-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "¿En qué caso es CloudFront mejor opción que Global Accelerator?",
+    "opciones": [
+      "Cuando la aplicación usa UDP.",
+      "Cuando los clientes necesitan dos IP estáticas.",
+      "Cuando se quiere cachear imágenes y vídeos cerca de los usuarios.",
+      "Cuando se necesita conmutar entre regiones sin depender del DNS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "CloudFront es una CDN: guarda en caché contenido HTTP en el borde. Global Accelerator no cachea; acelera conexiones TCP y UDP, da IP estáticas y conmuta entre regiones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html"
+    ]
+  },
+  {
+    "id": "global-accelerator-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio mejora la disponibilidad y el rendimiento de una aplicación global llevando el tráfico de los usuarios por la red de AWS a través de IP estáticas?",
+    "opciones": [
+      "AWS Global Accelerator.",
+      "AWS Direct Connect.",
+      "Amazon VPC.",
+      "AWS Transit Gateway."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Global Accelerator usa ubicaciones de borde y la red troncal de AWS para llevar el tráfico de internet a la aplicación, con dos IP estáticas como punto de entrada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/global-accelerator/latest/dg/what-is-global-accelerator.html"
+    ]
+  }
+]
