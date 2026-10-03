@@ -1,0 +1,112 @@
+[
+  {
+    "id": "nova-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una agencia quiere generar imágenes para campañas a partir de descripciones en texto usando un modelo de Amazon en Bedrock. ¿Qué modelo usa?",
+    "opciones": [
+      "Amazon Nova Micro.",
+      "Amazon Nova Canvas.",
+      "Amazon Nova Sonic.",
+      "Amazon Polly."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Nova Canvas genera y edita imágenes. Micro trabaja solo con texto y Sonic con voz.",
+    "fuentes": [
+      "https://aws.amazon.com/nova/"
+    ]
+  },
+  {
+    "id": "nova-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un centro de contacto quiere un asistente que hable con los clientes por voz en tiempo real, entendiendo y respondiendo con voz. ¿Qué modelo de Nova encaja?",
+    "opciones": [
+      "Nova Canvas.",
+      "Nova Reel.",
+      "Nova Sonic.",
+      "Nova Multimodal Embeddings."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Nova Sonic es el modelo de voz a voz para conversaciones en tiempo real.",
+    "fuentes": [
+      "https://aws.amazon.com/nova/"
+    ]
+  },
+  {
+    "id": "nova-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA generativa",
+    "enunciado": "Un equipo quiere búsqueda semántica sobre textos, imágenes y vídeos con un único modelo que los represente en el mismo espacio vectorial. ¿Qué usa?",
+    "opciones": [
+      "Nova Reel.",
+      "Amazon Comprehend.",
+      "Amazon Textract.",
+      "Nova Multimodal Embeddings."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Nova Multimodal Embeddings convierte distintos tipos de contenido en vectores de un mismo espacio, lo que permite búsquedas entre modalidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/nova/latest/nova2-userguide/whats-new.html"
+    ]
+  },
+  {
+    "id": "nova-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa quiere que Nova 2 Lite responda con el estilo y el vocabulario de su sector usando miles de ejemplos etiquetados. ¿Qué técnica aplica?",
+    "opciones": [
+      "Ajuste fino supervisado (SFT) en Bedrock o SageMaker AI.",
+      "Usar más tokens de salida.",
+      "Cambiar a Nova Canvas.",
+      "Subir la temperatura."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El ajuste fino supervisado adapta el modelo con pares de entrada y salida etiquetados. Nova 2 Lite admite SFT y ajuste por refuerzo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/nova/latest/nova2-userguide/whats-new.html"
+    ]
+  },
+  {
+    "id": "nova-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Directrices para una IA responsable",
+    "enunciado": "¿Qué medida incluye Amazon Nova para ayudar a identificar que una imagen o un vídeo ha sido generado por IA?",
+    "opciones": [
+      "Un nombre de fichero especial.",
+      "Una marca de agua invisible en el contenido generado.",
+      "Una resolución fija.",
+      "Nada; no es posible."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los modelos creativos de Nova añaden una marca de agua invisible para apoyar la transparencia y la trazabilidad del contenido generado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ai/responsible-ai/nova-reel/overview.html"
+    ]
+  }
+]

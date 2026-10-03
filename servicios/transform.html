@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Transform — Apuntes AWS</title>
+<meta name="description" content="Servicio con agentes de IA para modernizar y migrar a escala: .NET, mainframe, VMware, migraciones de servidores y transformaciones de código personalizadas. Apuntes y preguntas de práctica para AIF-C01.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/transform.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Transform — Apuntes AWS">
+<meta property="og:description" content="Servicio con agentes de IA para modernizar y migrar a escala: .NET, mainframe, VMware, migraciones de servidores y transformaciones de código personalizadas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/transform.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/transform.svg" alt="" width="56" height="56"><span>AWS Transform</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Agentes de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> que modernizan código heredado: .NET, mainframe y cargas de VMware</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/transform/" target="_blank" rel="noopener">Documentación de AWS Transform ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Transform es un servicio de <strong><abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> con agentes</strong> que acelera la <strong>modernización y la
+        migración</strong> de sistemas heredados. Varios agentes especializados analizan el código o la infraestructura,
+        proponen un plan, ejecutan la transformación y documentan el resultado, con personas que revisan y aprueban en
+        los puntos clave.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>.NET (Windows):</strong> pasa aplicaciones .NET Framework a .NET multiplataforma, para ejecutarlas en
+          Linux y ahorrar licencias.</li>
+        <li><strong>Mainframe:</strong> analiza código <abbr class="sigla sigla-1" data-s="COBOL" data-en="Common Business-Oriented Language" data-es="lenguaje de programación habitual en mainframes" tabindex="0">COBOL<span class="sigla-exp"> (Common Business-Oriented Language: lenguaje de programación habitual en mainframes)</span></abbr>, documenta la lógica de negocio, descompone y refactoriza
+          hacia Java.</li>
+        <li><strong>VMware:</strong> descubre máquinas y dependencias, traduce la red y planifica olas para pasar a <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>.</li>
+        <li><strong>Migraciones:</strong> descubrimiento, evaluación de costes (<abbr class="sigla" data-s="TCO" data-en="Total Cost of Ownership" data-es="coste total de propiedad" tabindex="0">TCO</abbr>) y rehospedaje usando <a href="application-migration-service.html">Transform MGN</a>.</li>
+        <li><strong>Transformaciones personalizadas (<em>custom</em>):</strong> actualizaciones de Java, Python o
+          Node.js y transformaciones propias descritas en lenguaje natural, aplicadas a muchos repositorios.</li>
+        <li><strong>Humano en el bucle:</strong> los planes y cambios se revisan antes de aplicarse.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Salir de licencias de Windows modernizando aplicaciones .NET.</li>
+        <li>Documentar y modernizar aplicaciones de mainframe.</li>
+        <li>Migrar un centro de datos VMware a AWS.</li>
+        <li>Actualizar Java 8 a una versión moderna en cientos de repositorios.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para cambios puntuales en un proyecto: un asistente de programación como <a href="kiro.html">Kiro</a> o <a href="../servicio.html?id=amazon-q">Q Developer</a>.</li>
+        <li>Para mover datos o bases de datos: <a href="datasync.html">DataSync</a>, <a href="dms.html"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Modernizar código heredado a escala</td><td>AWS Transform</td></tr>
+            <tr><td>Rehospedar servidores tal cual</td><td><a href="application-migration-service.html">Transform MGN</a> (antes Application Migration Service)</td></tr>
+            <tr><td>Programar día a día con agentes</td><td><a href="kiro.html">Kiro</a>, <a href="../servicio.html?id=amazon-q">Q Developer</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Depende del tipo de transformación: algunas no tienen coste adicional y otras se cobran por uso del agente
+        (por ejemplo, por líneas de código o por tiempo de transformación). Se pagan aparte los recursos de AWS creados.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El código se procesa en tu entorno de AWS y no se usa para entrenar modelos.</li>
+        <li>Acceso controlado por <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> e <a href="iam-identity-center.html">IAM Identity Center</a>.</li>
+        <li>Revisión humana de los planes y del código transformado.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Modernizar .NET Framework a .NET multiplataforma con <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr>"</strong>: AWS Transform.</li>
+        <li><strong>"Documentar y modernizar <abbr class="sigla" data-s="COBOL" data-en="Common Business-Oriented Language" data-es="lenguaje de programación habitual en mainframes" tabindex="0">COBOL</abbr>"</strong>: AWS Transform for mainframe.</li>
+        <li><strong>"Migrar VMware a <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> con planificación de olas"</strong>: AWS Transform for VMware.</li>
+        <li><strong>"Actualizar Java en cientos de repositorios"</strong>: transformaciones personalizadas.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="transform"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://aws.amazon.com/documentation-overview/transform/" target="_blank" rel="noopener">AWS Transform documentation</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/transform/latest/userguide/dotnet.html" target="_blank" rel="noopener">Modernizing .NET with AWS Transform</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/12/transform-custom-organization-wide-modernization/" target="_blank" rel="noopener">AWS launches AWS Transform custom</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

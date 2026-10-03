@@ -1,0 +1,112 @@
+[
+  {
+    "id": "bedrock-agentcore-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un equipo ha creado un agente con un marco de código abierto y quiere ejecutarlo en producción con sesiones aisladas, memoria entre conversaciones y trazas, sin gestionar servidores. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon Bedrock AgentCore.",
+      "Amazon SageMaker AI Ground Truth.",
+      "Amazon Comprehend.",
+      "AWS Glue DataBrew."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AgentCore ejecuta agentes de cualquier marco y modelo, con Runtime, Memory y Observability gestionados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock-agentcore/"
+    ]
+  },
+  {
+    "id": "bedrock-agentcore-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un agente debe poder consultar el estado de pedidos usando una API interna existente, expuesta como herramienta. ¿Qué componente de AgentCore lo facilita?",
+    "opciones": [
+      "AgentCore Memory.",
+      "AgentCore Gateway, que convierte API y funciones en herramientas que el agente usa mediante MCP.",
+      "AgentCore Evaluations.",
+      "Amazon Polly."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Gateway transforma API, funciones Lambda y servicios en herramientas compatibles con MCP para que los agentes puedan llamarlas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock-agentcore/"
+    ]
+  },
+  {
+    "id": "bedrock-agentcore-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Una empresa quiere garantizar que un agente nunca apruebe reembolsos de más de 500 € aunque el modelo lo intente. ¿Qué componente aplica esa regla en cada llamada a herramientas?",
+    "opciones": [
+      "AgentCore Memory.",
+      "Un prompt de sistema más largo.",
+      "AgentCore Policy.",
+      "Amazon CloudFront."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Policy intercepta las llamadas a herramientas a través de Gateway y aplica reglas deterministas (Cedar), independientes de lo que decida el modelo.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/12/amazon-bedrock-agentcore-policy-evaluations-preview/"
+    ]
+  },
+  {
+    "id": "bedrock-agentcore-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un asistente debe recordar las preferencias de cada cliente (por ejemplo, su talla) entre conversaciones distintas. ¿Qué usa?",
+    "opciones": [
+      "Aumentar la temperatura del modelo.",
+      "Un modelo más grande.",
+      "AgentCore Browser.",
+      "La memoria a largo plazo de AgentCore Memory."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "AgentCore Memory guarda memoria a corto plazo (la conversación) y a largo plazo (hechos y preferencias) para reutilizarla en sesiones posteriores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock-agentcore/"
+    ]
+  },
+  {
+    "id": "bedrock-agentcore-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Para auditar por qué un agente tomó una decisión concreta, ¿qué componente ofrece trazas de cada paso?",
+    "opciones": [
+      "AgentCore Observability, integrado con CloudWatch.",
+      "Amazon Translate.",
+      "AgentCore Code Interpreter.",
+      "AgentCore Identity."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Observability registra trazas y métricas de cada paso, llamada al modelo y uso de herramientas, lo que permite depurar y auditar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-get-started.html"
+    ]
+  }
+]

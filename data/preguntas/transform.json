@@ -1,0 +1,112 @@
+[
+  {
+    "id": "transform-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa quiere usar agentes de IA para pasar decenas de aplicaciones .NET Framework a .NET multiplataforma y ejecutarlas en Linux. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon CodeGuru Profiler.",
+      "AWS Transform.",
+      "Amazon Comprehend.",
+      "AWS Glue DataBrew."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "AWS Transform for .NET analiza, planifica y transforma aplicaciones .NET Framework a .NET moderno multiplataforma.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/transform/latest/userguide/dotnet.html"
+    ]
+  },
+  {
+    "id": "transform-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un banco necesita entender y documentar la lógica de negocio de millones de líneas de COBOL antes de modernizarlas. ¿Qué capacidad encaja?",
+    "opciones": [
+      "Amazon Textract.",
+      "Amazon Translate.",
+      "AWS Transform for mainframe.",
+      "AWS DMS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "AWS Transform for mainframe analiza el código, extrae y documenta la lógica de negocio y ayuda a refactorizar.",
+    "fuentes": [
+      "https://aws.amazon.com/documentation-overview/transform/"
+    ]
+  },
+  {
+    "id": "transform-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una organización quiere actualizar de Java 8 a Java 17 cientos de repositorios aplicando las mismas reglas en todos. ¿Qué usa?",
+    "opciones": [
+      "AWS CodeDeploy.",
+      "Amazon Kendra.",
+      "Amazon Q Business.",
+      "AWS Transform custom, con transformaciones predefinidas o propias."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "AWS Transform custom incluye transformaciones como Java 8 a 17 y permite definir otras en lenguaje natural para aplicarlas a escala.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/12/transform-custom-organization-wide-modernization/"
+    ]
+  },
+  {
+    "id": "transform-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Directrices para una IA responsable",
+    "enunciado": "En AWS Transform, ¿qué papel tienen las personas durante una transformación?",
+    "opciones": [
+      "Revisan y aprueban los planes y los cambios propuestos por los agentes.",
+      "Solo pagan la factura.",
+      "Escriben todo el código a mano.",
+      "Ninguno; todo es automático."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS Transform mantiene a las personas en el bucle para revisar planes y resultados, una práctica clave de IA responsable.",
+    "fuentes": [
+      "https://aws.amazon.com/documentation-overview/transform/"
+    ]
+  },
+  {
+    "id": "transform-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Para migrar un entorno VMware a AWS con descubrimiento de dependencias y planificación de olas asistidos por IA, ¿qué usa?",
+    "opciones": [
+      "AWS Snow Family.",
+      "AWS Transform for VMware.",
+      "Amazon WorkSpaces.",
+      "AWS Backup."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El agente de VMware de AWS Transform descubre aplicaciones y dependencias, traduce la red y planifica las olas de migración.",
+    "fuentes": [
+      "https://aws.amazon.com/documentation-overview/transform/"
+    ]
+  }
+]

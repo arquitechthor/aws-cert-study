@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Bedrock AgentCore — Apuntes AWS</title>
+<meta name="description" content="Plataforma para ejecutar agentes de IA en producción con seguridad: entorno de ejecución aislado, memoria, puerta de enlace de herramientas, identidad, políticas y observabilidad. Apuntes y preguntas de práctica para AIF-C01.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/bedrock-agentcore.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Bedrock AgentCore — Apuntes AWS">
+<meta property="og:description" content="Plataforma para ejecutar agentes de IA en producción con seguridad: entorno de ejecución aislado, memoria, puerta de enlace de herramientas, identidad, políticas y observabilidad.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/bedrock-agentcore.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="56" height="56"><span>Amazon Bedrock AgentCore</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Ejecuta y protege agentes de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> en producción con memoria, identidad y observabilidad</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/bedrock-agentcore/" target="_blank" rel="noopener">Documentación de Amazon Bedrock AgentCore ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Bedrock AgentCore es un conjunto de servicios para <strong>llevar agentes de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> a producción</strong>.
+        Un agente es un programa que usa un modelo de lenguaje para decidir qué pasos dar y qué herramientas llamar.
+        AgentCore resuelve lo que no es el modelo: dónde se ejecuta el agente, cómo recuerda, cómo se conecta a
+        herramientas y <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>, quién puede usarlo y qué hace. Funciona con <strong>cualquier marco</strong> (<a href="strands-agents.html">Strands Agents</a>,
+        LangGraph, CrewAI…) y <strong>cualquier modelo</strong>, dentro o fuera de <a href="bedrock.html">Bedrock</a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Runtime:</strong> ejecuta el agente sin servidores, con cada sesión aislada y sesiones largas.</li>
+        <li><strong>Memory:</strong> memoria a corto plazo (la conversación) y a largo plazo (preferencias, hechos,
+          episodios aprendidos).</li>
+        <li><strong>Gateway:</strong> convierte <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>, funciones <a href="lambda.html">Lambda</a> y servicios en herramientas que el agente puede usar
+          mediante <abbr class="sigla sigla-1" data-s="MCP" data-en="Model Context Protocol" data-es="protocolo abierto para dar herramientas y datos a agentes de IA" tabindex="0">MCP<span class="sigla-exp"> (Model Context Protocol: protocolo abierto para dar herramientas y datos a agentes de IA)</span></abbr>.</li>
+        <li><strong>Identity:</strong> gestiona con qué identidad actúa el agente y sus credenciales hacia terceros (<abbr class="sigla sigla-1" data-s="OAuth" data-es="estándar para delegar acceso a una aplicación sin compartir la contraseña" tabindex="0">OAuth<span class="sigla-exp"> (estándar para delegar acceso a una aplicación sin compartir la contraseña)</span></abbr>,
+          claves de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>).</li>
+        <li><strong>Policy:</strong> reglas (escritas en lenguaje natural y convertidas a Cedar) que interceptan las llamadas
+          a herramientas para que el agente no se salga de sus límites.</li>
+        <li><strong>Evaluations:</strong> mide la calidad del agente con evaluadores ya definidos o propios.</li>
+        <li><strong>Observability:</strong> trazas y métricas de cada paso del agente en <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li><strong>Herramientas integradas:</strong> navegador (Browser) e intérprete de código (Code Interpreter) en
+          entornos aislados.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Desplegar en producción un agente de atención al cliente creado con Strands o LangGraph.</li>
+        <li>Dar a un agente acceso controlado a las <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> internas de la empresa.</li>
+        <li>Agentes que recuerdan las preferencias de cada usuario entre sesiones.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para una sola llamada a un modelo (resumir, clasificar): la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> de <a href="bedrock.html">Bedrock</a> basta.</li>
+        <li>Para un asistente empresarial listo para usar sin programar: soluciones gestionadas como <a href="quick.html">Amazon Quick</a>.</li>
+        <li>Para escribir la lógica del agente: eso lo hace un marco como <a href="strands-agents.html">Strands Agents</a>; AgentCore lo ejecuta y lo
+          protege.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pieza</th><th>Ejemplo</th><th>Papel</th></tr></thead>
+          <tbody>
+            <tr><td>Modelo</td><td>Nova, Claude en <a href="bedrock.html">Bedrock</a></td><td>Razona y genera</td></tr>
+            <tr><td>Marco de agentes</td><td><a href="strands-agents.html">Strands Agents</a></td><td>Define el bucle del agente y sus herramientas</td></tr>
+            <tr><td>Plataforma</td><td>AgentCore</td><td>Ejecuta, recuerda, conecta, protege y observa</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Pago por uso de cada componente: <strong>tiempo de <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> y memoria</strong> consumido en Runtime, eventos y
+        registros de memoria, invocaciones de Gateway, etc., sin costes iniciales. Los modelos se pagan aparte.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Aislamiento de cada sesión de usuario en Runtime.</li>
+        <li>Identidades y credenciales del agente gestionadas, sin guardarlas en el código.</li>
+        <li>Policy limita qué herramientas y con qué parámetros puede usar el agente.</li>
+        <li>Trazas completas para auditar las decisiones del agente.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Ejecutar agentes en producción de forma segura y escalable con cualquier marco"</strong>: AgentCore.</li>
+        <li><strong>"Que el agente recuerde entre sesiones"</strong>: AgentCore Memory.</li>
+        <li><strong>"Convertir <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> internas en herramientas para el agente"</strong>: AgentCore Gateway.</li>
+        <li><strong>"Impedir que el agente haga ciertas acciones"</strong>: AgentCore Policy.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="bedrock-agentcore"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/bedrock-agentcore/" target="_blank" rel="noopener">Amazon Bedrock AgentCore documentation</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/12/amazon-bedrock-agentcore-policy-evaluations-preview/" target="_blank" rel="noopener">Amazon Bedrock AgentCore now includes Policy, Evaluations (preview) and more</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability-get-started.html" target="_blank" rel="noopener">Get started with AgentCore Observability</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

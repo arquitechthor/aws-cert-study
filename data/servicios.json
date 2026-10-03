@@ -311,8 +311,8 @@
     "certificaciones": [
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Plataforma para ejecutar agentes de IA en producción con seguridad: entorno de ejecución aislado, memoria, puerta de enlace de herramientas, identidad, políticas y observabilidad.",
     "frase": "Ejecuta y protege agentes de IA en producción con memoria, identidad y observabilidad",
     "documentacion": "https://docs.aws.amazon.com/bedrock-agentcore/"
   },
@@ -1168,8 +1168,8 @@
     "certificaciones": [
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Herramienta visual para explorar, perfilar, limpiar y normalizar datos sin escribir código, con más de 250 transformaciones y reglas de calidad.",
     "frase": "Limpia y prepara datos con más de 250 transformaciones visuales, sin escribir código",
     "documentacion": "https://docs.aws.amazon.com/databrew/latest/dg/what-is.html"
   },
@@ -1421,8 +1421,8 @@
     "certificaciones": [
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Entorno de desarrollo (IDE y CLI) con agentes de IA que parte de especificaciones: requisitos, diseño y tareas antes de escribir el código.",
     "frase": "IDE con agentes de IA que parte de especificaciones para planificar y escribir código",
     "documentacion": "https://kiro.dev/docs/"
   },
@@ -1717,8 +1717,8 @@
     "certificaciones": [
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Familia de modelos fundacionales de Amazon en Bedrock: texto y multimodales (Nova 2), imagen (Canvas), vídeo (Reel), voz (Sonic) y embeddings, además de Nova Act y Nova Forge.",
     "frase": "Familia de modelos fundacionales propios de AWS para texto, imagen y vídeo",
     "documentacion": "https://docs.aws.amazon.com/nova/"
   },
@@ -2234,8 +2234,8 @@
     "certificaciones": [
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "SDK de código abierto de AWS para crear agentes de IA con pocas líneas: un modelo, unas instrucciones y unas herramientas, con soporte multiagente y MCP.",
     "frase": "SDK de código abierto para crear agentes de IA en Python con unas pocas líneas",
     "documentacion": "https://strandsagents.com/docs/"
   },
@@ -2349,8 +2349,8 @@
     "certificaciones": [
       "AIF-C01"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio con agentes de IA para modernizar y migrar a escala: .NET, mainframe, VMware, migraciones de servidores y transformaciones de código personalizadas.",
     "frase": "Agentes de IA que modernizan código heredado: .NET, mainframe y cargas de VMware",
     "documentacion": "https://docs.aws.amazon.com/transform/"
   },

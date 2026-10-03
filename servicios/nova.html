@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Nova — Apuntes AWS</title>
+<meta name="description" content="Familia de modelos fundacionales de Amazon en Bedrock: texto y multimodales (Nova 2), imagen (Canvas), vídeo (Reel), voz (Sonic) y embeddings, además de Nova Act y Nova Forge. Apuntes y preguntas de práctica para AIF-C01.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/nova.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Nova — Apuntes AWS">
+<meta property="og:description" content="Familia de modelos fundacionales de Amazon en Bedrock: texto y multimodales (Nova 2), imagen (Canvas), vídeo (Reel), voz (Sonic) y embeddings, además de Nova Act y Nova Forge.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/nova.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/nova.svg" alt="" width="56" height="56"><span>Amazon Nova</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Familia de modelos fundacionales propios de AWS para texto, imagen y vídeo</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/nova/" target="_blank" rel="noopener">Documentación de Amazon Nova ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Nova es la familia de <strong>modelos fundacionales propios de Amazon</strong>, disponibles en
+        <a href="bedrock.html">Bedrock</a>. Incluye modelos de <strong>comprensión</strong> (texto, imagen, documentos y vídeo), modelos
+        <strong>creativos</strong> (generación de imágenes y vídeos), un modelo de <strong>voz a voz</strong> y modelos
+        de <strong>embeddings</strong> multimodales. Destacan por su relación precio-rendimiento y por sus opciones de
+        personalización.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Modelos de comprensión:</strong> Nova Micro (solo texto, muy rápido), Lite y Pro (multimodales) y la
+          generación <strong>Nova 2</strong>, con razonamiento extendido y herramientas integradas (búsqueda web e
+          intérprete de código).</li>
+        <li><strong>Nova Canvas</strong> genera y edita imágenes; <strong>Nova Reel</strong> genera vídeos cortos a partir
+          de texto.</li>
+        <li><strong>Nova Sonic:</strong> conversaciones de voz a voz en tiempo real.</li>
+        <li><strong>Nova Multimodal Embeddings:</strong> texto, documentos, imágenes, vídeo y audio en un mismo espacio,
+          para búsqueda y <abbr class="sigla sigla-1" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG<span class="sigla-exp"> (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos)</span></abbr> multimodal.</li>
+        <li><strong>Personalización:</strong> ajuste fino supervisado (<abbr class="sigla" data-s="SFT" data-en="Supervised Fine-Tuning" data-es="ajuste fino de un modelo con ejemplos etiquetados" tabindex="0">SFT</abbr>), por refuerzo (<abbr class="sigla" data-s="RFT" data-en="Reinforcement Fine-Tuning" data-es="ajuste fino de un modelo con recompensas" tabindex="0">RFT</abbr>) y destilación en <a href="bedrock.html">Bedrock</a> o
+          <a href="sagemaker-ai.html">SageMaker AI</a>; <strong>Nova Forge</strong> para crear modelos propios partiendo de Nova.</li>
+        <li><strong>Nova Act:</strong> servicio para crear agentes que automatizan tareas en interfaces web.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Chatbots, resumen y extracción de datos de documentos a bajo coste.</li>
+        <li>Imágenes y vídeos para marketing.</li>
+        <li>Asistentes de voz en centros de contacto.</li>
+        <li>Búsqueda semántica sobre contenidos de distintos tipos.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para tareas muy concretas resueltas por servicios de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> ya preparados: <a href="textract.html">Textract</a> (documentos), <a href="transcribe.html">Transcribe</a> (voz a
+          texto), <a href="rekognition.html">Rekognition</a> (imágenes).</li>
+        <li>Si otro modelo de <a href="bedrock.html">Bedrock</a> rinde mejor en tu caso: Bedrock permite cambiar de modelo con la misma <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Modelo de Nova</th></tr></thead>
+          <tbody>
+            <tr><td>Texto barato y rápido</td><td>Nova Micro o Nova 2 Lite</td></tr>
+            <tr><td>Documentos, imágenes y vídeo</td><td>Nova Lite, Pro o Nova 2</td></tr>
+            <tr><td>Generar imágenes</td><td>Nova Canvas</td></tr>
+            <tr><td>Generar vídeo</td><td>Nova Reel</td></tr>
+            <tr><td>Conversación por voz</td><td>Nova Sonic</td></tr>
+            <tr><td>Vectores para búsqueda</td><td>Nova Multimodal Embeddings</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Bajo demanda <strong>por tokens de entrada y salida</strong> (por imagen o por segundo de vídeo en los modelos
+        creativos), con descuentos por inferencia por lotes o rendimiento aprovisionado, como el resto de modelos de
+        <a href="bedrock.html">Bedrock</a>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Se usan a través de <a href="bedrock.html">Bedrock</a>: tus datos no entrenan los modelos base.</li>
+        <li>Guardrails de Bedrock para filtrar contenido.</li>
+        <li>Las imágenes y vídeos generados incluyen una marca de agua invisible para identificar su origen.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Modelo fundacional de Amazon"</strong>: Nova (los Titan Text eran la generación anterior).</li>
+        <li><strong>"Generar imágenes"</strong>: Nova Canvas; <strong>"vídeo"</strong>: Nova Reel.</li>
+        <li><strong>"Voz a voz en tiempo real"</strong>: Nova Sonic.</li>
+        <li><strong>"Adaptar el modelo con datos etiquetados"</strong>: ajuste fino (<abbr class="sigla" data-s="SFT" data-en="Supervised Fine-Tuning" data-es="ajuste fino de un modelo con ejemplos etiquetados" tabindex="0">SFT</abbr>).</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="nova"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://aws.amazon.com/nova/" target="_blank" rel="noopener">Amazon Nova</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/nova/latest/nova2-userguide/whats-new.html" target="_blank" rel="noopener">What's new in Amazon Nova 2</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/ai/responsible-ai/nova-reel/overview.html" target="_blank" rel="noopener">Amazon Nova Reel AI Service Card</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

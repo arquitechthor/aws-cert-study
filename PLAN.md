@@ -444,14 +444,14 @@ esta lista es solo el orden de trabajo.
 
 #### Prioridad 4: AI Practitioner (AIF-C01) (8)
 
-- [ ] `glue-databrew` AWS Glue DataBrew — Análisis (AIF-C01)
-- [ ] `kiro` Kiro — Herramientas para desarrolladores (AIF-C01)
-- [ ] `strands-agents` Strands Agents — Herramientas para desarrolladores (AIF-C01)
+- [x] `glue-databrew` AWS Glue DataBrew — Análisis (AIF-C01)
+- [x] `kiro` Kiro — Herramientas para desarrolladores (AIF-C01)
+- [x] `strands-agents` Strands Agents — Herramientas para desarrolladores (AIF-C01)
 - [x] `bedrock` Amazon Bedrock — Machine learning (AIF-C01)
-- [ ] `bedrock-agentcore` Amazon Bedrock AgentCore — Machine learning (AIF-C01)
-- [ ] `nova` Amazon Nova — Machine learning (AIF-C01)
+- [x] `bedrock-agentcore` Amazon Bedrock AgentCore — Machine learning (AIF-C01)
+- [x] `nova` Amazon Nova — Machine learning (AIF-C01)
 - [x] `personalize` Amazon Personalize — Machine learning (SAP-C02, AIF-C01)
-- [ ] `transform` AWS Transform — Machine learning (AIF-C01)
+- [x] `transform` AWS Transform — Machine learning (AIF-C01)
 
 #### Prioridad 5: nuevos con CLF-C02 y DVA-C02 (9)
 

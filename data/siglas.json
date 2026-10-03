@@ -160,6 +160,10 @@
    "en": "Container Network Interface",
    "es": "plugin de red de los contenedores"
   },
+  "COBOL": {
+   "en": "Common Business-Oriented Language",
+   "es": "lenguaje de programación habitual en mainframes"
+  },
   "CORS": {
    "en": "Cross-Origin Resource Sharing",
    "es": "permite que una web llame a otro dominio"
@@ -688,6 +692,10 @@
    "en": "Origin Access Identity",
    "es": "mecanismo anterior a OAC"
   },
+  "OAuth": {
+   "en": null,
+   "es": "estándar para delegar acceso a una aplicación sin compartir la contraseña"
+  },
   "OCI": {
    "en": "Open Container Initiative",
    "es": "estándar abierto de imágenes de contenedores"
@@ -824,6 +832,10 @@
    "en": "Representational State Transfer",
    "es": "estilo de API sobre HTTP"
   },
+  "RFT": {
+   "en": "Reinforcement Fine-Tuning",
+   "es": "ajuste fino de un modelo con recompensas"
+  },
   "RPO": {
    "en": "Recovery Point Objective",
    "es": "cuántos datos puedes permitirte perder"
@@ -891,6 +903,10 @@
   "SES": {
    "en": "Simple Email Service",
    "es": null
+  },
+  "SFT": {
+   "en": "Supervised Fine-Tuning",
+   "es": "ajuste fino de un modelo con ejemplos etiquetados"
   },
   "SFTP": {
    "en": "SSH File Transfer Protocol",
@@ -1027,6 +1043,10 @@
   "TAM": {
    "en": "Technical Account Manager",
    "es": "responsable técnico asignado por AWS"
+  },
+  "TCO": {
+   "en": "Total Cost of Ownership",
+   "es": "coste total de propiedad"
   },
   "TCP": {
    "en": "Transmission Control Protocol",

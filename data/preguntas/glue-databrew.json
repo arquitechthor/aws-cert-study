@@ -1,0 +1,112 @@
+[
+  {
+    "id": "glue-databrew-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un analista sin conocimientos de programación debe limpiar un conjunto de datos (rellenar nulos, quitar duplicados, normalizar fechas) antes de entrenar un modelo. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon EMR.",
+      "AWS Glue DataBrew.",
+      "AWS Lambda.",
+      "Amazon Kinesis Data Streams."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "DataBrew permite preparar datos de forma visual con más de 250 transformaciones, sin escribir código.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/databrew/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "glue-databrew-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Antes de entrenar un modelo, un equipo quiere saber qué columnas tienen muchos valores nulos o valores atípicos. ¿Qué hace en DataBrew?",
+    "opciones": [
+      "Un trabajo de receta.",
+      "Un endpoint de inferencia.",
+      "Un trabajo de perfil del conjunto de datos.",
+      "Una regla de ciclo de vida."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los trabajos de perfil calculan estadísticas por columna, como nulos, valores distintos y atípicos, y pueden validar reglas de calidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/databrew/latest/dg/profile.data-quality-rules.html"
+    ]
+  },
+  {
+    "id": "glue-databrew-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Los mismos pasos de limpieza deben aplicarse cada semana a los datos nuevos. ¿Qué elemento de DataBrew lo permite?",
+    "opciones": [
+      "Un proyecto nuevo cada semana.",
+      "Un trabajo de perfil.",
+      "Un índice de Kendra.",
+      "Una receta guardada aplicada en un trabajo programado."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Una receta guarda la secuencia de transformaciones y un trabajo programado la aplica a los datos completos de forma repetible.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/databrew/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "glue-databrew-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "Un conjunto de datos contiene nombres y teléfonos de clientes y debe compartirse con otro equipo para entrenar un modelo. ¿Qué puede hacer DataBrew?",
+    "opciones": [
+      "Detectar y enmascarar los datos personales antes de compartirlos.",
+      "Cifrar el bucket.",
+      "Borrar todo el conjunto.",
+      "Nada; hay que hacerlo a mano."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "DataBrew incluye transformaciones para detectar y enmascarar información personal identificable.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/databrew/latest/dg/what-is.html"
+    ]
+  },
+  {
+    "id": "glue-databrew-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un equipo de ingeniería de datos necesita un ETL complejo, escrito en código y sobre terabytes de datos. ¿Es DataBrew la mejor opción?",
+    "opciones": [
+      "Sí, siempre.",
+      "No: para ETL con código a gran escala encajan mejor los trabajos de Glue (Spark) o EMR.",
+      "Sí, pero solo con CSV.",
+      "No: debe usar Amazon Polly."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "DataBrew está pensado para la preparación visual sin código; el ETL complejo programado encaja con Glue o EMR.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/databrew/latest/dg/what-is.html"
+    ]
+  }
+]

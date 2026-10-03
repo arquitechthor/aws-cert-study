@@ -1,0 +1,112 @@
+[
+  {
+    "id": "strands-agents-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un desarrollador quiere crear en Python, con pocas líneas, un agente que use un modelo de Bedrock y unas funciones propias como herramientas. ¿Qué usa?",
+    "opciones": [
+      "Amazon Kendra.",
+      "Amazon Lex.",
+      "AWS Glue DataBrew.",
+      "Strands Agents."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Strands Agents es un SDK de código abierto para definir agentes con un modelo, un prompt de sistema y herramientas.",
+    "fuentes": [
+      "https://strandsagents.com/docs/"
+    ]
+  },
+  {
+    "id": "strands-agents-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA generativa",
+    "enunciado": "En el enfoque dirigido por el modelo de Strands, ¿quién decide qué herramienta llamar en cada paso?",
+    "opciones": [
+      "El modelo de lenguaje, dentro del bucle del agente.",
+      "El usuario en cada paso.",
+      "Un árbol de decisiones programado a mano.",
+      "Una regla de EventBridge."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El modelo razona en un bucle, elige herramientas, recibe sus resultados y decide cuándo termina.",
+    "fuentes": [
+      "https://strandsagents.com/blog/strands-agents-model-driven-approach/"
+    ]
+  },
+  {
+    "id": "strands-agents-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un sistema necesita un agente orquestador que reparta el trabajo entre agentes especialistas. ¿Qué patrón de Strands encaja?",
+    "opciones": [
+      "Un único agente sin herramientas.",
+      "Agentes como herramientas (o un grafo de agentes).",
+      "Una tabla de DynamoDB.",
+      "Aumentar el número de tokens."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Strands admite patrones multiagente: agentes que actúan como herramientas de otro, traspasos, enjambres y grafos.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/machine-learning/customize-agent-workflows-with-advanced-orchestration-techniques-using-strands-agents/"
+    ]
+  },
+  {
+    "id": "strands-agents-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Tras crear un agente con Strands, ¿dónde puede ejecutarse en producción con sesiones aisladas y memoria gestionada?",
+    "opciones": [
+      "En Amazon Polly.",
+      "En AWS Glue.",
+      "En Amazon Bedrock AgentCore Runtime.",
+      "En Amazon Macie."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "AgentCore Runtime ejecuta agentes de cualquier marco, incluido Strands, con aislamiento por sesión, y se combina con AgentCore Memory.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/machine-learning/customize-agent-workflows-with-advanced-orchestration-techniques-using-strands-agents/"
+    ]
+  },
+  {
+    "id": "strands-agents-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza de soluciones de IA",
+    "enunciado": "¿Qué buena práctica de seguridad aplica al dar herramientas a un agente de Strands que actúa sobre AWS?",
+    "opciones": [
+      "Darle permisos de administrador para que no falle.",
+      "Guardar las claves de acceso en el código.",
+      "Desactivar los registros.",
+      "Darle solo las herramientas y permisos de IAM mínimos, y revisión humana en acciones sensibles."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Un agente puede equivocarse o ser manipulado; limitar herramientas y permisos y exigir confirmación en acciones críticas reduce el riesgo.",
+    "fuentes": [
+      "https://strandsagents.com/docs/"
+    ]
+  }
+]

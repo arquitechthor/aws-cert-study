@@ -1,0 +1,112 @@
+[
+  {
+    "id": "kiro-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un equipo quiere que su asistente de programación genere primero requisitos con criterios de aceptación, un diseño y una lista de tareas para aprobarlos antes de escribir código. ¿Qué herramienta de AWS sigue ese enfoque?",
+    "opciones": [
+      "Amazon Comprehend.",
+      "AWS CodeBuild.",
+      "Kiro, con su desarrollo guiado por especificaciones.",
+      "AWS Glue DataBrew."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Kiro convierte la petición en specs (requisitos, diseño y tareas) que el desarrollador revisa antes de implementar.",
+    "fuentes": [
+      "https://repost.aws/articles/ARuUbsGQVJQ-uthWBO7a7v8Q/build-a-licensed-content-distribution-prototype-for-edtech-with-kiro"
+    ]
+  },
+  {
+    "id": "kiro-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "En Kiro, ¿qué característica actualiza automáticamente las pruebas cada vez que se guarda un fichero?",
+    "opciones": [
+      "Steering.",
+      "Un servidor MCP.",
+      "Specs.",
+      "Agent hooks."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los agent hooks ejecutan acciones del agente cuando ocurren eventos como guardar o crear un fichero.",
+    "fuentes": [
+      "https://kiro.dev/docs/"
+    ]
+  },
+  {
+    "id": "kiro-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un equipo quiere que el agente de Kiro respete siempre sus convenciones de nombres y su arquitectura. ¿Dónde las define?",
+    "opciones": [
+      "En ficheros de steering del proyecto.",
+      "En una política de IAM.",
+      "En agent hooks.",
+      "En el buildspec."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los ficheros de steering dan al agente el contexto y las normas del proyecto que debe seguir.",
+    "fuentes": [
+      "https://kiro.dev/docs/"
+    ]
+  },
+  {
+    "id": "kiro-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Directrices para una IA responsable",
+    "enunciado": "¿Qué buena práctica aplica al usar código generado por un agente como Kiro?",
+    "opciones": [
+      "Desplegarlo sin revisar, porque el agente no se equivoca.",
+      "Revisar el código y los comandos propuestos y mantener pruebas antes de integrarlos.",
+      "Compartir las credenciales con el agente.",
+      "Desactivar las pruebas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los modelos pueden equivocarse; la revisión humana y las pruebas siguen siendo necesarias para un uso responsable.",
+    "fuentes": [
+      "https://kiro.dev/docs/"
+    ]
+  },
+  {
+    "id": "kiro-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "¿Cuál es la herramienta más adecuada para modernizar cientos de aplicaciones .NET Framework de una organización, frente a Kiro?",
+    "opciones": [
+      "AWS DataSync.",
+      "Amazon Lex.",
+      "AWS Transform.",
+      "Kiro es siempre la mejor opción."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "AWS Transform está pensado para modernizaciones a gran escala (.NET, mainframe, VMware, actualizaciones de lenguaje). Kiro es un entorno de desarrollo para el trabajo diario.",
+    "fuentes": [
+      "https://kiro.dev/docs/"
+    ]
+  }
+]
