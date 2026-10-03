@@ -1,0 +1,112 @@
+[
+  {
+    "id": "migration-evaluator-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "La dirección pide un caso de negocio con el coste estimado de llevar a AWS su centro de datos, basado en el uso real de sus servidores. ¿Qué servicio gratuito usa?",
+    "opciones": [
+      "AWS Trusted Advisor.",
+      "AWS Budgets.",
+      "AWS Cost Explorer.",
+      "Migration Evaluator."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Migration Evaluator analiza el inventario y el uso de los servidores locales y crea un caso de negocio con escenarios en AWS.",
+    "fuentes": [
+      "https://aws.amazon.com/migration-evaluator/features/"
+    ]
+  },
+  {
+    "id": "migration-evaluator-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué herramienta se usa para estimar el coste de una arquitectura nueva que todavía no existe, eligiendo servicios y cantidades?",
+    "opciones": [
+      "AWS Pricing Calculator.",
+      "Migration Evaluator.",
+      "AWS Cost and Usage Report.",
+      "AWS Marketplace."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Pricing Calculator estima el coste de una arquitectura que diseñas; Migration Evaluator parte de los servidores que ya tienes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/whitepapers/latest/how-aws-pricing-works/aws-pricingtco-tools.html"
+    ]
+  },
+  {
+    "id": "migration-evaluator-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Cuánto cuesta usar Migration Evaluator?",
+    "opciones": [
+      "Una tarifa por servidor analizado.",
+      "Es gratuito.",
+      "Un porcentaje del ahorro.",
+      "Depende del plan de soporte."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Migration Evaluator es un servicio gratuito de AWS, con acompañamiento de un equipo de AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/whitepapers/latest/how-aws-pricing-works/aws-pricingtco-tools.html"
+    ]
+  },
+  {
+    "id": "migration-evaluator-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Cómo obtiene Migration Evaluator los datos de los servidores locales si no hay un inventario previo?",
+    "opciones": [
+      "Con un agente en cada servidor que copia los datos de negocio.",
+      "Pidiendo las facturas eléctricas.",
+      "Con un recolector sin agente, con acceso de solo lectura a VMware, Hyper-V, Windows, Linux y SQL Server.",
+      "Con CloudTrail."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El recolector sin agente se instala en local y recoge configuración y uso con acceso de solo lectura.",
+    "fuentes": [
+      "https://aws.amazon.com/migration-evaluator/features/"
+    ]
+  },
+  {
+    "id": "migration-evaluator-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "¿Qué ventaja tiene basar la estimación en el uso real de los servidores y no en su capacidad aprovisionada?",
+    "opciones": [
+      "Ninguna.",
+      "Evita tener que migrar.",
+      "Aumenta el número de servidores.",
+      "Permite dimensionar las instancias de AWS según lo que de verdad se usa, lo que suele reducir el coste."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Muchos servidores están sobredimensionados; ajustar a su uso real es una de las fuentes de ahorro de la nube.",
+    "fuentes": [
+      "https://aws.amazon.com/migration-evaluator/features/"
+    ]
+  }
+]

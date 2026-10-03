@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Q — Apuntes AWS</title>
+<meta name="description" content="Asistente de IA generativa de AWS para desarrollar y operar: chat en la consola, el IDE y Slack o Teams, generación y revisión de código y ayuda con recursos de AWS. Apuntes y preguntas de práctica para CLF-C02, DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/amazon-q.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Q — Apuntes AWS">
+<meta property="og:description" content="Asistente de IA generativa de AWS para desarrollar y operar: chat en la consola, el IDE y Slack o Teams, generación y revisión de código y ayuda con recursos de AWS.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/amazon-q.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/amazon-q.svg" alt="" width="56" height="56"><span>Amazon Q</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Asistente de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> generativa que escribe, explica y moderniza código dentro de tu <abbr class="sigla sigla-1" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE<span class="sigla-exp"> (Integrated Development Environment: editor de código con herramientas de desarrollo)</span></abbr></span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/amazonq/" target="_blank" rel="noopener">Documentación de Amazon Q ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> Los <strong>plugins de Amazon Q Developer para <abbr class="sigla" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE</abbr></strong> terminan su soporte el <strong>30/04/2027</strong>;
+        AWS recomienda <strong><a href="kiro.html">Kiro</a></strong> para la programación con agentes en el <abbr class="sigla" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE</abbr> (y Kiro <a href="cli.html"><abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> es la evolución de la
+        <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> de Q Developer). Q Developer en la consola de AWS y en aplicaciones de chat sigue disponible.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Q es la familia de <strong>asistentes de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> generativa</strong> de AWS, construidos sobre <a href="bedrock.html">Bedrock</a>. Para
+        estos exámenes interesa <strong>Amazon Q Developer</strong>: un asistente que ayuda a <strong>escribir, entender,
+        probar y mejorar código</strong> en el <abbr class="sigla" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE</abbr> y a <strong>entender y operar los recursos de AWS</strong> desde la
+        consola, la documentación o aplicaciones de chat como Slack y Microsoft Teams.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>En el <abbr class="sigla" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE</abbr>:</strong> chat sobre el código, sugerencias en línea, generación de código y pruebas
+          unitarias, revisiones y escaneos de seguridad, y agentes que implementan cambios.</li>
+        <li><strong>En la consola de AWS:</strong> preguntas sobre servicios, buenas prácticas, tus recursos y costes, y
+          ayuda para diagnosticar errores.</li>
+        <li><strong>En aplicaciones de chat:</strong> notificaciones y consultas sobre los recursos en Slack o Teams (antes
+          AWS Chatbot).</li>
+        <li><strong>Niveles:</strong> gratuito (con un AWS Builder ID) y Pro, de pago por usuario, con más límites y
+          administración centralizada con <a href="iam-identity-center.html">IAM Identity Center</a>.</li>
+        <li><strong>Amazon Q Business:</strong> asistente para responder sobre los datos internos de la empresa (otro
+          producto de la familia).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Generar pruebas unitarias o explicar código heredado.</li>
+        <li>Detectar contraseñas escritas en el código y otras vulnerabilidades.</li>
+        <li>Preguntar en la consola por qué falla un recurso o cuánto cuesta un servicio.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para programar con agentes guiados por especificaciones en el <abbr class="sigla" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE</abbr>: <a href="kiro.html">Kiro</a> (sucesor de los plugins).</li>
+        <li>Para modernizar código a gran escala: <a href="transform.html">AWS Transform</a>.</li>
+        <li>Para crear tu propio asistente o agente en una aplicación: <a href="bedrock.html">Bedrock</a>, <a href="strands-agents.html">Strands Agents</a> y AgentCore.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Asistente de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> para desarrollar y operar en AWS</td><td>Amazon Q Developer</td></tr>
+            <tr><td>Entorno de desarrollo con agentes</td><td><a href="kiro.html">Kiro</a></td></tr>
+            <tr><td>Crear aplicaciones propias de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> generativa</td><td><a href="bedrock.html">Bedrock</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Nivel <strong>gratuito</strong> con límites mensuales y nivel <strong>Pro</strong> con una tarifa
+        <strong>mensual por usuario</strong>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>En la consola, Q solo ve los recursos que permiten los permisos de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> del usuario.</li>
+        <li>En el nivel Pro, el contenido no se usa para mejorar el servicio.</li>
+        <li>Detección de abusos de <a href="bedrock.html">Bedrock</a> para un uso responsable.</li>
+        <li>Revisa siempre el código sugerido antes de usarlo.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Asistente de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> generativa para desarrolladores en el <abbr class="sigla" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE</abbr> y la consola"</strong>: Amazon Q Developer.</li>
+        <li><strong>"Escanear el código en busca de vulnerabilidades desde el <abbr class="sigla" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE</abbr>"</strong>: Q Developer.</li>
+        <li><strong>"Preguntar por recursos de AWS desde Slack"</strong>: Q Developer en aplicaciones de chat.</li>
+        <li><strong>"Asistente sobre documentos internos de la empresa"</strong>: Q Business, no Q Developer.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="amazon-q"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html" target="_blank" rel="noopener">What is Amazon Q Developer?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/devops/code-security-scanning-with-amazon-q-developer/" target="_blank" rel="noopener">Code security scanning with Amazon Q Developer</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/02/aws-chatbot-named-amazon-q-developer/" target="_blank" rel="noopener">AWS Chatbot is now named Amazon Q Developer</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

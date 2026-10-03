@@ -30,8 +30,8 @@
     "incluye": [
       "Amazon Q Developer"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Asistente de IA generativa de AWS para desarrollar y operar: chat en la consola, el IDE y Slack o Teams, generación y revisión de código y ayuda con recursos de AWS.",
     "frase": "Asistente de IA generativa que escribe, explica y moderniza código dentro de tu IDE",
     "documentacion": "https://docs.aws.amazon.com/amazonq/"
   },
@@ -441,8 +441,8 @@
     "certificaciones": [
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Terminal en el navegador, ya autenticada con tus credenciales de la consola, con la AWS CLI y otras herramientas instaladas y 1 GB persistente por región, sin coste.",
     "frase": "Terminal en el navegador ya autenticada, con las herramientas de línea de comandos",
     "documentacion": "https://docs.aws.amazon.com/cloudshell/"
   },
@@ -627,8 +627,8 @@
     "certificaciones": [
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Centro de contacto omnicanal en la nube (voz, chat, tareas y correo) con flujos de atención, enrutamiento a agentes, IA y análisis, pagando por uso.",
     "frase": "Centro de contacto en la nube con llamadas, chat, IVR y enrutado a agentes",
     "documentacion": "https://docs.aws.amazon.com/connect/"
   },
@@ -1618,8 +1618,8 @@
     "certificaciones": [
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Catálogo de software, datos y servicios de terceros que se compran y despliegan en AWS y se pagan en la misma factura, con ofertas privadas y catálogos controlados.",
     "frase": "Tienda de software de terceros que compras y despliegas con tu factura de AWS",
     "documentacion": "https://docs.aws.amazon.com/marketplace/"
   },
@@ -1631,8 +1631,8 @@
     "certificaciones": [
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio gratuito que analiza los servidores locales y su uso real para crear un caso de negocio con el coste estimado en AWS antes de migrar.",
     "frase": "Estima el coste en la nube de tu centro de datos para preparar el caso de negocio",
     "documentacion": "https://aws.amazon.com/migration-evaluator/"
   },
@@ -2261,8 +2261,8 @@
     "certificaciones": [
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Planes de soporte de AWS: Basic gratuito, Business Support+, Enterprise y Unified Operations, con distintos tiempos de respuesta, acceso 24/7 y TAM.",
     "frase": "Planes de ayuda técnica con casos, tiempos de respuesta y un TAM en los superiores",
     "documentacion": "https://docs.aws.amazon.com/awssupport/latest/user/getting-started.html"
   },

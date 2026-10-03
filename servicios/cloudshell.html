@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CloudShell — Apuntes AWS</title>
+<meta name="description" content="Terminal en el navegador, ya autenticada con tus credenciales de la consola, con la AWS CLI y otras herramientas instaladas y 1 GB persistente por región, sin coste. Apuntes y preguntas de práctica para DVA-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cloudshell.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CloudShell — Apuntes AWS">
+<meta property="og:description" content="Terminal en el navegador, ya autenticada con tus credenciales de la consola, con la AWS CLI y otras herramientas instaladas y 1 GB persistente por región, sin coste.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cloudshell.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/cloudshell.svg" alt="" width="56" height="56"><span>AWS CloudShell</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Terminal en el navegador ya autenticada, con las herramientas de línea de comandos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=herramientas-desarrolladores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="18" height="18">Herramientas para desarrolladores <span class="cat-en">(Developer Tools)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cloudshell/" target="_blank" rel="noopener">Documentación de AWS CloudShell ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS CloudShell es una <strong>terminal en el navegador</strong> que se abre desde la consola de AWS. Ya está
+        <strong>autenticada con las credenciales de la sesión</strong> de la consola y trae instaladas la <a href="cli.html">AWS <abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a>, la <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr>
+        de <abbr class="sigla sigla-1" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM<span class="sigla-exp"> (Serverless Application Model: extensión de CloudFormation para aplicaciones sin servidores)</span></abbr>, Git, Python, Node.js y otras herramientas sobre Amazon Linux. No hay que instalar nada ni guardar claves
+        en el portátil, y <strong>no tiene coste adicional</strong>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Credenciales:</strong> las del usuario o rol con el que se inició sesión en la consola; los permisos de
+          <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> se aplican igual.</li>
+        <li><strong>Almacenamiento persistente:</strong> 1 GB en el directorio <code>$HOME</code> por región, privado y
+          gratuito; se borra si no se usa CloudShell en esa región durante 120 días.</li>
+        <li><strong>Entorno efímero:</strong> todo lo que está fuera de <code>$HOME</code> se pierde al terminar la
+          sesión.</li>
+        <li><strong>Inactividad:</strong> la sesión termina tras 20–30 minutos sin actividad.</li>
+        <li><strong>Entornos en <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>:</strong> para llegar a recursos privados; no tienen almacenamiento persistente.</li>
+        <li><strong>Subir y descargar ficheros</strong> entre el equipo y la terminal.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Ejecutar comandos de la <a href="cli.html"><abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a> desde un equipo sin herramientas instaladas.</li>
+        <li>Scripts rápidos de administración o pruebas.</li>
+        <li>Conectar con recursos privados de una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> desde un entorno en <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para tareas largas o programadas: <a href="lambda.html">Lambda</a>, Batch o una instancia.</li>
+        <li>Para entrar en una instancia <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>: <a href="systems-manager.html">Session Manager</a> de Systems Manager.</li>
+        <li>Para desarrollar a diario con <abbr class="sigla sigla-1" data-s="IDE" data-en="Integrated Development Environment" data-es="editor de código con herramientas de desarrollo" tabindex="0">IDE<span class="sigla-exp"> (Integrated Development Environment: editor de código con herramientas de desarrollo)</span></abbr>: tu entorno local o <a href="kiro.html">Kiro</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Terminal con la <a href="cli.html"><abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a> ya autenticada</td><td>CloudShell</td></tr>
+            <tr><td>Terminal dentro de una instancia <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></td><td><a href="systems-manager.html">Session Manager</a></td></tr>
+            <tr><td><abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> en tu propio equipo</td><td>AWS <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> con perfiles</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>CloudShell <strong>no tiene coste adicional</strong>; solo se pagan los recursos de AWS que crees o uses con
+        él.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>No hay claves de acceso que guardar ni rotar en el equipo.</li>
+        <li>Los permisos son los de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> de la sesión de la consola.</li>
+        <li>Los administradores pueden denegar su uso con políticas de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Usar la <a href="cli.html">AWS <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a> sin instalarla ni configurar claves"</strong>: CloudShell.</li>
+        <li><strong>"Los ficheros desaparecieron al volver"</strong>: estaban fuera de <code>$HOME</code>, o pasaron 120
+          días sin usar la región.</li>
+        <li><strong>"Conectarse a una instancia <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> sin <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr>"</strong>: <a href="systems-manager.html">Session Manager</a>, no CloudShell.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cloudshell"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html" target="_blank" rel="noopener">What is AWS CloudShell?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cloudshell/latest/userguide/limits.html" target="_blank" rel="noopener">Service quotas and restrictions for AWS CloudShell</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

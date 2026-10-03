@@ -1,0 +1,112 @@
+[
+  {
+    "id": "marketplace-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa quiere desplegar un cortafuegos de un fabricante conocido en su VPC y pagarlo en su factura de AWS. ¿Dónde lo busca?",
+    "opciones": [
+      "AWS Config.",
+      "AWS Artifact.",
+      "AWS Marketplace.",
+      "AWS Support."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Marketplace ofrece software de terceros (AMI, SaaS, contenedores) que se despliega en AWS y se paga en la misma factura.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/marketplace/latest/buyerguide/what-is-marketplace.html"
+    ]
+  },
+  {
+    "id": "marketplace-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa ha negociado con un proveedor un descuento por volumen para un SaaS que contrata a través de Marketplace. ¿Cómo se formaliza?",
+    "opciones": [
+      "No es posible.",
+      "Con una reserva de capacidad.",
+      "Con un Savings Plan.",
+      "Con una oferta privada en AWS Marketplace."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las ofertas privadas permiten condiciones y precios personalizados para un comprador concreto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/marketplace/latest/buyerguide/buyer-private-offers.html"
+    ]
+  },
+  {
+    "id": "marketplace-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "El departamento de compras quiere que los equipos solo puedan suscribirse a productos de Marketplace aprobados. ¿Qué usa?",
+    "opciones": [
+      "Private Marketplace.",
+      "Una política de bucket.",
+      "AWS Budgets.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Private Marketplace crea un catálogo curado con los productos aprobados por la organización.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/marketplace/latest/buyerguide/what-is-marketplace.html"
+    ]
+  },
+  {
+    "id": "marketplace-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa ya tiene licencias de un software y quiere usarlas en AWS con la AMI que ofrece el proveedor en Marketplace. ¿Qué modelo busca?",
+    "opciones": [
+      "Pago por hora.",
+      "BYOL (bring your own license).",
+      "Prueba gratuita.",
+      "Contrato SaaS."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con BYOL se usa la licencia existente y solo se pagan los recursos de AWS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/marketplace/latest/buyerguide/what-is-marketplace.html"
+    ]
+  },
+  {
+    "id": "marketplace-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Después de desplegar una AMI de Marketplace, ¿quién es responsable de configurar sus grupos de seguridad y aplicar parches?",
+    "opciones": [
+      "El vendedor del producto.",
+      "AWS Marketplace.",
+      "El cliente, según el modelo de responsabilidad compartida.",
+      "Nadie."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El cliente sigue siendo responsable de la configuración y la seguridad de lo que despliega en su cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/marketplace/latest/buyerguide/what-is-marketplace.html"
+    ]
+  }
+]

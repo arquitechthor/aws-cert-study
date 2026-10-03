@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Migration Evaluator — Apuntes AWS</title>
+<meta name="description" content="Servicio gratuito que analiza los servidores locales y su uso real para crear un caso de negocio con el coste estimado en AWS antes de migrar. Apuntes y preguntas de práctica para CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/migration-evaluator.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Migration Evaluator — Apuntes AWS">
+<meta property="og:description" content="Servicio gratuito que analiza los servidores locales y su uso real para crear un caso de negocio con el coste estimado en AWS antes de migrar.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/migration-evaluator.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/migration-evaluator.svg" alt="" width="56" height="56"><span>Migration Evaluator</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Estima el coste en la nube de tu centro de datos para preparar el caso de negocio</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://aws.amazon.com/migration-evaluator/" target="_blank" rel="noopener">Documentación de Migration Evaluator ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Migration Evaluator (antes TSO Logic) es un servicio <strong>gratuito</strong> de AWS para crear un
+        <strong>caso de negocio</strong> de la migración: analiza el inventario y el <strong>uso real</strong> de los
+        servidores locales, propone las instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> y volúmenes <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a> adecuados y compara el coste actual con varios
+        escenarios en AWS, incluidas las opciones de licencias. Un equipo de AWS acompaña el proceso.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Recolector sin agente:</strong> se instala en local con acceso de solo lectura a VMware, Hyper-V,
+          Windows, Linux, Active Directory y SQL Server.</li>
+        <li><strong>Importación:</strong> también acepta exportaciones de otras herramientas o datos de Application
+          Discovery Service.</li>
+        <li><strong>Quick Insights:</strong> resumen de una página con el coste proyectado en AWS.</li>
+        <li><strong>Caso de negocio:</strong> comparación del coste actual con varios escenarios futuros, incluido el
+          aprovechamiento de licencias (<abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr>).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Justificar económicamente una migración ante la dirección.</li>
+        <li>Dimensionar correctamente las instancias según el uso real, no lo aprovisionado.</li>
+        <li>Planificar licencias de Windows y SQL Server en AWS.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para estimar el coste de una arquitectura nueva: AWS Pricing Calculator.</li>
+        <li>Para migrar los servidores: <a href="application-migration-service.html">Transform MGN</a>.</li>
+        <li>Para una evaluación con agentes de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> y planificación de olas: <a href="transform.html">AWS Transform</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Herramienta</th></tr></thead>
+          <tbody>
+            <tr><td>Caso de negocio a partir del centro de datos actual</td><td>Migration Evaluator</td></tr>
+            <tr><td>Estimar el coste de una arquitectura que diseñas</td><td>AWS Pricing Calculator</td></tr>
+            <tr><td>Analizar el gasto que ya tienes en AWS</td><td><a href="cost-explorer.html">Cost Explorer</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Migration Evaluator es <strong>gratuito</strong>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El recolector usa acceso de solo lectura.</li>
+        <li>Se recogen datos de configuración y uso, no los datos de negocio.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Caso de negocio para migrar el centro de datos"</strong>: Migration Evaluator.</li>
+        <li><strong>"Estimar cuánto costará una arquitectura nueva"</strong>: Pricing Calculator.</li>
+        <li><strong>"<abbr class="sigla sigla-1" data-s="TCO" data-en="Total Cost of Ownership" data-es="coste total de propiedad" tabindex="0">TCO<span class="sigla-exp"> (Total Cost of Ownership: coste total de propiedad)</span></abbr> actual frente a AWS"</strong>: Migration Evaluator.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="migration-evaluator"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://aws.amazon.com/migration-evaluator/features/" target="_blank" rel="noopener">Migration Evaluator features</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/whitepapers/latest/how-aws-pricing-works/aws-pricingtco-tools.html" target="_blank" rel="noopener">AWS Pricing/TCO Tools (How AWS Pricing Works)</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

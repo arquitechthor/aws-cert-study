@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 131 de 164: los 12 que usa
+- **Fase 2 completa (03/10/2026):** publicados los **164 de 164** servicios, con 1041 preguntas. Los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -20,14 +20,13 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 - **Fase 4 (juego de memoria):** publicada el 2026-10-02 en `memoria.html` con los dos modos
   (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
 - **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
-  parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después, seguir con las guías pendientes
-  (33). Las categorías **Computación**, **Administración y gobernanza** y **Seguridad, identidad y
-  cumplimiento** y las colas "Prioridad 0" y "Prioridad 1" están completas desde el 02/10/2026; el
-  03/10/2026 se publicaron 20 de SAP-C02 (redes, migración, almacenamiento, CodePipeline, CodeDeploy y CUR).
-  La cola "Prioridad 2" quedó completa el mismo día. Siguiente bloque: "Prioridad 3" (`codebuild`,
-  `codeartifact`, `workspaces`, `appstream-2-0`, `kendra`, IoT…), antes del 17/11/2026.
-  **Revisar tras el 07/10/2026:** el aviso de `proton` (ese día termina su soporte: pasar el texto a
-  pasado).
+  parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después:
+  ampliar a 5 preguntas `appflow`, `glue` y `savings-plans` (tienen menos del mínimo de `CLAUDE.md`) y
+  empezar la Fase 3 (simulacro por certificación, `sitemap.xml`…).
+  **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `proton` y `iot-greengrass`
+  (V1) el 07/10/2026, `pinpoint` el 30/10/2026, `managed-blockchain` (sin clientes nuevos) el
+  29/10/2026 y `support` (planes antiguos) el 01/01/2027. Tarea 0.9 (guías SAP-C03 y DVA-C03) el
+  27/10/2026.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
 - **Última actualización:** 2026-10-03
@@ -458,14 +457,14 @@ esta lista es solo el orden de trabajo.
 Primero los de DVA-C02 por su fecha límite (01/12/2026). Las certificaciones entre paréntesis del
 resto de la cola son las de cuando se creó; las actuales están en `servicios.json`.
 
-- [ ] `amazon-q` Amazon Q — Machine learning (CLF-C02, DVA-C02)
+- [x] `amazon-q` Amazon Q — Machine learning (CLF-C02, DVA-C02)
 - [x] `appconfig` AWS AppConfig — Administración y gobernanza (DVA-C02)
 - [x] `cdk` AWS CDK — Administración y gobernanza (DVA-C02)
-- [ ] `cloudshell` AWS CloudShell — Herramientas para desarrolladores (DVA-C02)
-- [ ] `connect` Amazon Connect — Aplicaciones empresariales (CLF-C02)
-- [ ] `marketplace` AWS Marketplace — Administración financiera en la nube (CLF-C02)
-- [ ] `migration-evaluator` Migration Evaluator — Migración y transferencia (CLF-C02)
-- [ ] `support` AWS Support — Habilitación de clientes (CLF-C02)
+- [x] `cloudshell` AWS CloudShell — Herramientas para desarrolladores (DVA-C02)
+- [x] `connect` Amazon Connect — Aplicaciones empresariales (CLF-C02)
+- [x] `marketplace` AWS Marketplace — Administración financiera en la nube (CLF-C02)
+- [x] `migration-evaluator` Migration Evaluator — Migración y transferencia (CLF-C02)
+- [x] `support` AWS Support — Habilitación de clientes (CLF-C02)
 - [x] `workspaces-secure-browser` Amazon WorkSpaces Secure Browser — Computación para usuarios finales (CLF-C02)
 
 ## Fase 3: extras (opcional)
@@ -655,3 +654,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-03 | Fase 2: 34 preguntas originales de CLF-C02, DVA-C02 y AIF-C01 para los servicios de Kopi que no las tenían: API Gateway (+5), Lambda (+6), DynamoDB (+7, una de AIF), S3 (+5), CloudFront (+5, una de AIF), Route 53 (+4) y SES (+2, solo CLF: no está en DVA). Bedrock no necesitaba ninguna (solo está en AIF-C01). Datos contrastados: memoria de Lambda de 128 a 10 240 MB con CPU proporcional (1769 MB = 1 vCPU), respuesta parcial de lote con ReportBatchItemFailures, LSI solo al crear la tabla, carga multiparte desde 100 MB, S3 Bucket Keys (hasta 99 % menos de llamadas a KMS), transferencia gratuita de orígenes de AWS a CloudFront, cuota de API Gateway de 10 000 RPS por cuenta y región. Posición de la respuesta correcta repartida entre A–D (`quiz.js` no baraja las opciones). |
 | 2026-10-03 | Fase 2: 20 guías de SAP-C02 con 109 preguntas originales (123 de 164), en tres commits. Redes: Transit Gateway, Direct Connect, Site-to-Site VPN, Global Accelerator y Client VPN. Migración: DMS, SCT, Application Migration Service, Application Discovery Service, Migration Hub, DataSync, Snow Family y Transfer Family. Almacenamiento y DR: Storage Gateway, FSx, Backup y Elastic Disaster Recovery. Otros: CodePipeline, CodeDeploy y Cost and Usage Report. Avisos: Migration Hub, Application Discovery Service y Snowball Edge (toda Snow Family; Snowcone y Snowmobile ya retirados) sin clientes nuevos desde el 07/11/2025 (alternativas: AWS Transform; DataSync, Data Transfer Terminal y Outposts); Application Migration Service renombrado a **AWS Transform MGN** en junio de 2026 (nombre nuevo en `servicios.json` y el anterior como alias, como se hizo con Quick); FSx File Gateway sin clientes nuevos desde el 28/10/2024. Datos contrastados: Transit Gateway hasta 100 Gbps por adjunto de VPC y AZ; Direct Connect dedicado de 1/10/100/400 Gbps y alojado de 50 Mbps a 25 Gbps, MACsec en 10/100/400 Gbps, SLA del 99,99 % con máxima resiliencia; túneles VPN de 1,25 Gbps (5 Gbps los de gran ancho de banda, con Transit Gateway o Cloud WAN); MGN con 2160 horas gratis por servidor; DRS con RPO de segundos y RTO de 5–20 min; CUR 2.0 en Data Exports con esquema fijo. 34 siglas nuevas en el glosario (BGP, ECMP, IPsec, MACsec, VIF, CDC, AS2, iSCSI, NTFS, FOCUS…), aplicadas también a CloudFront, EC2 y VPC. |
 | 2026-10-03 | Fase 2: cola "Prioridad 2" completa con 8 guías más (MSK, Keyspaces, ECR, Amplify, Device Farm, X-Ray, Elastic Transcoder y Kinesis Video Streams) y 42 preguntas originales (131 de 164). Avisos: Elastic Transcoder retirado el 13/11/2025 (sustituto: AWS Elemental MediaConvert; su `documentacion` en `servicios.json` apunta al anuncio de retirada) y SDK y demonio de X-Ray en mantenimiento desde el 25/02/2026 (instrumentar con OpenTelemetry/ADOT; el servicio X-Ray sigue soportado). Datos contrastados: filas de Keyspaces de hasta 1 MB; retención de Kinesis Video Streams 0 por defecto; brokers Standard y Express de MSK. 7 siglas nuevas (ADOT, HLS, IVS, MPEG-DASH, OCI, SASL/SCRAM, WebRTC). |
+| 2026-10-03 | **Fase 2 completa: 164 de 164.** 33 guías más con 165 preguntas originales, en cinco commits: CodeBuild, CodeArtifact, CodeGuru, WorkSpaces, WorkSpaces Applications (antes AppStream 2.0), WorkSpaces Secure Browser, Pinpoint y Managed Blockchain; los 8 de IoT (Core, Greengrass, SiteWise, Device Defender, Device Management, Events, 1-Click, Things Graph); Kendra, Personalize, Fraud Detector, Timestream y Managed Service for Apache Flink; AgentCore, Nova, Strands Agents, Kiro, AWS Transform y Glue DataBrew; Amazon Q, CloudShell, Connect, Marketplace, Migration Evaluator y Support. Estados contrastados: **retirados** IoT Events (tras el aviso de mayo de 2025), IoT 1-Click y IoT Things Graph (2022, hacia IoT TwinMaker); **fin de soporte** de Pinpoint el 30/10/2026 (canales en End User Messaging), Greengrass V1 el 07/10/2026, Managed Blockchain el 29/09/2027 (sin clientes nuevos desde el 29/10/2026), plugins de IDE de Q Developer el 30/04/2027 (hacia Kiro) y planes Developer, Business y Enterprise On-Ramp el 01/01/2027; **sin clientes nuevos** CodeGuru Reviewer, Fraud Detector, SiteWise Monitor (07/11/2025) y Timestream for LiveAnalytics (20/06/2025); Fleet Hub retirado el 18/10/2025; **renombrado** AppStream 2.0 a WorkSpaces Applications (nombre nuevo y alias). El generador reparte ya la posición de la respuesta correcta. 21 siglas nuevas (VDI, DCV, MCP, LoRaWAN, OPC UA, KPU, SFT, TCO…). Comprobado en navegador: las 164 guías sin desbordamiento a 375 px, con todas sus preguntas, frase e icono. |

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Marketplace — Apuntes AWS</title>
+<meta name="description" content="Catálogo de software, datos y servicios de terceros que se compran y despliegan en AWS y se pagan en la misma factura, con ofertas privadas y catálogos controlados. Apuntes y preguntas de práctica para CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/marketplace.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Marketplace — Apuntes AWS">
+<meta property="og:description" content="Catálogo de software, datos y servicios de terceros que se compran y despliegan en AWS y se pagan en la misma factura, con ofertas privadas y catálogos controlados.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/marketplace.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/marketplace.svg" alt="" width="56" height="56"><span>AWS Marketplace</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Tienda de software de terceros que compras y despliegas con tu factura de AWS</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-financiera#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="18" height="18">Administración financiera en la nube <span class="cat-en">(Cloud Financial Management)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/marketplace/" target="_blank" rel="noopener">Documentación de AWS Marketplace ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Marketplace es un <strong>catálogo digital de software, datos y servicios de terceros</strong> que funcionan
+        en AWS: <abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr>, <abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr>, contenedores, modelos de <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>, conjuntos de datos y servicios profesionales. Se encuentran, se
+        compran y se despliegan rápidamente, y se <strong>pagan en la factura de AWS</strong>, sin abrir un proceso de
+        compra con cada proveedor.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Tipos de producto:</strong> <abbr class="sigla" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS</abbr>, <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr>, contenedores, modelos y algoritmos de <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr>, datos (con Data
+          Exchange) y servicios profesionales.</li>
+        <li><strong>Modelos de precio:</strong> gratis, por uso (por hora o por unidad), contratos anuales o plurianuales y
+          <abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr> (licencia propia).</li>
+        <li><strong>Ofertas privadas:</strong> precios y condiciones negociados con el proveedor para tu cuenta.</li>
+        <li><strong>Private Marketplace:</strong> catálogo curado con los productos aprobados por la empresa.</li>
+        <li><strong>Facturación unificada:</strong> el gasto aparece en la factura de AWS y puede contar para compromisos
+          de gasto con AWS.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Desplegar en minutos un cortafuegos o una solución de seguridad de un fabricante conocido.</li>
+        <li>Contratar un <abbr class="sigla" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS</abbr> con la cuenta de AWS ya existente.</li>
+        <li>Limitar qué software pueden comprar los equipos.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para servicios propios de AWS: se usan directamente desde la consola.</li>
+        <li>Para compartir datos entre empresas con suscripciones: <a href="data-exchange.html">AWS Data Exchange</a> (que se integra con Marketplace).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>Software de terceros pagado en la factura de AWS</td><td>AWS Marketplace</td></tr>
+            <tr><td>Conjuntos de datos de terceros</td><td><a href="data-exchange.html">AWS Data Exchange</a></td></tr>
+            <tr><td>Servicios de AWS</td><td>Consola de AWS</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El precio lo fija cada <strong>vendedor</strong> (gratis, por uso, por contrato o <abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr>) y se cobra en la factura
+        de AWS, junto a los recursos de AWS que use el producto (por ejemplo, las instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> de una <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr>).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>AWS revisa los productos publicados (por ejemplo, las <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> se analizan en busca de vulnerabilidades).</li>
+        <li>Private Marketplace limita qué productos se pueden suscribir.</li>
+        <li>El cliente sigue siendo responsable de configurar y proteger lo que despliega.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Comprar software de terceros y pagarlo en la factura de AWS"</strong>: Marketplace.</li>
+        <li><strong>"Precio negociado con un proveedor"</strong>: oferta privada.</li>
+        <li><strong>"Solo productos aprobados por la empresa"</strong>: Private Marketplace.</li>
+        <li><strong>"Usar mi licencia actual"</strong>: <abbr class="sigla" data-s="BYOL" data-en="Bring Your Own License" data-es="usar tu propia licencia" tabindex="0">BYOL</abbr>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="marketplace"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/marketplace/latest/buyerguide/what-is-marketplace.html" target="_blank" rel="noopener">What is AWS Marketplace?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/marketplace/latest/buyerguide/buyer-private-offers.html" target="_blank" rel="noopener">Private offers in AWS Marketplace</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

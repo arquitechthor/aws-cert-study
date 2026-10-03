@@ -1,0 +1,112 @@
+[
+  {
+    "id": "connect-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere montar un centro de atención telefónica y por chat con agentes que trabajan desde casa, sin comprar centralitas. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon SNS.",
+      "AWS Direct Connect.",
+      "Amazon WorkSpaces.",
+      "Amazon Connect."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Amazon Connect es un centro de contacto en la nube. Direct Connect es una conexión de red dedicada, aunque el nombre se parezca.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html"
+    ]
+  },
+  {
+    "id": "connect-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Cómo se cobra Amazon Connect?",
+    "opciones": [
+      "Por uso: minutos de voz, mensajes de chat y tareas, sin compromisos.",
+      "Una licencia anual por agente.",
+      "Por hora de servidor.",
+      "Una cuota fija mensual por centro de contacto."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Connect sigue el modelo de pago por uso, sin licencias por agente ni compromisos mínimos.",
+    "fuentes": [
+      "https://aws.amazon.com/connect/pricing/"
+    ]
+  },
+  {
+    "id": "connect-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un centro de contacto quiere transcribir las llamadas y detectar automáticamente el sentimiento de los clientes. ¿Qué función usa?",
+    "opciones": [
+      "Amazon Polly.",
+      "Contact Lens de Amazon Connect.",
+      "AWS Config.",
+      "Amazon Rekognition."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Contact Lens transcribe y analiza las conversaciones, incluido el sentimiento. Polly convierte texto en voz.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html"
+    ]
+  },
+  {
+    "id": "connect-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un banco quiere que un asistente de voz resuelva consultas sencillas antes de pasar la llamada a un agente. ¿Qué combinación usa?",
+    "opciones": [
+      "Connect con SES.",
+      "Connect con DataSync.",
+      "Amazon Connect con un bot de Amazon Lex en el flujo de contacto.",
+      "Connect con CloudFront."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los flujos de contacto de Connect pueden integrar bots de Lex para autoservicio por voz o chat en lenguaje natural.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html"
+    ]
+  },
+  {
+    "id": "connect-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Dónde se diseña en Amazon Connect el menú de voz y el recorrido que sigue cada llamada?",
+    "opciones": [
+      "En AWS Budgets.",
+      "En una política de IAM.",
+      "En una tabla de rutas.",
+      "En los flujos de contacto, con un editor visual."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los flujos de contacto definen la experiencia del cliente: mensajes, menús, decisiones y enrutamiento a colas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html"
+    ]
+  }
+]

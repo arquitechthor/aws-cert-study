@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Connect — Apuntes AWS</title>
+<meta name="description" content="Centro de contacto omnicanal en la nube (voz, chat, tareas y correo) con flujos de atención, enrutamiento a agentes, IA y análisis, pagando por uso. Apuntes y preguntas de práctica para CLF-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/connect.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Connect — Apuntes AWS">
+<meta property="og:description" content="Centro de contacto omnicanal en la nube (voz, chat, tareas y correo) con flujos de atención, enrutamiento a agentes, IA y análisis, pagando por uso.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/connect.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/connect.svg" alt="" width="56" height="56"><span>Amazon Connect</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Centro de contacto en la nube con llamadas, chat, <abbr class="sigla sigla-1" data-s="IVR" data-en="Interactive Voice Response" data-es="menú telefónico automático por voz o teclado" tabindex="0">IVR<span class="sigla-exp"> (Interactive Voice Response: menú telefónico automático por voz o teclado)</span></abbr> y enrutado a agentes</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=aplicaciones-empresariales#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/aplicaciones-empresariales.svg" alt="" width="18" height="18">Aplicaciones empresariales <span class="cat-en">(Business Applications)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/connect/" target="_blank" rel="noopener">Documentación de Amazon Connect ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Connect es un <strong>centro de contacto en la nube</strong>. Permite atender a los clientes por
+        <strong>voz, chat, tareas y correo</strong> con agentes que trabajan desde el navegador, sin centralitas ni
+        hardware. Se configura en minutos, escala con la demanda y se paga por uso. Incluye <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> para automatizar la
+        atención y analizar las conversaciones.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Flujos de contacto:</strong> diseñador visual de la experiencia del cliente: menús de voz (<abbr class="sigla" data-s="IVR" data-en="Interactive Voice Response" data-es="menú telefónico automático por voz o teclado" tabindex="0">IVR</abbr>),
+          mensajes y decisiones de enrutamiento.</li>
+        <li><strong>Colas y perfiles de enrutamiento:</strong> llevan cada contacto al agente adecuado.</li>
+        <li><strong>Espacio de trabajo del agente</strong> en el navegador.</li>
+        <li><strong>Bots de <a href="lex.html">Lex</a></strong> para atender por voz o chat en lenguaje natural.</li>
+        <li><strong>Contact Lens:</strong> transcripción, análisis de sentimiento y calidad de las conversaciones.</li>
+        <li><strong>Customer Profiles y campañas salientes</strong> para comunicaciones proactivas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Centro de atención al cliente con agentes en remoto.</li>
+        <li>Autoservicio por voz con un bot (por ejemplo, consultar el saldo).</li>
+        <li>Campañas de llamadas o mensajes salientes.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para enviar correos transaccionales: <a href="ses.html"><abbr class="sigla sigla-1" data-s="SES" data-en="Simple Email Service" tabindex="0">SES<span class="sigla-exp"> (Simple Email Service)</span></abbr></a>.</li>
+        <li>Para notificaciones entre aplicaciones: <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>.</li>
+        <li>Para crear solo un bot conversacional sin centro de contacto: <a href="lex.html">Lex</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Centro de contacto completo</td><td>Amazon Connect</td></tr>
+            <tr><td>Bot conversacional</td><td><a href="lex.html">Amazon Lex</a></td></tr>
+            <tr><td>Correo electrónico</td><td><a href="ses.html">Amazon <abbr class="sigla" data-s="SES" data-en="Simple Email Service" tabindex="0">SES</abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p><strong>Pago por uso</strong>: por minuto de voz, por mensaje de chat y por tarea o correo, más los números de
+        teléfono y las llamadas de telefonía. Sin cuotas por agente ni compromisos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Grabaciones y transcripciones cifradas en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>Inicio de sesión de los agentes con <abbr class="sigla sigla-1" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML<span class="sigla-exp"> (Security Assertion Markup Language: estándar de inicio de sesión federado)</span></abbr> y permisos por perfil de seguridad.</li>
+        <li>Servicio de alta disponibilidad repartido en varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Centro de llamadas en la nube" o "contact center"</strong>: Amazon Connect.</li>
+        <li><strong>"Analizar el sentimiento de las llamadas"</strong>: Contact Lens.</li>
+        <li><strong>"Bot de voz que atiende antes que un agente"</strong>: Connect con <a href="lex.html">Lex</a>.</li>
+        <li><strong>"Conexión de red dedicada"</strong>: <a href="direct-connect.html">Direct Connect</a>, que no tiene nada que ver con Connect.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="connect"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html" target="_blank" rel="noopener">What is Amazon Connect?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/connect/pricing/" target="_blank" rel="noopener">Amazon Connect pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

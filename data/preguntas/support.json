@@ -1,0 +1,112 @@
+[
+  {
+    "id": "support-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una gran empresa quiere un responsable técnico de cuenta (TAM) designado y una respuesta en 15 minutos para casos críticos. ¿Qué plan contrata?",
+    "opciones": [
+      "Basic.",
+      "Business Support+.",
+      "AWS Enterprise Support.",
+      "Developer."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Enterprise Support incluye un TAM designado y respuesta en 15 minutos para casos críticos (Unified Operations va más allá).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/aws-support-plans.html"
+    ]
+  },
+  {
+    "id": "support-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una startup necesita soporte técnico 24/7 de AWS para su producción con el menor coste posible entre los planes actuales. ¿Cuál elige?",
+    "opciones": [
+      "Basic.",
+      "Unified Operations.",
+      "Enterprise Support.",
+      "Business Support+."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Business Support+ ofrece acceso 24/7 a expertos desde 29 USD al mes por cuenta. Basic no incluye casos técnicos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/aws-support-plans.html"
+    ]
+  },
+  {
+    "id": "support-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué incluye el plan Basic de AWS Support?",
+    "opciones": [
+      "Atención al cliente para cuentas y facturación, documentación y comprobaciones básicas de Trusted Advisor, sin casos técnicos.",
+      "Un TAM.",
+      "Respuesta en 15 minutos.",
+      "Casos técnicos 24/7."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Basic es gratuito y no incluye soporte técnico por casos; sí atención al cliente, documentación, foros y algunas comprobaciones de Trusted Advisor.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/getting-started.html"
+    ]
+  },
+  {
+    "id": "support-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una empresa con el plan Developer pregunta qué pasará con él. ¿Qué le responde?",
+    "opciones": [
+      "Sigue sin cambios indefinidamente.",
+      "Se retira el 01/01/2027; puede pasar a Business Support+ antes de esa fecha.",
+      "Se convierte en Basic automáticamente en 2025.",
+      "Pasa a costar lo mismo que Enterprise."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Developer, Business y Enterprise On-Ramp se retiran el 01/01/2027 (salvo en GovCloud). AWS propone Business Support+ a los clientes de Developer y Business.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awssupport/latest/user/aws-support-plans.html"
+    ]
+  },
+  {
+    "id": "support-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "¿Qué plan de soporte incluye AWS Security Incident Response sin coste adicional?",
+    "opciones": [
+      "Basic.",
+      "Developer.",
+      "Enterprise Support (y Unified Operations).",
+      "Ninguno."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Con los nuevos planes, Security Incident Response se incluye sin coste adicional en Enterprise Support y Unified Operations.",
+    "fuentes": [
+      "https://aws.amazon.com/premiumsupport/faqs/"
+    ]
+  }
+]

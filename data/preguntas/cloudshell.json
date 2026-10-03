@@ -1,0 +1,112 @@
+[
+  {
+    "id": "cloudshell-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador necesita ejecutar comandos de la AWS CLI desde un ordenador prestado, sin instalar nada ni guardar claves de acceso. ¿Qué usa?",
+    "opciones": [
+      "AWS CloudShell desde la consola.",
+      "Claves de acceso en un fichero de texto.",
+      "Session Manager.",
+      "AWS Cloud9."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CloudShell abre una terminal en el navegador con la CLI instalada y autenticada con las credenciales de la sesión de la consola.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html"
+    ]
+  },
+  {
+    "id": "cloudshell-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un desarrollador guardó un script en /tmp en CloudShell y al día siguiente no está. ¿Por qué?",
+    "opciones": [
+      "Porque CloudShell borra todo cada hora.",
+      "Porque solo se conserva el directorio $HOME (1 GB por región); el resto del entorno es efímero.",
+      "Porque el script no tenía permisos.",
+      "Porque cambió de navegador."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Solo $HOME es persistente entre sesiones; lo que está fuera se pierde al terminar la sesión.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudshell/latest/userguide/limits.html"
+    ]
+  },
+  {
+    "id": "cloudshell-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "¿Con qué permisos se ejecutan los comandos de la CLI en CloudShell?",
+    "opciones": [
+      "Con los del usuario raíz.",
+      "Con permisos de administrador fijos.",
+      "Con los permisos de IAM del usuario o rol con el que se inició sesión en la consola.",
+      "Sin permisos; solo lectura."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "CloudShell usa las credenciales de la sesión de la consola, así que se aplican los mismos permisos de IAM.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html"
+    ]
+  },
+  {
+    "id": "cloudshell-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador necesita, desde CloudShell, conectarse a una base de datos en una subred privada. ¿Qué usa?",
+    "opciones": [
+      "Hacer pública la base de datos.",
+      "Un emparejamiento de VPC con CloudShell.",
+      "Una VPN Site-to-Site.",
+      "Un entorno de CloudShell en la VPC."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los entornos de CloudShell en VPC se crean en una subred de tu VPC y alcanzan recursos privados; no tienen almacenamiento persistente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html"
+    ]
+  },
+  {
+    "id": "cloudshell-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "¿Cuánto cuesta usar AWS CloudShell?",
+    "opciones": [
+      "Nada adicional; solo se pagan los recursos que se usen con él.",
+      "Una tarifa por hora de sesión.",
+      "Por GB de almacenamiento en $HOME.",
+      "Una tarifa mensual por usuario."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CloudShell no tiene coste adicional, incluido 1 GB de almacenamiento persistente por región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html"
+    ]
+  }
+]

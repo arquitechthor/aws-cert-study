@@ -1,0 +1,112 @@
+[
+  {
+    "id": "amazon-q-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS es un asistente de IA generativa que ayuda a los desarrolladores a escribir código y a entender sus recursos de AWS desde el IDE y la consola?",
+    "opciones": [
+      "Amazon Comprehend.",
+      "Amazon Q Developer.",
+      "AWS Config.",
+      "Amazon Polly."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Amazon Q Developer ofrece chat, generación de código y ayuda con los recursos de AWS en el IDE, la consola y aplicaciones de chat.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html"
+    ]
+  },
+  {
+    "id": "amazon-q-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Un desarrollador quiere detectar en su IDE, mientras escribe, una contraseña escrita en el código y otras vulnerabilidades. ¿Qué herramienta de AWS lo hace?",
+    "opciones": [
+      "AWS CloudTrail.",
+      "AWS Budgets.",
+      "Los escaneos de seguridad de Amazon Q Developer.",
+      "Amazon Inspector Classic."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Q Developer escanea el código del proyecto (y, en Pro, de forma automática mientras se escribe) y señala vulnerabilidades como credenciales escritas en el código.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/devops/code-security-scanning-with-amazon-q-developer/"
+    ]
+  },
+  {
+    "id": "amazon-q-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador necesita generar pruebas unitarias para un módulo existente y que le expliquen una función compleja, desde su IDE. ¿Qué usa?",
+    "opciones": [
+      "AWS CodeBuild.",
+      "AWS X-Ray.",
+      "AWS CloudShell.",
+      "Amazon Q Developer en el IDE."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Q Developer en el IDE explica código, genera pruebas unitarias y propone mejoras. CodeBuild ejecuta las pruebas, pero no las escribe.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html"
+    ]
+  },
+  {
+    "id": "amazon-q-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Un equipo de operaciones quiere recibir avisos y consultar el estado de sus recursos de AWS desde un canal de Slack. ¿Qué usa?",
+    "opciones": [
+      "Amazon Q Developer en aplicaciones de chat (antes AWS Chatbot).",
+      "Amazon Pinpoint.",
+      "AWS Marketplace.",
+      "Amazon Connect."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "AWS Chatbot se renombró como Amazon Q Developer en aplicaciones de chat, para Slack y Microsoft Teams.",
+    "fuentes": [
+      "https://aws.amazon.com/about-aws/whats-new/2025/02/aws-chatbot-named-amazon-q-developer/"
+    ]
+  },
+  {
+    "id": "amazon-q-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un equipo usa los plugins de Amazon Q Developer en su IDE. ¿Qué debe tener en cuenta según el aviso de AWS?",
+    "opciones": [
+      "Que ya no funcionan desde 2025.",
+      "Que terminan su soporte el 30/04/2027 y AWS recomienda Kiro para esas capacidades.",
+      "Que solo funcionan en Eclipse.",
+      "Nada: no hay cambios previstos."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "AWS anunció el fin de soporte de los plugins de IDE de Q Developer el 30/04/2027 y orienta a Kiro para programar con agentes, chat y MCP.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html"
+    ]
+  }
+]
