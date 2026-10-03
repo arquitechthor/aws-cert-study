@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 103 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 123 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -21,11 +21,12 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
 - **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
   parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después, seguir con las guías pendientes
-  (61). Las categorías **Computación**, **Administración y gobernanza** y **Seguridad, identidad y
-  cumplimiento** y las colas "Prioridad 0" y "Prioridad 1" están completas desde el 02/10/2026. Siguiente
-  bloque: lo que queda de "Prioridad 2" (SAA-C03 + SAP-C02): `cost-and-usage-report`, almacenamiento
-  (`backup`, `fsx`, `storage-gateway`), `msk`, `keyspaces`, `ecr`, `amplify`, `device-farm`, `x-ray`,
-  migración y redes.
+  (41). Las categorías **Computación**, **Administración y gobernanza** y **Seguridad, identidad y
+  cumplimiento** y las colas "Prioridad 0" y "Prioridad 1" están completas desde el 02/10/2026; el
+  03/10/2026 se publicaron 20 de SAP-C02 (redes, migración, almacenamiento, CodePipeline, CodeDeploy y CUR).
+  Siguiente bloque: lo que queda de "Prioridad 2" (`msk`, `keyspaces`, `ecr`, `amplify`, `device-farm`,
+  `x-ray`, `elastic-transcoder`, `kinesis-video-streams`) y después "Prioridad 3" (`codebuild`,
+  `codeartifact`, `workspaces`, `appstream-2-0`, `kendra`, IoT…), antes del 17/11/2026.
   **Revisar tras el 07/10/2026:** el aviso de `proton` (ese día termina su soporte: pasar el texto a
   pasado).
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
@@ -341,7 +342,7 @@ esta lista es solo el orden de trabajo.
 
 #### Prioridad 2: SAA-C03 + SAP-C02 (64)
 
-- [ ] `cost-and-usage-report` AWS Cost and Usage Report — Administración financiera en la nube (SAA-C03, SAP-C02)
+- [x] `cost-and-usage-report` AWS Cost and Usage Report — Administración financiera en la nube (SAA-C03, SAP-C02)
 - [x] `savings-plans` Savings Plans — Administración financiera en la nube (SAA-C03, SAP-C02)
 - [x] `cli` AWS CLI — Administración y gobernanza (SAA-C03, SAP-C02)
 - [x] `cloudformation` AWS CloudFormation — Administración y gobernanza (SAA-C03, SAP-C02)
@@ -354,9 +355,9 @@ esta lista es solo el orden de trabajo.
 - [x] `management-console` AWS Management Console — Administración y gobernanza (SAA-C03, SAP-C02)
 - [x] `service-catalog` AWS Service Catalog — Administración y gobernanza (SAA-C03, SAP-C02)
 - [x] `systems-manager` AWS Systems Manager — Administración y gobernanza (SAA-C03, SAP-C02)
-- [ ] `backup` AWS Backup — Almacenamiento (SAA-C03, SAP-C02)
-- [ ] `fsx` Amazon FSx — Almacenamiento (SAA-C03, SAP-C02)
-- [ ] `storage-gateway` AWS Storage Gateway — Almacenamiento (SAA-C03, SAP-C02)
+- [x] `backup` AWS Backup — Almacenamiento (SAA-C03, SAP-C02)
+- [x] `fsx` Amazon FSx — Almacenamiento (SAA-C03, SAP-C02)
+- [x] `storage-gateway` AWS Storage Gateway — Almacenamiento (SAA-C03, SAP-C02)
 - [x] `athena` Amazon Athena — Análisis (SAA-C03, SAP-C02)
 - [x] `data-firehose` Amazon Data Firehose — Análisis (SAA-C03, SAP-C02)
 - [x] `kinesis-data-streams` Amazon Kinesis Data Streams — Análisis (SAA-C03, SAP-C02)
@@ -410,7 +411,7 @@ esta lista es solo el orden de trabajo.
 
 - [x] `proton` AWS Proton — Administración y gobernanza (SAP-C02)
 - [x] `service-quotas` Service Quotas — Administración y gobernanza (SAP-C02)
-- [ ] `elastic-disaster-recovery` AWS Elastic Disaster Recovery — Almacenamiento (SAP-C02)
+- [x] `elastic-disaster-recovery` AWS Elastic Disaster Recovery — Almacenamiento (SAP-C02)
 - [ ] `managed-service-for-apache-flink` Amazon Managed Service for Apache Flink — Análisis (SAP-C02)
 - [x] `ses` Amazon SES — Aplicaciones empresariales (SAP-C02)
 - [ ] `timestream` Amazon Timestream — Base de datos (SAP-C02)
@@ -422,9 +423,9 @@ esta lista es solo el orden de trabajo.
 - [ ] `pinpoint` Amazon Pinpoint — Frontend web y móvil (SAP-C02)
 - [ ] `codeartifact` AWS CodeArtifact — Herramientas para desarrolladores (SAP-C02)
 - [ ] `codebuild` AWS CodeBuild — Herramientas para desarrolladores (SAP-C02)
-- [ ] `codedeploy` AWS CodeDeploy — Herramientas para desarrolladores (SAP-C02)
+- [x] `codedeploy` AWS CodeDeploy — Herramientas para desarrolladores (SAP-C02)
 - [ ] `codeguru` Amazon CodeGuru — Herramientas para desarrolladores (SAP-C02)
-- [ ] `codepipeline` AWS CodePipeline — Herramientas para desarrolladores (SAP-C02)
+- [x] `codepipeline` AWS CodePipeline — Herramientas para desarrolladores (SAP-C02)
 - [x] `appsync` AWS AppSync — Integración de aplicaciones (SAP-C02)
 - [ ] `iot-1-click` AWS IoT 1-Click — Internet de las cosas (IoT) (SAP-C02)
 - [ ] `iot-core` AWS IoT Core — Internet de las cosas (IoT) (SAP-C02)
@@ -653,3 +654,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-02 | Fase 2: cola "Prioridad 1" completa con 20 guías más (Budgets, Cost Explorer, S3 Glacier, Data Exchange, EMR, Lake Formation, Quick, DocumentDB, Neptune, Artifact, Comprehend, Lex, Polly, Rekognition, SageMaker AI, Textract, Transcribe, Translate, Inspector y Macie) y 126 preguntas originales, todas con al menos una pregunta de AIF-C01 (91 de 164). Avisos: Amazon Quick es el nombre actual de QuickSight (ahora Quick Sight, dentro de Quick); el servicio Amazon Glacier de bóvedas no admite clientes nuevos desde el 07/11/2025; Comprehend (modelado de temas, detección de eventos y seguridad de prompts) y Rekognition (vídeo en streaming y análisis masivo de imágenes) cerraron funciones a clientes nuevos el 30/04/2026. 13 siglas nuevas en el glosario (SSML, SOC, BAA, HIPAA, HDFS, RDF, SBOM, CIS, SPICE, SaaS, MLOps, GraphRAG, E/S). |
 | 2026-10-02 | Fase 2: categoría Seguridad, identidad y cumplimiento completa con 12 guías más (Audit Manager, CloudHSM, Detective, Directory Service, Firewall Manager, GuardDuty, IAM Identity Center, Network Firewall, RAM, Security Hub, Shield y STS) y 74 preguntas originales (103 de 164). Avisos: Audit Manager sin clientes nuevos desde el 30/04/2026 (alternativa: paquetes de conformidad de AWS Config), Simple AD sin clientes nuevos, y Security Hub dividido en Security Hub CSPM (lo que describen los exámenes) y el nuevo Security Hub de exposiciones. Además: 14 preguntas de CLF-C02 y DVA-C02 añadidas a IAM, Cognito, ACM y CloudWatch (ACM pasa de 4 a 6), sección "Comparativa" añadida a CloudFormation y Systems Manager, y 6 siglas nuevas (SCIM, NIST, RADIUS, OCSF, CSPM, SRT). |
 | 2026-10-03 | Fase 2: 34 preguntas originales de CLF-C02, DVA-C02 y AIF-C01 para los servicios de Kopi que no las tenían: API Gateway (+5), Lambda (+6), DynamoDB (+7, una de AIF), S3 (+5), CloudFront (+5, una de AIF), Route 53 (+4) y SES (+2, solo CLF: no está en DVA). Bedrock no necesitaba ninguna (solo está en AIF-C01). Datos contrastados: memoria de Lambda de 128 a 10 240 MB con CPU proporcional (1769 MB = 1 vCPU), respuesta parcial de lote con ReportBatchItemFailures, LSI solo al crear la tabla, carga multiparte desde 100 MB, S3 Bucket Keys (hasta 99 % menos de llamadas a KMS), transferencia gratuita de orígenes de AWS a CloudFront, cuota de API Gateway de 10 000 RPS por cuenta y región. Posición de la respuesta correcta repartida entre A–D (`quiz.js` no baraja las opciones). |
+| 2026-10-03 | Fase 2: 20 guías de SAP-C02 con 109 preguntas originales (123 de 164), en tres commits. Redes: Transit Gateway, Direct Connect, Site-to-Site VPN, Global Accelerator y Client VPN. Migración: DMS, SCT, Application Migration Service, Application Discovery Service, Migration Hub, DataSync, Snow Family y Transfer Family. Almacenamiento y DR: Storage Gateway, FSx, Backup y Elastic Disaster Recovery. Otros: CodePipeline, CodeDeploy y Cost and Usage Report. Avisos: Migration Hub, Application Discovery Service y Snowball Edge (toda Snow Family; Snowcone y Snowmobile ya retirados) sin clientes nuevos desde el 07/11/2025 (alternativas: AWS Transform; DataSync, Data Transfer Terminal y Outposts); Application Migration Service renombrado a **AWS Transform MGN** en junio de 2026 (nombre nuevo en `servicios.json` y el anterior como alias, como se hizo con Quick); FSx File Gateway sin clientes nuevos desde el 28/10/2024. Datos contrastados: Transit Gateway hasta 100 Gbps por adjunto de VPC y AZ; Direct Connect dedicado de 1/10/100/400 Gbps y alojado de 50 Mbps a 25 Gbps, MACsec en 10/100/400 Gbps, SLA del 99,99 % con máxima resiliencia; túneles VPN de 1,25 Gbps (5 Gbps los de gran ancho de banda, con Transit Gateway o Cloud WAN); MGN con 2160 horas gratis por servidor; DRS con RPO de segundos y RTO de 5–20 min; CUR 2.0 en Data Exports con esquema fijo. 34 siglas nuevas en el glosario (BGP, ECMP, IPsec, MACsec, VIF, CDC, AS2, iSCSI, NTFS, FOCUS…), aplicadas también a CloudFront, EC2 y VPC. |

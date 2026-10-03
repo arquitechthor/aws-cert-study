@@ -1,0 +1,112 @@
+[
+  {
+    "id": "codedeploy-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo quiere publicar una nueva versión de una función Lambda enviando el 10 % del tráfico durante 10 minutos y, si no hay errores, el 100 %. ¿Qué usa?",
+    "opciones": [
+      "CodeDeploy con una configuración canary sobre un alias de Lambda.",
+      "CodeDeploy con despliegue in situ.",
+      "Dos funciones distintas con Route 53 ponderado.",
+      "Actualizar $LATEST y esperar."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CodeDeploy desplaza el tráfico del alias entre versiones de Lambda; la configuración canary envía un porcentaje, espera y después pasa el resto. Los despliegues in situ son para EC2 y servidores locales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html"
+    ]
+  },
+  {
+    "id": "codedeploy-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Durante un despliegue con CodeDeploy, la tasa de errores 5xx de la aplicación se dispara. El equipo quiere que en ese caso el despliegue vuelva solo a la versión anterior. ¿Qué configura?",
+    "opciones": [
+      "Una aprobación manual en CodePipeline.",
+      "Un gancho BeforeInstall.",
+      "Más instancias en el grupo de Auto Scaling.",
+      "Una alarma de CloudWatch en el grupo de despliegue con reversión automática activada."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "CodeDeploy puede vigilar alarmas de CloudWatch durante el despliegue y revertir automáticamente si alguna se activa, además de revertir si el despliegue falla.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and-redeploy.html"
+    ]
+  },
+  {
+    "id": "codedeploy-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "En un despliegue in situ en EC2, hay que reiniciar un servicio y comprobar que responde después de copiar los ficheros. ¿Dónde se define?",
+    "opciones": [
+      "En la plantilla de lanzamiento de EC2.",
+      "En los ganchos del archivo AppSpec, como AfterInstall y ValidateService.",
+      "En el buildspec de CodeBuild.",
+      "En la política de la bóveda de AWS Backup."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El archivo AppSpec indica qué ficheros copiar y qué scripts ejecutar en cada evento del ciclo de vida del despliegue, como AfterInstall o ValidateService.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html"
+    ]
+  },
+  {
+    "id": "codedeploy-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Un despliegue de CodeDeploy en instancias EC2 se queda esperando y termina fallando en todas ellas. ¿Cuál es una causa frecuente?",
+    "opciones": [
+      "El agente de CodeDeploy no está instalado o en ejecución, o el perfil de instancia no puede leer la revisión en S3.",
+      "La función Lambda no tiene alias.",
+      "El balanceador usa HTTPS.",
+      "La cuenta no tiene CodePipeline."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En EC2 y servidores locales, CodeDeploy necesita su agente en cada instancia, y el perfil de instancia debe permitir descargar la revisión desde S3.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/troubleshooting-ec2-instances.html"
+    ]
+  },
+  {
+    "id": "codedeploy-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa despliega en una flota de EC2 tras un balanceador y quiere evitar cualquier pérdida de capacidad durante el despliegue y poder volver atrás al instante. ¿Qué tipo de despliegue usa?",
+    "opciones": [
+      "In situ, de una en una.",
+      "In situ, todas a la vez.",
+      "Azul/verde, creando instancias nuevas y moviendo el tráfico del balanceador.",
+      "Actualizar la AMI a mano."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "En azul/verde, CodeDeploy crea un entorno nuevo, mueve el tráfico cuando está listo y mantiene el antiguo un tiempo para volver atrás moviendo el tráfico de nuevo. In situ reduce la capacidad mientras actualiza.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html"
+    ]
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "codepipeline-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo quiere que cada cambio en la rama principal de GitHub se compile, se pruebe y se despliegue automáticamente en ECS, con una aprobación humana antes de producción. ¿Qué solución usa?",
+    "opciones": [
+      "CodeBuild con un webhook de GitHub y nada más.",
+      "Una canalización de CodePipeline con fuente en GitHub, acciones de CodeBuild, una aprobación manual y despliegue en ECS.",
+      "Un cron en EC2 que ejecute git pull.",
+      "CloudFormation con una pila anidada."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CodePipeline orquesta el flujo completo: fuente (GitHub mediante CodeConnections), compilación y pruebas (CodeBuild), aprobación manual y despliegue en ECS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html"
+    ]
+  },
+  {
+    "id": "codepipeline-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Una canalización solo debe ejecutarse cuando se crea una etiqueta de Git con el formato v*, no con cada commit. ¿Qué se configura?",
+    "opciones": [
+      "Un disparador por etiquetas en una canalización de tipo V2.",
+      "Una aprobación manual al inicio.",
+      "Una regla de ciclo de vida de S3.",
+      "Una canalización V1 con sondeo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las canalizaciones V2 admiten disparadores con filtros por rama, etiqueta de Git o solicitud de incorporación. V1 se inicia con cada cambio de la fuente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html"
+    ]
+  },
+  {
+    "id": "codepipeline-003",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una canalización en la cuenta de herramientas debe desplegar con CloudFormation en las cuentas de preproducción y producción. ¿Qué se necesita? (Elige dos.)",
+    "opciones": [
+      "Roles en las cuentas de destino que la canalización pueda asumir.",
+      "Una clave de KMS gestionada por el cliente, compartida con esas cuentas, para cifrar los artefactos.",
+      "Usuarios de IAM con claves de acceso en cada cuenta.",
+      "Copiar el código a un repositorio en cada cuenta.",
+      "La clave de KMS gestionada por AWS por defecto de S3."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Las acciones entre cuentas asumen roles en las cuentas de destino, que también deben poder leer los artefactos. Por eso los artefactos se cifran con una clave de KMS gestionada por el cliente con una política que lo permita; la clave por defecto no se puede compartir.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-create-cross-account.html"
+    ]
+  },
+  {
+    "id": "codepipeline-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS automatiza las fases de compilación, prueba y despliegue de una aplicación cada vez que cambia el código?",
+    "opciones": [
+      "AWS CloudTrail.",
+      "AWS Config.",
+      "Amazon Inspector.",
+      "AWS CodePipeline."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "CodePipeline es el servicio de entrega continua que encadena esas fases. CloudTrail registra llamadas a la API y Config evalúa la configuración de los recursos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html"
+    ]
+  },
+  {
+    "id": "codepipeline-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una canalización falla en la acción de despliegue y el equipo quiere recibir un aviso en Slack cada vez que una ejecución falle. ¿Qué usa?",
+    "opciones": [
+      "Un sondeo de la API desde una instancia EC2.",
+      "Los registros de CloudTrail revisados a mano.",
+      "Una regla de EventBridge (o una notificación de CodeStar Notifications) sobre los cambios de estado de la canalización.",
+      "Una aprobación manual."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "CodePipeline publica eventos de cambio de estado; una regla de EventBridge o las notificaciones de las herramientas para desarrolladores pueden enviarlos a SNS o a Amazon Q Developer en aplicaciones de chat para Slack.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/detect-state-changes-cloudwatch-events.html"
+    ]
+  }
+]

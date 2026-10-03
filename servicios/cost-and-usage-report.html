@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Cost and Usage Report — Apuntes AWS</title>
+<meta name="description" content="El informe de facturación más detallado de AWS: cada línea de uso y coste, por hora y por recurso, entregado en S3 para analizarlo con Athena, Redshift o Quick. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cost-and-usage-report.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Cost and Usage Report — Apuntes AWS">
+<meta property="og:description" content="El informe de facturación más detallado de AWS: cada línea de uso y coste, por hora y por recurso, entregado en S3 para analizarlo con Athena, Redshift o Quick.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cost-and-usage-report.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/cost-and-usage-report.svg" alt="" width="56" height="56"><span>AWS Cost and Usage Report</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Exporta el detalle más fino de facturación, línea a línea, a <abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr> para analizarlo</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-financiera#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="18" height="18">Administración financiera en la nube <span class="cat-en">(Cloud Financial Management)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html" target="_blank" rel="noopener">Documentación de AWS Cost and Usage Report ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Cost and Usage Report (<abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr>) es el <strong>conjunto de datos de facturación más completo</strong> de AWS.
+        Contiene cada línea de uso y coste, con granularidad <strong>horaria, diaria o mensual</strong>, por
+        <strong>recurso</strong>, con etiquetas de asignación de costes, descuentos, <a href="savings-plans.html">Savings Plans</a> y reservas. Se
+        entrega en un bucket de <strong><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></strong> varias veces al día para analizarlo con <a href="athena.html">Athena</a>, <a href="redshift.html">Redshift</a> o Quick
+        Sight. Hoy se crea como <strong><abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr> 2.0</strong> desde AWS Data Exports.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong><abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr> 2.0 (Data Exports):</strong> esquema fijo, columnas anidadas (etiquetas, categorías de coste),
+          selección de columnas y filtros con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> básico, y columnas extra como el nombre de la cuenta. Sustituye al <abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr>
+          heredado, que tiene un esquema que cambia según el uso.</li>
+        <li><strong>Granularidad e IDs de recurso:</strong> se puede pedir por hora e incluir el ID de cada recurso.</li>
+        <li><strong>Formatos:</strong> Parquet (recomendado para consultas) o <abbr class="sigla sigla-1" data-s="CSV" data-en="Comma-Separated Values" data-es="texto con valores separados por comas" tabindex="0">CSV<span class="sigla-exp"> (Comma-Separated Values: texto con valores separados por comas)</span></abbr> comprimido.</li>
+        <li><strong>Integración con <a href="athena.html">Athena</a> y <a href="redshift.html">Redshift</a>:</strong> la exportación incluye lo necesario para crear las tablas
+          y mantenerlas al día.</li>
+        <li><strong>Organizaciones:</strong> desde la cuenta de administración se obtienen los costes de todas las
+          cuentas.</li>
+        <li><strong>Etiquetas de asignación de costes:</strong> hay que activarlas en Billing para que aparezcan.</li>
+        <li><strong>Otras exportaciones:</strong> Data Exports también ofrece el formato abierto <abbr class="sigla sigla-1" data-s="FOCUS" data-en="FinOps Open Cost and Usage Specification" data-es="formato abierto para datos de facturación en la nube" tabindex="0">FOCUS<span class="sigla-exp"> (FinOps Open Cost and Usage Specification: formato abierto para datos de facturación en la nube)</span></abbr> y datos de
+          recomendaciones de optimización.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Repercutir costes a departamentos o clientes (<em>chargeback</em>) por etiquetas o cuentas.</li>
+        <li>Análisis detallado del uso de <a href="savings-plans.html">Savings Plans</a> y reservas.</li>
+        <li>Paneles de costes propios (por ejemplo, Cloud Intelligence Dashboards).</li>
+        <li>Integrar la facturación con herramientas financieras externas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para ver gráficos y tendencias rápidamente sin montar nada: <a href="cost-explorer.html">Cost Explorer</a>.</li>
+        <li>Para recibir avisos al superar un gasto: Budgets.</li>
+        <li>Para detectar gastos anómalos automáticamente: Cost Anomaly Detection.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Cost and Usage Report</th><th><a href="cost-explorer.html">Cost Explorer</a></th><th>Budgets</th></tr></thead>
+          <tbody>
+            <tr><td>Qué ofrece</td><td>Datos en bruto, línea a línea</td><td>Gráficos, filtros y previsiones</td><td>Alertas y acciones por umbral</td></tr>
+            <tr><td>Detalle</td><td>Máximo (por hora y recurso)</td><td>Agregado</td><td>Agregado</td></tr>
+            <tr><td>Esfuerzo</td><td>Requiere analizarlo (<a href="athena.html">Athena</a>, <a href="redshift.html">Redshift</a>, Quick)</td><td>Listo en la consola</td><td>Listo en la consola</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El informe <strong>no tiene coste</strong>; se paga el almacenamiento en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y las consultas que hagas (<a href="athena.html">Athena</a>,
+        <a href="redshift.html">Redshift</a>, Quick).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El bucket de destino necesita una política que permita escribir al servicio de facturación.</li>
+        <li>Limita quién lee el bucket: contiene información financiera de toda la organización.</li>
+        <li>Cifrado del bucket con <abbr class="sigla sigla-1" data-s="SSE-S3" data-en="Server-Side Encryption with S3 managed keys" data-es="cifrado en el servidor con claves que gestiona S3" tabindex="0">SSE-S3<span class="sigla-exp"> (Server-Side Encryption with S3 managed keys: cifrado en el servidor con claves que gestiona S3)</span></abbr> o <abbr class="sigla sigla-1" data-s="SSE-KMS" data-en="Server-Side Encryption with KMS keys" data-es="cifrado en el servidor con claves de KMS" tabindex="0">SSE-KMS<span class="sigla-exp"> (Server-Side Encryption with KMS keys: cifrado en el servidor con claves de KMS)</span></abbr>.</li>
+        <li>Se puede pedir que AWS rellene datos de meses anteriores.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"El nivel de detalle más fino", "por hora y por recurso"</strong>: Cost and Usage Report.</li>
+        <li><strong>"Consultar los costes con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr>"</strong>: <abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr> en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y <a href="athena.html">Athena</a>.</li>
+        <li><strong>"Costes por proyecto"</strong>: etiquetas de asignación de costes activadas, y <abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr> o <a href="cost-explorer.html">Cost Explorer</a>.</li>
+        <li><strong>"Ver tendencias rápidamente"</strong>: Cost Explorer, no <abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr>.</li>
+        <li><strong>"Aviso al pasar de un importe"</strong>: Budgets.</li>
+        <li><strong>"Costes de todas las cuentas"</strong>: <abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr> desde la cuenta de administración de la organización.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cost-and-usage-report"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html" target="_blank" rel="noopener">What are AWS Cost and Usage Reports?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cur/latest/userguide/dataexports-migrate.html" target="_blank" rel="noopener">Migrating from CUR to Data Exports CUR 2.0</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2026/06/aws-cur2.0-athena-redshift/" target="_blank" rel="noopener">AWS Cost and Usage Report 2.0 now supports Athena and Redshift integration</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+[
+  {
+    "id": "storage-gateway-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa quiere dejar de usar cintas físicas para sus copias de seguridad, pero su software de copias solo sabe escribir en bibliotecas de cintas. ¿Qué solución usa?",
+    "opciones": [
+      "S3 File Gateway.",
+      "Tape Gateway de Storage Gateway, con archivo en S3 Glacier Deep Archive.",
+      "AWS DataSync.",
+      "Volume Gateway almacenado."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Tape Gateway presenta una biblioteca de cintas virtual por iSCSI que el software de copias ya conoce. Las cintas se guardan en S3 y se archivan en Glacier para abaratar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/storagegateway/latest/tgw/WhatIsStorageGateway.html"
+    ]
+  },
+  {
+    "id": "storage-gateway-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Unos servidores Linux locales escriben ficheros en un recurso NFS. La empresa quiere que esos ficheros acaben como objetos en S3 para analizarlos con Athena, manteniendo el acceso local rápido. ¿Qué usa?",
+    "opciones": [
+      "S3 File Gateway.",
+      "Volume Gateway en caché.",
+      "Amazon EFS montado por internet.",
+      "AWS Snow Family."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "S3 File Gateway ofrece un recurso NFS o SMB y guarda cada fichero como un objeto en S3, con caché local de lo reciente. Volume Gateway guarda bloques, no ficheros legibles como objetos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/filegateway/latest/files3/what-is-file-s3.html"
+    ]
+  },
+  {
+    "id": "storage-gateway-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una aplicación local necesita latencia mínima en todos sus datos de bloque (iSCSI) y, a la vez, una copia en AWS para recuperarse en EC2 si el centro de datos falla. ¿Qué modo elige?",
+    "opciones": [
+      "Volume Gateway en caché.",
+      "Tape Gateway.",
+      "Volume Gateway almacenado, con instantáneas de EBS en AWS.",
+      "S3 File Gateway."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "En modo almacenado todos los datos están en local (baja latencia) y se copian de forma asíncrona a AWS como instantáneas de EBS, que pueden restaurarse como volúmenes para EC2.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html"
+    ]
+  },
+  {
+    "id": "storage-gateway-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Un servidor de ficheros local se queda sin disco. La empresa quiere ampliar la capacidad con almacenamiento en la nube sin cambiar cómo acceden los usuarios (SMB) y sin migrar aún las aplicaciones. ¿Qué solución encaja mejor?",
+    "opciones": [
+      "AWS DataSync una sola vez.",
+      "S3 File Gateway con un recurso SMB y caché local.",
+      "Amazon FSx for Lustre.",
+      "AWS Transfer Family."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "S3 File Gateway mantiene el acceso SMB para los usuarios, con caché local, y guarda los datos en S3 con capacidad prácticamente ilimitada. DataSync solo copiaría los datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/filegateway/latest/files3/what-is-file-s3.html"
+    ]
+  },
+  {
+    "id": "storage-gateway-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS permite que las aplicaciones de un centro de datos usen almacenamiento en la nube como si fuera local, con caché?",
+    "opciones": [
+      "Amazon EBS.",
+      "AWS Backup.",
+      "Amazon S3 Glacier.",
+      "AWS Storage Gateway."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Storage Gateway es un servicio de almacenamiento híbrido que conecta las aplicaciones locales con el almacenamiento en AWS mediante protocolos estándar y una caché local.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/filegateway/latest/files3/what-is-file-s3.html"
+    ]
+  }
+]

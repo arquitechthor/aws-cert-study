@@ -92,7 +92,7 @@
           misma zona. Para llevarlo a otra zona o región, se hace una instantánea y se restaura allí.</li>
         <li><strong>Instantáneas (snapshots):</strong> copias incrementales guardadas en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> (solo se
           guardan los bloques cambiados). Se pueden copiar entre regiones, compartir con otras cuentas y
-          automatizar con Data Lifecycle Manager o <a href="../servicio.html?id=backup">AWS Backup</a>. El archivo de instantáneas abarata las que
+          automatizar con Data Lifecycle Manager o <a href="backup.html">AWS Backup</a>. El archivo de instantáneas abarata las que
           se guardan mucho tiempo; la papelera de reciclaje protege contra borrados accidentales.</li>
         <li><strong>Multi-Attach:</strong> los io2 pueden conectarse a varias instancias Nitro de la misma
           zona a la vez (la aplicación debe gestionar la escritura concurrente).</li>
@@ -113,7 +113,7 @@
 
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
-        <li>Ficheros compartidos entre muchas instancias o zonas: <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a> (Linux) o <a href="../servicio.html?id=fsx">FSx</a> (Windows y otros).</li>
+        <li>Ficheros compartidos entre muchas instancias o zonas: <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a> (Linux) o <a href="fsx.html">FSx</a> (Windows y otros).</li>
         <li>Objetos accesibles por <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>, a escala ilimitada: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
         <li>Datos temporales de máximo rendimiento que pueden perderse: instance store.</li>
       </ul>
@@ -156,7 +156,7 @@
         <li><strong>"Compartir ficheros entre muchas instancias"</strong>: <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>, no <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr>.</li>
         <li><strong>"Los datos del disco desaparecieron al parar la instancia"</strong>: era instance store.</li>
         <li><strong>"Cifrar un volumen existente"</strong>: instantánea, copia cifrada y nuevo volumen.</li>
-        <li><strong>"Automatizar las instantáneas"</strong>: Data Lifecycle Manager o <a href="../servicio.html?id=backup">AWS Backup</a>.</li>
+        <li><strong>"Automatizar las instantáneas"</strong>: Data Lifecycle Manager o <a href="backup.html">AWS Backup</a>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

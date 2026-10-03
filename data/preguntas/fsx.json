@@ -1,0 +1,134 @@
+[
+  {
+    "id": "fsx-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación .NET en instancias EC2 Windows necesita un recurso compartido SMB con permisos de Active Directory y alta disponibilidad entre AZ. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon EFS.",
+      "Amazon FSx for Lustre.",
+      "Amazon FSx for Windows File Server con despliegue Multi-AZ.",
+      "Un volumen EBS Multi-Attach."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "FSx for Windows File Server ofrece SMB nativo integrado con Active Directory y permisos NTFS, y en Multi-AZ conmuta solo si falla una AZ. EFS es NFS para Linux.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fsx/latest/WindowsGuide/what-is.html"
+    ]
+  },
+  {
+    "id": "fsx-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un trabajo de entrenamiento de aprendizaje automático lee millones de ficheros guardados en S3 y necesita cientos de GB/s de rendimiento durante unas horas. ¿Qué solución encaja?",
+    "opciones": [
+      "FSx for Lustre enlazado con el bucket de S3.",
+      "S3 File Gateway.",
+      "Amazon EFS en modo estándar.",
+      "FSx for Windows File Server."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "FSx for Lustre es un sistema de ficheros paralelo de alto rendimiento que puede enlazarse con S3 para presentar sus objetos como ficheros y escribir los resultados de vuelta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html"
+    ]
+  },
+  {
+    "id": "fsx-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un trabajo HPC genera datos intermedios que solo se usan durante unos días y pueden regenerarse. ¿Qué opción de FSx es la más barata?",
+    "opciones": [
+      "FSx for Lustre persistente.",
+      "FSx for NetApp ONTAP Multi-AZ.",
+      "FSx for Windows File Server Multi-AZ.",
+      "FSx for Lustre de tipo scratch."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El despliegue scratch de Lustre no replica los datos y es más barato; encaja con datos temporales que pueden regenerarse. El persistente replica dentro de la AZ para datos duraderos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html"
+    ]
+  },
+  {
+    "id": "fsx-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa usa cabinas NetApp en local, con volúmenes servidos a la vez por NFS a Linux y por SMB a Windows, y replica con SnapMirror. Quiere migrar a AWS sin cambiar herramientas. ¿Qué elige?",
+    "opciones": [
+      "Amazon EFS y FSx for Windows por separado.",
+      "Amazon FSx for NetApp ONTAP.",
+      "Amazon FSx for OpenZFS.",
+      "S3 File Gateway."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "FSx for NetApp ONTAP ofrece los mismos protocolos (NFS, SMB, iSCSI) y funciones de ONTAP, incluida SnapMirror, para replicar desde las cabinas locales y migrar sin cambiar procesos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/what-is-fsx-ontap.html"
+    ]
+  },
+  {
+    "id": "fsx-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Varias instancias EC2 Linux necesitan un sistema de ficheros NFS compartido que crezca solo y se pague por lo que se usa, sin elegir capacidad ni rendimiento. ¿Qué servicio es más adecuado?",
+    "opciones": [
+      "Amazon EFS.",
+      "Amazon FSx for Lustre.",
+      "Amazon FSx for Windows File Server.",
+      "Amazon EBS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "EFS es NFS elástico: crece y decrece solo y se paga por uso. FSx encaja cuando se necesitan las características de Windows, Lustre, ONTAP u OpenZFS.",
+    "fuentes": [
+      "https://aws.amazon.com/fsx/when-to-choose-fsx/"
+    ]
+  },
+  {
+    "id": "fsx-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS ofrece sistemas de ficheros gestionados de Windows File Server, Lustre, NetApp ONTAP u OpenZFS?",
+    "opciones": [
+      "Amazon S3.",
+      "Amazon EBS.",
+      "Amazon FSx.",
+      "AWS Storage Gateway."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Amazon FSx ofrece esos cuatro sistemas de ficheros totalmente gestionados. S3 es almacenamiento de objetos y EBS, de bloques.",
+    "fuentes": [
+      "https://aws.amazon.com/fsx/when-to-choose-fsx/"
+    ]
+  }
+]

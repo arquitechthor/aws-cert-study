@@ -1,0 +1,136 @@
+[
+  {
+    "id": "backup-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Una empresa quiere copias diarias de sus instancias EC2, bases de datos RDS, tablas de DynamoDB y sistemas EFS con una retención de 35 días, gestionadas desde un único lugar e incluyendo los recursos nuevos sin intervención. ¿Qué hace?",
+    "opciones": [
+      "Scripts con la CLI en una instancia programada.",
+      "Un plan de AWS Backup con asignación de recursos por etiquetas.",
+      "Instantáneas automáticas de cada servicio por separado.",
+      "AWS DataSync diario a S3."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "AWS Backup centraliza las copias de esos servicios en un plan con frecuencia y retención. Asignar por etiquetas hace que los recursos nuevos etiquetados entren en el plan automáticamente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html"
+    ]
+  },
+  {
+    "id": "backup-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Una normativa exige que las copias de seguridad no puedan borrarse ni acortar su retención durante 7 años, ni siquiera por un administrador con todos los permisos. ¿Qué configura?",
+    "opciones": [
+      "Una política de IAM que deniegue el borrado.",
+      "Vault Lock en modo gobernanza.",
+      "Vault Lock en modo cumplimiento.",
+      "Cifrado con una clave de KMS gestionada por el cliente."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "En modo cumplimiento, una vez pasado el periodo de gracia, el bloqueo es inmutable: nadie puede borrar las copias antes de su retención ni cambiar la configuración. El modo gobernanza permite cambios a usuarios con permisos especiales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html"
+    ]
+  },
+  {
+    "id": "backup-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización con 200 cuentas quiere aplicar el mismo plan de copias en todas y que las copias se guarden también en una cuenta de copias aislada, en otra región. ¿Qué combinación usa?",
+    "opciones": [
+      "Un plan de AWS Backup creado a mano en cada cuenta.",
+      "Replicación de S3 en cada cuenta.",
+      "AWS Config con reglas de corrección.",
+      "Políticas de copia de AWS Organizations con AWS Backup y copias entre cuentas y regiones."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las políticas de copia de Organizations despliegan planes de AWS Backup en todas las cuentas, y las reglas de copia envían los puntos de recuperación a una bóveda de otra cuenta y región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/manage-cross-account.html"
+    ]
+  },
+  {
+    "id": "backup-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Tras un ataque de ransomware que comprometió una cuenta, una empresa quiere que sus copias estén aisladas, bloqueadas y que puedan restaurarse directamente desde otra cuenta de recuperación. ¿Qué característica de AWS Backup encaja mejor?",
+    "opciones": [
+      "Una bóveda aislada lógicamente, compartida con la cuenta de recuperación.",
+      "El paso a almacenamiento en frío.",
+      "Una regla de ciclo de vida de S3.",
+      "Copias en la misma bóveda con otra clave de KMS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La bóveda aislada lógicamente está bloqueada en modo cumplimiento por defecto y se puede compartir (con RAM) con otra cuenta para restaurar desde ella, sin copiar antes los datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/logicallyairgappedvault.html"
+    ]
+  },
+  {
+    "id": "backup-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un auditor pide demostrar periódicamente que todos los recursos críticos tienen copias según la política y que las copias se pueden restaurar. ¿Qué funciones de AWS Backup ayudan? (Elige dos.)",
+    "opciones": [
+      "Audit Manager de AWS Backup.",
+      "Las pruebas de restauración.",
+      "Vault Lock en modo gobernanza.",
+      "El paso a almacenamiento en frío.",
+      "La asignación por ID de recurso."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Audit Manager de AWS Backup evalúa los controles de las copias y genera informes de cumplimiento, y las pruebas de restauración restauran copias de forma programada para comprobar que funcionan.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html"
+    ]
+  },
+  {
+    "id": "backup-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS permite centralizar y automatizar las copias de seguridad de varios servicios de AWS?",
+    "opciones": [
+      "Amazon S3 Glacier.",
+      "AWS Storage Gateway.",
+      "AWS Backup.",
+      "AWS Elastic Disaster Recovery."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "AWS Backup gestiona desde un único lugar las copias de EC2, EBS, RDS, DynamoDB, EFS, FSx, S3 y otros. Elastic Disaster Recovery replica servidores para recuperación ante desastres.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html"
+    ]
+  }
+]

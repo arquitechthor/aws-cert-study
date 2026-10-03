@@ -267,8 +267,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Copias de seguridad centralizadas y por políticas de muchos servicios de AWS y de entornos híbridos, con bóvedas inmutables y copias entre regiones y cuentas.",
     "frase": "Centraliza y programa copias de seguridad de muchos servicios con políticas y bóvedas",
     "documentacion": "https://docs.aws.amazon.com/aws-backup/"
   },
@@ -519,8 +519,8 @@
       "SAP-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Automatiza despliegues en EC2, servidores locales, Lambda y ECS, con estrategias in situ, azul/verde, canary o lineal y reversión automática.",
     "frase": "Despliega versiones en servidores, funciones o contenedores con estrategias blue/green",
     "documentacion": "https://docs.aws.amazon.com/codedeploy/"
   },
@@ -547,8 +547,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Orquesta la entrega continua: encadena fuente, compilación, pruebas, aprobaciones y despliegue en etapas que se ejecutan con cada cambio.",
     "frase": "Encadena fuente, compilación, pruebas y despliegue en un flujo de entrega continua",
     "documentacion": "https://docs.aws.amazon.com/codepipeline/"
   },
@@ -654,8 +654,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "El informe de facturación más detallado de AWS: cada línea de uso y coste, por hora y por recurso, entregado en S3 para analizarlo con Athena, Redshift o Quick.",
     "frase": "Exporta el detalle más fino de facturación, línea a línea, a S3 para analizarlo",
     "documentacion": "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
   },
@@ -981,8 +981,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Recuperación ante desastres de servidores con replicación continua a un área de preparación barata: RPO de segundos y RTO de minutos.",
     "frase": "Mantiene réplicas baratas de tus servidores para arrancarlos en minutos si algo cae",
     "documentacion": "https://docs.aws.amazon.com/drs/"
   },
@@ -1120,8 +1120,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Sistemas de ficheros gestionados de alto rendimiento con cuatro opciones: Windows File Server, Lustre, NetApp ONTAP y OpenZFS.",
     "frase": "Sistemas de ficheros gestionados de Windows, Lustre, NetApp ONTAP u OpenZFS",
     "documentacion": "https://docs.aws.amazon.com/fsx/"
   },
@@ -2217,8 +2217,8 @@
       "SAP-C02",
       "CLF-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Puerta de enlace híbrida que da a las aplicaciones locales acceso por NFS, SMB, iSCSI o cintas virtuales a almacenamiento en AWS, con caché local.",
     "frase": "Conecta tu centro de datos a S3 con volúmenes, recursos NFS o cintas virtuales",
     "documentacion": "https://docs.aws.amazon.com/storagegateway/"
   },

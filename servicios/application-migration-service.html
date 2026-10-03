@@ -100,7 +100,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para migrar solo una base de datos o cambiar de motor: <a href="dms.html"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a> (y <a href="sct.html"><abbr class="sigla sigla-1" data-s="SCT" data-en="Schema Conversion Tool" tabindex="0">SCT<span class="sigla-exp"> (Schema Conversion Tool)</span></abbr></a>).</li>
-        <li>Para recuperación ante desastres continua (no una migración): <a href="../servicio.html?id=elastic-disaster-recovery">Elastic Disaster Recovery</a>, que usa una
+        <li>Para recuperación ante desastres continua (no una migración): <a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a>, que usa una
           tecnología parecida.</li>
         <li>Para mover ficheros o recursos compartidos: <a href="datasync.html">DataSync</a>.</li>
         <li>Si vas a reescribir la aplicación (por ejemplo, a contenedores o sin servidor), rehospedar el servidor tal
@@ -110,7 +110,7 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>Transform MGN</th><th><a href="../servicio.html?id=elastic-disaster-recovery">Elastic Disaster Recovery</a></th><th><a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>Transform MGN</th><th><a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a></th><th><a href="dms.html"><abbr class="sigla" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS</abbr></a></th></tr></thead>
           <tbody>
             <tr><td>Objetivo</td><td>Migrar servidores una vez</td><td>Recuperarse de un desastre, de forma continua</td><td>Migrar bases de datos</td></tr>
             <tr><td>Qué replica</td><td>Discos enteros, bloque a bloque</td><td>Discos enteros, bloque a bloque</td><td>Filas y cambios</td></tr>
@@ -139,7 +139,7 @@
         <li><strong>"Probar antes del corte sin afectar al origen"</strong>: instancias de prueba de MGN.</li>
         <li>Si aparecen <strong>Server Migration Service</strong> o CloudEndure Migration: son sus predecesores; la
           respuesta actual es MGN.</li>
-        <li><strong>"Recuperación ante desastres"</strong>: <a href="../servicio.html?id=elastic-disaster-recovery">Elastic Disaster Recovery</a>, no MGN.</li>
+        <li><strong>"Recuperación ante desastres"</strong>: <a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a>, no MGN.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

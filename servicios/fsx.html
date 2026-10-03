@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon FSx — Apuntes AWS</title>
+<meta name="description" content="Sistemas de ficheros gestionados de alto rendimiento con cuatro opciones: Windows File Server, Lustre, NetApp ONTAP y OpenZFS. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/fsx.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon FSx — Apuntes AWS">
+<meta property="og:description" content="Sistemas de ficheros gestionados de alto rendimiento con cuatro opciones: Windows File Server, Lustre, NetApp ONTAP y OpenZFS.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/fsx.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/fsx.svg" alt="" width="56" height="56"><span>Amazon FSx</span></h1>
+      <p class="full-name">Amazon FSx (for all types)</p>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Sistemas de ficheros gestionados de Windows, Lustre, NetApp ONTAP u OpenZFS</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=almacenamiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/almacenamiento.svg" alt="" width="18" height="18">Almacenamiento <span class="cat-en">(Storage)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/fsx/" target="_blank" rel="noopener">Documentación de Amazon FSx ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon FSx ofrece <strong>sistemas de ficheros gestionados</strong> construidos sobre tecnologías conocidas,
+        para cuando necesitas sus características concretas. Hay cuatro: <strong>Windows File Server</strong>,
+        <strong>Lustre</strong>, <strong>NetApp ONTAP</strong> y <strong>OpenZFS</strong>. AWS gestiona el hardware, los
+        parches, las copias y la conmutación por error; tú eliges capacidad, rendimiento y despliegue.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>FSx for Windows File Server:</strong> recursos compartidos <abbr class="sigla sigla-1" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB<span class="sigla-exp"> (Server Message Block: protocolo de ficheros compartidos de Windows)</span></abbr> nativos de Windows, integrado con
+          Active Directory (permisos <abbr class="sigla sigla-1" data-s="NTFS" data-en="New Technology File System" data-es="sistema de ficheros de Windows, con permisos por usuario" tabindex="0">NTFS<span class="sigla-exp"> (New Technology File System: sistema de ficheros de Windows, con permisos por usuario)</span></abbr>), <abbr class="sigla sigla-1" data-s="DFS" data-en="Distributed File System" data-es="agrupa recursos compartidos de Windows bajo un mismo espacio de nombres" tabindex="0">DFS<span class="sigla-exp"> (Distributed File System: agrupa recursos compartidos de Windows bajo un mismo espacio de nombres)</span></abbr>, instantáneas que los usuarios pueden restaurar y deduplicación.</li>
+        <li><strong>FSx for Lustre:</strong> sistema de ficheros paralelo para <abbr class="sigla sigla-1" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC<span class="sigla-exp"> (High Performance Computing: cómputo de alto rendimiento)</span></abbr>, aprendizaje automático y proceso de
+          medios, con cientos de GB/s. Se puede <strong>enlazar con un bucket de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a></strong> para leer y escribir sus
+          objetos como ficheros. Despliegues <strong>scratch</strong> (temporal, sin replicación, más barato) o
+          <strong>persistente</strong>.</li>
+        <li><strong>FSx for NetApp ONTAP:</strong> <abbr class="sigla sigla-1" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS<span class="sigla-exp"> (Network File System: protocolo para compartir ficheros en red)</span></abbr>, <abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr> e <abbr class="sigla" data-s="iSCSI" data-en="Internet Small Computer Systems Interface" data-es="discos por bloques a través de la red" tabindex="0">iSCSI</abbr> (y <abbr class="sigla sigla-1" data-s="NVMe" data-en="Non-Volatile Memory Express" data-es="protocolo de acceso rápido a discos SSD" tabindex="0">NVMe<span class="sigla-exp"> (Non-Volatile Memory Express: protocolo de acceso rápido a discos SSD)</span></abbr> sobre <abbr class="sigla sigla-1" data-s="TCP" data-en="Transmission Control Protocol" data-es="protocolo de transporte fiable" tabindex="0">TCP<span class="sigla-exp"> (Transmission Control Protocol: protocolo de transporte fiable)</span></abbr>) a la vez, con las funciones de ONTAP:
+          instantáneas, clones, SnapMirror para replicar y nivel de capacidad automático para datos fríos. Ideal si ya
+          usas NetApp en local.</li>
+        <li><strong>FSx for OpenZFS:</strong> <abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> con latencias muy bajas, instantáneas y clones; para migrar sistemas
+          <abbr class="sigla sigla-1" data-s="ZFS" data-en="Zettabyte File System" data-es="sistema de ficheros con instantáneas y clones" tabindex="0">ZFS<span class="sigla-exp"> (Zettabyte File System: sistema de ficheros con instantáneas y clones)</span></abbr> o Linux.</li>
+        <li><strong>Despliegue Single-AZ o Multi-AZ:</strong> Multi-AZ en Windows, ONTAP y OpenZFS (<abbr class="sigla sigla-1" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA<span class="sigla-exp"> (Service Level Agreement: compromiso de disponibilidad)</span></abbr> del 99,99 %);
+          Lustre es solo de una <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>.</li>
+        <li><strong>Copias de seguridad:</strong> automáticas e incrementales, integradas con <a href="backup.html">AWS Backup</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Recursos compartidos de Windows para aplicaciones .NET, SQL Server o carpetas de usuario (Windows File Server).</li>
+        <li>Entrenamiento de modelos o simulaciones que leen datos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> a gran velocidad (Lustre).</li>
+        <li>Migrar cabinas NetApp sin cambiar herramientas ni procesos (ONTAP).</li>
+        <li>Cargas Linux que necesitan <abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> de muy baja latencia (OpenZFS).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para un <abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> sencillo para Linux que crezca y se pague por uso, sin elegir capacidad: <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>.</li>
+        <li>Para almacenamiento de objetos: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li>Para un disco de una sola instancia: <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Elige</th></tr></thead>
+          <tbody>
+            <tr><td><abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr> con Active Directory para Windows</td><td>FSx for Windows File Server</td></tr>
+            <tr><td><abbr class="sigla" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC</abbr> o <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr> con <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> como origen de datos</td><td>FSx for Lustre</td></tr>
+            <tr><td>Multiprotocolo (<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> + <abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr> + <abbr class="sigla" data-s="iSCSI" data-en="Internet Small Computer Systems Interface" data-es="discos por bloques a través de la red" tabindex="0">iSCSI</abbr>) o venir de NetApp</td><td>FSx for NetApp ONTAP</td></tr>
+            <tr><td><abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> de muy baja latencia, venir de <abbr class="sigla" data-s="ZFS" data-en="Zettabyte File System" data-es="sistema de ficheros con instantáneas y clones" tabindex="0">ZFS</abbr></td><td>FSx for OpenZFS</td></tr>
+            <tr><td><abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> elástico sin gestionar capacidad, para Linux</td><td><a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga la <strong>capacidad de almacenamiento</strong> aprovisionada (o usada, en los niveles elásticos), la
+        <strong>capacidad de rendimiento</strong> elegida, las <abbr class="sigla sigla-1" data-s="IOPS" data-en="Input/Output Operations Per Second" data-es="operaciones de disco por segundo" tabindex="0">IOPS<span class="sigla-exp"> (Input/Output Operations Per Second: operaciones de disco por segundo)</span></abbr> aprovisionadas adicionales y las <strong>copias de
+        seguridad</strong>. Multi-AZ cuesta más que Single-AZ.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> (siempre activo) y en tránsito según el protocolo.</li>
+        <li>Acceso de red dentro de tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> con grupos de seguridad.</li>
+        <li>Permisos de ficheros nativos: <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr> de <abbr class="sigla" data-s="NTFS" data-en="New Technology File System" data-es="sistema de ficheros de Windows, con permisos por usuario" tabindex="0">NTFS</abbr> con Active Directory, o permisos <abbr class="sigla sigla-1" data-s="POSIX" data-en="Portable Operating System Interface" data-es="estándar de ficheros y permisos tipo Unix" tabindex="0">POSIX<span class="sigla-exp"> (Portable Operating System Interface: estándar de ficheros y permisos tipo Unix)</span></abbr>.</li>
+        <li>Multi-AZ con conmutación automática a la <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr> de reserva.</li>
+        <li>Replicación entre regiones con SnapMirror (ONTAP) o copias de seguridad entre regiones.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"<abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr>", "Windows", "Active Directory", "<abbr class="sigla" data-s="NTFS" data-en="New Technology File System" data-es="sistema de ficheros de Windows, con permisos por usuario" tabindex="0">NTFS</abbr>"</strong>: FSx for Windows File Server, no <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>.</li>
+        <li><strong>"<abbr class="sigla" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC</abbr>", "alto rendimiento", "procesar datos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: FSx for Lustre.</li>
+        <li><strong>"Datos temporales de un trabajo <abbr class="sigla" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC</abbr>, lo más barato"</strong>: Lustre scratch.</li>
+        <li><strong>"<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> y <abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr> a la vez" o "NetApp"</strong>: FSx for NetApp ONTAP.</li>
+        <li><strong>"Linux, <abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr>, elástico, sin gestionar capacidad"</strong>: <abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr>.</li>
+        <li><strong>"Alta disponibilidad para un recurso compartido de Windows"</strong>: FSx for Windows Multi-AZ.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="fsx"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/fsx/latest/WindowsGuide/what-is.html" target="_blank" rel="noopener">What is Amazon FSx for Windows File Server?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html" target="_blank" rel="noopener">What is Amazon FSx for Lustre?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/what-is-fsx-ontap.html" target="_blank" rel="noopener">What is Amazon FSx for NetApp ONTAP?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/fsx/when-to-choose-fsx/" target="_blank" rel="noopener">Help me choose an Amazon FSx file system</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

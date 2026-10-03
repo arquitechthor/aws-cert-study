@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Backup — Apuntes AWS</title>
+<meta name="description" content="Copias de seguridad centralizadas y por políticas de muchos servicios de AWS y de entornos híbridos, con bóvedas inmutables y copias entre regiones y cuentas. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/backup.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Backup — Apuntes AWS">
+<meta property="og:description" content="Copias de seguridad centralizadas y por políticas de muchos servicios de AWS y de entornos híbridos, con bóvedas inmutables y copias entre regiones y cuentas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/backup.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/backup.svg" alt="" width="56" height="56"><span>AWS Backup</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Centraliza y programa copias de seguridad de muchos servicios con políticas y bóvedas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=almacenamiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/almacenamiento.svg" alt="" width="18" height="18">Almacenamiento <span class="cat-en">(Storage)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/aws-backup/" target="_blank" rel="noopener">Documentación de AWS Backup ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Backup <strong>centraliza y automatiza las copias de seguridad</strong> de muchos servicios desde un único
+        lugar: <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="aurora.html">Aurora</a>, <a href="dynamodb.html">DynamoDB</a>, <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>, <a href="fsx.html">FSx</a>, <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="documentdb.html">DocumentDB</a>, <a href="neptune.html">Neptune</a>, <a href="redshift.html">Redshift</a>, <a href="storage-gateway.html">Storage Gateway</a> y máquinas
+        virtuales VMware, entre otros. Defines <strong>planes</strong> con frecuencia y retención, eliges los recursos
+        (por ejemplo, por etiquetas) y AWS Backup hace, copia, conserva y caduca las copias. También sirve para cumplir
+        normativas y protegerse del ransomware.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Plan de copias:</strong> reglas con frecuencia, ventana, retención, paso a <strong>almacenamiento
+          en frío</strong> y copias a otras regiones o cuentas.</li>
+        <li><strong>Asignación de recursos:</strong> por ID o, mejor, por <strong>etiquetas</strong>, para que lo nuevo
+          entre solo.</li>
+        <li><strong>Bóveda (<em>vault</em>):</strong> contenedor de los puntos de recuperación, cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y con su
+          propia política de acceso.</li>
+        <li><strong>Vault Lock:</strong> modo <strong>gobernanza</strong> (solo usuarios con permisos especiales pueden
+          cambiarlo) o <strong>cumplimiento</strong> (inmutable: nadie, ni siquiera la cuenta raíz o AWS, puede borrar
+          antes de tiempo, tras un periodo de gracia).</li>
+        <li><strong>Bóveda aislada lógicamente (<em>logically air-gapped</em>):</strong> bloqueada en modo cumplimiento
+          por defecto y compartible con otras cuentas para restaurar desde ellas.</li>
+        <li><strong>Copias entre regiones y cuentas:</strong> para recuperación ante desastres y aislamiento.</li>
+        <li><strong>Políticas de copia de <a href="organizations.html">Organizations</a>:</strong> aplican planes en todas las cuentas.</li>
+        <li><strong><a href="audit-manager.html">Audit Manager</a> de AWS Backup</strong> (informes de cumplimiento de las copias) y <strong>pruebas de
+          restauración</strong> automáticas.</li>
+        <li><strong>Recuperación a un momento dado</strong> (<abbr class="sigla" data-s="PITR" data-en="Point-In-Time Recovery" data-es="restaurar a un momento concreto" tabindex="0">PITR</abbr>) en servicios que lo admiten, como <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="aurora.html">Aurora</a> y <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Política de copias única para toda la organización.</li>
+        <li>Cumplir normativas que exigen retención e inmutabilidad.</li>
+        <li>Protección frente a ransomware con copias en otra cuenta bloqueadas.</li>
+        <li>Recuperación ante desastres de tipo copia de seguridad y restauración en otra región.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si necesitas <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr> de segundos y <abbr class="sigla sigla-1" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO<span class="sigla-exp"> (Recovery Time Objective: cuánto tiempo puedes estar sin servicio)</span></abbr> de minutos para servidores: <a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a>.</li>
+        <li>Para replicación continua de bases de datos entre regiones: bases de datos globales de <a href="aurora.html">Aurora</a> o tablas
+          globales de <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Para versiones de objetos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> sin un plan de copias: el control de versiones y la replicación de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> pueden
+          bastar.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Estrategia</th><th>Servicio</th><th><abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> / <abbr class="sigla" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO</abbr> aproximados</th></tr></thead>
+          <tbody>
+            <tr><td>Copia y restauración</td><td>AWS Backup</td><td>Horas</td></tr>
+            <tr><td>Réplica continua de servidores</td><td><a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a></td><td>Segundos / minutos</td></tr>
+            <tr><td>Base de datos multirregión</td><td><a href="aurora.html">Aurora</a> Global Database, tablas globales de <a href="dynamodb.html">DynamoDB</a></td><td>Segundos / minutos</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga el <strong>almacenamiento de las copias</strong> por GB y mes (según el tipo de recurso, y más barato en
+        frío), las <strong>restauraciones</strong> en algunos servicios y la <strong>transferencia entre
+        regiones</strong> de las copias. No hay cargo por crear planes.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado de las copias con <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a>; algunos recursos usan la clave del recurso original.</li>
+        <li>Políticas de acceso a la bóveda para impedir borrados.</li>
+        <li>Vault Lock en modo cumplimiento para copias <abbr class="sigla sigla-1" data-s="WORM" data-en="Write Once, Read Many" data-es="se escribe una vez y no se puede modificar" tabindex="0">WORM<span class="sigla-exp"> (Write Once, Read Many: se escribe una vez y no se puede modificar)</span></abbr>.</li>
+        <li>Copias en otra cuenta y otra región para aislar fallos y ataques.</li>
+        <li>Supervisión con <a href="cloudwatch.html">CloudWatch</a>, <a href="eventbridge.html">EventBridge</a> y <a href="cloudtrail.html">CloudTrail</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Centralizar las copias de varios servicios" o "de toda la organización"</strong>: AWS Backup con
+          políticas de <a href="organizations.html">Organizations</a>.</li>
+        <li><strong>"Que nadie pueda borrar las copias, ni el administrador"</strong>: Vault Lock en modo cumplimiento.</li>
+        <li><strong>"Proteger las copias del ransomware"</strong>: copias en otra cuenta, bóveda aislada lógicamente o
+          Vault Lock.</li>
+        <li><strong>"Incluir automáticamente los recursos nuevos"</strong>: asignación por etiquetas.</li>
+        <li><strong>"Demostrar que las copias cumplen la política"</strong>: <a href="audit-manager.html">Audit Manager</a> de AWS Backup.</li>
+        <li><strong>"<abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> de segundos"</strong>: no es AWS Backup; piensa en <a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a> o replicación.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="backup"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html" target="_blank" rel="noopener">What is AWS Backup?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html" target="_blank" rel="noopener">AWS Backup Vault Lock</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/aws-backup/latest/devguide/logicallyairgappedvault.html" target="_blank" rel="noopener">Logically air-gapped vault</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/storage/protecting-data-with-aws-backup-vault-lock/" target="_blank" rel="noopener">Protecting data with AWS Backup Vault Lock</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

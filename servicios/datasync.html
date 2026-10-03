@@ -63,7 +63,7 @@
       <h2 id="que-es">Qué es</h2>
       <p>AWS DataSync es un servicio de <strong>transferencia de datos en línea</strong>. Copia ficheros y objetos entre
         tu almacenamiento local (<abbr class="sigla" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS</abbr> con <abbr class="sigla sigla-1" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS<span class="sigla-exp"> (Network File System: protocolo para compartir ficheros en red)</span></abbr> o <abbr class="sigla sigla-1" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB<span class="sigla-exp"> (Server Message Block: protocolo de ficheros compartidos de Windows)</span></abbr>, <abbr class="sigla sigla-1" data-s="HDFS" data-en="Hadoop Distributed File System" data-es="sistema de ficheros distribuido de Hadoop" tabindex="0">HDFS<span class="sigla-exp"> (Hadoop Distributed File System: sistema de ficheros distribuido de Hadoop)</span></abbr>, almacenamiento de objetos), otras nubes y los servicios de
-        almacenamiento de AWS: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> y todos los tipos de <a href="../servicio.html?id=fsx">FSx</a>. Se encarga del paralelismo, el cifrado, los reintentos y
+        almacenamiento de AWS: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> y todos los tipos de <a href="fsx.html">FSx</a>. Se encarga del paralelismo, el cifrado, los reintentos y
         la <strong>verificación de integridad</strong>, y puede ejecutarse de forma <strong>programada</strong> copiando
         solo lo que ha cambiado.</p>
 
@@ -84,7 +84,7 @@
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
-        <li>Migrar un <abbr class="sigla" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS</abbr> local a <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> o a <a href="../servicio.html?id=fsx">FSx</a>.</li>
+        <li>Migrar un <abbr class="sigla" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS</abbr> local a <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a> o a <a href="fsx.html">FSx</a>.</li>
         <li>Mover datos a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> para analizarlos o archivarlos (incluidas clases Glacier).</li>
         <li>Replicar periódicamente datos entre centros de datos y AWS, o entre servicios de AWS de distintas regiones.</li>
         <li>Traer datos desde otra nube.</li>
@@ -95,7 +95,7 @@
         <li>Si la red no da para mover el volumen en un plazo razonable: transferencia física (<a href="snow-family.html">Snow Family</a> para clientes
           existentes, Data Transfer Terminal para nuevos).</li>
         <li>Para que las aplicaciones locales sigan accediendo a los datos en AWS de forma continua, con caché local:
-          <a href="../servicio.html?id=storage-gateway">Storage Gateway</a>.</li>
+          <a href="storage-gateway.html">Storage Gateway</a>.</li>
         <li>Para que socios externos suban ficheros por <abbr class="sigla sigla-1" data-s="SFTP" data-en="SSH File Transfer Protocol" data-es="transferencia de ficheros sobre SSH" tabindex="0">SFTP<span class="sigla-exp"> (SSH File Transfer Protocol: transferencia de ficheros sobre SSH)</span></abbr>: <a href="transfer-family.html">Transfer Family</a>.</li>
         <li>Para migrar bases de datos: <a href="dms.html"><abbr class="sigla sigla-1" data-s="DMS" data-en="Database Migration Service" tabindex="0">DMS<span class="sigla-exp"> (Database Migration Service)</span></abbr></a>.</li>
       </ul>
@@ -103,7 +103,7 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>DataSync</th><th><a href="../servicio.html?id=storage-gateway">Storage Gateway</a></th><th><a href="transfer-family.html">Transfer Family</a></th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>DataSync</th><th><a href="storage-gateway.html">Storage Gateway</a></th><th><a href="transfer-family.html">Transfer Family</a></th></tr></thead>
           <tbody>
             <tr><td>Uso</td><td>Copiar o migrar datos</td><td>Acceso híbrido continuo</td><td>Intercambio por <abbr class="sigla" data-s="SFTP" data-en="SSH File Transfer Protocol" data-es="transferencia de ficheros sobre SSH" tabindex="0">SFTP</abbr>, <abbr class="sigla sigla-1" data-s="FTPS" data-en="FTP Secure" data-es="FTP cifrado con TLS" tabindex="0">FTPS<span class="sigla-exp"> (FTP Secure: FTP cifrado con TLS)</span></abbr>, <abbr class="sigla sigla-1" data-s="FTP" data-en="File Transfer Protocol" data-es="protocolo clásico de transferencia de ficheros" tabindex="0">FTP<span class="sigla-exp"> (File Transfer Protocol: protocolo clásico de transferencia de ficheros)</span></abbr> o <abbr class="sigla sigla-1" data-s="AS2" data-en="Applicability Statement 2" data-es="protocolo para intercambiar documentos de negocio entre empresas" tabindex="0">AS2<span class="sigla-exp"> (Applicability Statement 2: protocolo para intercambiar documentos de negocio entre empresas)</span></abbr></td></tr>
             <tr><td>Quién inicia</td><td>Tareas programadas</td><td>Las aplicaciones locales</td><td>Usuarios y socios externos</td></tr>
@@ -126,10 +126,10 @@
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
-        <li><strong>"Copiar un <abbr class="sigla" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS</abbr> (<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> o <abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr>) a <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>, <a href="../servicio.html?id=fsx">FSx</a> o <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: DataSync.</li>
+        <li><strong>"Copiar un <abbr class="sigla" data-s="NAS" data-en="Network Attached Storage" data-es="almacenamiento de ficheros conectado a la red" tabindex="0">NAS</abbr> (<abbr class="sigla" data-s="NFS" data-en="Network File System" data-es="protocolo para compartir ficheros en red" tabindex="0">NFS</abbr> o <abbr class="sigla" data-s="SMB" data-en="Server Message Block" data-es="protocolo de ficheros compartidos de Windows" tabindex="0">SMB</abbr>) a <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>, <a href="fsx.html">FSx</a> o <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: DataSync.</li>
         <li><strong>"Copia programada e incremental con verificación"</strong>: DataSync.</li>
         <li><strong>"Que la copia no sature la red en horario laboral"</strong>: límite de ancho de banda y programación.</li>
-        <li><strong>"Seguir usando los ficheros desde local con caché"</strong>: <a href="../servicio.html?id=storage-gateway">Storage Gateway</a>, no DataSync.</li>
+        <li><strong>"Seguir usando los ficheros desde local con caché"</strong>: <a href="storage-gateway.html">Storage Gateway</a>, no DataSync.</li>
         <li><strong>"Petabytes con poca red"</strong>: transferencia física, no DataSync.</li>
         <li><strong>"Sin pasar por internet"</strong>: agente con punto de enlace de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> sobre <a href="direct-connect.html">Direct Connect</a> o <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>.</li>
       </ul>

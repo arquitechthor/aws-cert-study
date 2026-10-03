@@ -1,0 +1,112 @@
+[
+  {
+    "id": "elastic-disaster-recovery-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere usar AWS como sitio de recuperación para 150 servidores locales con un RPO de segundos y un RTO inferior a 30 minutos, sin pagar por servidores encendidos en espera. ¿Qué solución elige?",
+    "opciones": [
+      "AWS Backup con copias diarias a otra región.",
+      "Un entorno completo en espera templada en EC2.",
+      "AWS Elastic Disaster Recovery.",
+      "Application Migration Service."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "DRS replica los discos de forma continua (RPO de segundos) a un área de preparación barata y lanza las instancias solo al recuperar, con un RTO típico de 5 a 20 minutos. AWS Backup daría RPO de horas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/drs/latest/userguide/CloudEndure-Concepts.html"
+    ]
+  },
+  {
+    "id": "elastic-disaster-recovery-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un ataque cifró los servidores de origen y DRS ya replicó los datos cifrados. ¿Cómo se recupera la empresa?",
+    "opciones": [
+      "Lanzando instancias de recuperación desde un punto anterior al ataque.",
+      "No es posible: DRS solo guarda el último estado.",
+      "Restaurando desde el área de preparación sin instancias.",
+      "Usando CloudTrail para revertir los cambios."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "DRS conserva puntos de recuperación anteriores, así que se puede lanzar la recuperación desde un momento previo a la corrupción o al cifrado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
+    ]
+  },
+  {
+    "id": "elastic-disaster-recovery-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS replica servidores de forma continua para recuperarlos rápidamente en AWS si ocurre un desastre?",
+    "opciones": [
+      "AWS Backup.",
+      "AWS Elastic Disaster Recovery.",
+      "Amazon S3 Glacier.",
+      "AWS DataSync."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Elastic Disaster Recovery mantiene una réplica continua y permite lanzar los servidores en EC2 en minutos. AWS Backup hace copias periódicas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
+    ]
+  },
+  {
+    "id": "elastic-disaster-recovery-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo debe demostrar cada trimestre que puede recuperar sus servidores en AWS sin interrumpir la replicación ni la producción. ¿Qué hace con DRS?",
+    "opciones": [
+      "Desinstalar el agente durante la prueba.",
+      "Hacer una conmutación de vuelta.",
+      "Pausar la replicación y lanzar recuperaciones.",
+      "Lanzar simulacros (drills) de recuperación."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los simulacros lanzan instancias en AWS a partir de los datos replicados sin detener la replicación ni afectar al origen, y permiten medir el RTO real.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
+    ]
+  },
+  {
+    "id": "elastic-disaster-recovery-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Tras una caída del centro de datos, la carga lleva dos semanas funcionando en AWS con DRS. El centro de datos ya está reparado. ¿Qué proceso devuelve la carga a él?",
+    "opciones": [
+      "La conmutación de vuelta (failback) de Elastic Disaster Recovery.",
+      "Una migración con AWS DMS.",
+      "Restaurar las copias de AWS Backup en local.",
+      "Un simulacro."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "DRS admite la conmutación de vuelta: replica los cambios hechos en AWS hacia el origen original y permite volver a él de forma controlada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
+    ]
+  }
+]

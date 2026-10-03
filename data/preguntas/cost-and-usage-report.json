@@ -1,0 +1,112 @@
+[
+  {
+    "id": "cost-and-usage-report-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "El equipo financiero quiere analizar con SQL el coste de cada recurso por hora, incluidas las etiquetas de proyecto, de todas las cuentas de la organización. ¿Qué solución usa?",
+    "opciones": [
+      "Cost Explorer con filtros.",
+      "Un informe de Cost and Usage Report (CUR 2.0) entregado en S3 y consultado con Athena.",
+      "AWS Budgets por proyecto.",
+      "Trusted Advisor."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CUR es el conjunto de datos más detallado, por hora y por recurso, y se entrega en S3; con la integración con Athena se consulta con SQL. Cost Explorer ofrece vistas agregadas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+    ]
+  },
+  {
+    "id": "cost-and-usage-report-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Las etiquetas de proyecto de los recursos no aparecen en el informe de costes. ¿Qué falta?",
+    "opciones": [
+      "Activar esas etiquetas como etiquetas de asignación de costes en la consola de facturación.",
+      "Cambiar el formato del informe a CSV.",
+      "Activar CloudTrail.",
+      "Usar Cost Explorer en lugar del informe."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las etiquetas definidas por el usuario solo aparecen en los informes de costes después de activarlas como etiquetas de asignación de costes, y solo desde ese momento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html"
+    ]
+  },
+  {
+    "id": "cost-and-usage-report-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Una empresa procesa el CUR heredado y sus consultas fallan cada mes porque cambian las columnas según los servicios usados. ¿Qué mejora resuelve el problema?",
+    "opciones": [
+      "Pasar a CUR 2.0 en AWS Data Exports, con un esquema fijo.",
+      "Descargar las facturas en PDF.",
+      "Usar granularidad mensual.",
+      "Activar Cost Anomaly Detection."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CUR 2.0 tiene un conjunto fijo de columnas, con etiquetas y categorías de coste en columnas anidadas, mientras que el CUR heredado cambia sus columnas según el uso y las etiquetas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cur/latest/userguide/dataexports-migrate.html"
+    ]
+  },
+  {
+    "id": "cost-and-usage-report-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Qué herramienta de AWS ofrece el detalle más completo de uso y costes, línea a línea, para analizarlo con otras herramientas?",
+    "opciones": [
+      "AWS Budgets.",
+      "AWS Pricing Calculator.",
+      "AWS Cost and Usage Report.",
+      "AWS Trusted Advisor."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Cost and Usage Report entrega en S3 los datos de facturación más detallados. Budgets avisa al superar umbrales y Pricing Calculator estima costes antes de usar los servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+    ]
+  },
+  {
+    "id": "cost-and-usage-report-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Un responsable quiere ver de un vistazo cómo ha evolucionado el gasto mensual por servicio y una previsión, sin montar nada. ¿Qué usa?",
+    "opciones": [
+      "AWS Cost and Usage Report con Athena.",
+      "AWS Cost Explorer.",
+      "AWS CloudTrail.",
+      "AWS Organizations."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Cost Explorer muestra gráficos, filtros y previsiones directamente en la consola. CUR da más detalle, pero hay que analizarlo con otras herramientas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html"
+    ]
+  }
+]

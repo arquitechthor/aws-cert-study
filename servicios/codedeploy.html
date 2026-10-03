@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CodeDeploy — Apuntes AWS</title>
+<meta name="description" content="Automatiza despliegues en EC2, servidores locales, Lambda y ECS, con estrategias in situ, azul/verde, canary o lineal y reversión automática. Apuntes y preguntas de práctica para DVA-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/codedeploy.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CodeDeploy — Apuntes AWS">
+<meta property="og:description" content="Automatiza despliegues en EC2, servidores locales, Lambda y ECS, con estrategias in situ, azul/verde, canary o lineal y reversión automática.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/codedeploy.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/codedeploy.svg" alt="" width="56" height="56"><span>AWS CodeDeploy</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Despliega versiones en servidores, funciones o contenedores con estrategias blue/green</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=herramientas-desarrolladores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="18" height="18">Herramientas para desarrolladores <span class="cat-en">(Developer Tools)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/codedeploy/" target="_blank" rel="noopener">Documentación de AWS CodeDeploy ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS CodeDeploy <strong>automatiza el despliegue</strong> de nuevas versiones en instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, servidores
+        locales, funciones <a href="lambda.html">Lambda</a> y servicios de <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>. Controla <strong>cómo y a qué ritmo</strong> llega la versión nueva
+        (de golpe, por partes o desplazando el tráfico poco a poco), ejecuta tus scripts en cada fase y
+        <strong>vuelve atrás</strong> automáticamente si algo falla o salta una alarma.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Aplicación y grupo de despliegue:</strong> el grupo define los destinos (por etiquetas o un grupo de
+          <a href="ec2-auto-scaling.html">Auto Scaling</a>, una función o un servicio de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>), la configuración de despliegue y las alarmas.</li>
+        <li><strong>Archivo AppSpec:</strong> describe qué desplegar y qué <strong>ganchos</strong> ejecutar en cada
+          evento del ciclo de vida (por ejemplo BeforeInstall, AfterInstall, ValidateService, o BeforeAllowTraffic en
+          <a href="lambda.html">Lambda</a> y <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>).</li>
+        <li><strong>Agente de CodeDeploy:</strong> necesario en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> y servidores locales; no en Lambda ni <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>.</li>
+        <li><strong>In situ (<abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> y local):</strong> se actualizan las instancias existentes por tandas
+          (todas a la vez, la mitad o una a una, o configuración propia).</li>
+        <li><strong>Azul/verde:</strong> en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> crea instancias nuevas y pasa el tráfico del balanceador; en Lambda y <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>
+          desplaza el tráfico entre versiones.</li>
+        <li><strong>Desplazamiento de tráfico (Lambda y <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>):</strong> <strong>canary</strong> (un porcentaje, espera y
+          el resto), <strong>lineal</strong> (porcentajes iguales cada cierto tiempo) o <strong>todo a la vez</strong>.</li>
+        <li><strong>Reversión automática:</strong> si el despliegue falla o se activa una alarma de <a href="cloudwatch.html">CloudWatch</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Desplegar en una flota de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> sin parar el servicio.</li>
+        <li>Publicar una versión de <a href="lambda.html">Lambda</a> con un 10 % del tráfico durante unos minutos antes de pasar al 100 %.</li>
+        <li>Despliegues azul/verde en <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> con pruebas en un puerto de prueba antes de mover el tráfico real.</li>
+        <li>Desplegar en servidores locales con el mismo proceso que en la nube.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para orquestar el flujo completo (fuente, compilación, aprobaciones): <a href="codepipeline.html">CodePipeline</a>, que puede usar CodeDeploy
+          en la etapa de despliegue.</li>
+        <li>En <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, los despliegues azul/verde ya pueden hacerse de forma nativa en el propio servicio, sin CodeDeploy.</li>
+        <li>Para aplicaciones en <a href="elastic-beanstalk.html">Elastic Beanstalk</a>, que tiene sus propias políticas de despliegue.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Plataforma</th><th>Estrategias</th><th>Agente</th></tr></thead>
+          <tbody>
+            <tr><td><a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> y servidores locales</td><td>In situ o azul/verde (solo <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>)</td><td>Sí</td></tr>
+            <tr><td><a href="lambda.html">Lambda</a></td><td>Canary, lineal, todo a la vez (con alias)</td><td>No</td></tr>
+            <tr><td><a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a></td><td>Azul/verde con canary, lineal o todo a la vez</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>En <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, <a href="lambda.html">Lambda</a> y <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> <strong>no tiene coste adicional</strong>. En servidores locales se paga
+        <strong>por cada actualización de instancia</strong>. Se pagan los recursos que uses (instancias, almacenamiento
+        de las revisiones en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>…).</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Rol de servicio de CodeDeploy y perfil de instancia con permiso para leer las revisiones de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+        <li>Los servidores locales se registran con un usuario o rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Mínimo de instancias sanas durante el despliegue in situ para no quedarse sin capacidad.</li>
+        <li>Reversión automática con alarmas para limitar el impacto.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Desplazar el 10 % del tráfico a la nueva versión de <a href="lambda.html">Lambda</a> y luego el resto"</strong>: CodeDeploy con
+          configuración canary.</li>
+        <li><strong>"Volver atrás si sube la tasa de errores"</strong>: reversión automática con una alarma de <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li><strong>"Ejecutar un script después de instalar"</strong>: gancho AfterInstall del AppSpec.</li>
+        <li><strong>"Probar con tráfico de prueba antes de mover producción en <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>"</strong>: azul/verde con el gancho
+          AfterAllowTestTraffic.</li>
+        <li><strong>"El despliegue en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> no arranca"</strong>: revisa que el agente esté instalado y que el perfil de
+          instancia pueda leer el bucket.</li>
+        <li><strong>"Sin cambiar las instancias existentes"</strong>: azul/verde, no in situ.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="codedeploy"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html" target="_blank" rel="noopener">What is CodeDeploy?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html" target="_blank" rel="noopener">Working with deployment configurations in CodeDeploy</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html" target="_blank" rel="noopener">CodeDeploy AppSpec file reference</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/containers/migrating-from-aws-codedeploy-to-amazon-ecs-for-blue-green-deployments/" target="_blank" rel="noopener">Migrating from AWS CodeDeploy to Amazon ECS for blue/green deployments</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

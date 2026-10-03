@@ -188,6 +188,10 @@
    "en": "Compute Unified Device Architecture",
    "es": "plataforma de NVIDIA para programar GPU"
   },
+  "CUR": {
+   "en": "Cost and Usage Report",
+   "es": null
+  },
   "CVE": {
    "en": "Common Vulnerabilities and Exposures",
    "es": "catálogo público de vulnerabilidades conocidas"
@@ -199,6 +203,10 @@
   "DDoS": {
    "en": "Distributed Denial of Service",
    "es": "ataque que satura un servicio desde muchos orígenes"
+  },
+  "DFS": {
+   "en": "Distributed File System",
+   "es": "agrupa recursos compartidos de Windows bajo un mismo espacio de nombres"
   },
   "DKIM": {
    "en": "DomainKeys Identified Mail",
@@ -227,6 +235,14 @@
   "DPU": {
    "en": "Data Processing Unit",
    "es": "unidad de capacidad de Glue"
+  },
+  "DR": {
+   "en": "Disaster Recovery",
+   "es": "recuperación ante desastres"
+  },
+  "DRS": {
+   "en": "Elastic Disaster Recovery",
+   "es": null
   },
   "DSSE-KMS": {
    "en": "Dual-layer Server-Side Encryption with KMS",
@@ -312,6 +328,10 @@
    "en": "Foundation Model",
    "es": "modelo fundacional"
   },
+  "FOCUS": {
+   "en": "FinOps Open Cost and Usage Specification",
+   "es": "formato abierto para datos de facturación en la nube"
+  },
   "FTP": {
    "en": "File Transfer Protocol",
    "es": "protocolo clásico de transferencia de ficheros"
@@ -347,6 +367,10 @@
   "GraphRAG": {
    "en": null,
    "es": "generación aumentada por recuperación apoyada en un grafo de conocimiento"
+  },
+  "HA": {
+   "en": "High Availability",
+   "es": "alta disponibilidad"
   },
   "HDD": {
    "en": "Hard Disk Drive",
@@ -599,6 +623,14 @@
   "NS": {
    "en": "Name Server",
    "es": "registro DNS con los servidores de nombres del dominio"
+  },
+  "NTFS": {
+   "en": "New Technology File System",
+   "es": "sistema de ficheros de Windows, con permisos por usuario"
+  },
+  "NVMe": {
+   "en": "Non-Volatile Memory Express",
+   "es": "protocolo de acceso rápido a discos SSD"
   },
   "OAC": {
    "en": "Origin Access Control",
@@ -1015,6 +1047,14 @@
   "YAML": {
    "en": "YAML Ain't Markup Language",
    "es": "formato de configuración legible"
+  },
+  "ZFS": {
+   "en": "Zettabyte File System",
+   "es": "sistema de ficheros con instantáneas y clones"
+  },
+  "iSCSI": {
+   "en": "Internet Small Computer Systems Interface",
+   "es": "discos por bloques a través de la red"
   },
   "k-NN": {
    "en": "k-Nearest Neighbors",
