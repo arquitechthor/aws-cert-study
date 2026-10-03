@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Kinesis Video Streams — Apuntes AWS</title>
+<meta name="description" content="Ingiere, guarda y reproduce vídeo y audio de cámaras y dispositivos en tiempo real, para verlo en directo o analizarlo con servicios de ML. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/kinesis-video-streams.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Kinesis Video Streams — Apuntes AWS">
+<meta property="og:description" content="Ingiere, guarda y reproduce vídeo y audio de cámaras y dispositivos en tiempo real, para verlo en directo o analizarlo con servicios de ML.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/kinesis-video-streams.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/kinesis-video-streams.svg" alt="" width="56" height="56"><span>Amazon Kinesis Video Streams</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Ingiere vídeo de cámaras en directo y lo guarda para reproducirlo o analizarlo</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=servicios-multimedia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/servicios-multimedia.svg" alt="" width="18" height="18">Servicios multimedia <span class="cat-en">(Media Services)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/what-is-kinesis-video.html" target="_blank" rel="noopener">Documentación de Amazon Kinesis Video Streams ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Kinesis Video Streams recibe <strong>vídeo, audio y otros datos con marca de tiempo</strong> de millones
+        de dispositivos (cámaras de seguridad, móviles, drones), los <strong>guarda</strong> de forma duradera durante el
+        tiempo que elijas y permite <strong>reproducirlos</strong> en directo o grabados, o <strong>analizarlos</strong>
+        con <a href="rekognition.html">Rekognition</a>, <a href="sagemaker-ai.html">SageMaker AI</a> u otras aplicaciones. También ofrece <strong><abbr class="sigla sigla-1" data-s="WebRTC" data-en="Web Real-Time Communication" data-es="audio y vídeo en tiempo real entre navegadores y dispositivos" tabindex="0">WebRTC<span class="sigla-exp"> (Web Real-Time Communication: audio y vídeo en tiempo real entre navegadores y dispositivos)</span></abbr></strong> para comunicación
+        bidireccional en tiempo real con baja latencia.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Flujo de vídeo:</strong> recurso que recibe los fragmentos de un dispositivo.</li>
+        <li><strong>Productores:</strong> los dispositivos, que envían vídeo con el <abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr> de productor.</li>
+        <li><strong>Consumidores:</strong> aplicaciones que leen el flujo (API GetMedia) para procesarlo.</li>
+        <li><strong>Retención:</strong> por defecto 0 (no se guarda; solo hay un búfer de unos minutos); se puede fijar en
+          horas, con niveles de almacenamiento.</li>
+        <li><strong>Reproducción:</strong> <abbr class="sigla sigla-1" data-s="HLS" data-en="HTTP Live Streaming" data-es="vídeo en trozos con calidad adaptada a la conexión" tabindex="0">HLS<span class="sigla-exp"> (HTTP Live Streaming: vídeo en trozos con calidad adaptada a la conexión)</span></abbr> o <abbr class="sigla sigla-1" data-s="MPEG-DASH" data-en="Dynamic Adaptive Streaming over HTTP" data-es="estándar de vídeo con calidad adaptada a la conexión" tabindex="0">MPEG-DASH<span class="sigla-exp"> (Dynamic Adaptive Streaming over HTTP: estándar de vídeo con calidad adaptada a la conexión)</span></abbr>, en directo o de lo grabado, y descarga de clips.</li>
+        <li><strong><abbr class="sigla" data-s="WebRTC" data-en="Web Real-Time Communication" data-es="audio y vídeo en tiempo real entre navegadores y dispositivos" tabindex="0">WebRTC</abbr>:</strong> canales de señalización para vídeo y audio bidireccional con latencia muy baja, por
+          ejemplo intercomunicadores o monitores de bebé.</li>
+        <li><strong>Integración con <a href="rekognition.html">Rekognition</a> Video:</strong> procesadores de flujos que detectan caras o personas en
+          directo.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Videovigilancia con almacenamiento y reproducción en la nube.</li>
+        <li>Análisis de vídeo en tiempo real con visión artificial (por ejemplo, detección de personas).</li>
+        <li>Dispositivos domésticos con vídeo en directo bidireccional (timbres, cámaras).</li>
+        <li>Grabación de datos de sensores con marca de tiempo junto al vídeo.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para transcodificar ficheros de vídeo: MediaConvert.</li>
+        <li>Para emitir en directo a miles de espectadores: MediaLive o <abbr class="sigla sigla-1" data-s="IVS" data-en="Interactive Video Service" data-es="streaming de vídeo interactivo en directo" tabindex="0">IVS<span class="sigla-exp"> (Interactive Video Service: streaming de vídeo interactivo en directo)</span></abbr>.</li>
+        <li>Para flujos de datos que no son vídeo (eventos, registros): <a href="kinesis-data-streams.html">Kinesis Data Streams</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>Vídeo de cámaras y dispositivos para guardar o analizar</td><td>Kinesis Video Streams</td></tr>
+            <tr><td>Eventos y registros en streaming</td><td><a href="kinesis-data-streams.html">Kinesis Data Streams</a></td></tr>
+            <tr><td>Transcodificar ficheros de vídeo</td><td>MediaConvert</td></tr>
+            <tr><td>Emitir en directo a una audiencia</td><td>MediaLive o <abbr class="sigla" data-s="IVS" data-en="Interactive Video Service" data-es="streaming de vídeo interactivo en directo" tabindex="0">IVS</abbr></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>GB ingerido</strong>, por <strong>GB almacenado</strong> al mes y por <strong>GB
+        consumido</strong> (incluida la reproducción). <abbr class="sigla" data-s="WebRTC" data-en="Web Real-Time Communication" data-es="audio y vídeo en tiempo real entre navegadores y dispositivos" tabindex="0">WebRTC</abbr> se cobra por canal activo al mes y por minutos de
+        conexión.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> siempre activo y en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
+        <li>Acceso controlado con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>; los dispositivos pueden autenticarse con certificados de <a href="../servicio.html?id=iot-core">IoT Core</a>.</li>
+        <li>Almacenamiento duradero gestionado por AWS.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Vídeo de cámaras en directo hacia AWS"</strong>: Kinesis Video Streams.</li>
+        <li><strong>"Detectar personas en vídeo en tiempo real"</strong>: Kinesis Video Streams con <a href="rekognition.html">Rekognition</a> Video.</li>
+        <li><strong>"Vídeo bidireccional de baja latencia"</strong>: <abbr class="sigla" data-s="WebRTC" data-en="Web Real-Time Communication" data-es="audio y vídeo en tiempo real entre navegadores y dispositivos" tabindex="0">WebRTC</abbr> de Kinesis Video Streams.</li>
+        <li><strong>"Reproducir en el navegador"</strong>: <abbr class="sigla" data-s="HLS" data-en="HTTP Live Streaming" data-es="vídeo en trozos con calidad adaptada a la conexión" tabindex="0">HLS</abbr> o <abbr class="sigla" data-s="MPEG-DASH" data-en="Dynamic Adaptive Streaming over HTTP" data-es="estándar de vídeo con calidad adaptada a la conexión" tabindex="0">MPEG-DASH</abbr>.</li>
+        <li><strong>"Clics o registros en streaming"</strong>: <a href="kinesis-data-streams.html">Kinesis Data Streams</a>, no Video Streams.</li>
+        <li><strong>"Los vídeos no se guardan"</strong>: revisa la retención; por defecto es 0.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="kinesis-video-streams"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/what-is-kinesis-video.html" target="_blank" rel="noopener">What is Amazon Kinesis Video Streams?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/kinesisvideostreams/latest/APIReference/API_CreateStream.html" target="_blank" rel="noopener">CreateStream (API Reference)</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/kinesisvideostreams-webrtc-dg/latest/devguide/what-is-kvswebrtc.html" target="_blank" rel="noopener">What is Amazon Kinesis Video Streams with WebRTC?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/kinesis/video-streams/pricing/" target="_blank" rel="noopener">Amazon Kinesis Video Streams pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

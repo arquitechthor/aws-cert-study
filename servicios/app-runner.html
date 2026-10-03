@@ -76,7 +76,7 @@
       <ul>
         <li><strong>Dos orígenes:</strong> un <strong>repositorio de código</strong> (App Runner construye la imagen con
           un entorno de ejecución gestionado, como Python o Node.js) o una <strong>imagen de contenedor</strong> en
-          <a href="../servicio.html?id=ecr"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>.</li>
+          <a href="ecr.html"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>.</li>
         <li><strong>Despliegue automático:</strong> opcionalmente, cada cambio en la rama del repositorio o cada imagen
           nueva en <abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr> lanza un despliegue.</li>
         <li><strong>Servicio:</strong> la unidad que se despliega. Recibe una <abbr class="sigla sigla-1" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL<span class="sigla-exp"> (Uniform Resource Locator: dirección web)</span></abbr> con <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> y admite
@@ -132,7 +132,7 @@
       <ul>
         <li><abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> con certificado gestionado en la <abbr class="sigla" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL</abbr> del servicio y en los dominios propios.</li>
         <li>El servicio usa un <strong>rol de instancia</strong> de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para llamar a otros servicios, y un rol de
-          acceso para leer la imagen de <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>.</li>
+          acceso para leer la imagen de <a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>.</li>
         <li>Las instancias se reparten entre varias <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>; un mínimo de instancias más alto mejora ese reparto.</li>
         <li>Los secretos y parámetros se inyectan desde <a href="secrets-manager.html">Secrets Manager</a> y <a href="systems-manager.html">Parameter Store</a>.</li>
       </ul>

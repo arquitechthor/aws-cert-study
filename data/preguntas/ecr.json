@@ -1,0 +1,136 @@
+[
+  {
+    "id": "ecr-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un desarrollador intenta hacer docker push a un repositorio de ECR y recibe un error de autenticación. ¿Qué debe hacer?",
+    "opciones": [
+      "Hacer el repositorio público.",
+      "Crear un usuario de Docker Hub.",
+      "Obtener un token con aws ecr get-login-password y usarlo en docker login.",
+      "Activar el escaneo de imágenes."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Docker necesita autenticarse contra ECR con un token temporal que se obtiene con la CLI (get-login-password) usando las credenciales de IAM del usuario o rol.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html"
+    ]
+  },
+  {
+    "id": "ecr-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un repositorio de ECR acumula miles de imágenes antiguas de compilaciones y el coste de almacenamiento crece. ¿Qué solución automatiza la limpieza?",
+    "opciones": [
+      "Una política de ciclo de vida que borre imágenes sin etiqueta o con más de cierta antigüedad.",
+      "Una regla de ciclo de vida de S3 en el bucket de ECR.",
+      "Activar las etiquetas inmutables.",
+      "Replicar a otra región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las políticas de ciclo de vida de ECR caducan imágenes según su antigüedad, su número o su etiqueta. Los buckets donde ECR guarda las imágenes no son accesibles.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECR/latest/userguide/LifecyclePolicies.html"
+    ]
+  },
+  {
+    "id": "ecr-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Unas tareas de ECS en subredes privadas sin NAT deben descargar imágenes de ECR sin salir a internet. ¿Qué crea?",
+    "opciones": [
+      "Una puerta de enlace de internet.",
+      "Una IP pública en cada tarea.",
+      "Un emparejamiento de VPC con ECR.",
+      "Puntos de enlace de VPC de ECR (api y dkr) y el punto de enlace de puerta de enlace de S3."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "ECR necesita sus puntos de enlace de interfaz para la API y Docker, y las capas de las imágenes se descargan de S3, por lo que también hace falta el punto de enlace de S3.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html"
+    ]
+  },
+  {
+    "id": "ecr-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Un equipo de seguridad quiere que las imágenes de ECR se analicen de forma continua en busca de vulnerabilidades del sistema operativo y de los paquetes del lenguaje, también cuando aparecen vulnerabilidades nuevas. ¿Qué activa?",
+    "opciones": [
+      "El escaneo básico al subir.",
+      "El escaneo mejorado de ECR con Amazon Inspector.",
+      "AWS Config.",
+      "GuardDuty."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El escaneo mejorado usa Inspector para analizar continuamente las imágenes, incluidos los paquetes de lenguajes, y reevaluarlas cuando se publican nuevas vulnerabilidades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html"
+    ]
+  },
+  {
+    "id": "ecr-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización construye imágenes base en una cuenta central y las usan clústeres de EKS en 30 cuentas y tres regiones. ¿Qué características de ECR lo facilitan? (Elige dos.)",
+    "opciones": [
+      "Replicación entre regiones y entre cuentas.",
+      "Políticas de repositorio que permitan la descarga a las cuentas de la organización.",
+      "ECR Public para todas las imágenes internas.",
+      "Copiar las imágenes a mano con docker save.",
+      "Etiquetas mutables."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "La replicación copia las imágenes a otras regiones y cuentas, y las políticas de repositorio conceden acceso de lectura a otras cuentas o a toda la organización. Las imágenes internas no deben publicarse en ECR Public.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html"
+    ]
+  },
+  {
+    "id": "ecr-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS guarda y gestiona imágenes de contenedores Docker?",
+    "opciones": [
+      "Amazon ECS.",
+      "AWS Fargate.",
+      "Amazon ECR.",
+      "Amazon EKS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "ECR es el registro de imágenes. ECS y EKS orquestan contenedores y Fargate los ejecuta sin servidores.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html"
+    ]
+  }
+]

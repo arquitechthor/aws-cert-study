@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 123 de 164: los 12 que usa
+- **Fase en curso:** **Fase 2** (rellenar servicios). Publicados 131 de 164: los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -21,11 +21,10 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
 - **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
   parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después, seguir con las guías pendientes
-  (41). Las categorías **Computación**, **Administración y gobernanza** y **Seguridad, identidad y
+  (33). Las categorías **Computación**, **Administración y gobernanza** y **Seguridad, identidad y
   cumplimiento** y las colas "Prioridad 0" y "Prioridad 1" están completas desde el 02/10/2026; el
   03/10/2026 se publicaron 20 de SAP-C02 (redes, migración, almacenamiento, CodePipeline, CodeDeploy y CUR).
-  Siguiente bloque: lo que queda de "Prioridad 2" (`msk`, `keyspaces`, `ecr`, `amplify`, `device-farm`,
-  `x-ray`, `elastic-transcoder`, `kinesis-video-streams`) y después "Prioridad 3" (`codebuild`,
+  La cola "Prioridad 2" quedó completa el mismo día. Siguiente bloque: "Prioridad 3" (`codebuild`,
   `codeartifact`, `workspaces`, `appstream-2-0`, `kendra`, IoT…), antes del 17/11/2026.
   **Revisar tras el 07/10/2026:** el aviso de `proton` (ese día termina su soporte: pasar el texto a
   pasado).
@@ -361,8 +360,8 @@ esta lista es solo el orden de trabajo.
 - [x] `athena` Amazon Athena — Análisis (SAA-C03, SAP-C02)
 - [x] `data-firehose` Amazon Data Firehose — Análisis (SAA-C03, SAP-C02)
 - [x] `kinesis-data-streams` Amazon Kinesis Data Streams — Análisis (SAA-C03, SAP-C02)
-- [ ] `msk` Amazon MSK — Análisis (SAA-C03, SAP-C02)
-- [ ] `keyspaces` Amazon Keyspaces — Base de datos (SAA-C03, SAP-C02)
+- [x] `msk` Amazon MSK — Análisis (SAA-C03, SAP-C02)
+- [x] `keyspaces` Amazon Keyspaces — Base de datos (SAA-C03, SAP-C02)
 - [x] `auto-scaling` AWS Auto Scaling — Computación (SAA-C03, SAP-C02)
 - [x] `batch` AWS Batch — Computación (SAA-C03, SAP-C02)
 - [x] `elastic-beanstalk` AWS Elastic Beanstalk — Computación (SAA-C03, SAP-C02)
@@ -371,11 +370,11 @@ esta lista es solo el orden de trabajo.
 - [x] `serverless-application-repository` AWS Serverless Application Repository — Computación (SAA-C03)
 - [x] `vmware-cloud-on-aws` VMware Cloud on AWS — Computación (SAA-C03)
 - [x] `wavelength` AWS Wavelength — Computación (SAA-C03, SAP-C02)
-- [ ] `ecr` Amazon ECR — Contenedores (SAA-C03, SAP-C02)
+- [x] `ecr` Amazon ECR — Contenedores (SAA-C03, SAP-C02)
 - [x] `api-gateway` Amazon API Gateway — Frontend web y móvil (SAA-C03, SAP-C02)
-- [ ] `amplify` AWS Amplify — Frontend web y móvil (SAA-C03, SAP-C02)
-- [ ] `device-farm` AWS Device Farm — Frontend web y móvil (SAA-C03, SAP-C02)
-- [ ] `x-ray` AWS X-Ray — Herramientas para desarrolladores (SAA-C03, SAP-C02)
+- [x] `amplify` AWS Amplify — Frontend web y móvil (SAA-C03, SAP-C02)
+- [x] `device-farm` AWS Device Farm — Frontend web y móvil (SAA-C03, SAP-C02)
+- [x] `x-ray` AWS X-Ray — Herramientas para desarrolladores (SAA-C03, SAP-C02)
 - [x] `appflow` Amazon AppFlow — Integración de aplicaciones (SAA-C03, SAP-C02)
 - [x] `eventbridge` Amazon EventBridge — Integración de aplicaciones (SAA-C03, SAP-C02)
 - [x] `mq` Amazon MQ — Integración de aplicaciones (SAA-C03, SAP-C02)
@@ -404,8 +403,8 @@ esta lista es solo el orden de trabajo.
 - [x] `security-hub` AWS Security Hub — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [x] `shield` AWS Shield — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
 - [x] `waf` AWS WAF — Seguridad, identidad y cumplimiento (SAA-C03, SAP-C02)
-- [ ] `elastic-transcoder` Amazon Elastic Transcoder — Servicios multimedia (SAA-C03, SAP-C02)
-- [ ] `kinesis-video-streams` Amazon Kinesis Video Streams — Servicios multimedia (SAA-C03, SAP-C02)
+- [x] `elastic-transcoder` Amazon Elastic Transcoder — Servicios multimedia (SAA-C03, SAP-C02)
+- [x] `kinesis-video-streams` Amazon Kinesis Video Streams — Servicios multimedia (SAA-C03, SAP-C02)
 
 #### Prioridad 3: solo SAP-C02 (fecha límite 17/11/2026) (33)
 
@@ -655,3 +654,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-02 | Fase 2: categoría Seguridad, identidad y cumplimiento completa con 12 guías más (Audit Manager, CloudHSM, Detective, Directory Service, Firewall Manager, GuardDuty, IAM Identity Center, Network Firewall, RAM, Security Hub, Shield y STS) y 74 preguntas originales (103 de 164). Avisos: Audit Manager sin clientes nuevos desde el 30/04/2026 (alternativa: paquetes de conformidad de AWS Config), Simple AD sin clientes nuevos, y Security Hub dividido en Security Hub CSPM (lo que describen los exámenes) y el nuevo Security Hub de exposiciones. Además: 14 preguntas de CLF-C02 y DVA-C02 añadidas a IAM, Cognito, ACM y CloudWatch (ACM pasa de 4 a 6), sección "Comparativa" añadida a CloudFormation y Systems Manager, y 6 siglas nuevas (SCIM, NIST, RADIUS, OCSF, CSPM, SRT). |
 | 2026-10-03 | Fase 2: 34 preguntas originales de CLF-C02, DVA-C02 y AIF-C01 para los servicios de Kopi que no las tenían: API Gateway (+5), Lambda (+6), DynamoDB (+7, una de AIF), S3 (+5), CloudFront (+5, una de AIF), Route 53 (+4) y SES (+2, solo CLF: no está en DVA). Bedrock no necesitaba ninguna (solo está en AIF-C01). Datos contrastados: memoria de Lambda de 128 a 10 240 MB con CPU proporcional (1769 MB = 1 vCPU), respuesta parcial de lote con ReportBatchItemFailures, LSI solo al crear la tabla, carga multiparte desde 100 MB, S3 Bucket Keys (hasta 99 % menos de llamadas a KMS), transferencia gratuita de orígenes de AWS a CloudFront, cuota de API Gateway de 10 000 RPS por cuenta y región. Posición de la respuesta correcta repartida entre A–D (`quiz.js` no baraja las opciones). |
 | 2026-10-03 | Fase 2: 20 guías de SAP-C02 con 109 preguntas originales (123 de 164), en tres commits. Redes: Transit Gateway, Direct Connect, Site-to-Site VPN, Global Accelerator y Client VPN. Migración: DMS, SCT, Application Migration Service, Application Discovery Service, Migration Hub, DataSync, Snow Family y Transfer Family. Almacenamiento y DR: Storage Gateway, FSx, Backup y Elastic Disaster Recovery. Otros: CodePipeline, CodeDeploy y Cost and Usage Report. Avisos: Migration Hub, Application Discovery Service y Snowball Edge (toda Snow Family; Snowcone y Snowmobile ya retirados) sin clientes nuevos desde el 07/11/2025 (alternativas: AWS Transform; DataSync, Data Transfer Terminal y Outposts); Application Migration Service renombrado a **AWS Transform MGN** en junio de 2026 (nombre nuevo en `servicios.json` y el anterior como alias, como se hizo con Quick); FSx File Gateway sin clientes nuevos desde el 28/10/2024. Datos contrastados: Transit Gateway hasta 100 Gbps por adjunto de VPC y AZ; Direct Connect dedicado de 1/10/100/400 Gbps y alojado de 50 Mbps a 25 Gbps, MACsec en 10/100/400 Gbps, SLA del 99,99 % con máxima resiliencia; túneles VPN de 1,25 Gbps (5 Gbps los de gran ancho de banda, con Transit Gateway o Cloud WAN); MGN con 2160 horas gratis por servidor; DRS con RPO de segundos y RTO de 5–20 min; CUR 2.0 en Data Exports con esquema fijo. 34 siglas nuevas en el glosario (BGP, ECMP, IPsec, MACsec, VIF, CDC, AS2, iSCSI, NTFS, FOCUS…), aplicadas también a CloudFront, EC2 y VPC. |
+| 2026-10-03 | Fase 2: cola "Prioridad 2" completa con 8 guías más (MSK, Keyspaces, ECR, Amplify, Device Farm, X-Ray, Elastic Transcoder y Kinesis Video Streams) y 42 preguntas originales (131 de 164). Avisos: Elastic Transcoder retirado el 13/11/2025 (sustituto: AWS Elemental MediaConvert; su `documentacion` en `servicios.json` apunta al anuncio de retirada) y SDK y demonio de X-Ray en mantenimiento desde el 25/02/2026 (instrumentar con OpenTelemetry/ADOT; el servicio X-Ray sigue soportado). Datos contrastados: filas de Keyspaces de hasta 1 MB; retención de Kinesis Video Streams 0 por defecto; brokers Standard y Express de MSK. 7 siglas nuevas (ADOT, HLS, IVS, MPEG-DASH, OCI, SASL/SCRAM, WebRTC). |

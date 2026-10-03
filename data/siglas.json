@@ -24,6 +24,10 @@
    "en": "Active Directory",
    "es": "directorio de usuarios y equipos de Microsoft"
   },
+  "ADOT": {
+   "en": "AWS Distro for OpenTelemetry",
+   "es": "distribución de AWS de OpenTelemetry para trazas y métricas"
+  },
   "AES-256": {
    "en": "Advanced Encryption Standard",
    "es": "cifrado simétrico con claves de 256 bits"
@@ -384,6 +388,10 @@
    "en": "Health Insurance Portability and Accountability Act",
    "es": "ley de EE. UU. que protege los datos de salud"
   },
+  "HLS": {
+   "en": "HTTP Live Streaming",
+   "es": "vídeo en trozos con calidad adaptada a la conexión"
+  },
   "HMAC": {
    "en": "Hash-based Message Authentication Code",
    "es": "código que verifica integridad y autenticidad"
@@ -480,6 +488,10 @@
    "en": "Interactive Voice Response",
    "es": "menú telefónico automático por voz o teclado"
   },
+  "IVS": {
+   "en": "Interactive Video Service",
+   "es": "streaming de vídeo interactivo en directo"
+  },
   "IaC": {
    "en": "Infrastructure as Code",
    "es": "infraestructura como código"
@@ -568,6 +580,10 @@
    "en": "Machine Learning Operations",
    "es": "prácticas para llevar y mantener modelos en producción"
   },
+  "MPEG-DASH": {
+   "en": "Dynamic Adaptive Streaming over HTTP",
+   "es": "estándar de vídeo con calidad adaptada a la conexión"
+  },
   "MPP": {
    "en": "Massively Parallel Processing",
    "es": "procesamiento masivamente paralelo"
@@ -639,6 +655,10 @@
   "OAI": {
    "en": "Origin Access Identity",
    "es": "mecanismo anterior a OAC"
+  },
+  "OCI": {
+   "en": "Open Container Initiative",
+   "es": "estándar abierto de imágenes de contenedores"
   },
   "OCSF": {
    "en": "Open Cybersecurity Schema Framework",
@@ -787,6 +807,10 @@
   "SAN": {
    "en": "Subject Alternative Name",
    "es": "nombres adicionales de un certificado"
+  },
+  "SASL/SCRAM": {
+   "en": "Simple Authentication and Security Layer / Salted Challenge Response Authentication Mechanism",
+   "es": "autenticación con usuario y contraseña"
   },
   "SBOM": {
    "en": "Software Bill of Materials",
@@ -1035,6 +1059,10 @@
   "WORM": {
    "en": "Write Once, Read Many",
    "es": "se escribe una vez y no se puede modificar"
+  },
+  "WebRTC": {
+   "en": "Web Real-Time Communication",
+   "es": "audio y vídeo en tiempo real entre navegadores y dispositivos"
   },
   "XKS": {
    "en": "External Key Store",

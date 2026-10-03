@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Amplify — Apuntes AWS</title>
+<meta name="description" content="Herramientas y servicios para crear, desplegar y alojar aplicaciones web y móviles full stack, con CI/CD desde Git y backend en AWS. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, DVA-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/amplify.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Amplify — Apuntes AWS">
+<meta property="og:description" content="Herramientas y servicios para crear, desplegar y alojar aplicaciones web y móviles full stack, con CI/CD desde Git y backend en AWS.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/amplify.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/amplify.svg" alt="" width="56" height="56"><span>AWS Amplify</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Crea y aloja apps web y móviles full stack con autenticación y datos ya conectados</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=frontend-web-movil#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/frontend-web-movil.svg" alt="" width="18" height="18">Frontend web y móvil <span class="cat-en">(Frontend Web and Mobile)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/amplify/" target="_blank" rel="noopener">Documentación de AWS Amplify ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Amplify es un conjunto de herramientas para <strong>crear y alojar aplicaciones web y móviles full
+        stack</strong>. <strong>Amplify Hosting</strong> conecta tu repositorio Git y, con cada cambio, compila y publica
+        la web (estática o con renderizado en servidor) en una <abbr class="sigla sigla-1" data-s="CDN" data-en="Content Delivery Network" data-es="red de entrega de contenido" tabindex="0">CDN<span class="sigla-exp"> (Content Delivery Network: red de entrega de contenido)</span></abbr>. El <strong>backend de Amplify</strong> (Gen 2) se
+        define con TypeScript y crea por ti autenticación con <a href="cognito.html">Cognito</a>, datos con <a href="appsync.html">AppSync</a> y <a href="dynamodb.html">DynamoDB</a>, ficheros en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> y
+        funciones <a href="lambda.html">Lambda</a>. Las <strong>bibliotecas</strong> y componentes de interfaz conectan el frontal con todo ello.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Amplify Hosting:</strong> <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> desde GitHub, GitLab, Bitbucket o CodeCommit; despliegues por rama,
+          <strong>previsualizaciones</strong> de solicitudes de incorporación, dominios propios con certificado,
+          renderizado en servidor (por ejemplo Next.js) y protección con contraseña de ramas.</li>
+        <li><strong>Amplify Gen 2:</strong> el backend se describe como código TypeScript (sobre <a href="cdk.html">CDK</a>) y cada desarrollador
+          tiene su propio entorno aislado.</li>
+        <li><strong>Categorías:</strong> auth (<a href="cognito.html">Cognito</a>), data (<a href="appsync.html">AppSync</a> y <a href="dynamodb.html">DynamoDB</a>), storage (<a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>), functions (<a href="lambda.html">Lambda</a>), y
+          más integraciones con CDK.</li>
+        <li><strong>Bibliotecas de Amplify:</strong> para JavaScript, Swift, Android y Flutter, y componentes de
+          interfaz (por ejemplo, la pantalla de inicio de sesión).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Publicar una aplicación React, Vue, Angular o Next.js con <abbr class="sigla" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD</abbr> en minutos.</li>
+        <li>Prototipos y productos de equipos pequeños que quieren backend sin servidor sin montar la infraestructura a
+          mano.</li>
+        <li>Aplicaciones móviles con inicio de sesión, datos en tiempo real y subida de ficheros.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para backends complejos con arquitecturas muy a medida: <a href="cdk.html">CDK</a>, <a href="cloudformation.html">CloudFormation</a> o <abbr class="sigla sigla-1" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM<span class="sigla-exp"> (Serverless Application Model: extensión de CloudFormation para aplicaciones sin servidores)</span></abbr> directamente.</li>
+        <li>Para una web estática muy sencilla sin <abbr class="sigla" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD</abbr>: <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con <a href="cloudfront.html">CloudFront</a> puede bastar.</li>
+        <li>Para aplicaciones en contenedores: <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="app-runner.html">App Runner</a> o similares.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Amplify</th><th><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> + <a href="cloudfront.html">CloudFront</a></th><th><a href="elastic-beanstalk.html">Elastic Beanstalk</a></th></tr></thead>
+          <tbody>
+            <tr><td>Tipo de aplicación</td><td>Web y móvil full stack, sin servidor</td><td>Web estática</td><td>Aplicación en servidores (<a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>)</td></tr>
+            <tr><td><abbr class="sigla" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD</abbr> incluido</td><td>Sí, desde Git</td><td>No (lo montas tú)</td><td>Despliegues de versiones</td></tr>
+            <tr><td>Backend</td><td><a href="cognito.html">Cognito</a>, <a href="appsync.html">AppSync</a>, <a href="dynamodb.html">DynamoDB</a>, <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, <a href="lambda.html">Lambda</a></td><td>No</td><td>Tu aplicación</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Hosting: <strong>minutos de compilación</strong>, <strong>GB almacenados y servidos</strong> y peticiones de
+        renderizado en servidor. Los recursos del backend (<a href="cognito.html">Cognito</a>, <a href="appsync.html">AppSync</a>, <a href="dynamodb.html">DynamoDB</a>, <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="lambda.html">Lambda</a>) se pagan con sus
+        propias tarifas.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li><abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> con certificados gestionados en dominios propios.</li>
+        <li>Autenticación con <a href="cognito.html">Cognito</a> y reglas de autorización por usuario o grupo en los datos.</li>
+        <li>Rol de servicio de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para desplegar el backend.</li>
+        <li>La web se sirve desde la red de <a href="cloudfront.html">CloudFront</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Desplegar una aplicación web o móvil full stack rápidamente"</strong>: Amplify.</li>
+        <li><strong>"<abbr class="sigla" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD</abbr> y alojamiento de una <abbr class="sigla sigla-1" data-s="SPA" data-en="Single-Page Application" data-es="web de una sola página" tabindex="0">SPA<span class="sigla-exp"> (Single-Page Application: web de una sola página)</span></abbr> desde Git"</strong>: Amplify Hosting.</li>
+        <li><strong>"Previsualizar cada solicitud de incorporación"</strong>: previsualizaciones de Amplify Hosting.</li>
+        <li><strong>"Inicio de sesión en la app móvil"</strong>: Amplify con <a href="cognito.html">Cognito</a>.</li>
+        <li><strong>"Probar en dispositivos reales"</strong>: <a href="device-farm.html">Device Farm</a>, no Amplify.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="amplify"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html" target="_blank" rel="noopener">What is AWS Amplify Hosting?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/amplify/latest/userguide/pr-previews.html" target="_blank" rel="noopener">Web previews for pull requests</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.amplify.aws/" target="_blank" rel="noopener">AWS Amplify Gen 2 documentation</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/amplify/pricing/" target="_blank" rel="noopener">AWS Amplify pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

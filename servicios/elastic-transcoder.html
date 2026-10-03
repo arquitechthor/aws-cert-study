@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Elastic Transcoder — Apuntes AWS</title>
+<meta name="description" content="Transcodificaba vídeos guardados en S3 a formatos para móviles, webs y televisores. Retirado el 13/11/2025; su sustituto es MediaConvert. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/elastic-transcoder.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Elastic Transcoder — Apuntes AWS">
+<meta property="og:description" content="Transcodificaba vídeos guardados en S3 a formatos para móviles, webs y televisores. Retirado el 13/11/2025; su sustituto es MediaConvert.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/elastic-transcoder.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/elastic-transcoder.svg" alt="" width="56" height="56"><span>Amazon Elastic Transcoder</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Convierte ficheros de vídeo de <abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr> a formatos aptos para móviles, webs y televisores</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=servicios-multimedia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/servicios-multimedia.svg" alt="" width="18" height="18">Servicios multimedia <span class="cat-en">(Media Services)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://aws.amazon.com/blogs/media/support-for-amazon-elastic-transcoder-ending-soon/" target="_blank" rel="noopener">Documentación de Amazon Elastic Transcoder ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> Amazon Elastic Transcoder <strong>se retiró el 13/11/2025</strong>: desde esa fecha no se puede usar ni
+        acceder a su consola ni a sus recursos. Su sustituto es <strong>AWS Elemental MediaConvert</strong>, más barato y
+        con más funciones. Esta guía se mantiene porque el servicio aparece en las guías de examen.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Elastic Transcoder era un servicio de <strong>transcodificación de vídeo bajo demanda</strong>: tomaba
+        un fichero de vídeo de un bucket de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, lo convertía a los formatos y resoluciones que necesitaban los distintos
+        dispositivos (móviles, webs, televisores) y dejaba el resultado en otro bucket. AWS lo retiró el 13/11/2025 y lo
+        sustituye <strong>AWS Elemental MediaConvert</strong>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Canalización (<em>pipeline</em>):</strong> cola de trabajos con un bucket de entrada y uno de salida.</li>
+        <li><strong>Trabajo:</strong> la conversión de un fichero concreto.</li>
+        <li><strong>Preajustes (<em>presets</em>):</strong> plantillas de formato, códec y resolución para cada
+          dispositivo.</li>
+        <li><strong>Notificaciones:</strong> avisos por <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> al empezar, terminar o fallar un trabajo.</li>
+        <li><strong>Sustituto:</strong> MediaConvert, con más códecs y formatos, funciones profesionales y precios
+          más bajos por minuto.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Convertir los vídeos que suben los usuarios a formatos de streaming adaptativo (<abbr class="sigla" data-s="HLS" data-en="HTTP Live Streaming" data-es="vídeo en trozos con calidad adaptada a la conexión" tabindex="0">HLS</abbr>).</li>
+        <li>Generar versiones de distinta calidad y miniaturas de cada vídeo.</li>
+        <li>Hoy, todo esto se hace con MediaConvert, por ejemplo lanzado por una función <a href="lambda.html">Lambda</a> al subir el fichero a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Ya no se puede usar: para vídeo bajo demanda, MediaConvert.</li>
+        <li>Para vídeo en directo: MediaLive (y <abbr class="sigla sigla-1" data-s="IVS" data-en="Interactive Video Service" data-es="streaming de vídeo interactivo en directo" tabindex="0">IVS<span class="sigla-exp"> (Interactive Video Service: streaming de vídeo interactivo en directo)</span></abbr> para streaming interactivo).</li>
+        <li>Para vídeo de cámaras que se ingiere y analiza: <a href="kinesis-video-streams.html">Kinesis Video Streams</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Servicio actual</th></tr></thead>
+          <tbody>
+            <tr><td>Transcodificar ficheros de vídeo (bajo demanda)</td><td>AWS Elemental MediaConvert</td></tr>
+            <tr><td>Codificar vídeo en directo</td><td>AWS Elemental MediaLive</td></tr>
+            <tr><td>Ingerir vídeo de cámaras para análisis</td><td><a href="kinesis-video-streams.html">Kinesis Video Streams</a></td></tr>
+            <tr><td>Servir el vídeo a los usuarios</td><td><a href="cloudfront.html">CloudFront</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se cobraba <strong>por minuto de vídeo de salida</strong>, según la resolución. MediaConvert también cobra por
+        minuto de salida, con tarifas más bajas y opciones según el nivel de funciones.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los ficheros de entrada y salida se guardaban en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, con su cifrado y sus políticas.</li>
+        <li>Acceso controlado con un rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> por canalización.</li>
+        <li>MediaConvert mantiene el mismo modelo: lee y escribe en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> con un rol de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Convertir vídeos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> a formatos para distintos dispositivos"</strong>: en preguntas antiguas,
+          Elastic Transcoder; hoy, MediaConvert.</li>
+        <li><strong>"Vídeo en directo"</strong>: MediaLive, no Elastic Transcoder.</li>
+        <li><strong>"Analizar vídeo de cámaras en tiempo real"</strong>: <a href="kinesis-video-streams.html">Kinesis Video Streams</a> con <a href="rekognition.html">Rekognition</a>.</li>
+        <li><strong>"Lanzar la conversión al subir el fichero"</strong>: evento de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> que invoca una <a href="lambda.html">Lambda</a> que crea el
+          trabajo.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="elastic-transcoder"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://aws.amazon.com/blogs/media/support-for-amazon-elastic-transcoder-ending-soon/" target="_blank" rel="noopener">Support for Amazon Elastic Transcoder ending soon</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/media/migrating-workflows-from-elastic-transcoder-to-amazon-elemental-mediaconvert/" target="_blank" rel="noopener">Migrating workflows from Amazon Elastic Transcoder to AWS Elemental MediaConvert</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html" target="_blank" rel="noopener">What is AWS Elemental MediaConvert?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

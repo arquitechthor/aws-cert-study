@@ -1,0 +1,112 @@
+[
+  {
+    "id": "msk-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa ejecuta Apache Kafka en servidores propios y quiere llevarlo a AWS sin cambiar el código de sus productores y consumidores ni gestionar servidores. ¿Qué servicio usa?",
+    "opciones": [
+      "Kinesis Data Streams.",
+      "Amazon MSK.",
+      "Amazon SQS.",
+      "Amazon MQ."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "MSK ofrece Kafka gestionado con las mismas API, así que las aplicaciones siguen funcionando. Kinesis tiene su propia API y obligaría a cambiar el código.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html"
+    ]
+  },
+  {
+    "id": "msk-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Un equipo necesita Kafka para una carga muy variable y no quiere dimensionar ni escalar brokers. ¿Qué opción elige?",
+    "opciones": [
+      "MSK aprovisionado con brokers Standard grandes.",
+      "Kafka en EC2 con Auto Scaling.",
+      "Amazon MSK Serverless.",
+      "Amazon MQ."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "MSK Serverless ajusta la capacidad automáticamente y se paga por uso, sin elegir el número ni el tamaño de los brokers.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/msk/latest/developerguide/serverless.html"
+    ]
+  },
+  {
+    "id": "msk-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una empresa quiere que los temas de su clúster MSK de us-east-1 se repliquen de forma continua a un clúster de eu-west-1 para recuperación ante desastres, sin gestionar MirrorMaker. ¿Qué usa?",
+    "opciones": [
+      "MSK Replicator.",
+      "MSK Connect con un conector de S3.",
+      "Replicación entre regiones de S3.",
+      "AWS DMS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "MSK Replicator copia datos y metadatos de temas entre clústeres MSK, incluso en otras regiones, sin desplegar ni mantener herramientas propias de replicación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/msk/latest/developerguide/msk-replicator.html"
+    ]
+  },
+  {
+    "id": "msk-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Las aplicaciones que escriben en un clúster MSK deben autenticarse sin gestionar usuarios y contraseñas de Kafka, usando sus roles de AWS. ¿Qué configura?",
+    "opciones": [
+      "SASL/SCRAM con credenciales en Secrets Manager.",
+      "Acceso público al clúster.",
+      "Grupos de seguridad sin autenticación.",
+      "Autenticación con IAM en el clúster."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "MSK admite autenticación y autorización con IAM: las aplicaciones usan sus roles y las políticas de IAM controlan qué temas pueden leer o escribir.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html"
+    ]
+  },
+  {
+    "id": "msk-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un clúster MSK aprovisionado debe retener datos durante meses para reprocesarlos, pero el coste de los discos de los brokers se dispara. ¿Qué mejora lo abarata sin cambiar las aplicaciones?",
+    "opciones": [
+      "Reducir las réplicas a una.",
+      "Activar el almacenamiento por niveles.",
+      "Pasar a SQS.",
+      "Borrar los temas cada semana."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El almacenamiento por niveles mueve los segmentos antiguos a un nivel más barato y los consumidores siguen leyéndolos con la API de Kafka. Reducir réplicas pondría en riesgo los datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html"
+    ]
+  }
+]

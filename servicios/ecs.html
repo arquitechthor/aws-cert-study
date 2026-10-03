@@ -91,7 +91,7 @@
               por ti, a medio camino entre las dos anteriores.</li>
           </ul></li>
         <li><strong>Dos roles de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> distintos:</strong> el <strong>rol de ejecución de la
-          tarea</strong> lo usa el agente de <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> para descargar la imagen de <a href="../servicio.html?id=ecr"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>, leer secretos y
+          tarea</strong> lo usa el agente de <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> para descargar la imagen de <a href="ecr.html"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>, leer secretos y
           enviar registros; el <strong>rol de la tarea</strong> lo usa tu código para llamar a otros
           servicios (<a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a>…).</li>
         <li><strong>Red <code>awsvpc</code>:</strong> cada tarea recibe su propia interfaz de red y
@@ -114,7 +114,7 @@
       <ul>
         <li>Si el equipo ya trabaja con Kubernetes o necesita portabilidad entre nubes: <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>.</li>
         <li>Funciones cortas por evento sin contenedor que mantener: <a href="lambda.html">Lambda</a>.</li>
-        <li>Una web sencilla desde un repositorio sin configurar nada: <a href="app-runner.html">App Runner</a> o <a href="../servicio.html?id=amplify">Amplify</a>.</li>
+        <li>Una web sencilla desde un repositorio sin configurar nada: <a href="app-runner.html">App Runner</a> o <a href="amplify.html">Amplify</a>.</li>
       </ul>
 
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
@@ -125,7 +125,7 @@
             <tr><td>Orquestar contenedores de la forma más sencilla en AWS</td><td><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></td></tr>
             <tr><td>Kubernetes estándar y su ecosistema</td><td><a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a></td></tr>
             <tr><td>No gestionar servidores para los contenedores</td><td><a href="fargate.html">Fargate</a> (con <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> o <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr>)</td></tr>
-            <tr><td>Guardar las imágenes</td><td><a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a></td></tr>
+            <tr><td>Guardar las imágenes</td><td><a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a></td></tr>
             <tr><td>Contenedor web desde código o imagen, sin configurar red ni balanceador</td><td><a href="app-runner.html">App Runner</a></td></tr>
           </tbody>
         </table>
@@ -135,7 +135,7 @@
       <p><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> en sí no cobra. Pagas la capacidad: con <strong><a href="fargate.html">Fargate</a></strong>, la vCPU y la memoria
         que pide cada tarea por segundo (Fargate Spot es mucho más barato y puede interrumpirse); con
         <strong><a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></strong>, las instancias y sus volúmenes; con <strong>Managed Instances</strong>,
-        las instancias más un cargo de gestión. Aparte, balanceadores, <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>, registros y transferencia
+        las instancias más un cargo de gestión. Aparte, balanceadores, <a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>, registros y transferencia
         de datos. Compute <a href="savings-plans.html">Savings Plans</a> cubre Fargate y <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
@@ -146,13 +146,13 @@
         <li>Security group por tarea con <code>awsvpc</code>, y tareas en subredes privadas.</li>
         <li>Servicios repartidos en varias zonas; el programador distribuye las tareas y sustituye
           las que fallan las comprobaciones de estado.</li>
-        <li>Escaneo de imágenes en <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a> (<a href="inspector.html">Amazon Inspector</a>).</li>
+        <li>Escaneo de imágenes en <a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a> (<a href="inspector.html">Amazon Inspector</a>).</li>
       </ul>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Contenedores sin gestionar servidores"</strong>: <a href="fargate.html">Fargate</a>.</li>
-        <li><strong>"La tarea no puede descargar la imagen de <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>"</strong> o <strong>"no lee el secreto"</strong>: revisa el rol de ejecución.</li>
+        <li><strong>"La tarea no puede descargar la imagen de <a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>"</strong> o <strong>"no lee el secreto"</strong>: revisa el rol de ejecución.</li>
         <li><strong>"El código del contenedor no puede escribir en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>"</strong>: revisa el rol de la tarea.</li>
         <li><strong>"Kubernetes"</strong> en el enunciado: <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>, no <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>.</li>
         <li><strong>"Tareas por lotes baratas que toleran interrupciones"</strong>: Fargate Spot.</li>

@@ -87,7 +87,7 @@
           una plantilla por pila más los <strong>recursos adjuntos</strong> (<em>assets</em>), como el código de las
           funciones <a href="lambda.html">Lambda</a> o las imágenes de contenedor.</li>
         <li><strong><em>Bootstrap</em>:</strong> <code>cdk bootstrap</code> se ejecuta <strong>una vez por cuenta y
-          región</strong>. Crea la pila <code>CDKToolkit</code> con el bucket de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, el repositorio de <a href="../servicio.html?id=ecr"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a> y los roles
+          región</strong>. Crea la pila <code>CDKToolkit</code> con el bucket de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, el repositorio de <a href="ecr.html"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a> y los roles
           de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> que el CDK necesita para subir los recursos adjuntos y desplegar.</li>
         <li><strong>Comandos habituales:</strong> <code>cdk init</code> (proyecto nuevo), <code>cdk synth</code>,
           <code>cdk diff</code> (qué cambiaría respecto a lo desplegado), <code>cdk deploy</code> y
@@ -132,7 +132,7 @@
 
       <h2 id="precios">Modelo de precios</h2>
       <p>El CDK es gratuito y de código abierto. Se pagan los recursos que despliega y los que crea el
-        <em>bootstrap</em> (el almacenamiento del bucket de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y del repositorio de <a href="../servicio.html?id=ecr"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>).</p>
+        <em>bootstrap</em> (el almacenamiento del bucket de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y del repositorio de <a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>).</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>

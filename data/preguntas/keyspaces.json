@@ -1,0 +1,112 @@
+[
+  {
+    "id": "keyspaces-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa tiene una aplicación que usa Apache Cassandra con CQL y quiere dejar de gestionar nodos y reparaciones sin reescribir el acceso a datos. ¿Qué servicio elige?",
+    "opciones": [
+      "Amazon DynamoDB.",
+      "Amazon Keyspaces.",
+      "Amazon DocumentDB.",
+      "Amazon Neptune."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Keyspaces es compatible con Cassandra: la aplicación sigue usando CQL y sus controladores, y AWS gestiona la infraestructura. DynamoDB obligaría a reescribir el acceso a datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/keyspaces/latest/devguide/what-is-keyspaces.html"
+    ]
+  },
+  {
+    "id": "keyspaces-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una tabla de Keyspaces recibe tráfico imprevisible con largos periodos sin uso. ¿Qué modo de capacidad abarata el coste?",
+    "opciones": [
+      "Capacidad aprovisionada fija al máximo.",
+      "Capacidad aprovisionada sin escalado.",
+      "Bajo demanda, que cobra por petición.",
+      "Ninguno: Keyspaces cobra por nodo."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "En modo bajo demanda se paga por cada lectura y escritura, sin capacidad ociosa. Keyspaces no tiene nodos que pagar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/keyspaces/latest/devguide/what-is-keyspaces.html"
+    ]
+  },
+  {
+    "id": "keyspaces-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una aplicación global basada en Cassandra necesita escribir con baja latencia desde Europa y América y seguir funcionando si cae una región, sin operar clústeres. ¿Qué solución usa?",
+    "opciones": [
+      "Keyspaces con replicación multirregión.",
+      "Keyspaces en una región con PITR.",
+      "Cassandra en EC2 en una sola región.",
+      "Copias diarias de Keyspaces a S3."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La replicación multirregión de Keyspaces mantiene la tabla en varias regiones y permite escribir en cualquiera de ellas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/keyspaces/latest/devguide/multiRegion-replication.html"
+    ]
+  },
+  {
+    "id": "keyspaces-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Al migrar a Keyspaces, una aplicación falla al insertar algunos registros muy grandes. ¿Qué límite es el más probable?",
+    "opciones": [
+      "El número de tablas por región.",
+      "El tamaño máximo de fila de 1 MB.",
+      "El número de columnas de agrupación.",
+      "La retención de PITR."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Keyspaces limita cada fila a 1 MB (sin contar los datos estáticos). Antes de migrar conviene revisar los tamaños y las funciones de Cassandra que usa la aplicación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/keyspaces/latest/devguide/quotas.html"
+    ]
+  },
+  {
+    "id": "keyspaces-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un error de una aplicación borró filas de una tabla de Keyspaces hace dos días. ¿Cómo se recuperan los datos?",
+    "opciones": [
+      "No es posible: Keyspaces no hace copias.",
+      "Con la replicación multirregión.",
+      "Con el TTL de la tabla.",
+      "Restaurando la tabla a un momento anterior con PITR."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con la recuperación a un momento dado activada, se puede restaurar la tabla a cualquier segundo de los últimos 35 días en una tabla nueva.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/keyspaces/latest/devguide/what-is-keyspaces.html"
+    ]
+  }
+]

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon MSK — Apuntes AWS</title>
+<meta name="description" content="Apache Kafka gestionado: clústeres con brokers Standard o Express, o sin servidor, compatibles con las aplicaciones y herramientas de Kafka. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/msk.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon MSK — Apuntes AWS">
+<meta property="og:description" content="Apache Kafka gestionado: clústeres con brokers Standard o Express, o sin servidor, compatibles con las aplicaciones y herramientas de Kafka.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/msk.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/msk.svg" alt="" width="56" height="56"><span>Amazon MSK</span></h1>
+      <p class="full-name">Amazon Managed Streaming for Apache Kafka (Amazon MSK)</p>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Clústeres gestionados de brokers de eventos con topics y particiones de código abierto</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/msk/" target="_blank" rel="noopener">Documentación de Amazon MSK ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Managed Streaming for Apache Kafka (<abbr class="sigla" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK</abbr>) ejecuta <strong>Apache Kafka</strong> por ti: crea los
+        brokers, los reparte entre <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>, sustituye los que fallan y aplica parches. Tus productores y consumidores usan las
+        <strong><abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> y herramientas de Kafka de siempre</strong>, sin cambios. Encaja para flujos de eventos de alto
+        volumen, sobre todo si ya usas Kafka o necesitas su ecosistema.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Temas y particiones:</strong> los mensajes se publican en temas divididos en particiones; el orden
+          se garantiza dentro de cada partición.</li>
+        <li><strong><abbr class="sigla" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK</abbr> aprovisionado:</strong> eliges el número y tipo de brokers. Brokers <strong>Standard</strong>
+          (más control de la configuración y del almacenamiento) o <strong>Express</strong> (más rendimiento por broker,
+          escalado más rápido y almacenamiento sin gestionar).</li>
+        <li><strong>MSK Serverless:</strong> sin brokers que dimensionar; escala solo y se paga por uso.</li>
+        <li><strong>Almacenamiento por niveles:</strong> los datos antiguos pasan a un nivel más barato para retener
+          mucho tiempo.</li>
+        <li><strong>MSK Connect:</strong> conectores de Kafka Connect gestionados para llevar datos desde y hacia otros
+          sistemas.</li>
+        <li><strong>MSK Replicator:</strong> replica temas entre clústeres, por ejemplo en otra región.</li>
+        <li><strong>Integraciones:</strong> <a href="lambda.html">Lambda</a> (mapeo de origen de eventos), <a href="data-firehose.html">Data Firehose</a>, Managed Service for Apache
+          Flink y entrega a <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Migrar a AWS un Kafka propio sin cambiar las aplicaciones.</li>
+        <li>Canalizaciones de eventos en tiempo real entre microservicios.</li>
+        <li>Ingesta de registros, clics o telemetría para análisis en streaming.</li>
+        <li>Captura de cambios de bases de datos con conectores de Kafka.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si no necesitas Kafka y quieres lo más sencillo: <a href="kinesis-data-streams.html">Kinesis Data Streams</a>.</li>
+        <li>Para colas de mensajes entre componentes: <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>.</li>
+        <li>Para notificaciones a muchos suscriptores: <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> o <a href="eventbridge.html">EventBridge</a>.</li>
+        <li>Para cargar datos en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> o <a href="redshift.html">Redshift</a> sin gestionar consumidores: <a href="data-firehose.html">Data Firehose</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th><abbr class="sigla" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK</abbr></th><th><a href="kinesis-data-streams.html">Kinesis Data Streams</a></th></tr></thead>
+          <tbody>
+            <tr><td><abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></td><td>Apache Kafka (código abierto)</td><td>Propia de AWS</td></tr>
+            <tr><td>Unidad de escala</td><td>Brokers y particiones (o sin servidor)</td><td>Fragmentos (o modo bajo demanda)</td></tr>
+            <tr><td>Configuración</td><td>Muy configurable</td><td>Muy sencilla</td></tr>
+            <tr><td>Cuándo</td><td>Ya usas Kafka o su ecosistema</td><td>Streaming nativo de AWS</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Aprovisionado: <strong>por hora de broker</strong> (según tipo) y por almacenamiento. Serverless: por hora de
+        clúster, por hora de partición y por datos escritos y leídos. MSK Connect y Replicator se cobran aparte, así como
+        la transferencia de datos entre <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr> y regiones cuando aplica.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Brokers repartidos en dos o tres <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>, con réplicas de cada partición.</li>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
+        <li>Autenticación con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>, <abbr class="sigla" data-s="SASL/SCRAM" data-en="Simple Authentication and Security Layer / Salted Challenge Response Authentication Mechanism" data-es="autenticación con usuario y contraseña" tabindex="0">SASL/SCRAM</abbr> (credenciales en <a href="secrets-manager.html">Secrets Manager</a>) o <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> mutuo; <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr> de Kafka para autorizar.</li>
+        <li>El clúster vive en subredes privadas de tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Ya usan Apache Kafka" o "sin cambiar el código de Kafka"</strong>: <abbr class="sigla" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK</abbr>.</li>
+        <li><strong>"Kafka sin gestionar capacidad"</strong>: MSK Serverless.</li>
+        <li><strong>"Conectores de Kafka Connect gestionados"</strong>: MSK Connect.</li>
+        <li><strong>"Replicar temas a otra región"</strong>: MSK Replicator.</li>
+        <li><strong>"Streaming sencillo y nativo de AWS"</strong>: <a href="kinesis-data-streams.html">Kinesis Data Streams</a>.</li>
+        <li><strong>"Procesar los mensajes con funciones"</strong>: <a href="lambda.html">Lambda</a> con <abbr class="sigla" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK</abbr> como origen de eventos.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="msk"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/msk/latest/developerguide/what-is-msk.html" target="_blank" rel="noopener">What is Amazon MSK?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/msk/latest/developerguide/broker-instance-types.html" target="_blank" rel="noopener">Amazon MSK broker types</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/msk/latest/developerguide/serverless.html" target="_blank" rel="noopener">What is MSK Serverless?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/msk/latest/developerguide/msk-replicator.html" target="_blank" rel="noopener">What is Amazon MSK Replicator?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+[
+  {
+    "id": "x-ray-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una petición a una API tarda 4 segundos y pasa por API Gateway, tres funciones Lambda y DynamoDB. ¿Qué servicio muestra en qué tramo se pierde el tiempo?",
+    "opciones": [
+      "AWS CloudTrail.",
+      "AWS X-Ray.",
+      "AWS Config.",
+      "Amazon Inspector."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "X-Ray traza la petición de extremo a extremo y muestra la duración de cada segmento y subsegmento, con lo que se ve el cuello de botella.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html"
+    ]
+  },
+  {
+    "id": "x-ray-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador quiere buscar en X-Ray todas las trazas de un cliente concreto usando su identificador. ¿Dónde debe guardar ese identificador?",
+    "opciones": [
+      "En una anotación del segmento.",
+      "En los metadatos del segmento.",
+      "En una variable de entorno.",
+      "En el nombre del grupo de registros."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las anotaciones se indexan y pueden usarse en expresiones de filtro. Los metadatos se guardan con la traza, pero no se pueden usar para buscar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html"
+    ]
+  },
+  {
+    "id": "x-ray-003",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una aplicación instrumentada con el SDK de X-Ray en instancias EC2 no envía trazas. ¿Qué dos causas son las más probables? (Elige dos.)",
+    "opciones": [
+      "El demonio de X-Ray no se está ejecutando en la instancia.",
+      "El perfil de instancia no tiene permiso para escribir en X-Ray.",
+      "La instancia no tiene volumen EBS.",
+      "La región no tiene CloudTrail.",
+      "La aplicación no usa HTTPS."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "El SDK envía los segmentos al demonio por UDP y el demonio los sube a X-Ray con las credenciales de la instancia. Sin demonio o sin permisos (por ejemplo, la política AWSXRayDaemonWriteAccess), no llegan trazas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html"
+    ]
+  },
+  {
+    "id": "x-ray-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una aplicación con mucho tráfico genera un coste alto de X-Ray. El equipo solo necesita una muestra representativa de peticiones. ¿Qué ajusta?",
+    "opciones": [
+      "La retención de las trazas.",
+      "El tamaño de los segmentos.",
+      "Las reglas de muestreo.",
+      "Los metadatos."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las reglas de muestreo fijan qué porcentaje de peticiones (y cuántas por segundo) se trazan, lo que reduce el coste sin perder la visión general.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html"
+    ]
+  },
+  {
+    "id": "x-ray-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un equipo empieza en 2026 a instrumentar una aplicación nueva de microservicios y quiere ver sus trazas en X-Ray. ¿Qué enfoque recomienda AWS?",
+    "opciones": [
+      "Los SDK de X-Ray, que siguen recibiendo funciones nuevas.",
+      "Escribir los segmentos a mano con la API.",
+      "CloudTrail con eventos de datos.",
+      "Instrumentación con OpenTelemetry (por ejemplo, AWS Distro for OpenTelemetry) que envía las trazas a X-Ray."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los SDK y el demonio de X-Ray están en mantenimiento desde febrero de 2026, y AWS recomienda OpenTelemetry para instrumentar. El servicio X-Ray sigue recibiendo y mostrando las trazas.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/aws-x-ray-sdks-daemon-migration-to-opentelemetry/"
+    ]
+  },
+  {
+    "id": "x-ray-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS ayuda a analizar y depurar aplicaciones distribuidas siguiendo las peticiones a través de sus componentes?",
+    "opciones": [
+      "AWS X-Ray.",
+      "Amazon CloudWatch Logs.",
+      "AWS CloudTrail.",
+      "AWS Trusted Advisor."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "X-Ray hace trazado distribuido. CloudTrail registra las llamadas a la API de AWS y CloudWatch Logs guarda registros.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html"
+    ]
+  }
+]

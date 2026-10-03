@@ -1,0 +1,112 @@
+[
+  {
+    "id": "device-farm-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una empresa debe comprobar que su app funciona en 50 modelos de móviles Android e iOS antes de cada versión, sin comprar dispositivos. ¿Qué servicio usa?",
+    "opciones": [
+      "AWS Amplify.",
+      "Amazon WorkSpaces.",
+      "AWS Device Farm.",
+      "AWS CodeBuild."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Device Farm ejecuta las pruebas en paralelo en dispositivos reales alojados por AWS. CodeBuild compila y ejecuta pruebas, pero no ofrece móviles reales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/devicefarm/latest/developerguide/welcome.html"
+    ]
+  },
+  {
+    "id": "device-farm-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un error solo aparece en un modelo concreto de tableta. El desarrollador quiere manejarla a mano desde su navegador para reproducirlo. ¿Qué usa?",
+    "opciones": [
+      "Una sesión de acceso remoto de Device Farm.",
+      "Un emulador en EC2.",
+      "CloudWatch RUM.",
+      "Systems Manager Session Manager."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El acceso remoto de Device Farm permite interactuar en tiempo real con un dispositivo real desde el navegador e instalar la app para depurarla.",
+    "fuentes": [
+      "https://aws.amazon.com/device-farm/faqs/"
+    ]
+  },
+  {
+    "id": "device-farm-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un equipo ejecuta muchas horas de pruebas al mes en Device Farm y la factura por minuto crece. ¿Qué opción reduce el coste si el uso es alto y constante?",
+    "opciones": [
+      "Usar dispositivos privados para todo.",
+      "Pasar a ranuras ilimitadas con tarifa plana mensual.",
+      "Ejecutar menos pruebas.",
+      "Usar el modo de pago por uso en otra región."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las ranuras ilimitadas cuestan una tarifa plana por ranura de concurrencia al mes, sin importar cuántos minutos se usen; compensan con un uso alto y constante.",
+    "fuentes": [
+      "https://aws.amazon.com/device-farm/pricing/"
+    ]
+  },
+  {
+    "id": "device-farm-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un equipo quiere ejecutar sus pruebas de Selenium contra varias versiones de navegadores de escritorio sin mantener una granja de navegadores. ¿Qué opción de AWS encaja?",
+    "opciones": [
+      "CloudWatch Synthetics.",
+      "AWS Amplify.",
+      "Amazon WorkSpaces.",
+      "Las pruebas en navegadores de escritorio de Device Farm."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Device Farm ofrece navegadores de escritorio alojados que las pruebas de Selenium controlan de forma remota, y genera registros y vídeos de cada prueba.",
+    "fuentes": [
+      "https://aws.amazon.com/device-farm/faqs/"
+    ]
+  },
+  {
+    "id": "device-farm-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Una canalización de CI/CD debe ejecutar las pruebas de interfaz de una app en dispositivos reales tras cada compilación y detenerse si fallan. ¿Qué combinación usa?",
+    "opciones": [
+      "CodePipeline con una acción de prueba de Device Farm.",
+      "CodeDeploy con un gancho AfterInstall.",
+      "Amplify Hosting sin pruebas.",
+      "AWS Config."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CodePipeline admite acciones de prueba que lanzan ejecuciones en Device Farm; si las pruebas fallan, la canalización se detiene antes de publicar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/devicefarm/latest/developerguide/welcome.html"
+    ]
+  }
+]

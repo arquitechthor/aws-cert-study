@@ -49,8 +49,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Herramientas y servicios para crear, desplegar y alojar aplicaciones web y móviles full stack, con CI/CD desde Git y backend en AWS.",
     "frase": "Crea y aloja apps web y móviles full stack con autenticación y datos ya conectados",
     "documentacion": "https://docs.aws.amazon.com/amplify/"
   },
@@ -744,8 +744,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Pruebas de aplicaciones móviles y web en dispositivos Android e iOS reales y navegadores alojados en AWS, automatizadas o interactivas.",
     "frase": "Prueba tu app en móviles y navegadores reales alojados en la nube",
     "documentacion": "https://docs.aws.amazon.com/devicefarm/"
   },
@@ -891,8 +891,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Registro de imágenes de contenedores gestionado, privado o público, con escaneo de vulnerabilidades, políticas de ciclo de vida y replicación.",
     "frase": "Registro privado de imágenes Docker con escaneo de vulnerabilidades y réplica",
     "documentacion": "https://docs.aws.amazon.com/ecr/"
   },
@@ -995,9 +995,10 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
-    "frase": "Convierte ficheros de vídeo de S3 a formatos aptos para móviles, webs y televisores"
+    "estado": "publicado",
+    "resumen": "Transcodificaba vídeos guardados en S3 a formatos para móviles, webs y televisores. Retirado el 13/11/2025; su sustituto es MediaConvert.",
+    "frase": "Convierte ficheros de vídeo de S3 a formatos aptos para móviles, webs y televisores",
+    "documentacion": "https://aws.amazon.com/blogs/media/support-for-amazon-elastic-transcoder-ending-soon/"
   },
   {
     "id": "elasticache",
@@ -1374,8 +1375,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Base de datos sin servidor compatible con Apache Cassandra: mismo CQL y controladores, sin gestionar nodos, con capacidad bajo demanda o aprovisionada.",
     "frase": "Base de columnas anchas sin servidor compatible con CQL y sus drivers de código abierto",
     "documentacion": "https://docs.aws.amazon.com/keyspaces/"
   },
@@ -1404,8 +1405,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Ingiere, guarda y reproduce vídeo y audio de cámaras y dispositivos en tiempo real, para verlo en directo o analizarlo con servicios de ML.",
     "frase": "Ingiere vídeo de cámaras en directo y lo guarda para reproducirlo o analizarlo",
     "documentacion": "https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/what-is-kinesis-video.html"
   },
@@ -1669,8 +1670,8 @@
       "SAA-C03",
       "SAP-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Apache Kafka gestionado: clústeres con brokers Standard o Express, o sin servidor, compatibles con las aplicaciones y herramientas de Kafka.",
     "frase": "Clústeres gestionados de brokers de eventos con topics y particiones de código abierto",
     "documentacion": "https://docs.aws.amazon.com/msk/"
   },
@@ -2509,8 +2510,8 @@
       "CLF-C02",
       "DVA-C02"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Trazado distribuido: sigue cada petición a través de servicios, muestra un mapa con latencias y errores y ayuda a encontrar cuellos de botella.",
     "frase": "Traza cada petición entre servicios y dibuja un mapa con latencias y errores",
     "documentacion": "https://docs.aws.amazon.com/xray/"
   }

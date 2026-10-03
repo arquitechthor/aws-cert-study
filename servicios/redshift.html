@@ -80,7 +80,7 @@
         <li><strong>Claves de distribución y ordenación:</strong> cómo se reparten las filas entre nodos y
           cómo se ordenan en disco; bien elegidas evitan mover datos entre nodos en los JOIN.</li>
         <li><strong>Carga de datos:</strong> el comando <code>COPY</code> desde <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> (en paralelo, mucho
-          más rápido que INSERT), la ingesta en streaming desde Kinesis o <a href="../servicio.html?id=msk"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>, y las integraciones
+          más rápido que INSERT), la ingesta en streaming desde Kinesis o <a href="msk.html"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a>, y las integraciones
           <strong>zero-ETL</strong> que replican automáticamente datos de <a href="aurora.html">Aurora</a>, <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a> o <a href="dynamodb.html">DynamoDB</a>.</li>
         <li><strong>Redshift Spectrum:</strong> consulta con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> datos que siguen en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> (lago de datos)
           sin cargarlos, y los combina con las tablas del almacén.</li>

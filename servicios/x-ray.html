@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS X-Ray — Apuntes AWS</title>
+<meta name="description" content="Trazado distribuido: sigue cada petición a través de servicios, muestra un mapa con latencias y errores y ayuda a encontrar cuellos de botella. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, DVA-C02, SAP-C02.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/x-ray.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS X-Ray — Apuntes AWS">
+<meta property="og:description" content="Trazado distribuido: sigue cada petición a través de servicios, muestra un mapa con latencias y errores y ayuda a encontrar cuellos de botella.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/x-ray.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../memoria.html">Memoria</a>
+      <a href="../aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/x-ray.svg" alt="" width="56" height="56"><span>AWS X-Ray</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Traza cada petición entre servicios y dibuja un mapa con latencias y errores</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=herramientas-desarrolladores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="18" height="18">Herramientas para desarrolladores <span class="cat-en">(Developer Tools)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/xray/" target="_blank" rel="noopener">Documentación de AWS X-Ray ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> Los <strong><abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr> y el demonio de X-Ray</strong> están en modo de mantenimiento desde el 25/02/2026 (solo
+        reciben correcciones de seguridad). El <strong>servicio X-Ray sigue plenamente soportado</strong>, pero la
+        instrumentación recomendada es <strong>OpenTelemetry</strong> (por ejemplo con AWS Distro for OpenTelemetry), y
+        las novedades llegan a <a href="cloudwatch.html">CloudWatch</a> Application Signals y Transaction Search. Los exámenes siguen preguntando por
+        X-Ray, su demonio y sus conceptos.</div>
+
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS X-Ray es un servicio de <strong>trazado distribuido</strong>. Registra el recorrido de cada petición a
+        través de tu aplicación (<a href="api-gateway.html">API Gateway</a>, <a href="lambda.html">Lambda</a>, contenedores, bases de datos, llamadas <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>…) y construye un
+        <strong>mapa de servicios</strong> con latencias, errores y fallos de cada tramo. Sirve para encontrar
+        <strong>dónde</strong> se pierde el tiempo o falla una petición en una arquitectura de microservicios.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Traza:</strong> el recorrido completo de una petición, identificado por un ID que se propaga en una
+          cabecera.</li>
+        <li><strong>Segmentos y subsegmentos:</strong> el trabajo de cada servicio y, dentro de él, de cada llamada
+          (por ejemplo, a <a href="dynamodb.html">DynamoDB</a>).</li>
+        <li><strong>Anotaciones:</strong> pares clave-valor <strong>indexados</strong>, para filtrar trazas
+          (por ejemplo, por cliente). <strong>Metadatos:</strong> información adicional <strong>no indexada</strong>.</li>
+        <li><strong>Muestreo:</strong> reglas que deciden qué fracción de peticiones se trazan, para controlar el coste.</li>
+        <li><strong>Demonio de X-Ray:</strong> recibe los segmentos por <abbr class="sigla" data-s="UDP" data-en="User Datagram Protocol" data-es="protocolo de transporte sin conexión" tabindex="0">UDP</abbr> (puerto 2000) y los envía al servicio; en
+          <a href="lambda.html">Lambda</a> y <a href="elastic-beanstalk.html">Elastic Beanstalk</a> ya está integrado, en <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> se ejecuta como contenedor auxiliar.</li>
+        <li><strong>Trazado activo en Lambda</strong> y trazado en etapas de <a href="api-gateway.html">API Gateway</a>, con un solo ajuste.</li>
+        <li><strong>Grupos e Insights:</strong> filtros guardados y detección automática de anomalías.</li>
+        <li><strong>OpenTelemetry:</strong> la vía recomendada para instrumentar; X-Ray acepta trazas en ese formato.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Encontrar qué microservicio añade latencia a una petición.</li>
+        <li>Ver qué llamadas a servicios externos fallan y con qué frecuencia.</li>
+        <li>Analizar el rendimiento de aplicaciones sin servidor con <a href="lambda.html">Lambda</a> y <a href="api-gateway.html">API Gateway</a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para métricas y alarmas de infraestructura: <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li>Para guardar y consultar registros de la aplicación: CloudWatch Logs.</li>
+        <li>Para auditar quién llamó a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de AWS: <a href="cloudtrail.html">CloudTrail</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pregunta</th><th>Servicio</th></tr></thead>
+          <tbody>
+            <tr><td>¿Por dónde pasa una petición y dónde se retrasa?</td><td>X-Ray</td></tr>
+            <tr><td>¿Cómo evoluciona la <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> o la tasa de errores?</td><td><a href="cloudwatch.html">CloudWatch</a> (métricas)</td></tr>
+            <tr><td>¿Qué escribió la aplicación en sus registros?</td><td>CloudWatch Logs</td></tr>
+            <tr><td>¿Quién cambió este recurso?</td><td><a href="cloudtrail.html">CloudTrail</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>trazas registradas</strong> y por <strong>trazas recuperadas o analizadas</strong>, con
+        una capa gratuita mensual. El muestreo reduce el coste. Con Transaction Search de <a href="cloudwatch.html">CloudWatch</a>, los tramos se
+        cobran como ingesta de registros.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Permisos de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para enviar trazas (por ejemplo, en el rol de ejecución de <a href="lambda.html">Lambda</a> o el rol de la tarea).</li>
+        <li>Cifrado de los datos de trazas con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>No incluyas datos personales en anotaciones ni metadatos.</li>
+        <li>Las trazas se conservan 30 días.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Encontrar el cuello de botella entre microservicios"</strong>: X-Ray.</li>
+        <li><strong>"Filtrar trazas por un valor propio"</strong>: anotaciones (los metadatos no se indexan).</li>
+        <li><strong>"Las trazas no llegan desde <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> o <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>"</strong>: falta el demonio (o el colector) o el permiso de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>.</li>
+        <li><strong>"Trazar <a href="lambda.html">Lambda</a>"</strong>: activar el trazado activo.</li>
+        <li><strong>"Reducir el coste del trazado"</strong>: reglas de muestreo.</li>
+        <li><strong>"Instrumentar hoy una aplicación nueva"</strong>: OpenTelemetry (<abbr class="sigla" data-s="ADOT" data-en="AWS Distro for OpenTelemetry" data-es="distribución de AWS de OpenTelemetry para trazas y métricas" tabindex="0">ADOT</abbr>), enviando a X-Ray.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="x-ray"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html" target="_blank" rel="noopener">What is AWS X-Ray?</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html" target="_blank" rel="noopener">AWS X-Ray concepts</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/mt/aws-x-ray-sdks-daemon-migration-to-opentelemetry/" target="_blank" rel="noopener">AWS X-Ray SDKs/Daemon migration to OpenTelemetry</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Transaction-Search.html" target="_blank" rel="noopener">Transaction Search</a>, documentación de AWS (consultada el 03/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

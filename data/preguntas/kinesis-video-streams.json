@@ -1,0 +1,112 @@
+[
+  {
+    "id": "kinesis-video-streams-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una cadena de tiendas quiere enviar el vídeo de miles de cámaras a AWS, guardarlo 30 días y detectar en tiempo real cuándo hay personas en zonas restringidas. ¿Qué combinación usa?",
+    "opciones": [
+      "Kinesis Data Streams con Comprehend.",
+      "Kinesis Video Streams con retención configurada y Rekognition Video.",
+      "S3 con MediaConvert.",
+      "Data Firehose con Athena."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Kinesis Video Streams ingiere y guarda el vídeo de las cámaras, y Rekognition Video puede analizar los flujos en directo para detectar personas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/what-is-kinesis-video.html"
+    ]
+  },
+  {
+    "id": "kinesis-video-streams-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Un equipo crea un flujo de Kinesis Video Streams y comprueba que no puede reproducir el vídeo de ayer. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "La retención del flujo es 0, el valor por defecto, así que no se guardan los datos.",
+      "Falta una función Lambda.",
+      "El flujo no tiene etiquetas.",
+      "HLS no está disponible en la región."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Por defecto la retención es 0 y solo hay un búfer de pocos minutos. Para guardar el vídeo hay que fijar una retención en horas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kinesisvideostreams/latest/APIReference/API_CreateStream.html"
+    ]
+  },
+  {
+    "id": "kinesis-video-streams-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un fabricante de timbres inteligentes necesita vídeo y audio en ambos sentidos entre el timbre y el móvil del usuario, con latencia inferior a un segundo. ¿Qué usa?",
+    "opciones": [
+      "Kinesis Data Streams.",
+      "MediaLive.",
+      "Kinesis Video Streams con WebRTC.",
+      "CloudFront con HLS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Kinesis Video Streams con WebRTC ofrece señalización y conexiones punto a punto (o con retransmisión) para comunicación bidireccional de muy baja latencia.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kinesisvideostreams-webrtc-dg/latest/devguide/what-is-kvswebrtc.html"
+    ]
+  },
+  {
+    "id": "kinesis-video-streams-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Una aplicación web debe mostrar en el navegador el vídeo en directo de una cámara que envía a Kinesis Video Streams. ¿Qué opción de reproducción usa?",
+    "opciones": [
+      "GetMedia directamente desde el navegador.",
+      "Descargar los fragmentos a S3 y servirlos.",
+      "MediaConvert.",
+      "Una sesión de reproducción HLS o MPEG-DASH."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Kinesis Video Streams genera URL de reproducción HLS o MPEG-DASH que los reproductores web pueden usar, tanto en directo como de lo grabado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/what-is-kinesis-video.html"
+    ]
+  },
+  {
+    "id": "kinesis-video-streams-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "¿Qué servicio de Kinesis es el adecuado para ingerir clics de una web en tiempo real, y cuál para vídeo de cámaras?",
+    "opciones": [
+      "Kinesis Data Streams para los clics y Kinesis Video Streams para el vídeo.",
+      "Kinesis Video Streams para ambos.",
+      "Data Firehose para el vídeo.",
+      "Kinesis Data Streams para ambos."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Kinesis Data Streams maneja registros de datos (eventos, clics), mientras que Kinesis Video Streams está diseñado para vídeo y audio con marca de tiempo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/what-is-kinesis-video.html"
+    ]
+  }
+]

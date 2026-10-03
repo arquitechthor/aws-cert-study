@@ -1,0 +1,112 @@
+[
+  {
+    "id": "elastic-transcoder-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "En 2026, una plataforma de cursos necesita convertir los vídeos que suben los profesores a S3 en varias resoluciones para streaming adaptativo. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon Elastic Transcoder.",
+      "AWS Elemental MediaLive.",
+      "Amazon Kinesis Video Streams.",
+      "AWS Elemental MediaConvert."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "MediaConvert transcodifica ficheros de vídeo bajo demanda y es el sustituto de Elastic Transcoder, retirado el 13/11/2025. MediaLive es para vídeo en directo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html"
+    ]
+  },
+  {
+    "id": "elastic-transcoder-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "enunciado": "Cada vez que se sube un vídeo a un bucket de S3 debe empezar su transcodificación automáticamente. ¿Qué diseño es el más sencillo?",
+    "opciones": [
+      "Una instancia EC2 que revise el bucket cada minuto.",
+      "Una notificación de eventos de S3 que invoque una función Lambda que cree el trabajo de transcodificación.",
+      "Una regla de ciclo de vida de S3.",
+      "Replicación entre regiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El evento de creación de objeto invoca una Lambda que crea el trabajo en el servicio de transcodificación (antes Elastic Transcoder, hoy MediaConvert).",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/media/migrating-workflows-from-elastic-transcoder-to-amazon-elemental-mediaconvert/"
+    ]
+  },
+  {
+    "id": "elastic-transcoder-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "enunciado": "Un evento deportivo debe emitirse en directo a miles de espectadores en varios formatos. ¿Qué servicio codifica el vídeo en directo?",
+    "opciones": [
+      "AWS Elemental MediaLive.",
+      "AWS Elemental MediaConvert.",
+      "Amazon Elastic Transcoder.",
+      "Amazon Rekognition."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "MediaLive codifica vídeo en directo. MediaConvert y el antiguo Elastic Transcoder trabajan con ficheros (bajo demanda).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html"
+    ]
+  },
+  {
+    "id": "elastic-transcoder-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa aún tenía flujos en Elastic Transcoder a finales de 2025. ¿Qué debía hacer y por qué?",
+    "opciones": [
+      "Nada: el servicio sigue funcionando para clientes existentes.",
+      "Pasar a Kinesis Video Streams, que lo sustituye.",
+      "Migrar los flujos a MediaConvert, porque Elastic Transcoder dejó de funcionar el 13/11/2025.",
+      "Mover las canalizaciones a otra región."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Elastic Transcoder se retiró por completo el 13/11/2025, sin mantenerse para clientes existentes. AWS recomienda migrar a MediaConvert, más barato y con más funciones.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/media/support-for-amazon-elastic-transcoder-ending-soon/"
+    ]
+  },
+  {
+    "id": "elastic-transcoder-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "¿Cómo se cobraba Elastic Transcoder (y cómo cobra MediaConvert)?",
+    "opciones": [
+      "Por hora de servidor aprovisionado.",
+      "Por minuto de vídeo de salida.",
+      "Por GB almacenado en S3 únicamente.",
+      "Por número de canalizaciones creadas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Ambos cobran por minuto de vídeo de salida, según características como la resolución. El almacenamiento en S3 se paga aparte.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/media/support-for-amazon-elastic-transcoder-ending-soon/"
+    ]
+  }
+]
