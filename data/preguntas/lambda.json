@@ -133,5 +133,137 @@
     "fuentes": [
       "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
     ]
+  },
+  {
+    "id": "lambda-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "Una empresa quiere ejecutar código en respuesta a eventos sin aprovisionar ni administrar servidores y pagando solo por el tiempo de ejecución. ¿Qué servicio cumple esto?",
+    "opciones": [
+      "AWS Lambda.",
+      "Amazon EC2.",
+      "Amazon Lightsail.",
+      "AWS Outposts."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Lambda es cómputo sin servidor: AWS administra la infraestructura y se paga por solicitudes y por la duración de cada ejecución. EC2 y Lightsail son servidores que hay que administrar, y Outposts lleva infraestructura de AWS al centro de datos propio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+    ]
+  },
+  {
+    "id": "lambda-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Según el modelo de responsabilidad compartida, ¿qué le corresponde al cliente cuando usa AWS Lambda?",
+    "opciones": [
+      "Aplicar parches al sistema operativo de los servidores que ejecutan las funciones.",
+      "Mantener el hardware físico y la red del centro de datos.",
+      "El código de la función y los permisos de IAM que se le conceden.",
+      "Actualizar el entorno de ejecución administrado cuando AWS publica parches de seguridad."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "En un servicio sin servidor AWS se encarga de la infraestructura, el sistema operativo y los entornos de ejecución administrados. El cliente sigue siendo responsable de su código, sus dependencias, la configuración y los permisos (rol de ejecución).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/lambda-security.html"
+    ]
+  },
+  {
+    "id": "lambda-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un desarrollador quiere enviar el 10 % de las invocaciones a la versión nueva de una función Lambda y el resto a la versión actual, y poder volver atrás al instante. ¿Qué usa?",
+    "opciones": [
+      "Dos funciones distintas detrás de un balanceador de carga.",
+      "Un alias con pesos que apunte a las dos versiones.",
+      "La versión $LATEST con una variable de entorno que elija el código.",
+      "La concurrencia reservada repartida entre las dos versiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un alias puede apuntar a dos versiones publicadas y repartir el tráfico por pesos (por ejemplo 90/10). Para volver atrás basta con dejar el peso de la versión nueva a 0. CodeDeploy usa este mismo mecanismo en los despliegues canary y lineales de Lambda.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/configuring-alias-routing.html"
+    ]
+  },
+  {
+    "id": "lambda-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una función Lambda procesa lotes de 10 mensajes de una cola SQS. Si falla un solo mensaje, se vuelven a procesar los 10. ¿Cómo se evita reprocesar los que ya salieron bien?",
+    "opciones": [
+      "Reducir el tamaño de lote a 1 y aumentar la concurrencia reservada.",
+      "Configurar un destino de Lambda para invocaciones correctas.",
+      "Borrar a mano todos los mensajes del lote al principio de la función.",
+      "Activar ReportBatchItemFailures en el mapeo de origen de eventos y devolver los identificadores de los mensajes fallidos."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con la respuesta parcial de lote, la función devuelve en batchItemFailures solo los mensajes que fallaron y solo esos vuelven a ser visibles en la cola. Si la función lanza una excepción, el lote entero se considera fallido. Los destinos de Lambda no se aplican a los mapeos de origen de eventos de SQS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-errorhandling.html"
+    ]
+  },
+  {
+    "id": "lambda-011",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una función Lambda que hace cálculos intensivos con 128 MB de memoria tarda demasiado. No hay esperas de red ni de disco. ¿Qué cambio es el más directo para que tarde menos?",
+    "opciones": [
+      "Aumentar la memoria asignada, que también aumenta la CPU de forma proporcional.",
+      "Activar la concurrencia aprovisionada.",
+      "Aumentar el tiempo de espera de la función a 15 minutos.",
+      "Mover la función a una VPC."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Lambda asigna CPU en proporción a la memoria configurada (a 1769 MB equivale a una vCPU). Más memoria suele acortar la duración y a veces incluso bajar el coste. El tiempo de espera solo evita que se corte, y la concurrencia aprovisionada reduce los arranques en frío, no el tiempo de cálculo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html"
+    ]
+  },
+  {
+    "id": "lambda-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una función Lambda necesita la contraseña de una base de datos. ¿Cuál es la opción más segura para obtenerla?",
+    "opciones": [
+      "Escribirla en el código de la función.",
+      "Guardarla en texto plano en una variable de entorno.",
+      "Leerla de AWS Secrets Manager con el rol de ejecución de la función, con permiso solo sobre ese secreto.",
+      "Pasarla en cada evento que invoca la función."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Secrets Manager guarda el secreto cifrado con KMS, permite rotarlo y controla el acceso con IAM. La función lo lee con su rol de ejecución (y puede cachearlo entre invocaciones). En el código o en texto plano queda expuesto a quien vea la configuración o el repositorio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/lambda/latest/dg/with-secrets-manager.html"
+    ]
   }
 ]

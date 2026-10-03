@@ -14,11 +14,9 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
-  Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). De los publicados antes de
-  añadir CLF-C02 y DVA-C02, ya tienen preguntas de esas dos guías IAM, Cognito, ACM y CloudWatch
-  (añadidas el 02/10/2026); faltan las de API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES y
-  Bedrock, por comprobar. La tarea 0.9 sigue
-  programada para el 27/10/2026.
+  Service, con 9 preguntas cada uno que cubren CLF, AIF, SAA, DVA y SAP). Los 12 de Kopi ya tienen
+  preguntas de todas las guías en las que aparecen (completado el 03/10/2026; Bedrock solo aparece en
+  AIF-C01). La tarea 0.9 sigue programada para el 27/10/2026.
 - **Fase 4 (juego de memoria):** publicada el 2026-10-02 en `memoria.html` con los dos modos
   (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
 - **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
@@ -32,7 +30,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   pasado).
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-10-02
+- **Última actualización:** 2026-10-03
 
 ---
 
@@ -654,3 +652,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-02 | Fase 2: categoría Computación completa con 7 guías más (App Runner, Batch, Lightsail, Outposts, Serverless Application Repository, VMware Cloud on AWS y Wavelength) y 41 preguntas originales (71 de 164). Avisos: App Runner sin clientes nuevos desde el 30/04/2026 (alternativa: ECS Express Mode), servidores Outposts de 1U y 2U fuera de venta, VMware Cloud on AWS contratado con Broadcom desde el 30/04/2024 (alternativa de AWS: Amazon EVS). Siglas nuevas en el glosario: 5G, RDP y LAMP. VMware Cloud on AWS no tiene icono propio y usa el de su categoría. |
 | 2026-10-02 | Fase 2: cola "Prioridad 1" completa con 20 guías más (Budgets, Cost Explorer, S3 Glacier, Data Exchange, EMR, Lake Formation, Quick, DocumentDB, Neptune, Artifact, Comprehend, Lex, Polly, Rekognition, SageMaker AI, Textract, Transcribe, Translate, Inspector y Macie) y 126 preguntas originales, todas con al menos una pregunta de AIF-C01 (91 de 164). Avisos: Amazon Quick es el nombre actual de QuickSight (ahora Quick Sight, dentro de Quick); el servicio Amazon Glacier de bóvedas no admite clientes nuevos desde el 07/11/2025; Comprehend (modelado de temas, detección de eventos y seguridad de prompts) y Rekognition (vídeo en streaming y análisis masivo de imágenes) cerraron funciones a clientes nuevos el 30/04/2026. 13 siglas nuevas en el glosario (SSML, SOC, BAA, HIPAA, HDFS, RDF, SBOM, CIS, SPICE, SaaS, MLOps, GraphRAG, E/S). |
 | 2026-10-02 | Fase 2: categoría Seguridad, identidad y cumplimiento completa con 12 guías más (Audit Manager, CloudHSM, Detective, Directory Service, Firewall Manager, GuardDuty, IAM Identity Center, Network Firewall, RAM, Security Hub, Shield y STS) y 74 preguntas originales (103 de 164). Avisos: Audit Manager sin clientes nuevos desde el 30/04/2026 (alternativa: paquetes de conformidad de AWS Config), Simple AD sin clientes nuevos, y Security Hub dividido en Security Hub CSPM (lo que describen los exámenes) y el nuevo Security Hub de exposiciones. Además: 14 preguntas de CLF-C02 y DVA-C02 añadidas a IAM, Cognito, ACM y CloudWatch (ACM pasa de 4 a 6), sección "Comparativa" añadida a CloudFormation y Systems Manager, y 6 siglas nuevas (SCIM, NIST, RADIUS, OCSF, CSPM, SRT). |
+| 2026-10-03 | Fase 2: 34 preguntas originales de CLF-C02, DVA-C02 y AIF-C01 para los servicios de Kopi que no las tenían: API Gateway (+5), Lambda (+6), DynamoDB (+7, una de AIF), S3 (+5), CloudFront (+5, una de AIF), Route 53 (+4) y SES (+2, solo CLF: no está en DVA). Bedrock no necesitaba ninguna (solo está en AIF-C01). Datos contrastados: memoria de Lambda de 128 a 10 240 MB con CPU proporcional (1769 MB = 1 vCPU), respuesta parcial de lote con ReportBatchItemFailures, LSI solo al crear la tabla, carga multiparte desde 100 MB, S3 Bucket Keys (hasta 99 % menos de llamadas a KMS), transferencia gratuita de orígenes de AWS a CloudFront, cuota de API Gateway de 10 000 RPS por cuenta y región. Posición de la respuesta correcta repartida entre A–D (`quiz.js` no baraja las opciones). |

@@ -111,5 +111,93 @@
     "fuentes": [
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html"
     ]
+  },
+  {
+    "id": "route-53-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "¿Qué servicio de AWS permite registrar un nombre de dominio, gestionar sus registros DNS y comprobar el estado de los recursos a los que apunta?",
+    "opciones": [
+      "Amazon CloudFront.",
+      "Elastic Load Balancing.",
+      "AWS Global Accelerator.",
+      "Amazon Route 53."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Route 53 combina registro de dominios, DNS con alta disponibilidad y comprobaciones de estado. Global Accelerator mejora el rendimiento de red con IP estáticas, y ELB reparte tráfico entre destinos dentro de una región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html"
+    ]
+  },
+  {
+    "id": "route-53-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Conceptos de la nube",
+    "enunciado": "Una empresa quiere enviar a cada usuario a la región de AWS que le dé menor latencia. ¿Qué ofrece Route 53 para conseguirlo?",
+    "opciones": [
+      "Una política de enrutamiento basado en latencia.",
+      "Una zona alojada privada en cada región.",
+      "Un registro de tipo MX.",
+      "La transferencia de dominios entre registradores."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El enrutamiento por latencia responde con el recurso de la región que da menor latencia al usuario. Es una forma sencilla de aprovechar la infraestructura global de AWS para una aplicación desplegada en varias regiones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy-latency.html"
+    ]
+  },
+  {
+    "id": "route-53-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo quiere que su API REST regional de API Gateway responda en api.ejemplo.com, cuyo dominio está en Route 53. ¿Qué pasos son necesarios?",
+    "opciones": [
+      "Crear un registro CNAME de api.ejemplo.com a la URL de la etapa, sin más cambios.",
+      "Pedir un certificado de ACM en us-east-1 y asociarlo directamente a la etapa.",
+      "Crear un nombre de dominio personalizado en API Gateway con un certificado de ACM de la misma región y un registro alias de Route 53 hacia él.",
+      "Crear una zona alojada privada para api.ejemplo.com."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "API Gateway necesita un nombre de dominio personalizado con su certificado (para un endpoint regional, de ACM en la misma región) y un mapeo a la API y etapa. Después, en Route 53 se crea un registro alias A hacia el dominio regional que genera API Gateway.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-regional-api-custom-domain-create.html"
+    ]
+  },
+  {
+    "id": "route-53-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Tras cambiar un registro de Route 53 para que apunte a un nuevo balanceador, algunos usuarios siguen llegando al antiguo durante horas. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Route 53 tarda horas en propagar cambios a sus servidores.",
+      "El TTL alto del registro anterior, que los resolutores mantienen en caché hasta que caduca.",
+      "El balanceador nuevo no tiene comprobaciones de estado.",
+      "El dominio está registrado en otro registrador."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los resolutores DNS guardan la respuesta durante el TTL del registro. Con un TTL alto, siguen usando el valor antiguo hasta que caduca. Antes de un cambio previsto conviene bajar el TTL. Los registros alias a recursos de AWS no usan un TTL propio que se pueda configurar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-values-basic.html"
+    ]
   }
 ]

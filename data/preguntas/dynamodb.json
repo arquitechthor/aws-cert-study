@@ -111,5 +111,160 @@
     "fuentes": [
       "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
     ]
+  },
+  {
+    "id": "dynamodb-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una aplicación necesita una base de datos NoSQL de clave-valor, totalmente administrada y con latencia de milisegundos a cualquier escala. ¿Qué servicio elige?",
+    "opciones": [
+      "Amazon RDS.",
+      "Amazon DynamoDB.",
+      "Amazon Redshift.",
+      "Amazon Aurora."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "DynamoDB es una base de datos NoSQL sin servidor, de clave-valor y documentos, con latencia de un solo dígito de milisegundos. RDS y Aurora son relacionales, y Redshift es un almacén de datos para análisis.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+    ]
+  },
+  {
+    "id": "dynamodb-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una tabla de DynamoDB tiene un tráfico muy irregular e imprevisible, con días casi sin uso. ¿Qué modo de capacidad evita pagar por capacidad ociosa?",
+    "opciones": [
+      "Capacidad aprovisionada con capacidad reservada a 3 años.",
+      "Ninguno: DynamoDB cobra siempre una cuota fija por tabla.",
+      "Capacidad aprovisionada con el máximo de unidades de lectura y escritura.",
+      "Capacidad bajo demanda, que cobra por cada lectura y escritura realizada."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "En modo bajo demanda se paga por solicitud y no hay que planificar capacidad; sin tráfico no se cobra rendimiento (sí el almacenamiento). Es el modo recomendado por defecto. La capacidad aprovisionada encaja con tráfico estable y previsible.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html"
+    ]
+  },
+  {
+    "id": "dynamodb-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Dos procesos leen el mismo elemento de DynamoDB, lo modifican y lo guardan, y a veces uno pisa el cambio del otro. ¿Cómo se detecta y evita sin bloquear el elemento?",
+    "opciones": [
+      "Usar bloqueo optimista: un atributo de versión y una expresión de condición que compruebe que no ha cambiado al escribir.",
+      "Usar lecturas fuertemente consistentes.",
+      "Aumentar la capacidad de escritura de la tabla.",
+      "Activar DynamoDB Streams."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con bloqueo optimista cada escritura incluye una condición sobre la versión leída. Si otro proceso la cambió antes, DynamoDB rechaza la escritura con ConditionalCheckFailedException y la aplicación vuelve a leer y reintenta. La consistencia de lectura no impide que dos escrituras se pisen.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/BestPractices_OptimisticLocking.html"
+    ]
+  },
+  {
+    "id": "dynamodb-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una tabla ya en producción tiene como clave de partición el id de cliente. Ahora hay que consultar pedidos por estado, un atributo que no es clave. ¿Qué se añade para hacerlo con Query en lugar de Scan?",
+    "opciones": [
+      "Un índice secundario local (LSI) sobre el estado.",
+      "Una tabla global en otra región.",
+      "Un índice secundario global (GSI) con el estado como clave de partición.",
+      "DAX delante de la tabla."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Un GSI admite otra clave de partición y se puede añadir a una tabla existente. Un LSI comparte la clave de partición de la tabla y solo se puede crear al crear la tabla. DAX acelera lecturas, pero no cambia qué se puede consultar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html",
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html"
+    ]
+  },
+  {
+    "id": "dynamodb-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Cada vez que se crea o modifica un pedido en una tabla de DynamoDB, hay que enviar un correo al cliente sin tocar el código que escribe en la tabla. ¿Qué solución lo consigue?",
+    "opciones": [
+      "Programar una función Lambda que haga un Scan de la tabla cada minuto.",
+      "Activar DynamoDB Streams y asociar una función Lambda que procese los cambios.",
+      "Activar el TTL de la tabla.",
+      "Crear una copia de seguridad bajo demanda tras cada escritura."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "DynamoDB Streams registra en orden cada cambio de los elementos, y Lambda puede leer el flujo con un mapeo de origen de eventos y reaccionar casi en tiempo real. Un Scan periódico es caro y lento, y el TTL solo borra elementos caducados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.html"
+    ]
+  },
+  {
+    "id": "dynamodb-011",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una llamada BatchWriteItem termina sin error, pero algunos elementos no aparecen en la tabla. ¿Qué debe revisar la aplicación?",
+    "opciones": [
+      "Que la tabla tenga un GSI.",
+      "Que los elementos no superen 1 KB.",
+      "Que la llamada se haga con lecturas fuertemente consistentes.",
+      "El campo UnprocessedItems de la respuesta, y reintentarlos con espera exponencial."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las operaciones por lotes pueden procesar solo una parte, por ejemplo si hay limitación de capacidad, y devuelven lo pendiente en UnprocessedItems sin lanzar un error. La aplicación debe reenviarlo, idealmente con espera exponencial.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html"
+    ]
+  },
+  {
+    "id": "dynamodb-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Un asistente conversacional basado en Amazon Bedrock debe recordar los mensajes anteriores de cada usuario entre peticiones, buscándolos por id de sesión con baja latencia. ¿Dónde es más adecuado guardar ese historial?",
+    "opciones": [
+      "En una tabla de Amazon DynamoDB con el id de sesión como clave de partición.",
+      "En Amazon Redshift.",
+      "En los parámetros de inferencia del modelo.",
+      "En Amazon S3 Glacier Deep Archive."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los modelos no guardan estado entre llamadas, así que la aplicación debe almacenar el historial y enviarlo como contexto. DynamoDB ofrece lecturas y escrituras por clave en milisegundos y escala sin servidor, lo que encaja con datos de sesión. Redshift es para análisis y Glacier para archivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+    ]
   }
 ]

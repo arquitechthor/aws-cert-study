@@ -88,5 +88,50 @@
     "fuentes": [
       "https://docs.aws.amazon.com/ses/latest/dg/Welcome.html"
     ]
+  },
+  {
+    "id": "ses-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una tienda en línea quiere enviar correos de confirmación de pedido y boletines con su propio dominio, a gran escala y pagando por uso. ¿Qué servicio de AWS usa?",
+    "opciones": [
+      "AWS Direct Connect.",
+      "Amazon SQS.",
+      "Amazon Connect.",
+      "Amazon SES."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "SES es un servicio de envío y recepción de correo electrónico para mensajes transaccionales y de marketing. SQS es una cola de mensajes entre aplicaciones, y Connect es un centro de contacto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ses/latest/dg/Welcome.html"
+    ]
+  },
+  {
+    "id": "ses-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa envía campañas con SES a listas compradas y recibe muchas quejas por correo no deseado. ¿Qué puede ocurrir y de quién es la responsabilidad?",
+    "opciones": [
+      "AWS puede suspender el envío de la cuenta; el cliente es responsable del contenido y de tener el consentimiento de los destinatarios.",
+      "Nada: AWS es el remitente legal y responde de las quejas.",
+      "SES borra automáticamente las direcciones que se quejan y no hay más consecuencias.",
+      "La responsabilidad es del proveedor de correo de los destinatarios."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Según los términos de servicio y la política de uso aceptable, AWS no es el remitente y puede suspender el envío si hay correo no deseado, rebotes o quejas excesivos. El cliente responde del contenido y del consentimiento de su lista.",
+    "fuentes": [
+      "https://aws.amazon.com/service-terms/",
+      "https://docs.aws.amazon.com/ses/latest/dg/lists-and-subscriptions.html"
+    ]
   }
 ]

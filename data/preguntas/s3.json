@@ -133,5 +133,115 @@
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
     ]
+  },
+  {
+    "id": "s3-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere guardar copias de seguridad y ficheros de cualquier tamaño, accesibles por internet y con una durabilidad de 99,999999999 %. ¿Qué servicio usa?",
+    "opciones": [
+      "Amazon EBS.",
+      "Almacén de instancia de EC2.",
+      "Amazon S3.",
+      "Amazon ElastiCache."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "S3 es almacenamiento de objetos diseñado para once nueves de durabilidad, guardando los datos en varias zonas de disponibilidad (salvo las clases de una sola zona). EBS y el almacén de instancia son discos para EC2, y ElastiCache es una caché en memoria.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/DataDurability.html"
+    ]
+  },
+  {
+    "id": "s3-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
+    "enunciado": "Una empresa expone por error datos privados porque dejó un bucket de S3 con acceso público. Según el modelo de responsabilidad compartida, ¿de quién era responsabilidad configurar ese acceso?",
+    "opciones": [
+      "De AWS, que debe impedir cualquier acceso público.",
+      "Del cliente, que controla las políticas del bucket y el bloqueo de acceso público.",
+      "Del proveedor de internet del usuario.",
+      "Compartida a partes iguales entre AWS y el cliente."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "AWS protege la infraestructura del servicio, pero la configuración de acceso a los datos (políticas de bucket, ACL, Block Public Access) es responsabilidad del cliente. Los buckets nuevos tienen el bloqueo de acceso público activado por defecto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html"
+    ]
+  },
+  {
+    "id": "s3-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una aplicación sube a S3 vídeos de 2 GB por una red que a veces se corta, y cada fallo obliga a empezar de cero. ¿Qué debe usar el desarrollador?",
+    "opciones": [
+      "Una única llamada PutObject con un tiempo de espera mayor.",
+      "Comprimir el vídeo en base64 antes de subirlo.",
+      "S3 Transfer Acceleration sin más cambios.",
+      "La carga multiparte, que sube partes en paralelo y reintenta solo las que fallan."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Se recomienda la carga multiparte a partir de 100 MB: las partes se suben en paralelo y, si una falla, solo se repite esa. Transfer Acceleration mejora la velocidad en largas distancias, pero no evita repetir una subida de una sola pieza.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html"
+    ]
+  },
+  {
+    "id": "s3-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una aplicación sube millones de objetos a un bucket con SSE-KMS y empieza a recibir errores de limitación de KMS y facturas altas de KMS. ¿Qué cambio lo resuelve sin dejar de cifrar con KMS?",
+    "opciones": [
+      "Activar S3 Bucket Keys en el bucket.",
+      "Desactivar el cifrado del bucket.",
+      "Usar una clave de KMS distinta para cada objeto.",
+      "Pasar a cifrado del lado del cliente con la misma clave de KMS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Con S3 Bucket Keys, S3 genera una clave a nivel de bucket y reduce mucho las llamadas a KMS (AWS indica hasta un 99 % menos de coste de solicitudes), sin cambios en las aplicaciones. Más claves o cifrado del lado del cliente no reducen las llamadas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html"
+    ]
+  },
+  {
+    "id": "s3-011",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Cada vez que se sube una imagen a un bucket de S3 hay que generar una miniatura automáticamente. ¿Cuál es la solución más sencilla?",
+    "opciones": [
+      "Una función Lambda que liste el bucket cada minuto buscando objetos nuevos.",
+      "Una regla de ciclo de vida de S3.",
+      "Una notificación de eventos de S3 (s3:ObjectCreated) que invoque una función Lambda.",
+      "La replicación de S3 hacia otro bucket."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las notificaciones de eventos de S3 pueden invocar Lambda (o enviar a SQS, SNS o EventBridge) cuando se crea un objeto, filtrando por prefijo o sufijo. Conviene escribir la miniatura en otro bucket o prefijo para no provocar invocaciones en bucle.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html"
+    ]
   }
 ]

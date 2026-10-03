@@ -111,5 +111,115 @@
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
     ]
+  },
+  {
+    "id": "cloudfront-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere que su web cargue rápido para usuarios de todo el mundo guardando copias del contenido cerca de ellos. ¿Qué servicio y qué infraestructura global usa?",
+    "opciones": [
+      "Amazon Route 53, con zonas de disponibilidad.",
+      "Amazon CloudFront, con sus ubicaciones de borde.",
+      "AWS Direct Connect, con regiones.",
+      "Amazon VPC, con subredes públicas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CloudFront es la CDN de AWS: guarda en caché el contenido en ubicaciones de borde repartidas por el mundo y sirve a cada usuario desde la más cercana. Las regiones y zonas de disponibilidad son donde se despliegan los recursos, no puntos de caché.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+    ]
+  },
+  {
+    "id": "cloudfront-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "Una web sirve imágenes desde S3 a través de CloudFront. ¿Cuál de estas transferencias de datos no se cobra?",
+    "opciones": [
+      "De CloudFront a los usuarios en internet.",
+      "Las peticiones HTTPS de los usuarios a CloudFront.",
+      "Ninguna: todas las transferencias se cobran igual.",
+      "De S3 (origen de AWS) a CloudFront."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La transferencia desde orígenes de AWS (S3, ELB, API Gateway, EC2…) hacia CloudFront es gratuita. Se cobra la salida de CloudFront a los usuarios y las peticiones, aunque hay una capa gratuita mensual.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+    ]
+  },
+  {
+    "id": "cloudfront-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "En cada petición a una distribución de CloudFront hay que reescribir la URL y añadir una cabecera, con la menor latencia y coste posibles, sin llamar a otros servicios. ¿Qué usa el desarrollador?",
+    "opciones": [
+      "CloudFront Functions en el evento de petición del espectador.",
+      "Lambda@Edge en el evento de respuesta del origen.",
+      "Una función Lambda regional detrás de API Gateway.",
+      "Una invalidación de caché tras cada petición."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CloudFront Functions ejecuta JavaScript ligero en las ubicaciones de borde para manipular peticiones y respuestas del espectador, a gran escala y bajo coste, pero sin acceso a red. Lambda@Edge es más potente (red, cuerpo de la petición, más tiempo) y se usa cuando hace falta llamar a otros servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/edge-functions-choosing.html"
+    ]
+  },
+  {
+    "id": "cloudfront-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una API servida por CloudFront devuelve el mismo resultado para /productos?pagina=1 y /productos?pagina=2. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "El origen no tiene HTTPS.",
+      "El TTL de los registros DNS es demasiado alto.",
+      "La política de caché no incluye la cadena de consulta en la clave de caché.",
+      "Falta una firma en las URL."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "CloudFront guarda en caché según la clave de caché. Si la política no incluye los parámetros de consulta, ambas URL comparten la misma entrada y se devuelve la primera respuesta cacheada. Hay que incluir esos parámetros (o solo los necesarios) en la política de caché.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-the-cache-key.html"
+    ]
+  },
+  {
+    "id": "cloudfront-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Aplicaciones de los modelos fundacionales",
+    "enunciado": "Una empresa ofrece a clientes de todo el mundo una web de chat que usa un modelo de Amazon Bedrock. Quiere reducir la latencia al cargar la interfaz y proteger la aplicación con AWS WAF en un único punto. ¿Qué pone delante de la aplicación?",
+    "opciones": [
+      "Amazon SageMaker AI.",
+      "Amazon CloudFront.",
+      "Amazon Kendra.",
+      "AWS Glue."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CloudFront sirve la parte estática desde ubicaciones de borde y enruta las llamadas dinámicas al backend por la red de AWS. Además se le puede asociar AWS WAF para filtrar tráfico malicioso antes de que llegue a la aplicación y al modelo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+    ]
   }
 ]

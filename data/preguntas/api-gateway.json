@@ -111,5 +111,115 @@
     "fuentes": [
       "https://docs.aws.amazon.com/apigateway/latest/developerguide/limits.html"
     ]
+  },
+  {
+    "id": "api-gateway-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
+    "enunciado": "Una empresa quiere publicar una API para sus aplicaciones móviles sin administrar servidores y que escale sola con el tráfico. ¿Qué servicio de AWS usa?",
+    "opciones": [
+      "Amazon Route 53.",
+      "Amazon CloudFront.",
+      "AWS Direct Connect.",
+      "Amazon API Gateway."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "API Gateway es un servicio administrado para crear, publicar, proteger y supervisar API a cualquier escala. Route 53 es DNS, Direct Connect es una conexión de red dedicada y CloudFront es una CDN.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html"
+    ]
+  },
+  {
+    "id": "api-gateway-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
+    "enunciado": "¿Cómo se cobra, en general, el uso de una API REST o HTTP en Amazon API Gateway?",
+    "opciones": [
+      "Por las llamadas recibidas y los datos transferidos, sin cuota mínima.",
+      "Por hora de servidor aprovisionado para la API.",
+      "Una cuota fija mensual por cada API creada, se use o no.",
+      "Solo se cobra el número de métodos definidos en la API."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "API Gateway sigue el modelo de pago por uso: se paga por millón de llamadas y por la transferencia de datos (y, si se activa, por la caché). No hay servidores que aprovisionar ni cuotas mínimas.",
+    "fuentes": [
+      "https://aws.amazon.com/api-gateway/pricing/"
+    ]
+  },
+  {
+    "id": "api-gateway-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una API REST con integración de proxy de Lambda devuelve 502 Bad Gateway. Los registros muestran que la función termina sin errores y devuelve el texto \"OK\". ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Falta configurar CORS en el método.",
+      "La API superó el límite de peticiones por segundo de la cuenta.",
+      "La función no devuelve el objeto JSON que espera la integración de proxy, con statusCode, headers y body.",
+      "La función tarda más de 15 minutos en responder."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Con integración de proxy, Lambda debe devolver un objeto con statusCode, headers y body (y opcionalmente isBase64Encoded). Si la respuesta no tiene ese formato, API Gateway la considera mal formada y devuelve 502. Superar el límite de peticiones da 429, no 502.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html"
+    ]
+  },
+  {
+    "id": "api-gateway-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Durante un pico de uso, los clientes de una API reciben respuestas 429 Too Many Requests de API Gateway. ¿Qué deben hacer los clientes para comportarse correctamente ante este error?",
+    "opciones": [
+      "Repetir la petición inmediatamente en bucle hasta que funcione.",
+      "Reintentar con espera exponencial y variación aleatoria (jitter).",
+      "Cambiar de método HTTP, de POST a GET.",
+      "Ignorar el error, porque API Gateway reintenta la petición por ellos."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El 429 indica que se superó el límite de limitación (throttling) de la cuenta, de la etapa o del plan de uso. La práctica recomendada es reintentar con espera exponencial y jitter; los SDK de AWS ya lo hacen. Si el pico es habitual, se puede pedir un aumento de cuota o activar caché.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-request-throttling.html"
+    ]
+  },
+  {
+    "id": "api-gateway-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C02"
+    ],
+    "dominio": "Implementación",
+    "enunciado": "Un equipo despliega la misma API REST en las etapas dev y prod, y cada etapa debe invocar un alias distinto de la misma función Lambda sin duplicar la definición de la API. ¿Qué característica usa?",
+    "opciones": [
+      "Planes de uso con claves de API distintas.",
+      "Un autorizador de Lambda que elija la función.",
+      "Dos API distintas con un nombre de dominio personalizado común.",
+      "Variables de etapa referenciadas en el ARN de la integración."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las variables de etapa son pares clave-valor por etapa que se pueden usar en la integración, por ejemplo en el ARN de la función (función:${stageVariables.alias}). Así una única definición apunta a destinos distintos según la etapa. Hay que dar permiso a API Gateway para invocar cada alias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/apigateway/latest/developerguide/stage-variables.html"
+    ]
   }
 ]
