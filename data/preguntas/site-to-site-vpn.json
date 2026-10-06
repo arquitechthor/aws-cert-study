@@ -73,6 +73,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar nuevas soluciones",
+    "dominios": {
+      "SAA-C03": "Diseñar arquitecturas seguras"
+    },
     "enunciado": "Una empresa debe cifrar el tráfico que viaja por su conexión Direct Connect de 1 Gbps hacia un Transit Gateway. ¿Qué solución es correcta?",
     "opciones": [
       "Activar MACsec en la conexión.",

@@ -51,6 +51,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "SAP-C02": "Diseñar nuevas soluciones"
+    },
     "enunciado": "Una normativa exige que ciertos registros guardados en S3 no puedan borrarse ni modificarse durante 5 años, por nadie, incluido el usuario raíz. ¿Qué configuración lo cumple?",
     "opciones": [
       "Versionado con MFA Delete.",

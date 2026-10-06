@@ -29,6 +29,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "SAP-C02": "Diseñar nuevas soluciones"
+    },
     "enunciado": "Los usuarios de una aplicación deben subir vídeos de hasta 2 GB. El backend está en API Gateway y Lambda. ¿Qué diseño es el adecuado?",
     "opciones": [
       "Enviar el vídeo en el cuerpo de la petición a API Gateway.",

@@ -6,7 +6,7 @@
     "nivel": "Foundational",
     "estado": "vigente",
     "guia": "https://docs.aws.amazon.com/aws-certification/latest/cloud-practitioner-02/cloud-practitioner-02.html",
-    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 700 },
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 700, "minutos": 90 },
     "dominios": [
       { "id": 1, "nombre": "Conceptos de la nube", "nombreEn": "Cloud Concepts", "peso": 24 },
       { "id": 2, "nombre": "Seguridad y cumplimiento", "nombreEn": "Security and Compliance", "peso": 30 },
@@ -21,7 +21,7 @@
     "nivel": "Foundational",
     "estado": "vigente",
     "guia": "https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01.html",
-    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 700 },
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 700, "minutos": 90 },
     "dominios": [
       { "id": 1, "nombre": "Fundamentos de IA y ML", "nombreEn": "Fundamentals of AI and ML", "peso": 20 },
       { "id": 2, "nombre": "Fundamentos de IA generativa", "nombreEn": "Fundamentals of GenAI", "peso": 24 },
@@ -37,7 +37,7 @@
     "nivel": "Associate",
     "estado": "vigente",
     "guia": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-associate-03/solutions-architect-associate-03.html",
-    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 720 },
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 720, "minutos": 130 },
     "dominios": [
       { "id": 1, "nombre": "Diseñar arquitecturas seguras", "nombreEn": "Design Secure Architectures", "peso": 30 },
       { "id": 2, "nombre": "Diseñar arquitecturas resilientes", "nombreEn": "Design Resilient Architectures", "peso": 26 },
@@ -53,7 +53,7 @@
     "estado": "retirandose",
     "ultimoDia": "2026-12-01",
     "guia": "https://docs.aws.amazon.com/aws-certification/latest/developer-associate-02/developer-associate-02.html",
-    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 720 },
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 720, "minutos": 130 },
     "dominios": [
       { "id": 1, "nombre": "Desarrollo con servicios de AWS", "nombreEn": "Development with AWS Services", "peso": 32 },
       { "id": 2, "nombre": "Seguridad", "nombreEn": "Security", "peso": 26 },
@@ -80,7 +80,7 @@
     "estado": "retirandose",
     "ultimoDia": "2026-11-17",
     "guia": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-professional-02/solutions-architect-professional-02.html",
-    "examen": { "preguntasPuntuadas": 65, "preguntasSinPuntuar": 10, "puntuacionMinima": 750 },
+    "examen": { "preguntasPuntuadas": 65, "preguntasSinPuntuar": 10, "puntuacionMinima": 750, "minutos": 180 },
     "dominios": [
       { "id": 1, "nombre": "Diseñar soluciones para la complejidad organizativa", "nombreEn": "Design Solutions for Organizational Complexity", "peso": 26 },
       { "id": 2, "nombre": "Diseñar nuevas soluciones", "nombreEn": "Design for New Solutions", "peso": 29 },

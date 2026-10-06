@@ -29,6 +29,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
+    "dominios": {
+      "SAP-C02": "Mejora continua de soluciones existentes"
+    },
     "enunciado": "Una función Lambda que escribe en una base de datos pequeña, compartida con otros sistemas, la satura en los picos de tráfico. ¿Cómo se limita el número de ejecuciones simultáneas de esa función?",
     "opciones": [
       "Configurar concurrencia reservada con el máximo deseado.",

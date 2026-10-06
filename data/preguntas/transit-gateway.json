@@ -29,6 +29,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominios": {
+      "SAA-C03": "Diseñar arquitecturas seguras"
+    },
     "enunciado": "Las VPC de producción y de desarrollo están adjuntas al mismo Transit Gateway. No deben poder comunicarse entre sí, pero ambas deben llegar a una VPC de servicios compartidos. ¿Cómo se configura?",
     "opciones": [
       "Con grupos de seguridad que denieguen el tráfico entre entornos.",

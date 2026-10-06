@@ -363,6 +363,7 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 .quiz-feedback .ok { color: var(--green); font-weight: 700; }
 .quiz-feedback .ko { color: var(--magenta); font-weight: 700; }
 .quiz-feedback ul { margin: 0; padding-left: 1.2em; font-size: 13.5px; }
+.quiz-feedback a { overflow-wrap: anywhere; }
 .quiz-progreso {
   display: grid; gap: 10px; justify-items: start; padding: 14px 16px;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
@@ -375,6 +376,89 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 .chip-ok { display: none; color: var(--green); border-color: rgba(74, 222, 128, 0.45); }
 .quiz-question.is-acertada .chip-ok { display: inline-flex; }
 .quiz-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+
+/* Pregunta difícil ("dificil": true en el JSON): etiqueta ⚠ en ámbar y borde a juego. */
+.chip-dificil { color: var(--amber); border-color: rgba(251, 191, 36, 0.5); background: rgba(251, 191, 36, 0.1); font-weight: 700; }
+.quiz-question.is-dificil { border-color: rgba(251, 191, 36, 0.35); }
+
+/* Ordenar: pasos con botones ↑ ↓. */
+.quiz-orden { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 8px; }
+.quiz-orden-item {
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); background: var(--bg-alt); color: var(--text-muted); font-size: 14.5px;
+}
+.quiz-orden-pos { flex-shrink: 0; width: 26px; height: 26px; border-radius: 999px; display: grid; place-items: center;
+  background: var(--surface-2); color: var(--cyan-strong); font-weight: 700; font-size: 13px; }
+.quiz-orden-texto { flex: 1; min-width: 0; }
+.quiz-orden-btns { display: flex; gap: 4px; flex-shrink: 0; }
+.quiz-orden-btns .btn { padding: 6px 10px; }
+.quiz-orden-item.is-correct, .quiz-par.is-correct { border-color: rgba(74, 222, 128, 0.6); color: var(--text); }
+.quiz-orden-item.is-wrong, .quiz-par.is-wrong { border-color: rgba(251, 113, 133, 0.6); }
+
+/* Emparejar: cada elemento con su desplegable. */
+.quiz-pares { display: grid; gap: 8px; margin: 0 0 14px; }
+.quiz-par {
+  display: grid; grid-template-columns: 1fr 110px; gap: 10px; align-items: center; padding: 8px 10px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-alt); color: var(--text-muted); font-size: 14.5px;
+}
+.quiz-destinos { list-style: none; margin: 0 0 12px; padding: 10px 14px; display: grid; gap: 6px; font-size: 14px;
+  color: var(--text-muted); border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); }
+.quiz-destinos strong { color: var(--cyan-strong); }
+.quiz-solucion { margin: 6px 0 10px; padding-left: 1.4em; font-size: 14px; }
+.quiz-solucion-zona { margin-bottom: 8px; color: var(--text); }
+
+/* ── Simulacro (simulacro.html) ──────────────────────────── */
+.sim-filter-row { grid-template-columns: 1fr 1fr; }
+@media (max-width: 760px) { .sim-filter-row { grid-template-columns: 1fr; } }
+.sim-examen[hidden], .sim-resultado[hidden], .sim-historial[hidden], .filters[hidden], .quiz-question[hidden] { display: none; }
+.sim-hud {
+  position: sticky; top: 62px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 8px 16px; padding: 10px 14px; margin-bottom: 14px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); font-size: 14px; color: var(--text-muted);
+}
+.sim-reloj { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--text); }
+.sim-reloj.is-poco { color: var(--amber); }
+.sim-num { margin: 0; }
+.sim-num:focus { outline: none; }
+.sim-pregunta { margin-bottom: 14px; }
+.sim-controles { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.sim-navegador { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; margin-bottom: 8px; }
+.sim-nav-btn, .sim-leyenda {
+  border: 1px solid var(--border-strong); background: var(--bg-alt); color: var(--text-muted); border-radius: 8px;
+  font: inherit; font-size: 13px; font-variant-numeric: tabular-nums;
+}
+.sim-nav-btn { height: 36px; cursor: pointer; }
+.sim-leyenda { display: inline-block; padding: 1px 8px; margin-right: 6px; }
+.sim-nav-btn.is-respondida, .sim-leyenda.is-respondida { background: rgba(34, 211, 238, 0.14); color: var(--cyan-strong); border-color: rgba(34, 211, 238, 0.45); }
+.sim-nav-btn.is-marcada, .sim-leyenda.is-marcada { box-shadow: inset 0 0 0 2px var(--amber); }
+.sim-nav-btn[aria-current] { outline: 2px solid var(--text); outline-offset: 1px; }
+.sim-resumen { margin-bottom: 28px; }
+.sim-resumen h2:focus { outline: none; }
+.sim-resumen .sim-nota { font-size: 28px; color: var(--magenta); margin-bottom: 4px; }
+.sim-nota strong { color: inherit; }
+.sim-resumen .sim-nota.ok { color: var(--green); }
+.sim-tabla-scroll { overflow-x: auto; margin-bottom: 24px; }
+.sim-tabla { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 16px; }
+.sim-tabla th, .sim-tabla td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text-muted); }
+.sim-tabla th[scope="row"] { color: var(--text); font-weight: 600; }
+.sim-tabla thead th { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.06em; }
+.sim-celda-barra { width: 35%; min-width: 80px; }
+.sim-revision-head { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.sim-revision-head h2 { margin: 0; }
+.sim-historial { margin-top: 36px; }
+
+/* ── Mi progreso (progreso.html) ─────────────────────────── */
+.prog-resumen { margin-bottom: 32px; }
+.prog-resumen .card { display: flex; flex-direction: column; gap: 6px; }
+.prog-resumen .btn { align-self: flex-start; margin-top: 4px; }
+.card .prog-cifra { font-size: 30px; font-weight: 800; color: var(--text); margin: 0; font-variant-numeric: tabular-nums; }
+.prog-cifra span { font-size: 16px; color: var(--text-faint); font-weight: 600; }
+.prog-certs .quiz-barra { margin-top: 6px; }
+.prog-acciones { display: flex; flex-wrap: wrap; gap: 6px; }
+.prog-lista { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); font-size: 14.5px; }
+.prog-curso li { display: grid; gap: 4px; }
+.prog-borrar { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
+#prog-contenido h2 { margin-top: 32px; }
 
 /* ── Juego de memoria (memoria.html) ─────────────────────── */
 .memo-filter-row { grid-template-columns: auto 1.4fr 1fr; align-items: end; }

@@ -51,6 +51,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "SAP-C02": "Diseñar nuevas soluciones"
+    },
     "enunciado": "Un juego multijugador usa UDP y necesita mejorar la latencia global y conmutar en segundos entre regiones, usando direcciones IP fijas. ¿Qué servicio es el adecuado?",
     "opciones": [
       "Amazon CloudFront.",

@@ -51,6 +51,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominios": {
+      "SAA-C03": "Diseñar arquitecturas de alto rendimiento"
+    },
     "enunciado": "Una empresa con una conexión Direct Connect quiere llegar con ella a VPC de us-east-1, eu-west-1 y ap-southeast-1, de varias cuentas. ¿Qué recurso lo permite?",
     "opciones": [
       "Una puerta de enlace de Direct Connect asociada a las puertas de enlace o Transit Gateway de esas regiones.",

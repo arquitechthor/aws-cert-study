@@ -73,6 +73,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "SAP-C02": "Diseñar nuevas soluciones"
+    },
     "enunciado": "Una aplicación web corre en instancias EC2 detrás de un Application Load Balancer y debe servirse por HTTPS con el menor esfuerzo de gestión de certificados. ¿Qué dos pasos son los adecuados?",
     "opciones": [
       "Solicitar un certificado público en ACM en la región del ALB, con validación por DNS.",

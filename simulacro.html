@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulacro de examen — Apuntes AWS</title>
+<meta name="description" content="Simulacro de examen de certificaciones AWS con preguntas originales: reparto por dominios según la guía oficial, tiempo límite, preguntas difíciles y corrección por dominio.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/simulacro.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Simulacro de examen — Apuntes AWS">
+<meta property="og:description" content="Simulacros de examen de AWS con preguntas originales, tiempo límite y corrección por dominio. Proyecto personal y educativo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/simulacro.html">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+      <a href="index.html#certificaciones">Certificaciones</a>
+      <a href="index.html#catalogo">Catálogo</a>
+      <a href="simulacro.html" aria-current="page">Simulacro</a>
+      <a href="memoria.html">Memoria</a>
+      <a href="progreso.html">Mi progreso</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <div class="section-head">
+      <h1 id="sim-titulo">Simulacro de <span class="gradient-text">examen</span></h1>
+      <p id="sim-intro">Preguntas de todos los servicios de una certificación, repartidas según el peso de cada
+        dominio de la guía oficial, con tiempo límite y corrección al final, como en el examen real.</p>
+    </div>
+
+    <form class="filters" id="sim-config" onsubmit="return false">
+      <div class="filter-row sim-filter-row">
+        <label class="field">
+          <span class="field-label">Certificación</span>
+          <select class="select" id="s-cert"></select>
+        </label>
+        <label class="field">
+          <span class="field-label">Duración</span>
+          <select class="select" id="s-longitud"></select>
+        </label>
+      </div>
+      <div class="field" id="s-dificiles-zona">
+        <span class="field-label" id="s-dificiles-label">Dificultad</span>
+        <div class="chips" role="group" aria-labelledby="s-dificiles-label">
+          <button class="chip" type="button" id="s-dificiles" aria-pressed="false">⚠ Solo preguntas difíciles</button>
+        </div>
+      </div>
+      <p class="field-hint" id="s-ayuda" aria-live="polite"></p>
+      <div class="filters-foot">
+        <p class="result-count" id="s-disponibles"></p>
+        <button class="btn btn-primary btn-sm" type="button" id="s-empezar" disabled>Empezar simulacro</button>
+      </div>
+    </form>
+
+    <div class="sim-examen" id="sim-examen" hidden>
+      <div class="sim-hud">
+        <span id="sim-posicion">Pregunta 1 de 1</span>
+        <span class="sim-reloj" id="sim-reloj" role="timer" aria-live="off"></span>
+        <button class="btn btn-secondary btn-sm" type="button" id="sim-terminar">Terminar y corregir</button>
+      </div>
+      <div class="quiz-question sim-pregunta" id="sim-pregunta"></div>
+      <div class="sim-controles">
+        <button class="btn btn-secondary btn-sm" type="button" id="sim-anterior">← Anterior</button>
+        <button class="chip" type="button" id="sim-marcar" aria-pressed="false">⚑ Marcar para revisar</button>
+        <button class="btn btn-secondary btn-sm" type="button" id="sim-siguiente">Siguiente →</button>
+      </div>
+      <nav class="sim-navegador" id="sim-navegador" aria-label="Ir a una pregunta"></nav>
+      <p class="field-hint">Leyenda: <span class="sim-leyenda is-respondida">respondida</span>
+        <span class="sim-leyenda is-marcada">marcada para revisar</span> <span class="sim-leyenda">sin responder</span></p>
+    </div>
+
+    <div class="sim-resultado" id="sim-resultado" hidden></div>
+
+    <div class="sim-historial" id="sim-historial"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/nav.js" defer></script>
+<script src="assets/datos.js" defer></script>
+<script src="assets/siglas.js" defer></script>
+<script src="assets/preguntas.js" defer></script>
+<script src="assets/simulacro.js" defer></script>
+</body>
+</html>

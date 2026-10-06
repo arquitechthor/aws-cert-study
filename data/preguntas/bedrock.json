@@ -132,5 +132,41 @@
     "fuentes": [
       "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
     ]
+  },
+  {
+    "id": "bedrock-007",
+    "tipo": "emparejar",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA generativa",
+    "enunciado": "Un equipo que empieza con Bedrock repasa los conceptos básicos de la IA generativa. Empareja cada concepto con su descripción (sobra una).",
+    "opciones": [
+      "Token",
+      "Embedding",
+      "Temperatura",
+      "Ventana de contexto",
+      "Ajuste fino (fine-tuning)"
+    ],
+    "destinos": [
+      "Parámetro de inferencia que controla lo aleatorias o creativas que son las respuestas.",
+      "Seguir entrenando un modelo preentrenado con datos propios etiquetados para una tarea concreta.",
+      "Unidad de texto (una palabra o un trozo de ella) con la que el modelo lee y genera.",
+      "Recuperar fragmentos de una base de conocimiento y añadirlos al prompt antes de generar.",
+      "Vector de números que representa el significado de un texto para buscar por similitud.",
+      "Cantidad máxima de texto que el modelo puede tener en cuenta en una sola petición."
+    ],
+    "correctas": [
+      2,
+      4,
+      0,
+      5,
+      1
+    ],
+    "explicacion": "El modelo trabaja con tokens; los embeddings convierten texto en vectores para búsquedas semánticas; la temperatura (junto a Top P y Top K) regula la aleatoriedad; la ventana de contexto limita cuánto texto entra en una petición; y el ajuste fino adapta el modelo con datos etiquetados propios. La descripción que sobra es la generación aumentada por recuperación (RAG), que añade contexto al prompt sin volver a entrenar el modelo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/inference-parameters.html",
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html"
+    ]
   }
 ]

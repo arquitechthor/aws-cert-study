@@ -174,5 +174,34 @@
     "fuentes": [
       "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-jumpstart.html"
     ]
+  },
+  {
+    "id": "sagemaker-ai-009",
+    "tipo": "ordenar",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Una empresa empieza su primer proyecto de ML. Ordena las fases del ciclo de vida de ML, de la primera a la última, tal como las describe la lente de ML de AWS Well-Architected.",
+    "opciones": [
+      "Desplegar el modelo para hacer inferencias.",
+      "Definir el objetivo de negocio y cómo se medirá el éxito.",
+      "Vigilar el modelo en producción para detectar si su rendimiento empeora.",
+      "Recoger y preparar los datos, incluida la ingeniería de características.",
+      "Plantear el problema como uno de ML: qué se observa y qué se quiere predecir.",
+      "Entrenar, ajustar y evaluar el modelo."
+    ],
+    "correctas": [
+      1,
+      4,
+      3,
+      5,
+      0,
+      2
+    ],
+    "explicacion": "Primero se fija el objetivo de negocio y se traduce a un problema de ML (qué etiqueta se predice y con qué métrica). Después vienen los datos (recogida, limpieza e ingeniería de características), el desarrollo del modelo (entrenamiento, ajuste y evaluación), el despliegue para inferencia y la monitorización, que puede devolver el ciclo a fases anteriores si el modelo se degrada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/wellarchitected/latest/machine-learning-lens/machine-learning-lifecycle.html"
+    ]
   }
 ]

@@ -51,6 +51,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominios": {
+      "SAA-C03": "Diseñar arquitecturas seguras"
+    },
     "enunciado": "Los usuarios de Client VPN del grupo de Finanzas solo deben llegar a la subred de la aplicación financiera, y los de Ingeniería solo a las de desarrollo. ¿Qué se usa?",
     "opciones": [
       "Varios puntos de enlace de Client VPN en la misma VPC.",

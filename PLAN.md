@@ -20,7 +20,14 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 - **Fase 4 (juego de memoria):** publicada el 2026-10-02 en `memoria.html` con los dos modos
   (categorías y funciones). **Fase 4 completa** desde el 2026-10-06 (tarea 4.11 cerrada con la
   revisión a mano de las frases que se confundían).
-- **Próximo paso (siguiente sesión):** empezar la Fase 3 (simulacro por certificación, `sitemap.xml`…).
+- **Fase 3 completa (06/10/2026)** salvo la 3.6 (más certificaciones), aplazada por decisión del
+  usuario: simulacro por certificación (`simulacro.html`), progreso y repaso de falladas
+  (`progreso.html`), `sitemap.xml` + `robots.txt` (en la raíz del dominio), enlace desde `kopi-web`
+  y preguntas de ordenar y emparejar. Además, etiqueta ⚠ "Pregunta difícil" (`"dificil": true`).
+- **Próximo paso (siguiente sesión):** empezar la **Fase 5** (profundización para SAP-C02), tarea
+  5.1 y luego los servicios de la cola 5.A en orden. Pendiente de datos: AIF-C01 solo tiene 5
+  preguntas de "Fundamentos de IA generativa" (pesa el 24 %, un simulacro completo pide 16); el
+  simulacro completa con otros dominios y lo avisa.
   **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `proton` y `iot-greengrass`
   (V1) el 07/10/2026, `pinpoint` el 30/10/2026, `managed-blockchain` (sin clientes nuevos) el
   29/10/2026 y `support` (planes antiguos) el 01/01/2027. Tarea 0.9 (guías SAP-C03 y DVA-C03) el
@@ -55,6 +62,10 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Progreso del usuario | Sin cuentas ni backend: el progreso vive en `localStorage` (clave `apuntes-aws.progreso`, un objeto por servicio con las preguntas acertadas, el total y la fecha de finalización). Un servicio publicado pasa a **Finalizado** cuando se han acertado todas sus preguntas al menos una vez; si luego se añaden preguntas, vuelve a estar en curso. "Finalizado" no es un `estado` de `servicios.json`: se calcula en el navegador. |
 | Filtro de certificaciones | Con varias marcadas, modo **Intersección** (todas, por defecto) o **Unión** (al menos una), en la URL como `modo=union`. Las certificaciones con `estado: "guia-pendiente"` (SAP-C03, DVA-C03) **no salen como filtro** hasta tener guía y servicios; solo se ven en su tarjeta, y un `cert=` suyo en la URL se ignora. |
 | Campo `frase` ("En una frase") | Confirmado por el usuario el 2026-09-26. Cada servicio del catálogo (todos, no solo los que tienen icono) tiene un campo `frase` en `servicios.json`: una frase de 60–90 caracteres, en español, con palabras propias, **sin el nombre, la sigla ni el id del servicio** y que lo distinga de sus vecinos parecidos (SQS/SNS, EBS/EFS, Athena/Redshift). Se usa en **cuatro sitios**: (1) fila **"En una frase:"** en la cabecera de cada guía, al nivel de Categoría, Certificaciones y Documentación oficial, con tooltips en sus siglas; (2) la misma fila en la página "Próximamente"; (3) las **tarjetas del catálogo**, donde **sustituye al `resumen`** para que las 164 tarjetas tengan texto; (4) las cartas de función del juego de memoria (modo funciones). El `resumen` se conserva solo para la meta description y Open Graph (ahí sí conviene nombrar el servicio). En las cartas del juego, mejor pocas siglas (no hay tooltip cómodo). Una comprobación automática rechaza frases que contengan el nombre, la sigla o el id del servicio. |
+| Simulacro (Fase 3) | Decidido el 2026-10-06. Preguntas de los servicios publicados de la certificación que llevan esa certificación, **repartidas por dominio según su peso** (cuota por mayor resto; si un dominio no llega, se completa con otros y se avisa). Tres duraciones: completo (puntuables + sin puntuar, p. ej. 75 en 180 min en SAP-C02), medio y rápido (10 preguntas), con el tiempo en proporción al examen real. Una pregunta cada vez, marcar para revisar, corrección solo al final y resultado en % por dominio; la nota de corte se muestra solo como referencia orientativa (puntuación mínima / 10 %), porque AWS usa una escala de 100 a 1000 sin equivalencia pública. Las respuestas cuentan para el progreso igual que en las guías. Historial de los 20 últimos en `localStorage` (`apuntes-aws.simulacros`). |
+| Repaso y falladas (3.2) | Una pregunta está "fallada" si su **último** intento fue incorrecto (`fallos` en `apuntes-aws.progreso`); sale del repaso al acertarla. El repaso (`simulacro.html?repaso=1[&cert=]`) no tiene tiempo límite. `progreso.html` resume todo y permite borrarlo; lleva `noindex` porque solo muestra datos locales. |
+| Preguntas difíciles | Pedido por el usuario el 2026-10-06: `"dificil": true` en el JSON muestra la etiqueta ⚠ "Pregunta difícil" (ámbar) en guías y simulacros, y el simulacro puede limitarse a ellas. Criterio en la Fase 5. |
+| `robots.txt` | Los buscadores solo leen `/robots.txt` en la raíz del dominio, así que vive en el repo `arquitechthor.github.io` y anuncia el `sitemap.xml` de los dos sitios. Este repo solo genera su `sitemap.xml` (`scripts/generar_sitemap.py`). |
 | Servicios pendientes | Sin archivos vacíos: un servicio con `estado: "pendiente"` enlaza a la página genérica `servicio.html?id=<id>` ("Próximamente disponible"). Al publicarlo se crea `servicios/<id>.html`. |
 
 ---
@@ -66,6 +77,9 @@ aws-cert-study/
 ├── index.html                # portada: buscador + filtros + tarjetas de servicios
 ├── servicio.html             # "Próximamente disponible" genérica (?id=<id>)
 ├── memoria.html              # juego de memoria: modos categorías y funciones (Fase 4)
+├── simulacro.html            # simulacro por certificación y repaso de falladas (Fase 3)
+├── progreso.html             # mi progreso: resumen, falladas, simulacros (Fase 3, noindex)
+├── sitemap.xml               # generado con scripts/generar_sitemap.py
 ├── servicios/<id>.html       # una página por servicio publicado
 ├── data/
 │   ├── servicios.json        # catálogo: única fuente de verdad
@@ -76,7 +90,10 @@ aws-cert-study/
 ├── assets/
 │   ├── catalogo.js           # filtros, tarjetas y estado de filtros en la URL
 │   ├── servicio.js           # página genérica "Próximamente"
-│   ├── quiz.js               # renderiza y corrige preguntas
+│   ├── preguntas.js          # componente común: pinta, corrige y registra los 4 tipos de pregunta
+│   ├── quiz.js               # preguntas de cada guía (usa preguntas.js)
+│   ├── simulacro.js          # simulacro y repaso (usa preguntas.js)
+│   ├── progreso.js           # página "Mi progreso"
 │   ├── memoria.js            # juego de memoria (Fase 4)
 │   ├── iconos/servicios/<id>.svg   # iconos oficiales de AWS (servicios)
 │   ├── iconos/categorias/<id>.svg  # iconos oficiales de AWS (categorías)
@@ -141,9 +158,18 @@ original de cada guía, con su URL y fecha de extracción, para poder comparar c
 }
 ```
 
-`tipo` puede ser `"unica"` o `"multiple"` (elegir 2 o más, como en el examen). AIF-C01
-también usa preguntas de **ordenar** (*ordering*) y **emparejar** (*matching*); se añadirán a
-`quiz.js` como `"ordenar"` y `"emparejar"` (tarea 3.7).
+`tipo` puede ser:
+- `"unica"`: una respuesta; `"multiple"`: elegir 2 o más, como en el examen (`correctas` con
+  todas).
+- `"ordenar"` (*ordering*, lo usa AIF-C01): `opciones` son los pasos en cualquier orden (nunca
+  ya ordenados) y `correctas` sus índices en el orden correcto. Se ordenan con botones ↑ ↓.
+- `"emparejar"` (*matching*): `opciones` son los elementos, `destinos` las descripciones (puede
+  sobrar alguna) y `correctas[i]` el índice del destino de `opciones[i]`.
+
+Campos opcionales: `"dificil": true` (etiqueta ⚠ "Pregunta difícil") y `"dominios":
+{"SAP-C02": "…"}` cuando una pregunta de varias certificaciones necesita otro dominio en alguna
+de ellas (el simulacro puntúa por el dominio de la certificación elegida). Ejemplos de los dos
+tipos nuevos: `sagemaker-ai-009` y `bedrock-007`.
 
 `data/certificaciones.json` incluye, por certificación: código, nombre, nivel, estado
 (`vigente`, `retirandose`, `guia-pendiente`), fechas, enlace a la guía, formato del examen y
@@ -465,16 +491,25 @@ resto de la cola son las de cuando se creó; las actuales están en `servicios.j
 - [x] `support` AWS Support — Habilitación de clientes (CLF-C02)
 - [x] `workspaces-secure-browser` Amazon WorkSpaces Secure Browser — Computación para usuarios finales (CLF-C02)
 
-## Fase 3: extras (opcional)
+## Fase 3: extras (completa salvo la 3.6)
 
-- [ ] **3.1** Simulacro por certificación: mezcla preguntas de todos los servicios, con
-      temporizador y puntuación por dominio.
-- [ ] **3.2** Progreso personal en `localStorage`: servicios estudiados, preguntas falladas y repaso.
-- [ ] **3.3** `sitemap.xml` + `robots.txt`.
-- [ ] **3.4** Enlace a este sitio desde `kopi-web` (en otro repo).
+- [x] **3.1** Simulacro por certificación: mezcla preguntas de todos los servicios, con
+      temporizador y puntuación por dominio. → `simulacro.html` + `assets/simulacro.js` (06/10/2026;
+      ver la decisión "Simulacro"). Botón "Simulacro" en cada tarjeta de certificación y enlace en el menú.
+- [x] **3.2** Progreso personal en `localStorage`: servicios estudiados, preguntas falladas y repaso.
+      → `progreso.html` + `assets/progreso.js` y `simulacro.html?repaso=1` (06/10/2026).
+- [x] **3.3** `sitemap.xml` + `robots.txt`. → `sitemap.xml` generado por
+      `scripts/generar_sitemap.py` (168 URL; repetirlo al publicar o cambiar páginas) y `robots.txt`
+      en la raíz del dominio, repo `arquitechthor.github.io` (06/10/2026).
+- [x] **3.4** Enlace a este sitio desde `kopi-web` (en otro repo). → Ya existía: pie común
+      "Apuntes AWS" y la sección de stack de `kopi-web` enlaza a las guías de los servicios de Kopi
+      (comprobado el 06/10/2026).
 - [x] **3.5** Cambiar "Sobre mí" a la futura web independiente cuando exista. → `https://arquitechthor.github.io/` (26/09/2026).
-- [ ] **3.6** Ampliar a más certificaciones si hace falta (el modelo ya lo permite).
-- [ ] **3.7** Tipos de pregunta "ordenar" y "emparejar" en `quiz.js` (los usa AIF-C01).
+- [ ] **3.6** Ampliar a más certificaciones si hace falta (el modelo ya lo permite). **Aplazada**
+      por decisión del usuario (06/10/2026): de momento no se añaden certificaciones.
+- [x] **3.7** Tipos de pregunta "ordenar" y "emparejar" en `quiz.js` (los usa AIF-C01). → En el
+      componente común `assets/preguntas.js` (guías, simulacro y repaso), también en la exportación
+      a Noria; primeras preguntas: `sagemaker-ai-009` y `bedrock-007` (06/10/2026).
 
 ## Fase 4: juego de memoria (modos categorías y funciones)
 
@@ -619,6 +654,49 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 
 ---
 
+## Fase 5: profundización para SAP-C02
+
+Pedido por el usuario el 2026-10-06. Algunos servicios pesan mucho en SAP-C02 y sus guías y
+preguntas actuales tienen nivel de Associate. En esos servicios se añade **contenido más concreto,
+profundo y complejo, adaptado a SAP-C02**, y **preguntas de mucha más complejidad**, parecidas a
+las de esa certificación, marcadas con `"dificil": true`. SAP-C02 se retira el 17/11/2026, así que
+la cola va por orden de peso en el examen; lo escrito servirá también para SAP-C03 (guía el
+27/10/2026, tarea 0.9).
+
+**Qué cambia en cada servicio de la cola:**
+- Sección nueva en la guía, **"A fondo para SAP-C02"** (tras "Comparativa con servicios
+  parecidos"): patrones multicuenta y multirregión, límites y cuotas que deciden un diseño,
+  decisiones con sus compromisos (coste, esfuerzo operativo, disponibilidad, seguridad),
+  integración con los servicios vecinos y las "trampas" típicas de los escenarios del examen, con
+  tablas de decisión cuando ayuden. Mismas reglas de siempre: palabras propias, siglas con
+  tooltip, enlaces a los demás servicios y datos contrastados con la documentación actual.
+- **5–10 preguntas nuevas de nivel SAP-C02** por servicio, todas con `"dificil": true`,
+  repartidas por los cuatro dominios, con la respuesta correcta en posiciones variadas.
+
+**Criterio de "pregunta difícil"** (también para marcar las que ya existen):
+- Escenario largo con **varias restricciones a la vez** (p. ej. multicuenta + cumplimiento + menor
+  esfuerzo operativo + coste), como en el examen.
+- **Todas las opciones son técnicamente posibles**; solo una (o las 2–3 de una respuesta múltiple)
+  cumple todas las restricciones. Distractores cercanos, nada descartable a simple vista.
+- Pide combinar **dos o más servicios** o conocer un límite, una cuota o un comportamiento concreto.
+- Respuesta múltiple ("Elige 2/3") frecuente.
+
+**Tareas:**
+- [ ] **5.1** Añadir la sección "A fondo para SAP-C02" (opcional, comentada) a
+      `plantillas/servicio.html` y documentar el criterio en `CLAUDE.md`. Revisar las preguntas de
+      SAP-C02 que ya existen y marcar `"dificil": true` en las que cumplan el criterio.
+- [ ] **5.2** Cola 5.A (pedidos por el usuario), en este orden: `organizations`, `iam`, `ec2`,
+      `ecs`, `eks`, `fargate`, `codepipeline`, `codebuild`, `codedeploy`, `codeartifact`.
+- [ ] **5.3** Cola 5.B (propuesta: también pesan mucho en SAP-C02; confirmar con el usuario
+      antes de empezarla): `control-tower`, `iam-identity-center`, `ram`, `transit-gateway`,
+      `direct-connect`, `vpc`, `privatelink`, `route-53`, `cloudformation`, `service-catalog`,
+      `systems-manager`, `config`, `kms`, `s3`, `aurora`, `dynamodb`, `lambda`, `api-gateway`,
+      `cloudfront`, `elastic-disaster-recovery`, `backup`, `dms`, `application-migration-service`.
+- [ ] **5.4** Con la cola 5.A hecha: que el simulacro de SAP-C02 "solo difíciles" pueda llegar a
+      65 preguntas repartidas por los cuatro dominios.
+
+---
+
 ## Registro de sesiones
 
 | Fecha | Qué se hizo |
@@ -655,3 +733,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-03 | **Fase 2 completa: 164 de 164.** 33 guías más con 165 preguntas originales, en cinco commits: CodeBuild, CodeArtifact, CodeGuru, WorkSpaces, WorkSpaces Applications (antes AppStream 2.0), WorkSpaces Secure Browser, Pinpoint y Managed Blockchain; los 8 de IoT (Core, Greengrass, SiteWise, Device Defender, Device Management, Events, 1-Click, Things Graph); Kendra, Personalize, Fraud Detector, Timestream y Managed Service for Apache Flink; AgentCore, Nova, Strands Agents, Kiro, AWS Transform y Glue DataBrew; Amazon Q, CloudShell, Connect, Marketplace, Migration Evaluator y Support. Estados contrastados: **retirados** IoT Events (tras el aviso de mayo de 2025), IoT 1-Click y IoT Things Graph (2022, hacia IoT TwinMaker); **fin de soporte** de Pinpoint el 30/10/2026 (canales en End User Messaging), Greengrass V1 el 07/10/2026, Managed Blockchain el 29/09/2027 (sin clientes nuevos desde el 29/10/2026), plugins de IDE de Q Developer el 30/04/2027 (hacia Kiro) y planes Developer, Business y Enterprise On-Ramp el 01/01/2027; **sin clientes nuevos** CodeGuru Reviewer, Fraud Detector, SiteWise Monitor (07/11/2025) y Timestream for LiveAnalytics (20/06/2025); Fleet Hub retirado el 18/10/2025; **renombrado** AppStream 2.0 a WorkSpaces Applications (nombre nuevo y alias). El generador reparte ya la posición de la respuesta correcta. 21 siglas nuevas (VDI, DCV, MCP, LoRaWAN, OPC UA, KPU, SFT, TCO…). Comprobado en navegador: las 164 guías sin desbordamiento a 375 px, con todas sus preguntas, frase e icono. |
 | 2026-10-06 | Tarea 4.11 cerrada (**Fase 4 completa**): revisión a mano de las 164 frases por categoría y entre categorías. 22 reescritas para que no valgan para otro servicio: Cognito (clientes) frente a IAM Identity Center (empleados); Amazon Q frente a AWS Transform (Q ya no "moderniza código"); Kinesis Data Streams frente a MSK; Proton frente a Service Catalog; RDS (sin MySQL) frente a Aurora; SES, Pinpoint y SNS (correo, campañas, pub/sub); Management Console, CLI y CloudShell (clics, equipo local, navegador); App Runner frente a Elastic Beanstalk; Artifact frente a Audit Manager; Storage Gateway frente a DataSync; IoT Events frente a Device Defender; y se quitan pistas o nombres de otras cartas en Firewall Manager (WAF, Shield), ECS (Fargate) y Managed Service for Prometheus (PromQL). Revisadas sin cambios las parejas clásicas (SQS/SNS/EventBridge, EBS/EFS/FSx, Athena/Redshift/EMR, CloudTrail/Config/CloudWatch, GuardDuty/Detective/Security Hub, KMS/CloudHSM, Bedrock/Nova…). Filas "En una frase:" de las 22 guías regeneradas con `revisar_texto.py`. |
 | 2026-10-06 | Quinta pregunta original para `appflow` (clave de KMS administrada por el cliente), `glue` (CSV a Parquet particionado para abaratar Athena) y `savings-plans` (compromiso hora a hora: exceso bajo demanda y lo no usado se pierde), todas de SAA-C03 y con la respuesta correcta fuera de la A. Ya ningún servicio baja del mínimo de 5 de `CLAUDE.md` (1044 preguntas). |
+| 2026-10-06 | **Fase 3 completa** (salvo la 3.6, aplazada por el usuario). Componente común `assets/preguntas.js` (tipos única, múltiple, **ordenar** y **emparejar**; etiqueta ⚠ "Pregunta difícil" con `"dificil": true`; aciertos y **falladas** en el progreso) usado por `quiz.js`, el **simulacro** (`simulacro.html`: reparto por peso de dominio, tres duraciones con el tiempo del examen real, marcar para revisar, corrección y resultado por dominio, historial) y el **repaso de falladas**; página **Mi progreso** (`progreso.html`, noindex). Menú con "Simulacro" y "Mi progreso" en las 169 páginas; botón "Simulacro" en las tarjetas de certificación; duración de cada examen en `certificaciones.json` (`minutos`); campo `dominios` en 15 preguntas compartidas SAA/SAP; dos preguntas de AIF-C01 de los tipos nuevos (`sagemaker-ai-009`, `bedrock-007`). `sitemap.xml` (168 URL, `scripts/generar_sitemap.py`) y `robots.txt` en el repo `arquitechthor.github.io`. Aviso legal (privacidad) actualizado. Las URL largas de las fuentes ya no desbordan en móvil. Probado en Chrome a 1280 px y en iframes de 375 px (sin desplazamiento horizontal). Nueva **Fase 5**: profundización para SAP-C02 (pedido del usuario). |

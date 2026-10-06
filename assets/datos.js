@@ -79,8 +79,10 @@
 
   /**
    * Progreso de estudio, solo en el localStorage del navegador (ver aviso legal, privacidad):
-   * { "<idServicio>": { "aciertos": ["<idPregunta>", …], "total": 12, "finalizado": "2026-09-26" } }.
+   * { "<idServicio>": { "aciertos": ["<idPregunta>", …], "fallos": [...], "total": 12, "finalizado": "2026-09-26" } }.
    * Un servicio está finalizado cuando se han acertado todas sus preguntas al menos una vez.
+   * "fallos" (opcional) son las preguntas cuyo último intento fue incorrecto: las que salen en el
+   * repaso. Lo leen y escriben assets/preguntas.js (guías y simulacro) y assets/progreso.js.
    */
   const CLAVE_PROGRESO = 'apuntes-aws.progreso';
 

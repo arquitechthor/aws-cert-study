@@ -118,6 +118,7 @@
           ${nota ? `<p class="cert-meta">${esc(nota)}</p>` : ''}
           <div class="cert-actions">
             ${n ? `<button class="btn btn-secondary btn-sm" type="button" data-cert="${esc(c.codigo)}">Ver servicios</button>` : ''}
+            ${n && c.examen ? `<a class="btn btn-secondary btn-sm" href="simulacro.html?cert=${encodeURIComponent(c.codigo)}">Simulacro</a>` : ''}
             <a class="btn btn-secondary btn-sm" href="${esc(c.guia)}" target="_blank" rel="noopener">Guía oficial ↗</a>
           </div>
         </article>`;

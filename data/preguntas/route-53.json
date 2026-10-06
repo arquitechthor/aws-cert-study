@@ -51,6 +51,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "SAP-C02": "Diseñar nuevas soluciones"
+    },
     "enunciado": "Por motivos legales, los usuarios de un país concreto deben recibir una versión distinta del sitio. ¿Qué política de enrutamiento se usa?",
     "opciones": [
       "Latencia.",

@@ -51,6 +51,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
+    "dominios": {
+      "SAP-C02": "Diseñar nuevas soluciones"
+    },
     "enunciado": "Una aplicación global necesita escrituras con baja latencia desde usuarios de Europa y América, y seguir funcionando si falla una región entera. ¿Qué opción es la adecuada?",
     "opciones": [
       "Una tabla en us-east-1 con DAX en Europa.",

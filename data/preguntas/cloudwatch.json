@@ -29,6 +29,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "SAP-C02": "Mejora continua de soluciones existentes"
+    },
     "enunciado": "Tras borrarse un grupo de seguridad en producción, la empresa quiere saber qué identidad lo hizo y cuándo. ¿Qué servicio lo muestra?",
     "opciones": [
       "CloudWatch Metrics.",

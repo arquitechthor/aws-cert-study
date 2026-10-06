@@ -29,6 +29,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "SAP-C02": "Diseñar soluciones para la complejidad organizativa"
+    },
     "enunciado": "Un usuario tiene una política que permite s3:* sobre todos los recursos y pertenece a un grupo con una política que deniega s3:DeleteObject en un bucket concreto. ¿Qué ocurre si intenta borrar un objeto de ese bucket?",
     "opciones": [
       "Se permite, porque la política del usuario es más específica que la del grupo.",

@@ -29,10 +29,21 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&kopi=1`). `kopi=1` shows only
   services with `"kopi": true` in `servicios.json` (the ones Kopi uses). Certifications with
   `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
-- Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store correct
-  answers per service in `localStorage` (`apuntes-aws.progreso`). `quiz.js` writes it; a
-  published service whose questions are all answered correctly shows as "Finalizado" in the
-  catalog. It is derived in the browser, never stored in `servicios.json`.
+- Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store, per service
+  in `localStorage` (`apuntes-aws.progreso`), the correct answers and the `fallos` (questions whose
+  last attempt was wrong, i.e. the review queue). `assets/preguntas.js` writes it from both the
+  guides and the simulacro; a published service whose questions are all answered correctly shows
+  as "Finalizado" in the catalog. It is derived in the browser, never stored in `servicios.json`.
+- `assets/preguntas.js` (`window.AwsPreguntas`): the shared question component (render, read,
+  grade, mark, solution, Noria text, progress) for the four types `unica`, `multiple`, `ordenar`
+  and `emparejar`, plus the ⚠ "Pregunta difícil" tag (`"dificil": true`) and per-certification
+  domains (`"dominios"`). Question format in `PLAN.md` ("Modelo de datos"). Every page with a quiz
+  loads it before `quiz.js`.
+- `simulacro.html` + `assets/simulacro.js`: practice exam per certification (questions spread by
+  domain weight, full/half/quick length with the real exam's time, flag for review, grading by
+  domain, history in `localStorage` `apuntes-aws.simulacros`) and the review of failed questions
+  (`?repaso=1[&cert=]`). `progreso.html` + `assets/progreso.js`: "Mi progreso" summary (noindex).
+  Exam length and duration come from `examen` in `certificaciones.json`.
 - `memoria.html` + `assets/memoria.js`: memory game with two modes, `categorias` (two service
   cards match when they share the main `categoria`) and `funciones` (a service card matches the
   card with its `frase`). Only services with `"icono": true`. Config lives in the URL
@@ -47,7 +58,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   site root derived from its own `<script src>`, so pages work at any depth and under the
   `/aws-cert-study/` subpath. **Always use relative paths**, never `/data/...`.
 - `assets/quiz.js`: renders `<div class="quiz" data-quiz="<id>">` from
-  `data/preguntas/<id>.json`, and its "Exportar a Noria" button downloads the questions as one
+  `data/preguntas/<id>.json` with `preguntas.js`, and its "Exportar a Noria" button downloads the questions as one
   Noria topic (`{version: 1, temas: [{nombre, descripcion, preguntas}]}`, format in
   `../kopi-docs/importar_temas.md`; statement + options, no answers).
 - `scripts/revisar_texto.py`: applies the acronym and service-link content rules (below) to
@@ -70,8 +81,10 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 python -m http.server 8765   # or: npx serve .   (fetch() of the JSON files fails on file://)
 ```
 
-No build, lint or test tooling (only the helpers `scripts/revisar_texto.py` and
-`scripts/revisar_frases.py`, which checks every service's `frase` in `servicios.json`: 60–90
+No build, lint or test tooling (only the helpers `scripts/revisar_texto.py`,
+`scripts/generar_sitemap.py` (rewrites `sitemap.xml` from the published services; run it after
+publishing or changing pages; `robots.txt` lives in the domain root, repo
+`arquitechthor.github.io`) and `scripts/revisar_frases.py`, which checks every service's `frase` in `servicios.json`: 60–90
 characters, no word of the service's name, acronym or id; run it after adding or editing one). Verify changes in a browser, including at ~375px width (no
 horizontal scroll).
 
@@ -91,13 +104,16 @@ horizontal scroll).
    sensitive identifiers (account ID, bucket names, distribution IDs, ARNs); in that case also
    set `"kopi": true` in `servicios.json` so it appears under the "Usados en Kopi" filter.
 3. Write `data/preguntas/<id>.json` with 5–15 **original** questions tagged with certification
-   and domain (domain names from `certificaciones.json`).
+   and domain (domain names from `certificaciones.json`; if a question has several certifications,
+   add `"dominios": {"<cert>": "<domain>"}` for the ones where `dominio` doesn't exist). Spread the
+   correct answer across positions. Mark SAP-level questions with `"dificil": true` (criteria in
+   `PLAN.md`, Fase 5).
 4. In `data/servicios.json`, set `estado` to `"publicado"` and write `resumen`. Then run
    `python scripts/revisar_texto.py --escribir <id>` (acronyms and links; add any new acronym
    to its glossary first) and `python scripts/revisar_texto.py --publicado <id>` so other pages'
    "Próximamente" links to it point to the new page.
-5. Serve locally, check the page and quiz, then commit and push to `main` (no PRs) and tick
-   the service in the `PLAN.md` queue.
+5. Run `python scripts/generar_sitemap.py`, serve locally, check the page and quiz, then commit
+   and push to `main` (no PRs) and tick the service in the `PLAN.md` queue.
 
 ## Content rules (non-negotiable)
 

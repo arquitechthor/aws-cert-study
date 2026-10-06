@@ -29,6 +29,9 @@
       "SAP-C02"
     ],
     "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "SAP-C02": "Diseñar nuevas soluciones"
+    },
     "enunciado": "Una API REST en API Gateway debe aceptar solo peticiones de usuarios autenticados en la aplicación, con el menor esfuerzo de desarrollo. ¿Qué opción es la más adecuada?",
     "opciones": [
       "Un autorizador de Cognito user pool en API Gateway.",

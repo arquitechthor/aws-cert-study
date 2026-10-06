@@ -29,6 +29,9 @@
       "SAP-C02"
     ],
     "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominios": {
+      "SAA-C03": "Diseñar arquitecturas de alto rendimiento"
+    },
     "enunciado": "Una empresa quiere pasar de Oracle local a Aurora PostgreSQL, con procedimientos almacenados incluidos. ¿Qué combinación es la adecuada?",
     "opciones": [
       "Solo AWS DMS, que convierte también los procedimientos.",

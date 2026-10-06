@@ -5,6 +5,10 @@ preguntas de práctica originales. Sitio estático publicado con GitHub Pages:
 
 **https://arquitechthor.github.io/aws-cert-study/**
 
+Incluye una guía por servicio con preguntas de práctica (única, múltiple, ordenar y emparejar),
+simulacros de examen por certificación con tiempo y resultado por dominio, repaso de las preguntas
+falladas, un juego de memoria y el progreso guardado solo en tu navegador.
+
 Certificaciones cubiertas: Cloud Practitioner (CLF-C02), AI Practitioner (AIF-C01), Solutions
 Architect – Associate (SAA-C03), Developer – Associate (DVA-C02 y DVA-C03) y Solutions Architect –
 Professional (SAP-C02 y SAP-C03).
