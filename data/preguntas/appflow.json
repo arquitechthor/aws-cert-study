@@ -86,5 +86,27 @@
     "fuentes": [
       "https://docs.aws.amazon.com/appflow/latest/userguide/flow-triggers.html"
     ]
+  },
+  {
+    "id": "appflow-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "enunciado": "Un banco usa AppFlow para copiar datos de clientes de un SaaS a S3. Su normativa exige poder auditar, rotar y revocar la clave con la que se cifran esos datos durante el flujo. ¿Qué debe configurar?",
+    "opciones": [
+      "Nada: AppFlow no cifra los datos, así que hay que cifrarlos después en S3.",
+      "Una VPN de sitio a sitio entre el SaaS y la VPC.",
+      "Una clave de KMS administrada por el cliente seleccionada al crear el flujo.",
+      "Un certificado TLS propio emitido con ACM para el conector."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "AppFlow cifra siempre los datos en tránsito (TLS 1.2) y en reposo, por defecto con una clave administrada por AWS; al crear el flujo se puede elegir una clave de KMS administrada por el cliente, cuyas políticas, rotación y uso controla y audita la empresa. Decir que no cifra es falso, la VPN no aplica a un SaaS público y un certificado de ACM no controla el cifrado en reposo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/appflow/latest/userguide/data-protection.html"
+    ]
   }
 ]

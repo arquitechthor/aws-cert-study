@@ -86,5 +86,27 @@
     "fuentes": [
       "https://aws.amazon.com/savingsplans/faqs/"
     ]
+  },
+  {
+    "id": "savings-plans-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Una empresa compra un Compute Savings Plan de 10 USD/hora. De día su uso elegible equivale a 14 USD/hora y de noche a 6 USD/hora. ¿Cómo se factura?",
+    "opciones": [
+      "El exceso diurno se descuenta del compromiso no usado de la noche.",
+      "Todo el uso, incluido el que supera los 10 USD/hora, recibe el precio de Savings Plans.",
+      "AWS amplía automáticamente el compromiso a 14 USD/hora.",
+      "De día, lo que supera el compromiso se cobra bajo demanda; de noche se pagan igualmente los 10 USD/hora."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El compromiso se aplica hora a hora: el uso que lo supera se cobra a precio bajo demanda y lo que no se usa en una hora no pasa a la siguiente, aunque se paga igual. Por eso conviene dimensionar el compromiso con las recomendaciones de Cost Explorer y no por encima del uso mínimo estable. AWS no amplía el compromiso por su cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-applying.html"
+    ]
   }
 ]

@@ -86,5 +86,27 @@
     "fuentes": [
       "https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html"
     ]
+  },
+  {
+    "id": "glue-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "enunciado": "Los analistas consultan con Athena varios TB de logs en CSV guardados en S3, casi siempre leyendo solo tres columnas y filtrando por fecha. La factura de Athena no deja de crecer. ¿Qué cambio reduce más el coste?",
+    "opciones": [
+      "Mover los CSV a S3 Glacier Flexible Retrieval.",
+      "Un trabajo de Glue que convierta los CSV a Parquet comprimido y particionado por fecha.",
+      "Cargar los CSV en una tabla de DynamoDB.",
+      "Ejecutar las consultas con más frecuencia para aprovechar la caché."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Athena cobra por datos escaneados: con un formato columnar como Parquet solo lee las columnas pedidas, la compresión reduce el volumen y las particiones por fecha evitan leer días que no interesan. Glacier no se puede consultar directamente con Athena, DynamoDB no es para analítica de este tipo y repetir consultas no reduce lo escaneado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/athena/latest/ug/columnar-storage.html"
+    ]
   }
 ]
