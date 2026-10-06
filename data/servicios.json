@@ -32,7 +32,7 @@
     ],
     "estado": "publicado",
     "resumen": "Asistente de IA generativa de AWS para desarrollar y operar: chat en la consola, el IDE y Slack o Teams, generación y revisión de código y ayuda con recursos de AWS.",
-    "frase": "Asistente de IA generativa que escribe, explica y moderniza código dentro de tu IDE",
+    "frase": "Asistente de IA generativa que responde dudas y escribe código en tu IDE y la consola",
     "documentacion": "https://docs.aws.amazon.com/amazonq/"
   },
   {
@@ -84,7 +84,7 @@
     ],
     "estado": "publicado",
     "resumen": "Despliega aplicaciones web y API en contenedores a partir del código fuente o de una imagen, con HTTPS, balanceo y escalado automáticos. Cerrado a clientes nuevos desde el 30/04/2026.",
-    "frase": "Lanza una web desde código o imagen de contenedor con HTTPS y escalado incluidos",
+    "frase": "De imagen de contenedor o repositorio a una web con HTTPS, sin ver ni gestionar máquinas",
     "documentacion": "https://docs.aws.amazon.com/apprunner/"
   },
   {
@@ -190,7 +190,7 @@
     ],
     "estado": "publicado",
     "resumen": "Portal gratuito de autoservicio para descargar los informes de auditoría y certificaciones de cumplimiento de AWS (SOC, ISO, PCI) y gestionar acuerdos como el BAA.",
-    "frase": "Descarga los informes de auditoría y certificaciones de cumplimiento de la nube",
+    "frase": "Descarga los informes ISO, SOC y PCI DSS que acreditan cómo cumple AWS y acepta acuerdos",
     "documentacion": "https://docs.aws.amazon.com/artifact/"
   },
   {
@@ -239,7 +239,7 @@
     ],
     "estado": "publicado",
     "resumen": "Base de datos relacional compatible con MySQL y PostgreSQL, con almacenamiento distribuido en tres zonas, hasta 15 réplicas y conmutación rápida.",
-    "frase": "Base relacional compatible con MySQL y PostgreSQL con almacenamiento replicado en 3 AZ",
+    "frase": "Motor relacional de AWS compatible con MySQL y PostgreSQL, con almacenamiento en 3 AZ",
     "documentacion": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/"
   },
   {
@@ -363,7 +363,7 @@
     ],
     "estado": "publicado",
     "resumen": "Herramienta de línea de comandos para llamar a las API de todos los servicios de AWS desde la terminal y automatizar tareas con scripts.",
-    "frase": "Controla todos los servicios desde la terminal con comandos y scripts automatizables",
+    "frase": "Herramienta que instalas en tu equipo para controlar los servicios con comandos y scripts",
     "documentacion": "https://docs.aws.amazon.com/cli/"
   },
   {
@@ -569,7 +569,7 @@
     ],
     "estado": "publicado",
     "resumen": "Registro, inicio de sesión y control de acceso de usuarios para aplicaciones web y móviles.",
-    "frase": "Registro e inicio de sesión de usuarios para tus apps, con tokens JWT y login social",
+    "frase": "Registro e inicio de sesión de los clientes de tus apps, con tokens JWT y login social",
     "documentacion": "https://docs.aws.amazon.com/cognito/"
   },
   {
@@ -720,7 +720,7 @@
     ],
     "estado": "publicado",
     "resumen": "Copia en línea, programada y verificada de ficheros y objetos entre almacenamiento local, otras nubes y S3, EFS o FSx.",
-    "frase": "Copia en línea grandes volúmenes desde NAS o servidores de ficheros a S3, EFS o FSx",
+    "frase": "Tareas de copia en línea de grandes volúmenes desde NAS o servidores a S3, EFS o FSx",
     "documentacion": "https://docs.aws.amazon.com/datasync/"
   },
   {
@@ -917,7 +917,7 @@
     ],
     "estado": "publicado",
     "resumen": "Orquestador de contenedores propio de AWS: ejecuta y escala tareas Docker sobre Fargate, EC2 o instancias gestionadas, integrado con el resto de servicios.",
-    "frase": "Orquestador de contenedores propio de AWS que ejecuta tareas y servicios en EC2 o Fargate",
+    "frase": "Orquestador de contenedores propio de AWS que ejecuta tareas y servicios en clústeres",
     "documentacion": "https://docs.aws.amazon.com/ecs/"
   },
   {
@@ -1097,7 +1097,7 @@
     ],
     "estado": "publicado",
     "resumen": "Administración centralizada de las reglas de WAF, Shield Advanced, grupos de seguridad, Network Firewall y DNS Firewall en todas las cuentas de una organización.",
-    "frase": "Aplica reglas de WAF, Shield y grupos de seguridad a todas las cuentas de tu organización",
+    "frase": "Impone reglas de cortafuegos y de protección DDoS iguales en todas tus cuentas",
     "documentacion": "https://docs.aws.amazon.com/waf/"
   },
   {
@@ -1234,7 +1234,7 @@
     ],
     "estado": "publicado",
     "resumen": "Inicio de sesión único para la plantilla en todas las cuentas de AWS y aplicaciones, con usuarios de su propio directorio, de Active Directory o de un proveedor de identidad externo.",
-    "frase": "Inicio de sesión único para todas tus cuentas y apps, con usuarios de tu directorio",
+    "frase": "Inicio de sesión único de tus empleados en todas las cuentas y apps de la empresa",
     "documentacion": "https://docs.aws.amazon.com/singlesignon/"
   },
   {
@@ -1315,7 +1315,7 @@
     ],
     "estado": "publicado",
     "resumen": "Detectaba patrones en los datos de sensores con máquinas de estados y disparaba alertas o acciones. Retirado tras el aviso de fin de soporte de 2025.",
-    "frase": "Detecta patrones en datos de sensores y dispara alertas o acciones al cambiar de estado",
+    "frase": "Modela estados de equipos con datos de sensores y actúa cuando pasan de uno a otro",
     "documentacion": "https://aws.amazon.com/about-aws/whats-new/2025/05/aws-service-changes/"
   },
   {
@@ -1397,7 +1397,7 @@
     ],
     "estado": "publicado",
     "resumen": "Flujos de datos en tiempo real: ingiere millones de eventos por segundo, los guarda de 24 horas a 365 días y varios consumidores los leen en orden.",
-    "frase": "Flujo de datos en tiempo real con fragmentos, retención y varios consumidores propios",
+    "frase": "Flujo de datos en tiempo real de AWS que escala por fragmentos y admite varios lectores",
     "documentacion": "https://docs.aws.amazon.com/streams/latest/dev/introduction.html"
   },
   {
@@ -1592,7 +1592,7 @@
     ],
     "estado": "publicado",
     "resumen": "Servicio gestionado compatible con Prometheus para ingerir, almacenar y consultar con PromQL métricas de contenedores a gran escala, sin administrar servidores.",
-    "frase": "Almacena y consulta con PromQL métricas de contenedores, compatible con código abierto",
+    "frase": "Guarda y consulta métricas de contenedores y Kubernetes con un estándar abierto",
     "documentacion": "https://docs.aws.amazon.com/prometheus/"
   },
   {
@@ -1607,7 +1607,7 @@
     ],
     "estado": "publicado",
     "resumen": "Interfaz web para administrar los servicios y recursos de AWS desde el navegador, con búsqueda unificada, selector de región y aplicación móvil.",
-    "frase": "Interfaz web para gestionar todos tus recursos desde el navegador",
+    "frase": "Interfaz web de clics y formularios para gestionar tus recursos sin escribir comandos",
     "documentacion": "https://docs.aws.amazon.com/awsconsolehelpdocs/"
   },
   {
@@ -1676,7 +1676,7 @@
     ],
     "estado": "publicado",
     "resumen": "Apache Kafka gestionado: clústeres con brokers Standard o Express, o sin servidor, compatibles con las aplicaciones y herramientas de Kafka.",
-    "frase": "Clústeres gestionados de brokers de eventos con topics y particiones de código abierto",
+    "frase": "Clústeres gestionados del broker de eventos abierto más usado, con topics y particiones",
     "documentacion": "https://docs.aws.amazon.com/msk/"
   },
   {
@@ -1793,7 +1793,7 @@
     ],
     "estado": "publicado",
     "resumen": "Campañas y recorridos de marketing por correo, SMS y push con segmentación de usuarios. Fin de soporte el 30/10/2026; sus canales siguen como End User Messaging.",
-    "frase": "Campañas de marketing por correo, SMS y push segmentando a tus usuarios",
+    "frase": "Campañas de marketing multicanal con segmentos de usuarios, recorridos y métricas",
     "documentacion": "https://docs.aws.amazon.com/pinpoint/"
   },
   {
@@ -1837,7 +1837,7 @@
     ],
     "estado": "publicado",
     "resumen": "Plantillas de entorno y de servicio con las que el equipo de plataforma estandariza cómo los desarrolladores despliegan infraestructura. AWS lo retira el 07/10/2026.",
-    "frase": "Plantillas de plataforma para que los equipos desplieguen servicios estandarizados",
+    "frase": "El equipo de plataforma define entornos y servicios con su pipeline y los demás los usan",
     "documentacion": "https://docs.aws.amazon.com/proton/"
   },
   {
@@ -1889,7 +1889,7 @@
     ],
     "estado": "publicado",
     "resumen": "Bases de datos relacionales gestionadas (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2) con copias, parches y alta disponibilidad automáticos.",
-    "frase": "Base relacional gestionada con MySQL, Oracle o SQL Server: parches y copias automáticos",
+    "frase": "Base relacional gestionada con motores como Oracle, SQL Server o MariaDB: parches y copias",
     "documentacion": "https://docs.aws.amazon.com/rds/"
   },
   {
@@ -2083,7 +2083,7 @@
     ],
     "estado": "publicado",
     "resumen": "Catálogo de productos de TI aprobados (plantillas de CloudFormation o Terraform) que los usuarios lanzan en autoservicio sin tener permisos directos sobre los recursos.",
-    "frase": "Portafolio de productos aprobados por TI que los equipos lanzan en autoservicio",
+    "frase": "Portafolio de productos aprobados por TI, con restricciones, que los equipos lanzan solos",
     "documentacion": "https://docs.aws.amazon.com/servicecatalog/"
   },
   {
@@ -2112,7 +2112,7 @@
     ],
     "estado": "publicado",
     "resumen": "Envío y recepción de correo electrónico a escala: transaccional, notificaciones y marketing.",
-    "frase": "Envía correo transaccional y de marketing a gran escala con DKIM y control de rebotes",
+    "frase": "Envía correo desde tus apps a gran escala, con DKIM, dominio verificado y rebotes",
     "documentacion": "https://docs.aws.amazon.com/ses/"
   },
   {
@@ -2176,7 +2176,7 @@
     ],
     "estado": "publicado",
     "resumen": "Mensajería pub/sub gestionada: publicas un mensaje en un tema y SNS lo entrega a todos sus suscriptores (colas, funciones, HTTP, correo, SMS o móviles).",
-    "frase": "Publica un mensaje una vez y lo reparte a correos, SMS, colas y funciones suscritas",
+    "frase": "Publica un mensaje una vez y lo entrega a todas las colas, funciones y endpoints suscritos",
     "documentacion": "https://docs.aws.amazon.com/sns/"
   },
   {
@@ -2224,7 +2224,7 @@
     ],
     "estado": "publicado",
     "resumen": "Puerta de enlace híbrida que da a las aplicaciones locales acceso por NFS, SMB, iSCSI o cintas virtuales a almacenamiento en AWS, con caché local.",
-    "frase": "Conecta tu centro de datos a S3 con volúmenes, recursos NFS o cintas virtuales",
+    "frase": "Tus servidores locales usan S3 como disco, recurso NFS o cinta virtual, con caché local",
     "documentacion": "https://docs.aws.amazon.com/storagegateway/"
   },
   {

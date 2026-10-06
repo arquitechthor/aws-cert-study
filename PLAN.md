@@ -18,18 +18,17 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   preguntas de todas las guías en las que aparecen (completado el 03/10/2026; Bedrock solo aparece en
   AIF-C01). La tarea 0.9 sigue programada para el 27/10/2026.
 - **Fase 4 (juego de memoria):** publicada el 2026-10-02 en `memoria.html` con los dos modos
-  (categorías y funciones). Solo queda de la 4.11 la revisión a mano de las frases que se confunden.
-- **Próximo paso (siguiente sesión):** cerrar la **tarea 4.11** con la revisión a mano de las
-  parejas que se confunden fácilmente (jugando al modo funciones con una sola categoría). Después:
-  ampliar a 5 preguntas `appflow`, `glue` y `savings-plans` (tienen menos del mínimo de `CLAUDE.md`) y
-  empezar la Fase 3 (simulacro por certificación, `sitemap.xml`…).
+  (categorías y funciones). **Fase 4 completa** desde el 2026-10-06 (tarea 4.11 cerrada con la
+  revisión a mano de las frases que se confundían).
+- **Próximo paso (siguiente sesión):** ampliar a 5 preguntas `appflow`, `glue` y `savings-plans`
+  (tienen menos del mínimo de `CLAUDE.md`) y empezar la Fase 3 (simulacro por certificación, `sitemap.xml`…).
   **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `proton` y `iot-greengrass`
   (V1) el 07/10/2026, `pinpoint` el 30/10/2026, `managed-blockchain` (sin clientes nuevos) el
   29/10/2026 y `support` (planes antiguos) el 01/01/2027. Tarea 0.9 (guías SAP-C03 y DVA-C03) el
   27/10/2026.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-10-03
+- **Última actualización:** 2026-10-06
 
 ---
 
@@ -566,7 +565,7 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
   Athena frente a Redshift): el juego enseña justo esas diferencias.
 
 **Tareas (modo 2):**
-- [ ] **4.11** **(En curso.)** Campo `frase` para **todos** los servicios (unos 164) según la
+- [x] **4.11** Campo `frase` para **todos** los servicios (unos 164) según la
       decisión "Campo `frase`": ~~escribir las frases; comprobación automática (sin nombre, sigla ni
       id del servicio; 60–90 caracteres) en `scripts/`~~ (hecho el 2026-09-28: 164 frases de 65 a
       89 caracteres, `scripts/revisar_frases.py` sin errores); ~~fila "En una frase:" en la cabecera de las
@@ -575,8 +574,8 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
       `resumen`; aplicar `revisar_texto.py` para que las siglas de la fila lleven tooltip (hoy el
       script solo procesa el `<article>`: ampliarlo a esa fila)~~ (hecho el 2026-09-28:
       `revisar_texto.py` inserta la fila desde `servicios.json` y marca sus siglas; 15 siglas
-      nuevas en el glosario); revisar a mano las parejas que se
-      confunden fácilmente.
+      nuevas en el glosario); ~~revisar a mano las parejas que se
+      confunden fácilmente~~ (hecho el 2026-10-06: 22 frases reescritas, ver registro).
 - [x] **4.12** Selector de modo (categorías / funciones) en el panel de configuración y en la URL.
 - [x] **4.13** Generador del modo funciones: N servicios al azar del filtro que tengan icono y
       `frase`, dos cartas por servicio, barajadas; tamaños 12 a 24 cartas.
@@ -655,3 +654,4 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 | 2026-10-03 | Fase 2: 20 guías de SAP-C02 con 109 preguntas originales (123 de 164), en tres commits. Redes: Transit Gateway, Direct Connect, Site-to-Site VPN, Global Accelerator y Client VPN. Migración: DMS, SCT, Application Migration Service, Application Discovery Service, Migration Hub, DataSync, Snow Family y Transfer Family. Almacenamiento y DR: Storage Gateway, FSx, Backup y Elastic Disaster Recovery. Otros: CodePipeline, CodeDeploy y Cost and Usage Report. Avisos: Migration Hub, Application Discovery Service y Snowball Edge (toda Snow Family; Snowcone y Snowmobile ya retirados) sin clientes nuevos desde el 07/11/2025 (alternativas: AWS Transform; DataSync, Data Transfer Terminal y Outposts); Application Migration Service renombrado a **AWS Transform MGN** en junio de 2026 (nombre nuevo en `servicios.json` y el anterior como alias, como se hizo con Quick); FSx File Gateway sin clientes nuevos desde el 28/10/2024. Datos contrastados: Transit Gateway hasta 100 Gbps por adjunto de VPC y AZ; Direct Connect dedicado de 1/10/100/400 Gbps y alojado de 50 Mbps a 25 Gbps, MACsec en 10/100/400 Gbps, SLA del 99,99 % con máxima resiliencia; túneles VPN de 1,25 Gbps (5 Gbps los de gran ancho de banda, con Transit Gateway o Cloud WAN); MGN con 2160 horas gratis por servidor; DRS con RPO de segundos y RTO de 5–20 min; CUR 2.0 en Data Exports con esquema fijo. 34 siglas nuevas en el glosario (BGP, ECMP, IPsec, MACsec, VIF, CDC, AS2, iSCSI, NTFS, FOCUS…), aplicadas también a CloudFront, EC2 y VPC. |
 | 2026-10-03 | Fase 2: cola "Prioridad 2" completa con 8 guías más (MSK, Keyspaces, ECR, Amplify, Device Farm, X-Ray, Elastic Transcoder y Kinesis Video Streams) y 42 preguntas originales (131 de 164). Avisos: Elastic Transcoder retirado el 13/11/2025 (sustituto: AWS Elemental MediaConvert; su `documentacion` en `servicios.json` apunta al anuncio de retirada) y SDK y demonio de X-Ray en mantenimiento desde el 25/02/2026 (instrumentar con OpenTelemetry/ADOT; el servicio X-Ray sigue soportado). Datos contrastados: filas de Keyspaces de hasta 1 MB; retención de Kinesis Video Streams 0 por defecto; brokers Standard y Express de MSK. 7 siglas nuevas (ADOT, HLS, IVS, MPEG-DASH, OCI, SASL/SCRAM, WebRTC). |
 | 2026-10-03 | **Fase 2 completa: 164 de 164.** 33 guías más con 165 preguntas originales, en cinco commits: CodeBuild, CodeArtifact, CodeGuru, WorkSpaces, WorkSpaces Applications (antes AppStream 2.0), WorkSpaces Secure Browser, Pinpoint y Managed Blockchain; los 8 de IoT (Core, Greengrass, SiteWise, Device Defender, Device Management, Events, 1-Click, Things Graph); Kendra, Personalize, Fraud Detector, Timestream y Managed Service for Apache Flink; AgentCore, Nova, Strands Agents, Kiro, AWS Transform y Glue DataBrew; Amazon Q, CloudShell, Connect, Marketplace, Migration Evaluator y Support. Estados contrastados: **retirados** IoT Events (tras el aviso de mayo de 2025), IoT 1-Click y IoT Things Graph (2022, hacia IoT TwinMaker); **fin de soporte** de Pinpoint el 30/10/2026 (canales en End User Messaging), Greengrass V1 el 07/10/2026, Managed Blockchain el 29/09/2027 (sin clientes nuevos desde el 29/10/2026), plugins de IDE de Q Developer el 30/04/2027 (hacia Kiro) y planes Developer, Business y Enterprise On-Ramp el 01/01/2027; **sin clientes nuevos** CodeGuru Reviewer, Fraud Detector, SiteWise Monitor (07/11/2025) y Timestream for LiveAnalytics (20/06/2025); Fleet Hub retirado el 18/10/2025; **renombrado** AppStream 2.0 a WorkSpaces Applications (nombre nuevo y alias). El generador reparte ya la posición de la respuesta correcta. 21 siglas nuevas (VDI, DCV, MCP, LoRaWAN, OPC UA, KPU, SFT, TCO…). Comprobado en navegador: las 164 guías sin desbordamiento a 375 px, con todas sus preguntas, frase e icono. |
+| 2026-10-06 | Tarea 4.11 cerrada (**Fase 4 completa**): revisión a mano de las 164 frases por categoría y entre categorías. 22 reescritas para que no valgan para otro servicio: Cognito (clientes) frente a IAM Identity Center (empleados); Amazon Q frente a AWS Transform (Q ya no "moderniza código"); Kinesis Data Streams frente a MSK; Proton frente a Service Catalog; RDS (sin MySQL) frente a Aurora; SES, Pinpoint y SNS (correo, campañas, pub/sub); Management Console, CLI y CloudShell (clics, equipo local, navegador); App Runner frente a Elastic Beanstalk; Artifact frente a Audit Manager; Storage Gateway frente a DataSync; IoT Events frente a Device Defender; y se quitan pistas o nombres de otras cartas en Firewall Manager (WAF, Shield), ECS (Fargate) y Managed Service for Prometheus (PromQL). Revisadas sin cambios las parejas clásicas (SQS/SNS/EventBridge, EBS/EFS/FSx, Athena/Redshift/EMR, CloudTrail/Config/CloudWatch, GuardDuty/Detective/Security Hub, KMS/CloudHSM, Bedrock/Nova…). Filas "En una frase:" de las 22 guías regeneradas con `revisar_texto.py`. |
