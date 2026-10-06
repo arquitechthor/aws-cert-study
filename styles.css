@@ -410,6 +410,18 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 /* ── Simulacro (simulacro.html) ──────────────────────────── */
 .sim-filter-row { grid-template-columns: 1fr 1fr; }
 @media (max-width: 760px) { .sim-filter-row { grid-template-columns: 1fr; } }
+.sim-cert { border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-alt); padding: 16px 18px; }
+.sim-cert[hidden] { display: none; }
+.sim-cert p { font-size: 14.5px; margin: 0 0 10px; }
+.sim-cert-titulo { font-size: 18px; margin: 0 0 4px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.sim-cert-titulo .cert-code { font-family: var(--font-mono); font-size: 13px; color: var(--cyan-strong); font-weight: 600; }
+.sim-cert-meta { font-size: 13.5px !important; color: var(--text-faint); }
+.sim-cert-sub { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin: 14px 0 8px; }
+.sim-dominios { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 10px; counter-reset: dom; }
+.sim-dominios li { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 14px; color: var(--text); counter-increment: dom; }
+.sim-dominio-nombre::before { content: counter(dom) ". "; color: var(--cyan-strong); font-weight: 700; }
+.sim-dominio-peso { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--cyan-strong); }
+.sim-dominios .quiz-barra { grid-column: 1 / -1; }
 .sim-examen[hidden], .sim-resultado[hidden], .sim-historial[hidden], .filters[hidden], .quiz-question[hidden] { display: none; }
 .sim-hud {
   position: sticky; top: 62px; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;

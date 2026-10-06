@@ -26,7 +26,7 @@
   const $ = (id) => document.getElementById(id);
   const el = {
     titulo: $('sim-titulo'), intro: $('sim-intro'), config: $('sim-config'), cert: $('s-cert'),
-    longitud: $('s-longitud'), difZona: $('s-dificiles-zona'), dificiles: $('s-dificiles'), ayuda: $('s-ayuda'),
+    longitud: $('s-longitud'), certInfo: $('s-cert-info'), difZona: $('s-dificiles-zona'), dificiles: $('s-dificiles'), ayuda: $('s-ayuda'),
     disponibles: $('s-disponibles'), empezar: $('s-empezar'), examen: $('sim-examen'), posicion: $('sim-posicion'),
     reloj: $('sim-reloj'), terminar: $('sim-terminar'), pregunta: $('sim-pregunta'), anterior: $('sim-anterior'),
     siguiente: $('sim-siguiente'), marcar: $('sim-marcar'), navegador: $('sim-navegador'),
@@ -132,6 +132,32 @@
     }
   }
 
+  /** Ficha de la certificación elegida: qué evalúa, formato del examen y dominios con su peso. */
+  function renderCertInfo() {
+    const c = certActual();
+    el.certInfo.hidden = !c;
+    if (!c) { el.certInfo.innerHTML = ''; return; }
+    const t = (s) => (glosario && window.AwsSiglas ? window.AwsSiglas.marcar(esc(s), '', glosario) : esc(s));
+    const ex = c.examen;
+    const estado = c.estado === 'retirandose' ? ` · <span class="badge badge-retirandose">Último día: ${esc(formatoFecha(c.ultimoDia))}</span>` : '';
+    el.certInfo.innerHTML = `
+      <h2 class="sim-cert-titulo">${esc(c.nombre)} <span class="cert-code">${esc(c.codigo)}</span></h2>
+      <p class="sim-cert-meta">Nivel ${esc(c.nivel)}${estado}</p>
+      ${c.descripcion ? `<p>${t(c.descripcion)}</p>` : ''}
+      <p class="sim-cert-meta">Examen oficial: ${ex.preguntasPuntuadas + ex.preguntasSinPuntuar} preguntas
+        (${ex.preguntasPuntuadas} puntúan y ${ex.preguntasSinPuntuar} no) en ${ex.minutos} minutos; se aprueba con
+        ${ex.puntuacionMinima} de 1000.</p>
+      <h3 class="sim-cert-sub">Dominios que evalúa el examen</h3>
+      <ol class="sim-dominios">${c.dominios.map((d) => `
+        <li>
+          <span class="sim-dominio-nombre">${esc(d.nombre)} <span class="cat-en">(${esc(d.nombreEn)})</span></span>
+          <span class="sim-dominio-peso">${d.peso} %</span>
+          <span class="quiz-barra" aria-hidden="true"><span style="width:${d.peso}%"></span></span>
+        </li>`).join('')}</ol>
+      <p class="field-hint">Según la <a href="${esc(c.guia)}" target="_blank" rel="noopener">guía oficial del examen ↗</a>.
+        El simulacro reparte sus preguntas con estos mismos pesos.</p>`;
+  }
+
   function renderLongitudes() {
     const c = certActual();
     if (!c) return;
@@ -181,6 +207,7 @@
     el.cert.addEventListener('change', () => {
       config.cert = el.cert.value;
       if (!repaso) renderLongitudes();
+      renderCertInfo();
       sincronizarUrl();
       prepararPool();
     });
@@ -528,6 +555,7 @@
       if (window.AwsSiglas) glosario = await window.AwsSiglas.cargarGlosario().catch(() => null);
       renderConfig();
       if (!repaso) renderLongitudes();
+      renderCertInfo();
       sincronizarUrl();
       enlazarConfig();
       enlazarExamen();
