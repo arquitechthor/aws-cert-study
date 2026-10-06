@@ -124,7 +124,8 @@
       document.title = 'Repaso de falladas — Apuntes AWS';
       el.titulo.innerHTML = 'Repaso de <span class="gradient-text">falladas</span>';
       el.intro.textContent = 'Las preguntas que fallaste la última vez que las respondiste, en una guía o en un simulacro. '
-        + 'Sin tiempo límite; cuando aciertes una, sale del repaso.';
+        + 'Sin tiempo límite; cuando aciertes una, sale del repaso. '
+        + 'Las preguntas son originales, escritas para este sitio: no son preguntas del examen real.';
       el.longitud.closest('.field').hidden = true;
       el.difZona.hidden = true;
       el.empezar.textContent = 'Empezar repaso';
