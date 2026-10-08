@@ -246,5 +246,137 @@
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html"
     ]
+  },
+  {
+    "id": "s3-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "dificil": true,
+    "enunciado": "Un contrato exige que los documentos que una empresa guarda en un bucket de S3 en eu-west-1 estén copiados en eu-central-1 con un RPO de 15 minutos, y que la empresa pueda demostrar con métricas cuánto falta por copiar en cada momento. ¿Qué solución lo cumple con menos esfuerzo operativo?",
+    "opciones": [
+      "Una regla de ciclo de vida que transicione los objetos cada 15 minutos al bucket de eu-central-1.",
+      "Replicación entre regiones (CRR) con S3 Replication Time Control activado.",
+      "Una función Lambda programada cada 15 minutos que copie los objetos nuevos con la API CopyObject.",
+      "Un trabajo de S3 Batch Operations programado cada 15 minutos con un informe de S3 Inventory como manifiesto."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Replication Time Control replica el 99,99 % de los objetos en 15 minutos, tiene un SLA y publica métricas de operaciones y bytes pendientes y de tiempo máximo de replicación. El ciclo de vida no copia entre buckets. Lambda o Batch Operations programados exigen código y operación propios (y S3 Inventory se genera a diario o cada semana), así que no garantizan el RPO.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-time-control.html",
+      "https://aws.amazon.com/s3/features/replication/"
+    ]
+  },
+  {
+    "id": "s3-013",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "dificil": true,
+    "enunciado": "Una aplicación global lee y escribe ficheros en S3 desde us-east-1 y eu-west-1. Quiere un único nombre de acceso para todos los clientes, poder pasar todo el tráfico a una sola región en pocos minutos si la otra falla, y no perder lo escrito durante la conmutación cuando la región original vuelva. ¿Qué DOS acciones lo consiguen? (Elige 2.)",
+    "opciones": [
+      "Crear un Multi-Region Access Point sobre los dos buckets y usar sus controles de conmutación por error en configuración activo-pasivo.",
+      "Crear un registro de Route 53 con enrutamiento por latencia que apunte a los dos endpoints de sitio web estático de los buckets.",
+      "Configurar replicación en un solo sentido, de us-east-1 a eu-west-1, con Replication Time Control.",
+      "Configurar replicación en los dos sentidos entre los buckets, con sincronización de cambios en réplicas.",
+      "Poner los dos buckets detrás de un access point de cada región y cambiar el nombre en la aplicación al conmutar."
+    ],
+    "correctas": [
+      0,
+      3
+    ],
+    "explicacion": "Un Multi-Region Access Point da un nombre global, y sus controles de conmutación por error mueven el tráfico entre regiones en unos 2 minutos. AWS recomienda replicación en los dos sentidos para que lo que se escribe en la región secundaria vuelva a la primaria. Los endpoints de sitio web solo sirven lecturas por HTTP, la replicación en un sentido pierde lo escrito tras la conmutación, y cambiar nombres en la aplicación no es un único punto de acceso.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/MrapFailover.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/FailoverConfiguration.html"
+    ]
+  },
+  {
+    "id": "s3-014",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dificil": true,
+    "enunciado": "Una organización de AWS con 250 cuentas descubre que una bucket policy mal escrita daba lectura a una cuenta de un antiguo proveedor. Quiere garantizar que ninguna identidad de fuera de la organización pueda acceder a ningún bucket de S3 de ninguna cuenta, aunque una bucket policy lo permita, y sin revisar los buckets uno a uno. ¿Qué debe hacer?",
+    "opciones": [
+      "Asociar a la raíz una SCP que deniegue s3:* cuando aws:PrincipalOrgID no sea el de la organización.",
+      "Activar Block Public Access a nivel de organización.",
+      "Asociar a la raíz una RCP que deniegue el acceso a S3 cuando aws:PrincipalOrgID no sea el de la organización.",
+      "Activar Amazon Macie en todas las cuentas con un administrador delegado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las RCP limitan los permisos sobre los recursos de las cuentas de la organización, también frente a identidades de otras cuentas. Una SCP solo afecta a las identidades de la propia organización, no a la cuenta del proveedor. Block Public Access frena el acceso público, pero no una bucket policy que da acceso a una cuenta concreta. Macie detecta datos sensibles, no impide el acceso.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html"
+    ]
+  },
+  {
+    "id": "s3-015",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "dificil": true,
+    "enunciado": "Hace un mes se configuró replicación entre regiones en un bucket con 400 millones de objetos. Los objetos nuevos llegan al destino, pero los que ya existían antes de crear la regla no están. ¿Cuál es la forma más sencilla de replicarlos conservando metadatos e identificadores de versión?",
+    "opciones": [
+      "Crear un trabajo de S3 Batch Replication sobre los objetos existentes.",
+      "Activar Replication Time Control en la regla para que procese también el histórico.",
+      "Suspender y volver a activar el versionado en el bucket de origen.",
+      "Copiar los objetos con aws s3 sync desde una instancia EC2 en la región de destino."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La replicación solo actúa sobre los objetos escritos después de crear la regla. S3 Batch Replication replica los existentes (y los que fallaron) usando la misma regla, con los mismos metadatos y versiones. Replication Time Control no afecta al histórico, tocar el versionado no dispara la replicación, y una copia con sync crea objetos nuevos con otros identificadores de versión.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-batch-replication-batch.html"
+    ]
+  },
+  {
+    "id": "s3-016",
+    "tipo": "emparejar",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "dificil": true,
+    "enunciado": "Un arquitecto revisa los requisitos de almacenamiento de una plataforma de datos. Empareja cada requisito con la función de S3 más adecuada (sobra una).",
+    "opciones": [
+      "Más de 200 equipos leen del mismo bucket compartido, cada uno con sus propios permisos y algunos solo desde su VPC.",
+      "Un trabajo de entrenamiento necesita latencia de un solo dígito de milisegundos y acepta perder los datos temporales si cae una zona.",
+      "Hay que cambiar la clave de cifrado de 2.000 millones de objetos existentes y obtener un informe del resultado.",
+      "Durante 7 años nadie, ni el usuario raíz, debe poder borrar ni sobrescribir los registros de auditoría."
+    ],
+    "destinos": [
+      "Object Lock en modo compliance.",
+      "S3 Batch Operations con un manifiesto de S3 Inventory.",
+      "Access points.",
+      "S3 Express One Zone.",
+      "Transfer Acceleration."
+    ],
+    "correctas": [
+      2,
+      3,
+      1,
+      0
+    ],
+    "explicacion": "Los access points dan a cada equipo su política y, si se quiere, su VPC, sin una bucket policy gigante. S3 Express One Zone ofrece la latencia más baja, en una sola zona. S3 Batch Operations aplica una acción a millones de objetos listados por S3 Inventory y genera un informe de finalización. Object Lock en modo compliance impide borrar o sobrescribir incluso al usuario raíz. Transfer Acceleration solo acelera las cargas desde lejos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html"
+    ]
   }
 ]

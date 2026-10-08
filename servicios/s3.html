@@ -45,6 +45,7 @@
     <div class="service-head">
       <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/s3.svg" alt="" width="56" height="56"><span>Amazon S3</span></h1>
       <p class="full-name">Amazon Simple Storage Service (Amazon S3)</p>
+      <p class="clave-aviso"><span class="chip chip-clave">★ Servicio clave</span> <span>Guía ampliada con <a href="#a-fondo">temas avanzados</a> y preguntas difíciles en el cuestionario.</span></p>
       <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Almacenamiento de objetos casi ilimitado con clases por coste y 11 nueves de durabilidad</span></div>
       <div class="meta-row">
         <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=almacenamiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/almacenamiento.svg" alt="" width="18" height="18">Almacenamiento <span class="cat-en">(Storage)</span></a></span>
@@ -137,6 +138,130 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios de SAP-C02: rendimiento
+        con mucho tráfico, acceso entre cuentas y a escala, perímetro de datos en una organización, cifrado con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> a
+        gran volumen, replicación y arquitecturas multirregión, y gobierno del coste de miles de buckets.</p>
+
+      <h3>Rendimiento a escala</h3>
+      <ul>
+        <li><strong>El límite es por prefijo, no por bucket:</strong> al menos 3.500 PUT/COPY/POST/DELETE y 5.500
+          GET/HEAD por segundo y por prefijo particionado, y no hay límite de prefijos. Repartir las claves entre varios
+          prefijos (por ejemplo, por fecha o por cliente) y leer en paralelo multiplica el rendimiento.</li>
+        <li><strong>Errores 503 <em>SlowDown</em>:</strong> aparecen mientras <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> reparte un prefijo ante un pico sostenido.
+          Se resuelven con reintentos con espera exponencial y repartiendo la carga; si el pico es previsible, se puede
+          pedir a Support que prepare las particiones.</li>
+        <li><strong>Ficheros grandes:</strong> carga multiparte en paralelo para subir y lecturas por rangos de bytes
+          (<em>byte-range fetches</em>) para descargar; si los clientes están lejos de la región, Transfer
+          Acceleration.</li>
+        <li><strong>Latencia de un solo dígito de milisegundos:</strong> S3 Express One Zone, con <em>directory
+          buckets</em> en una sola zona de disponibilidad, junto al cómputo. Se gana velocidad a cambio de
+          resiliencia: no sobrevive a la caída de esa zona.</li>
+      </ul>
+
+      <h3>Acceso entre cuentas y a escala</h3>
+      <ul>
+        <li><strong>Entre cuentas hacen falta dos permisos:</strong> la política de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> en la
+          cuenta de quien llama y la bucket policy en la cuenta del bucket. Si falta uno, se deniega.</li>
+        <li><strong>Propiedad de los objetos:</strong> con <em>Bucket owner enforced</em> (el valor por defecto) el dueño
+          del bucket es dueño de todo lo que se sube y las <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> no cuentan. Con <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> activas, un objeto subido por otra
+          cuenta es de esa cuenta, y el dueño del bucket no puede leerlo ni delegarlo: un clásico de las preguntas
+          antiguas.</li>
+        <li><strong>Access points:</strong> un punto de acceso por aplicación o equipo, cada uno con su política (hasta 20
+          KB) y, si se quiere, limitado a una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>; hasta 10.000 por cuenta y región. La bucket policy delega en ellos y
+          deja de crecer sin control. Su configuración de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> no se puede cambiar después, y no sirven como destino de
+          replicación.</li>
+        <li><strong>Acceso de usuarios del directorio corporativo:</strong> S3 Access Grants asigna permisos sobre
+          prefijos a usuarios y grupos de <a href="iam-identity-center.html">IAM Identity Center</a>, sin escribir una política por persona.</li>
+      </ul>
+
+      <h3>Perímetro de datos en una organización</h3>
+      <p>El objetivo: que solo identidades de confianza accedan a recursos de confianza desde redes esperadas. En <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> se
+        combinan varias capas de <a href="organizations.html">AWS Organizations</a> y de red:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Riesgo</th><th>Control</th></tr></thead>
+          <tbody>
+            <tr><td>Un bucket público por error en cualquier cuenta</td><td>Block Public Access a nivel de organización
+              (política de Organizations, desde noviembre de 2025), más una <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> que impida cambiarlo en las cuentas.</td></tr>
+            <tr><td>Una bucket policy mal escrita da acceso a una cuenta ajena</td><td><abbr class="sigla sigla-1" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP<span class="sigla-exp"> (Resource Control Policy: política de Organizations que limita el acceso a los recursos)</span></abbr> que deniega el acceso a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> si
+              <code>aws:PrincipalOrgID</code> no es la organización.</td></tr>
+            <tr><td>Alguien de dentro copia datos a un bucket de otra organización</td><td><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> o política del endpoint de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>
+              con <code>aws:ResourceOrgID</code>.</td></tr>
+            <tr><td>Credenciales robadas usadas desde fuera de la red corporativa</td><td>Bucket policy o <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> que exige
+              <code>aws:SourceVpce</code> o rangos <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> propios.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Para detectar en lugar de prevenir: IAM Access Analyzer avisa de buckets compartidos fuera de la organización y
+        <a href="macie.html">Macie</a> encuentra datos personales en los objetos.</p>
+
+      <h3>Cifrado con KMS a gran volumen</h3>
+      <ul>
+        <li><strong>Cuotas y coste de <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a>:</strong> con <abbr class="sigla" data-s="SSE-KMS" data-en="Server-Side Encryption with KMS keys" data-es="cifrado en el servidor con claves de KMS" tabindex="0">SSE-KMS</abbr> cada objeto pide una clave de
+          datos a <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr>. S3 Bucket Keys genera una clave temporal por bucket y recorta hasta un 99 % esas peticiones; no
+          existe para <abbr class="sigla" data-s="DSSE-KMS" data-en="Dual-layer Server-Side Encryption with KMS" data-es="doble capa de cifrado con claves de KMS" tabindex="0">DSSE-KMS</abbr>.</li>
+        <li><strong>Entre cuentas:</strong> si el bucket cifra con una clave administrada por el cliente, quien lee desde
+          otra cuenta necesita también permiso en la política de la clave. Con la clave administrada por AWS
+          (<code>aws/s3</code>) no se puede dar ese permiso, así que no sirve para compartir entre cuentas.</li>
+        <li><strong>Replicación:</strong> los objetos con <abbr class="sigla" data-s="SSE-KMS" data-en="Server-Side Encryption with KMS keys" data-es="cifrado en el servidor con claves de KMS" tabindex="0">SSE-KMS</abbr> no se replican si no se activa expresamente en la regla,
+          indicando la clave de destino y dando al rol de replicación permiso para descifrar en origen y cifrar en
+          destino.</li>
+      </ul>
+
+      <h3>Replicación y arquitecturas multirregión</h3>
+      <ul>
+        <li><strong>Qué replica y qué no:</strong> solo los objetos nuevos desde que existe la regla (los anteriores, con <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>
+          Batch Replication); los marcadores de borrado, solo si se activa su replicación (y nunca los que crea una regla
+          de ciclo de vida); los borrados de una versión concreta, nunca, para protegerse de borrados maliciosos.</li>
+        <li><strong>Replication Time Control:</strong> replica el 99,99 % de los objetos en 15 minutos, con un <abbr class="sigla sigla-1" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA<span class="sigla-exp"> (Service Level Agreement: compromiso de disponibilidad)</span></abbr> del
+          99,9 % y métricas de lo pendiente. Es la respuesta cuando el escenario pide un <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr> de minutos medible. La
+          replicación de marcadores de borrado no entra en ese <abbr class="sigla" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA</abbr>.</li>
+        <li><strong>Replicación en los dos sentidos:</strong> dos reglas, una en cada bucket, más la sincronización de
+          cambios en réplicas (<em>replica modification sync</em>) para que también viajen los cambios de metadatos.</li>
+        <li><strong>Multi-Region Access Points:</strong> un único nombre global sobre buckets de varias regiones. En modo
+          activo-activo cada petición va a la región más cercana; en activo-pasivo, los controles de conmutación por
+          error (<em>failover controls</em>) mueven el tráfico a la otra región en unos 2 minutos. AWS recomienda
+          replicación en los dos sentidos para no perder lo escrito durante la conmutación.</li>
+        <li><strong>Protección frente a ransomware:</strong> versionado y Object Lock en modo compliance, replicación a un
+          bucket de otra cuenta (con otro propietario) y, si se quiere una copia gestionada, <a href="backup.html">AWS
+          Backup</a> con almacén aislado.</li>
+      </ul>
+
+      <h3>Gobierno y coste de miles de buckets</h3>
+      <ul>
+        <li><strong>Visibilidad:</strong> S3 Storage Lens agrega uso y actividad de toda la organización (buckets sin
+          ciclo de vida, cargas multiparte incompletas, crecimiento por prefijo); Storage Class Analysis sugiere cuándo
+          pasar un prefijo a Standard-IA.</li>
+        <li><strong>Objetos pequeños:</strong> por defecto, el ciclo de vida no mueve objetos de menos de 128 KB (la
+          transición costaría más de lo que ahorra), e Intelligent-Tiering tampoco los vigila. Millones de objetos
+          diminutos se agrupan antes de archivarlos.</li>
+        <li><strong>Limpieza:</strong> una regla de ciclo de vida que borre las cargas multiparte incompletas y caduque las
+          versiones antiguas evita pagar por datos que nadie ve.</li>
+        <li><strong>Cambios masivos:</strong> S3 Inventory genera la lista de objetos y S3 Batch Operations aplica una
+          acción a todos (copiar, etiquetar, restaurar, cambiar el cifrado, invocar una <a href="lambda.html">Lambda</a>, replicar lo
+          existente), con informe final. Por defecto, hasta 4.000 millones de objetos por trabajo.</li>
+        <li><strong>Servicio cerrado:</strong> S3 Object Lambda no admite clientes nuevos desde el 07/11/2025; en diseños
+          nuevos, la transformación se hace en una Lambda detrás de <a href="api-gateway.html">API Gateway</a> o de
+          <a href="cloudfront.html">CloudFront</a>.</li>
+      </ul>
+
+      <h3>Qué usar en cada caso: tabla de decisión</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Solución</th></tr></thead>
+          <tbody>
+            <tr><td>Copia en otra región con un <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> de minutos medible</td><td><abbr class="sigla" data-s="CRR" data-en="Cross-Region Replication" data-es="replicación a otra región" tabindex="0">CRR</abbr> con Replication Time Control</td></tr>
+            <tr><td>Un único punto de acceso global con conmutación entre regiones</td><td>Multi-Region Access Points con replicación en los dos sentidos</td></tr>
+            <tr><td>Copiar lo que ya existía antes de crear la regla</td><td>S3 Batch Replication</td></tr>
+            <tr><td>Que nadie, ni el usuario raíz, borre durante X años</td><td>Object Lock en modo compliance</td></tr>
+            <tr><td>Cientos de equipos con permisos distintos sobre un mismo bucket</td><td>Access points (o Access Grants si son usuarios del directorio)</td></tr>
+            <tr><td>Muchos errores de limitación de <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr> al subir</td><td>S3 Bucket Keys</td></tr>
+            <tr><td>Latencia mínima para un trabajo intensivo en una zona</td><td>S3 Express One Zone</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga por GB almacenado al mes según la clase, por peticiones (PUT, GET, LIST…), por
         recuperación de datos en las clases <abbr class="sigla" data-s="IA" data-en="Infrequent Access" data-es="clase para objetos poco usados" tabindex="0">IA</abbr> y Glacier, y por la transferencia de salida a internet.
@@ -191,6 +316,14 @@
         <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html" target="_blank" rel="noopener">Understanding and managing Amazon S3 storage classes</a>, documentación de AWS (consultada el 25/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html" target="_blank" rel="noopener">Amazon S3 multipart upload limits</a>, documentación de AWS (consultada el 25/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html" target="_blank" rel="noopener">Download and upload objects with presigned URLs</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html" target="_blank" rel="noopener">Best practices design patterns: optimizing Amazon S3 performance</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-time-control.html" target="_blank" rel="noopener">Meeting compliance requirements with S3 Replication Time Control</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/MrapFailover.html" target="_blank" rel="noopener">Amazon S3 Multi-Region Access Points failover controls</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-restrictions-limitations-naming-rules.html" target="_blank" rel="noopener">Access points restrictions and limitations</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/11/amazon-s3-block-public-access-organization-level-enforcement/" target="_blank" rel="noopener">Amazon S3 Block Public Access now supports organization-level enforcement</a>, novedades de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html" target="_blank" rel="noopener">Reducing the cost of SSE-KMS with Amazon S3 Bucket Keys</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops.html" target="_blank" rel="noopener">Performing object operations in bulk with Batch Operations</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/10/aws-service-availability/" target="_blank" rel="noopener">AWS Service Availability Updates</a>, novedades de AWS (consultada el 08/10/2026).</li>
       </ul>
     </article>
   </div>

@@ -1951,6 +1951,7 @@
     "nombreCompleto": "Amazon Simple Storage Service (Amazon S3)",
     "categoria": "almacenamiento",
     "icono": true,
+    "clave": true,
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
