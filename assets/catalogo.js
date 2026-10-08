@@ -30,9 +30,10 @@
     'guia-pendiente': 'Guía pendiente',
   };
 
+  // El modo se aplica dentro de cada grupo (certificaciones y destacados); entre grupos, siempre "y".
   const MODOS = {
-    union: 'Unión: servicios que entran en al menos una de las certificaciones marcadas.',
-    interseccion: 'Intersección: servicios que entran en todas las certificaciones marcadas.',
+    union: 'Unión: servicios con al menos una de las certificaciones marcadas y al menos uno de los destacados marcados.',
+    interseccion: 'Intersección: servicios con todas las certificaciones marcadas y todos los destacados marcados.',
   };
   const ESTADOS = ['publicado', 'finalizado', 'pendiente'];
   // Servicios clave ("clave": true en servicios.json): guía ampliada y preguntas difíciles.
@@ -210,8 +211,13 @@
       if (estado.cat && s.categoria !== estado.cat && !(s.categoriasAdicionales || []).includes(estado.cat)) return false;
       if (estado.estado === 'finalizado' && estadoDe(s) !== 'finalizado') return false;
       if (estado.estado && estado.estado !== 'finalizado' && s.estado !== estado.estado) return false;
-      if (estado.clave && !s.clave) return false;
-      if (estado.kopi && !s.kopi) return false;
+      const destacados = [[estado.clave, s.clave], [estado.kopi, s.kopi]].filter(([marcado]) => marcado);
+      if (destacados.length) {
+        const coincide = estado.modo === 'interseccion'
+          ? destacados.every(([, tiene]) => tiene)
+          : destacados.some(([, tiene]) => tiene);
+        if (!coincide) return false;
+      }
       if (estado.certs.size) {
         const certs = [...estado.certs];
         const coincide = estado.modo === 'interseccion'

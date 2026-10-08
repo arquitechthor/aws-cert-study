@@ -25,7 +25,9 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   menú y pie en las tres webs" in `../kopi-docs/politicas.md`. The catalog search also matches
   each service's `frase` (name matches are listed first).
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
-  filters (text, category, status, certifications with union/intersection mode). Filter state
+  filters (text, category, status, certifications and the "Destacados" chips (key services, used
+  in Kopi); the union/intersection mode applies within each of those two groups, and the groups
+  combine with AND). Filter state
   lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1`). `kopi=1` shows only
   services with `"kopi": true` in `servicios.json` (the ones Kopi uses); `clave=1` only the key
   services (see "Key services" below). Certifications with
