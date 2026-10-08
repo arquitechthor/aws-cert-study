@@ -50,17 +50,17 @@
       "SAP-C02"
     ],
     "dominio": "Mejora continua de soluciones existentes",
-    "enunciado": "Una empresa usa AWS Proton y AWS ha anunciado el fin del soporte del servicio. ¿Qué ocurre con las aplicaciones ya desplegadas cuando llegue esa fecha?",
+    "enunciado": "Una empresa desplegaba sus aplicaciones con AWS Proton hasta que el servicio llegó al fin de su soporte. ¿Qué ha ocurrido con las aplicaciones ya desplegadas?",
     "opciones": [
-      "Se eliminan junto con las plantillas.",
-      "Pasan automáticamente a AWS Service Catalog.",
+      "Se eliminaron junto con las plantillas.",
+      "Pasaron automáticamente a AWS Service Catalog.",
       "Las pilas de CloudFormation y sus recursos siguen funcionando, pero ya no se pueden gestionar ni actualizar desde Proton.",
-      "Siguen funcionando y se pueden seguir actualizando desde la consola de Proton en modo de solo mantenimiento."
+      "Siguen funcionando y se pueden actualizar desde la consola de Proton en modo de solo mantenimiento."
     ],
     "correctas": [
       2
     ],
-    "explicacion": "La retirada afecta al servicio y a sus pipelines, no a la infraestructura desplegada: las pilas siguen activas, pero hay que gestionarlas con otra herramienta. No hay migración automática y tras la fecha no se puede acceder a la consola.",
+    "explicacion": "La retirada afecta al servicio y a sus pipelines, no a la infraestructura desplegada: las pilas siguen activas, pero hay que gestionarlas con otra herramienta. No hubo migración automática y desde el 07/10/2026 no se puede acceder a la consola.",
     "fuentes": [
       "https://docs.aws.amazon.com/proton/latest/userguide/proton-end-of-support.html"
     ]

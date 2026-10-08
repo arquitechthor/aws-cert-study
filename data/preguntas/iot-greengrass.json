@@ -72,17 +72,17 @@
       "SAP-C02"
     ],
     "dominio": "Acelerar la migración y modernización de cargas de trabajo",
-    "enunciado": "Una empresa sigue usando AWS IoT Greengrass V1 en octubre de 2026. ¿Qué debe hacer?",
+    "enunciado": "Una empresa todavía tiene dispositivos con AWS IoT Greengrass V1. ¿Qué debe hacer?",
     "opciones": [
-      "Nada: V1 tiene soporte indefinido.",
+      "Nada: V1 sigue teniendo soporte.",
       "Migrar a IoT 1-Click.",
-      "Migrar a Greengrass V2, porque V1 termina su soporte el 07/10/2026.",
+      "Migrar a Greengrass V2, porque V1 ya no tiene soporte desde el 07/10/2026.",
       "Migrar a IoT Things Graph."
     ],
     "correctas": [
       2
     ],
-    "explicacion": "Greengrass V1 deja de estar disponible el 07/10/2026; la migración es a Greengrass V2. IoT 1-Click y Things Graph ya están retirados.",
+    "explicacion": "Greengrass V1 dejó de estar disponible el 07/10/2026; la migración es a Greengrass V2. IoT 1-Click y Things Graph ya están retirados.",
     "fuentes": [
       "https://docs.aws.amazon.com/greengrass/v2/developerguide/migrate-from-v1.html"
     ]

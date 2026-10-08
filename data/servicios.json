@@ -1837,7 +1837,7 @@
       "SAP-C02"
     ],
     "estado": "publicado",
-    "resumen": "Plantillas de entorno y de servicio con las que el equipo de plataforma estandariza cómo los desarrolladores despliegan infraestructura. AWS lo retira el 07/10/2026.",
+    "resumen": "Plantillas de entorno y de servicio con las que el equipo de plataforma estandariza cómo los desarrolladores despliegan infraestructura. AWS lo retiró el 07/10/2026.",
     "frase": "El equipo de plataforma define entornos y servicios con su pipeline y los demás los usan",
     "documentacion": "https://docs.aws.amazon.com/proton/"
   },
