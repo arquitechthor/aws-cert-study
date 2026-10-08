@@ -44,6 +44,7 @@
 
     <div class="service-head">
       <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/lambda.svg" alt="" width="56" height="56"><span>AWS Lambda</span></h1>
+      <p class="clave-aviso"><span class="chip chip-clave">★ Servicio clave</span> <span>Guía ampliada con <a href="#a-fondo">temas avanzados</a> y preguntas difíciles en el cuestionario.</span></p>
       <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Ejecuta tu código como funciones por evento, sin servidores y pagando por milisegundo</span></div>
       <div class="meta-row">
         <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
@@ -74,7 +75,7 @@
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
-        <li><strong>Límites principales:</strong> hasta <strong>15 minutos</strong> por invocación,
+        <li><strong>Límites principales:</strong> hasta <strong>15 minutos</strong> por invocación (con una excepción reciente, en <a href="#a-fondo">A fondo</a>),
           memoria de <strong>128 MB a 10.240 MB</strong> (la <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> crece en proporción a la memoria),
           almacenamiento <code>/tmp</code> de 512 MB a 10.240 MB y carga útil de <strong>6 MB</strong>
           en invocación síncrona (petición y respuesta) y <strong>1 MB</strong> en asíncrona.</li>
@@ -135,6 +136,122 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios de SAP-C02: cómo escala
+        Lambda de verdad, cómo protegerse de picos y de los sistemas que hay detrás, colas y flujos a gran volumen,
+        redes, procesos largos, despliegues seguros, varias cuentas y cuándo Lambda deja de ser la opción más barata.</p>
+
+      <h3>Cómo escala y cómo controlarlo</h3>
+      <ul>
+        <li><strong>Dos límites distintos:</strong> la concurrencia de la cuenta (1.000 por región por defecto, compartida
+          por todas las funciones) y la velocidad de escalado, que es <strong>por función</strong>: como mucho 1.000
+          entornos nuevos cada 10 segundos. Un pico más rápido que eso recibe errores 429 aunque quede cuota libre.</li>
+        <li><strong>Concurrencia reservada:</strong> aparta una parte de la cuota para una función crítica y, a la vez, es
+          su techo. Con valor 0 la función queda parada, un interruptor de emergencia útil.</li>
+        <li><strong>Concurrencia aprovisionada:</strong> entornos ya iniciados, sin arranque en frío, para picos
+          previsibles; se programa con Application Auto Scaling (por ejemplo, más en horario laboral). Se paga aunque no
+          se use.</li>
+        <li><strong>Proteger lo que hay detrás:</strong> una base de datos relacional no aguanta mil conexiones nuevas.
+          Se combina un techo de concurrencia (reservada en la función o máxima en la fuente de eventos) con
+          <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> Proxy, que reutiliza las conexiones, o con una cola <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a>
+          delante que absorba el pico.</li>
+        <li><strong>Aislamiento por cliente:</strong> el modo de aislamiento por inquilino (<em>tenant isolation</em>,
+          noviembre de 2025) dedica entornos de ejecución a cada identificador de cliente, sin crear una función por
+          cliente en una plataforma <abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr>.</li>
+      </ul>
+
+      <h3>Colas y flujos a gran volumen</h3>
+      <ul>
+        <li><strong><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>:</strong> el <em>event source mapping</em> empieza con 5 invocaciones simultáneas, sube hasta
+          300 más por minuto y llega a 1.250. La <strong>concurrencia máxima</strong> se fija en la fuente, no en la
+          función: limita lo que consume esa cola y evita mensajes que vuelven a la cola por limitación. Si se usa a la
+          vez que la reservada, la reservada debe ser mayor.</li>
+        <li><strong>Modo aprovisionado</strong> para <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr> y Kafka: un mínimo y un máximo de lectores dedicados, que escalan
+          unas 3 veces más rápido, para picos con latencia baja.</li>
+        <li><strong>Tiempo de visibilidad</strong> de la cola: al menos 6 veces el tiempo máximo de la función, o los
+          mensajes reaparecen mientras se procesan.</li>
+        <li><strong>Fallos parciales del lote:</strong> devolver solo los mensajes que fallan
+          (<code>ReportBatchItemFailures</code>) evita reprocesar el lote entero. En Kinesis y <a href="dynamodb.html">DynamoDB</a> Streams, además,
+          dividir el lote al fallar, limitar la antigüedad y los reintentos, y enviar lo que falle a un destino.</li>
+        <li><strong>Orden:</strong> en una cola <abbr class="sigla sigla-1" data-s="FIFO" data-en="First In, First Out" data-es="el primero en entrar es el primero en salir" tabindex="0">FIFO<span class="sigla-exp"> (First In, First Out: el primero en entrar es el primero en salir)</span></abbr>, el orden se mantiene por grupo de mensajes; en Kinesis, por
+          fragmento (con el factor de paralelización, por clave de partición dentro del fragmento).</li>
+        <li><strong>Todo puede llegar dos veces:</strong> Lambda no garantiza una sola ejecución, así que las funciones
+          deben ser idempotentes (por ejemplo, con una tabla de claves ya procesadas en <a href="dynamodb.html">DynamoDB</a>).</li>
+      </ul>
+
+      <h3>Lambda dentro de una VPC</h3>
+      <ul>
+        <li>Lambda crea <abbr class="sigla sigla-1" data-s="ENI" data-en="Elastic Network Interface" data-es="tarjeta de red virtual de AWS" tabindex="0">ENI<span class="sigla-exp"> (Elastic Network Interface: tarjeta de red virtual de AWS)</span></abbr> compartidas (<em>Hyperplane</em>) por cada combinación de subred y security group: las
+          funciones con la misma combinación reutilizan la misma, y el escalado ya no depende de crear una <abbr class="sigla" data-s="ENI" data-en="Elastic Network Interface" data-es="tarjeta de red virtual de AWS" tabindex="0">ENI</abbr> por
+          ejecución.</li>
+        <li>La función no recibe <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> pública: para salir a internet necesita un <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway</abbr> en una subred pública; para
+          servicios de AWS, mejor endpoints de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>. Si solo usa servicios públicos, no se mete en la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li>Una <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> o una política de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> con las claves <code>lambda:VpcIds</code>, <code>lambda:SubnetIds</code> y
+          <code>lambda:SecurityGroupIds</code> obliga a desplegar las funciones dentro de las <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> aprobadas.</li>
+      </ul>
+
+      <h3>Procesos largos y flujos de varios pasos</h3>
+      <ul>
+        <li><strong>15 minutos es el límite de la invocación síncrona</strong> en todos los casos. Desde septiembre de
+          2026, con Lambda Managed Instances, las invocaciones asíncronas y por <em>event source mapping</em> pueden
+          llegar a 90 minutos (salvo <a href="mq.html">Amazon MQ</a> y <a href="documentdb.html">DocumentDB</a>).</li>
+        <li><strong>Durable functions</strong> (diciembre de 2025): una función con pasos (<em>steps</em>) y esperas
+          (<em>waits</em>) que guarda su progreso, puede pausarse hasta un año sin pagar cómputo y se recupera de fallos
+          repitiendo solo lo que no había terminado.</li>
+        <li><strong>Cuándo <a href="step-functions.html">Step Functions</a>:</strong> si el flujo coordina muchos servicios
+          sin código, necesita ramas en paralelo a gran escala (Distributed Map sobre millones de objetos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>) o
+          debe verse como un diagrama auditable. Durable functions encaja cuando el flujo es sobre todo código propio
+          con esperas.</li>
+        <li><strong>Respuestas grandes:</strong> con <em>response streaming</em> una función devuelve hasta 200 MB y el
+          cliente recibe los primeros bytes antes.</li>
+      </ul>
+
+      <h3>Despliegues seguros y varias cuentas</h3>
+      <ul>
+        <li><strong>Despliegue gradual:</strong> <a href="codedeploy.html">CodeDeploy</a> mueve el alias de una versión a
+          otra en modo canary, lineal o de golpe, con <em>hooks</em> de prueba antes y después y vuelta atrás automática
+          si salta una alarma de <a href="cloudwatch.html">CloudWatch</a>. <abbr class="sigla sigla-1" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM<span class="sigla-exp"> (Serverless Application Model: extensión de CloudFormation para aplicaciones sin servidores)</span></abbr> lo configura con pocas líneas.</li>
+        <li><strong>Configuración sin redesplegar:</strong> <a href="appconfig.html">AppConfig</a> con su extensión para
+          Lambda, con despliegue gradual y vuelta atrás de la configuración.</li>
+        <li><strong>Invocar desde otra cuenta:</strong> la política basada en recurso de la función permite a la otra cuenta
+          (o a toda la organización con <code>aws:PrincipalOrgID</code>) llamar a <code>lambda:InvokeFunction</code>; quien
+          llama necesita además el permiso en su propia política de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>.</li>
+        <li><strong>Código firmado:</strong> con <em>code signing</em> y AWS Signer, la función solo acepta paquetes
+          firmados por perfiles de confianza.</li>
+      </ul>
+
+      <h3>Coste: cuándo Lambda deja de compensar</h3>
+      <ul>
+        <li><strong>Ajustar memoria:</strong> más memoria da más <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr>; a veces acaba antes y cuesta menos.
+          <a href="compute-optimizer.html">Compute Optimizer</a> recomienda la memoria con el uso real, y Arm (Graviton)
+          abarata el GB-segundo.</li>
+        <li><strong>Compute <a href="savings-plans.html">Savings Plans</a></strong> también descuentan Lambda (duración y concurrencia aprovisionada).</li>
+        <li><strong>Tráfico alto y estable:</strong> Lambda Managed Instances ejecuta las funciones en instancias
+          <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> que gestiona Lambda en tu <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, con varias peticiones a la vez por entorno, los
+          descuentos de <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> (Savings Plans, instancias reservadas) y una tarifa de gestión sobre el precio de la
+          instancia. Se paga por instancia, no por milisegundo.</li>
+        <li><strong>Esperas largas dentro de la función</strong> (llamar a otro servicio y esperar la respuesta) se pagan
+          como duración: mejor un flujo con esperas sin coste (durable functions o Step Functions) o una invocación
+          asíncrona.</li>
+      </ul>
+
+      <h3>Qué usar en cada caso: tabla de decisión</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Escenario</th><th>Solución</th></tr></thead>
+          <tbody>
+            <tr><td>Picos previsibles sin arranques en frío</td><td>Concurrencia aprovisionada programada</td></tr>
+            <tr><td>Una cola satura una base de datos con demasiadas conexiones</td><td>Concurrencia máxima en el event source mapping y RDS Proxy</td></tr>
+            <tr><td>Una función no debe dejar sin cuota a las demás</td><td>Concurrencia reservada</td></tr>
+            <tr><td>Un lote falla por un solo mensaje y se reprocesa entero</td><td>Fallos parciales del lote (<code>ReportBatchItemFailures</code>)</td></tr>
+            <tr><td>Flujo de varios pasos con esperas de días, escrito en código</td><td>Durable functions</td></tr>
+            <tr><td>Orquestación visual de muchos servicios o millones de objetos en paralelo</td><td>Step Functions (Distributed Map)</td></tr>
+            <tr><td>Proceso síncrono de más de 15 minutos</td><td><a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> con <a href="fargate.html">Fargate</a> o <a href="batch.html">AWS Batch</a></td></tr>
+            <tr><td>Tráfico alto y constante, con ganas de usar descuentos de <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></td><td>Lambda Managed Instances</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga por número de invocaciones y por <strong>GB-segundo</strong> (memoria configurada
         por duración, redondeada al milisegundo). La arquitectura Arm (Graviton) es más barata que x86.
@@ -182,6 +299,14 @@
         <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html" target="_blank" rel="noopener">Lambda quotas</a>, documentación de AWS (consultada el 25/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html" target="_blank" rel="noopener">Understanding Lambda function scaling</a>, documentación de AWS (consultada el 25/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-invocation.html" target="_blank" rel="noopener">Understanding Lambda function invocation methods</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/scaling-behavior.html" target="_blank" rel="noopener">Lambda scaling behavior</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-scaling.html" target="_blank" rel="noopener">Configuring scaling behavior for SQS event source mappings</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html" target="_blank" rel="noopener">Giving Lambda functions access to resources in an Amazon VPC</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html" target="_blank" rel="noopener">Lambda durable functions</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2026/09/aws-lambda-90-minute-function/" target="_blank" rel="noopener">AWS Lambda now supports 90-minute function timeout on Lambda Managed Instances</a>, novedades de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://aws.amazon.com/about-aws/whats-new/2025/11/aws-lambda-tenant-isolation-mode/" target="_blank" rel="noopener">AWS Lambda announces new tenant isolation mode</a>, novedades de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html" target="_blank" rel="noopener">Response streaming for Lambda functions</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://aws.amazon.com/lambda/pricing/" target="_blank" rel="noopener">AWS Lambda Pricing</a> (Lambda Managed Instances), página de precios de AWS (consultada el 08/10/2026).</li>
       </ul>
     </article>
   </div>

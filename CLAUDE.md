@@ -120,7 +120,7 @@ horizontal scroll).
 
 ## Key services ("Servicios clave")
 
-The owner names them while using the site (so far `vpc`, `organizations` and `s3`); never mark one on
+The owner names them while using the site (so far `vpc`, `organizations`, `s3` and `lambda`); never mark one on
 your own. A key service has `"clave": true` in `servicios.json` and must have:
 - **Highlight:** gradient border and "★ Servicio clave" chip on its catalog card (`catalogo.js`),
   plus the "★ Servicio clave" banner in its page header, which `scripts/revisar_texto.py --escribir

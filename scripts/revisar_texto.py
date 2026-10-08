@@ -305,6 +305,7 @@ G = {
     'SRT': ('Shield Response Team', 'equipo de respuesta de AWS Shield'),
     'IPAM': ('IP Address Manager', 'planifica y reparte rangos de IP entre cuentas y regiones'),
     'MTU': ('Maximum Transmission Unit', 'tamaño máximo de paquete en una red'),
+    'ENI': ('Elastic Network Interface', 'tarjeta de red virtual de AWS'),
     'ABAC': ('Attribute-Based Access Control', 'permisos según etiquetas o atributos'),
 }
 # RAM es la memoria en EC2 y el servicio AWS RAM en el resto de páginas. IA es Infrequent Access en EFS y S3.

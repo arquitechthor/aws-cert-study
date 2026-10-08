@@ -328,6 +328,10 @@
    "en": "Elastic MapReduce",
    "es": null
   },
+  "ENI": {
+   "en": "Elastic Network Interface",
+   "es": "tarjeta de red virtual de AWS"
+  },
   "ERP": {
    "en": "Enterprise Resource Planning",
    "es": "software de gestión empresarial"

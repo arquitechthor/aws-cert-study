@@ -1464,6 +1464,7 @@
     "nombre": "AWS Lambda",
     "categoria": "computacion",
     "icono": true,
+    "clave": true,
     "kopi": true,
     "categoriasAdicionales": [
       "sin-servidor"
