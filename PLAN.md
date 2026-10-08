@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Fase 2 completa (03/10/2026):** publicados los **164 de 164** servicios, con 1044 preguntas (todos con al menos 5 desde el 06/10/2026). Los 12 que usa
+- **Fase 2 completa (03/10/2026):** publicados los **164 de 164** servicios, con 1044 preguntas (1056 desde el 08/10/2026; todos con al menos 5 desde el 06/10/2026). Los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
   EC2, VPC, RDS, Aurora, ElastiCache, ECS, EKS, KMS, Secrets Manager, CloudTrail y OpenSearch
@@ -32,9 +32,13 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   (V1) el 07/10/2026, `pinpoint` el 30/10/2026, `managed-blockchain` (sin clientes nuevos) el
   29/10/2026 y `support` (planes antiguos) el 01/01/2027. Tarea 0.9 (guías SAP-C03 y DVA-C03) el
   27/10/2026.
+- **Servicios clave (08/10/2026):** pedidos por el usuario, que irá diciendo cuáles son mientras
+  prueba la web. Hechos: `vpc` y `organizations` (resaltado en catálogo y guía, filtro `clave=1`,
+  sección "A fondo: temas avanzados" y 5 preguntas difíciles cada uno). Ver la decisión
+  "Servicios clave" y `CLAUDE.md`.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-10-06
+- **Última actualización:** 2026-10-08
 
 ---
 
@@ -65,6 +69,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Simulacro (Fase 3) | Decidido el 2026-10-06. Preguntas de los servicios publicados de la certificación que llevan esa certificación, **repartidas por dominio según su peso** (cuota por mayor resto; si un dominio no llega, se completa con otros y se avisa). Tres duraciones: completo (puntuables + sin puntuar, p. ej. 75 en 180 min en SAP-C02), medio y rápido (10 preguntas), con el tiempo en proporción al examen real. Una pregunta cada vez, marcar para revisar, corrección solo al final y resultado en % por dominio; la nota de corte se muestra solo como referencia orientativa (puntuación mínima / 10 %), porque AWS usa una escala de 100 a 1000 sin equivalencia pública. Encima de la configuración, una ficha de la certificación elegida (descripción, formato del examen oficial, fecha de retirada y dominios con su peso y nombre en inglés, con enlace a la guía); la introducción aclara que las preguntas son originales, no del examen real. Las respuestas cuentan para el progreso igual que en las guías. Historial de los 20 últimos en `localStorage` (`apuntes-aws.simulacros`). |
 | Repaso y falladas (3.2) | Una pregunta está "fallada" si su **último** intento fue incorrecto (`fallos` en `apuntes-aws.progreso`); sale del repaso al acertarla. El repaso (`simulacro.html?repaso=1[&cert=]`) no tiene tiempo límite. `progreso.html` resume todo y permite borrarlo; lleva `noindex` porque solo muestra datos locales. |
 | Preguntas difíciles | Pedido por el usuario el 2026-10-06: `"dificil": true` en el JSON muestra la etiqueta ⚠ "Pregunta difícil" (ámbar) en guías y simulacros, y el simulacro puede limitarse a ellas. Criterio en la Fase 5. |
+| Servicios clave | Pedido por el usuario el 2026-10-08; él decide cuáles son (primeros: Amazon VPC y AWS Organizations). `"clave": true` en `servicios.json`. (1) **Resaltado**: borde con el degradado de la marca y chip "★ Servicio clave" en su tarjeta del catálogo, y aviso "★ Servicio clave" en la cabecera de su guía (lo escribe `revisar_texto.py`). (2) **Filtro** "★ Servicios clave" en el grupo "Destacados" del catálogo (antes "En la práctica", junto a "Usados en Kopi"), `clave=1` en la URL. (3) **Guía más larga y profunda**: sección `id="a-fondo"` "A fondo: temas avanzados" antes de "Modelo de precios" (la misma sección que prevé la Fase 5). (4) **Al menos 2 preguntas difíciles** (`"dificil": true`). `revisar_texto.py` avisa si faltan (3) o (4). |
 | `robots.txt` | Los buscadores solo leen `/robots.txt` en la raíz del dominio, así que vive en el repo `arquitechthor.github.io` y anuncia el `sitemap.xml` de los dos sitios. Este repo solo genera su `sitemap.xml` (`scripts/generar_sitemap.py`). |
 | Servicios pendientes | Sin archivos vacíos: un servicio con `estado: "pendiente"` enlaza a la página genérica `servicio.html?id=<id>` ("Próximamente disponible"). Al publicarlo se crea `servicios/<id>.html`. |
 
@@ -128,7 +133,7 @@ aws-cert-study/
 `nombreCompleto`, `categoriasAdicionales`, `incluye` y `alias` son opcionales.
 `documentacion` es la URL de la documentación oficial principal del servicio (comprobada con una
 petición HTTP 200 el 2026-09-26); solo falta en servicios retirados sin documentación publicada
-(`elastic-transcoder`, `iot-events`), que enlazan a la búsqueda de docs.aws.amazon.com. `kopi: true` marca los
+(`elastic-transcoder`, `iot-events`), que enlazan a la búsqueda de docs.aws.amazon.com. `clave: true` marca los servicios clave (decisión "Servicios clave"). `kopi: true` marca los
 servicios que usa Kopi (su guía incluye "Así lo uso en Kopi") y alimenta el filtro "Usados en
 Kopi" (`kopi=1` en la URL). `icono: true`
 indica que existe `assets/iconos/servicios/<id>.svg`; si falta, se usa el icono de la categoría.
@@ -686,11 +691,12 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
 - [ ] **5.1** Añadir la sección "A fondo para SAP-C02" (opcional, comentada) a
       `plantillas/servicio.html` y documentar el criterio en `CLAUDE.md`. Revisar las preguntas de
       SAP-C02 que ya existen y marcar `"dificil": true` en las que cumplan el criterio.
-- [ ] **5.2** Cola 5.A (pedidos por el usuario), en este orden: `organizations`, `iam`, `ec2`,
+- [ ] **5.2** Cola 5.A (pedidos por el usuario), en este orden: ~~`organizations`~~ (hecho el
+      08/10/2026 al hacerlo servicio clave: sección "A fondo" y 5 preguntas difíciles), `iam`, `ec2`,
       `ecs`, `eks`, `fargate`, `codepipeline`, `codebuild`, `codedeploy`, `codeartifact`.
 - [ ] **5.3** Cola 5.B (propuesta: también pesan mucho en SAP-C02; confirmar con el usuario
       antes de empezarla): `control-tower`, `iam-identity-center`, `ram`, `transit-gateway`,
-      `direct-connect`, `vpc`, `privatelink`, `route-53`, `cloudformation`, `service-catalog`,
+      `direct-connect`, ~~`vpc`~~ (hecho el 08/10/2026 como servicio clave), `privatelink`, `route-53`, `cloudformation`, `service-catalog`,
       `systems-manager`, `config`, `kms`, `s3`, `aurora`, `dynamodb`, `lambda`, `api-gateway`,
       `cloudfront`, `elastic-disaster-recovery`, `backup`, `dms`, `application-migration-service`.
 - [ ] **5.4** Con la cola 5.A hecha: que el simulacro de SAP-C02 "solo difíciles" pueda llegar a
@@ -736,3 +742,4 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
 | 2026-10-06 | Quinta pregunta original para `appflow` (clave de KMS administrada por el cliente), `glue` (CSV a Parquet particionado para abaratar Athena) y `savings-plans` (compromiso hora a hora: exceso bajo demanda y lo no usado se pierde), todas de SAA-C03 y con la respuesta correcta fuera de la A. Ya ningún servicio baja del mínimo de 5 de `CLAUDE.md` (1044 preguntas). |
 | 2026-10-06 | **Fase 3 completa** (salvo la 3.6, aplazada por el usuario). Componente común `assets/preguntas.js` (tipos única, múltiple, **ordenar** y **emparejar**; etiqueta ⚠ "Pregunta difícil" con `"dificil": true`; aciertos y **falladas** en el progreso) usado por `quiz.js`, el **simulacro** (`simulacro.html`: reparto por peso de dominio, tres duraciones con el tiempo del examen real, marcar para revisar, corrección y resultado por dominio, historial) y el **repaso de falladas**; página **Mi progreso** (`progreso.html`, noindex). Menú con "Simulacro" y "Mi progreso" en las 169 páginas; botón "Simulacro" en las tarjetas de certificación; duración de cada examen en `certificaciones.json` (`minutos`); campo `dominios` en 15 preguntas compartidas SAA/SAP; dos preguntas de AIF-C01 de los tipos nuevos (`sagemaker-ai-009`, `bedrock-007`). `sitemap.xml` (168 URL, `scripts/generar_sitemap.py`) y `robots.txt` en el repo `arquitechthor.github.io`. Aviso legal (privacidad) actualizado. Las URL largas de las fuentes ya no desbordan en móvil. Probado en Chrome a 1280 px y en iframes de 375 px (sin desplazamiento horizontal). Nueva **Fase 5**: profundización para SAP-C02 (pedido del usuario). |
 | 2026-10-06 | Simulacro: la introducción aclara que las preguntas son originales y no del examen real (también en el repaso), y se añade una ficha de la certificación elegida con su descripción (campo nuevo `descripcion` en `certificaciones.json`), el formato del examen oficial y los dominios que evalúa con su peso. |
+| 2026-10-08 | **Servicios clave** (pedido por el usuario): campo `clave` en `servicios.json`, tarjeta resaltada (borde degradado y chip ★) y filtro "★ Servicios clave" (`clave=1`) en el catálogo, aviso en la cabecera de la guía escrito por `revisar_texto.py` (que además avisa si falta la sección "A fondo" o hay menos de 2 preguntas difíciles), sección opcional en la plantilla y reglas en `CLAUDE.md`. Primeros servicios clave: **VPC** (IPAM y solapes, VPC compartidas, Transit Gateway con salida e inspección centralizadas y modo appliance, MTU, endpoints a escala, DNS híbrido, tabla de decisión de conectividad) y **Organizations** (evaluación SCP + RCP + IAM, listas de permitidos y excepciones, perímetro de datos, estructura de OU, delegación, fusiones y adquisiciones), con 5 preguntas difíciles de SAP-C02 cada uno (`vpc-010`…`014`, `organizations-010`…`014`, incluida una de emparejar). Siglas nuevas: IPAM, MTU, ABAC. Cuotas comprobadas con la documentación actual. |

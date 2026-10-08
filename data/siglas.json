@@ -4,6 +4,10 @@
    "en": null,
    "es": "quinta generación de redes móviles"
   },
+  "ABAC": {
+   "en": "Attribute-Based Access Control",
+   "es": "permisos según etiquetas o atributos"
+  },
   "ACID": {
    "en": null,
    "es": "atomicidad, consistencia, aislamiento y durabilidad de las transacciones"
@@ -472,6 +476,10 @@
    "en": "Internet Protocol",
    "es": "dirección de red"
   },
+  "IPAM": {
+   "en": "IP Address Manager",
+   "es": "planifica y reparte rangos de IP entre cuentas y regiones"
+  },
   "IPS": {
    "en": "Intrusion Prevention System",
    "es": "sistema que detecta y bloquea intrusiones en la red"
@@ -635,6 +643,10 @@
   "MSK": {
    "en": "Managed Streaming for Apache Kafka",
    "es": null
+  },
+  "MTU": {
+   "en": "Maximum Transmission Unit",
+   "es": "tamaño máximo de paquete en una red"
   },
   "MX": {
    "en": "Mail Exchange",

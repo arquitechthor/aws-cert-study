@@ -196,5 +196,140 @@
     "fuentes": [
       "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html"
     ]
+  },
+  {
+    "id": "organizations-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dificil": true,
+    "enunciado": "Una empresa mantiene FullAWSAccess en la raíz de su organización. En la OU Analytics quitó FullAWSAccess y asoció una SCP de lista de permitidos que solo admite Amazon EC2, Amazon S3, IAM y Amazon CloudWatch. La cuenta Datos, dentro de esa OU, ya tiene FullAWSAccess asociada directamente, y un administrador le añade otra SCP que permite athena:* y glue:*. Los roles de la cuenta tienen AdministratorAccess, pero las llamadas a Amazon Athena siguen denegadas. El resto de cuentas de Analytics no debe poder usar Athena ni AWS Glue. ¿Qué cambio lo resuelve?",
+    "opciones": [
+      "Asociar a la raíz una SCP adicional que permita athena:* y glue:*.",
+      "Añadir athena:* y glue:* a la SCP de lista de permitidos de la OU Analytics.",
+      "Crear bajo la raíz una OU nueva con la lista de permitidos de Analytics más athena:* y glue:*, y mover a ella la cuenta Datos.",
+      "Crear una OU hija dentro de Analytics con una SCP que permita athena:* y glue:* y mover a ella la cuenta Datos."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Una acción solo está permitida si la permite cada nivel, desde la raíz hasta la cuenta. La OU Analytics no permite Athena, así que ni la SCP de la cuenta ni una OU hija pueden ampliarlo, y la raíz ya lo permitía todo. Añadirlo a la lista de la OU daría Athena y Glue a todas sus cuentas, porque cada una tiene FullAWSAccess. Solo una OU propia, colgada de la raíz, cumple las dos condiciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_evaluation.html"
+    ]
+  },
+  {
+    "id": "organizations-011",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "dificil": true,
+    "enunciado": "Para montar un perímetro de datos, una empresa asocia a la raíz una RCP que deniega s3:* cuando aws:PrincipalOrgID no es el de su organización. Desde entonces, el registro de AWS CloudTrail de la organización no entrega archivos en el bucket de la cuenta Log Archive, y una cuenta de un socio, que lee un bucket concreto gracias a la política de ese bucket, recibe errores de acceso denegado. Hay que recuperar los dos accesos sin renunciar al perímetro. ¿Qué DOS cambios hay que hacer en la RCP? (Elige 2.)",
+    "opciones": [
+      "Sustituir la RCP por una SCP con la misma condición, que no afecta a los servicios de AWS.",
+      "Excluir de la denegación las peticiones en las que aws:PrincipalIsAWSService es verdadero.",
+      "Añadir a la política del bucket de Log Archive un Allow explícito para cloudtrail.amazonaws.com.",
+      "Asociar la RCP solo a las OU de cargas de trabajo y dejar la OU Security sin ella.",
+      "Añadir una excepción con aws:PrincipalAccount para la cuenta del socio, limitada al ARN del bucket que comparte."
+    ],
+    "correctas": [
+      1,
+      4
+    ],
+    "explicacion": "Una RCP limita a cualquiera que acceda al recurso, también a los servicios de AWS, así que hay que excluirlos con aws:PrincipalIsAWSService, y la cuenta del socio necesita una excepción acotada a su bucket. Un Allow en la política del bucket no supera una denegación explícita de la RCP. Una SCP no afecta a identidades externas, así que se perdería el perímetro, y quitarla de la OU Security dejaría sin protección precisamente los registros de auditoría.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html"
+    ]
+  },
+  {
+    "id": "organizations-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "dificil": true,
+    "enunciado": "Una empresa asoció a la raíz una SCP que deniega la acción \"*\" cuando aws:RequestedRegion no es eu-west-1 ni eu-central-1. Desde entonces los equipos no pueden crear roles de IAM, gestionar zonas alojadas de Amazon Route 53 ni actualizar distribuciones de Amazon CloudFront. Hay que mantener la restricción de regiones para los servicios regionales con el menor esfuerzo operativo. ¿Qué cambio lo consigue?",
+    "opciones": [
+      "Añadir us-east-1 a la lista de regiones permitidas de la SCP.",
+      "Cambiar Action \"*\" por NotAction con los servicios globales (iam:*, route53:*, cloudfront:*, organizations:*, support:* y similares).",
+      "Sustituir la SCP por límites de permisos en los roles de cada cuenta que nieguen las demás regiones.",
+      "Sustituir la SCP por una regla de AWS Config que detecte recursos creados fuera de las regiones aprobadas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las llamadas a los servicios globales se resuelven en us-east-1, así que una denegación por región los bloquea. Se excluyen con NotAction y la restricción sigue valiendo para el resto. Permitir us-east-1 abriría todos los servicios regionales en esa región. Los límites de permisos exigen mantener cada rol y un administrador de la cuenta puede quitarlos, y AWS Config detecta pero no impide.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_evaluation.html",
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples_general.html"
+    ]
+  },
+  {
+    "id": "organizations-013",
+    "tipo": "emparejar",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dificil": true,
+    "enunciado": "El equipo de gobierno de una organización con 300 cuentas reparte sus requisitos entre los mecanismos de control. Empareja cada requisito con el mecanismo más adecuado (sobra uno).",
+    "opciones": [
+      "Nadie de fuera de la organización puede leer los secretos de AWS Secrets Manager, aunque la política de un secreto lo permita por error.",
+      "Desde la red corporativa no se pueden subir datos a buckets de Amazon S3 de otras organizaciones.",
+      "Cada cuenta nueva que entra en una OU recibe un rol de auditoría sin intervención manual.",
+      "El acceso público a las AMI y a las instantáneas de Amazon EBS queda bloqueado en todas las cuentas, aunque aparezcan API nuevas.",
+      "La etiqueta CostCenter usa siempre la misma grafía y solo valores aprobados."
+    ],
+    "destinos": [
+      "Política declarativa de EC2.",
+      "Política de etiquetas.",
+      "CloudFormation StackSets con permisos administrados por el servicio y despliegue automático.",
+      "RCP asociada a la raíz.",
+      "Política del endpoint de VPC de S3 con aws:ResourceOrgID.",
+      "Límite de permisos (permissions boundary) en cada rol."
+    ],
+    "correctas": [
+      3,
+      4,
+      2,
+      0,
+      1
+    ],
+    "explicacion": "La RCP limita el acceso a los recursos también frente a identidades externas. La política del endpoint de VPC con aws:ResourceOrgID impide llevar datos a recursos ajenos desde la red propia. StackSets con permisos administrados por el servicio despliega solo en las cuentas nuevas de la OU. La política declarativa fija la configuración del servicio, sea cual sea la API que se use. La política de etiquetas normaliza claves y valores. Un límite de permisos actúa rol a rol y no resuelve ninguno de estos requisitos a escala.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html",
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_declarative.html",
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_tag-policies.html"
+    ]
+  },
+  {
+    "id": "organizations-014",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dificil": true,
+    "enunciado": "Una empresa compra otra que tiene su propia organización con 40 cuentas. Las políticas de los buckets y de las claves de AWS KMS de las cuentas adquiridas usan aws:PrincipalOrgID con el ID de la organización antigua, y el equipo central administra esas cuentas con OrganizationAccountAccessRole. Hay que integrarlas en la organización de la empresa compradora sin cortar el servicio. ¿Qué plan es correcto?",
+    "opciones": [
+      "Invitar ya las 40 cuentas a la nueva organización: durante la transición pueden pertenecer a las dos.",
+      "Eliminar primero la organización antigua para que todas las cuentas queden independientes a la vez y después invitarlas.",
+      "Compartir con AWS RAM los recursos de las cuentas adquiridas con la nueva organización en lugar de mover las cuentas.",
+      "Añadir el ID de la nueva organización a las condiciones de las políticas; mover las cuentas de una en una (salir, aceptar la invitación, entrar en una OU de pruebas con sus SCP); hacer que OrganizationAccountAccessRole confíe en la nueva cuenta de administración; y al final quitar el ID antiguo."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Una cuenta solo pertenece a una organización y, al cambiar, deja de cumplir las condiciones con el ID antiguo, así que antes hay que aceptar los dos. El rol de acceso confía en la cuenta de administración antigua y hay que cambiar su relación de confianza. Una organización no se puede eliminar mientras tenga cuentas miembro, y RAM comparte recursos, no traslada cuentas ni su gobierno.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_remove.html",
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_access.html"
+    ]
   }
 ]

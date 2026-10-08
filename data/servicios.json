@@ -1744,6 +1744,7 @@
     "nombre": "AWS Organizations",
     "categoria": "administracion-gobernanza",
     "icono": true,
+    "clave": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",
@@ -2419,6 +2420,7 @@
     "nombreCompleto": "Amazon Virtual Private Cloud (Amazon VPC)",
     "categoria": "redes-entrega-contenido",
     "icono": true,
+    "clave": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C02",

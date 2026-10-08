@@ -1,7 +1,7 @@
 /**
  * Portada: tarjetas de certificación y catálogo de servicios con filtros. El estado de los
- * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=union&kopi=1) para poder compartir
- * vistas filtradas. "finalizado" no es un estado del catálogo sino del progreso local del
+ * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1) para poder
+ * compartir vistas filtradas. "finalizado" no es un estado del catálogo sino del progreso local del
  * usuario (localStorage), que se superpone a "publicado".
  */
 (function () {
@@ -17,6 +17,7 @@
     cert: $('f-cert'),
     modo: $('f-modo'),
     modoAyuda: $('f-modo-ayuda'),
+    clave: $('f-clave'),
     kopi: $('f-kopi'),
     limpiar: $('f-limpiar'),
     resultados: $('resultados'),
@@ -34,8 +35,10 @@
     interseccion: 'Intersección: servicios que entran en todas las certificaciones marcadas.',
   };
   const ESTADOS = ['publicado', 'finalizado', 'pendiente'];
+  // Servicios clave ("clave": true en servicios.json): guía ampliada y preguntas difíciles.
+  const TITULO_CLAVE = 'Servicio clave: guía ampliada con temas avanzados y preguntas difíciles';
 
-  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', kopi: false };
+  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', clave: false, kopi: false };
   let datos = null;
   let progreso = {};
 
@@ -81,6 +84,7 @@
     // Solo certificaciones filtrables: se ignoran códigos desconocidos o con la guía pendiente.
     estado.certs = new Set((p.get('cert') || '').split(',').filter((c) => esFiltrable(datos.certPorCodigo.get(c))));
     estado.modo = p.get('modo') === 'union' ? 'union' : 'interseccion';
+    estado.clave = p.get('clave') === '1';
     estado.kopi = p.get('kopi') === '1';
   }
 
@@ -91,6 +95,7 @@
     if (estado.estado) p.set('estado', estado.estado);
     if (estado.certs.size) p.set('cert', [...estado.certs].join(','));
     if (estado.modo !== 'interseccion') p.set('modo', estado.modo);
+    if (estado.clave) p.set('clave', '1');
     if (estado.kopi) p.set('kopi', '1');
     const q = p.toString();
     history.replaceState(null, '', `${location.pathname}${q ? `?${q}` : ''}${location.hash}`);
@@ -154,6 +159,11 @@
       sincronizarControles();
       aplicar();
     });
+    el.clave.addEventListener('click', () => {
+      estado.clave = !estado.clave;
+      sincronizarControles();
+      aplicar();
+    });
     el.kopi.addEventListener('click', () => {
       estado.kopi = !estado.kopi;
       sincronizarControles();
@@ -167,7 +177,7 @@
       aplicar();
     });
     el.limpiar.addEventListener('click', () => {
-      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', kopi: false });
+      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', clave: false, kopi: false });
       sincronizarControles();
       aplicar();
     });
@@ -188,6 +198,7 @@
       btn.setAttribute('aria-checked', String(btn.dataset.modo === estado.modo));
     }
     el.modoAyuda.textContent = MODOS[estado.modo];
+    el.clave.setAttribute('aria-pressed', String(estado.clave));
     el.kopi.setAttribute('aria-pressed', String(estado.kopi));
   }
 
@@ -199,6 +210,7 @@
       if (estado.cat && s.categoria !== estado.cat && !(s.categoriasAdicionales || []).includes(estado.cat)) return false;
       if (estado.estado === 'finalizado' && estadoDe(s) !== 'finalizado') return false;
       if (estado.estado && estado.estado !== 'finalizado' && s.estado !== estado.estado) return false;
+      if (estado.clave && !s.clave) return false;
       if (estado.kopi && !s.kopi) return false;
       if (estado.certs.size) {
         const certs = [...estado.certs];
@@ -229,14 +241,14 @@
     const cat = datos.categoriaPorId.get(s.categoria);
     const [clase, texto] = BADGES[estadoDe(s)] || BADGES.pendiente;
     return `
-      <a class="service-card" href="${esc(urlServicio(s))}">
+      <a class="service-card${s.clave ? ' service-card-clave' : ''}" href="${esc(urlServicio(s))}">
         <div class="service-card-head">
           <div class="service-card-title">${iconoServicio(s, cat)}<h3>${esc(s.nombre)}</h3></div>
           <span class="badge badge-${clase}">${texto}</span>
         </div>
         <p class="service-cat cat-link">${categoriaHtml(cat)}</p>
         ${s.frase ? `<p class="service-resumen">${esc(s.frase)}</p>` : ''}
-        <div class="chips">${s.certificaciones.map((c) => `<span class="chip chip-cert">${esc(c)}</span>`).join('')}${s.kopi
+        <div class="chips">${s.clave ? `<span class="chip chip-clave" title="${esc(TITULO_CLAVE)}">★ Servicio clave</span>` : ''}${s.certificaciones.map((c) => `<span class="chip chip-cert">${esc(c)}</span>`).join('')}${s.kopi
           ? '<span class="chip chip-kopi" title="Lo usa Kopi en producción">Kopi</span>' : ''}</div>
       </a>`;
   }

@@ -26,8 +26,9 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   each service's `frase` (name matches are listed first).
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
   filters (text, category, status, certifications with union/intersection mode). Filter state
-  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&kopi=1`). `kopi=1` shows only
-  services with `"kopi": true` in `servicios.json` (the ones Kopi uses). Certifications with
+  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1`). `kopi=1` shows only
+  services with `"kopi": true` in `servicios.json` (the ones Kopi uses); `clave=1` only the key
+  services (see "Key services" below). Certifications with
   `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
 - Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store, per service
   in `localStorage` (`apuntes-aws.progreso`), the correct answers and the `fallos` (questions whose
@@ -114,6 +115,19 @@ horizontal scroll).
    "Próximamente" links to it point to the new page.
 5. Run `python scripts/generar_sitemap.py`, serve locally, check the page and quiz, then commit
    and push to `main` (no PRs) and tick the service in the `PLAN.md` queue.
+
+## Key services ("Servicios clave")
+
+The owner names them while using the site (so far `vpc` and `organizations`); never mark one on
+your own. A key service has `"clave": true` in `servicios.json` and must have:
+- **Highlight:** gradient border and "★ Servicio clave" chip on its catalog card (`catalogo.js`),
+  plus the "★ Servicio clave" banner in its page header, which `scripts/revisar_texto.py --escribir
+  <id>` inserts (and removes if `clave` is dropped).
+- **A longer, deeper guide:** section `<h2 id="a-fondo">A fondo: temas avanzados</h2>` right
+  before "Modelo de precios", with `<h3>` subsections (multi-account/multi-region patterns, quotas
+  that drive a design, trade-offs, decision tables). Same as the Fase 5 deep-dive section.
+- **At least 2 hard questions** (`"dificil": true`, criteria in `PLAN.md`, Fase 5).
+`revisar_texto.py` prints `AVISO servicio clave` when the section or the hard questions are missing.
 
 ## Content rules (non-negotiable)
 

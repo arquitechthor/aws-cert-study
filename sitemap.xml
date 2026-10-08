@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://arquitechthor.github.io/aws-cert-study/</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/simulacro.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/memoria.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/aviso-legal.html</loc><lastmod>2026-10-06</lastmod></url>
@@ -117,7 +117,7 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/network-firewall.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/nova.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/opensearch-service.html</loc><lastmod>2026-10-06</lastmod></url>
-  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/organizations.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/organizations.html</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/outposts.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/personalize.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/pinpoint.html</loc><lastmod>2026-10-06</lastmod></url>
@@ -161,7 +161,7 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/translate.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/trusted-advisor.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/vmware-cloud-on-aws.html</loc><lastmod>2026-10-06</lastmod></url>
-  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/vpc.html</loc><lastmod>2026-10-06</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/vpc.html</loc><lastmod>2026-10-08</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/waf.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/wavelength.html</loc><lastmod>2026-10-06</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/well-architected-tool.html</loc><lastmod>2026-10-06</lastmod></url>

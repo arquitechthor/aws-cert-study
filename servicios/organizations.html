@@ -44,6 +44,7 @@
 
     <div class="service-head">
       <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/organizations.svg" alt="" width="56" height="56"><span>AWS Organizations</span></h1>
+      <p class="clave-aviso"><span class="chip chip-clave">★ Servicio clave</span> <span>Guía ampliada con <a href="#a-fondo">temas avanzados</a> y preguntas difíciles en el cuestionario.</span></p>
       <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Agrupa cuentas en unidades, unifica la factura y aplica <abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> a todas a la vez</span></div>
       <div class="meta-row">
         <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
@@ -152,6 +153,111 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios multicuenta de
+        SAP-C02: cómo se combinan las políticas, cómo se monta un perímetro de datos, cómo se ordenan las <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> y qué
+        se rompe cuando una cuenta cambia de organización.</p>
+
+      <h3>Cómo se evalúa una petición con SCP, RCP e IAM a la vez</h3>
+      <ol>
+        <li><strong>Una denegación explícita gana siempre</strong>, venga de una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>, una <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr>, una política de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>, la
+          política del recurso, un límite de permisos o una política de sesión.</li>
+        <li><strong>Las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> miran a quién llama:</strong> si la identidad pertenece a una cuenta miembro, la acción
+          tiene que estar permitida en <em>cada</em> nivel, desde la raíz hasta la cuenta. La <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> de su cuenta le
+          sigue aplicando aunque acceda a un recurso de otra cuenta.</li>
+        <li><strong>Las <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> miran al recurso:</strong> si el recurso pertenece a una cuenta miembro, la <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> limita lo
+          que se puede hacer con él sea quien sea quien llame, incluida una cuenta que no es de la organización.</li>
+        <li>Superados esos techos, <strong>alguna política tiene que conceder</strong> el permiso: la de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> de quien
+          llama y, en el acceso entre cuentas, también la política del recurso.</li>
+      </ol>
+      <p>Ni las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> ni las <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> afectan a la cuenta de administración ni a los roles vinculados a servicios. Las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>
+        tampoco limitan a los servicios de AWS cuando actúan con su propia entidad de servicio (por ejemplo,
+        <code>cloudtrail.amazonaws.com</code> escribiendo en un bucket).</p>
+
+      <h3>Lista de denegación, lista de permitidos y excepciones</h3>
+      <ul>
+        <li><strong>Lista de denegación</strong> (lo habitual): se deja <code>FullAWSAccess</code> en todos los niveles y se
+          añaden sentencias <code>Deny</code>. Los servicios nuevos funcionan sin tocar nada.</li>
+        <li><strong>Lista de permitidos:</strong> hay que quitar <code>FullAWSAccess</code> y permitir lo necesario
+          <strong>en cada nivel</strong>. Un <code>Allow</code> en la cuenta no sirve si la <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> de la que cuelga no lo
+          permite: es el fallo más típico en los escenarios del examen.</li>
+        <li><strong>Excepciones con condiciones:</strong> una denegación con <code>ArnNotLike</code> sobre
+          <code>aws:PrincipalArn</code> deja fuera a un rol concreto (el de la canalización o el de emergencia) sin
+          crear otra <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr>.</li>
+        <li><strong>Restringir regiones:</strong> la denegación por <code>aws:RequestedRegion</code> debe excluir con
+          <code>NotAction</code> los servicios globales (<abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>, Organizations, <a href="route-53.html">Route 53</a>, <a href="cloudfront.html">CloudFront</a>, Support…), cuyas
+          llamadas se resuelven en us-east-1; si no, se bloquean en todas las cuentas.</li>
+        <li><strong>Cuotas que deciden el diseño:</strong> 10 <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> asociadas directamente por raíz, <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> o cuenta (las
+          heredadas no cuentan) y 10&nbsp;240 caracteres por <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>; 5 <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> por entidad (la <code>RCPFullAWSAccess</code>
+          ocupa una y no se puede quitar) y 5&nbsp;120 caracteres por <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr>. Son límites fijos: cuando no caben más,
+          se agrupan sentencias en una misma política o se reparten entre la raíz y las <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr>.</li>
+      </ul>
+
+      <h3>Perímetro de datos</h3>
+      <p>Un perímetro de datos garantiza tres cosas a la vez: solo <strong>identidades de confianza</strong>, solo
+        sobre <strong>recursos de confianza</strong> y solo desde <strong>redes esperadas</strong>. Cada pieza va en un
+        sitio distinto:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Objetivo</th><th>Dónde se aplica</th><th>Clave de condición típica</th></tr></thead>
+          <tbody>
+            <tr><td>Que nadie de fuera acceda a nuestros recursos</td><td><abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> o política del recurso</td><td><code>aws:PrincipalOrgID</code> o <code>aws:PrincipalOrgPaths</code></td></tr>
+            <tr><td>Que nuestras identidades no lleven datos a recursos ajenos</td><td><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> o política del endpoint de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a></td><td><code>aws:ResourceOrgID</code></td></tr>
+            <tr><td>Que un servicio de AWS no actúe en nuestros recursos para otra organización (<em>confused deputy</em>)</td><td><abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> o política del recurso</td><td><code>aws:SourceOrgID</code></td></tr>
+            <tr><td>Que solo se acceda desde nuestras redes</td><td><abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>, <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> o política del recurso</td><td><code>aws:SourceVpc</code>, <code>aws:SourceIp</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>En una <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> que deniega a identidades externas hay que dejar pasar a los servicios de AWS
+        (<code>aws:PrincipalIsAWSService</code>), o dejarán de funcionar cosas como los registros de <a href="cloudtrail.html">CloudTrail</a> que se
+        escriben en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>. Las <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> solo cubren algunos servicios (entre ellos <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, <a href="sts.html"><abbr class="sigla sigla-1" data-s="STS" data-en="Security Token Service" tabindex="0">STS<span class="sigla-exp"> (Security Token Service)</span></abbr></a>, <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="secrets-manager.html">Secrets Manager</a>, <a href="ecr.html"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a> y
+        <a href="opensearch-service.html">OpenSearch</a> Serverless), así que el resto del perímetro sigue dependiendo de políticas de recurso y de
+        endpoints de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</p>
+
+      <h3>Estructura de OU recomendada</h3>
+      <p>Las <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> se diseñan por <strong>función y por políticas comunes</strong>, no copiando el organigrama: una
+        reorganización interna no debería obligar a mover cuentas. Con pocos niveles se razona mejor la herencia.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th><abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr></th><th>Qué contiene</th></tr></thead>
+          <tbody>
+            <tr><td>Security</td><td>La cuenta de archivo de registros (<em>Log Archive</em>) y la de herramientas de seguridad, administradora delegada de <a href="guardduty.html">GuardDuty</a>, <a href="security-hub.html">Security Hub</a> y Config.</td></tr>
+            <tr><td>Infrastructure</td><td>Red compartida (<a href="transit-gateway.html">Transit Gateway</a>, <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> compartidas, <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr>) y servicios comunes.</td></tr>
+            <tr><td>Workloads</td><td>Las aplicaciones, con <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> hijas para producción y para desarrollo y pruebas, con <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> distintas.</td></tr>
+            <tr><td>Sandbox</td><td>Experimentos sin conexión con la red corporativa y con límites de gasto.</td></tr>
+            <tr><td>Policy Staging</td><td>Cuentas donde se prueban las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> antes de llevarlas a producción.</td></tr>
+            <tr><td>Suspended</td><td>Cuentas que se van a cerrar, con una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> que lo deniega todo.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Sacar trabajo de la cuenta de administración</h3>
+      <ul>
+        <li><strong>Administrador delegado</strong> para los servicios integrados (GuardDuty, Security Hub, Config,
+          <a href="iam-identity-center.html">IAM Identity Center</a>, <a href="firewall-manager.html">Firewall Manager</a>, Backup, <a href="cloudformation.html">CloudFormation</a> StackSets…): la cuenta de seguridad los
+          gestiona para toda la organización.</li>
+        <li><strong>Gestión de políticas delegada:</strong> con una política de delegación basada en recursos, una cuenta
+          miembro puede crear y asociar políticas de Organizations. Desde el 30/06/2026 esa política no admite
+          <code>NotAction</code> ni <code>NotResource</code>: hay que listar las acciones y los recursos permitidos.</li>
+        <li><strong>StackSets con permisos administrados por el servicio</strong> y despliegue automático: cada cuenta
+          nueva que entra en una <abbr class="sigla" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU</abbr> recibe sola los roles, las alarmas o la configuración base.</li>
+        <li><strong>Registro de auditoría de la organización:</strong> un <em>organization trail</em> que escribe en el
+          bucket de la cuenta Log Archive, protegido con una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> que impide borrarlo o desactivarlo.</li>
+      </ul>
+
+      <h3>Fusiones, adquisiciones y salidas</h3>
+      <ul>
+        <li>Una cuenta solo puede estar en una organización: para traer la de una empresa adquirida, primero sale de la
+          suya y después acepta la invitación.</li>
+        <li>Al salir de una organización la cuenta pierde a la vez las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> y <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr>, la facturación unificada (y con ella
+          los descuentos y las reservas compartidas), los recursos que otras cuentas le compartían con <a href="ram.html"><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></a> dentro de
+          la organización y la gestión de los servicios con administrador delegado.</li>
+        <li>Las condiciones con <code>aws:PrincipalOrgID</code> dejan de cumplirse en cuanto la cuenta cambia de
+          organización: hay que revisar las políticas de recurso que dependen de ella antes de moverla.</li>
+        <li>En las cuentas invitadas no existe <code>OrganizationAccountAccessRole</code>: se crea a mano (o con
+          StackSets) para administrarlas desde fuera.</li>
+      </ul>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Organizations es <strong>gratuito</strong>. Se paga el consumo de cada cuenta, agregado en la factura de la
         cuenta de administración.</p>
@@ -197,6 +303,9 @@
         <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html" target="_blank" rel="noopener">Enabling all features for an organization</a>, documentación de AWS (consultada el 02/10/2026).</li>
         <li><a href="https://aws.amazon.com/organizations/faqs/" target="_blank" rel="noopener">AWS Organizations FAQs</a>, documentación de AWS (consultada el 02/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html" target="_blank" rel="noopener">Consolidating billing for AWS Organizations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs-policy-delegate.html" target="_blank" rel="noopener">Create a resource-based delegation policy with AWS Organizations</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_rcps.html" target="_blank" rel="noopener">Resource control policies (RCPs)</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/security/get-more-out-of-service-control-policies-in-a-multi-account-environment/" target="_blank" rel="noopener">Get more out of service control policies in a multi-account environment, AWS Security Blog</a>, documentación de AWS (consultada el 08/10/2026).</li>
       </ul>
     </article>
   </div>

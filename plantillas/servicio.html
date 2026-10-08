@@ -54,7 +54,8 @@
            si no, el de su categoría (assets/iconos/categorias/[[id-categoria]].svg). -->
       <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/[[id]].svg" alt="" width="56" height="56"><span>[[Amazon Ejemplo]]</span></h1>
       <p class="full-name">[[Nombre completo, si difiere]]</p>
-      <!-- La fila "En una frase:" la inserta scripts/revisar_texto.py desde el campo frase de servicios.json. -->
+      <!-- La fila "En una frase:" la inserta scripts/revisar_texto.py desde el campo frase de servicios.json,
+           y también el aviso "★ Servicio clave" si el servicio tiene "clave": true. -->
       <div class="meta-row">
         <span><strong>Categoría:</strong>
           <a class="cat-link" href="../index.html?cat=[[id-categoria]]#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/[[id-categoria]].svg" alt="" width="18" height="18">[[Categoría]] <span class="cat-en">([[Category]])</span></a></span>
@@ -101,6 +102,15 @@
           <tbody><tr><td>[[…]]</td><td>[[…]]</td><td>[[…]]</td></tr></tbody>
         </table>
       </div>
+
+      <!-- Obligatoria en los servicios clave ("clave": true en servicios.json), opcional en el resto
+           (Fase 5): patrones multicuenta y multirregión, cuotas que deciden un diseño, compromisos
+           (coste, esfuerzo, disponibilidad, seguridad), integración con servicios vecinos y tablas de
+           decisión. Subsecciones con <h3>. -->
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>[[Qué cubre esta parte ampliada.]]</p>
+      <h3>[[Tema avanzado]]</h3>
+      <ul><li>[[…]]</li></ul>
 
       <h2 id="precios">Modelo de precios</h2>
       <p>[[Cómo se cobra (dimensiones de facturación), sin cifras.]]</p>

@@ -198,5 +198,127 @@
     "fuentes": [
       "https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html"
     ]
+  },
+  {
+    "id": "vpc-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "dificil": true,
+    "enunciado": "Una empresa inspecciona el tráfico entre VPC con firewalls con estado detrás de un Gateway Load Balancer, en una VPC de inspección unida a un AWS Transit Gateway en dos zonas de disponibilidad. Las conexiones entre instancias de la misma zona funcionan, pero las que cruzan zonas fallan de forma intermitente y los firewalls registran paquetes de vuelta sin sesión. ¿Qué cambio lo resuelve con el menor esfuerzo operativo?",
+    "opciones": [
+      "Activar el balanceo entre zonas (cross-zone) en el Gateway Load Balancer.",
+      "Configurar los firewalls para que hagan NAT de origen de todo el tráfico inspeccionado.",
+      "Activar el modo appliance en el adjunto del Transit Gateway de la VPC de inspección.",
+      "Crear una tabla de rutas del Transit Gateway por zona con rutas estáticas hacia cada firewall."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Transit Gateway mantiene el tráfico en la zona de origen, así que la ida y la vuelta de un flujo entre zonas pueden entrar por zonas distintas de la VPC de inspección y llegar a firewalls diferentes. El modo appliance fija un solo camino por flujo. El balanceo entre zonas no cambia por qué zona entra el tráfico desde el Transit Gateway, el NAT de origen funcionaría pero añade carga y pierde la IP original, y las tablas de rutas no se pueden asociar por zona.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-appliance-scenario.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/using-gwlb-with-tg-for-cns.html"
+    ]
+  },
+  {
+    "id": "vpc-011",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "dificil": true,
+    "enunciado": "Una empresa conecta su centro de datos con AWS Direct Connect a una VPC de servicios compartidos, que tiene un endpoint de VPC de tipo gateway para Amazon S3. Las instancias de esa VPC llegan a S3 de forma privada, pero los servidores locales no consiguen usar el endpoint. La política exige que el tráfico local hacia S3 no pase por internet. ¿Qué DOS acciones lo resuelven? (Elige 2.)",
+    "opciones": [
+      "Añadir en la tabla de rutas del gateway virtual la lista de prefijos de S3 que apunta al endpoint de tipo gateway.",
+      "Crear un endpoint de VPC de tipo interface para S3 en la VPC de servicios compartidos.",
+      "Activar el DNS privado en el endpoint de tipo gateway para que se anuncie a la red local.",
+      "Hacer que los clientes locales usen los nombres DNS específicos del endpoint de tipo interface, resueltos desde la red local.",
+      "Crear un NAT gateway en la VPC de servicios compartidos y enviar hacia él el tráfico local con destino a S3."
+    ],
+    "correctas": [
+      1,
+      3
+    ],
+    "explicacion": "Un endpoint de tipo gateway solo se alcanza desde dentro de su VPC: no sirve para tráfico que llega por Direct Connect, VPN, peering o Transit Gateway, y no tiene DNS privado. El endpoint de tipo interface tiene IP privadas alcanzables desde la red local, y los clientes deben resolver sus nombres DNS (o un reenvío hacia él). El NAT gateway llevaría el tráfico a S3 por internet.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html",
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html"
+    ]
+  },
+  {
+    "id": "vpc-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dificil": true,
+    "enunciado": "Una empresa tendrá 30 equipos de aplicación, cada uno en su propia cuenta de AWS dentro de la misma organización. El equipo de red quiere controlar en exclusiva las rutas, las NACL y la salida a internet, reducir el número de adjuntos de Transit Gateway y no desperdiciar direcciones IP. Ningún equipo debe ver ni modificar los recursos de otro. ¿Qué diseño lo cumple?",
+    "opciones": [
+      "Una VPC por cuenta de aplicación, todas unidas entre sí con VPC peering.",
+      "Una VPC por cuenta de aplicación, cada una con su adjunto al Transit Gateway central.",
+      "Una sola cuenta para todos los equipos, con políticas de IAM por equipo basadas en etiquetas.",
+      "VPC en la cuenta de red cuyas subredes se comparten con AWS RAM a las cuentas de aplicación de la OU correspondiente."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con VPC compartidas, la cuenta propietaria controla rutas, NACL y gateways, y cada participante solo gestiona sus recursos y security groups, sin ver los de los demás. Hay menos VPC, menos adjuntos y menos IP sin usar. Una VPC por cuenta multiplica adjuntos y rangos, el peering en malla no escala, y una sola cuenta pierde el aislamiento entre equipos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html",
+      "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-share-limitations.html"
+    ]
+  },
+  {
+    "id": "vpc-013",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dificil": true,
+    "enunciado": "Tras una adquisición, la VPC de la empresa comprada usa 10.0.0.0/16, el mismo rango que la VPC de la compradora. Las aplicaciones de la empresa comprada deben consumir cuanto antes una API interna de la compradora, publicada detrás de un Network Load Balancer, sin renumerar ninguna red y sin dar acceso a nada más. ¿Qué solución lo cumple?",
+    "opciones": [
+      "Unir las dos VPC a un AWS Transit Gateway y separar el tráfico con tablas de rutas distintas.",
+      "Publicar la API como servicio de endpoint de AWS PrivateLink y crear un endpoint de tipo interface en la VPC de la empresa comprada.",
+      "Crear un VPC peering y añadir rutas más específicas hacia las subredes de la API.",
+      "Montar una AWS Site-to-Site VPN entre las dos VPC con enrutamiento estático."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "PrivateLink expone un único servicio mediante una interfaz de red con IP del rango del consumidor, así que funciona aunque los rangos se solapen y no abre el resto de la red. El peering no se puede crear con rangos solapados, y con Transit Gateway o una VPN las rutas hacia el mismo rango son ambiguas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-share-your-services.html",
+      "https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html"
+    ]
+  },
+  {
+    "id": "vpc-014",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "dificil": true,
+    "enunciado": "Una empresa tiene 50 VPC en varias cuentas, unidas por Transit Gateway a una VPC de servicios compartidos que recibe la conexión con el centro de datos. Los servidores locales deben resolver las zonas alojadas privadas de Amazon Route 53, y todas las VPC deben resolver el dominio interno corp.example.com, servido por los DNS locales. Se busca el menor coste y esfuerzo operativo. ¿Qué diseño lo cumple?",
+    "opciones": [
+      "Endpoints de entrada y de salida de Route 53 Resolver solo en la VPC de servicios compartidos, con las zonas privadas asociadas a ella y la regla de reenvío de corp.example.com compartida con AWS RAM y asociada a las 50 VPC.",
+      "Endpoints de entrada y de salida de Route 53 Resolver en cada una de las 50 VPC, con sus propias reglas de reenvío.",
+      "Servidores DNS en instancias EC2 en cada VPC, configurados con conjuntos de opciones DHCP.",
+      "Convertir las zonas privadas en públicas y publicar corp.example.com en una zona pública de Route 53."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Un único juego de endpoints basta: el de entrada responde con las zonas asociadas a su VPC, y las reglas de reenvío del endpoint de salida se comparten con RAM y se asocian a cada VPC sin crear más endpoints. Un juego por VPC multiplica el coste, los servidores propios suman trabajo operativo y hacer públicas las zonas expone nombres internos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/whitepapers/latest/hybrid-cloud-dns-options-for-vpc/route-53-resolver-endpoints-and-forwarding-rules.html",
+      "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-rules-managing.html"
+    ]
   }
 ]

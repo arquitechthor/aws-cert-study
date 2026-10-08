@@ -9,6 +9,8 @@ Es idempotente. Sin dependencias (Python 3). Uso, desde la raíz del repo:
   python scripts/revisar_texto.py --publicado <id>        tras publicar <id>: los enlaces a su
                                                           página "Próximamente" pasan a la suya
 Sin --escribir solo informa de lo que cambiaría. Si aparece una sigla nueva, añádela a G.
+También pone el aviso "★ Servicio clave" en la cabecera de los servicios con "clave": true y
+avisa si les falta la sección "A fondo" (id="a-fondo") o tienen menos de 2 preguntas difíciles.
 """
 import glob, html, json, os, re, sys
 
@@ -301,6 +303,9 @@ G = {
     'OCSF': ('Open Cybersecurity Schema Framework', 'esquema abierto para datos de seguridad'),
     'CSPM': ('Cloud Security Posture Management', 'gestión de la postura de seguridad en la nube'),
     'SRT': ('Shield Response Team', 'equipo de respuesta de AWS Shield'),
+    'IPAM': ('IP Address Manager', 'planifica y reparte rangos de IP entre cuentas y regiones'),
+    'MTU': ('Maximum Transmission Unit', 'tamaño máximo de paquete en una red'),
+    'ABAC': ('Attribute-Based Access Control', 'permisos según etiquetas o atributos'),
 }
 # RAM es la memoria en EC2 y el servicio AWS RAM en el resto de páginas. IA es Infrequent Access en EFS y S3.
 POR_PAGINA = {
@@ -519,11 +524,46 @@ def poner_frase(t, sid):
     return t[:m.end()] + fila + t[m.end():]
 
 
+RX_CLAVE = re.compile(r'\n\s*<p class="clave-aviso">.*?</p>', re.S)
+CLAVE_AVISO = ('\n      <p class="clave-aviso"><span class="chip chip-clave">★ Servicio clave</span> '
+               '<span>Guía ampliada con <a href="#a-fondo">temas avanzados</a> y preguntas difíciles '
+               'en el cuestionario.</span></p>')
+
+
+def poner_clave(t, sid):
+    """Aviso "★ Servicio clave" de la cabecera, justo encima de "En una frase:", según el campo
+    `clave` de servicios.json (se quita si deja de ser clave)."""
+    t = RX_CLAVE.sub('', t)
+    if not S[sid].get('clave'):
+        return t
+    fila = RX_FRASE.search(t)
+    if fila:
+        return t[:fila.start()] + CLAVE_AVISO + t[fila.start():]
+    cab = t.index('<div class="service-head">')
+    m = re.compile(r'<p class="full-name">.*?</p>', re.S).search(t, cab) or re.compile('</h1>').search(t, cab)
+    return t[:m.end()] + CLAVE_AVISO + t[m.end():]
+
+
+def avisos_clave(sid):
+    """Lo que le falta a un servicio clave: la sección "A fondo" y al menos 2 preguntas difíciles."""
+    if not S[sid].get('clave'):
+        return []
+    falta = []
+    pagina = open(os.path.join(REPO, 'servicios', f'{sid}.html'), encoding='utf8').read()
+    if 'id="a-fondo"' not in pagina:
+        falta.append('sin sección <h2 id="a-fondo">')
+    ruta = os.path.join(REPO, 'data', 'preguntas', f'{sid}.json')
+    dificiles = sum(1 for q in json.load(open(ruta, encoding='utf8')) if q.get('dificil')) if os.path.exists(ruta) else 0
+    if dificiles < 2:
+        falta.append(f'{dificiles} preguntas difíciles (mínimo 2)')
+    return falta
+
+
 def revisar_pagina(sid, escribir):
     ruta = os.path.join(REPO, 'servicios', f'{sid}.html')
     t = open(ruta, encoding='utf8').read()
     t0 = t
-    t = poner_frase(t, sid)
+    t = poner_clave(poner_frase(t, sid), sid)
     ini = t.index('<article class="doc">')
     fin = t.index('<h2 id="preguntas">')
     # Primero los enlaces (sobre el texto limpio) y después las siglas, también dentro de enlaces.
@@ -611,3 +651,5 @@ if __name__ == '__main__':
         siglas, enlaces = revisar_pagina(sid, escribir)
         nq = revisar_preguntas(sid, escribir)
         print(f'{sid:20} siglas {len(siglas):2} enlaces {len(enlaces):3} preguntas {nq:3} | {" ".join(siglas)}')
+        for falta in avisos_clave(sid):
+            print(f'  AVISO servicio clave {sid}: {falta}')

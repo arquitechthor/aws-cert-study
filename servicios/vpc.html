@@ -45,6 +45,7 @@
     <div class="service-head">
       <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/vpc.svg" alt="" width="56" height="56"><span>Amazon VPC</span></h1>
       <p class="full-name">Amazon Virtual Private Cloud (Amazon VPC)</p>
+      <p class="clave-aviso"><span class="chip chip-clave">★ Servicio clave</span> <span>Guía ampliada con <a href="#a-fondo">temas avanzados</a> y preguntas difíciles en el cuestionario.</span></p>
       <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Red aislada y lógica en la nube con subredes, tablas de rutas y grupos de seguridad</span></div>
       <div class="meta-row">
         <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
@@ -137,6 +138,104 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios de redes de SAP-C02:
+        direcciones sin solapes en muchas cuentas, <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> compartidas, topologías en estrella con salida e inspección
+        centralizadas, endpoints y <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> a escala, y cómo elegir entre las formas de conectar redes.</p>
+
+      <h3>Direcciones IP a escala</h3>
+      <ul>
+        <li><strong>Sin solapes desde el principio:</strong> si dos rangos se solapan, no se pueden unir por peering ni
+          enrutar por <a href="transit-gateway.html">Transit Gateway</a>. Rehacer el direccionamiento de una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> en producción es caro, así que se
+          planifica para todas las cuentas, regiones y redes locales a la vez.</li>
+        <li><strong>VPC <abbr class="sigla sigla-1" data-s="IPAM" data-en="IP Address Manager" data-es="planifica y reparte rangos de IP entre cuentas y regiones" tabindex="0">IPAM<span class="sigla-exp"> (IP Address Manager: planifica y reparte rangos de IP entre cuentas y regiones)</span></abbr>:</strong> reparte el espacio en grupos (<em>pools</em>) por región y entorno, se comparte con
+          <a href="ram.html"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a> a las cuentas de la organización, asigna rangos automáticamente al crear una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y avisa de solapes y de
+          rangos sin usar.</li>
+        <li><strong>Si el solape ya existe</strong> (por ejemplo, tras una adquisición): <a href="privatelink.html">PrivateLink</a>, que expone un
+          servicio concreto sin unir las redes, o un <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway</abbr> privado que traduce a un rango que no se solapa.</li>
+        <li><strong>Cuando faltan direcciones:</strong> se añaden bloques <abbr class="sigla" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR</abbr> secundarios, por ejemplo del rango
+          <code>100.64.0.0/10</code> para los pods de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>, sin tocar las subredes existentes.</li>
+        <li><strong>Cuotas que deciden el diseño:</strong> 5 <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> por región (ampliable a cientos), 5 bloques <abbr class="sigla" data-s="IPv4" data-en="Internet Protocol version 4" data-es="direcciones IP de 32 bits" tabindex="0">IPv4</abbr> por
+          <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (hasta 50), 200 subredes por <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y 50 peerings activos por <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (hasta 125). Más de unas decenas de
+          <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> conectadas entre sí ya apunta a Transit Gateway.</li>
+      </ul>
+
+      <h3>VPC compartidas (<em>VPC sharing</em>)</h3>
+      <p>Una cuenta de red es dueña de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y <strong>comparte subredes con <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></strong> a otras cuentas u <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr> de la
+        misma organización; esas cuentas participantes lanzan sus recursos en las subredes compartidas.</p>
+      <ul>
+        <li><strong>La cuenta propietaria</strong> controla la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, las subredes, las tablas de rutas, las <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr>, los
+          gateways y los <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr> gateways.</li>
+        <li><strong>Los participantes</strong> gestionan solo sus recursos y sus security groups: no pueden tocar rutas,
+          <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr> ni gateways, no ven los recursos de otros participantes y no pueden usar el security group por defecto
+          (es del propietario). Cada cuenta paga sus propios recursos.</li>
+        <li><strong>Requisitos:</strong> todas las cuentas en la misma organización y el uso compartido de <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr> activado
+          desde la cuenta de administración. Las subredes de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> por defecto no se pueden compartir.</li>
+        <li><strong>Ventajas:</strong> menos <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, menos adjuntos de Transit Gateway y menos direcciones desperdiciadas,
+          con la red en manos de un equipo central y los equipos de aplicación separados por cuenta.
+          <strong>Compromiso:</strong> las cuotas de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y el radio de fallo se comparten.</li>
+      </ul>
+
+      <h3>Topología en estrella con Transit Gateway</h3>
+      <ul>
+        <li><strong>Segmentación con tablas de rutas:</strong> cada adjunto se <em>asocia</em> a una tabla (por dónde
+          busca rutas) y <em>propaga</em> sus rutas a otras. Con tablas separadas, producción y desarrollo comparten
+          el mismo Transit Gateway sin verse.</li>
+        <li><strong>Salida a internet centralizada:</strong> una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de salida con <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr> gateways por zona y, en las <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de
+          aplicación, la ruta <code>0.0.0.0/0</code> hacia el Transit Gateway. Ahorra <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr> gateways, pero cada GB paga
+          además el procesamiento del Transit Gateway: con mucho tráfico puede salir más caro que un <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr> por <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li><strong>Inspección centralizada:</strong> una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de inspección con <a href="network-firewall.html">Network Firewall</a> o con appliances detrás
+          de un <abbr class="sigla" data-s="GWLB" data-en="Gateway Load Balancer" data-es="balanceador para appliances de red" tabindex="0">GWLB</abbr>. En su adjunto hay que activar el <strong>modo appliance</strong>
+          (<em>appliance mode</em>) para que la ida y la vuelta de cada flujo pasen por el mismo appliance; sin él, el
+          tráfico entre zonas distintas puede volver por otro camino y el firewall con estado lo descarta.</li>
+        <li><strong>Security groups entre <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>:</strong> por peering se puede referenciar un security group de la otra
+          <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> si están en la misma región; por Transit Gateway también, en la misma región, activando la opción en el
+          Transit Gateway (viene desactivada) y en el adjunto.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="MTU" data-en="Maximum Transmission Unit" data-es="tamaño máximo de paquete en una red" tabindex="0">MTU<span class="sigla-exp"> (Maximum Transmission Unit: tamaño máximo de paquete en una red)</span></abbr>:</strong> dentro de una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> se admiten tramas grandes de 9001 bytes; a través de Transit Gateway
+          el máximo es 8500 y por <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> o internet, 1500. Un fallo que solo aparece con paquetes grandes suele ser
+          esto.</li>
+        <li><strong>Varias regiones:</strong> peering entre Transit Gateways (con rutas estáticas) o Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr>, que define
+          la red global y su segmentación con una política central.</li>
+      </ul>
+
+      <h3>Endpoints a escala</h3>
+      <ul>
+        <li><strong>Endpoints de tipo interface centralizados:</strong> en una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de servicios compartidos, con el <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr>
+          privado del endpoint desactivado y una zona alojada privada de <a href="route-53.html">Route 53</a> por servicio
+          (<code>sqs.&lt;región&gt;.amazonaws.com</code>) asociada a todas las <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de aplicación. Se paga un endpoint en
+          vez de uno por <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, a cambio del tráfico por el Transit Gateway.</li>
+        <li><strong>Los endpoints de tipo gateway solo sirven dentro de su <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>:</strong> no se alcanzan desde otra <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>
+          (peering o Transit Gateway), ni desde una <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> o <a href="direct-connect.html">Direct Connect</a>. Para llegar a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> de forma privada desde la
+          red local hace falta el endpoint de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> de tipo interface.</li>
+        <li><strong>Políticas de endpoint como perímetro de datos:</strong> con <code>aws:ResourceOrgID</code> el endpoint
+          solo deja llegar a buckets de la propia organización, lo que corta la exfiltración a cuentas ajenas.</li>
+      </ul>
+
+      <h3>DNS híbrido</h3>
+      <ul>
+        <li>El resolvedor de cada <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (la dirección <code>.2</code> del rango) solo responde a consultas que nacen dentro
+          de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+        <li><strong>Endpoint de entrada</strong> de Route 53 Resolver: la red local resuelve las zonas privadas de AWS.
+          <strong>Endpoint de salida</strong> con <strong>reglas de reenvío</strong>: las <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> resuelven los dominios
+          de la red local.</li>
+        <li>Basta un juego de endpoints, en varias zonas, en la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> de servicios compartidos: las reglas de reenvío se
+          comparten con <abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr> al resto de cuentas y <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>.</li>
+      </ul>
+
+      <h3>Cómo conectar redes: tabla de decisión</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Cuándo</th><th>Transitivo</th><th>¿Tolera rangos solapados?</th></tr></thead>
+          <tbody>
+            <tr><td><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> peering</td><td>Pocas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>; sin coste por conexión, solo la transferencia de datos.</td><td>No</td><td>No</td></tr>
+            <tr><td>Transit Gateway</td><td>Decenas o miles de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y redes locales, con segmentación por tablas de rutas.</td><td>Sí</td><td>No</td></tr>
+            <tr><td>PrivateLink</td><td>Exponer un servicio concreto (detrás de un <a href="elb.html"><abbr class="sigla sigla-1" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB<span class="sigla-exp"> (Network Load Balancer: balanceador TCP/UDP)</span></abbr></a>) a otras cuentas o como <abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr>; solo en un sentido.</td><td>No aplica</td><td>Sí</td></tr>
+            <tr><td>VPC Lattice</td><td>Comunicación entre servicios de varias <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y cuentas en la capa de aplicación, con autorización de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</td><td>No aplica</td><td>Sí</td></tr>
+            <tr><td>Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr></td><td>Red global en varias regiones y oficinas gestionada con una política central.</td><td>Sí</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Crear una <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, subredes, tablas de rutas, security groups y <abbr class="sigla" data-s="NACL" data-en="Network Access Control List" data-es="firewall a nivel de subred" tabindex="0">NACL</abbr> no cuesta nada. Se paga por
         los componentes gestionados: <abbr class="sigla" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT</abbr> gateways (por hora y por GB procesado), endpoints de tipo
@@ -177,6 +276,11 @@
         <li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html" target="_blank" rel="noopener">NAT gateways</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html" target="_blank" rel="noopener">Gateway endpoints</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html" target="_blank" rel="noopener">VPC peering basics</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-share-limitations.html" target="_blank" rel="noopener">Responsibilities and permissions for owners and participants (VPC sharing)</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/using-gwlb-with-tg-for-cns.html" target="_blank" rel="noopener">Using Gateway Load Balancer with Transit Gateway for centralized network security</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/whitepapers/latest/hybrid-cloud-dns-options-for-vpc/route-53-resolver-endpoints-and-forwarding-rules.html" target="_blank" rel="noopener">Route 53 Resolver endpoints and forwarding rules</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html" target="_blank" rel="noopener">Amazon VPC quotas</a>, documentación de AWS (consultada el 08/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-connection-quotas.html" target="_blank" rel="noopener">VPC peering connection quotas</a>, documentación de AWS (consultada el 08/10/2026).</li>
       </ul>
     </article>
   </div>
