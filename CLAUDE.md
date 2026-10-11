@@ -47,11 +47,21 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   domain, history in `localStorage` `apuntes-aws.simulacros`) and the review of failed questions
   (`?repaso=1[&cert=]`). `progreso.html` + `assets/progreso.js`: "Mi progreso" summary (noindex).
   Exam length and duration come from `examen` in `certificaciones.json`.
-- `memoria.html` + `assets/memoria.js`: memory game with two modes, `categorias` (two service
-  cards match when they share the main `categoria`) and `funciones` (a service card matches the
-  card with its `frase`). Only services with `"icono": true`. Config lives in the URL
-  (`?modo=funciones&tablero=16&cert=DVA-C02&cat=a,b&dificil=1`); last config and best scores in
-  `localStorage` (`apuntes-aws.memoria`). Rules and sizes in `PLAN.md` (Fase 4).
+- Games, grouped in the nav under a "Juegos" dropdown (`.nav-menu`, opened by `assets/nav.js`):
+  - `memoria.html` + `assets/memoria.js`: memory game; two service cards match when they share the
+    main `categoria`. Config in the URL (`?tablero=8x8&cert=DVA-C02&cat=a,b&dificil=1`), last one in
+    `localStorage` (`apuntes-aws.memoria`). Rules in `PLAN.md` (Fase 4).
+  - `empareja.html` + `assets/empareja.js` (the old memory "funciones" mode, now its own game):
+    services (icon + name; icon only in hard mode) on the left, their `frase` on the right, all
+    visible once "Empezar" is pressed (the timer starts there). Tracks time and accuracy
+    (pairs / attempts). Config in the URL (`?tablero=8&...`), last one in `apuntes-aws.empareja`.
+  - `clasificacion.html` + `assets/clasificacion.js` (noindex): top 10 times per game, board size
+    and hard mode, shown as two tables (Memoria, Empareja) for the chosen level and mode
+    (`?nivel=1..7&dificil=1`). `assets/juegos.js` (`window.AwsJuegos`) holds the 7 shared size
+    levels (`NIVELES`: Memoria 6×6…12×12 ↔ Empareja 6…24 pairs), the storage
+    (`apuntes-aws.clasificacion`: name, date, time in ms, and accuracy for Empareja) and the
+    end-of-game name prompt. Reduced boards (when filters leave too few services) don't rank.
+  Only services with `"icono": true` (and a `frase`) play in either game.
 - `servicio.html` + `assets/servicio.js`: generic "Próximamente disponible" page
   (`?id=<id>`), used for every service with `estado: "pendiente"`. It redirects to
   `servicios/<id>.html` once the service is `publicado`.
@@ -156,6 +166,6 @@ your own. A key service has `"clave": true` in `servicios.json` and must have:
 - Keep the legal footer on every page, and keep `aviso-legal.html` consistent with any new
   feature (e.g. anything stored in `localStorage` must be covered by its privacy section).
 - AWS icons are shown only next to the service/category name they identify (catalog cards,
-  category filter, service page header) and in the memory game; always **unmodified** (no
+  category filter, service page header) and in the games (Memoria, Empareja); always **unmodified** (no
   recoloring or cropping) and excluded from the CC BY-SA 4.0 license (see `PLAN.md` decisions
   and `README.md`).

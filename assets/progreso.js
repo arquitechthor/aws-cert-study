@@ -136,7 +136,7 @@
 
       <div class="prog-borrar">
         <h2>Borrar mi progreso</h2>
-        <p>Borra de este navegador los aciertos, las falladas y el historial de simulacros (el juego de memoria no se toca). No se puede deshacer.</p>
+        <p>Borra de este navegador los aciertos, las falladas y el historial de simulacros (los juegos y su clasificación no se tocan). No se puede deshacer.</p>
         <button class="btn btn-secondary btn-sm" type="button" id="prog-borrar">Borrar mi progreso</button>
       </div>`;
 

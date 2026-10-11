@@ -31,13 +31,17 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `pinpoint` el 30/10/2026, `managed-blockchain` (sin clientes nuevos) el
   29/10/2026 y `support` (planes antiguos) el 01/01/2027. Tarea 0.9 (guías SAP-C03 y DVA-C03) el
   27/10/2026.
+- **Juegos (11/10/2026):** el modo funciones sale del juego de memoria y pasa a ser el juego
+  **Empareja** (`empareja.html`); menú desplegable "Juegos" (Memoria, Empareja, Clasificación) y
+  **clasificación** local con el top 10 de tiempos por juego, tamaño y modo difícil
+  (`clasificacion.html`). Ver la decisión "Juegos y clasificación".
 - **Servicios clave (08/10/2026):** pedidos por el usuario, que irá diciendo cuáles son mientras
   prueba la web. Hechos: `vpc`, `organizations`, `s3` y `lambda` (resaltado en catálogo y guía, filtro `clave=1`,
   sección "A fondo: temas avanzados" y 5 preguntas difíciles cada uno). Ver la decisión
   "Servicios clave" y `CLAUDE.md`.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-10-08
+- **Última actualización:** 2026-10-11
 
 ---
 
@@ -69,6 +73,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Repaso y falladas (3.2) | Una pregunta está "fallada" si su **último** intento fue incorrecto (`fallos` en `apuntes-aws.progreso`); sale del repaso al acertarla. El repaso (`simulacro.html?repaso=1[&cert=]`) no tiene tiempo límite. `progreso.html` resume todo y permite borrarlo; lleva `noindex` porque solo muestra datos locales. |
 | Preguntas difíciles | Pedido por el usuario el 2026-10-06: `"dificil": true` en el JSON muestra la etiqueta ⚠ "Pregunta difícil" (ámbar) en guías y simulacros, y el simulacro puede limitarse a ellas. Criterio en la Fase 5. |
 | Servicios clave | Pedido por el usuario el 2026-10-08; él decide cuáles son (primeros: Amazon VPC y AWS Organizations; después, Amazon S3 y AWS Lambda). `"clave": true` en `servicios.json`. (1) **Resaltado**: borde con el degradado de la marca y chip "★ Servicio clave" en su tarjeta del catálogo, y aviso "★ Servicio clave" en la cabecera de su guía (lo escribe `revisar_texto.py`). (2) **Filtro** "★ Servicios clave" en el grupo "Destacados" del catálogo (antes "En la práctica", junto a "Usados en Kopi"), `clave=1` en la URL. (3) **Guía más larga y profunda**: sección `id="a-fondo"` "A fondo: temas avanzados" antes de "Modelo de precios" (la misma sección que prevé la Fase 5). (4) **Al menos 2 preguntas difíciles** (`"dificil": true`). `revisar_texto.py` avisa si faltan (3) o (4). |
+| Juegos y clasificación | Pedido por el usuario el 2026-10-11. (1) El juego de memoria se queda **solo con el modo categorías**; el modo funciones pasa a ser un juego aparte, **Empareja** (`empareja.html`): servicios (icono y nombre; en modo difícil solo icono) a la izquierda y sus frases a la derecha, **todo a la vista**; se elige uno de cada lado. Cuenta el **tiempo** y el **porcentaje de acierto** (parejas / intentos). Para que nadie lea el tablero con el reloj parado, las columnas aparecen al pulsar "Empezar", que arranca el tiempo. Al fallar no se dice de quién era la frase (lo resolvería); se revela en "Tus fallos" al final. (2) Menú desplegable **"Juegos"** con Memoria, Empareja y Clasificación en todas las páginas. (3) **Clasificación** (`clasificacion.html`, noindex): top 10 por tiempo, **una tabla interna por juego, tamaño de tablero y modo difícil**, pero al usuario se le muestran solo dos (Memoria y Empareja) según un desplegable de tamaño y una casilla de modo difícil. Como el desplegable es común, los dos juegos comparten **7 niveles**: Memoria 6×6, 6×8, 8×8, 8×10, 10×10, 10×12, 12×12 ↔ Empareja 6, 8, 10, 12, 16, 20, 24 parejas. Si un tiempo entra en el top 10 se pide el nombre (se recuerda el último); se guardan nombre, fecha, tiempo (en ms, se muestra con décimas) y, en Empareja, el acierto. Los filtros de certificación y categoría no separan tablas; los tableros reducidos (filtros con pocos servicios) no entran. Todo en `localStorage` (`apuntes-aws.clasificacion`); las antiguas "mejores marcas" por movimientos del juego de memoria se descartan. |
 | `robots.txt` | Los buscadores solo leen `/robots.txt` en la raíz del dominio, así que vive en el repo `arquitechthor.github.io` y anuncia el `sitemap.xml` de los dos sitios. Este repo solo genera su `sitemap.xml` (`scripts/generar_sitemap.py`). |
 | Servicios pendientes | Sin archivos vacíos: un servicio con `estado: "pendiente"` enlaza a la página genérica `servicio.html?id=<id>` ("Próximamente disponible"). Al publicarlo se crea `servicios/<id>.html`. |
 
@@ -80,7 +85,9 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 aws-cert-study/
 ├── index.html                # portada: buscador + filtros + tarjetas de servicios
 ├── servicio.html             # "Próximamente disponible" genérica (?id=<id>)
-├── memoria.html              # juego de memoria: modos categorías y funciones (Fase 4)
+├── memoria.html              # juego de memoria por categorías (Fase 4)
+├── empareja.html             # juego Empareja: servicio ↔ función, a la vista
+├── clasificacion.html        # top 10 de tiempos de los juegos (noindex)
 ├── simulacro.html            # simulacro por certificación y repaso de falladas (Fase 3)
 ├── progreso.html             # mi progreso: resumen, falladas, simulacros (Fase 3, noindex)
 ├── sitemap.xml               # generado con scripts/generar_sitemap.py
@@ -99,6 +106,9 @@ aws-cert-study/
 │   ├── simulacro.js          # simulacro y repaso (usa preguntas.js)
 │   ├── progreso.js           # página "Mi progreso"
 │   ├── memoria.js            # juego de memoria (Fase 4)
+│   ├── empareja.js           # juego Empareja
+│   ├── juegos.js             # niveles y clasificación comunes a los juegos
+│   ├── clasificacion.js      # página de clasificación
 │   ├── iconos/servicios/<id>.svg   # iconos oficiales de AWS (servicios)
 │   ├── iconos/categorias/<id>.svg  # iconos oficiales de AWS (categorías)
 │   └── nav.js                # menú móvil
@@ -518,6 +528,10 @@ resto de la cola son las de cuando se creó; las actuales están en `servicios.j
 
 ## Fase 4: juego de memoria (modos categorías y funciones)
 
+> **Desde el 2026-10-11** el modo 2 (funciones) es un juego aparte, **Empareja**, con todas las
+> cartas a la vista y clasificación por tiempo: ver la decisión "Juegos y clasificación". Lo que
+> sigue describe la Fase 4 tal como se hizo.
+
 Objetivo: un juego tipo memoria (memorama) en `memoria.html` con dos modos: **categorías**
 (aprender a qué categoría pertenece cada servicio) y **funciones** (aprender qué hace cada
 servicio). Los dos comparten tablero, filtros, accesibilidad y pantalla final. Solo depende de la Fase 1 (catálogo y estilos), no del contenido de la
@@ -745,3 +759,4 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
 | 2026-10-08 | Avisos con fecha vencidos pasados a pasado: `proton` (retirado el 07/10/2026: aviso, meta description, `resumen`, trampas y la pregunta sobre el fin de soporte) e `iot-greengrass` (V1 sin soporte desde el 07/10/2026: aviso, trampas y su pregunta). Quedan Pinpoint (30/10/2026), Managed Blockchain (29/10/2026) y Support (01/01/2027). |
 | 2026-10-08 | **S3 pasa a servicio clave** (pedido por el usuario): sección "A fondo" (rendimiento por prefijo y errores 503, acceso entre cuentas y propiedad de objetos, access points y Access Grants, perímetro de datos con Block Public Access de organización, RCP, SCP y endpoints, KMS a gran volumen y Bucket Keys, qué replica y qué no, Replication Time Control, replicación en los dos sentidos y Multi-Region Access Points, Storage Lens, objetos de menos de 128 KB, Batch Operations, cierre de S3 Object Lambda, tabla de decisión) y 5 preguntas difíciles de SAP-C02 (`s3-012`…`016`, una de emparejar). 1061 preguntas. |
 | 2026-10-08 | **Lambda pasa a servicio clave** (pedido por el usuario): sección "A fondo" (velocidad de escalado por función y concurrencia reservada/aprovisionada, proteger la base de datos con concurrencia máxima y RDS Proxy, aislamiento por inquilino, SQS/Kinesis a gran volumen con modo aprovisionado, tiempo de visibilidad, fallos parciales e idempotencia, ENI Hyperplane y claves `lambda:VpcIds`, límite de 15 minutos y la excepción de 90 de Lambda Managed Instances (09/2026), durable functions frente a Step Functions, response streaming de 200 MB, CodeDeploy, AppConfig, invocación entre cuentas, code signing, coste y Managed Instances, tabla de decisión) y 5 preguntas difíciles de SAP-C02 (`lambda-013`…`017`, una de emparejar). Sigla nueva: ENI. 1066 preguntas. |
+| 2026-10-11 | **Juegos** (pedido por el usuario): el modo funciones sale de `memoria.html` y pasa a ser el juego **Empareja** (`empareja.html` + `assets/empareja.js`: dos columnas a la vista, botón "Empezar" que arranca el tiempo, acierto = parejas / intentos, repaso de fallos al final). Menú desplegable **"Juegos"** (Memoria, Empareja, Clasificación) en las 173 páginas y la plantilla, con submenú dentro del panel en móvil. **Clasificación** (`clasificacion.html` + `assets/clasificacion.js`, noindex) y módulo común `assets/juegos.js`: top 10 por juego, tamaño y modo difícil, 7 niveles comunes, nombre pedido al entrar en el top 10, en `localStorage` `apuntes-aws.clasificacion`. Aviso legal (privacidad), portada (botón Empareja), `sitemap.xml` (+ `empareja.html`) y `CLAUDE.md` actualizados. Probado en navegador a escritorio y 375 px (sin desplazamiento horizontal). |

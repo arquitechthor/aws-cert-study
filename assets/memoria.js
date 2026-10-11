@@ -1,19 +1,17 @@
 /**
- * Juego de memoria (memoria.html) con dos modos:
- *  - "categorias": cada carta es un servicio y dos cartas son pareja si comparten categoría
- *    principal. No hay una pareja única: cualquier servicio de la misma categoría vale.
- *  - "funciones": cada servicio aporta una carta de servicio y otra con su `frase`; la única
- *    pareja válida es un servicio con su frase.
- * La configuración vive en la URL (?modo=funciones&tablero=16&cert=DVA-C02&cat=a,b&dificil=1)
- * y la última usada, junto con las mejores marcas, en localStorage (ver aviso legal, privacidad).
+ * Juego de memoria (memoria.html): cada carta es un servicio y dos cartas son pareja si comparten
+ * categoría principal. No hay una pareja única: cualquier servicio de la misma categoría vale.
+ * (El antiguo modo "funciones", servicio con su frase, es ahora el juego Empareja.)
+ * La configuración vive en la URL (?tablero=8x8&cert=DVA-C02&cat=a,b&dificil=1) y la última
+ * usada en localStorage (ver aviso legal, privacidad). Los tiempos van a la clasificación común
+ * de los juegos (assets/juegos.js).
  */
 (function () {
   const { cargar, esc, urlServicio, iconoServicio, categoriaHtml } = window.AwsDatos;
+  const { barajar, formatoTiempo, ofrecer } = window.AwsJuegos;
 
   const $ = (id) => document.getElementById(id);
   const el = {
-    modo: $('m-modo'),
-    ayuda: $('m-ayuda'),
     cert: $('m-cert'),
     tablero: $('m-tablero'),
     cats: $('m-cats'),
@@ -29,22 +27,15 @@
   };
 
   const CLAVE = 'apuntes-aws.memoria';
-  // Modo categorías: filas × columnas. Solo se ofrecen los tamaños que caben en el filtro.
-  const TABLEROS_CATEGORIAS = [[6, 6], [6, 8], [8, 8], [8, 10], [10, 10], [10, 12], [12, 12]];
-  // Modo funciones: número de cartas (dos por servicio) y columnas en escritorio.
-  const TABLEROS_FUNCIONES = { 12: 4, 16: 4, 20: 5, 24: 6 };
-  // Las frases necesitan más tiempo de lectura antes de taparse.
-  const PAUSA_FALLO = { categorias: 1800, funciones: 3500 };
-  const AYUDA = {
-    categorias: 'Categorías: dos servicios son pareja si pertenecen a la misma categoría. Cualquier servicio de esa categoría vale.',
-    funciones: 'Funciones: empareja cada servicio con la frase que describe lo que hace.',
-  };
+  // Filas × columnas: los niveles de la clasificación. Solo se ofrecen los que caben en el filtro.
+  const TABLEROS = window.AwsJuegos.NIVELES.map((n) => n.memoria.split('x').map(Number));
+  const PAUSA_FALLO = 1800;
 
-  const config = { modo: 'categorias', tablero: '', cert: '', cats: new Set(), dificil: false };
+  const config = { tablero: '', cert: '', cats: new Set(), dificil: false };
   let datos = null;
   let partida = null;
 
-  // ── Almacenamiento local: { config: {…}, marcas: { "<modo>|<cartas>|<difícil>": {…} } } ──
+  // ── Almacenamiento local: { config: {…} } (los tiempos van a la clasificación) ──
   function leerAlmacen() {
     try {
       const a = JSON.parse(localStorage.getItem(CLAVE) || '{}');
@@ -56,7 +47,9 @@
 
   function guardarAlmacen(cambios) {
     try {
-      localStorage.setItem(CLAVE, JSON.stringify({ ...leerAlmacen(), ...cambios }));
+      // Las antiguas "marcas" (por movimientos) se descartan: las sustituye la clasificación.
+      const { marcas, ...resto } = leerAlmacen();
+      localStorage.setItem(CLAVE, JSON.stringify({ ...resto, ...cambios }));
     } catch { /* sin almacenamiento: no se guarda */ }
   }
 
@@ -66,7 +59,6 @@
   }
 
   function aplicarConfig(c) {
-    config.modo = c.modo === 'funciones' ? 'funciones' : 'categorias';
     config.tablero = String(c.tablero || '');
     config.cert = esFiltrable(datos.certPorCodigo.get(c.cert)) ? c.cert : '';
     config.cats = new Set((c.cats || []).filter((id) => datos.categoriaPorId.has(id)));
@@ -78,7 +70,6 @@
     const p = new URLSearchParams(location.search);
     if ([...p.keys()].length) {
       aplicarConfig({
-        modo: p.get('modo'),
         tablero: p.get('tablero'),
         cert: p.get('cert'),
         cats: (p.get('cat') || '').split(','),
@@ -91,7 +82,6 @@
 
   function escribirConfig() {
     const p = new URLSearchParams();
-    if (config.modo !== 'categorias') p.set('modo', config.modo);
     if (config.tablero) p.set('tablero', config.tablero);
     if (config.cert) p.set('cert', config.cert);
     if (config.cats.size) p.set('cat', [...config.cats].join(','));
@@ -122,22 +112,14 @@
   }
 
   /**
-   * Tamaños que caben en el filtro. En el modo categorías el máximo es la suma, por categoría,
-   * de su número de servicios redondeado hacia abajo a par (así el tablero siempre se vacía).
-   * Si el filtro no llega al tamaño mínimo, se ofrece un único tablero con lo que haya.
+   * Tamaños que caben en el filtro. El máximo es la suma, por categoría, de su número de
+   * servicios redondeado hacia abajo a par (así el tablero siempre se vacía). Si el filtro no
+   * llega al tamaño mínimo, se ofrece un único tablero con lo que haya (fuera de la clasificación).
    */
   function tamanos() {
-    const lista = candidatos();
-    if (config.modo === 'funciones') {
-      const max = lista.length * 2;
-      const ok = Object.entries(TABLEROS_FUNCIONES).filter(([n]) => n <= max).map(([n, columnas]) => (
-        { valor: n, cartas: Number(n), columnas, texto: `${n} cartas (${n / 2} servicios)` }));
-      if (ok.length || max < 4) return ok;
-      return [{ valor: String(max), cartas: max, columnas: 4, texto: `${max} cartas (${max / 2} servicios)` }];
-    }
     let max = 0;
-    for (const grupo of porCategoria(lista).values()) max += grupo.length - (grupo.length % 2);
-    const ok = TABLEROS_CATEGORIAS.filter(([f, c]) => f * c <= max).map(([f, c]) => (
+    for (const grupo of porCategoria(candidatos()).values()) max += grupo.length - (grupo.length % 2);
+    const ok = TABLEROS.filter(([f, c]) => f * c <= max).map(([f, c]) => (
       { valor: `${f}x${c}`, cartas: f * c, columnas: c, texto: `${f}×${c} (${f * c} cartas)` }));
     if (ok.length || max < 4) return ok;
     return [{ valor: String(max), cartas: max, columnas: max <= 16 ? 4 : 6, texto: `${max} cartas` }];
@@ -162,13 +144,6 @@
     el.cert.insertAdjacentHTML('beforeend', datos.certificaciones.filter(esFiltrable).map((c) =>
       `<option value="${esc(c.codigo)}">${esc(c.codigo)} · ${esc(c.nombreCorto)}</option>`).join(''));
 
-    el.modo.addEventListener('click', (ev) => {
-      const btn = ev.target.closest('button[data-modo]');
-      if (!btn || btn.dataset.modo === config.modo) return;
-      config.modo = btn.dataset.modo;
-      config.tablero = ''; // los tamaños de un modo no valen para el otro
-      nuevaPartida();
-    });
     el.cert.addEventListener('change', () => { config.cert = el.cert.value; nuevaPartida(); });
     el.tablero.addEventListener('change', () => { config.tablero = el.tablero.value; nuevaPartida(); });
     el.cats.addEventListener('click', (ev) => {
@@ -185,10 +160,6 @@
   }
 
   function sincronizarControles(lista, tamano) {
-    for (const btn of el.modo.querySelectorAll('button[data-modo]')) {
-      btn.setAttribute('aria-checked', String(btn.dataset.modo === config.modo));
-    }
-    el.ayuda.textContent = AYUDA[config.modo];
     el.cert.value = config.cert;
 
     // Solo las categorías con servicios en la certificación elegida.
@@ -207,23 +178,8 @@
   }
 
   // ── Generación del tablero ──────────────────────────────────
-  function barajar(lista) {
-    const a = [...lista];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
   function generar(n) {
     const lista = barajar(candidatos());
-    if (config.modo === 'funciones') {
-      return barajar(lista.slice(0, n / 2).flatMap((s) => [
-        { tipo: 'servicio', servicio: s },
-        { tipo: 'funcion', servicio: s },
-      ]));
-    }
     // Se eligen parejas de servicios de la misma categoría: cada categoría sale un número par
     // de veces y no quedan cartas huérfanas.
     const parejas = [];
@@ -244,20 +200,15 @@
 
   function htmlCarta(carta, i) {
     const s = carta.servicio;
-    const tipo = config.modo === 'funciones'
-      ? `<span class="memo-tipo">${carta.tipo === 'funcion' ? 'Función' : 'Servicio'}</span>` : '';
-    const cara = carta.tipo === 'funcion'
-      ? `<span class="memo-frase">${esc(s.frase)}</span>`
-      : `${iconoServicio(s, categoriaDe(carta), 'memo-icono').replace(' loading="lazy"', '')}<span class="memo-nombre">${esc(s.nombre)}</span>`;
-    return `<button type="button" class="memo-carta memo-${carta.tipo}" data-i="${i}" aria-label="Carta ${i + 1}, boca abajo">
-      <span class="memo-inner"><span class="memo-dorso" aria-hidden="true"></span><span class="memo-cara">${tipo}${cara}</span></span>
+    const cara = `${iconoServicio(s, categoriaDe(carta), 'memo-icono').replace(' loading="lazy"', '')}<span class="memo-nombre">${esc(s.nombre)}</span>`;
+    return `<button type="button" class="memo-carta" data-i="${i}" aria-label="Carta ${i + 1}, boca abajo">
+      <span class="memo-inner"><span class="memo-dorso" aria-hidden="true"></span><span class="memo-cara">${cara}</span></span>
     </button>`;
   }
 
   /** Lo que anuncia una carta boca arriba (en modo difícil el nombre no se ve, pero sí se lee). */
   function etiqueta(carta) {
-    if (carta.tipo === 'funcion') return `Función: ${carta.servicio.frase}`;
-    return config.modo === 'funciones' ? `Servicio: ${carta.servicio.nombre}` : carta.servicio.nombre;
+    return carta.servicio.nombre;
   }
 
   // ── Partida ─────────────────────────────────────────────────
@@ -278,7 +229,7 @@
 
     el.final.hidden = true;
     el.final.innerHTML = '';
-    el.juego.className = `memo-tablero memo-${config.modo}${config.dificil ? ' memo-dificil' : ''}`;
+    el.juego.className = `memo-tablero memo-categorias${config.dificil ? ' memo-dificil' : ''}`;
 
     if (!tamano) {
       partida = null;
@@ -296,9 +247,7 @@
     el.juego.innerHTML = cartas.map(htmlCarta).join('');
     cartas.forEach((c, i) => { c.nodo = el.juego.children[i]; });
     el.hud.hidden = false;
-    decir(config.modo === 'funciones'
-      ? 'Voltea dos cartas: un servicio y la frase que lo describe.'
-      : 'Voltea dos cartas: son pareja si los dos servicios son de la misma categoría.');
+    decir('Voltea dos cartas: son pareja si los dos servicios son de la misma categoría.');
     pintarMarcador();
   }
 
@@ -307,14 +256,10 @@
     el.mensaje.textContent = texto;
   }
 
-  function formatoTiempo(seg) {
-    return `${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, '0')}`;
-  }
-
   function pintarMarcador() {
     el.movimientos.textContent = partida.movimientos;
     el.parejas.textContent = `${partida.emparejadas.length}/${partida.cartas.length / 2}`;
-    el.tiempo.textContent = formatoTiempo(partida.segundos);
+    el.tiempo.textContent = formatoTiempo(partida.segundos * 1000, false);
   }
 
   /** El tiempo empieza a contar con la primera carta volteada. */
@@ -323,7 +268,7 @@
     partida.inicio = Date.now();
     partida.crono = setInterval(() => {
       partida.segundos = Math.floor((Date.now() - partida.inicio) / 1000);
-      el.tiempo.textContent = formatoTiempo(partida.segundos);
+      el.tiempo.textContent = formatoTiempo(partida.segundos * 1000, false);
     }, 1000);
   }
 
@@ -338,7 +283,6 @@
   }
 
   function esPareja(a, b) {
-    if (config.modo === 'funciones') return a.tipo !== b.tipo && a.servicio === b.servicio;
     return a.servicio.categoria === b.servicio.categoria;
   }
 
@@ -365,14 +309,9 @@
     for (const c of [a, b]) {
       c.hecha = true;
       c.nodo.classList.add('is-hecha');
-      c.nodo.setAttribute('aria-label', `${etiqueta(c)}, emparejada${config.modo === 'categorias' ? `: ${nombreCategoria(c)}` : ''}`);
+      c.nodo.setAttribute('aria-label', `${etiqueta(c)}, emparejada: ${nombreCategoria(c)}`);
     }
-    if (config.modo === 'funciones') {
-      enlazar(a.tipo === 'servicio' ? a : b);
-      decir(`¡Pareja! ${a.servicio.nombre}: ${a.servicio.frase}.`, 'ok');
-    } else {
-      decir(`¡Pareja! ${a.servicio.nombre} y ${b.servicio.nombre} son de ${nombreCategoria(a)}.`, 'ok');
-    }
+    decir(`¡Pareja! ${a.servicio.nombre} y ${b.servicio.nombre} son de ${nombreCategoria(a)}.`, 'ok');
     if (partida.emparejadas.length === partida.cartas.length / 2) terminar();
   }
 
@@ -381,17 +320,8 @@
     b.fallada = true;
     a.nodo.classList.add('is-fallo');
     b.nodo.classList.add('is-fallo');
-    if (config.modo === 'categorias') {
-      decir(`No son pareja: ${a.servicio.nombre} es de ${nombreCategoria(a)} y ${b.servicio.nombre}, de ${nombreCategoria(b)}.`, 'ko');
-    } else {
-      // Se dice de qué servicio era cada frase volteada, para aprender del error.
-      const frases = [a, b].filter((c) => c.tipo === 'funcion').map((c) => `«${c.servicio.frase}» es ${c.servicio.nombre}`);
-      const motivo = a.tipo === b.tipo
-        ? (a.tipo === 'servicio' ? 'Dos servicios nunca son pareja: busca la frase de uno de ellos.' : 'Dos frases nunca son pareja.')
-        : 'No son pareja.';
-      decir(`${motivo}${frases.length ? ` ${frases.join('; ')}.` : ''}`, 'ko');
-    }
-    partida.pendiente = setTimeout(taparFallo, PAUSA_FALLO[config.modo]);
+    decir(`No son pareja: ${a.servicio.nombre} es de ${nombreCategoria(a)} y ${b.servicio.nombre}, de ${nombreCategoria(b)}.`, 'ko');
+    partida.pendiente = setTimeout(taparFallo, PAUSA_FALLO);
   }
 
   function taparFallo() {
@@ -401,31 +331,12 @@
     partida.abiertas = [];
   }
 
-  /** En el modo funciones, la carta de servicio acertada pasa a ser un enlace a su guía. */
-  function enlazar(carta) {
-    const a = document.createElement('a');
-    a.className = carta.nodo.className;
-    a.href = urlServicio(carta.servicio);
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.setAttribute('aria-label', `${etiqueta(carta)}, emparejada. Abrir su guía en otra pestaña`);
-    a.innerHTML = carta.nodo.innerHTML;
-    const conFoco = document.activeElement === carta.nodo;
-    carta.nodo.replaceWith(a);
-    carta.nodo = a;
-    if (conFoco) a.focus();
-  }
-
   // ── Pantalla final ──────────────────────────────────────────
   function enlaceServicio(s) {
     return `<a href="${esc(urlServicio(s))}">${esc(s.nombre)}</a>`;
   }
 
   function repaso() {
-    if (config.modo === 'funciones') {
-      return `<ul class="memo-repaso">${partida.emparejadas.map(([a]) =>
-        `<li><strong>${enlaceServicio(a.servicio)}</strong>: ${esc(a.servicio.frase)}</li>`).join('')}</ul>`;
-    }
     const grupos = porCategoria(partida.emparejadas.flat().map((c) => c.servicio));
     return [...grupos].sort(([a], [b]) => datos.categoriaPorId.get(a).nombre.localeCompare(datos.categoriaPorId.get(b).nombre, 'es'))
       .map(([id, servicios]) => `
@@ -436,36 +347,26 @@
   function terminar() {
     partida.terminada = true;
     clearInterval(partida.crono);
-    partida.segundos = Math.floor((Date.now() - partida.inicio) / 1000);
-
-    // Mejor marca por modo, número de cartas y modo difícil: menos movimientos y, a igualdad, menos tiempo.
-    const clave = `${config.modo}|${partida.cartas.length}|${config.dificil ? 1 : 0}`;
-    const marcas = leerAlmacen().marcas || {};
-    const previa = marcas[clave];
-    const mejora = !previa || partida.movimientos < previa.movimientos
-      || (partida.movimientos === previa.movimientos && partida.segundos < previa.segundos);
-    if (mejora) {
-      marcas[clave] = { movimientos: partida.movimientos, segundos: partida.segundos, fecha: new Date().toISOString().slice(0, 10) };
-      guardarAlmacen({ marcas });
-    }
-    const marca = mejora
-      ? (previa ? `¡Nueva mejor marca! La anterior era de ${previa.movimientos} movimientos en ${formatoTiempo(previa.segundos)}.` : 'Primera marca guardada para este tablero.')
-      : `Tu mejor marca en este tablero: ${previa.movimientos} movimientos en ${formatoTiempo(previa.segundos)}.`;
+    const ms = Date.now() - partida.inicio;
+    partida.segundos = Math.floor(ms / 1000);
+    pintarMarcador();
 
     const total = partida.cartas.length / 2;
     el.final.innerHTML = `
       <h2 tabindex="-1">¡Tablero completado!</h2>
       <div class="memo-resumen">
+        <div><strong>${formatoTiempo(ms)}</strong><span>tiempo</span></div>
         <div><strong>${partida.movimientos}</strong><span>movimientos</span></div>
         <div><strong>${partida.primeras}/${total}</strong><span>aciertos a la primera</span></div>
-        <div><strong>${formatoTiempo(partida.segundos)}</strong><span>tiempo</span></div>
       </div>
-      <p class="memo-marca">${esc(marca)}</p>
+      <div id="memo-clasificacion"></div>
       <p><button class="btn btn-primary" type="button" id="memo-revancha">Revancha</button></p>
-      <h3>${config.modo === 'funciones' ? 'Parejas para repasar' : 'Servicios del tablero por categoría'}</h3>
+      <h3>Servicios del tablero por categoría</h3>
       ${repaso()}`;
+    // Cuenta el tamaño jugado: un tablero reducido por los filtros no entra en la clasificación.
+    ofrecer($('memo-clasificacion'), { juego: 'memoria', tablero: config.tablero, dificil: config.dificil, ms });
     el.final.hidden = false;
-    decir(`¡Tablero completado en ${partida.movimientos} movimientos!`, 'ok');
+    decir(`¡Tablero completado en ${formatoTiempo(ms)} y ${partida.movimientos} movimientos!`, 'ok');
     $('memo-revancha').addEventListener('click', () => {
       nuevaPartida();
       el.hud.scrollIntoView({ block: 'nearest' });
@@ -473,7 +374,8 @@
       if (primera) primera.focus();
     });
     el.final.scrollIntoView({ block: 'nearest' });
-    el.final.querySelector('h2').focus({ preventScroll: true });
+    const campo = el.final.querySelector('.clas-form input');
+    (campo || el.final.querySelector('h2')).focus({ preventScroll: true });
   }
 
   // ── Eventos del tablero ─────────────────────────────────────

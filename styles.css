@@ -124,6 +124,30 @@ p { color: var(--text-muted); margin: 0 0 16px; }
 .nav-links a:hover, .nav-links a[aria-current] { color: var(--text); text-decoration: none; }
 .nav-toggle { display: none; }
 
+/* Submenú desplegable ("Juegos"), lo abre assets/nav.js. */
+.nav-menu { position: relative; }
+.nav-menu-btn {
+  display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; padding: 0;
+  font: inherit; color: var(--text-muted); font-size: 14px; font-weight: 500; cursor: pointer;
+}
+.nav-menu-btn::after { content: ""; width: 6px; height: 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.nav-menu.is-open .nav-menu-btn::after { transform: translateY(1px) rotate(-135deg); }
+.nav-menu-btn:hover, .nav-menu-btn.is-actual, .nav-menu.is-open .nav-menu-btn { color: var(--text); }
+.nav-submenu {
+  display: none; position: absolute; top: calc(100% + 12px); left: -14px; min-width: 170px; z-index: 60;
+  flex-direction: column; gap: 2px; padding: 8px; background: var(--surface);
+  border: 1px solid var(--border-strong); border-radius: 12px; box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+}
+.nav-menu.is-open .nav-submenu { display: flex; }
+.nav-links .nav-submenu a { padding: 8px 10px; border-radius: 8px; }
+.nav-links .nav-submenu a:hover, .nav-links .nav-submenu a[aria-current] { background: var(--surface-2); }
+
+@media (max-width: 760px) {
+  .nav-submenu { position: static; min-width: 0; margin-top: 8px; padding: 0 0 0 12px; background: none; border: 0; border-left: 1px solid var(--border-strong); border-radius: 0; box-shadow: none; }
+  .nav-links .nav-submenu a { padding: 6px 8px; }
+  .nav-links .nav-submenu a:hover, .nav-links .nav-submenu a[aria-current] { background: none; }
+}
+
 @media (max-width: 760px) {
   .nav-inner { padding: 12px 16px; }
   .nav-links { display: none; }
@@ -486,11 +510,9 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 .prog-borrar { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
 #prog-contenido h2 { margin-top: 32px; }
 
-/* ── Juego de memoria (memoria.html) ─────────────────────── */
-.memo-filter-row { grid-template-columns: auto 1.4fr 1fr; align-items: end; }
+/* ── Juegos: Memoria (memoria.html) y Empareja (empareja.html) ── */
+.memo-filter-row { grid-template-columns: 1.4fr 1fr; align-items: end; }
 @media (max-width: 760px) { .memo-filter-row { grid-template-columns: 1fr; align-items: stretch; } }
-.memo-filter-row .segmented { align-self: flex-start; }
-.memo-filter-row .segmented button { padding: 10px 14px; font-size: 13.5px; }
 
 /* Marcador pegado bajo el menú: en tableros altos el resultado de cada jugada sigue a la vista. */
 .memo-hud {
@@ -513,16 +535,13 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 }
 .memo-tablero > p { grid-column: 1 / -1; }
 .memo-tablero.memo-categorias { max-width: calc(var(--cols, 6) * 104px); }
-.memo-tablero.memo-funciones { max-width: calc(var(--cols, 4) * 200px); }
 @media (max-width: 760px) {
   .memo-tablero { gap: 6px; }
   .memo-tablero.memo-categorias { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .memo-tablero.memo-funciones { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 480px) {
   /* Con nombres hacen falta cartas más anchas; en modo difícil (solo icono) caben 6. */
   .memo-tablero.memo-categorias:not(.memo-dificil) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .memo-tablero.memo-funciones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .memo-carta {
@@ -530,10 +549,8 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
   color: inherit; font: inherit; cursor: pointer; perspective: 600px;
   aspect-ratio: 5 / 6; border-radius: var(--radius-sm);
 }
-a.memo-carta:hover { text-decoration: none; }
 .memo-dificil.memo-categorias .memo-carta { aspect-ratio: 1; }
-.memo-funciones .memo-carta { aspect-ratio: auto; height: 148px; }
-.memo-carta.is-hecha:not(a) { cursor: default; }
+.memo-carta.is-hecha { cursor: default; }
 .memo-inner { position: absolute; inset: 0; transition: transform .35s ease; transform-style: preserve-3d; }
 .memo-carta.is-vuelta .memo-inner { transform: rotateY(180deg); }
 .memo-dorso, .memo-cara {
@@ -561,15 +578,6 @@ a.memo-carta:hover { text-decoration: none; }
 /* Modo difícil: el nombre solo aparece cuando la pareja ya está hecha. */
 .memo-dificil .memo-carta:not(.is-hecha) .memo-nombre { display: none; }
 .memo-dificil.memo-categorias .memo-carta.is-hecha .memo-icono { width: 40%; }
-/* Modo funciones: los dos tipos de carta se distinguen por la etiqueta y el color del borde. */
-.memo-funciones .memo-cara { padding: 10px; gap: 8px; }
-.memo-funciones .memo-icono { width: 44px; }
-.memo-funciones .memo-nombre { font-size: 13px; font-weight: 600; }
-.memo-tipo { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan-strong); }
-.memo-funcion .memo-tipo { color: var(--violet-strong); }
-.memo-funcion:not(.is-hecha):not(.is-fallo) .memo-cara { border-color: rgba(168, 85, 247, 0.55); }
-.memo-servicio:not(.is-hecha):not(.is-fallo) .memo-cara { border-color: rgba(34, 211, 238, 0.45); }
-.memo-frase { font-size: 12.5px; line-height: 1.35; color: var(--text); overflow-wrap: break-word; }
 @media (prefers-reduced-motion: reduce) { .memo-inner { transition: none; } }
 
 .memo-final {
@@ -582,11 +590,69 @@ a.memo-carta:hover { text-decoration: none; }
 .memo-resumen div { display: grid; }
 .memo-resumen strong { font-size: 26px; line-height: 1.2; font-variant-numeric: tabular-nums; }
 .memo-resumen span { font-size: 13px; color: var(--text-muted); }
-.memo-marca { font-size: 14px; }
 .memo-repaso { margin: 0; padding-left: 1.2em; color: var(--text-muted); font-size: 14.5px; }
 .memo-repaso li { margin: 6px 0; }
 .memo-repaso-cat { margin: 16px 0 4px; font-size: 14.5px; font-weight: 600; }
 .memo-repaso-servicios { margin: 0; font-size: 14.5px; }
+
+/* Empareja: dos columnas siempre a la vista; servicios en cian y frases en violeta. */
+.emp-inicio {
+  display: grid; justify-items: start; gap: 12px; padding: 24px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.emp-inicio p { margin: 0; }
+.emp-tablero { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px; align-items: start; }
+.emp-col { display: grid; gap: 8px; min-width: 0; }
+.emp-col-titulo { margin: 0 0 2px; font-size: 12.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.emp-item {
+  display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 56px; padding: 8px 12px;
+  text-align: left; font: inherit; font-size: 13.5px; line-height: 1.35; color: var(--text); cursor: pointer;
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  transition: border-color .15s, background-color .15s, opacity .2s;
+}
+.emp-servicio { border-color: rgba(34, 211, 238, 0.4); font-weight: 600; }
+.emp-funcion { border-color: rgba(168, 85, 247, 0.45); overflow-wrap: break-word; }
+.emp-item:hover:not(:disabled) { background: var(--surface-2); }
+.emp-servicio:hover:not(:disabled) { border-color: var(--cyan); }
+.emp-funcion:hover:not(:disabled) { border-color: var(--violet); }
+.emp-item.is-elegido { background: var(--surface-2); box-shadow: 0 0 0 2px var(--text); }
+.emp-item.is-fallo { border-color: var(--magenta); box-shadow: 0 0 0 2px var(--magenta); }
+.emp-item.is-hecha { border-color: rgba(74, 222, 128, 0.6); opacity: 0.45; cursor: default; }
+/* Iconos oficiales de AWS: solo se escalan, sin recolorear ni recortar. */
+.emp-icono { width: 36px; height: 36px; flex: none; border-radius: 6px; }
+.emp-nombre { min-width: 0; overflow-wrap: anywhere; }
+/* Modo difícil: solo el icono hasta que se une con su frase. */
+.emp-dificil .emp-servicio:not(.is-hecha) .emp-nombre { display: none; }
+.emp-dificil .emp-servicio { justify-content: center; }
+.emp-dificil .emp-servicio.is-hecha { justify-content: flex-start; }
+@media (max-width: 560px) {
+  .emp-tablero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; }
+  .emp-item { gap: 8px; padding: 8px; font-size: 12.5px; }
+  .emp-servicio { flex-direction: column; text-align: center; justify-content: center; }
+  .emp-icono { width: 32px; height: 32px; }
+}
+
+/* Clasificación (clasificacion.html y pantalla final de los juegos) */
+.clas-filtros { display: flex; flex-wrap: wrap; align-items: end; gap: 14px 24px; }
+.clas-filtros .field { flex: 1 1 320px; }
+.clas-check { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 14.5px; color: var(--text); cursor: pointer; }
+.clas-check input { width: 18px; height: 18px; accent-color: var(--cyan); }
+.clas-tablas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px 32px; }
+.clas-juego { border: 0; padding: 0; margin: 0; }
+.clas-juego-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.clas-juego-head h2 { margin: 0; }
+.clas-tabla td:first-child { width: 2.5em; font-variant-numeric: tabular-nums; }
+.clas-tabla th[scope="row"] { overflow-wrap: anywhere; }
+.clas-tiempo { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+.clas-tabla tr.is-nueva td, .clas-tabla tr.is-nueva th { background: rgba(34, 211, 238, 0.12); }
+.clas-bloque { margin: 8px 0 16px; font-size: 14.5px; }
+.clas-bloque h3 { margin: 16px 0 4px; }
+.clas-bloque h3:focus { outline: none; }
+.clas-form { max-width: 460px; }
+.clas-form-titulo { font-size: 15px; font-weight: 600; color: var(--text); }
+.clas-form-fila { display: flex; gap: 8px; }
+.clas-form-fila .input { flex: 1; min-width: 0; }
+.clas-error:empty { display: none; }
 
 /* ── Footer ──────────────────────────────────────────────── */
 footer { padding: 36px 0; border-top: 1px solid var(--border); }

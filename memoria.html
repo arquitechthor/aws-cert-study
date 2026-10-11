@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Juego de memoria — Apuntes AWS</title>
-<meta name="description" content="Juego de memoria para aprender los servicios de AWS: empareja servicios de la misma categoría o cada servicio con la frase que describe lo que hace. Filtra por certificación y categoría.">
+<meta name="description" content="Juego de memoria para aprender los servicios de AWS: voltea las cartas y empareja servicios de la misma categoría. Filtra por certificación y categoría y compite contra tu mejor tiempo.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/memoria.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Apuntes AWS">
 <meta property="og:title" content="Juego de memoria — Apuntes AWS">
-<meta property="og:description" content="Empareja servicios de AWS por categoría o por lo que hacen. Proyecto personal y educativo.">
+<meta property="og:description" content="Empareja servicios de AWS de la misma categoría a contrarreloj. Proyecto personal y educativo.">
 <meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/memoria.html">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary">
@@ -31,7 +31,14 @@
       <a href="index.html#certificaciones">Certificaciones</a>
       <a href="index.html#catalogo">Catálogo</a>
       <a href="simulacro.html">Simulacro</a>
-      <a href="memoria.html" aria-current="page">Memoria</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="memoria.html" aria-current="page">Memoria</a>
+          <a href="empareja.html">Empareja</a>
+          <a href="clasificacion.html">Clasificación</a>
+        </div>
+      </div>
       <a href="progreso.html">Mi progreso</a>
       <a href="aviso-legal.html">Aviso legal</a>
     </div>
@@ -44,19 +51,14 @@
   <div class="container">
     <div class="section-head">
       <h1>Juego de <span class="gradient-text">memoria</span></h1>
-      <p>Voltea las cartas de dos en dos y encuentra las parejas. Sirve para aprender a qué
-        categoría pertenece cada servicio de AWS y qué hace cada uno.</p>
+      <p>Voltea las cartas de dos en dos y encuentra las parejas: dos servicios son pareja si
+        pertenecen a la misma categoría, y cualquier servicio de esa categoría vale. Sirve para
+        aprender a qué categoría pertenece cada servicio de AWS. Los mejores tiempos entran en la
+        <a href="clasificacion.html">clasificación</a>.</p>
     </div>
 
     <form class="filters" id="memo-config" onsubmit="return false">
       <div class="filter-row memo-filter-row">
-        <div class="field">
-          <span class="field-label" id="m-modo-label">Modo</span>
-          <div class="segmented" id="m-modo" role="radiogroup" aria-labelledby="m-modo-label">
-            <button type="button" role="radio" aria-checked="true" data-modo="categorias">Categorías</button>
-            <button type="button" role="radio" aria-checked="false" data-modo="funciones">Funciones</button>
-          </div>
-        </div>
         <label class="field">
           <span class="field-label">Certificación</span>
           <select class="select" id="m-cert">
@@ -68,7 +70,6 @@
           <select class="select" id="m-tablero"></select>
         </label>
       </div>
-      <p class="field-hint" id="m-ayuda" aria-live="polite"></p>
       <div class="field">
         <span class="field-label" id="m-cats-label">Categorías (puedes elegir varias)</span>
         <div class="chips" id="m-cats" role="group" aria-labelledby="m-cats-label"></div>
@@ -131,6 +132,7 @@
 
 <script src="assets/nav.js" defer></script>
 <script src="assets/datos.js" defer></script>
+<script src="assets/juegos.js" defer></script>
 <script src="assets/memoria.js" defer></script>
 </body>
 </html>

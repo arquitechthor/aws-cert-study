@@ -19,6 +19,41 @@
 })();
 
 /**
+ * Submenús desplegables del menú (.nav-menu, p. ej. "Juegos"): se abren al pulsar el botón y se
+ * cierran con Escape, al pulsar fuera o al sacar el foco. En el panel móvil se despliegan dentro
+ * del propio panel. El botón se resalta si el submenú contiene la página actual.
+ */
+(function () {
+  const menus = [...document.querySelectorAll('.nav-menu')];
+  menus.forEach((menu, i) => {
+    const btn = menu.querySelector('.nav-menu-btn');
+    const sub = menu.querySelector('.nav-submenu');
+    if (!btn || !sub) return;
+    sub.id = sub.id || `navSubmenu${i + 1}`;
+    btn.setAttribute('aria-controls', sub.id);
+    if (sub.querySelector('[aria-current="page"]')) btn.classList.add('is-actual');
+
+    const abrir = (si) => {
+      menu.classList.toggle('is-open', si);
+      btn.setAttribute('aria-expanded', String(si));
+    };
+    btn.addEventListener('click', () => abrir(!menu.classList.contains('is-open')));
+    menu.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape' && menu.classList.contains('is-open')) {
+        abrir(false);
+        btn.focus();
+      }
+    });
+    menu.addEventListener('focusout', (ev) => {
+      if (ev.relatedTarget && !menu.contains(ev.relatedTarget)) abrir(false);
+    });
+    document.addEventListener('click', (ev) => {
+      if (!menu.contains(ev.target)) abrir(false);
+    });
+  });
+})();
+
+/**
  * Enlace activo del menú (igual en kopi-web, aws-cert-study y arquitechthor.github.io).
  * Los enlaces a otra página pueden llevar aria-current="page" en el HTML. Los enlaces a una
  * sección de esta misma página (#id) reciben aria-current="location" mientras esa sección
