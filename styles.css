@@ -526,6 +526,22 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 .memo-mensaje { margin: 0; font-size: 14px; min-height: 1.6em; color: var(--text-muted); }
 .memo-mensaje.ok { color: var(--green); }
 .memo-mensaje.ko { color: var(--magenta); }
+/* Comparación 2×2 de las cartas volteadas: fila 1 la primera carta, fila 2 la segunda. Altura fija
+   para que el marcador pegado no salte al rellenarse. */
+.memo-comparacion { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 13.5px; }
+.memo-comparacion td {
+  height: 30px; padding: 4px 10px; border: 1px solid var(--border); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; color: var(--text);
+}
+.memo-comparacion .memo-comp-servicio { width: 40%; font-weight: 600; }
+.memo-comparacion td:empty::before { content: '—'; color: var(--text-faint); }
+.memo-comparacion.ok .memo-comp-cat { color: var(--green); background: rgba(74, 222, 128, 0.08); }
+.memo-comparacion.ko .memo-comp-cat { color: var(--magenta); background: rgba(251, 113, 133, 0.08); }
+@media (max-width: 760px) {
+  .memo-comparacion { font-size: 12.5px; }
+  .memo-comparacion td { padding: 3px 6px; white-space: normal; height: auto; }
+  .memo-comparacion .cat-en { display: none; }
+}
 
 /* El tamaño del tablero fija el número de cartas, no la disposición: en pantallas estrechas las
    columnas se reducen y el tablero crece en vertical, sin desplazamiento horizontal. */

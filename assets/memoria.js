@@ -22,6 +22,7 @@
     parejas: $('memo-parejas'),
     tiempo: $('memo-tiempo'),
     mensaje: $('memo-mensaje'),
+    comparacion: $('memo-comparacion'),
     juego: $('memo-tablero'),
     final: $('memo-final'),
   };
@@ -248,12 +249,31 @@
     cartas.forEach((c, i) => { c.nodo = el.juego.children[i]; });
     el.hud.hidden = false;
     decir('Voltea dos cartas: son pareja si los dos servicios son de la misma categoría.');
+    comparar([]);
     pintarMarcador();
   }
 
   function decir(texto, clase = '') {
     el.mensaje.className = `memo-mensaje ${clase}`;
     el.mensaje.textContent = texto;
+  }
+
+  /**
+   * Tabla 2×2 sobre el tablero: fila 1, servicio y categoría de la primera carta; fila 2, los de
+   * la segunda, para comparar las categorías de un vistazo. Se queda a la vista hasta que se
+   * voltea la siguiente primera carta. En modo difícil los nombres no salen hasta voltear la
+   * segunda carta (antes se adivinarían sin mirar el icono).
+   */
+  function comparar(cartas) {
+    const filas = el.comparacion.tBodies[0].rows;
+    const completa = cartas.length === 2;
+    for (let i = 0; i < 2; i++) {
+      const [servicio, categoria] = filas[i].cells;
+      const carta = cartas[i];
+      servicio.textContent = carta && (completa || !config.dificil) ? carta.servicio.nombre : '';
+      categoria.innerHTML = carta ? categoriaHtml(categoriaDe(carta)) : '';
+    }
+    el.comparacion.className = `memo-comparacion${completa ? (esPareja(...cartas) ? ' ok' : ' ko') : ''}`;
   }
 
   function pintarMarcador() {
@@ -294,6 +314,7 @@
     iniciarCrono();
     mostrar(carta);
     partida.abiertas.push(carta);
+    comparar(partida.abiertas);
     if (partida.abiertas.length < 2) return;
 
     const [a, b] = partida.abiertas;
