@@ -40,6 +40,9 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   categoría) y con la segunda la fila 2; las categorías se pintan en verde si son pareja y en rojo
   si no. Sigue a la vista hasta la siguiente jugada. En modo difícil los nombres no aparecen hasta
   voltear la segunda carta.
+- **Más juegos (12/10/2026):** cinco propuestas guardadas en la **Fase 6**. El usuario eligió hacer
+  primero **¿Quién soy?** (6.A, tareas 6.1–6.4) y después **Arquitecto** (6.B, tareas 6.5–6.8). Las
+  otras tres (Supervivencia, Clasificador, Siglas) quedan en cola.
 - **Servicios clave (08/10/2026):** pedidos por el usuario, que irá diciendo cuáles son mientras
   prueba la web. Hechos: `vpc`, `organizations`, `s3` y `lambda` (resaltado en catálogo y guía, filtro `clave=1`,
   sección "A fondo: temas avanzados" y 5 preguntas difíciles cada uno). Ver la decisión
@@ -722,6 +725,97 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
 
 ---
 
+## Fase 6: más juegos
+
+Propuestas del 2026-10-12, pedidas por el usuario, que eligió empezar por **6.A (¿Quién soy?)** y
+después **6.B (Arquitecto)**. Las otras tres (6.C–6.E) quedan en cola sin fecha. Todas siguen lo que
+ya hacen Memoria y Empareja: HTML/CSS/JS puro, entrada en el menú desplegable "Juegos", panel de
+configuración reflejado en la URL, filtros de certificación y categoría, modo difícil, repaso al final
+con enlaces a las guías, sin desplazamiento horizontal a 375 px, y aviso legal (privacidad) y
+`sitemap.xml` actualizados al publicar cada una.
+
+**Clasificación:** hoy se ordena por tiempo, con 7 niveles comunes. Los juegos nuevos puntúan de otra
+forma (puntos, racha, aciertos), así que cada uno necesita su propia tabla en `clasificacion.html` con
+su propia métrica. Decidirlo en la primera tarea de cada juego.
+
+### 6.A ¿Quién soy?: adivina el servicio con pistas (primero)
+
+Se van dando pistas de la más vaga a la más clara y el jugador escribe el servicio con
+autocompletado sobre los 164 (nombre y alias). Cuantas menos pistas use, más puntos gana. Al fallar o
+rendirse, se revela el servicio con un enlace a su guía.
+
+- Pistas a partir de los datos que ya hay en `servicios.json`, por ejemplo: (1) categoría (icono y
+  nombre), (2) certificaciones en las que aparece, (3) si es clave o lo usa Kopi, (4) una sigla
+  relacionada (`siglas.json`), (5) la `frase`. Al escribir las pistas, comprobar que ninguna revela el
+  nombre (p. ej. una sigla que *es* el servicio).
+- Modos: **partida** (N servicios seguidos, con puntuación total) y **reto del día** (el mismo
+  servicio para todos, elegido a partir de la fecha, una sola partida al día y resultado para
+  compartir sin destripar la respuesta).
+- Modo difícil: sin la pista de la `frase` y el autocompletado solo se activa tras 3 letras.
+
+**Tareas:**
+- [ ] **6.1** Diseño: orden y texto de las pistas, puntos por pista, cuántos servicios por partida y
+      métrica de la clasificación. Comprobar que el autocompletado distingue bien servicios con
+      nombres casi iguales (Kinesis, IoT, WorkSpaces, Q).
+- [ ] **6.2** `quien-soy.html` + `assets/quien-soy.js`: partida, autocompletado accesible con
+      teclado, repaso final y tabla propia en la clasificación.
+- [ ] **6.3** Reto del día: servicio determinista a partir de la fecha, guardado local del resultado
+      de ese día y texto para compartir.
+- [ ] **6.4** Menú "Juegos", portada, aviso legal, `sitemap.xml`, `CLAUDE.md`; prueba en navegador a
+      escritorio y 375 px.
+
+### 6.B Arquitecto: completa el diagrama (segundo)
+
+Se plantea un caso ("web estática con login y API sin servidores") junto a un diagrama con huecos
+(usuario → ? → ? → ? → datos). El jugador arrastra (o elige con teclado o toque) fichas de servicios a
+cada hueco. Un hueco puede admitir varias respuestas válidas. Al corregir, cada hueco se explica con
+una línea y un enlace a la guía. Es el juego más cercano a los escenarios de diseño de SAA-C03 y
+SAP-C02 y encaja con la Fase 5.
+
+- Escenarios escritos a mano en un fichero nuevo, `data/escenarios.json`: enunciado, certificaciones,
+  dificultad, nodos y flechas del diagrama, huecos con sus servicios válidos (y, si hace falta, por
+  qué un distractor cercano no vale) y fichas de distracción.
+- Primer escenario: **la arquitectura de Kopi** (CloudFront + S3 + Cognito + API Gateway + Lambda +
+  DynamoDB, con Route 53, ACM y SES), con un enlace a sus guías "Así lo uso en Kopi".
+- Diagrama en SVG inline que se vea bien en claro y en oscuro y que en móvil pase a una lista
+  vertical de pasos con sus huecos.
+- Puntuación: huecos acertados al primer intento y tiempo. En modo difícil, más fichas de
+  distracción y sin el nombre de la categoría en los huecos.
+
+**Tareas:**
+- [ ] **6.5** Diseño: formato de `escenarios.json`, interacción (arrastrar en escritorio; tocar
+      hueco y luego ficha en móvil y con teclado) y métrica de la clasificación.
+- [ ] **6.6** Escribir 10–20 escenarios originales repartidos entre CLF, SAA, DVA y SAP (Kopi,
+      sitio estático, API sin servidores, procesamiento por eventos con colas, data lake,
+      multirregión con DR, conectividad híbrida, multicuenta con Organizations…), contrastados con la
+      documentación actual.
+- [ ] **6.7** `arquitecto.html` + `assets/arquitecto.js`: diagrama, colocación de fichas, corrección
+      con explicaciones y tabla propia en la clasificación.
+- [ ] **6.8** Menú "Juegos", portada, aviso legal, `sitemap.xml`, `CLAUDE.md`; prueba en navegador a
+      escritorio y 375 px.
+
+### 6.C Supervivencia: preguntas hasta fallar tres veces (en cola)
+
+Preguntas seguidas del banco (todas o filtradas por certificación) con 3 vidas. Cada 5 aciertos sube
+la dificultad: primero entran las de `"dificil": true` y después las de los servicios clave.
+Puntuación = aciertos. Reutiliza `assets/preguntas.js` tal cual, y los fallos se añaden al repaso de
+falladas de `progreso.html`. Es la más barata de las cinco.
+
+### 6.D Clasificador: lluvia de servicios por categoría (en cola)
+
+Caen nombres de servicios y hay que mandarlos a su categoría (teclas o columnas que se tocan) antes
+de que lleguen abajo. La velocidad sube con el tiempo. En modo difícil salen alias y nombres
+antiguos (p. ej. "Application Migration Service" para Transform MGN). Puntuación = racha o aciertos.
+Usa solo `categoria` y `alias`.
+
+### 6.E Siglas: descifra el acrónimo (en cola)
+
+Aparece una sigla de `data/siglas.json` (SCP, VPC, KMS, RPO/RTO, ALB…) y hay que elegir o escribir
+su significado. En modo inverso se da el nombre y se escribe la sigla. Al fallar, se enlaza a una
+guía donde aparece. Coste muy bajo.
+
+---
+
 ## Registro de sesiones
 
 | Fecha | Qué se hizo |
@@ -766,3 +860,4 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
 | 2026-10-08 | **Lambda pasa a servicio clave** (pedido por el usuario): sección "A fondo" (velocidad de escalado por función y concurrencia reservada/aprovisionada, proteger la base de datos con concurrencia máxima y RDS Proxy, aislamiento por inquilino, SQS/Kinesis a gran volumen con modo aprovisionado, tiempo de visibilidad, fallos parciales e idempotencia, ENI Hyperplane y claves `lambda:VpcIds`, límite de 15 minutos y la excepción de 90 de Lambda Managed Instances (09/2026), durable functions frente a Step Functions, response streaming de 200 MB, CodeDeploy, AppConfig, invocación entre cuentas, code signing, coste y Managed Instances, tabla de decisión) y 5 preguntas difíciles de SAP-C02 (`lambda-013`…`017`, una de emparejar). Sigla nueva: ENI. 1066 preguntas. |
 | 2026-10-11 | **Juegos** (pedido por el usuario): el modo funciones sale de `memoria.html` y pasa a ser el juego **Empareja** (`empareja.html` + `assets/empareja.js`: dos columnas a la vista, botón "Empezar" que arranca el tiempo, acierto = parejas / intentos, repaso de fallos al final). Menú desplegable **"Juegos"** (Memoria, Empareja, Clasificación) en las 173 páginas y la plantilla, con submenú dentro del panel en móvil. **Clasificación** (`clasificacion.html` + `assets/clasificacion.js`, noindex) y módulo común `assets/juegos.js`: top 10 por juego, tamaño y modo difícil, 7 niveles comunes, nombre pedido al entrar en el top 10, en `localStorage` `apuntes-aws.clasificacion`. Aviso legal (privacidad), portada (botón Empareja), `sitemap.xml` (+ `empareja.html`) y `CLAUDE.md` actualizados. Probado en navegador a escritorio y 375 px (sin desplazamiento horizontal). |
 | 2026-10-12 | **Memoria: tabla de comparación 2×2** (pedido por el usuario) en el marcador pegado: fila 1 la primera carta volteada (servicio y categoría), fila 2 la segunda; categorías en verde/rojo según sean pareja. En modo difícil los nombres salen al voltear la segunda carta. Sin probar en navegador (extensión de Chrome no conectada). |
+| 2026-10-12 | **Fase 6: más juegos** (pedida por el usuario): cinco propuestas guardadas con sus tareas: ¿Quién soy? (6.A), Arquitecto (6.B), Supervivencia, Clasificador y Siglas. Orden elegido por el usuario: primero 6.A y después 6.B. |
