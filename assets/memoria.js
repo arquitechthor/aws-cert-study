@@ -315,7 +315,8 @@
     mostrar(carta);
     partida.abiertas.push(carta);
     comparar(partida.abiertas);
-    if (partida.abiertas.length < 2) return;
+    // El resultado de la jugada anterior se borra al empezar una nueva.
+    if (partida.abiertas.length < 2) { decir(''); return; }
 
     const [a, b] = partida.abiertas;
     partida.movimientos++;
