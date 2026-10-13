@@ -11,6 +11,7 @@
  * en móvil pasa a una lista de pasos con sus conexiones escritas.
  * La configuración vive en la URL (?escenario=kopi&cert=SAA-C03&dificil=1) y la última usada, con
  * los escenarios resueltos, en localStorage (apuntes-aws.arquitecto, ver aviso legal, privacidad).
+ * Un escenario resuelto ofrece su solución en PDF de una hoja A4 (assets/arquitecto-pdf.js).
  */
 (function () {
   const { cargar, json, esc, urlServicio, iconoServicio, iconoCategoria } = window.AwsDatos;
@@ -205,6 +206,7 @@
       <article class="arq-caso">
         <div class="arq-caso-cab">
           <h2>${esc(e.titulo)}${resueltos.has(e.id) ? ' <span class="chip chip-ok-fijo" title="Ya lo resolviste en este navegador">✓ Resuelto</span>' : ''}</h2>
+          ${resueltos.has(e.id) ? botonPdf('btn-sm') : ''}
           <div class="chips">
             <span class="chip">${esc(nivel ? nivel[1] : e.nivel)}</span>
             ${e.certificaciones.map((c) => `<span class="chip chip-cert">${esc(c)}</span>`).join('')}
@@ -467,6 +469,7 @@
       ${e.kopi && completo ? '<p>Las guías de estos servicios tienen una sección «Así lo uso en Kopi» con los detalles reales.</p>' : ''}
       <p class="arq-final-acciones">
         ${!completo ? '<button class="btn btn-secondary" type="button" id="arq-solucion">Ver la solución</button>' : ''}
+        ${completo && resueltos.has(e.id) ? botonPdf('') : ''}
         <button class="btn btn-secondary" type="button" id="arq-repetir">Repetir</button>
         ${siguiente.length > 1 ? '<button class="btn btn-primary" type="button" id="arq-siguiente">Siguiente escenario</button>' : ''}
       </p>`;
@@ -486,6 +489,25 @@
     if (completo) {
       caja.scrollIntoView({ block: 'nearest' });
       caja.querySelector('h2').focus({ preventScroll: true });
+    }
+  }
+
+  // ── PDF de la solución (solo de escenarios ya resueltos) ────
+  const botonPdf = (tam) => `<button class="btn btn-secondary ${tam}" type="button" data-pdf
+      title="Una hoja A4 con el caso, el diagrama resuelto y la explicación de cada hueco">Descargar la solución (PDF A4)</button>`;
+
+  async function descargarPdf(b) {
+    const texto0 = b.textContent;
+    b.disabled = true;
+    b.textContent = 'Generando el PDF…';
+    try {
+      await window.AwsArquitectoPdf.descargar(partida.esc, datos);
+    } catch (err) {
+      console.error(err);
+      decir('No se pudo generar el PDF. Vuelve a intentarlo.', 'ko');
+    } finally {
+      b.disabled = false;
+      b.textContent = texto0;
     }
   }
 
@@ -544,7 +566,8 @@
     if (!partida) return;
     const b = ev.target.closest('button');
     if (!b || !el.juego.contains(b)) return;
-    if (b.dataset.uid) pulsarFicha(b.dataset.uid);
+    if (b.dataset.pdf !== undefined) descargarPdf(b);
+    else if (b.dataset.uid) pulsarFicha(b.dataset.uid);
     else if (b.dataset.hueco !== undefined) pulsarHueco(Number(b.dataset.hueco));
     else if (b.dataset.pista !== undefined) pista(Number(b.dataset.pista));
     else if (b.dataset.quitar !== undefined) quitar(Number(b.dataset.quitar));

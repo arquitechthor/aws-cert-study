@@ -36,6 +36,8 @@ Ver [`LICENSE`](LICENSE).
 - Las marcas, nombres de servicios y logotipos de AWS.
 - Las citas literales de documentación de AWS, identificadas y enlazadas a su fuente.
 - El logotipo del sitio (`assets/logo.png` y los favicons).
+- jsPDF (`assets/vendor/jspdf.umd.min.js`), que genera el PDF del juego Arquitecto: licencia MIT,
+  con su aviso de copyright en la cabecera del fichero.
 
 ## Desarrollo
 

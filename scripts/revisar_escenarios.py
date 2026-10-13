@@ -7,7 +7,10 @@ Comprueba data/escenarios.json (juego Arquitecto, Fase 6.B de PLAN.md):
   - ninguna ficha de distracción es válida en algún hueco (sería una respuesta correcta disfrazada)
     y ninguna clave de noVale está entre los válidos de su hueco;
   - las flechas unen nodos que existen;
-  - siglas en mayúsculas que no están en data/siglas.json (solo aviso: quedarían sin tooltip).
+  - siglas en mayúsculas que no están en data/siglas.json (solo aviso: quedarían sin tooltip);
+  - topes de tamaño para que la solución quepa en una hoja A4 (assets/arquitecto-pdf.js): rejilla
+    de 5 × 4 como mucho, 8 huecos, longitud del título, del caso, de las explicaciones y de los
+    textos de nodos y flechas (ver TOPES). Se comprobaron con escenarios de prueba en el límite.
 Sin dependencias. Uso, desde la raíz del repo:
   python scripts/revisar_escenarios.py
 """
@@ -16,6 +19,17 @@ import json, os, re, sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Partes de nombres de servicio y unidades: no llevan tooltip.
 IGNORAR = {'AWS', 'AI', 'MQ', 'MGN', 'TB', 'GB', 'PHP'}
+# Topes para el PDF de una hoja A4. Con todos en el máximo, el PDF aún cabe (letra al 80-85 %).
+TOPES = {
+    'cols': 5, 'filas': 4, 'huecos': 8, 'requisitos': 7,
+    'titulo': 60,          # caracteres
+    'caso': 900,           # enunciado + requisitos
+    'explicacion': 320,    # cada hueco
+    'explicaciones': 1400, # todas, más las líneas "También vale: ..."
+    'texto_fijo': 60,      # nodo sin servicio
+    'texto_servicio': 40,  # texto bajo el nombre de un servicio
+    'flecha': 15,
+}
 
 
 def cargar(ruta):
@@ -23,7 +37,8 @@ def cargar(ruta):
 
 
 def main():
-    servicios = {s['id'] for s in cargar('data/servicios.json')}
+    nombres = {s['id']: s['nombre'] for s in cargar('data/servicios.json')}
+    servicios = set(nombres)
     certs = {c['codigo'] for c in cargar('data/certificaciones.json')}
     siglas = set(cargar('data/siglas.json')['siglas'])
     escenarios = cargar('data/escenarios.json')['escenarios']
@@ -87,6 +102,29 @@ def main():
                     err(f'{nid}: servicio desconocido: {n["servicio"]}')
         if not any('hueco' in n for n in e['nodos']):
             err('no tiene huecos')
+
+        # Topes del PDF A4.
+        def tope(clave, valor, que):
+            if valor > TOPES[clave]:
+                err(f'{que}: {valor} (máximo {TOPES[clave]} para que el PDF quepa en una hoja A4)')
+        huecos = [n['hueco'] for n in e['nodos'] if 'hueco' in n]
+        tope('cols', max((n.get('col') or 0) for n in e['nodos']), 'columnas')
+        tope('filas', max((n.get('fila') or 0) for n in e['nodos']), 'filas')
+        tope('huecos', len(huecos), 'huecos')
+        tope('requisitos', len(e.get('requisitos', [])), 'requisitos')
+        tope('titulo', len(e.get('titulo', '')), 'caracteres del título')
+        tope('caso', len(e.get('enunciado', '')) + sum(map(len, e.get('requisitos', []))), 'caracteres de enunciado y requisitos')
+        total = 0
+        for h in huecos:
+            tope('explicacion', len(h.get('explicacion', '')), 'caracteres de una explicación')
+            otros = [nombres.get(s, s) for s in h.get('validos', [])[1:]]
+            total += len(h.get('explicacion', '')) + (len('También vale: ' + ', '.join(otros) + '.') if otros else 0)
+        tope('explicaciones', total, 'caracteres de las explicaciones (con "También vale")')
+        for n in e['nodos']:
+            if 'hueco' not in n and n.get('texto'):
+                tope('texto_servicio' if n.get('servicio') else 'texto_fijo', len(n['texto']), f'caracteres del texto de {n.get("id")}')
+        for f in e['flechas']:
+            tope('flecha', len(f.get('texto', '')), f'caracteres de la flecha {f.get("de")}→{f.get("a")}')
 
         for s in e.get('distractores', []) + e.get('distractoresDificil', []):
             if s not in servicios:

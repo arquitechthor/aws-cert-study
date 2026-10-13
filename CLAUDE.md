@@ -68,8 +68,12 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
     shows the category of its valid services; "Comprobar" explains each slot with `noVale` reasons and
     hides the answer until "Ver la solución". Desktop: CSS grid (`col`/`fila`) with SVG arrows; ≤760px:
     list of steps. Config in the URL (`?escenario=&cert=&dificil=1`), last config and solved scenarios
-    in `apuntes-aws.arquitecto`. After editing scenarios run `python scripts/revisar_escenarios.py`
-    (ids, cells, distractors that would be valid, acronyms missing from `siglas.json`); write texts with
+    in `apuntes-aws.arquitecto`. A solved scenario (only solved, never via "Ver la solución") offers
+    "Descargar la solución (PDF A4)": `assets/arquitecto-pdf.js` draws one landscape A4 page with
+    jsPDF (local copy in `assets/vendor/`, no CDN, so no third-party requests). After editing scenarios
+    run `python scripts/revisar_escenarios.py` (ids, cells, distractors that would be valid, acronyms
+    missing from `siglas.json`, and the size limits `TOPES` that guarantee the PDF fits one page; if you
+    change the PDF layout, re-test a scenario at every limit); write texts with
     bare acronyms (tooltips at render time) and check new layouts in a browser so no arrow crosses a node.
 - `servicio.html` + `assets/servicio.js`: generic "Próximamente disponible" page
   (`?id=<id>`), used for every service with `estado: "pendiente"`. It redirects to
