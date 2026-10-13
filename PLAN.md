@@ -45,7 +45,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   otras tres (Supervivencia, Clasificador, Siglas) quedan en cola.
 - **Arquitecto publicado (13/10/2026):** el usuario lo pidió antes que ¿Quién soy?, **sin puntuación
   ni clasificación** y con un botón **?** en cada hueco que dice la categoría del servicio que falta.
-  `arquitecto.html` + `assets/arquitecto.js` + `data/escenarios.json` (13 escenarios, validados con
+  `arquitecto.html` + `assets/arquitecto.js` + `data/escenarios.json` (14 escenarios, validados con
   `scripts/revisar_escenarios.py`). Ver la decisión "Juego Arquitecto". 6.A (¿Quién soy?) sigue
   pendiente. Ese mismo día, a petición del usuario, **la solución en PDF de una hoja A4** (tarea 6.9):
   solo con la solución completa y solo en escenarios resueltos.
@@ -808,7 +808,8 @@ SAP-C02 y encaja con la Fase 5.
       documentación actual.
       *Hecho: 13 escenarios (Kopi, web estática, pedidos con colas, fotos con Rekognition, tres
       capas, lago de datos, tiempo real, DR multirregión, conectividad híbrida, multicuenta,
-      migración, CI/CD de contenedores y RAG con Bedrock).*
+      migración, CI/CD de contenedores y RAG con Bedrock). El 13/10/2026 se añadió el 14.º, **SignMad**
+      (pedido por el usuario): inspirado en la arquitectura actual de Xigmad con otro nombre.*
 - [x] **6.7** `arquitecto.html` + `assets/arquitecto.js`: diagrama, colocación de fichas, corrección
       con explicaciones y tabla propia en la clasificación. *Sin tabla de clasificación.*
 - [x] **6.8** Menú "Juegos", portada, aviso legal, `sitemap.xml`, `CLAUDE.md`; prueba en navegador a
@@ -885,3 +886,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-12 | **Fase 6: más juegos** (pedida por el usuario): cinco propuestas guardadas con sus tareas: ¿Quién soy? (6.A), Arquitecto (6.B), Supervivencia, Clasificador y Siglas. Orden elegido por el usuario: primero 6.A y después 6.B. |
 | 2026-10-13 | **Arquitecto** (Fase 6.B, pedido por el usuario antes que ¿Quién soy?): `arquitecto.html` + `assets/arquitecto.js` + `data/escenarios.json` con 13 escenarios originales (CLF, SAA, DVA, SAP y AIF) y su validador `scripts/revisar_escenarios.py`. Sin puntos ni clasificación; botón **?** por hueco con la categoría; comprobación con explicación por hueco y "Ver la solución"; arrastrar o tocar hueco y ficha; diagrama en rejilla con flechas SVG y lista de pasos en móvil. Menú "Juegos" en las 173 páginas y la plantilla, botón en la portada, aviso legal (privacidad e iconos), `sitemap.xml` y `CLAUDE.md`. Probado en navegador a escritorio y 375 px (sin desplazamiento horizontal ni flechas que crucen nodos). |
 | 2026-10-13 | **Arquitecto: solución en PDF A4** (tarea 6.9, pedida por el usuario): `assets/arquitecto-pdf.js` con jsPDF 2.5.2 en local (`assets/vendor/`), botón solo en escenarios resueltos, topes de tamaño en `revisar_escenarios.py`. Revisados a ojo los PDF de los 13 escenarios (todos con la letra al 100 %) y tres escenarios de prueba con todo en el tope (caben al 80-85 %). README, aviso legal y `CLAUDE.md` actualizados. |
+| 2026-10-13 | **Escenario SignMad** (pedido por el usuario): inspirado en la arquitectura actual de Xigmad (web estática con Route 53, ACM, CloudFront con función de rutas y S3 privado con OAC; despliegue con CodeCommit, EventBridge, CodeBuild y CloudWatch Logs), con el nombre cambiado y sin identificadores reales. 14 escenarios. `AAAA` (tipo de registro DNS) añadido a las excepciones de siglas del validador. Probado en navegador (sin flechas que crucen nodos) y su PDF cabe al 100 %. |

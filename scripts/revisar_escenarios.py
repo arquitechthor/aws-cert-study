@@ -17,8 +17,8 @@ Sin dependencias. Uso, desde la raíz del repo:
 import json, os, re, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# Partes de nombres de servicio y unidades: no llevan tooltip.
-IGNORAR = {'AWS', 'AI', 'MQ', 'MGN', 'TB', 'GB', 'PHP'}
+# Partes de nombres de servicio, unidades y tipos de registro DNS: no llevan tooltip.
+IGNORAR = {'AWS', 'AI', 'MQ', 'MGN', 'TB', 'GB', 'PHP', 'AAAA'}
 # Topes para el PDF de una hoja A4. Con todos en el máximo, el PDF aún cabe (letra al 80-85 %).
 TOPES = {
     'cols': 5, 'filas': 4, 'huecos': 8, 'requisitos': 7,

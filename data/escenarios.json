@@ -774,6 +774,84 @@
       ],
       "distractores": ["sagemaker-ai", "dynamodb", "comprehend"],
       "distractoresDificil": ["lex", "textract", "efs"]
+    },
+    {
+      "id": "signmad",
+      "titulo": "SignMad: del servidor viejo a una web estática",
+      "nivel": "intermedio",
+      "certificaciones": ["SAA-C03", "DVA-C02", "DVA-C03"],
+      "enunciado": "SignMad tenía todas sus webs en un servidor EC2 con todo dentro (Apache, PHP, base de datos y correo), sin actualizar. Ahora solo publica su web corporativa, ya estática, y quiere que cueste un par de dólares al mes y que se despliegue sola.",
+      "requisitos": [
+        "El dominio y su subdominio www apuntan a la web sin pagar por cada consulta DNS.",
+        "Un certificado TLS gratuito para el dominio y sus subdominios, que se renueve solo.",
+        "La web se sirve por HTTPS desde ubicaciones de borde, y www redirige al dominio sin www.",
+        "Los ficheros viven en un almacenamiento de objetos privado: solo la CDN puede leerlos.",
+        "Cada push a la rama main lanza el despliegue sin que nadie lo pida.",
+        "Un entorno de compilación gestionado sube solo los ficheros cambiados e invalida la caché, y se paga por minuto."
+      ],
+      "nodos": [
+        { "id": "u", "texto": "Visitantes", "col": 1, "fila": 2 },
+        { "id": "dns", "col": 2, "fila": 1, "hueco": {
+          "validos": ["route-53"],
+          "explicacion": "Route 53 registra el dominio y aloja su zona. Los registros alias A y AAAA del dominio y de www apuntan a CloudFront, y las consultas a alias de recursos de AWS no se cobran.",
+          "noVale": {}
+        } },
+        { "id": "cdn", "col": 2, "fila": 2, "hueco": {
+          "validos": ["cloudfront"],
+          "explicacion": "CloudFront sirve la web por HTTPS con caché en el borde. Una CloudFront Function en la petición del visitante redirige www al dominio sin www y sirve carpeta/index.html, lo que antes hacía Apache.",
+          "noVale": {
+            "elb": "Un balanceador reparte tráfico entre destinos de una región: no cachea, no tiene ubicaciones de borde y no puede tener un bucket de S3 como destino.",
+            "global-accelerator": "Global Accelerator lleva el tráfico por la red de AWS hasta endpoints regionales, pero no cachea ni sirve ficheros desde el borde."
+          }
+        } },
+        { "id": "web", "col": 3, "fila": 2, "hueco": {
+          "validos": ["s3"],
+          "explicacion": "S3 guarda los ficheros en un bucket privado con el bloqueo de acceso público activado. Con OAC, CloudFront firma sus peticiones y la política del bucket solo deja leer a esa distribución.",
+          "noVale": {
+            "ec2": "Es lo que había antes: un servidor que hay que parchear y pagar encendido todo el mes. Para ficheros estáticos, S3 detrás de CloudFront cuesta céntimos y no deja nada que atacar.",
+            "lightsail": "Lightsail sigue siendo un servidor que mantener y pagar cada mes; para una web estática no hace falta ninguno.",
+            "efs": "EFS es un sistema de ficheros que se monta en servidores; CloudFront no puede leerlo sin un servidor delante."
+          }
+        } },
+        { "id": "cert", "col": 2, "fila": 3, "hueco": {
+          "validos": ["acm"],
+          "explicacion": "ACM emite un certificado comodín validado por DNS, que cubre los subdominios y el dominio raíz. Se renueva solo mientras exista su registro CNAME de validación. Para CloudFront tiene que estar en us-east-1.",
+          "noVale": {}
+        } },
+        { "id": "dev", "texto": "PC del desarrollador", "col": 1, "fila": 4 },
+        { "id": "repo", "texto": "Repositorio Git en CodeCommit (rama main)", "col": 2, "fila": 4 },
+        { "id": "evt", "col": 3, "fila": 4, "hueco": {
+          "validos": ["eventbridge"],
+          "explicacion": "El repositorio publica un evento cada vez que cambia una rama. Una regla de EventBridge filtra los de main y lanza el proyecto de CodeBuild con un rol que solo puede hacer StartBuild.",
+          "noVale": {
+            "sqs": "SQS guarda mensajes hasta que alguien los lee, pero el repositorio no escribe ahí sus eventos y la cola no lanza una compilación por sí sola.",
+            "cloudtrail": "CloudTrail registra las llamadas a la API para auditarlas; no filtra eventos ni lanza compilaciones."
+          }
+        } },
+        { "id": "build", "col": 4, "fila": 4, "hueco": {
+          "validos": ["codebuild"],
+          "explicacion": "CodeBuild clona el repositorio y ejecuta su buildspec: sincroniza con S3 solo lo que cambió, borra lo que sobra e invalida la caché de CloudFront. Se paga por minuto de compilación: unos céntimos por despliegue.",
+          "noVale": {
+            "codedeploy": "CodeDeploy despliega aplicaciones en instancias EC2, servidores propios, Lambda o ECS; no sincroniza ficheros con S3 ni invalida la caché de CloudFront.",
+            "ec2": "Un servidor de compilación encendido todo el mes para despliegues de menos de un minuto: justo el gasto que SignMad quiere quitarse."
+          }
+        } },
+        { "id": "logs", "servicio": "cloudwatch", "texto": "Registros de cada despliegue", "col": 5, "fila": 4 }
+      ],
+      "flechas": [
+        { "de": "u", "a": "dns", "texto": "resuelve" },
+        { "de": "u", "a": "cdn", "texto": "HTTPS" },
+        { "de": "cert", "a": "cdn", "texto": "certificado" },
+        { "de": "cdn", "a": "web", "texto": "OAC" },
+        { "de": "dev", "a": "repo", "texto": "git push" },
+        { "de": "repo", "a": "evt", "texto": "evento" },
+        { "de": "evt", "a": "build", "texto": "StartBuild" },
+        { "de": "build", "a": "web", "texto": "sincroniza" },
+        { "de": "build", "a": "cdn", "texto": "invalida" },
+        { "de": "build", "a": "logs" }
+      ],
+      "distractores": ["ec2", "elb", "codedeploy"],
+      "distractoresDificil": ["lightsail", "global-accelerator", "sqs", "cloudtrail", "efs"]
     }
   ]
 }
