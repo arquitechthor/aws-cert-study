@@ -340,7 +340,7 @@
   }
 
   function explicaciones(doc, m) {
-    titulo(doc, 'LA SOLUCIÓN, HUECO A HUECO', M, m.expY);
+    titulo(doc, 'LA SOLUCIÓN', M, m.expY);
     m.cols.forEach((col, c) => {
       const x = M + c * (m.anchoCol + 8);
       let y = m.expY + 5;
