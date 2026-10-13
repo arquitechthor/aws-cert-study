@@ -20,7 +20,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 `kopi-web`, whose palette and base components were copied into `styles.css`).
 
 - Every page shares the same `<nav>` and closing footer line (`.footer-sitios`: Kopi Tools ·
-  Apuntes AWS · Sobre mí) as `kopi-web` and the personal site ("Sobre mí" first, no
+  Apuntes AWS · Sobre mí) as `kopi-web` and the personal site ("Inicio" first, "Sobre mí" last, no
   call-to-action button, active link via `aria-current` set by `assets/nav.js`): policy "Mismo
   menú y pie en las tres webs" in `../kopi-docs/politicas.md`. The catalog search also matches
   each service's `frase` (name matches are listed first).
