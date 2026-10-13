@@ -61,7 +61,16 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
     levels (`NIVELES`: Memoria 6×6…12×12 ↔ Empareja 6…24 pairs), the storage
     (`apuntes-aws.clasificacion`: name, date, time in ms, and accuracy for Empareja) and the
     end-of-game name prompt. Reduced boards (when filters leave too few services) don't rank.
-  Only services with `"icono": true` (and a `frase`) play in either game.
+  Only services with `"icono": true` (and a `frase`) play in Memoria and Empareja.
+  - `arquitecto.html` + `assets/arquitecto.js` (no score, no ranking): scenarios from
+    `data/escenarios.json` (format in `PLAN.md`, decision "Juego Arquitecto") with a diagram whose
+    slots (`hueco`) take service tokens (drag, or tap slot and token in any order); a **?** per slot
+    shows the category of its valid services; "Comprobar" explains each slot with `noVale` reasons and
+    hides the answer until "Ver la solución". Desktop: CSS grid (`col`/`fila`) with SVG arrows; ≤760px:
+    list of steps. Config in the URL (`?escenario=&cert=&dificil=1`), last config and solved scenarios
+    in `apuntes-aws.arquitecto`. After editing scenarios run `python scripts/revisar_escenarios.py`
+    (ids, cells, distractors that would be valid, acronyms missing from `siglas.json`); write texts with
+    bare acronyms (tooltips at render time) and check new layouts in a browser so no arrow crosses a node.
 - `servicio.html` + `assets/servicio.js`: generic "Próximamente disponible" page
   (`?id=<id>`), used for every service with `estado: "pendiente"`. It redirects to
   `servicios/<id>.html` once the service is `publicado`.
@@ -97,7 +106,7 @@ python -m http.server 8765   # or: npx serve .   (fetch() of the JSON files fail
 No build, lint or test tooling (only the helpers `scripts/revisar_texto.py`,
 `scripts/generar_sitemap.py` (rewrites `sitemap.xml` from the published services; run it after
 publishing or changing pages; `robots.txt` lives in the domain root, repo
-`arquitechthor.github.io`) and `scripts/revisar_frases.py`, which checks every service's `frase` in `servicios.json`: 60–90
+`arquitechthor.github.io`), `scripts/revisar_escenarios.py` (Arquitecto scenarios) and `scripts/revisar_frases.py`, which checks every service's `frase` in `servicios.json`: 60–90
 characters, no word of the service's name, acronym or id; run it after adding or editing one). Verify changes in a browser, including at ~375px width (no
 horizontal scroll).
 
@@ -166,6 +175,6 @@ your own. A key service has `"clave": true` in `servicios.json` and must have:
 - Keep the legal footer on every page, and keep `aviso-legal.html` consistent with any new
   feature (e.g. anything stored in `localStorage` must be covered by its privacy section).
 - AWS icons are shown only next to the service/category name they identify (catalog cards,
-  category filter, service page header) and in the games (Memoria, Empareja); always **unmodified** (no
+  category filter, service page header) and in the games (Memoria, Empareja, Arquitecto); always **unmodified** (no
   recoloring or cropping) and excluded from the CC BY-SA 4.0 license (see `PLAN.md` decisions
   and `README.md`).

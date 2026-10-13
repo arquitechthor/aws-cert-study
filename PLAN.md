@@ -43,13 +43,18 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 - **Más juegos (12/10/2026):** cinco propuestas guardadas en la **Fase 6**. El usuario eligió hacer
   primero **¿Quién soy?** (6.A, tareas 6.1–6.4) y después **Arquitecto** (6.B, tareas 6.5–6.8). Las
   otras tres (Supervivencia, Clasificador, Siglas) quedan en cola.
+- **Arquitecto publicado (13/10/2026):** el usuario lo pidió antes que ¿Quién soy?, **sin puntuación
+  ni clasificación** y con un botón **?** en cada hueco que dice la categoría del servicio que falta.
+  `arquitecto.html` + `assets/arquitecto.js` + `data/escenarios.json` (13 escenarios, validados con
+  `scripts/revisar_escenarios.py`). Ver la decisión "Juego Arquitecto". 6.A (¿Quién soy?) sigue
+  pendiente.
 - **Servicios clave (08/10/2026):** pedidos por el usuario, que irá diciendo cuáles son mientras
   prueba la web. Hechos: `vpc`, `organizations`, `s3` y `lambda` (resaltado en catálogo y guía, filtro `clave=1`,
   sección "A fondo: temas avanzados" y 5 preguntas difíciles cada uno). Ver la decisión
   "Servicios clave" y `CLAUDE.md`.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-10-11
+- **Última actualización:** 2026-10-13
 
 ---
 
@@ -81,6 +86,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Repaso y falladas (3.2) | Una pregunta está "fallada" si su **último** intento fue incorrecto (`fallos` en `apuntes-aws.progreso`); sale del repaso al acertarla. El repaso (`simulacro.html?repaso=1[&cert=]`) no tiene tiempo límite. `progreso.html` resume todo y permite borrarlo; lleva `noindex` porque solo muestra datos locales. |
 | Preguntas difíciles | Pedido por el usuario el 2026-10-06: `"dificil": true` en el JSON muestra la etiqueta ⚠ "Pregunta difícil" (ámbar) en guías y simulacros, y el simulacro puede limitarse a ellas. Criterio en la Fase 5. |
 | Servicios clave | Pedido por el usuario el 2026-10-08; él decide cuáles son (primeros: Amazon VPC y AWS Organizations; después, Amazon S3 y AWS Lambda). `"clave": true` en `servicios.json`. (1) **Resaltado**: borde con el degradado de la marca y chip "★ Servicio clave" en su tarjeta del catálogo, y aviso "★ Servicio clave" en la cabecera de su guía (lo escribe `revisar_texto.py`). (2) **Filtro** "★ Servicios clave" en el grupo "Destacados" del catálogo (antes "En la práctica", junto a "Usados en Kopi"), `clave=1` en la URL. (3) **Guía más larga y profunda**: sección `id="a-fondo"` "A fondo: temas avanzados" antes de "Modelo de precios" (la misma sección que prevé la Fase 5). (4) **Al menos 2 preguntas difíciles** (`"dificil": true`). `revisar_texto.py` avisa si faltan (3) o (4). |
+| Juego Arquitecto | Pedido por el usuario el 2026-10-13 (Fase 6.B), **sin puntos ni clasificación**. Cada escenario de `data/escenarios.json` tiene `id`, `titulo`, `nivel` (básico, intermedio, avanzado), `certificaciones`, `kopi` (opcional), `enunciado`, `requisitos`, `nodos` (`col`/`fila` en la rejilla; fijos con `texto` y/o `servicio`, o `hueco` con `validos`, `explicacion` y `noVale` {servicio: por qué no}), `flechas` (`de`, `a`, `texto` opcional y corto) y `distractores` / `distractoresDificil`. Fichas: el primer válido de cada hueco más las de distracción (el modo difícil añade `distractoresDificil`); una ficha de distracción nunca es válida en ningún hueco. Interacción: arrastrar con ratón, o tocar hueco y ficha en cualquier orden (táctil y teclado); dos huecos seguidos intercambian sus fichas. El botón **?** de cada hueco muestra la categoría (o categorías) de sus servicios válidos. "Comprobar" marca cada hueco y explica el acierto, o por qué la ficha puesta no vale (`noVale` o, si no hay, la `frase` del servicio), sin revelar la respuesta hasta "Ver la solución". Diagrama: rejilla con flechas en SVG (escritorio) y lista de pasos con sus conexiones escritas (≤ 760 px). En `localStorage` (`apuntes-aws.arquitecto`): última configuración y escenarios resueltos (✓ en el selector). `scripts/revisar_escenarios.py` valida el fichero. |
 | Juegos y clasificación | Pedido por el usuario el 2026-10-11. (1) El juego de memoria se queda **solo con el modo categorías**; el modo funciones pasa a ser un juego aparte, **Empareja** (`empareja.html`): servicios (icono y nombre; en modo difícil solo icono) a la izquierda y sus frases a la derecha, **todo a la vista**; se elige uno de cada lado. Cuenta el **tiempo** y el **porcentaje de acierto** (parejas / intentos). Para que nadie lea el tablero con el reloj parado, las columnas aparecen al pulsar "Empezar", que arranca el tiempo. Al fallar no se dice de quién era la frase (lo resolvería); se revela en "Tus fallos" al final. (2) Menú desplegable **"Juegos"** con Memoria, Empareja y Clasificación en todas las páginas. (3) **Clasificación** (`clasificacion.html`, noindex): top 10 por tiempo, **una tabla interna por juego, tamaño de tablero y modo difícil**, pero al usuario se le muestran solo dos (Memoria y Empareja) según un desplegable de tamaño y una casilla de modo difícil. Como el desplegable es común, los dos juegos comparten **7 niveles**: Memoria 6×6, 6×8, 8×8, 8×10, 10×10, 10×12, 12×12 ↔ Empareja 6, 8, 10, 12, 16, 20, 24 parejas. Si un tiempo entra en el top 10 se pide el nombre (se recuerda el último); se guardan nombre, fecha, tiempo (en ms, se muestra con décimas) y, en Empareja, el acierto. Los filtros de certificación y categoría no separan tablas; los tableros reducidos (filtros con pocos servicios) no entran. Todo en `localStorage` (`apuntes-aws.clasificacion`); las antiguas "mejores marcas" por movimientos del juego de memoria se descartan. |
 | `robots.txt` | Los buscadores solo leen `/robots.txt` en la raíz del dominio, así que vive en el repo `arquitechthor.github.io` y anuncia el `sitemap.xml` de los dos sitios. Este repo solo genera su `sitemap.xml` (`scripts/generar_sitemap.py`). |
 | Servicios pendientes | Sin archivos vacíos: un servicio con `estado: "pendiente"` enlaza a la página genérica `servicio.html?id=<id>` ("Próximamente disponible"). Al publicarlo se crea `servicios/<id>.html`. |
@@ -95,6 +101,7 @@ aws-cert-study/
 ├── servicio.html             # "Próximamente disponible" genérica (?id=<id>)
 ├── memoria.html              # juego de memoria por categorías (Fase 4)
 ├── empareja.html             # juego Empareja: servicio ↔ función, a la vista
+├── arquitecto.html           # juego Arquitecto: completa el diagrama (Fase 6.B)
 ├── clasificacion.html        # top 10 de tiempos de los juegos (noindex)
 ├── simulacro.html            # simulacro por certificación y repaso de falladas (Fase 3)
 ├── progreso.html             # mi progreso: resumen, falladas, simulacros (Fase 3, noindex)
@@ -105,6 +112,7 @@ aws-cert-study/
 │   ├── categorias.json       # id, nombre en español y nombre en inglés
 │   ├── certificaciones.json  # código, nombre, nivel, enlace a la guía oficial
 │   ├── preguntas/<id>.json   # preguntas de práctica por servicio
+│   ├── escenarios.json       # escenarios del juego Arquitecto
 │   └── fuentes/<código>.txt  # listas originales de servicios en alcance de cada guía
 ├── assets/
 │   ├── catalogo.js           # filtros, tarjetas y estado de filtros en la URL
@@ -115,6 +123,7 @@ aws-cert-study/
 │   ├── progreso.js           # página "Mi progreso"
 │   ├── memoria.js            # juego de memoria (Fase 4)
 │   ├── empareja.js           # juego Empareja
+│   ├── arquitecto.js         # juego Arquitecto
 │   ├── juegos.js             # niveles y clasificación comunes a los juegos
 │   ├── clasificacion.js      # página de clasificación
 │   ├── iconos/servicios/<id>.svg   # iconos oficiales de AWS (servicios)
@@ -764,7 +773,11 @@ rendirse, se revela el servicio con un enlace a su guía.
 - [ ] **6.4** Menú "Juegos", portada, aviso legal, `sitemap.xml`, `CLAUDE.md`; prueba en navegador a
       escritorio y 375 px.
 
-### 6.B Arquitecto: completa el diagrama (segundo)
+### 6.B Arquitecto: completa el diagrama (hecho el 13/10/2026)
+
+> **Cambios del usuario al pedirlo:** sin puntuación ni clasificación, y un botón **?** en cada hueco
+> que dice la categoría del servicio que falta (en lugar de mostrarla en el hueco). El modo difícil
+> solo añade fichas de distracción. Ver la decisión "Juego Arquitecto".
 
 Se plantea un caso ("web estática con login y API sin servidores") junto a un diagrama con huecos
 (usuario → ? → ? → ? → datos). El jugador arrastra (o elige con teclado o toque) fichas de servicios a
@@ -783,15 +796,19 @@ SAP-C02 y encaja con la Fase 5.
   distracción y sin el nombre de la categoría en los huecos.
 
 **Tareas:**
-- [ ] **6.5** Diseño: formato de `escenarios.json`, interacción (arrastrar en escritorio; tocar
+- [x] **6.5** Diseño: formato de `escenarios.json`, interacción (arrastrar en escritorio; tocar
       hueco y luego ficha en móvil y con teclado) y métrica de la clasificación.
-- [ ] **6.6** Escribir 10–20 escenarios originales repartidos entre CLF, SAA, DVA y SAP (Kopi,
+      *Hecho: sin clasificación por decisión del usuario.*
+- [x] **6.6** Escribir 10–20 escenarios originales repartidos entre CLF, SAA, DVA y SAP (Kopi,
       sitio estático, API sin servidores, procesamiento por eventos con colas, data lake,
       multirregión con DR, conectividad híbrida, multicuenta con Organizations…), contrastados con la
       documentación actual.
-- [ ] **6.7** `arquitecto.html` + `assets/arquitecto.js`: diagrama, colocación de fichas, corrección
-      con explicaciones y tabla propia en la clasificación.
-- [ ] **6.8** Menú "Juegos", portada, aviso legal, `sitemap.xml`, `CLAUDE.md`; prueba en navegador a
+      *Hecho: 13 escenarios (Kopi, web estática, pedidos con colas, fotos con Rekognition, tres
+      capas, lago de datos, tiempo real, DR multirregión, conectividad híbrida, multicuenta,
+      migración, CI/CD de contenedores y RAG con Bedrock).*
+- [x] **6.7** `arquitecto.html` + `assets/arquitecto.js`: diagrama, colocación de fichas, corrección
+      con explicaciones y tabla propia en la clasificación. *Sin tabla de clasificación.*
+- [x] **6.8** Menú "Juegos", portada, aviso legal, `sitemap.xml`, `CLAUDE.md`; prueba en navegador a
       escritorio y 375 px.
 
 ### 6.C Supervivencia: preguntas hasta fallar tres veces (en cola)
@@ -861,3 +878,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-11 | **Juegos** (pedido por el usuario): el modo funciones sale de `memoria.html` y pasa a ser el juego **Empareja** (`empareja.html` + `assets/empareja.js`: dos columnas a la vista, botón "Empezar" que arranca el tiempo, acierto = parejas / intentos, repaso de fallos al final). Menú desplegable **"Juegos"** (Memoria, Empareja, Clasificación) en las 173 páginas y la plantilla, con submenú dentro del panel en móvil. **Clasificación** (`clasificacion.html` + `assets/clasificacion.js`, noindex) y módulo común `assets/juegos.js`: top 10 por juego, tamaño y modo difícil, 7 niveles comunes, nombre pedido al entrar en el top 10, en `localStorage` `apuntes-aws.clasificacion`. Aviso legal (privacidad), portada (botón Empareja), `sitemap.xml` (+ `empareja.html`) y `CLAUDE.md` actualizados. Probado en navegador a escritorio y 375 px (sin desplazamiento horizontal). |
 | 2026-10-12 | **Memoria: tabla de comparación 2×2** (pedido por el usuario) en el marcador pegado: fila 1 la primera carta volteada (servicio y categoría), fila 2 la segunda; categorías en verde/rojo según sean pareja. En modo difícil los nombres salen al voltear la segunda carta. Sin probar en navegador (extensión de Chrome no conectada). |
 | 2026-10-12 | **Fase 6: más juegos** (pedida por el usuario): cinco propuestas guardadas con sus tareas: ¿Quién soy? (6.A), Arquitecto (6.B), Supervivencia, Clasificador y Siglas. Orden elegido por el usuario: primero 6.A y después 6.B. |
+| 2026-10-13 | **Arquitecto** (Fase 6.B, pedido por el usuario antes que ¿Quién soy?): `arquitecto.html` + `assets/arquitecto.js` + `data/escenarios.json` con 13 escenarios originales (CLF, SAA, DVA, SAP y AIF) y su validador `scripts/revisar_escenarios.py`. Sin puntos ni clasificación; botón **?** por hueco con la categoría; comprobación con explicación por hueco y "Ver la solución"; arrastrar o tocar hueco y ficha; diagrama en rejilla con flechas SVG y lista de pasos en móvil. Menú "Juegos" en las 173 páginas y la plantilla, botón en la portada, aviso legal (privacidad e iconos), `sitemap.xml` y `CLAUDE.md`. Probado en navegador a escritorio y 375 px (sin desplazamiento horizontal ni flechas que crucen nodos). |

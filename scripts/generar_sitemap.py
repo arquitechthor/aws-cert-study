@@ -1,6 +1,6 @@
 """
 Genera sitemap.xml (tarea 3.3 de PLAN.md) con las páginas indexables del sitio:
-  - la portada, el simulacro, los juegos Memoria y Empareja y el aviso legal;
+  - la portada, el simulacro, los juegos Memoria, Empareja y Arquitecto y el aviso legal;
   - servicios/<id>.html de cada servicio con estado "publicado" en data/servicios.json.
 Se excluyen las páginas con noindex: servicio.html ("Próximamente"), progreso.html y
 clasificacion.html (datos locales de cada visitante) y plantillas/.
@@ -16,7 +16,8 @@ from xml.sax.saxutils import escape
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = 'https://arquitechthor.github.io/aws-cert-study/'
 FIJAS = [('index.html', ''), ('simulacro.html', 'simulacro.html'), ('memoria.html', 'memoria.html'),
-         ('empareja.html', 'empareja.html'), ('aviso-legal.html', 'aviso-legal.html')]
+         ('empareja.html', 'empareja.html'), ('arquitecto.html', 'arquitecto.html'),
+         ('aviso-legal.html', 'aviso-legal.html')]
 
 
 def git(*args):

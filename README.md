@@ -7,7 +7,8 @@ preguntas de práctica originales. Sitio estático publicado con GitHub Pages:
 
 Incluye una guía por servicio con preguntas de práctica (única, múltiple, ordenar y emparejar),
 simulacros de examen por certificación con tiempo y resultado por dominio, repaso de las preguntas
-falladas, dos juegos (Memoria y Empareja) con clasificación de mejores tiempos y el progreso
+falladas, tres juegos (Memoria y Empareja, con clasificación de mejores tiempos, y Arquitecto, que
+consiste en completar diagramas de arquitectura) y el progreso
 guardado solo en tu navegador.
 
 Certificaciones cubiertas: Cloud Practitioner (CLF-C02), AI Practitioner (AIF-C01), Solutions

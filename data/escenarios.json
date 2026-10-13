@@ -1,0 +1,779 @@
+{
+  "escenarios": [
+    {
+      "id": "kopi",
+      "titulo": "La arquitectura de Kopi Tools",
+      "nivel": "intermedio",
+      "certificaciones": ["CLF-C02", "SAA-C03", "DVA-C02", "DVA-C03"],
+      "kopi": true,
+      "enunciado": "Kopi Tools es una aplicación web y Android hecha por una sola persona. Debe costar casi nada cuando no se usa y no tener servidores que mantener.",
+      "requisitos": [
+        "El dominio propio apunta a los recursos de AWS sin coste extra por consulta.",
+        "La web (una SPA compilada) se sirve por HTTPS desde una caché cercana a cada usuario.",
+        "Los ficheros de la web viven en un almacenamiento de objetos que no es accesible directamente.",
+        "Registro e inicio de sesión gestionados, con tokens JWT y aprobación manual de cada alta.",
+        "Una API HTTP que valida el token y ejecuta código solo cuando llega una petición.",
+        "Datos NoSQL de varios usuarios, con pago por petición."
+      ],
+      "nodos": [
+        { "id": "u", "texto": "Usuarios (web y app Android)", "col": 1, "fila": 3 },
+        { "id": "dns", "col": 1, "fila": 1, "hueco": {
+          "validos": ["route-53"],
+          "explicacion": "Route 53 aloja la zona DNS del dominio. Sus registros alias apuntan cada subdominio a CloudFront o a API Gateway, y las consultas a alias de recursos de AWS no se cobran.",
+          "noVale": {}
+        } },
+        { "id": "cdn", "col": 2, "fila": 2, "hueco": {
+          "validos": ["cloudfront"],
+          "explicacion": "CloudFront sirve la web por HTTPS desde ubicaciones de borde cercanas a cada usuario y cachea los ficheros estáticos. Su certificado de ACM tiene que estar en us-east-1.",
+          "noVale": {
+            "global-accelerator": "Global Accelerator mejora la ruta de red hacia endpoints regionales, pero no cachea contenido ni sirve ficheros desde el borde."
+          }
+        } },
+        { "id": "web", "col": 3, "fila": 2, "hueco": {
+          "validos": ["s3"],
+          "explicacion": "S3 guarda los ficheros compilados de la SPA. El bucket es privado y solo CloudFront puede leerlo gracias al OAC.",
+          "noVale": {
+            "ec2": "Una instancia EC2 con un servidor web funcionaría, pero hay que parchearla y se paga aunque nadie entre. Para ficheros estáticos, S3 detrás de CloudFront es más barato y no se mantiene."
+          }
+        } },
+        { "id": "auth", "col": 2, "fila": 3, "hueco": {
+          "validos": ["cognito"],
+          "explicacion": "Cognito gestiona el registro y el inicio de sesión (SRP) y emite los tokens JWT. Un disparador previo al registro avisa al administrador, que aprueba cada alta a mano.",
+          "noVale": {}
+        } },
+        { "id": "mail", "servicio": "ses", "texto": "Aviso de nueva alta", "col": 3, "fila": 3 },
+        { "id": "api", "col": 2, "fila": 4, "hueco": {
+          "validos": ["api-gateway"],
+          "explicacion": "API Gateway (HTTP API) recibe las peticiones en el dominio de la API y comprueba el token con un autorizador JWT de Cognito antes de llamar a Lambda.",
+          "noVale": {
+            "elb": "Un ALB reparte tráfico entre destinos, pero aquí no hay servidores detrás y lo que se busca es una API gestionada con autorizador JWT y pago por petición.",
+            "appsync": "AppSync sirve APIs GraphQL. Kopi expone una API HTTP con rutas REST, que es lo que hace API Gateway."
+          }
+        } },
+        { "id": "fn", "col": 3, "fila": 4, "hueco": {
+          "validos": ["lambda"],
+          "explicacion": "Lambda ejecuta el código de cada ruta solo cuando llega una petición: sin servidores y sin coste en reposo.",
+          "noVale": {
+            "ec2": "EC2 obliga a tener servidores encendidos (y pagados) aunque no haya peticiones."
+          }
+        } },
+        { "id": "db", "col": 4, "fila": 4, "hueco": {
+          "validos": ["dynamodb"],
+          "explicacion": "DynamoDB guarda los datos de cada usuario con su ownerId como clave. En modo bajo demanda se paga por petición.",
+          "noVale": {
+            "rds": "RDS es relacional y se paga por hora de instancia aunque no se use; el requisito es NoSQL con pago por petición."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "u", "a": "dns", "texto": "resuelve" },
+        { "de": "u", "a": "cdn", "texto": "HTTPS" },
+        { "de": "cdn", "a": "web", "texto": "origen" },
+        { "de": "u", "a": "auth", "texto": "login" },
+        { "de": "auth", "a": "mail", "texto": "alta" },
+        { "de": "u", "a": "api", "texto": "token JWT" },
+        { "de": "api", "a": "auth", "texto": "valida" },
+        { "de": "api", "a": "fn" },
+        { "de": "fn", "a": "db" }
+      ],
+      "distractores": ["ec2", "rds", "elb"],
+      "distractoresDificil": ["appsync", "global-accelerator", "efs"]
+    },
+    {
+      "id": "web-estatica",
+      "titulo": "Web estática global con dominio propio",
+      "nivel": "básico",
+      "certificaciones": ["CLF-C02", "SAA-C03"],
+      "enunciado": "Una agencia publica la web de un festival: solo HTML, CSS, imágenes y JavaScript. Espera visitas de todo el mundo, sobre todo el día que salen las entradas.",
+      "requisitos": [
+        "Dominio propio (www.festival.example).",
+        "HTTPS con un certificado gratuito que se renueve solo.",
+        "El contenido se entrega desde puntos cercanos a cada visitante.",
+        "Los ficheros se guardan sin servidores y nadie puede leerlos saltándose la caché.",
+        "Bloquear bots e inyecciones con reglas sobre las peticiones HTTP."
+      ],
+      "nodos": [
+        { "id": "u", "texto": "Visitantes de todo el mundo", "col": 1, "fila": 2 },
+        { "id": "dns", "col": 2, "fila": 1, "hueco": {
+          "validos": ["route-53"],
+          "explicacion": "Route 53 resuelve el dominio y, con un registro alias, lo apunta a la distribución de CloudFront (también en el dominio raíz, donde un CNAME no se permite).",
+          "noVale": {}
+        } },
+        { "id": "cdn", "col": 2, "fila": 2, "hueco": {
+          "validos": ["cloudfront"],
+          "explicacion": "CloudFront cachea la web en sus ubicaciones de borde y aguanta los picos sin que el origen lo note.",
+          "noVale": {
+            "global-accelerator": "Global Accelerator lleva el tráfico por la red de AWS hasta endpoints regionales, pero no cachea: cada visita llegaría al origen.",
+            "elb": "Un balanceador reparte tráfico dentro de una región; no cachea ni acerca el contenido a otros continentes."
+          }
+        } },
+        { "id": "origen", "col": 3, "fila": 2, "hueco": {
+          "validos": ["s3"],
+          "explicacion": "S3 guarda los ficheros. Con OAC el bucket queda privado y solo CloudFront puede leerlo.",
+          "noVale": {
+            "efs": "EFS es un sistema de ficheros que se monta en servidores; no sirve contenido web por sí mismo ni puede ser origen de CloudFront sin un servidor delante.",
+            "ec2": "Una instancia con un servidor web haría falta mantenerla y escalarla; para contenido estático S3 es más simple y barato.",
+            "lightsail": "Lightsail ofrece servidores privados virtuales sencillos; sigue siendo un servidor que mantener, innecesario para ficheros estáticos."
+          }
+        } },
+        { "id": "cert", "col": 1, "fila": 3, "hueco": {
+          "validos": ["acm"],
+          "explicacion": "ACM emite el certificado TLS gratis y lo renueva solo mientras la validación DNS siga en su sitio. Para CloudFront tiene que pedirse en us-east-1.",
+          "noVale": {}
+        } },
+        { "id": "waf", "col": 3, "fila": 1, "hueco": {
+          "validos": ["waf"],
+          "explicacion": "WAF se asocia a la distribución y filtra peticiones HTTP con reglas: inyección SQL, bots conocidos, límites por IP…",
+          "noVale": {
+            "shield": "Shield Standard ya protege gratis contra ataques DDoS de red y transporte, pero no inspecciona peticiones HTTP con reglas; eso es WAF."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "u", "a": "dns", "texto": "resuelve" },
+        { "de": "u", "a": "cdn", "texto": "HTTPS" },
+        { "de": "cdn", "a": "origen", "texto": "OAC" },
+        { "de": "cert", "a": "cdn", "texto": "certificado" },
+        { "de": "waf", "a": "cdn", "texto": "filtra" }
+      ],
+      "distractores": ["ec2", "elb", "efs"],
+      "distractoresDificil": ["global-accelerator", "shield", "lightsail"]
+    },
+    {
+      "id": "pedidos",
+      "titulo": "Pedidos desacoplados con colas",
+      "nivel": "intermedio",
+      "certificaciones": ["SAA-C03", "DVA-C02", "DVA-C03"],
+      "enunciado": "Una tienda online pierde pedidos en las rebajas porque el código que los procesa no da abasto. Quieren separar la recepción del procesamiento.",
+      "requisitos": [
+        "Ningún pedido se pierde aunque el procesador vaya lento o esté caído: espera guardado hasta que se procese.",
+        "Los pedidos que fallan varias veces se apartan para revisarlos sin bloquear al resto.",
+        "Cada pedido procesado se guarda en una base de datos NoSQL de baja latencia.",
+        "Al confirmar un pedido se avisa a la vez al cliente y al almacén, que no se conocen entre sí."
+      ],
+      "nodos": [
+        { "id": "web", "texto": "Tienda web", "col": 1, "fila": 2 },
+        { "id": "api", "servicio": "api-gateway", "col": 2, "fila": 2 },
+        { "id": "cola", "col": 3, "fila": 2, "hueco": {
+          "validos": ["sqs"],
+          "explicacion": "SQS guarda cada pedido hasta que se procesa y lo borra solo cuando el consumidor confirma. Absorbe los picos: la cola crece y el procesador sigue a su ritmo.",
+          "noVale": {
+            "sns": "SNS entrega cada mensaje en el momento y no lo guarda: si el procesador está caído, el pedido se pierde (salvo que una cola esté suscrita).",
+            "kinesis-data-streams": "Kinesis también guarda los datos, pero está pensado para flujos ordenados leídos por varios consumidores. Para una cola de trabajos con reintentos por mensaje y cola de fallidos, SQS.",
+            "mq": "Amazon MQ es para quien ya usa ActiveMQ o RabbitMQ y sus protocolos (AMQP, MQTT…). Para una aplicación nueva, SQS no tiene brókeres que gestionar."
+          }
+        } },
+        { "id": "fn", "servicio": "lambda", "texto": "Procesa cada pedido", "col": 4, "fila": 2 },
+        { "id": "dlq", "col": 3, "fila": 3, "hueco": {
+          "validos": ["sqs"],
+          "explicacion": "Otra cola de SQS hace de cola de mensajes fallidos (DLQ): tras el número máximo de recepciones, el pedido pasa ahí para revisarlo o reenviarlo.",
+          "noVale": {}
+        } },
+        { "id": "db", "col": 4, "fila": 1, "hueco": {
+          "validos": ["dynamodb"],
+          "explicacion": "DynamoDB guarda los pedidos con latencia de milisegundos y escala con los picos sin gestionar servidores.",
+          "noVale": {
+            "rds": "RDS valdría para datos relacionales, pero el requisito es NoSQL y escalar con los picos sin gestionar instancias.",
+            "elasticache": "ElastiCache es una caché en memoria: rapidísima, pero no es el almacén duradero de los pedidos."
+          }
+        } },
+        { "id": "aviso", "col": 4, "fila": 3, "hueco": {
+          "validos": ["sns", "eventbridge"],
+          "explicacion": "SNS publica el aviso una vez y lo entrega a todos los suscriptores (difusión o fan-out). EventBridge también vale: un bus de eventos con reglas que envía el evento a varios destinos.",
+          "noVale": {
+            "sqs": "Una cola entrega cada mensaje a un solo consumidor; para avisar a varios a la vez hace falta un tema de SNS (o un bus de EventBridge)."
+          }
+        } },
+        { "id": "cliente", "texto": "Email al cliente", "col": 5, "fila": 3 },
+        { "id": "almacen", "texto": "Sistema del almacén", "col": 5, "fila": 4 }
+      ],
+      "flechas": [
+        { "de": "web", "a": "api" },
+        { "de": "api", "a": "cola", "texto": "encola" },
+        { "de": "cola", "a": "fn", "texto": "lee" },
+        { "de": "cola", "a": "dlq", "texto": "tras 3 fallos" },
+        { "de": "fn", "a": "db", "texto": "guarda" },
+        { "de": "fn", "a": "aviso", "texto": "confirmado" },
+        { "de": "aviso", "a": "cliente" },
+        { "de": "aviso", "a": "almacen" }
+      ],
+      "distractores": ["kinesis-data-streams", "rds", "step-functions"],
+      "distractoresDificil": ["mq", "elasticache", "appsync"]
+    },
+    {
+      "id": "fotos",
+      "titulo": "Etiquetado automático de fotos",
+      "nivel": "intermedio",
+      "certificaciones": ["SAA-C03", "DVA-C02", "DVA-C03", "AIF-C01"],
+      "enunciado": "Una app de recetas quiere que cada foto que suben los usuarios se etiquete sola (\"pasta\", \"horno\", \"tomate\") para poder buscar por ingredientes.",
+      "requisitos": [
+        "La app sube la foto directamente al almacenamiento, sin pasar por un servidor propio.",
+        "La subida dispara el procesamiento sin servidores encendidos esperando.",
+        "Las etiquetas salen de un servicio de visión ya entrenado: no hay equipo de ML.",
+        "Las etiquetas se guardan en una base NoSQL para buscar por ellas."
+      ],
+      "nodos": [
+        { "id": "app", "texto": "App móvil", "col": 1, "fila": 2 },
+        { "id": "fotos", "col": 2, "fila": 2, "hueco": {
+          "validos": ["s3"],
+          "explicacion": "S3 recibe la subida mediante una URL prefirmada y, al crearse el objeto, emite un evento.",
+          "noVale": {
+            "ebs": "EBS es el disco de una instancia EC2: la app no puede subir ahí y no emite eventos al crearse un fichero.",
+            "efs": "EFS es un sistema de ficheros para servidores; la app no sube directamente y no hay eventos por fichero nuevo."
+          }
+        } },
+        { "id": "fn", "col": 3, "fila": 2, "hueco": {
+          "validos": ["lambda"],
+          "explicacion": "Lambda se ejecuta con el evento de S3, llama al servicio de visión y guarda el resultado. Solo se paga mientras procesa.",
+          "noVale": {
+            "ec2": "Una instancia EC2 tendría que estar encendida esperando subidas; el requisito es no tener servidores en reposo."
+          }
+        } },
+        { "id": "vision", "col": 4, "fila": 1, "hueco": {
+          "validos": ["rekognition"],
+          "explicacion": "Rekognition detecta objetos, escenas y conceptos en imágenes con un modelo ya entrenado, con una sola llamada a su API.",
+          "noVale": {
+            "textract": "Textract extrae texto, tablas y formularios de documentos; no reconoce objetos ni escenas en fotos.",
+            "comprehend": "Comprehend analiza texto (entidades, sentimiento), no imágenes.",
+            "sagemaker-ai": "Con SageMaker AI podrías entrenar tu propio modelo, pero sin equipo de ML lo sensato es un servicio ya entrenado como Rekognition."
+          }
+        } },
+        { "id": "db", "col": 4, "fila": 3, "hueco": {
+          "validos": ["dynamodb"],
+          "explicacion": "DynamoDB guarda las etiquetas de cada foto; con un índice secundario se puede buscar por etiqueta.",
+          "noVale": {}
+        } }
+      ],
+      "flechas": [
+        { "de": "app", "a": "fotos", "texto": "sube" },
+        { "de": "fotos", "a": "fn", "texto": "evento" },
+        { "de": "fn", "a": "vision", "texto": "¿qué hay?" },
+        { "de": "fn", "a": "db", "texto": "guarda" }
+      ],
+      "distractores": ["textract", "ebs", "ec2"],
+      "distractoresDificil": ["comprehend", "efs", "sagemaker-ai"]
+    },
+    {
+      "id": "tres-capas",
+      "titulo": "Web clásica en tres capas",
+      "nivel": "básico",
+      "certificaciones": ["CLF-C02", "SAA-C03"],
+      "enunciado": "Un ayuntamiento lleva a AWS su web de trámites: una aplicación PHP con base de datos MySQL. No quieren reescribirla, pero sí que aguante y que no se caiga si falla un centro de datos.",
+      "requisitos": [
+        "Un único punto de entrada que reparte las peticiones HTTP entre varios servidores.",
+        "Servidores virtuales que se añaden y se quitan solos según la carga, en dos zonas de disponibilidad.",
+        "MySQL gestionado, con copia en espera en otra zona (Multi-AZ).",
+        "Una caché en memoria para las consultas repetidas y las sesiones."
+      ],
+      "nodos": [
+        { "id": "u", "texto": "Ciudadanos", "col": 1, "fila": 2 },
+        { "id": "dns", "servicio": "route-53", "col": 2, "fila": 2 },
+        { "id": "lb", "col": 3, "fila": 2, "hueco": {
+          "validos": ["elb"],
+          "explicacion": "Un Application Load Balancer (ELB) recibe el tráfico, comprueba la salud de los servidores y lo reparte entre las zonas de disponibilidad.",
+          "noVale": {
+            "cloudfront": "CloudFront puede ir delante para cachear, pero no reparte la carga entre instancias ni comprueba su salud; para eso está el balanceador.",
+            "global-accelerator": "Global Accelerator dirige tráfico a endpoints de varias regiones, pero dentro de la región sigue haciendo falta un balanceador."
+          }
+        } },
+        { "id": "app", "col": 4, "fila": 2, "hueco": {
+          "validos": ["ec2", "ec2-auto-scaling"],
+          "explicacion": "Instancias EC2 con la aplicación PHP, dentro de un grupo de EC2 Auto Scaling repartido en dos zonas que añade o quita instancias según la carga.",
+          "noVale": {
+            "lambda": "Lambda obligaría a reescribir la aplicación en funciones; el requisito es moverla tal cual.",
+            "lightsail": "Lightsail es sencillo, pero se queda corto para escalado automático entre zonas con un ALB y RDS Multi-AZ."
+          }
+        } },
+        { "id": "db", "col": 5, "fila": 2, "hueco": {
+          "validos": ["rds", "aurora"],
+          "explicacion": "RDS para MySQL en Multi-AZ mantiene una copia en espera en otra zona y conmuta sola si cae la principal. Aurora MySQL también vale, con almacenamiento replicado en tres zonas.",
+          "noVale": {
+            "dynamodb": "DynamoDB es NoSQL: obligaría a reescribir todas las consultas de la aplicación MySQL.",
+            "redshift": "Redshift es un almacén de datos para análisis, no la base transaccional de una web."
+          }
+        } },
+        { "id": "cache", "col": 4, "fila": 3, "hueco": {
+          "validos": ["elasticache"],
+          "explicacion": "ElastiCache (Valkey, Redis OSS o Memcached) guarda en memoria las sesiones y los resultados de consultas repetidas, y descarga a la base de datos.",
+          "noVale": {
+            "efs": "EFS puede compartir ficheros de sesión entre servidores, pero es un sistema de ficheros, no una caché en memoria de milisegundos."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "u", "a": "dns" },
+        { "de": "dns", "a": "lb", "texto": "alias" },
+        { "de": "lb", "a": "app", "texto": "reparte" },
+        { "de": "app", "a": "db", "texto": "SQL" },
+        { "de": "app", "a": "cache", "texto": "caché" }
+      ],
+      "distractores": ["dynamodb", "cloudfront", "lambda"],
+      "distractoresDificil": ["redshift", "efs", "lightsail"]
+    },
+    {
+      "id": "lago-datos",
+      "titulo": "Lago de datos con consultas SQL",
+      "nivel": "intermedio",
+      "certificaciones": ["CLF-C02", "SAA-C03"],
+      "enunciado": "Una cadena de gimnasios quiere analizar los registros de uso de sus apps y máquinas sin montar ni mantener un almacén de datos.",
+      "requisitos": [
+        "Los registros llegan en continuo y se guardan en lotes, sin escribir código de ingesta.",
+        "Todo se guarda barato y sin límite de tamaño en un almacenamiento de objetos.",
+        "Un proceso descubre el esquema de los ficheros y lo apunta en un catálogo.",
+        "Los analistas consultan con SQL directamente sobre los ficheros, pagando por datos leídos.",
+        "Paneles para la dirección."
+      ],
+      "nodos": [
+        { "id": "fuentes", "texto": "Apps y máquinas", "col": 1, "fila": 2 },
+        { "id": "ingesta", "col": 2, "fila": 2, "hueco": {
+          "validos": ["data-firehose"],
+          "explicacion": "Data Firehose recibe el flujo, lo agrupa en lotes (y puede convertirlo a Parquet) y lo entrega en S3 sin código.",
+          "noVale": {
+            "kinesis-data-streams": "Kinesis Data Streams guarda el flujo para tus consumidores, pero no escribe en S3 por sí solo: tendrías que programar el consumidor. Firehose lo hace sin código.",
+            "sqs": "SQS es una cola de mensajes para desacoplar aplicaciones; no agrupa ni entrega datos en S3."
+          }
+        } },
+        { "id": "lago", "col": 3, "fila": 2, "hueco": {
+          "validos": ["s3"],
+          "explicacion": "S3 es el almacenamiento del lago: barato, duradero y sin límite de tamaño total.",
+          "noVale": {
+            "rds": "RDS es una base de datos relacional con tamaño máximo y coste por instancia; no es el sitio para guardar registros en bruto sin límite."
+          }
+        } },
+        { "id": "catalogo", "col": 3, "fila": 3, "hueco": {
+          "validos": ["glue"],
+          "explicacion": "Un rastreador de Glue lee los ficheros, deduce el esquema y crea las tablas en el catálogo de datos de Glue, que luego usa el motor de consultas.",
+          "noVale": {
+            "lake-formation": "Lake Formation gobierna los permisos del lago (y usa el catálogo de Glue), pero el rastreador que descubre el esquema es de Glue."
+          }
+        } },
+        { "id": "sql", "col": 4, "fila": 2, "hueco": {
+          "validos": ["athena"],
+          "explicacion": "Athena consulta con SQL los ficheros de S3 usando el catálogo de Glue. No hay nada que mantener y se paga por datos leídos.",
+          "noVale": {
+            "redshift": "Redshift es un almacén de datos: valdría, pero añade un clúster o un endpoint sin servidor y, normalmente, cargar los datos. El requisito es consultar los ficheros sin montar un almacén.",
+            "emr": "EMR ejecuta Spark o Hive sobre clústeres que hay que configurar; para SQL puntual sobre S3 sin gestionar nada, Athena.",
+            "opensearch-service": "OpenSearch está pensado para búsqueda de texto y análisis de registros indexados, no para SQL sobre ficheros de S3."
+          }
+        } },
+        { "id": "paneles", "col": 5, "fila": 2, "hueco": {
+          "validos": ["quick"],
+          "explicacion": "Amazon Quick (antes QuickSight) crea paneles interactivos con Athena como origen de datos.",
+          "noVale": {}
+        } }
+      ],
+      "flechas": [
+        { "de": "fuentes", "a": "ingesta", "texto": "flujo" },
+        { "de": "ingesta", "a": "lago", "texto": "lotes" },
+        { "de": "catalogo", "a": "lago", "texto": "rastrea" },
+        { "de": "sql", "a": "lago", "texto": "lee" },
+        { "de": "catalogo", "a": "sql", "texto": "esquema" },
+        { "de": "paneles", "a": "sql", "texto": "consulta" }
+      ],
+      "distractores": ["redshift", "rds", "sqs"],
+      "distractoresDificil": ["emr", "lake-formation", "kinesis-data-streams"]
+    },
+    {
+      "id": "tiempo-real",
+      "titulo": "Flujo de eventos en tiempo real",
+      "nivel": "avanzado",
+      "certificaciones": ["SAA-C03", "DVA-C02", "DVA-C03", "SAP-C02"],
+      "enunciado": "Un juego online envía millones de eventos por minuto (partidas, compras, clics). Quieren marcadores al segundo y, además, guardar todo para analizarlo después.",
+      "requisitos": [
+        "Un flujo duradero y ordenado por jugador que varios consumidores leen a la vez y pueden releer.",
+        "Código que procesa los eventos por lotes nada más llegar, sin servidores.",
+        "Los marcadores se actualizan en una base NoSQL con latencia de milisegundos.",
+        "Una copia íntegra del flujo se archiva en S3 sin escribir código."
+      ],
+      "nodos": [
+        { "id": "juego", "texto": "Clientes del juego", "col": 1, "fila": 2 },
+        { "id": "flujo", "col": 2, "fila": 2, "hueco": {
+          "validos": ["kinesis-data-streams", "msk"],
+          "explicacion": "Kinesis Data Streams guarda los eventos ordenados por clave de partición durante días y permite que varios consumidores los lean y relean. MSK (Kafka gestionado) también cumple si el equipo ya usa Kafka.",
+          "noVale": {
+            "sqs": "SQS borra cada mensaje al procesarlo y lo entrega a un único consumidor; aquí dos consumidores leen el mismo flujo, en orden y pudiendo releerlo.",
+            "sns": "SNS entrega y no guarda: no hay forma de releer ni de mantener el orden por jugador.",
+            "eventbridge": "EventBridge enruta eventos con reglas, pero no es un flujo ordenado que se pueda releer a millones de eventos por minuto."
+          }
+        } },
+        { "id": "proc", "col": 3, "fila": 1, "hueco": {
+          "validos": ["lambda", "managed-service-for-apache-flink"],
+          "explicacion": "Lambda lee el flujo por lotes con un mapeo de origen de eventos y actualiza los marcadores. Managed Service for Apache Flink también vale si hacen falta ventanas de tiempo y estado.",
+          "noVale": {
+            "glue": "Glue hace ETL por lotes (o en streaming con Spark), pero no es la opción sin servidores más directa para reaccionar a cada lote al segundo."
+          }
+        } },
+        { "id": "marcador", "col": 4, "fila": 1, "hueco": {
+          "validos": ["dynamodb"],
+          "explicacion": "DynamoDB actualiza contadores con escrituras atómicas en milisegundos, a cualquier escala.",
+          "noVale": {
+            "rds": "Una base relacional sufriría con millones de actualizaciones por minuto; DynamoDB escala horizontalmente.",
+            "redshift": "Redshift es para análisis, no para actualizar marcadores al segundo."
+          }
+        } },
+        { "id": "archivo", "col": 3, "fila": 3, "hueco": {
+          "validos": ["data-firehose"],
+          "explicacion": "Data Firehose lee el mismo flujo y lo entrega en S3 por lotes, sin código.",
+          "noVale": {}
+        } },
+        { "id": "s3", "servicio": "s3", "texto": "Archivo histórico", "col": 4, "fila": 3 }
+      ],
+      "flechas": [
+        { "de": "juego", "a": "flujo", "texto": "eventos" },
+        { "de": "flujo", "a": "proc", "texto": "lotes" },
+        { "de": "proc", "a": "marcador", "texto": "contadores" },
+        { "de": "flujo", "a": "archivo", "texto": "copia" },
+        { "de": "archivo", "a": "s3" }
+      ],
+      "distractores": ["sqs", "sns", "rds"],
+      "distractoresDificil": ["eventbridge", "glue", "redshift"]
+    },
+    {
+      "id": "multirregion",
+      "titulo": "Recuperación ante desastres entre regiones",
+      "nivel": "avanzado",
+      "certificaciones": ["SAA-C03", "SAP-C02"],
+      "enunciado": "Un banco digital tiene su aplicación en una región y quiere seguir funcionando si esa región entera falla.",
+      "requisitos": [
+        "El tráfico pasa solo a la región de respaldo cuando las comprobaciones de salud de la principal fallan.",
+        "Base de datos MySQL con RPO de segundos y RTO de minutos entre regiones.",
+        "Copias diarias guardadas en la otra región, para recuperarse de un borrado accidental (la replicación también copia los borrados)."
+      ],
+      "nodos": [
+        { "id": "u", "texto": "Clientes", "col": 1, "fila": 2 },
+        { "id": "dns", "col": 2, "fila": 2, "hueco": {
+          "validos": ["route-53", "global-accelerator"],
+          "explicacion": "Route 53 con enrutamiento por conmutación por error (failover) y comprobaciones de salud responde con la región de respaldo cuando la principal falla. Global Accelerator también vale: dirige el tráfico al endpoint sano en segundos sin depender de la caché DNS.",
+          "noVale": {
+            "cloudfront": "La conmutación de origen de CloudFront sirve para contenido que se puede cachear; para una aplicación transaccional entre regiones se usa Route 53 (o Global Accelerator)."
+          }
+        } },
+        { "id": "alb1", "servicio": "elb", "texto": "Región principal", "col": 3, "fila": 1 },
+        { "id": "alb2", "servicio": "elb", "texto": "Región de respaldo", "col": 3, "fila": 3 },
+        { "id": "bd", "col": 4, "fila": 1, "hueco": {
+          "validos": ["aurora"],
+          "explicacion": "Aurora Global Database replica a otra región con un retraso típico de menos de un segundo, y la región secundaria se puede promover en minutos.",
+          "noVale": {
+            "rds": "Una réplica de lectura de RDS en otra región también es asíncrona, pero su retraso suele ser mayor y su promoción es manual y más lenta. Para RPO de segundos y RTO de minutos, Aurora Global Database.",
+            "dynamodb": "Las tablas globales de DynamoDB replican entre regiones, pero la aplicación usa MySQL: cambiar a NoSQL obligaría a reescribirla."
+          }
+        } },
+        { "id": "replica", "texto": "Clúster secundario (solo lectura hasta promoverlo)", "col": 4, "fila": 3 },
+        { "id": "copias", "col": 5, "fila": 1, "hueco": {
+          "validos": ["backup"],
+          "explicacion": "AWS Backup programa las copias de la base de datos y las copia a una bóveda de otra región, con su retención. Protege también de un borrado, porque la copia es de un momento concreto.",
+          "noVale": {
+            "s3-glacier": "Glacier es una clase de almacenamiento; quien programa las instantáneas de Aurora y las copia a otra región es AWS Backup.",
+            "elastic-disaster-recovery": "Elastic Disaster Recovery replica servidores a nivel de bloque; para copias programadas de la base de datos con retención, AWS Backup."
+          }
+        } },
+        { "id": "boveda", "texto": "Bóveda de copias en la región de respaldo", "col": 5, "fila": 3 }
+      ],
+      "flechas": [
+        { "de": "u", "a": "dns" },
+        { "de": "dns", "a": "alb1", "texto": "normal" },
+        { "de": "dns", "a": "alb2", "texto": "si falla" },
+        { "de": "alb1", "a": "bd", "texto": "lee/escribe" },
+        { "de": "bd", "a": "replica", "texto": "replica <1 s" },
+        { "de": "alb2", "a": "replica", "texto": "lee" },
+        { "de": "copias", "a": "bd", "texto": "copia diaria" },
+        { "de": "copias", "a": "boveda", "texto": "a otra región" }
+      ],
+      "distractores": ["rds", "dynamodb", "s3-glacier"],
+      "distractoresDificil": ["elastic-disaster-recovery", "cloudfront", "transit-gateway"]
+    },
+    {
+      "id": "hibrida",
+      "titulo": "Conectividad híbrida con varias VPC",
+      "nivel": "avanzado",
+      "certificaciones": ["SAA-C03", "SAP-C02"],
+      "enunciado": "Una aseguradora conecta su centro de datos con tres VPC (producción, desarrollo y servicios compartidos) y quiere que todo se comunique sin una maraña de conexiones.",
+      "requisitos": [
+        "Un enlace privado dedicado, con latencia estable y mucho ancho de banda, que no pase por Internet.",
+        "Un respaldo cifrado por Internet que entre si el enlace dedicado cae.",
+        "Un punto central (hub) que enrute entre el centro de datos y todas las VPC, sin conectar cada pareja por separado."
+      ],
+      "nodos": [
+        { "id": "cpd", "texto": "Centro de datos", "col": 1, "fila": 2 },
+        { "id": "dx", "col": 2, "fila": 1, "hueco": {
+          "validos": ["direct-connect"],
+          "explicacion": "Direct Connect es una conexión física dedicada entre el centro de datos y AWS: no pasa por Internet y su latencia es estable. No va cifrada por defecto (se puede añadir MACsec o una VPN encima).",
+          "noVale": {
+            "global-accelerator": "Global Accelerator mejora el acceso de usuarios de Internet a aplicaciones; no es un enlace privado con tu centro de datos."
+          }
+        } },
+        { "id": "vpn", "col": 2, "fila": 3, "hueco": {
+          "validos": ["site-to-site-vpn"],
+          "explicacion": "Site-to-Site VPN crea túneles IPsec cifrados por Internet. Es el respaldo habitual de Direct Connect: más barato y rápido de montar.",
+          "noVale": {
+            "client-vpn": "Client VPN conecta a personas (portátiles) con AWS; para unir una red entera se usa Site-to-Site VPN."
+          }
+        } },
+        { "id": "hub", "col": 3, "fila": 2, "hueco": {
+          "validos": ["transit-gateway"],
+          "explicacion": "Transit Gateway es un enrutador regional que hace de hub: cada VPC y cada conexión se conecta una vez y las tablas de rutas deciden quién habla con quién.",
+          "noVale": {
+            "vpc": "El emparejamiento de VPC (VPC peering) no es transitivo: habría que conectar cada pareja por separado, justo lo que se quiere evitar.",
+            "privatelink": "PrivateLink publica un servicio concreto a otras VPC; no enruta redes enteras entre sí.",
+            "network-firewall": "Network Firewall inspecciona el tráfico, pero no es el hub que lo enruta (aunque se puede colocar junto a Transit Gateway)."
+          }
+        } },
+        { "id": "prod", "servicio": "vpc", "texto": "Producción", "col": 4, "fila": 1 },
+        { "id": "dev", "servicio": "vpc", "texto": "Desarrollo", "col": 4, "fila": 2 },
+        { "id": "comp", "servicio": "vpc", "texto": "Servicios compartidos", "col": 4, "fila": 3 }
+      ],
+      "flechas": [
+        { "de": "cpd", "a": "dx", "texto": "dedicado" },
+        { "de": "cpd", "a": "vpn", "texto": "respaldo" },
+        { "de": "dx", "a": "hub" },
+        { "de": "vpn", "a": "hub" },
+        { "de": "hub", "a": "prod" },
+        { "de": "hub", "a": "dev" },
+        { "de": "hub", "a": "comp" }
+      ],
+      "distractores": ["client-vpn", "privatelink", "global-accelerator"],
+      "distractoresDificil": ["vpc", "network-firewall", "cloudfront"]
+    },
+    {
+      "id": "multicuenta",
+      "titulo": "Organización con varias cuentas",
+      "nivel": "avanzado",
+      "certificaciones": ["SAA-C03", "SAP-C02"],
+      "enunciado": "Una empresa pasa de una sola cuenta de AWS a una cuenta por entorno y equipo, y quiere gobernarlas todas desde un sitio.",
+      "requisitos": [
+        "Montar el entorno multicuenta (landing zone) con buenas prácticas y controles ya preparados.",
+        "Agrupar las cuentas en unidades organizativas, con facturación unificada y políticas que limitan lo que se puede hacer (SCP).",
+        "Los empleados entran una sola vez con su cuenta corporativa y eligen cuenta y rol, sin usuarios IAM en cada cuenta.",
+        "Registrar cada llamada a la API de todas las cuentas en un bucket central.",
+        "Reunir en un solo panel los hallazgos de seguridad de todas las cuentas y compararlos con estándares como CIS."
+      ],
+      "nodos": [
+        { "id": "equipo", "texto": "Empleados", "col": 1, "fila": 2 },
+        { "id": "sso", "col": 2, "fila": 2, "hueco": {
+          "validos": ["iam-identity-center"],
+          "explicacion": "IAM Identity Center da el inicio de sesión único: se conecta al directorio corporativo y asigna conjuntos de permisos por cuenta, con credenciales temporales.",
+          "noVale": {
+            "iam": "Crear usuarios IAM en cada cuenta multiplica las credenciales de larga duración y las altas y bajas; Identity Center centraliza el acceso.",
+            "cognito": "Cognito gestiona los usuarios de tus aplicaciones, no el acceso de los empleados a las cuentas de AWS."
+          }
+        } },
+        { "id": "ct", "col": 2, "fila": 1, "hueco": {
+          "validos": ["control-tower"],
+          "explicacion": "Control Tower monta la landing zone sobre Organizations (cuentas de registros y de auditoría, controles preventivos y de detección) y crea cuentas nuevas ya preparadas.",
+          "noVale": {
+            "service-catalog": "Service Catalog publica productos aprobados para desplegar; no monta el entorno multicuenta (aunque Control Tower lo usa por debajo para crear cuentas)."
+          }
+        } },
+        { "id": "org", "col": 3, "fila": 1, "hueco": {
+          "validos": ["organizations"],
+          "explicacion": "Organizations agrupa las cuentas en unidades organizativas, unifica la factura y aplica SCP que limitan lo máximo que se puede hacer en cada cuenta.",
+          "noVale": {
+            "ram": "RAM comparte recursos (subredes, Transit Gateway…) entre cuentas; no crea ni agrupa cuentas."
+          }
+        } },
+        { "id": "cuentas", "texto": "Cuentas: producción, desarrollo, pruebas…", "col": 3, "fila": 2 },
+        { "id": "trail", "col": 4, "fila": 2, "hueco": {
+          "validos": ["cloudtrail"],
+          "explicacion": "Un registro (trail) de organización de CloudTrail guarda cada llamada a la API de todas las cuentas en un bucket de la cuenta de registros.",
+          "noVale": {
+            "config": "Config registra cómo estaba configurado cada recurso a lo largo del tiempo, no quién hizo cada llamada a la API.",
+            "cloudwatch": "CloudWatch recoge métricas y registros de aplicaciones; el historial de llamadas a la API es de CloudTrail (que puede enviarlo a CloudWatch Logs)."
+          }
+        } },
+        { "id": "logs", "servicio": "s3", "texto": "Bucket de la cuenta de registros", "col": 5, "fila": 2 },
+        { "id": "hub", "col": 3, "fila": 3, "hueco": {
+          "validos": ["security-hub"],
+          "explicacion": "Security Hub reúne los hallazgos de GuardDuty, Inspector, Macie y otros de todas las cuentas en una cuenta administradora delegada y los compara con estándares como CIS.",
+          "noVale": {
+            "guardduty": "GuardDuty detecta amenazas, pero es una de las fuentes; el panel que reúne hallazgos de varios servicios y los compara con estándares es Security Hub."
+          }
+        } },
+        { "id": "seg", "texto": "Cuenta de seguridad", "col": 4, "fila": 3 }
+      ],
+      "flechas": [
+        { "de": "equipo", "a": "sso", "texto": "SSO" },
+        { "de": "sso", "a": "cuentas", "texto": "rol temporal" },
+        { "de": "ct", "a": "org", "texto": "monta" },
+        { "de": "org", "a": "cuentas", "texto": "SCP" },
+        { "de": "cuentas", "a": "trail", "texto": "llamadas API" },
+        { "de": "trail", "a": "logs" },
+        { "de": "cuentas", "a": "hub", "texto": "hallazgos" },
+        { "de": "hub", "a": "seg" }
+      ],
+      "distractores": ["iam", "cognito", "config"],
+      "distractoresDificil": ["guardduty", "ram", "service-catalog"]
+    },
+    {
+      "id": "migracion",
+      "titulo": "Migración de un centro de datos",
+      "nivel": "intermedio",
+      "certificaciones": ["SAA-C03", "SAP-C02"],
+      "enunciado": "Una empresa cierra su centro de datos en seis meses. Quiere mover los servidores tal cual, pasar su base de datos Oracle a Aurora PostgreSQL con el mínimo corte y llevarse un servidor de ficheros NFS de 40 TB.",
+      "requisitos": [
+        "Servidores Windows y Linux migrados sin cambios (rehost), con replicación continua y prueba antes del corte.",
+        "Copia de los datos de Oracle a Aurora y replicación de los cambios hasta el día del corte (el esquema ya se ha convertido).",
+        "Copia de los ficheros por la red, verificada y programable.",
+        "Destino: un sistema de ficheros NFS gestionado que crezca y decrezca solo."
+      ],
+      "nodos": [
+        { "id": "srv", "texto": "Servidores Windows y Linux", "col": 1, "fila": 1 },
+        { "id": "mgn", "col": 2, "fila": 1, "hueco": {
+          "validos": ["application-migration-service"],
+          "explicacion": "AWS Transform MGN (antes Application Migration Service) replica los discos de forma continua y lanza instancias de prueba y de corte en EC2.",
+          "noVale": {
+            "elastic-disaster-recovery": "Elastic Disaster Recovery comparte la tecnología de replicación con MGN, pero está pensado para recuperación ante desastres continua, no para migrar.",
+            "storage-gateway": "Storage Gateway da acceso híbrido a almacenamiento en la nube; no migra servidores."
+          }
+        } },
+        { "id": "ec2", "servicio": "ec2", "texto": "Servidores migrados", "col": 3, "fila": 1 },
+        { "id": "ora", "texto": "Base de datos Oracle", "col": 1, "fila": 2 },
+        { "id": "dms", "col": 2, "fila": 2, "hueco": {
+          "validos": ["dms"],
+          "explicacion": "DMS hace la carga completa y después replica los cambios (CDC) hasta el corte, así la base de origen sigue funcionando durante la migración.",
+          "noVale": {
+            "sct": "SCT (o DMS Schema Conversion) convierte el esquema y el código de Oracle a PostgreSQL, pero no copia los datos ni replica cambios; eso es DMS.",
+            "datasync": "DataSync copia ficheros y objetos, no filas de una base de datos con replicación de cambios."
+          }
+        } },
+        { "id": "aurora", "servicio": "aurora", "texto": "Aurora PostgreSQL", "col": 3, "fila": 2 },
+        { "id": "nfs", "texto": "Servidor NFS (40 TB)", "col": 1, "fila": 3 },
+        { "id": "ds", "col": 2, "fila": 3, "hueco": {
+          "validos": ["datasync"],
+          "explicacion": "DataSync copia ficheros por la red con un agente, verifica la integridad, se puede programar y solo copia lo que ha cambiado en cada pasada.",
+          "noVale": {
+            "storage-gateway": "Storage Gateway sirve para seguir usando la nube desde el centro de datos de forma continua; para una copia de migración, DataSync.",
+            "transfer-family": "Transfer Family ofrece SFTP o FTP gestionado para que terceros envíen ficheros; no es una herramienta de migración masiva."
+          }
+        } },
+        { "id": "fs", "col": 3, "fila": 3, "hueco": {
+          "validos": ["efs"],
+          "explicacion": "EFS es un sistema de ficheros NFS gestionado y elástico: crece y decrece solo y lo montan a la vez muchas instancias.",
+          "noVale": {
+            "ebs": "EBS es un disco de bloques para una instancia (Multi-Attach solo en algunos tipos y en la misma zona); no es un NFS compartido.",
+            "s3": "S3 es almacenamiento de objetos: no se monta como NFS sin una capa intermedia."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "srv", "a": "mgn", "texto": "réplica" },
+        { "de": "mgn", "a": "ec2", "texto": "corte" },
+        { "de": "ora", "a": "dms", "texto": "carga + CDC" },
+        { "de": "dms", "a": "aurora" },
+        { "de": "nfs", "a": "ds", "texto": "agente" },
+        { "de": "ds", "a": "fs" }
+      ],
+      "distractores": ["storage-gateway", "ebs", "s3"],
+      "distractoresDificil": ["sct", "elastic-disaster-recovery", "transfer-family"]
+    },
+    {
+      "id": "cicd-contenedores",
+      "titulo": "Entrega continua de contenedores",
+      "nivel": "intermedio",
+      "certificaciones": ["DVA-C02", "DVA-C03", "SAP-C02"],
+      "enunciado": "Un equipo tiene su código en GitHub y sus servicios en contenedores con ECS. Quieren que cada cambio en main acabe en producción sin pasos manuales y sin gestionar servidores.",
+      "requisitos": [
+        "Un flujo que se dispara con cada cambio en main y coordina las etapas.",
+        "Compilar, pasar las pruebas y construir la imagen Docker sin mantener servidores de compilación.",
+        "Un registro privado de imágenes de contenedor con análisis de vulnerabilidades.",
+        "Los contenedores se ejecutan sin gestionar instancias."
+      ],
+      "nodos": [
+        { "id": "repo", "texto": "Repositorio en GitHub", "col": 1, "fila": 2 },
+        { "id": "pipe", "col": 2, "fila": 2, "hueco": {
+          "validos": ["codepipeline"],
+          "explicacion": "CodePipeline detecta el cambio en main (con una conexión a GitHub) y encadena las etapas de compilación y despliegue.",
+          "noVale": {
+            "codedeploy": "CodeDeploy hace el despliegue, pero no coordina las etapas ni se dispara con el repositorio.",
+            "cloudformation": "CloudFormation despliega infraestructura desde plantillas; no orquesta un flujo de compilación y despliegue por cada cambio."
+          }
+        } },
+        { "id": "build", "col": 3, "fila": 2, "hueco": {
+          "validos": ["codebuild"],
+          "explicacion": "CodeBuild ejecuta el buildspec en un entorno gestionado: compila, pasa las pruebas y construye y sube la imagen. Se paga por minuto de compilación.",
+          "noVale": {
+            "codedeploy": "CodeDeploy despliega; no compila ni ejecuta pruebas.",
+            "lambda": "Lambda no está pensada para compilar ni para construir imágenes Docker; para eso está CodeBuild."
+          }
+        } },
+        { "id": "registro", "col": 4, "fila": 2, "hueco": {
+          "validos": ["ecr"],
+          "explicacion": "ECR es el registro privado de imágenes de contenedor, con análisis de vulnerabilidades al subirlas. ECS descarga de ahí las imágenes.",
+          "noVale": {
+            "codeartifact": "CodeArtifact guarda paquetes de software (npm, Maven, PyPI…), no imágenes de contenedor.",
+            "s3": "S3 guarda artefactos, pero ECS descarga imágenes de un registro de contenedores, no de un bucket."
+          }
+        } },
+        { "id": "ecs", "servicio": "ecs", "texto": "Despliegue blue/green", "col": 3, "fila": 3 },
+        { "id": "computo", "col": 4, "fila": 3, "hueco": {
+          "validos": ["fargate"],
+          "explicacion": "Fargate ejecuta las tareas de ECS sin instancias que gestionar: cada tarea declara su CPU y memoria.",
+          "noVale": {
+            "ec2": "Con EC2 como capacidad de ECS tendrías que gestionar las instancias; el requisito es no gestionar servidores.",
+            "eks": "EKS es otro orquestador (Kubernetes); el equipo ya usa ECS y lo que falta es dónde se ejecutan las tareas.",
+            "lambda": "Lambda ejecuta funciones, no tareas de ECS."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "repo", "a": "pipe", "texto": "push" },
+        { "de": "pipe", "a": "build" },
+        { "de": "build", "a": "registro", "texto": "imagen" },
+        { "de": "pipe", "a": "ecs", "texto": "despliega" },
+        { "de": "ecs", "a": "registro", "texto": "descarga" },
+        { "de": "ecs", "a": "computo", "texto": "tareas" }
+      ],
+      "distractores": ["codedeploy", "ec2", "lambda"],
+      "distractoresDificil": ["codeartifact", "eks", "cloudformation"]
+    },
+    {
+      "id": "asistente-rag",
+      "titulo": "Asistente con IA generativa sobre tus documentos",
+      "nivel": "avanzado",
+      "certificaciones": ["AIF-C01"],
+      "enunciado": "Una consultora quiere un asistente interno que responda preguntas usando sus manuales en PDF, citando el documento de donde sale cada respuesta (RAG).",
+      "requisitos": [
+        "Un modelo fundacional por API, sin entrenar ni alojar modelos, con bases de conocimiento gestionadas.",
+        "Los manuales se guardan en un almacenamiento de objetos del que la base de conocimiento se sincroniza.",
+        "Un almacén de vectores (embeddings) que busque los fragmentos más parecidos a la pregunta."
+      ],
+      "nodos": [
+        { "id": "u", "texto": "Empleados", "col": 1, "fila": 2 },
+        { "id": "api", "servicio": "api-gateway", "col": 2, "fila": 2 },
+        { "id": "fn", "servicio": "lambda", "col": 3, "fila": 2 },
+        { "id": "llm", "col": 4, "fila": 2, "hueco": {
+          "validos": ["bedrock"],
+          "explicacion": "Bedrock da acceso por API a modelos fundacionales, y sus bases de conocimiento trocean los documentos, crean los embeddings, buscan el contexto y citan las fuentes.",
+          "noVale": {
+            "sagemaker-ai": "En SageMaker AI podrías alojar un modelo, pero gestionarías los endpoints y el flujo RAG; Bedrock lo da gestionado.",
+            "lex": "Lex crea bots conversacionales con intenciones definidas; por sí solo no genera respuestas a partir de tus documentos.",
+            "comprehend": "Comprehend extrae entidades y sentimiento de un texto; no genera respuestas."
+          }
+        } },
+        { "id": "docs", "col": 4, "fila": 1, "hueco": {
+          "validos": ["s3"],
+          "explicacion": "S3 es el origen de datos habitual de una base de conocimiento: al sincronizar, Bedrock lee los PDF nuevos o cambiados.",
+          "noVale": {
+            "efs": "EFS es un sistema de ficheros para servidores; las bases de conocimiento de Bedrock leen los documentos de S3 (u otros orígenes como SharePoint o Confluence)."
+          }
+        } },
+        { "id": "vectores", "col": 4, "fila": 3, "hueco": {
+          "validos": ["opensearch-service", "aurora", "s3"],
+          "explicacion": "OpenSearch Serverless es el almacén de vectores que Bedrock puede crear por ti. También valen Aurora PostgreSQL (pgvector) o S3 Vectors.",
+          "noVale": {
+            "dynamodb": "DynamoDB busca por clave, no por similitud entre vectores.",
+            "textract": "Textract extrae el texto de los PDF, pero no guarda ni busca vectores."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "u", "a": "api", "texto": "pregunta" },
+        { "de": "api", "a": "fn" },
+        { "de": "fn", "a": "llm", "texto": "consulta" },
+        { "de": "docs", "a": "llm", "texto": "sincroniza" },
+        { "de": "llm", "a": "vectores", "texto": "embeddings" }
+      ],
+      "distractores": ["sagemaker-ai", "dynamodb", "comprehend"],
+      "distractoresDificil": ["lex", "textract", "efs"]
+    }
+  ]
+}
