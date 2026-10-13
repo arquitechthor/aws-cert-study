@@ -35,7 +35,7 @@ Ver [`LICENSE`](LICENSE).
 - Los iconos oficiales de AWS (*AWS Architecture Icons*) de `assets/iconos/`.
 - Las marcas, nombres de servicios y logotipos de AWS.
 - Las citas literales de documentación de AWS, identificadas y enlazadas a su fuente.
-- Los recursos de marca de Kopi (`assets/logo.png` y los favicons).
+- El logotipo del sitio (`assets/logo.png` y los favicons).
 
 ## Desarrollo
 
