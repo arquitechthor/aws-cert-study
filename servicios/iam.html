@@ -53,6 +53,7 @@
     <div class="service-head">
       <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/iam.svg" alt="" width="56" height="56"><span>AWS IAM</span></h1>
       <p class="full-name">AWS Identity and Access Management (IAM)</p>
+      <p class="clave-aviso"><span class="chip chip-clave">★ Servicio clave</span> <span>Guía ampliada con <a href="#a-fondo">temas avanzados</a> y preguntas difíciles en el cuestionario.</span></p>
       <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Usuarios, roles y políticas que deciden quién puede hacer qué en tu cuenta</span></div>
       <div class="meta-row">
         <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
@@ -145,6 +146,121 @@
           </tbody>
         </table>
       </div>
+
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios de SAP-C02: cómo se
+        decide una petición cuando intervienen todos los tipos de política, cuándo conviene un rol y cuándo una
+        política de recurso para el acceso entre cuentas, permisos por etiquetas, delegación sin escalada, cuotas que
+        obligan a cambiar el diseño y cómo quitar las credenciales permanentes de una organización entera.</p>
+
+      <h3>Cómo se decide una petición, paso a paso</h3>
+      <ol>
+        <li><strong>Denegación explícita:</strong> si cualquier política aplicable tiene un <code>Deny</code> que
+          coincide, la petición se rechaza y no se mira nada más.</li>
+        <li><strong>Techos de la organización:</strong> la <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> de la cuenta de quien llama y la <abbr class="sigla" data-s="RCP" data-en="Resource Control Policy" data-es="política de Organizations que limita el acceso a los recursos" tabindex="0">RCP</abbr> de la cuenta dueña
+          del recurso tienen que permitir la acción en cada nivel, desde la raíz hasta la cuenta (ver
+          <a href="organizations.html">AWS Organizations</a>).</li>
+        <li><strong>Política del recurso:</strong> dentro de la misma cuenta, si nombra directamente al usuario o a la
+          sesión del rol como <code>Principal</code>, basta para conceder el permiso.</li>
+        <li><strong>Política de identidad</strong>, recortada por el <strong>límite de permisos</strong> y por la
+          <strong>política de sesión</strong> si las hay: el permiso efectivo es la intersección de las tres.</li>
+      </ol>
+      <p>La regla que más se pregunta: <strong>en la misma cuenta basta con un <code>Allow</code></strong> en la política
+        de identidad <em>o</em> en la del recurso; <strong>entre cuentas hacen falta los dos</strong>, uno en cada
+        lado. Hay dos excepciones en la misma cuenta: la política de una clave de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> y la política de confianza de
+        un rol tienen que permitirlo expresamente, aunque la política de identidad ya lo conceda.</p>
+
+      <h3>Acceso entre cuentas: rol o política de recurso</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>Asumir un rol en la otra cuenta</th><th>Política de recurso con <code>Principal</code> externo</th></tr></thead>
+          <tbody>
+            <tr><td>Permisos de quien llama</td><td>Los <strong>cambia</strong> por los del rol mientras dura la sesión</td><td>Los <strong>conserva</strong>: puede leer en una cuenta y escribir en la suya en la misma operación</td></tr>
+            <tr><td>Servicios</td><td>Cualquiera</td><td>Solo los que admiten políticas de recurso (<a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a>, <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>, <abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr>, <a href="lambda.html">Lambda</a>, <a href="secrets-manager.html">Secrets Manager</a>…)</td></tr>
+            <tr><td>Duración</td><td>De 15 minutos a 12 horas según el máximo del rol; con encadenamiento de roles, 1 hora como máximo</td><td>Sin sesión: vale mientras exista la política</td></tr>
+            <tr><td>Auditoría</td><td><a href="cloudtrail.html">CloudTrail</a> registra la llamada a <a href="sts.html"><abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr></a> y las acciones con el nombre de la sesión</td><td>Las acciones aparecen con la identidad de la cuenta de origen</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li><strong><em>Confused deputy</em> con terceros:</strong> si un proveedor asume un rol en tu cuenta, la política
+          de confianza exige un <code>sts:ExternalId</code> que solo conocéis vosotros dos, para que otro cliente del
+          mismo proveedor no pueda hacer que actúe sobre tu cuenta.</li>
+        <li><strong><em>Confused deputy</em> con servicios de AWS:</strong> en las políticas de recurso que dan acceso a un
+          servicio (por ejemplo, <abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr> publicando en una cola <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>), se acota con <code>aws:SourceArn</code> o
+          <code>aws:SourceAccount</code>.</li>
+        <li><strong>Toda la organización de una vez:</strong> <code>aws:PrincipalOrgID</code> en la política del recurso
+          en vez de listar decenas de cuentas, que además se queda corto con el tamaño máximo de la política.</li>
+      </ul>
+
+      <h3>Permisos por etiquetas (ABAC)</h3>
+      <p>Con <abbr class="sigla sigla-1" data-s="RBAC" data-en="Role-Based Access Control" data-es="permisos según el rol" tabindex="0">RBAC<span class="sigla-exp"> (Role-Based Access Control: permisos según el rol)</span></abbr> se escribe una política por equipo o proyecto, y cada proyecto nuevo obliga a tocarlas. Con <abbr class="sigla sigla-1" data-s="ABAC" data-en="Attribute-Based Access Control" data-es="permisos según etiquetas o atributos" tabindex="0">ABAC<span class="sigla-exp"> (Attribute-Based Access Control: permisos según etiquetas o atributos)</span></abbr>
+        una sola política compara etiquetas: permite actuar sobre un recurso si su etiqueta <code>proyecto</code> es
+        igual a la de quien llama.</p>
+      <ul>
+        <li><code>aws:PrincipalTag/clave</code> es la etiqueta de quien llama y <code>aws:ResourceTag/clave</code> la del
+          recurso. Para crear recursos ya etiquetados se exige <code>aws:RequestTag/clave</code> y se limita qué
+          claves se pueden poner con <code>aws:TagKeys</code>.</li>
+        <li>Hay que impedir que alguien cambie sus propias etiquetas o las del recurso
+          (<code>iam:TagRole</code>, <code>TagResource</code>…), o se saltaría el control.</li>
+        <li><strong>Etiquetas de sesión:</strong> con federación <abbr class="sigla" data-s="SAML" data-en="Security Assertion Markup Language" data-es="estándar de inicio de sesión federado" tabindex="0">SAML</abbr> u <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr>, el proveedor de identidad envía
+          atributos (departamento, centro de coste) que llegan como etiquetas de la sesión. La política de confianza
+          del rol debe permitir <code>sts:TagSession</code>. Las etiquetas marcadas como <em>transitivas</em> se
+          mantienen al encadenar roles.</li>
+        <li>No todas las acciones de todos los servicios admiten condiciones por etiqueta: hay que comprobarlo en la
+          referencia de autorización de cada servicio antes de basar el diseño en <abbr class="sigla" data-s="ABAC" data-en="Attribute-Based Access Control" data-es="permisos según etiquetas o atributos" tabindex="0">ABAC</abbr>.</li>
+      </ul>
+
+      <h3>Delegar la creación de roles sin escalada de privilegios</h3>
+      <p>El patrón para que los equipos creen roles para sus Lambda o sus tareas de <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a> sin poder darse más
+        permisos de los que tienen:</p>
+      <ol>
+        <li>Permitir <code>iam:CreateRole</code> y <code>iam:PutRolePermissionsBoundary</code> solo con la condición
+          <code>iam:PermissionsBoundary</code> igual al <abbr class="sigla sigla-1" data-s="ARN" data-en="Amazon Resource Name" data-es="identificador único de un recurso de AWS" tabindex="0">ARN<span class="sigla-exp"> (Amazon Resource Name: identificador único de un recurso de AWS)</span></abbr> del límite aprobado.</li>
+        <li>Denegar que se modifique o se borre esa política de límite y que se quite el límite de un rol
+          (<code>iam:DeleteRolePermissionsBoundary</code>).</li>
+        <li>Obligar a crear los roles bajo una ruta propia (<code>/equipo-a/</code>) y limitar
+          <code>iam:PassRole</code> a esa ruta. <code>iam:PassRole</code> es el permiso para entregar un rol a un
+          servicio (asociarlo a una instancia <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> o a una función); con la condición
+          <code>iam:PassedToService</code> se limita además a qué servicio.</li>
+      </ol>
+
+      <h3>Cuotas que deciden un diseño</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Límite</th><th>Valor</th><th>Qué hacer si no cabe</th></tr></thead>
+          <tbody>
+            <tr><td>Políticas administradas por rol</td><td>20 (ampliable a 25)</td><td>Agrupar permisos en menos políticas administradas por el cliente</td></tr>
+            <tr><td>Políticas administradas por usuario / por grupo</td><td>10 (usuario ampliable a 20; grupo fijo)</td><td>Pasar a roles e <a href="iam-identity-center.html">IAM Identity Center</a></td></tr>
+            <tr><td>Tamaño de una política administrada</td><td>6&nbsp;144 caracteres (fijo, sin contar espacios)</td><td>Comodines en las acciones, condiciones en vez de listas de recursos, o repartir en varias</td></tr>
+            <tr><td>Suma de políticas insertadas</td><td>Rol 10&nbsp;240, grupo 5&nbsp;120, usuario 2&nbsp;048 caracteres (fijos)</td><td>Usar políticas administradas</td></tr>
+            <tr><td>Política de confianza de un rol</td><td>2&nbsp;048 caracteres (ampliable a 8&nbsp;192)</td><td><code>aws:PrincipalOrgID</code> o <code>aws:PrincipalOrgPaths</code> en vez de listar cuentas</td></tr>
+            <tr><td>Roles por cuenta</td><td>1&nbsp;000 (ampliable a 10&nbsp;000)</td><td>Separar cargas en más cuentas, o <abbr class="sigla" data-s="ABAC" data-en="Attribute-Based Access Control" data-es="permisos según etiquetas o atributos" tabindex="0">ABAC</abbr> en vez de un rol por proyecto</td></tr>
+            <tr><td>Políticas de sesión</td><td>2&nbsp;048 caracteres en total y hasta 10 políticas administradas</td><td>Fijo: las políticas de sesión solo recortan, no amplían</td></tr>
+            <tr><td>Peticiones a <abbr class="sigla" data-s="STS" data-en="Security Token Service" tabindex="0">STS</abbr> con credenciales de AWS</td><td>600 por segundo, por cuenta y región</td><td>Reutilizar las credenciales hasta que caduquen en vez de pedir unas nuevas en cada llamada</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Las ampliaciones se piden en <a href="service-quotas.html">Service Quotas</a> desde la región us-east-1, porque <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> es global.</p>
+
+      <h3>Sin credenciales permanentes en toda la organización</h3>
+      <ul>
+        <li><strong>Gestión centralizada del usuario raíz:</strong> desde la cuenta de administración (o la cuenta
+          administradora delegada de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>) se pueden borrar la contraseña, las claves y el <abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr> del usuario raíz de las
+          cuentas miembro; las cuentas nuevas ya nacen sin ellas. Las pocas tareas que exigen raíz (por ejemplo,
+          desbloquear un bucket cuya política deniega a todo el mundo) se hacen con <code>sts:AssumeRoot</code>: una
+          sesión de raíz de 15 minutos como máximo, limitada a esa tarea, a la que siguen aplicando las <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>.</li>
+        <li><strong>Personas:</strong> IAM Identity Center con el proveedor de identidad corporativo, en lugar de
+          usuarios de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> en cada cuenta.</li>
+        <li><strong>Cargas fuera de AWS</strong> (servidores locales, otras nubes): IAM Roles Anywhere, que cambia un
+          certificado X.509 emitido por tu <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> (o por AWS Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>) por credenciales temporales de un rol.</li>
+        <li><strong>Canalizaciones de <abbr class="sigla" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD</abbr>:</strong> federación <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr> con condiciones sobre el repositorio y la rama en la
+          política de confianza. <strong>Pods de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>:</strong> EKS Pod Identity o <abbr class="sigla sigla-1" data-s="IRSA" data-en="IAM Roles for Service Accounts" data-es="roles de IAM para cuentas de servicio de Kubernetes" tabindex="0">IRSA<span class="sigla-exp"> (IAM Roles for Service Accounts: roles de IAM para cuentas de servicio de Kubernetes)</span></abbr>, un rol por cuenta de servicio
+          de Kubernetes.</li>
+        <li><strong>Limpieza continua:</strong> IAM Access Analyzer encuentra roles, claves y permisos sin usar,
+          recursos compartidos fuera de la organización y quién tiene acceso a recursos críticos dentro de ella, y
+          genera una política de mínimo privilegio a partir de hasta 90 días de actividad en CloudTrail.</li>
+      </ul>
 
       <h2 id="precios">Modelo de precios</h2>
       <p><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> no tiene coste: usuarios, roles, políticas y evaluaciones son gratuitos. Pagas por los

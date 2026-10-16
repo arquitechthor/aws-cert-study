@@ -246,5 +246,128 @@
     "fuentes": [
       "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
     ]
+  },
+  {
+    "id": "iam-012",
+    "tipo": "unica",
+    "dificil": true,
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una empresa da acceso a una cuenta de análisis a 40 equipos que inician sesión con federación SAML desde su proveedor de identidad corporativo. Cada semana aparecen proyectos nuevos. Cada equipo solo debe poder leer y modificar los recursos de sus proyectos, y el equipo de seguridad quiere el menor esfuerzo operativo posible al crear proyectos, sin acercarse a la cuota de roles de la cuenta. ¿Qué solución cumple todos los requisitos?",
+    "opciones": [
+      "Crear un rol por proyecto con una política que liste los ARN de sus recursos y asignar cada grupo del proveedor de identidad a su rol.",
+      "Crear en IAM Identity Center un conjunto de permisos por proyecto y asignarlo a los grupos correspondientes de la cuenta de análisis.",
+      "Mover los recursos de cada proyecto a una OU propia y aplicar una SCP por proyecto que deniegue el acceso a los recursos de los demás.",
+      "Enviar el proyecto como atributo SAML para que llegue como etiqueta de sesión, usar un único rol que permita sts:TagSession en su política de confianza, con una política que compare aws:PrincipalTag/proyecto con aws:ResourceTag/proyecto y que impida cambiar esas etiquetas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Es un caso de ABAC: una sola política compara la etiqueta de la sesión con la del recurso, así que un proyecto nuevo solo necesita etiquetar sus recursos y el atributo en el proveedor de identidad. Un rol o un conjunto de permisos por proyecto funciona, pero obliga a crear y mantener piezas nuevas cada semana (y los roles cuentan para la cuota). Las SCP se aplican a cuentas y OU, no a recursos dentro de una misma cuenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_session-tags.html"
+    ]
+  },
+  {
+    "id": "iam-013",
+    "tipo": "multiple",
+    "dificil": true,
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar nuevas soluciones",
+    "enunciado": "Un equipo de plataforma permite a los desarrolladores crear roles para sus funciones Lambda siempre que lleven el límite de permisos aprobado (condición iam:PermissionsBoundary en iam:CreateRole). Una auditoría demuestra que un desarrollador aún puede acabar con más permisos de los que permite ese límite. Los desarrolladores deben seguir creando roles por su cuenta. ¿Qué DOS controles cierran la escalada? (Elige 2)",
+    "opciones": [
+      "Denegar la modificación y el borrado de la política usada como límite, y la acción iam:DeleteRolePermissionsBoundary.",
+      "Una SCP que deniegue iam:CreateRole en la cuenta de desarrollo para todos salvo el rol del equipo de plataforma.",
+      "Exigir que los roles se creen bajo una ruta propia y limitar iam:PassRole a esa ruta, con iam:PassedToService igual a lambda.amazonaws.com.",
+      "Reducir a una hora la duración máxima de sesión de los roles que crean los desarrolladores.",
+      "Activar un analizador de acceso externo de IAM Access Analyzer en la cuenta de desarrollo."
+    ],
+    "correctas": [
+      0,
+      2
+    ],
+    "explicacion": "Si el desarrollador puede editar la política de límite o quitarla de un rol, el límite deja de limitar; y si puede pasar cualquier rol existente (por ejemplo, uno de administración) a una función, hereda sus permisos sin crear nada. La SCP rompe el requisito de que creen roles ellos mismos, acortar la sesión no reduce los permisos, y el analizador de acceso externo detecta recursos compartidos fuera, no escaladas internas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html"
+    ]
+  },
+  {
+    "id": "iam-014",
+    "tipo": "unica",
+    "dificil": true,
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Mejora continua de soluciones existentes",
+    "enunciado": "Un proceso de la cuenta A copia cada noche objetos de un bucket S3 de un socio (cuenta B, en otra organización) a un bucket de la cuenta A. Hoy asume un rol en la cuenta B y falla al escribir en el bucket de A, porque la organización del socio tiene una SCP que deniega escribir en recursos de fuera de su organización (aws:ResourceOrgID). La copia debe hacerse en el servidor, sin descargar los objetos a la máquina del proceso. ¿Qué cambio lo resuelve?",
+    "opciones": [
+      "Añadir en el bucket de A una política que permita s3:PutObject al rol de la cuenta B y seguir asumiéndolo.",
+      "Que la política del bucket de B permita s3:GetObject al rol de la cuenta A, dar a ese rol permiso de lectura sobre el bucket de B en su política de identidad, y hacer la copia con las credenciales del rol de A, sin asumir el rol de B.",
+      "Configurar en la cuenta B una regla de replicación de S3 hacia el bucket de A con un rol de replicación de la cuenta B.",
+      "Encadenar roles: leer con el rol de B y escribir con el rol de A dentro de la misma llamada de copia."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con una política de recurso, quien llama conserva sus propios permisos: el rol de A lee del bucket de B (permitido en los dos lados, como exige el acceso entre cuentas) y escribe en su propio bucket en la misma operación de copia. Las opciones que escriben con una identidad de B chocan con la SCP del socio, incluida la replicación, cuyo rol también es de B. Una llamada de copia usa un único juego de credenciales, así que no se pueden mezclar dos roles en ella.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic-cross-account.html",
+      "https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-walkthroughs-managing-access-example2.html"
+    ]
+  },
+  {
+    "id": "iam-015",
+    "tipo": "unica",
+    "dificil": true,
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "enunciado": "Una empresa migrará a AWS en 18 meses. Mientras tanto, 200 aplicaciones de su centro de datos llaman a S3 y SQS con claves de acceso de usuarios de IAM guardadas en ficheros de configuración. Seguridad exige eliminar ya las credenciales de larga duración y aprovechar la autoridad de certificación interna, que emite certificados a todos los servidores. ¿Qué solución cumple los requisitos con el menor cambio en las aplicaciones?",
+    "opciones": [
+      "Guardar las claves en Secrets Manager con rotación automática cada 30 días y que las aplicaciones las lean al arrancar.",
+      "Crear un grupo de identidades de Amazon Cognito y que cada aplicación obtenga credenciales temporales como usuario no autenticado.",
+      "Configurar IAM Roles Anywhere con un ancla de confianza en la CA interna y perfiles asociados a roles, y usar su ayudante de credenciales como proceso de credenciales del SDK.",
+      "Dar de alta las aplicaciones en IAM Identity Center y que inicien sesión con el proveedor de identidad corporativo."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "IAM Roles Anywhere cambia el certificado X.509 que ya tiene cada servidor por credenciales temporales de un rol, y el SDK las obtiene sin cambios de código mediante el proceso de credenciales. Rotar claves sigue usando credenciales de larga duración; las identidades no autenticadas de Cognito están pensadas para usuarios de aplicaciones y no identifican a cada servidor; IAM Identity Center es para personas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/rolesanywhere/latest/userguide/introduction.html"
+    ]
+  },
+  {
+    "id": "iam-016",
+    "tipo": "multiple",
+    "dificil": true,
+    "certificaciones": [
+      "SAP-C02"
+    ],
+    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "enunciado": "Una organización con 300 cuentas miembro guarda la contraseña y un dispositivo MFA del usuario raíz de cada cuenta en una caja fuerte, y quiere dejar de gestionarlos. A veces, un error deja un bucket S3 con una política que deniega el acceso a todo el mundo, y solo el usuario raíz de la cuenta puede borrarla. ¿Qué DOS acciones resuelven las dos necesidades? (Elige 2)",
+    "opciones": [
+      "Aplicar una SCP que deniegue cualquier acción al usuario raíz de las cuentas miembro.",
+      "Activar la gestión centralizada del acceso raíz en IAM y borrar las credenciales del usuario raíz de las cuentas miembro.",
+      "Dar al rol de administración de cada cuenta miembro el permiso s3:DeleteBucketPolicy sobre todos los buckets.",
+      "Sustituir los dispositivos MFA físicos por llaves de acceso (passkeys) guardadas en un gestor de contraseñas compartido.",
+      "Desbloquear el bucket desde la cuenta de administración o la administradora delegada de IAM con sts:AssumeRoot y la política de tarea S3UnlockBucketPolicy."
+    ],
+    "correctas": [
+      1,
+      4
+    ],
+    "explicacion": "La gestión centralizada permite borrar las credenciales raíz de las cuentas miembro (las nuevas ya nacen sin ellas) y abrir sesiones de raíz cortas y limitadas a una tarea con sts:AssumeRoot, como borrar la política de un bucket bloqueado. Una SCP que deniega todo al usuario raíz también bloquearía esas sesiones, porque las SCP siguen aplicando; el rol de administración no puede saltarse una política de bucket que también lo deniega a él; y las llaves de acceso siguen siendo credenciales que gestionar en 300 cuentas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html",
+      "https://aws.amazon.com/blogs/security/secure-root-user-access-for-member-accounts-in-aws-organizations/"
+    ]
   }
 ]

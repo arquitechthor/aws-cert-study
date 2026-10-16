@@ -1209,6 +1209,7 @@
     "nombreCompleto": "AWS Identity and Access Management (IAM)",
     "categoria": "seguridad-identidad-cumplimiento",
     "icono": true,
+    "clave": true,
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
