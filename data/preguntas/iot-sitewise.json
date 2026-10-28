@@ -2,10 +2,8 @@
   {
     "id": "iot-sitewise-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa con diez plantas quiere recoger datos de sus máquinas por OPC UA, organizarlos por planta, línea y máquina y calcular la eficacia de los equipos. ¿Qué servicio usa?",
     "opciones": [
       "IoT Core con reglas.",
@@ -24,10 +22,8 @@
   {
     "id": "iot-sitewise-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "En IoT SiteWise, ¿qué tipo de propiedad calcula la temperatura media por hora de una máquina?",
     "opciones": [
       "Una métrica, que agrega datos por intervalos.",
@@ -46,10 +42,8 @@
   {
     "id": "iot-sitewise-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un cliente nuevo de IoT SiteWise quiere dar paneles a los operarios con los datos de planta. ¿Qué opción recomienda AWS?",
     "opciones": [
       "SiteWise Monitor.",
@@ -68,10 +62,8 @@
   {
     "id": "iot-sitewise-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "La conexión de una planta a internet se corta a menudo y no se pueden perder lecturas. ¿Qué componente de SiteWise ayuda?",
     "opciones": [
       "Una réplica de lectura.",
@@ -90,10 +82,8 @@
   {
     "id": "iot-sitewise-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Qué servicio de IoT es más adecuado para modelar equipos industriales y sus jerarquías que IoT Core por sí solo?",
     "opciones": [
       "IoT 1-Click.",

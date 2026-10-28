@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amazon Detective — Apuntes AWS</title>
-<meta name="description" content="Servicio para investigar hallazgos de seguridad: reúne los logs en un grafo de comportamiento y muestra el alcance, la cronología y la causa raíz de un incidente. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<meta name="description" content="Servicio para investigar hallazgos de seguridad: reúne los logs en un grafo de comportamiento y muestra el alcance, la cronología y la causa raíz de un incidente. Apuntes y preguntas de práctica para SAA-C03, CLF-C02.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/detective.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Apuntes AWS">
@@ -60,7 +60,6 @@
         <strong>Certificaciones:</strong>
         <span class="chips">
           <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
-          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
           <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
         </span>
       </div>
@@ -93,7 +92,7 @@
           compromiso.</li>
         <li><strong>Un año de historia:</strong> conserva hasta un año de datos agregados para mirar hacia atrás.</li>
         <li><strong>Integración:</strong> desde un hallazgo de GuardDuty, Security Hub o <a href="inspector.html">Inspector</a> se salta a
-          Detective para investigarlo; también consulta los registros guardados en Security Lake.</li>
+          Detective para investigarlo; también consulta los registros guardados en <a href="../servicio.html?id=security-lake">Security Lake</a>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -110,7 +109,7 @@
         <li>Para <strong>detectar</strong> amenazas: <a href="guardduty.html">GuardDuty</a>. Detective investiga lo ya detectado.</li>
         <li>Para una vista agregada de hallazgos y cumplimiento: <a href="security-hub.html">Security Hub</a>.</li>
         <li>Para vulnerabilidades de software: <a href="inspector.html">Inspector</a>. Para datos sensibles en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>: <a href="macie.html">Macie</a>.</li>
-        <li>Para consultas libres sobre logs guardados: <a href="athena.html">Athena</a>, <a href="cloudwatch.html">CloudWatch</a> Logs Insights o Security Lake.</li>
+        <li>Para consultas libres sobre logs guardados: <a href="athena.html">Athena</a>, <a href="cloudwatch.html">CloudWatch</a> Logs Insights o <a href="../servicio.html?id=security-lake">Security Lake</a>.</li>
         <li>Para <strong>responder</strong> o contener: <a href="eventbridge.html">EventBridge</a> con <a href="lambda.html">Lambda</a> o <a href="systems-manager.html">Systems Manager</a>.</li>
       </ul>
 

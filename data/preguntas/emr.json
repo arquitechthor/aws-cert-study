@@ -69,9 +69,9 @@
     "id": "emr-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa quiere migrar a AWS su clúster local de Hadoop con cientos de trabajos de Spark y Hive, cambiando lo mínimo posible, y aprovechar para separar el almacenamiento del cómputo. ¿Qué diseño es el adecuado?",
     "opciones": [
       "Reescribir los trabajos como funciones Lambda encadenadas con Step Functions.",
@@ -91,9 +91,9 @@
     "id": "emr-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un equipo lanza trabajos de Spark de forma irregular, algunos días ninguno, y no quiere dimensionar ni administrar clústeres. ¿Qué opción de Amazon EMR encaja mejor?",
     "opciones": [
       "EMR Serverless.",

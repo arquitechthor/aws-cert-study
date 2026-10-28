@@ -26,11 +26,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
     "dominios": {
-      "SAP-C02": "Mejora continua de soluciones existentes"
+      "SAP-C03": "Seguridad, cumplimiento y gobernanza"
     },
     "enunciado": "Tras borrarse un grupo de seguridad en producción, la empresa quiere saber qué identidad lo hizo y cuándo. ¿Qué servicio lo muestra?",
     "opciones": [
@@ -73,9 +73,9 @@
     "id": "cloudwatch-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una organización con muchas cuentas acumula costes crecientes de almacenamiento en CloudWatch Logs de logs de hace años que nadie consulta. Debe conservar un año por auditoría. ¿Qué medida reduce el coste?",
     "opciones": [
       "Fijar la retención de los grupos de logs en unos días o semanas y exportar o suscribir los logs a S3, con ciclo de vida hacia clases más baratas hasta cumplir el año.",
@@ -185,7 +185,7 @@
     "id": "cloudwatch-009",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una función Lambda falla de forma intermitente y el desarrollador necesita buscar en sus logs todas las líneas con la palabra ERROR de la última hora y contarlas por tipo. ¿Qué herramienta es la adecuada?",
@@ -207,7 +207,7 @@
     "id": "cloudwatch-010",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una aplicación debe publicar en Amazon CloudWatch una métrica de negocio propia, el número de pedidos procesados, para crear alarmas sobre ella. ¿Cómo se hace?",

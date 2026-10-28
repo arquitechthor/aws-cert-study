@@ -90,10 +90,8 @@
   {
     "id": "well-architected-tool-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa quiere que todas las revisiones de arquitectura incluyan, además de las buenas prácticas de AWS, sus propios requisitos internos de cumplimiento. ¿Qué función de AWS Well-Architected Tool lo permite?",
     "opciones": [
       "Los hitos.",
@@ -112,10 +110,8 @@
   {
     "id": "well-architected-tool-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Qué diferencia hay entre AWS Well-Architected Tool y AWS Trusted Advisor?",
     "opciones": [
       "Well-Architected Tool es de pago y Trusted Advisor es siempre gratuito y completo.",

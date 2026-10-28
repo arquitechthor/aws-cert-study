@@ -114,7 +114,7 @@
     "id": "opensearch-service-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador quiere que sus funciones Lambda envíen registros a un dominio de OpenSearch de forma fiable y por lotes, sin escribir el código de reintentos. ¿Qué opción es la más sencilla?",
@@ -136,7 +136,7 @@
     "id": "opensearch-service-007",
     "tipo": "multiple",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Un dominio de OpenSearch contiene índices de varios clientes y cada aplicación solo debe ver sus documentos y algunos campos. ¿Qué DOS elementos lo permiten? (Elige 2.)",
@@ -160,9 +160,9 @@
     "id": "opensearch-service-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Un asistente interno con RAG recibe consultas solo en horario laboral y el equipo no quiere pagar capacidad de búsqueda vectorial de noche ni gestionar clústeres. ¿Qué opción es la más adecuada?",
     "opciones": [
       "OpenSearch Serverless con una colección de búsqueda vectorial NextGen y mínimo de 0 OCU.",
@@ -182,9 +182,9 @@
     "id": "opensearch-service-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Un dominio de OpenSearch crítico debe seguir atendiendo búsquedas sin perder capacidad si cae una zona de disponibilidad completa. ¿Qué configuración es la adecuada?",
     "opciones": [
       "Multi-AZ con espera (standby) en tres zonas.",

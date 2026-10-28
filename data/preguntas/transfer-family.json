@@ -47,9 +47,9 @@
     "id": "transfer-family-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Los usuarios de un servidor SFTP de Transfer Family deben iniciar sesión con usuario y contraseña de un directorio LDAP propio, no de Active Directory. ¿Qué tipo de proveedor de identidad se usa?",
     "opciones": [
       "Gestionado por el servicio.",
@@ -69,9 +69,9 @@
     "id": "transfer-family-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Cada fichero que llega por SFTP debe descifrarse con PGP, copiarse a otra carpeta y etiquetarse antes de procesarse, sin servidores propios. ¿Qué usa?",
     "opciones": [
       "Un flujo gestionado de Transfer Family.",

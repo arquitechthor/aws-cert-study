@@ -25,9 +25,9 @@
     "id": "amplify-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Los revisores quieren ver cada solicitud de incorporación desplegada en una URL propia antes de fusionarla. ¿Qué característica usa el equipo?",
     "opciones": [
       "Las previsualizaciones web de Amplify Hosting.",
@@ -47,7 +47,7 @@
     "id": "amplify-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una aplicación móvil necesita registro e inicio de sesión de usuarios, una API de datos en tiempo real y subida de fotos, con el backend definido como código. ¿Qué enfoque es más rápido?",
@@ -90,10 +90,8 @@
   {
     "id": "amplify-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa con una aplicación Next.js con renderizado en servidor quiere alojarla con CI/CD y sin gestionar servidores ni contenedores. ¿Qué opción encaja?",
     "opciones": [
       "S3 con alojamiento estático.",

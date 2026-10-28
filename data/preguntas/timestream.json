@@ -3,9 +3,9 @@
     "id": "timestream-001",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa nueva en AWS necesita guardar millones de lecturas por minuto de sensores con marca de tiempo y consultarlas en milisegundos para paneles en tiempo real. ¿Qué elige?",
     "opciones": [
       "Timestream for InfluxDB.",
@@ -25,9 +25,9 @@
     "id": "timestream-002",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Un equipo ya usa InfluxDB en servidores propios y quiere dejar de gestionarlos sin cambiar sus herramientas. ¿Qué servicio usa?",
     "opciones": [
       "Amazon DynamoDB.",
@@ -47,9 +47,9 @@
     "id": "timestream-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "¿Qué tipo de datos encaja mejor en una base de datos de series temporales?",
     "opciones": [
       "Pedidos con transacciones entre tablas.",
@@ -69,9 +69,9 @@
     "id": "timestream-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un cliente existente de Timestream for LiveAnalytics pregunta si puede seguir usándolo. ¿Qué le responde?",
     "opciones": [
       "Solo con Enterprise Support.",
@@ -91,9 +91,9 @@
     "id": "timestream-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Para alta disponibilidad de una base de datos de Timestream for InfluxDB, ¿qué se configura?",
     "opciones": [
       "Un despliegue Multi-AZ.",

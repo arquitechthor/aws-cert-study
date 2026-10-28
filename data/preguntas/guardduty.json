@@ -91,9 +91,9 @@
     "id": "guardduty-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización quiere que Amazon GuardDuty esté activo en todas sus cuentas, también en las que se creen después, y que el equipo de seguridad vea todos los hallazgos sin usar la cuenta de administración. ¿Qué debe configurar?",
     "opciones": [
       "Un administrador delegado de GuardDuty en AWS Organizations, con activación automática.",
@@ -113,9 +113,9 @@
     "id": "guardduty-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa solo usa dos regiones de AWS. ¿Por qué se recomienda activar Amazon GuardDuty también en las demás regiones?",
     "opciones": [
       "Porque los hallazgos se replican entre regiones y se necesita quorum.",
@@ -135,9 +135,9 @@
     "id": "guardduty-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa ejecuta contenedores en Amazon ECS sobre Fargate y quiere detectar comportamientos maliciosos dentro de los contenedores, como la ejecución de procesos sospechosos. ¿Qué capacidad de Amazon GuardDuty lo cubre?",
     "opciones": [
       "La protección de S3.",

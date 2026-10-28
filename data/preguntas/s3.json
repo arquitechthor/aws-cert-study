@@ -48,11 +48,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
     "dominios": {
-      "SAP-C02": "Diseñar nuevas soluciones"
+      "SAP-C03": "Seguridad, cumplimiento y gobernanza"
     },
     "enunciado": "Una normativa exige que ciertos registros guardados en S3 no puedan borrarse ni modificarse durante 5 años, por nadie, incluido el usuario raíz. ¿Qué configuración lo cumple?",
     "opciones": [
@@ -95,9 +95,9 @@
     "id": "s3-005",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa quiere copiar automáticamente los objetos nuevos de un bucket en eu-west-1 a otro en us-east-1 para recuperación ante desastres. ¿Qué dos requisitos debe cumplir?",
     "opciones": [
       "Activar el versionado en ambos buckets.",
@@ -185,7 +185,7 @@
     "id": "s3-009",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una aplicación sube a S3 vídeos de 2 GB por una red que a veces se corta, y cada fallo obliga a empezar de cero. ¿Qué debe usar el desarrollador?",
@@ -207,7 +207,7 @@
     "id": "s3-010",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una aplicación sube millones de objetos a un bucket con SSE-KMS y empieza a recibir errores de limitación de KMS y facturas altas de KMS. ¿Qué cambio lo resuelve sin dejar de cifrar con KMS?",
@@ -229,7 +229,7 @@
     "id": "s3-011",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Cada vez que se sube una imagen a un bucket de S3 hay que generar una miniatura automáticamente. ¿Cuál es la solución más sencilla?",
@@ -251,9 +251,9 @@
     "id": "s3-012",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "dificil": true,
     "enunciado": "Un contrato exige que los documentos que una empresa guarda en un bucket de S3 en eu-west-1 estén copiados en eu-central-1 con un RPO de 15 minutos, y que la empresa pueda demostrar con métricas cuánto falta por copiar en cada momento. ¿Qué solución lo cumple con menos esfuerzo operativo?",
     "opciones": [
@@ -275,9 +275,9 @@
     "id": "s3-013",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Una aplicación global lee y escribe ficheros en S3 desde us-east-1 y eu-west-1. Quiere un único nombre de acceso para todos los clientes, poder pasar todo el tráfico a una sola región en pocos minutos si la otra falla, y no perder lo escrito durante la conmutación cuando la región original vuelva. ¿Qué DOS acciones lo consiguen? (Elige 2.)",
     "opciones": [
@@ -301,9 +301,9 @@
     "id": "s3-014",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
     "enunciado": "Una organización de AWS con 250 cuentas descubre que una bucket policy mal escrita daba lectura a una cuenta de un antiguo proveedor. Quiere garantizar que ninguna identidad de fuera de la organización pueda acceder a ningún bucket de S3 de ninguna cuenta, aunque una bucket policy lo permita, y sin revisar los buckets uno a uno. ¿Qué debe hacer?",
     "opciones": [
@@ -325,9 +325,9 @@
     "id": "s3-015",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "dificil": true,
     "enunciado": "Hace un mes se configuró replicación entre regiones en un bucket con 400 millones de objetos. Los objetos nuevos llegan al destino, pero los que ya existían antes de crear la regla no están. ¿Cuál es la forma más sencilla de replicarlos conservando metadatos e identificadores de versión?",
     "opciones": [
@@ -348,9 +348,9 @@
     "id": "s3-016",
     "tipo": "emparejar",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Un arquitecto revisa los requisitos de almacenamiento de una plataforma de datos. Empareja cada requisito con la función de S3 más adecuada (sobra una).",
     "opciones": [

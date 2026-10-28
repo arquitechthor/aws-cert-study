@@ -69,7 +69,7 @@
     "id": "waf-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Tras activar una regla nueva de WAF, algunos usuarios legítimos reciben errores 403. ¿Cuál es la mejor forma de ajustar la regla sin cortar el servicio?",
@@ -91,9 +91,9 @@
     "id": "waf-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización con 80 cuentas exige que todos los ALB y distribuciones de CloudFront, actuales y futuros, tengan una Web ACL con un conjunto mínimo de reglas. ¿Qué solución es la adecuada?",
     "opciones": [
       "Políticas de AWS Firewall Manager que apliquen la Web ACL en toda la organización.",

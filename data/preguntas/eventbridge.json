@@ -91,7 +91,7 @@
     "id": "eventbridge-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador quiere que una regla solo capture los eventos de pedidos con importe mayor de 1000 y país ES o PT. ¿Dónde se expresa esa condición?",
@@ -113,7 +113,7 @@
     "id": "eventbridge-006",
     "tipo": "multiple",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un equipo quiere leer mensajes de una cola SQS, descartar los que no tengan el campo \"prioridad\", enriquecer los demás con una función y arrancar con cada uno una máquina de Step Functions, con el mínimo código. ¿Qué DOS elementos de EventBridge Pipes intervienen? (Elige 2.)",
@@ -137,7 +137,7 @@
     "id": "eventbridge-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una aplicación debe notificar a la API REST de un proveedor externo, que usa una clave de API, cada vez que llega cierto evento a un bus. ¿Qué opción evita escribir y mantener una función intermedia?",
@@ -159,9 +159,9 @@
     "id": "eventbridge-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa diseña microservicios que publican eventos de dominio; nuevos equipos deben poder suscribirse a subconjuntos de esos eventos sin cambiar a los productores, e integrar además eventos de un CRM (Customer Relationship Management) SaaS. ¿Qué pieza central encaja mejor?",
     "opciones": [
       "Un bus personalizado de EventBridge con reglas por consumidor y un bus de socio para el CRM.",
@@ -181,9 +181,9 @@
     "id": "eventbridge-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una empresa tiene cientos de reglas programadas de EventBridge con expresiones cron en UTC que fallan cada cambio de horario de verano, y necesita tareas puntuales (\"recordar esto el día X a las 10:00\"). ¿Qué mejora lo resuelve?",
     "opciones": [
       "Migrar a EventBridge Scheduler, que admite zonas horarias y programaciones puntuales.",

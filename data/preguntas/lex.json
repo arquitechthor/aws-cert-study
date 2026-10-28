@@ -90,10 +90,8 @@
   {
     "id": "lex-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un bot de Amazon Lex debe pasar de pruebas a producción sin que los cambios en curso afecten a los usuarios. ¿Qué mecanismo ofrece el servicio?",
     "opciones": [
       "Un bot distinto por cada desarrollador, sin versiones.",

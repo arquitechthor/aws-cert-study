@@ -25,9 +25,9 @@
     "id": "application-migration-service-002",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Durante una migración con Application Migration Service, el equipo quiere comprobar que los servidores arrancan bien en AWS sin parar los de origen ni la replicación. ¿Qué hace?",
     "opciones": [
       "Lanzar instancias de prueba desde la consola del servicio.",
@@ -47,9 +47,9 @@
     "id": "application-migration-service-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Tras lanzar cada servidor migrado, hay que instalar el agente de CloudWatch y cambiar una configuración, sin hacerlo a mano en cada uno. ¿Qué característica de MGN se usa?",
     "opciones": [
       "Las reglas de ciclo de vida de EBS.",
@@ -91,9 +91,9 @@
     "id": "application-migration-service-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa ya migró sus servidores a EC2 con MGN y ahora quiere poder recuperarlos en otra región si la principal falla, con replicación continua. ¿Qué servicio usa?",
     "opciones": [
       "AWS Application Migration Service otra vez.",

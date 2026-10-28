@@ -26,11 +26,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
     "dominios": {
-      "SAP-C02": "Mejora continua de soluciones existentes"
+      "SAP-C03": "Diseño e implementación de arquitecturas nativas de la nube"
     },
     "enunciado": "Una función Lambda que escribe en una base de datos pequeña, compartida con otros sistemas, la satura en los picos de tráfico. ¿Cómo se limita el número de ejecuciones simultáneas de esa función?",
     "opciones": [
@@ -73,9 +73,9 @@
     "id": "lambda-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa quiere migrar un proceso nocturno que tarda unas 3 horas y hoy corre en un servidor. Busca un modelo sin servidores que gestionar. ¿Qué opción es viable sin rediseñar el proceso?",
     "opciones": [
       "Una sola función Lambda con el tiempo máximo configurado.",
@@ -185,9 +185,9 @@
     "id": "lambda-009",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un desarrollador quiere enviar el 10 % de las invocaciones a la versión nueva de una función Lambda y el resto a la versión actual, y poder volver atrás al instante. ¿Qué usa?",
     "opciones": [
       "Dos funciones distintas detrás de un balanceador de carga.",
@@ -207,7 +207,7 @@
     "id": "lambda-010",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una función Lambda procesa lotes de 10 mensajes de una cola SQS. Si falla un solo mensaje, se vuelven a procesar los 10. ¿Cómo se evita reprocesar los que ya salieron bien?",
@@ -229,7 +229,7 @@
     "id": "lambda-011",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una función Lambda que hace cálculos intensivos con 128 MB de memoria tarda demasiado. No hay esperas de red ni de disco. ¿Qué cambio es el más directo para que tarde menos?",
@@ -251,7 +251,7 @@
     "id": "lambda-012",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una función Lambda necesita la contraseña de una base de datos. ¿Cuál es la opción más segura para obtenerla?",
@@ -273,9 +273,9 @@
     "id": "lambda-013",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Una función Lambda consume mensajes de una cola SQS estándar y escribe en una base de datos Amazon RDS for PostgreSQL. En los picos, la base de datos agota sus conexiones, las escrituras fallan y otras funciones de la cuenta reciben errores de limitación porque esta consume casi toda la concurrencia. ¿Qué cambio lo resuelve sin perder mensajes?",
     "opciones": [
@@ -297,9 +297,9 @@
     "id": "lambda-014",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Una web de venta de entradas abre las ventas cada viernes a las 9:00. Su API síncrona con API Gateway y Lambda pasa en pocos segundos de casi nada a necesitar unas 3.000 ejecuciones simultáneas, y en el primer minuto hay errores 429 y respuestas lentas por arranques en frío. La cuenta tiene la cuota por defecto de 1.000. ¿Qué DOS acciones lo resuelven? (Elige 2.)",
     "opciones": [
@@ -323,9 +323,9 @@
     "id": "lambda-015",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Un equipo escribe en Python un proceso de pedidos con varios pasos: validar, cobrar, esperar la aprobación de una persona (hasta 3 días) y enviar. Quiere escribirlo todo como código dentro del modelo de Lambda, sin definir máquinas de estado aparte, que un fallo no repita los pasos ya hechos y no pagar cómputo mientras espera. ¿Qué debe usar?",
     "opciones": [
@@ -347,9 +347,9 @@
     "id": "lambda-016",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
     "enunciado": "En una organización de AWS, la política de seguridad exige que todas las funciones Lambda de las cuentas de la OU de producción se conecten a VPC aprobadas, cuyo tráfico de salida pasa por un firewall central. Hoy algunos equipos crean funciones fuera de cualquier VPC. ¿Cómo se impide de forma preventiva y en todas las cuentas a la vez?",
     "opciones": [
@@ -371,9 +371,9 @@
     "id": "lambda-017",
     "tipo": "emparejar",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Una empresa SaaS revisa los requisitos de su plataforma en Lambda. Empareja cada requisito con la función de Lambda más adecuada (sobra una).",
     "opciones": [

@@ -7,7 +7,7 @@
  * (cuota por mayor resto; si un dominio no tiene bastantes, se completa con los demás y se avisa).
  * Una pregunta cada vez, tiempo límite proporcional al examen real, "marcar para revisar" y
  * corrección al final, con resultado por dominio. Configuración en la URL
- * (?cert=SAP-C02&longitud=completo&dificiles=1).
+ * (?cert=SAP-C03&longitud=completo&dificiles=1).
  *
  * Repaso: las preguntas cuyo último intento fue incorrecto (progreso local, "fallos"), de una
  * certificación o de todas, sin tiempo límite.
@@ -139,7 +139,8 @@
     if (!c) { el.certInfo.innerHTML = ''; return; }
     const t = (s) => (glosario && window.AwsSiglas ? window.AwsSiglas.marcar(esc(s), '', glosario) : esc(s));
     const ex = c.examen;
-    const estado = c.estado === 'retirandose' ? ` · <span class="badge badge-retirandose">Último día: ${esc(formatoFecha(c.ultimoDia))}</span>` : '';
+    let estado = c.estado === 'retirandose' ? ` · <span class="badge badge-retirandose">Último día: ${esc(formatoFecha(c.ultimoDia))}</span>` : '';
+    if (c.examenDesde && c.examenDesde > new Date().toISOString().slice(0, 10)) estado = ` · Examen disponible a partir del ${esc(formatoFecha(c.examenDesde))}`;
     el.certInfo.innerHTML = `
       <h2 class="sim-cert-titulo">${esc(c.nombre)} <span class="cert-code">${esc(c.codigo)}</span></h2>
       <p class="sim-cert-meta">Nivel ${esc(c.nivel)}${estado}</p>

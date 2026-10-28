@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS X-Ray — Apuntes AWS</title>
-<meta name="description" content="Trazado distribuido: sigue cada petición a través de servicios, muestra un mapa con latencias y errores y ayuda a encontrar cuellos de botella. Apuntes y preguntas de práctica para CLF-C02, SAA-C03, DVA-C02, SAP-C02.">
+<meta name="description" content="Trazado distribuido: sigue cada petición a través de servicios, muestra un mapa con latencias y errores y ayuda a encontrar cuellos de botella. Apuntes y preguntas de práctica para SAA-C03, SAP-C03, CLF-C02, DVA-C03.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/x-ray.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Apuntes AWS">
@@ -59,10 +59,10 @@
       <div class="meta-row">
         <strong>Certificaciones:</strong>
         <span class="chips">
-          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
           <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
-          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
-          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+          <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C03#catalogo" title="AWS Certified Developer – Associate">DVA-C03</a>
         </span>
       </div>
       <div class="meta-row">
@@ -74,7 +74,7 @@
     <article class="doc">
       <div class="callout callout-warn"><strong>Aviso:</strong> Los <strong><abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr> y el demonio de X-Ray</strong> están en modo de mantenimiento desde el 25/02/2026 (solo
         reciben correcciones de seguridad). El <strong>servicio X-Ray sigue plenamente soportado</strong>, pero la
-        instrumentación recomendada es <strong>OpenTelemetry</strong> (por ejemplo con AWS Distro for OpenTelemetry), y
+        instrumentación recomendada es <strong>OpenTelemetry</strong> (por ejemplo con <a href="../servicio.html?id=distro-for-opentelemetry">AWS Distro for OpenTelemetry</a>), y
         las novedades llegan a <a href="cloudwatch.html">CloudWatch</a> Application Signals y Transaction Search. Los exámenes siguen preguntando por
         X-Ray, su demonio y sus conceptos.</div>
 

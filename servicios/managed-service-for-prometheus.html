@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amazon Managed Service for Prometheus — Apuntes AWS</title>
-<meta name="description" content="Servicio gestionado compatible con Prometheus para ingerir, almacenar y consultar con PromQL métricas de contenedores a gran escala, sin administrar servidores. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<meta name="description" content="Servicio gestionado compatible con Prometheus para ingerir, almacenar y consultar con PromQL métricas de contenedores a gran escala, sin administrar servidores. Apuntes y preguntas de práctica para SAA-C03.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/managed-service-for-prometheus.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Apuntes AWS">
@@ -60,7 +60,6 @@
         <strong>Certificaciones:</strong>
         <span class="chips">
           <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
-          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
         </span>
       </div>
       <div class="meta-row">
@@ -85,7 +84,7 @@
           <ul>
             <li><strong>Recolector gestionado por AWS:</strong> un <em>scraper</em> sin agentes que recoge las métricas
               de los clústeres de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>.</li>
-            <li><strong>Recolector propio:</strong> un Prometheus en modo agente o AWS Distro for OpenTelemetry, que
+            <li><strong>Recolector propio:</strong> un Prometheus en modo agente o <a href="../servicio.html?id=distro-for-opentelemetry">AWS Distro for OpenTelemetry</a>, que
               envían las métricas con <strong>escritura remota</strong> (<em>remote write</em>).</li>
           </ul>
         </li>

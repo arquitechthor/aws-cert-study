@@ -90,10 +90,8 @@
   {
     "id": "translate-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un medio global quiere publicar subtítulos en diez idiomas para sus vídeos, que solo tienen audio en inglés, de forma automática. ¿Qué cadena de servicios es la adecuada?",
     "opciones": [
       "Amazon Polly para leer el audio y Amazon Comprehend para detectar el idioma.",

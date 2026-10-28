@@ -26,11 +26,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseñar arquitecturas seguras",
     "dominios": {
-      "SAA-C03": "Diseñar arquitecturas seguras"
+      "SAP-C03": "Diseño e implementación de arquitecturas nativas de la nube"
     },
     "enunciado": "Las VPC de producción y de desarrollo están adjuntas al mismo Transit Gateway. No deben poder comunicarse entre sí, pero ambas deben llegar a una VPC de servicios compartidos. ¿Cómo se configura?",
     "opciones": [
@@ -73,9 +73,9 @@
     "id": "transit-gateway-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa centraliza la inspección del tráfico entre VPC en una VPC de inspección con un cortafuegos con estado, conectada a un Transit Gateway. Algunas conexiones se cortan porque la respuesta vuelve por otra AZ. ¿Qué lo corrige?",
     "opciones": [
       "Desactivar la propagación de rutas.",

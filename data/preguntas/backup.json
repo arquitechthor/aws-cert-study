@@ -47,9 +47,9 @@
     "id": "backup-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una organización con 200 cuentas quiere aplicar el mismo plan de copias en todas y que las copias se guarden también en una cuenta de copias aislada, en otra región. ¿Qué combinación usa?",
     "opciones": [
       "Un plan de AWS Backup creado a mano en cada cuenta.",
@@ -69,9 +69,9 @@
     "id": "backup-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Tras un ataque de ransomware que comprometió una cuenta, una empresa quiere que sus copias estén aisladas, bloqueadas y que puedan restaurarse directamente desde otra cuenta de recuperación. ¿Qué característica de AWS Backup encaja mejor?",
     "opciones": [
       "Una bóveda aislada lógicamente, compartida con la cuenta de recuperación.",

@@ -91,9 +91,9 @@
     "id": "sagemaker-ai-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Un modelo de riesgo desplegado hace un año en Amazon SageMaker AI acierta cada vez menos porque el comportamiento de los clientes ha cambiado. ¿Qué capacidad habría detectado el problema a tiempo?",
     "opciones": [
       "SageMaker Ground Truth.",
@@ -113,9 +113,9 @@
     "id": "sagemaker-ai-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una empresa quiere automatizar el paso de sus modelos a producción: reentrenar, evaluar, registrar la versión y desplegar solo tras una aprobación. ¿Qué combinación de Amazon SageMaker AI lo cubre?",
     "opciones": [
       "Data Wrangler y Canvas.",

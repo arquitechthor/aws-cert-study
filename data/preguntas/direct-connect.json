@@ -48,11 +48,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
     "dominios": {
-      "SAA-C03": "Diseñar arquitecturas de alto rendimiento"
+      "SAP-C03": "Diseño e implementación de arquitecturas nativas de la nube"
     },
     "enunciado": "Una empresa con una conexión Direct Connect quiere llegar con ella a VPC de us-east-1, eu-west-1 y ap-southeast-1, de varias cuentas. ¿Qué recurso lo permite?",
     "opciones": [
@@ -73,9 +73,9 @@
     "id": "direct-connect-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una aplicación crítica depende de una única conexión Direct Connect. La dirección exige la máxima resiliencia frente a la caída de un equipo o de una ubicación entera. ¿Qué diseño cumple el requisito?",
     "opciones": [
       "Un LAG con cuatro conexiones en el mismo dispositivo.",

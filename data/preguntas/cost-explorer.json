@@ -91,9 +91,9 @@
     "id": "cost-explorer-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Un equipo de FinOps necesita analizar con SQL el gasto de toda la organización a nivel de recurso y de hora durante el último año. ¿Qué opción es más adecuada que la interfaz de Cost Explorer?",
     "opciones": [
       "AWS Cost and Usage Report entregado en S3 y consultado con Amazon Athena.",

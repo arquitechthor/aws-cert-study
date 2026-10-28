@@ -113,7 +113,7 @@
     "id": "rds-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una API con cientos de invocaciones concurrentes de Lambda agota las conexiones de una base de datos de RDS for MySQL. ¿Qué solución requiere menos cambios?",
@@ -135,7 +135,7 @@
     "id": "rds-007",
     "tipo": "multiple",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Un desarrollador no quiere guardar la contraseña de su base de datos de RDS for PostgreSQL en el código. ¿Qué DOS opciones son adecuadas? (Elige 2.)",
@@ -159,9 +159,9 @@
     "id": "rds-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una aplicación en RDS for MySQL en eu-west-1 necesita un plan de recuperación ante desastres regionales con RPO de minutos y un coste contenido. ¿Qué solución es la más adecuada?",
     "opciones": [
       "Multi-AZ en eu-west-1.",
@@ -181,9 +181,9 @@
     "id": "rds-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa debe actualizar la versión principal de su RDS for PostgreSQL de producción con el mínimo tiempo de inactividad y la posibilidad de probar antes el cambio. ¿Qué opción lo facilita?",
     "opciones": [
       "Actualizar en caliente la instancia principal en la ventana de mantenimiento.",

@@ -91,9 +91,9 @@
     "id": "quick-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa de software quiere mostrar a sus clientes paneles analíticos dentro de su propia aplicación web, sin que estos tengan cuenta de AWS ni salgan de la aplicación. ¿Qué opción encaja?",
     "opciones": [
       "El análisis incrustado de Amazon QuickSight.",

@@ -47,9 +47,9 @@
     "id": "site-to-site-vpn-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Unas sedes en otros continentes se conectan a AWS por VPN y sufren latencia y pérdidas por internet. Las VPN terminan en un Transit Gateway. ¿Qué mejora tiene menos impacto en la arquitectura?",
     "opciones": [
       "Cambiar a rutas estáticas.",
@@ -70,11 +70,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseñar arquitecturas seguras",
     "dominios": {
-      "SAA-C03": "Diseñar arquitecturas seguras"
+      "SAP-C03": "Seguridad, cumplimiento y gobernanza"
     },
     "enunciado": "Una empresa debe cifrar el tráfico que viaja por su conexión Direct Connect de 1 Gbps hacia un Transit Gateway. ¿Qué solución es correcta?",
     "opciones": [

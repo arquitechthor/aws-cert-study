@@ -48,11 +48,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
     "dominios": {
-      "SAP-C02": "Diseñar nuevas soluciones"
+      "SAP-C03": "Diseño e implementación de arquitecturas nativas de la nube"
     },
     "enunciado": "Un juego multijugador usa UDP y necesita mejorar la latencia global y conmutar en segundos entre regiones, usando direcciones IP fijas. ¿Qué servicio es el adecuado?",
     "opciones": [
@@ -73,9 +73,9 @@
     "id": "cloudfront-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una web en CloudFront necesita añadir cabeceras de seguridad y redirigir URLs antiguas en cada petición, con la menor latencia y coste posibles. ¿Qué opción es la adecuada?",
     "opciones": [
       "Lambda@Edge en el evento de petición al origen.",
@@ -163,7 +163,7 @@
     "id": "cloudfront-008",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "En cada petición a una distribución de CloudFront hay que reescribir la URL y añadir una cabecera, con la menor latencia y coste posibles, sin llamar a otros servicios. ¿Qué usa el desarrollador?",
@@ -185,7 +185,7 @@
     "id": "cloudfront-009",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una API servida por CloudFront devuelve el mismo resultado para /productos?pagina=1 y /productos?pagina=2. ¿Cuál es la causa más probable?",

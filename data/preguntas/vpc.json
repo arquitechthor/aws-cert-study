@@ -113,7 +113,7 @@
     "id": "vpc-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una función Lambda conectada a una VPC, en subredes privadas, no consigue llamar a una API pública externa y la petición agota el tiempo. ¿Cuál es la causa más probable?",
@@ -135,7 +135,7 @@
     "id": "vpc-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un desarrollador sospecha que unas conexiones a su base de datos se están rechazando en la red. ¿Qué herramienta le muestra si el tráfico se aceptó o se rechazó?",
@@ -157,9 +157,9 @@
     "id": "vpc-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una organización con 60 VPC en varias cuentas y dos centros de datos quiere conectividad entre todas con enrutamiento centralizado y sin gestionar una malla de conexiones. ¿Qué solución es la adecuada?",
     "opciones": [
       "VPC peering entre cada par de VPC.",
@@ -179,9 +179,9 @@
     "id": "vpc-009",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa quiere unir por peering dos VPC de cuentas distintas para que se comuniquen de forma privada. ¿Qué DOS condiciones deben cumplirse? (Elige 2.)",
     "opciones": [
       "Los bloques CIDR de las VPC no pueden solaparse.",
@@ -203,9 +203,9 @@
     "id": "vpc-010",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Una empresa inspecciona el tráfico entre VPC con firewalls con estado detrás de un Gateway Load Balancer, en una VPC de inspección unida a un AWS Transit Gateway en dos zonas de disponibilidad. Las conexiones entre instancias de la misma zona funcionan, pero las que cruzan zonas fallan de forma intermitente y los firewalls registran paquetes de vuelta sin sesión. ¿Qué cambio lo resuelve con el menor esfuerzo operativo?",
     "opciones": [
@@ -227,9 +227,9 @@
     "id": "vpc-011",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Una empresa conecta su centro de datos con AWS Direct Connect a una VPC de servicios compartidos, que tiene un endpoint de VPC de tipo gateway para Amazon S3. Las instancias de esa VPC llegan a S3 de forma privada, pero los servidores locales no consiguen usar el endpoint. La política exige que el tráfico local hacia S3 no pase por internet. ¿Qué DOS acciones lo resuelven? (Elige 2.)",
     "opciones": [
@@ -253,9 +253,9 @@
     "id": "vpc-012",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Una empresa tendrá 30 equipos de aplicación, cada uno en su propia cuenta de AWS dentro de la misma organización. El equipo de red quiere controlar en exclusiva las rutas, las NACL y la salida a internet, reducir el número de adjuntos de Transit Gateway y no desperdiciar direcciones IP. Ningún equipo debe ver ni modificar los recursos de otro. ¿Qué diseño lo cumple?",
     "opciones": [
@@ -277,9 +277,9 @@
     "id": "vpc-013",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Tras una adquisición, la VPC de la empresa comprada usa 10.0.0.0/16, el mismo rango que la VPC de la compradora. Las aplicaciones de la empresa comprada deben consumir cuanto antes una API interna de la compradora, publicada detrás de un Network Load Balancer, sin renumerar ninguna red y sin dar acceso a nada más. ¿Qué solución lo cumple?",
     "opciones": [
@@ -301,9 +301,9 @@
     "id": "vpc-014",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
     "enunciado": "Una empresa tiene 50 VPC en varias cuentas, unidas por Transit Gateway a una VPC de servicios compartidos que recibe la conexión con el centro de datos. Los servidores locales deben resolver las zonas alojadas privadas de Amazon Route 53, y todas las VPC deben resolver el dominio interno corp.example.com, servido por los DNS locales. Se busca el menor coste y esfuerzo operativo. ¿Qué diseño lo cumple?",
     "opciones": [

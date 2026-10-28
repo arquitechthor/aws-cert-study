@@ -3,9 +3,9 @@
     "id": "appconfig-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo quiere activar una funcionalidad nueva solo para una parte de los usuarios y poder apagarla al instante, sin volver a desplegar el código. ¿Qué servicio debe usar?",
     "opciones": [
       "AWS CodeDeploy con un despliegue canary.",
@@ -25,9 +25,9 @@
     "id": "appconfig-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un cambio de configuración debe llegar poco a poco a la flota y revertirse solo si aumenta la tasa de errores. ¿Qué combinación de AWS AppConfig lo consigue?",
     "opciones": [
       "Un validador de esquema JSON y un despliegue inmediato a todos los destinos.",
@@ -47,7 +47,7 @@
     "id": "appconfig-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una función Lambda consulta AWS AppConfig en cada invocación y eso añade latencia y coste. ¿Cuál es la forma recomendada de reducirlos?",
@@ -69,9 +69,9 @@
     "id": "appconfig-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un error de sintaxis en un fichero de configuración JSON tumbó producción. ¿Qué función de AWS AppConfig evita que se repita?",
     "opciones": [
       "El tiempo de observación de la estrategia de despliegue.",
@@ -91,7 +91,7 @@
     "id": "appconfig-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una aplicación necesita la contraseña de una base de datos, con rotación automática, y además varios parámetros de ajuste que se cambian con despliegues graduales. ¿Qué reparto es el adecuado?",
@@ -113,7 +113,7 @@
     "id": "appconfig-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Durante un despliegue de AWS AppConfig, la alarma del entorno pasa a estado de alarma. ¿Qué hace el servicio?",

@@ -91,9 +91,9 @@
     "id": "inspector-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización con 150 cuentas quiere que el equipo de seguridad active y gestione Amazon Inspector en todas, incluidas las futuras, y vea los hallazgos de forma centralizada. ¿Cuál es el diseño adecuado?",
     "opciones": [
       "Activar Inspector a mano en cada cuenta y exportar los hallazgos a un bucket de S3.",
@@ -113,9 +113,9 @@
     "id": "inspector-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Parte de la flota de EC2 de una empresa no tiene instalado el agente de Systems Manager y no se puede modificar a corto plazo. ¿Cómo puede Amazon Inspector buscar vulnerabilidades en esas instancias?",
     "opciones": [
       "No puede: sin el agente de Systems Manager no hay análisis posible.",

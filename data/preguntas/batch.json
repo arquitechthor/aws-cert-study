@@ -112,10 +112,8 @@
   {
     "id": "batch-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Varios equipos comparten una cola de AWS Batch y los trabajos de un equipo que envía grandes lotes dejan bloqueados durante horas a los demás. ¿Qué cambio lo resuelve sin crear una infraestructura por equipo?",
     "opciones": [
       "Aumentar sin límite el máximo de vCPU del entorno de cómputo compartido.",
@@ -134,10 +132,8 @@
   {
     "id": "batch-007",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa migra una simulación de dinámica de fluidos que reparte un único cálculo entre decenas de servidores que intercambian mensajes continuamente. ¿Qué función de AWS Batch corresponde a este patrón?",
     "opciones": [
       "Los trabajos en matriz con dependencias.",

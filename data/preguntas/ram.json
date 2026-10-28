@@ -91,9 +91,9 @@
     "id": "ram-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una organización tiene un Transit Gateway en la cuenta de redes y quiere que todas las cuentas, incluidas las futuras, puedan asociar sus VPC sin aceptar invitaciones. ¿Cómo debe configurarlo?",
     "opciones": [
       "Creando un Transit Gateway por cuenta y uniéndolos con interconexiones.",
@@ -113,9 +113,9 @@
     "id": "ram-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa quiere dar a otra cuenta acceso de lectura a un bucket de S3 y a la clave de KMS que lo cifra. Un ingeniero propone usar AWS RAM. ¿Es la herramienta adecuada?",
     "opciones": [
       "Sí: RAM es el único mecanismo para compartir recursos entre cuentas.",

@@ -26,11 +26,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
     "dominios": {
-      "SAA-C03": "Diseñar arquitecturas de alto rendimiento"
+      "SAP-C03": "Resiliencia, migración y continuidad del negocio"
     },
     "enunciado": "Una empresa quiere pasar de Oracle local a Aurora PostgreSQL, con procedimientos almacenados incluidos. ¿Qué combinación es la adecuada?",
     "opciones": [
@@ -51,9 +51,9 @@
     "id": "dms-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa quiere enviar casi en tiempo real los cambios de su base de datos SQL Server a un flujo para que otros sistemas los consuman, sin tocar la aplicación. ¿Qué usa?",
     "opciones": [
       "Una tarea de solo CDC de AWS DMS con Kinesis Data Streams como destino.",
@@ -95,9 +95,9 @@
     "id": "dms-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Un equipo va a ejecutar muchas migraciones de bases de datos con cargas variables y no quiere dimensionar ni vigilar instancias de replicación. ¿Qué opción de DMS elige?",
     "opciones": [
       "Instancias de replicación del mayor tamaño.",

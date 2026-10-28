@@ -47,9 +47,9 @@
     "id": "cloudformation-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Antes de actualizar una pila de producción, un desarrollador quiere saber si el cambio sustituirá (y por tanto recreará) alguna instancia o base de datos. ¿Qué usa?",
     "opciones": [
       "Un conjunto de cambios (change set) y revisar la columna de reemplazo.",
@@ -69,7 +69,7 @@
     "id": "cloudformation-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una plantilla necesita la contraseña maestra de una base de datos y el equipo no quiere que aparezca en la plantilla ni en el repositorio. ¿Qué opción es la adecuada?",
@@ -91,9 +91,9 @@
     "id": "cloudformation-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una organización quiere desplegar el mismo rol de auditoría y la misma configuración de AWS Config en todas sus cuentas, incluidas las que se creen en el futuro, en tres regiones. ¿Qué solución es la adecuada?",
     "opciones": [
       "StackSets de CloudFormation con permisos gestionados por el servicio y despliegue automático en la unidad organizativa.",
@@ -113,9 +113,9 @@
     "id": "cloudformation-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Los equipos cambian recursos de producción desde la consola y las pilas de CloudFormation ya no reflejan la realidad. ¿Qué primer paso ayuda a detectarlo?",
     "opciones": [
       "Ejecutar la detección de desviaciones (drift) en las pilas.",

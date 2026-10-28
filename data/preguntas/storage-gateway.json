@@ -69,9 +69,9 @@
     "id": "storage-gateway-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un servidor de ficheros local se queda sin disco. La empresa quiere ampliar la capacidad con almacenamiento en la nube sin cambiar cómo acceden los usuarios (SMB) y sin migrar aún las aplicaciones. ¿Qué solución encaja mejor?",
     "opciones": [
       "AWS DataSync una sola vez.",

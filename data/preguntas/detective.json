@@ -90,10 +90,8 @@
   {
     "id": "detective-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "El equipo de seguridad de una organización con 300 cuentas quiere investigar incidentes que cruzan varias cuentas desde un único sitio. ¿Cómo debe configurar Amazon Detective?",
     "opciones": [
       "Activarlo por separado en cada cuenta y exportar los resultados a un bucket de S3 común.",
@@ -112,10 +110,8 @@
   {
     "id": "detective-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa recibe cada día decenas de hallazgos de seguridad sueltos y tarda mucho en ver cuáles pertenecen a un mismo ataque. ¿Qué función de Amazon Detective ayuda?",
     "opciones": [
       "Las reglas de supresión de hallazgos.",

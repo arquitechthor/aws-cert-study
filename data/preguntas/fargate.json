@@ -113,9 +113,9 @@
     "id": "fargate-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una plataforma multiinquilino ejecuta en EKS código de distintos clientes y el equipo de seguridad exige que los pods de un cliente no compartan núcleo del sistema operativo con los de otros. ¿Qué opción lo facilita con la menor operación?",
     "opciones": [
       "Ejecutar esos pods en Fargate mediante perfiles de Fargate.",
@@ -135,9 +135,9 @@
     "id": "fargate-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una empresa ejecuta en Fargate un servicio estable con uso constante 24/7 y quiere reducir el coste sin volver a gestionar instancias. ¿Qué acción es la más adecuada?",
     "opciones": [
       "Comprar Compute Savings Plans y usar tareas Graviton si la imagen lo permite.",

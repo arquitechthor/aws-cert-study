@@ -114,7 +114,7 @@
     "id": "kms-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una aplicación debe cifrar ficheros de 50 MB con una clave de KMS. ¿Cuál es el enfoque correcto?",
@@ -136,7 +136,7 @@
     "id": "kms-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una función Lambda con permiso kms:Decrypt en su rol de IAM recibe AccessDeniedException al descifrar con una clave gestionada por el cliente de otra cuenta. ¿Cuál es la causa más probable?",
@@ -158,9 +158,9 @@
     "id": "kms-008",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Un equipo de seguridad central gestiona las claves de KMS de una organización y los equipos de aplicación solo deben poder usarlas para cifrar y descifrar a través de S3, sin administrarlas. ¿Qué DOS medidas lo consiguen? (Elige 2.)",
     "opciones": [
       "Separar en la política de la clave los administradores (gestión) de los usuarios (uso criptográfico).",
@@ -182,9 +182,9 @@
     "id": "kms-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una aplicación cifra datos en el cliente en us-east-1 y debe poder descifrarlos en eu-west-1 durante una recuperación ante desastres, sin recifrarlos ni llamar a la región original. ¿Qué solución es la adecuada?",
     "opciones": [
       "Claves multirregión de KMS con una réplica en eu-west-1.",

@@ -69,7 +69,7 @@
     "id": "efs-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Varias funciones Lambda necesitan compartir un modelo de 5 GB en ficheros y guardar resultados persistentes. ¿Qué opción lo permite?",
@@ -91,9 +91,9 @@
     "id": "efs-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una aplicación Linux con ficheros compartidos en EFS necesita un plan de recuperación ante la pérdida de la región, con un RPO de minutos. ¿Qué opción es la adecuada?",
     "opciones": [
       "Replicación de EFS a un sistema de ficheros en otra región.",

@@ -2,10 +2,8 @@
   {
     "id": "managed-service-for-apache-flink-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una plataforma de pagos debe calcular en tiempo real el número de transacciones por tarjeta en ventanas de cinco minutos y avisar si se supera un umbral. ¿Qué servicio procesa el flujo?",
     "opciones": [
       "Amazon Managed Service for Apache Flink.",
@@ -24,10 +22,8 @@
   {
     "id": "managed-service-for-apache-flink-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un analista quiere explorar un flujo de Kinesis con consultas SQL interactivas antes de convertirlas en una aplicación de producción. ¿Qué usa?",
     "opciones": [
       "Amazon Redshift.",
@@ -46,10 +42,8 @@
   {
     "id": "managed-service-for-apache-flink-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una aplicación de Flink debe actualizarse sin perder el estado acumulado (contadores por usuario). ¿Qué se usa?",
     "opciones": [
       "Borrar y recrear la aplicación.",
@@ -68,10 +62,8 @@
   {
     "id": "managed-service-for-apache-flink-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Con qué unidad se mide y se cobra la capacidad de una aplicación de Managed Service for Apache Flink?",
     "opciones": [
       "Con fragmentos (shards).",
@@ -90,10 +82,8 @@
   {
     "id": "managed-service-for-apache-flink-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "En una pregunta antigua aparece \"Kinesis Data Analytics for Apache Flink\". ¿Qué servicio es hoy?",
     "opciones": [
       "Amazon Managed Service for Apache Flink.",

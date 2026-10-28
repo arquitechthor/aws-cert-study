@@ -2,10 +2,8 @@
   {
     "id": "iot-device-management-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa debe actualizar el firmware de 80 000 dispositivos, empezando por el 1 % y deteniéndose si más del 5 % falla. ¿Qué usa?",
     "opciones": [
       "Un trabajo de IoT Device Management con despliegue gradual y criterios de cancelación.",
@@ -24,10 +22,8 @@
   {
     "id": "iot-device-management-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un técnico necesita conectarse por SSH a un dispositivo instalado en la red de un cliente, detrás de un cortafuegos que no admite conexiones entrantes. ¿Qué usa?",
     "opciones": [
       "Abrir el puerto 22 en el cortafuegos.",
@@ -46,10 +42,8 @@
   {
     "id": "iot-device-management-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un operador quiere encontrar todos los dispositivos desconectados con una versión de firmware anterior a la 2.0. ¿Qué función lo permite?",
     "opciones": [
       "AWS Config.",
@@ -68,10 +62,8 @@
   {
     "id": "iot-device-management-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Qué tipo de grupo de cosas se actualiza solo según una consulta, por ejemplo \"dispositivos con batería por debajo del 20 %\"?",
     "opciones": [
       "Un grupo estático.",
@@ -90,10 +82,8 @@
   {
     "id": "iot-device-management-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo usaba la aplicación web Fleet Hub para ver su flota. ¿Qué ocurrió con ella?",
     "opciones": [
       "Se retiró el 18/10/2025; sus funciones están en la consola de IoT Device Management.",

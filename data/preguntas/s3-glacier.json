@@ -91,9 +91,9 @@
     "id": "s3-glacier-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa archiva copias de seguridad en S3 Glacier Flexible Retrieval. Su plan de recuperación exige poder restaurar algunos ficheros críticos en menos de 10 minutos, también en momentos de mucha demanda. ¿Qué debe prever?",
     "opciones": [
       "Restauraciones aceleradas, con capacidad aprovisionada para garantizar que estén disponibles.",
@@ -113,9 +113,9 @@
     "id": "s3-glacier-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Un equipo pasa a S3 Glacier Flexible Retrieval millones de objetos de unos pocos kilobytes y el ahorro esperado no llega. Además, muchos se borran al mes. ¿Qué explica el resultado?",
     "opciones": [
       "Las clases Glacier cobran la transferencia entre AZ.",

@@ -91,9 +91,9 @@
     "id": "auto-scaling-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una aplicación con frontal EC2, tabla de DynamoDB aprovisionada y réplicas de Aurora escala cada capa con políticas distintas y mal coordinadas, y en los picos la base de datos se satura antes que el resto. ¿Qué mejora centraliza la configuración?",
     "opciones": [
       "Un plan de AWS Auto Scaling sobre los recursos de la aplicación con una estrategia de optimización de disponibilidad.",

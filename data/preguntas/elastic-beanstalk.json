@@ -91,9 +91,9 @@
     "id": "elastic-beanstalk-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo quiere desplegar una nueva versión en Beanstalk sin reducir la capacidad y con la opción de volver atrás al instante si las nuevas instancias fallan. ¿Qué política usa?",
     "opciones": [
       "Immutable.",
@@ -113,9 +113,9 @@
     "id": "elastic-beanstalk-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo quiere enviar el 10 % del tráfico a la nueva versión durante 30 minutos y, si todo va bien, pasar al 100 %. ¿Qué política de Beanstalk lo permite?",
     "opciones": [
       "Traffic splitting.",
@@ -135,9 +135,9 @@
     "id": "elastic-beanstalk-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un desarrollador necesita instalar un paquete del sistema y definir variables en cada instancia de su entorno de Beanstalk, de forma versionada con el código. ¿Dónde lo configura?",
     "opciones": [
       "En ficheros de configuración dentro de la carpeta .ebextensions del paquete de la aplicación.",
@@ -157,9 +157,9 @@
     "id": "elastic-beanstalk-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una empresa necesita actualizar la plataforma de su entorno de Beanstalk a una versión nueva del lenguaje y poder volver a la anterior en segundos si algo falla. ¿Qué estrategia es la adecuada?",
     "opciones": [
       "Blue/green: clonar el entorno, actualizar el nuevo, probarlo e intercambiar las URL (swap de CNAME).",
@@ -179,9 +179,9 @@
     "id": "elastic-beanstalk-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa quiere migrar rápido 20 aplicaciones web Java y .NET sencillas desde su centro de datos, con cambios mínimos y sin un equipo de operaciones dedicado. ¿Qué opción es la más adecuada?",
     "opciones": [
       "Elastic Beanstalk con las plataformas de Java y .NET.",

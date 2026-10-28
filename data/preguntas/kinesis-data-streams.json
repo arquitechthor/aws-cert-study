@@ -69,7 +69,7 @@
     "id": "kinesis-data-streams-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un productor recibe ProvisionedThroughputExceededException al escribir en un stream aprovisionado, y casi todos los registros usan la misma clave de partición. ¿Qué cambio lo soluciona mejor?",
@@ -91,7 +91,7 @@
     "id": "kinesis-data-streams-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Cinco consumidores leen del mismo stream y se ralentizan porque comparten los 2 MB/s de lectura de cada shard. ¿Qué opción da a cada uno su propio rendimiento?",
@@ -113,9 +113,9 @@
     "id": "kinesis-data-streams-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una empresa gestiona a mano el número de shards de un stream cuyo tráfico cambia mucho a lo largo del día, y sufre limitaciones en los picos. ¿Qué mejora requiere menos operación?",
     "opciones": [
       "Cambiar el stream al modo de capacidad bajo demanda.",
@@ -135,9 +135,9 @@
     "id": "kinesis-data-streams-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un flujo de telemetría suele enviar registros de 200 KB, pero algunas veces necesita enviar registros de 6 MB, y hoy los divide en trozos. ¿Qué opción lo simplifica?",
     "opciones": [
       "Aumentar el tamaño máximo de registro del stream (hasta 10 MiB) para admitir esos registros ocasionales.",

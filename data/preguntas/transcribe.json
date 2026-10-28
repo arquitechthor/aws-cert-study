@@ -90,10 +90,8 @@
   {
     "id": "transcribe-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Las transcripciones de Amazon Transcribe confunden sistemáticamente los nombres de los productos y las siglas internas de una empresa. ¿Cuál es el primer cambio que conviene aplicar?",
     "opciones": [
       "Aumentar la calidad de compresión del audio.",

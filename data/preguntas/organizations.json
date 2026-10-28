@@ -113,9 +113,9 @@
     "id": "organizations-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Tras asociar a la raíz una SCP que deniega desactivar AWS CloudTrail, un administrador comprueba que desde la cuenta de administración todavía se puede detener el registro. ¿Por qué?",
     "opciones": [
       "Porque las SCP tardan 24 horas en propagarse a todas las cuentas.",
@@ -135,9 +135,9 @@
     "id": "organizations-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa quiere asegurarse de que ninguna identidad ajena a la organización pueda acceder a sus buckets de S3, aunque el equipo de una cuenta escriba una política de bucket demasiado abierta. ¿Qué mecanismo lo impone de forma centralizada?",
     "opciones": [
       "Una SCP que deniegue s3:GetObject a los principales de fuera de la organización.",
@@ -157,9 +157,9 @@
     "id": "organizations-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa adquirida tiene una cuenta de AWS que se invita a la organización. El equipo central no consigue asumir en ella el rol OrganizationAccountAccessRole. ¿Cuál es la causa más probable?",
     "opciones": [
       "El rol solo se crea automáticamente en las cuentas creadas desde la organización; en las invitadas hay que crearlo.",
@@ -179,9 +179,9 @@
     "id": "organizations-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "El equipo de seguridad debe administrar Amazon GuardDuty y AWS Security Hub para toda la organización sin usar la cuenta de administración a diario. ¿Qué debe configurarse?",
     "opciones": [
       "Una SCP que permita esos servicios en la cuenta de seguridad.",
@@ -201,9 +201,9 @@
     "id": "organizations-010",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
     "enunciado": "Una empresa mantiene FullAWSAccess en la raíz de su organización. En la OU Analytics quitó FullAWSAccess y asoció una SCP de lista de permitidos que solo admite Amazon EC2, Amazon S3, IAM y Amazon CloudWatch. La cuenta Datos, dentro de esa OU, ya tiene FullAWSAccess asociada directamente, y un administrador le añade otra SCP que permite athena:* y glue:*. Los roles de la cuenta tienen AdministratorAccess, pero las llamadas a Amazon Athena siguen denegadas. El resto de cuentas de Analytics no debe poder usar Athena ni AWS Glue. ¿Qué cambio lo resuelve?",
     "opciones": [
@@ -224,9 +224,9 @@
     "id": "organizations-011",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
     "enunciado": "Para montar un perímetro de datos, una empresa asocia a la raíz una RCP que deniega s3:* cuando aws:PrincipalOrgID no es el de su organización. Desde entonces, el registro de AWS CloudTrail de la organización no entrega archivos en el bucket de la cuenta Log Archive, y una cuenta de un socio, que lee un bucket concreto gracias a la política de ese bucket, recibe errores de acceso denegado. Hay que recuperar los dos accesos sin renunciar al perímetro. ¿Qué DOS cambios hay que hacer en la RCP? (Elige 2.)",
     "opciones": [
@@ -250,9 +250,9 @@
     "id": "organizations-012",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
     "enunciado": "Una empresa asoció a la raíz una SCP que deniega la acción \"*\" cuando aws:RequestedRegion no es eu-west-1 ni eu-central-1. Desde entonces los equipos no pueden crear roles de IAM, gestionar zonas alojadas de Amazon Route 53 ni actualizar distribuciones de Amazon CloudFront. Hay que mantener la restricción de regiones para los servicios regionales con el menor esfuerzo operativo. ¿Qué cambio lo consigue?",
     "opciones": [
@@ -274,9 +274,9 @@
     "id": "organizations-013",
     "tipo": "emparejar",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
     "enunciado": "El equipo de gobierno de una organización con 300 cuentas reparte sus requisitos entre los mecanismos de control. Empareja cada requisito con el mecanismo más adecuado (sobra uno).",
     "opciones": [
@@ -312,9 +312,9 @@
     "id": "organizations-014",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
     "enunciado": "Una empresa compra otra que tiene su propia organización con 40 cuentas. Las políticas de los buckets y de las claves de AWS KMS de las cuentas adquiridas usan aws:PrincipalOrgID con el ID de la organización antigua, y el equipo central administra esas cuentas con OrganizationAccountAccessRole. Hay que integrarlas en la organización de la empresa compradora sin cortar el servicio. ¿Qué plan es correcto?",
     "opciones": [

@@ -2,10 +2,8 @@
   {
     "id": "audit-manager-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Antes de cada auditoría de PCI DSS, un equipo dedica semanas a reunir capturas de pantalla y exportaciones de configuración de decenas de cuentas. La empresa ya usa AWS Audit Manager. ¿Cómo reduce ese trabajo?",
     "opciones": [
       "Con un trabajo de descubrimiento de Amazon Macie sobre todos los buckets de la organización.",
@@ -24,10 +22,8 @@
   {
     "id": "audit-manager-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un auditor pide dos cosas: el informe SOC 2 del proveedor de nube y las pruebas de que los recursos de la empresa cumplen sus propios controles. ¿Qué servicios corresponden a cada una?",
     "opciones": [
       "AWS Config para el informe SOC 2 y AWS Artifact para las pruebas de los recursos propios.",
@@ -46,10 +42,8 @@
   {
     "id": "audit-manager-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa que nunca ha usado AWS Audit Manager quiere empezar hoy a evaluar de forma continua sus recursos frente a un marco como HIPAA en todas sus cuentas. ¿Qué opción indica AWS?",
     "opciones": [
       "Activar Audit Manager en la cuenta de administración y delegar su gestión.",
@@ -68,10 +62,8 @@
   {
     "id": "audit-manager-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "En una evaluación de AWS Audit Manager hay controles, como la existencia de un plan de formación en seguridad, que no se pueden verificar consultando la configuración de AWS. ¿Cómo se cubren?",
     "opciones": [
       "Subiendo evidencias manuales, como el documento del plan, y asociándolas al control.",
@@ -90,10 +82,8 @@
   {
     "id": "audit-manager-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Cuál de estas afirmaciones describe correctamente el alcance de AWS Audit Manager?",
     "opciones": [
       "Corrige automáticamente los recursos que incumplen un control del marco elegido.",

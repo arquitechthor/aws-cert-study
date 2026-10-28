@@ -70,7 +70,7 @@
     "id": "athena-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una aplicación lanza consultas de Athena con el SDK. ¿Cómo obtiene el resultado?",
@@ -92,9 +92,9 @@
     "id": "athena-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Varios equipos usan Athena en la misma cuenta y uno de ellos lanzó consultas que analizaron decenas de TB por error. ¿Cómo se evita que vuelva a pasar y se separan los costes?",
     "opciones": [
       "Un grupo de trabajo por equipo con límites de datos analizados por consulta y etiquetas de coste.",

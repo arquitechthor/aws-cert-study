@@ -109,6 +109,7 @@
       let nota = '';
       if (c.estado === 'retirandose') nota = `Último día para presentarlo: ${formatoFecha(c.ultimoDia)}.`;
       if (c.estado === 'guia-pendiente') nota = `Guía oficial disponible a partir del ${formatoFecha(c.disponibleDesde)}.`;
+      if (c.examenDesde && c.examenDesde > new Date().toISOString().slice(0, 10)) nota = `Examen disponible a partir del ${formatoFecha(c.examenDesde)}.`;
       const n = cuenta(c.codigo);
       const meta = c.examen
         ? `${n} servicios · ${c.dominios.length} dominios · nota mínima ${c.examen.puntuacionMinima}/1000`

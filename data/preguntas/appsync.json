@@ -2,10 +2,8 @@
   {
     "id": "appsync-001",
     "tipo": "unica",
-    "certificaciones": [
-      "DVA-C02"
-    ],
-    "dominio": "Desarrollo con servicios de AWS",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una app móvil muestra en una pantalla datos de un usuario (DynamoDB) y sus pedidos (un microservicio HTTP), y hoy necesita varias llamadas REST que devuelven campos que no usa. ¿Qué servicio permite obtenerlo todo en una sola consulta con solo los campos necesarios?",
     "opciones": [
       "AWS AppSync con una API GraphQL y resolvers para cada fuente.",
@@ -24,10 +22,8 @@
   {
     "id": "appsync-002",
     "tipo": "unica",
-    "certificaciones": [
-      "DVA-C02"
-    ],
-    "dominio": "Desarrollo con servicios de AWS",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "En una app de chat con AppSync, los usuarios deben ver los mensajes nuevos al instante sin recargar. ¿Qué operación de GraphQL lo permite?",
     "opciones": [
       "Una subscription asociada a la mutation que crea mensajes.",
@@ -46,10 +42,8 @@
   {
     "id": "appsync-003",
     "tipo": "multiple",
-    "certificaciones": [
-      "DVA-C02"
-    ],
-    "dominio": "Seguridad",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una API GraphQL de AppSync debe permitir lecturas públicas desde la web y reservar las mutations a usuarios que han iniciado sesión. ¿Qué DOS modos de autorización se combinan? (Elige 2.)",
     "opciones": [
       "Clave de API para las operaciones públicas.",
@@ -70,10 +64,8 @@
   {
     "id": "appsync-004",
     "tipo": "unica",
-    "certificaciones": [
-      "DVA-C02"
-    ],
-    "dominio": "Desarrollo con servicios de AWS",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un backend publica resultados de partidos en EventBridge y hay que enviarlos en tiempo real a millones de navegadores, sin diseñar un esquema GraphQL ni gestionar conexiones WebSocket. ¿Qué opción encaja?",
     "opciones": [
       "AWS AppSync Events, publicando en un canal al que se suscriben los navegadores.",
@@ -92,10 +84,8 @@
   {
     "id": "appsync-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Varios equipos mantienen sus propias API GraphQL en AppSync (catálogo, pedidos, usuarios) y los clientes quieren un único endpoint con todo. ¿Qué solución lo permite sin juntar el código de los equipos?",
     "opciones": [
       "Una API fusionada (merged API) de AppSync que combine las API de origen.",
@@ -114,10 +104,8 @@
   {
     "id": "appsync-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa diseña una app móvil que debe funcionar sin conexión y sincronizar los cambios cuando vuelva la red, con autenticación de usuarios y datos en DynamoDB. ¿Qué combinación es la más adecuada?",
     "opciones": [
       "Amplify con AppSync (GraphQL) y Cognito.",
@@ -136,10 +124,8 @@
   {
     "id": "appsync-007",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una API GraphQL de AppSync recibe muchas consultas repetidas del catálogo de productos, que cambia pocas veces al día, y la carga en DynamoDB es alta. ¿Qué mejora es la más directa?",
     "opciones": [
       "Activar la caché del servidor de AppSync para esas consultas con un TTL adecuado.",

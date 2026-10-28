@@ -91,9 +91,9 @@
     "id": "cloudhsm-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa migra a AWS una aplicación que firma documentos mediante la interfaz PKCS #11 de un HSM local, y la normativa exige mantener HSM dedicados. ¿Qué opción minimiza los cambios en la aplicación?",
     "opciones": [
       "AWS CloudHSM, que ofrece esa misma interfaz estándar.",
@@ -113,9 +113,9 @@
     "id": "cloudhsm-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Un equipo valora usar un almacén de claves personalizado de KMS sobre AWS CloudHSM para cifrar una tabla de DynamoDB con miles de operaciones por segundo. ¿Qué debe tener en cuenta?",
     "opciones": [
       "Que DynamoDB no admite cifrado con claves gestionadas por el cliente.",

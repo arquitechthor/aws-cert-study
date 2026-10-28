@@ -90,10 +90,8 @@
   {
     "id": "macie-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una organización tiene miles de buckets con petabytes de datos y quiere una visión continua de dónde hay datos sensibles sin pagar el análisis completo de todo. ¿Qué enfoque es el adecuado?",
     "opciones": [
       "El descubrimiento automatizado de Macie en toda la organización, con trabajos dirigidos donde haga falta.",
@@ -112,10 +110,8 @@
   {
     "id": "macie-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Amazon Macie no consigue analizar los objetos de un bucket que están cifrados con una clave de KMS gestionada por el cliente. ¿Cuál es la causa más probable?",
     "opciones": [
       "Macie no admite ningún objeto cifrado, sea cual sea el tipo de clave.",

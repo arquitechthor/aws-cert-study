@@ -12,8 +12,8 @@ consiste en completar diagramas de arquitectura) y el progreso
 guardado solo en tu navegador.
 
 Certificaciones cubiertas: Cloud Practitioner (CLF-C02), AI Practitioner (AIF-C01), Solutions
-Architect – Associate (SAA-C03), Developer – Associate (DVA-C02 y DVA-C03) y Solutions Architect –
-Professional (SAP-C02 y SAP-C03).
+Architect – Associate (SAA-C03), Developer – Associate (DVA-C03) y Solutions Architect – Professional
+(SAP-C03).
 
 ## Aviso
 

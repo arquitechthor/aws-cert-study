@@ -91,9 +91,9 @@
     "id": "directory-service-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa quiere desplegar recursos de Windows en AWS en un dominio propio de la nube, pero que los usuarios sigan gestionándose en el Active Directory local y entren con sus credenciales actuales. ¿Qué diseño es el adecuado?",
     "opciones": [
       "AWS Managed Microsoft AD como bosque de recursos, con una confianza hacia el AD local.",
@@ -113,9 +113,9 @@
     "id": "directory-service-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Al migrar a AWS, una empresa quiere que sus bases de datos SQL Server en Amazon RDS acepten la autenticación de Windows de los usuarios del dominio. ¿Qué necesita?",
     "opciones": [
       "Un grupo de usuarios de Amazon Cognito federado con el dominio.",

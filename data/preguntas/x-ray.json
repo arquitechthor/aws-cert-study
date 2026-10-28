@@ -3,7 +3,7 @@
     "id": "x-ray-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una petición a una API tarda 4 segundos y pasa por API Gateway, tres funciones Lambda y DynamoDB. ¿Qué servicio muestra en qué tramo se pierde el tiempo?",
@@ -25,7 +25,7 @@
     "id": "x-ray-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador quiere buscar en X-Ray todas las trazas de un cliente concreto usando su identificador. ¿Dónde debe guardar ese identificador?",
@@ -47,7 +47,7 @@
     "id": "x-ray-003",
     "tipo": "multiple",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una aplicación instrumentada con el SDK de X-Ray en instancias EC2 no envía trazas. ¿Qué dos causas son las más probables? (Elige dos.)",
@@ -71,7 +71,7 @@
     "id": "x-ray-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una aplicación con mucho tráfico genera un coste alto de X-Ray. El equipo solo necesita una muestra representativa de peticiones. ¿Qué ajusta?",

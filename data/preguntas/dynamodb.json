@@ -48,11 +48,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas resilientes",
     "dominios": {
-      "SAP-C02": "Diseñar nuevas soluciones"
+      "SAP-C03": "Diseño e implementación de arquitecturas nativas de la nube"
     },
     "enunciado": "Una aplicación global necesita escrituras con baja latencia desde usuarios de Europa y América, y seguir funcionando si falla una región entera. ¿Qué opción es la adecuada?",
     "opciones": [
@@ -73,9 +73,9 @@
     "id": "dynamodb-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una tabla en modo aprovisionado sufre limitación de escritura (throttling) aunque el consumo total está muy por debajo de la capacidad. La clave de partición es la fecha del día. ¿Cuál es la causa más probable y la mejora adecuada?",
     "opciones": [
       "Falta capacidad total: duplicar las WCU.",
@@ -163,7 +163,7 @@
     "id": "dynamodb-008",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Dos procesos leen el mismo elemento de DynamoDB, lo modifican y lo guardan, y a veces uno pisa el cambio del otro. ¿Cómo se detecta y evita sin bloquear el elemento?",
@@ -185,7 +185,7 @@
     "id": "dynamodb-009",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una tabla ya en producción tiene como clave de partición el id de cliente. Ahora hay que consultar pedidos por estado, un atributo que no es clave. ¿Qué se añade para hacerlo con Query en lugar de Scan?",
@@ -208,7 +208,7 @@
     "id": "dynamodb-010",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Cada vez que se crea o modifica un pedido en una tabla de DynamoDB, hay que enviar un correo al cliente sin tocar el código que escribe en la tabla. ¿Qué solución lo consigue?",
@@ -230,7 +230,7 @@
     "id": "dynamodb-011",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una llamada BatchWriteItem termina sin error, pero algunos elementos no aparecen en la tabla. ¿Qué debe revisar la aplicación?",

@@ -48,11 +48,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
     "dominios": {
-      "SAP-C02": "Diseñar nuevas soluciones"
+      "SAP-C03": "Diseño e implementación de arquitecturas nativas de la nube"
     },
     "enunciado": "Por motivos legales, los usuarios de un país concreto deben recibir una versión distinta del sitio. ¿Qué política de enrutamiento se usa?",
     "opciones": [
@@ -73,9 +73,9 @@
     "id": "route-53-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Las cargas de trabajo en varias VPC deben resolver nombres de un dominio interno alojado en los servidores DNS de un centro de datos, conectado por Direct Connect. ¿Qué solución es la adecuada?",
     "opciones": [
       "Una zona alojada pública con los mismos registros.",
@@ -163,9 +163,9 @@
     "id": "route-53-008",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo quiere que su API REST regional de API Gateway responda en api.ejemplo.com, cuyo dominio está en Route 53. ¿Qué pasos son necesarios?",
     "opciones": [
       "Crear un registro CNAME de api.ejemplo.com a la URL de la etapa, sin más cambios.",
@@ -185,7 +185,7 @@
     "id": "route-53-009",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Tras cambiar un registro de Route 53 para que apunte a un nuevo balanceador, algunos usuarios siguen llegando al antiguo durante horas. ¿Cuál es la causa más probable?",

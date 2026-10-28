@@ -69,9 +69,9 @@
     "id": "ec2-auto-scaling-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Antes de terminar una instancia por reducción de capacidad, hay que copiar sus registros de la aplicación a S3. ¿Qué mecanismo de EC2 Auto Scaling lo permite?",
     "opciones": [
       "Un lifecycle hook de terminación que pausa la instancia hasta completar la copia.",
@@ -91,9 +91,9 @@
     "id": "ec2-auto-scaling-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una flota sin estado debe minimizar el coste, pero siempre con al menos 4 instancias bajo demanda para la carga base, y el resto en Spot con varios tipos de instancia para reducir interrupciones. ¿Qué configuración lo consigue en un solo grupo?",
     "opciones": [
       "Un grupo de Auto Scaling con política de instancias mixtas, capacidad base bajo demanda de 4 y varios tipos de instancia para Spot.",

@@ -49,59 +49,38 @@
     ]
   },
   {
-    "codigo": "DVA-C02",
-    "nombre": "AWS Certified Developer – Associate",
-    "nombreCorto": "Developer Associate (C02)",
-    "descripcion": "Desarrollo, despliegue y depuración de aplicaciones con los servicios de AWS: SDK y APIs, arquitecturas sin servidor, CI/CD, seguridad en el código y observabilidad.",
-    "nivel": "Associate",
-    "estado": "retirandose",
-    "ultimoDia": "2026-12-01",
-    "guia": "https://docs.aws.amazon.com/aws-certification/latest/developer-associate-02/developer-associate-02.html",
-    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 720, "minutos": 130 },
-    "dominios": [
-      { "id": 1, "nombre": "Desarrollo con servicios de AWS", "nombreEn": "Development with AWS Services", "peso": 32 },
-      { "id": 2, "nombre": "Seguridad", "nombreEn": "Security", "peso": 26 },
-      { "id": 3, "nombre": "Implementación", "nombreEn": "Deployment", "peso": 24 },
-      { "id": 4, "nombre": "Solución de problemas y optimización", "nombreEn": "Troubleshooting and Optimization", "peso": 18 }
-    ]
-  },
-  {
     "codigo": "DVA-C03",
     "nombre": "AWS Certified Developer – Associate",
-    "nombreCorto": "Developer Associate (C03)",
+    "nombreCorto": "Developer Associate",
+    "descripcion": "Desarrollo, pruebas, despliegue y depuración de aplicaciones con los servicios de AWS: SDK y APIs, arquitecturas sin servidor, contenedores, CI/CD, seguridad en el código (también al integrar servicios de IA), observabilidad y herramientas de desarrollo asistido por IA.",
     "nivel": "Associate",
-    "estado": "guia-pendiente",
-    "disponibleDesde": "2026-10-27",
-    "guia": "https://aws.amazon.com/certification/certified-developer-associate/",
-    "examen": null,
-    "dominios": []
-  },
-  {
-    "codigo": "SAP-C02",
-    "nombre": "AWS Certified Solutions Architect – Professional",
-    "nombreCorto": "Solutions Architect Professional (C02)",
-    "descripcion": "Diseño de soluciones complejas: organizaciones multicuenta, soluciones nuevas con requisitos exigentes, mejora de las existentes y migraciones. Escenarios largos que combinan varios servicios y restricciones.",
-    "nivel": "Professional",
-    "estado": "retirandose",
-    "ultimoDia": "2026-11-17",
-    "guia": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-professional-02/solutions-architect-professional-02.html",
-    "examen": { "preguntasPuntuadas": 65, "preguntasSinPuntuar": 10, "puntuacionMinima": 750, "minutos": 180 },
+    "estado": "vigente",
+    "examenDesde": "2026-12-01",
+    "guia": "https://docs.aws.amazon.com/aws-certification/latest/developer-associate-03/developer-associate-03.html",
+    "examen": { "preguntasPuntuadas": 50, "preguntasSinPuntuar": 15, "puntuacionMinima": 720, "minutos": 130 },
     "dominios": [
-      { "id": 1, "nombre": "Diseñar soluciones para la complejidad organizativa", "nombreEn": "Design Solutions for Organizational Complexity", "peso": 26 },
-      { "id": 2, "nombre": "Diseñar nuevas soluciones", "nombreEn": "Design for New Solutions", "peso": 29 },
-      { "id": 3, "nombre": "Mejora continua de soluciones existentes", "nombreEn": "Continuous Improvement for Existing Solutions", "peso": 25 },
-      { "id": 4, "nombre": "Acelerar la migración y modernización de cargas de trabajo", "nombreEn": "Accelerate Workload Migration and Modernization", "peso": 20 }
+      { "id": 1, "nombre": "Desarrollo con servicios de AWS", "nombreEn": "Development with AWS Services", "peso": 30 },
+      { "id": 2, "nombre": "Seguridad", "nombreEn": "Security", "peso": 26 },
+      { "id": 3, "nombre": "Pruebas e implementación", "nombreEn": "Testing and Deployment", "peso": 22 },
+      { "id": 4, "nombre": "Solución de problemas y optimización", "nombreEn": "Troubleshooting and Optimization", "peso": 22 }
     ]
   },
   {
     "codigo": "SAP-C03",
     "nombre": "AWS Certified Solutions Architect – Professional",
-    "nombreCorto": "Solutions Architect Professional (C03)",
+    "nombreCorto": "Solutions Architect Professional",
+    "descripcion": "Diseño de soluciones complejas en entornos multicuenta: arquitecturas nativas de la nube con IA y ML integradas, seguridad y gobernanza, costes, resiliencia y migración, y excelencia operativa con automatización. Escenarios largos que combinan varios servicios y restricciones.",
     "nivel": "Professional",
-    "estado": "guia-pendiente",
-    "disponibleDesde": "2026-10-27",
-    "guia": "https://aws.amazon.com/certification/certified-solutions-architect-professional/",
-    "examen": null,
-    "dominios": []
+    "estado": "vigente",
+    "examenDesde": "2026-11-17",
+    "guia": "https://docs.aws.amazon.com/aws-certification/latest/solutions-architect-professional-03/solutions-architect-professional-03.html",
+    "examen": { "preguntasPuntuadas": 65, "preguntasSinPuntuar": 10, "puntuacionMinima": 720, "minutos": 180 },
+    "dominios": [
+      { "id": 1, "nombre": "Diseño e implementación de arquitecturas nativas de la nube", "nombreEn": "Architecture Design and Implementation Built for the Cloud", "peso": 25 },
+      { "id": 2, "nombre": "Seguridad, cumplimiento y gobernanza", "nombreEn": "Security, Compliance, and Governance", "peso": 25 },
+      { "id": 3, "nombre": "Diseño de arquitecturas con costos optimizados", "nombreEn": "Cost-Optimized Architecture Design", "peso": 15 },
+      { "id": 4, "nombre": "Resiliencia, migración y continuidad del negocio", "nombreEn": "Resilience, Migration, and Business Continuity", "peso": 15 },
+      { "id": 5, "nombre": "Excelencia operativa y automatización", "nombreEn": "Operational Excellence and Automation", "peso": 20 }
+    ]
   }
 ]

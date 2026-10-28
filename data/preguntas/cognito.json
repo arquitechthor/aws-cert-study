@@ -26,11 +26,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
     "dominios": {
-      "SAP-C02": "Diseñar nuevas soluciones"
+      "SAP-C03": "Seguridad, cumplimiento y gobernanza"
     },
     "enunciado": "Una API REST en API Gateway debe aceptar solo peticiones de usuarios autenticados en la aplicación, con el menor esfuerzo de desarrollo. ¿Qué opción es la más adecuada?",
     "opciones": [
@@ -51,9 +51,9 @@
     "id": "cognito-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa migra una aplicación con su propia base de datos de usuarios a Cognito y quiere que los usuarios no tengan que restablecer la contraseña. ¿Qué característica lo permite?",
     "opciones": [
       "El disparador Lambda de migración de usuarios, que valida contra el sistema antiguo en el primer inicio de sesión.",
@@ -141,7 +141,7 @@
     "id": "cognito-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Tras iniciar sesión en un grupo de usuarios de Amazon Cognito, una aplicación recibe tres tokens. ¿Cuál debe enviar a una API protegida para demostrar a qué recursos tiene acceso el usuario?",
@@ -163,7 +163,7 @@
     "id": "cognito-008",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador quiere ejecutar lógica propia cada vez que un usuario se registra en un grupo de usuarios de Amazon Cognito, por ejemplo para validar el dominio del correo. ¿Qué mecanismo ofrece el servicio?",

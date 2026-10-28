@@ -115,7 +115,7 @@
     "id": "sqs-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un consumidor tarda unos 2 minutos en procesar cada mensaje de SQS y los mensajes se procesan dos veces con frecuencia. El tiempo de visibilidad es de 30 segundos. ¿Qué cambio lo soluciona?",
@@ -137,7 +137,7 @@
     "id": "sqs-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Algunos mensajes con datos corruptos hacen fallar siempre a una función Lambda que lee de SQS, y se reintentan una y otra vez. ¿Qué solución los aparta para analizarlos?",
@@ -159,7 +159,7 @@
     "id": "sqs-008",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una aplicación necesita enviar a SQS documentos JSON de hasta 5 MB. ¿Qué enfoque es el correcto?",
@@ -181,9 +181,9 @@
     "id": "sqs-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Cuando se crea un pedido, tres sistemas independientes (facturación, almacén y análisis) deben recibirlo y procesarlo cada uno a su ritmo, sin perder mensajes si alguno está caído. ¿Qué arquitectura es la adecuada?",
     "opciones": [
       "Un tema de SNS con tres colas SQS suscritas, una por sistema (fan-out).",
@@ -203,9 +203,9 @@
     "id": "sqs-010",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa migra un monolito que llama de forma síncrona a un servicio de facturación lento, lo que provoca timeouts en los picos. Quiere modernizarlo con el mínimo cambio. ¿Qué primer paso es el más adecuado?",
     "opciones": [
       "Poner una cola SQS entre el monolito y la facturación y procesar las facturas de forma asíncrona.",

@@ -90,10 +90,8 @@
   {
     "id": "firewall-manager-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Tras activar AWS Firewall Manager, una política no detecta los recursos de varias cuentas miembro. ¿Cuál es la causa más probable?",
     "opciones": [
       "Que esas cuentas no tienen un plan de soporte de pago.",
@@ -112,10 +110,8 @@
   {
     "id": "firewall-manager-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una organización quiere que la inspección de tráfico con AWS Network Firewall se despliegue con las mismas reglas en todas las VPC de sus cuentas de producción, sin que los equipos puedan desactivarla. ¿Qué diseño es el adecuado?",
     "opciones": [
       "Compartir un único cortafuegos con todas las cuentas mediante AWS RAM.",

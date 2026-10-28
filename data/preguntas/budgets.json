@@ -91,9 +91,9 @@
     "id": "budgets-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "En una organización, el equipo financiero quiere un presupuesto por unidad de negocio. Cada unidad usa varias cuentas y marca sus recursos con la etiqueta Unidad. ¿Cuál es el planteamiento adecuado?",
     "opciones": [
       "Crear en cada cuenta miembro un presupuesto y sumar los resultados a mano.",

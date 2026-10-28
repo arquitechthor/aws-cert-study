@@ -3,9 +3,9 @@
     "id": "ecr-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un desarrollador intenta hacer docker push a un repositorio de ECR y recibe un error de autenticación. ¿Qué debe hacer?",
     "opciones": [
       "Hacer el repositorio público.",
@@ -69,7 +69,7 @@
     "id": "ecr-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Un equipo de seguridad quiere que las imágenes de ECR se analicen de forma continua en busca de vulnerabilidades del sistema operativo y de los paquetes del lenguaje, también cuando aparecen vulnerabilidades nuevas. ¿Qué activa?",
@@ -91,9 +91,9 @@
     "id": "ecr-005",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una organización construye imágenes base en una cuenta central y las usan clústeres de EKS en 30 cuentas y tres regiones. ¿Qué características de ECR lo facilitan? (Elige dos.)",
     "opciones": [
       "Replicación entre regiones y entre cuentas.",

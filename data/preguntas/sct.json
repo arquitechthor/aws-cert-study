@@ -3,9 +3,9 @@
     "id": "sct-001",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Antes de aprobar el paso de SQL Server a Aurora PostgreSQL, la dirección quiere saber cuánto código de la base de datos habrá que reescribir a mano. ¿Qué herramienta da esa información?",
     "opciones": [
       "El informe de evaluación de AWS SCT (o de DMS Schema Conversion).",
@@ -25,9 +25,9 @@
     "id": "sct-002",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa migra un almacén de datos Teradata de 200 TB a Amazon Redshift. ¿Qué enfoque recomienda AWS?",
     "opciones": [
       "AWS DMS con una tarea de CDC directamente a Redshift.",
@@ -47,9 +47,9 @@
     "id": "sct-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una base de datos PostgreSQL local se va a mover a Amazon RDS for PostgreSQL de la misma versión. ¿Hace falta AWS SCT?",
     "opciones": [
       "Sí, siempre que el destino sea RDS.",
@@ -91,9 +91,9 @@
     "id": "sct-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Un equipo quiere convertir el esquema de SQL Server a Aurora PostgreSQL sin instalar software en sus equipos y con ayuda para el código que no se convierte automáticamente. ¿Qué usa?",
     "opciones": [
       "AWS SCT en un portátil.",

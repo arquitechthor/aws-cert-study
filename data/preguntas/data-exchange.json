@@ -46,10 +46,8 @@
   {
     "id": "data-exchange-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo de análisis quiere consultar con SQL un gran conjunto de datos de un proveedor externo sin copiarlo ni montar un proceso de ETL. Ya usa Amazon Redshift. ¿Qué tipo de producto de AWS Data Exchange encaja?",
     "opciones": [
       "Un conjunto de datos de Amazon Redshift, con acceso de solo lectura a los datos compartidos.",
@@ -68,10 +66,8 @@
   {
     "id": "data-exchange-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa quiere distribuir un conjunto de datos propio a tres socios concretos, cada uno con condiciones negociadas, usando AWS Data Exchange. ¿Qué mecanismo es el adecuado?",
     "opciones": [
       "Publicar el producto con una oferta pública para todos.",

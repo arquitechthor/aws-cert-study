@@ -10,6 +10,16 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
+- **Guías nuevas SAP-C03 y DVA-C03 (28/10/2026, tarea 0.9):** pasan a `vigente` con sus dominios,
+  examen y servicios, y **se quitan SAP-C02 y DVA-C02** del sitio aunque aún se puedan presentar
+  (decisión del usuario). Las preguntas de SAP-C02 pasan a SAP-C03 reclasificadas en los cinco
+  dominios nuevos (por palabras clave y revisión a mano) y las de DVA-C02 a DVA-C03 ("Implementación"
+  → "Pruebas e implementación"). Las de servicios que salen del alcance quedan **sin certificación**
+  (siguen en su guía, pero no entran en simulacros). **19 servicios nuevos en `pendiente`**
+  (Prioridad 6 de la cola). Los servicios que ya no entran en ningún examen **siguen en el sitio**
+  (IoT, App Runner, Kendra…), salvo los retirados o integrados en otro servicio, que **se quitan**:
+  IoT 1-Click, IoT Events, IoT Things Graph, Proton, Pinpoint y Managed Blockchain (y con él la
+  categoría Blockchain). Ver la decisión "Servicios fuera de los exámenes".
 - **Fase 2 completa (03/10/2026):** publicados los **164 de 164** servicios, con 1044 preguntas (1066 desde el 08/10/2026; todos con al menos 5 desde el 06/10/2026). Los 12 que usa
   Kopi (IAM, Cognito, API Gateway, Lambda, DynamoDB, S3, CloudFront, Route 53, SES, Bedrock, ACM y
   CloudWatch) y, con ellos, los **17 comunes a las cinco certificaciones con guía** (se añadieron
@@ -24,13 +34,13 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   usuario: simulacro por certificación (`simulacro.html`), progreso y repaso de falladas
   (`progreso.html`), `sitemap.xml` + `robots.txt` (en la raíz del dominio), enlace desde `kopi-web`
   y preguntas de ordenar y emparejar. Además, etiqueta ⚠ "Pregunta difícil" (`"dificil": true`).
-- **Próximo paso (siguiente sesión):** empezar la **Fase 5** (profundización para SAP-C02), tarea
+- **Próximo paso (siguiente sesión):** publicar las guías de la **Prioridad 6** (servicios nuevos de
+  SAP-C03 y DVA-C03) y después la **Fase 5** (profundización, ahora para SAP-C03), tarea
   5.1 y luego los servicios de la cola 5.A en orden. Pendiente de datos: AIF-C01 solo tiene 5
   preguntas de "Fundamentos de IA generativa" (pesa el 24 %, un simulacro completo pide 16); el
   simulacro completa con otros dominios y lo avisa.
-  **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `pinpoint` el 30/10/2026, `managed-blockchain` (sin clientes nuevos) el
-  29/10/2026 y `support` (planes antiguos) el 01/01/2027. Tarea 0.9 (guías SAP-C03 y DVA-C03) el
-  27/10/2026.
+  **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `support` (planes antiguos) el 01/01/2027. La nota "Examen disponible a partir del…"
+  de SAP-C03 (17/11/2026) y DVA-C03 (01/12/2026) desaparece sola al llegar la fecha (`examenDesde`).
 - **Juegos (11/10/2026):** el modo funciones sale del juego de memoria y pasa a ser el juego
   **Empareja** (`empareja.html`); menú desplegable "Juegos" (Memoria, Empareja, Clasificación) y
   **clasificación** local con el top 10 de tiempos por juego, tamaño y modo difícil
@@ -55,7 +65,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   "Servicios clave" y `CLAUDE.md`.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-10-16
+- **Última actualización:** 2026-10-28
 
 ---
 
@@ -67,11 +77,11 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 | Estilo | Paleta y componentes de `kopi-web/styles.css` (`--cyan`, `--violet`, `--magenta`, `--gradient-brand`), **copiados** porque los repos son independientes. |
 | Hosting | Solo GitHub Pages (`arquitechthor.github.io/aws-cert-study/`). Sin dominio propio ni Route 53. |
 | Nombre del repo | `aws-cert-study` (antes `knowledgement-aws`). |
-| Certificaciones | **CLF-C02** (Cloud Practitioner), **AIF-C01** (AI Practitioner), **SAA-C03** (Solutions Architect – Associate), **DVA-C02** y **DVA-C03** (Developer – Associate) y **SAP-C02** y **SAP-C03** (Solutions Architect – Professional). Verificado el 2026-09-25 (SAA, SAP, AIF) y el 2026-09-26 (CLF, DVA) con las guías oficiales. En `certificaciones.json` van ordenadas por nivel. |
-| DVA-C02 vs DVA-C03 | Igual que SAP: **certificaciones distintas**. DVA-C02 se retira (último día 01/12/2026) y DVA-C03 abre el registro el 27/10/2026, con `estado: "guia-pendiente"` y sin servicios hasta la tarea 0.9. CLF-C02 sigue vigente sin nueva versión anunciada (solo se retiran sus versiones en italiano y alemán tras el 31/12/2026). |
-| SAP-C02 vs SAP-C03 | Son **certificaciones distintas** en el catálogo: una persona presenta SAP-C02 (último día 17/11/2026) y otra SAP-C03 (registro desde el 27/10/2026, sin guía publicada aún). SAP-C03 aparece en `certificaciones.json` con `estado: "guia-pendiente"` y sin servicios hasta la tarea 0.9. |
+| Certificaciones | **CLF-C02** (Cloud Practitioner), **AIF-C01** (AI Practitioner), **SAA-C03** (Solutions Architect – Associate), **DVA-C03** (Developer – Associate) y **SAP-C03** (Solutions Architect – Professional). Verificado el 2026-09-25 (SAA, AIF), el 2026-09-26 (CLF) y el 2026-10-28 (SAP-C03, DVA-C03) con las guías oficiales. En `certificaciones.json` van ordenadas por nivel. |
+| SAP-C03 y DVA-C03 | Decidido el 2026-10-28 (tarea 0.9). Al salir las guías nuevas, **SAP-C02 y DVA-C02 se quitan del sitio** aunque aún se puedan presentar (último día 16/11/2026 y 30/11/2026), a petición del usuario. SAP-C03 (examen desde el 17/11/2026): 75 preguntas (65 puntúan), 180 min, aprobado 720, cinco dominios. DVA-C03 (examen desde el 01/12/2026): 65 (50), 130 min, 720, cuatro dominios. `examenDesde` en `certificaciones.json` muestra "Examen disponible a partir del…" hasta esa fecha. **Alcance:** la lista de la guía; además, las funciones de un servicio padre de la lista (la guía de SAP-C03 dice que los incluye implícitamente: `s3-glacier`, `ec2-auto-scaling`, `auto-scaling`, `iam-identity-center`, `sts`) y servicios citados en las tareas (`artifact`, `bedrock-agentcore` en SAP; `fargate` en DVA). "AWS VPN" → Site-to-Site VPN + Client VPN; "Amazon Kinesis" → Kinesis Data Streams; "CloudWatch Logs" → `cloudwatch`. **Preguntas:** las de SAP-C02 pasan a SAP-C03 con dominio nuevo (señales en enunciado y respuestas, servicio y dominio antiguo, y revisión a mano siguiendo la tabla de recategorización de la guía); las de servicios fuera de alcance quedan con `certificaciones: []` y `dominio: ""`. Los servicios sin ninguna certificación siguen publicados con "Ninguna de las guías vigentes" en la cabecera. CLF-C02 sigue vigente sin nueva versión anunciada. |
 | Idioma | Español. Los nombres de servicio van en inglés, como los usa AWS. Las categorías usan la **traducción oficial de AWS** (guías en `es_es`) **con su nombre en inglés** como referencia, por ejemplo "Computación (*Compute*)". |
-| Categorías | 21 categorías, la unión de las usadas en las guías ("Habilitación de clientes" (*Customer Enablement*) entró con CLF-C02, solo para AWS Support). "AWS Cost Management" (SAA) y "Cloud Financial Management" (SAP/AIF) se unifican como "Administración financiera en la nube". Cada servicio tiene una `categoria` principal (la más usada en las guías; si hay empate, la de SAP) y opcionalmente `categoriasAdicionales`. El filtro busca en ambas, así que "Sin servidor" (*Serverless*) muestra Lambda y Fargate aunque su categoría principal sea Computación. |
+| Servicios fuera de los exámenes | Decidido por el usuario el 2026-10-28: un servicio que ya no entra en ninguna guía **sigue en el sitio** (guía, preguntas sin certificación y juegos), **salvo que AWS lo haya retirado** (o tenga fecha de cierre anunciada) **o lo haya integrado en otro servicio**: entonces se borran su página, sus preguntas, su icono y su entrada en `servicios.json`, y se quitan los enlaces que apunten a él. Aplicado ese día a `iot-1-click`, `iot-events`, `iot-things-graph`, `proton` (retirados), `pinpoint` (cierra el 30/10/2026; sus canales siguen en End User Messaging) y `managed-blockchain` (cierra el 29/09/2027); la categoría Blockchain se queda sin servicios y se quita. Un servicio retirado que **sí** sigue en una guía vigente (p. ej. Elastic Transcoder en SAA-C03) se mantiene. |
+| Categorías | 20 categorías (21 hasta el 2026-10-28, cuando se quitó Blockchain), la unión de las usadas en las guías ("Habilitación de clientes" (*Customer Enablement*) entró con CLF-C02, solo para AWS Support). "AWS Cost Management" (SAA) y "Cloud Financial Management" (SAP/AIF) se unifican como "Administración financiera en la nube". Cada servicio tiene una `categoria` principal (la más usada en las guías; si hay empate, la de SAP) y opcionalmente `categoriasAdicionales`. El filtro busca en ambas, así que "Sin servidor" (*Serverless*) muestra Lambda y Fargate aunque su categoría principal sea Computación. |
 | Alias y fusiones | Las guías nombran el mismo servicio de formas distintas ("Amazon S3" / "Amazon Simple Storage Service (Amazon S3)"), así que se unifican en un id. Las funcionalidades que las guías listan aparte se fusionan en su servicio (`incluye`): Aurora Serverless → Aurora, CloudWatch Logs → CloudWatch, ECS Anywhere → ECS, EKS Anywhere/Distro → EKS, SageMaker JumpStart → SageMaker AI. "AWS VPN" (SAP) cubre Site-to-Site VPN y Client VPN. "Amazon Kinesis" (SAA) → Kinesis Data Streams. Amazon QuickSight aparece como Amazon Quick (nombre actual) con alias de búsqueda. |
 | Licencia | **CC BY-SA 4.0** para todo el repo (sustituye a la GPL-3.0 inicial). |
 | Derechos de autor | Nada de copiar documentación de AWS: se resume con palabras propias y se enlaza la fuente. Si algo debe ser literal (una definición, un límite), va entre comillas o en `<blockquote>` con cita y enlace a la fuente. |
@@ -201,7 +211,7 @@ original de cada guía, con su URL y fecha de extracción, para poder comparar c
   sobrar alguna) y `correctas[i]` el índice del destino de `opciones[i]`.
 
 Campos opcionales: `"dificil": true` (etiqueta ⚠ "Pregunta difícil") y `"dominios":
-{"SAP-C02": "…"}` cuando una pregunta de varias certificaciones necesita otro dominio en alguna
+{"SAP-C03": "…"}` cuando una pregunta de varias certificaciones necesita otro dominio en alguna
 de ellas (el simulacro puntúa por el dominio de la certificación elegida). Ejemplos de los dos
 tipos nuevos: `sagemaker-ai-009` y `bedrock-007`.
 
@@ -277,10 +287,11 @@ Objetivo: tener el catálogo completo de servicios y categorías de las 3 certif
       que comparten SAA y SAP, luego los de AIF) y volcarlo en la cola de la Fase 2 de este fichero.
       *Hecho: núcleo primero y después por número de guías. Lo exclusivo de SAP va antes que lo
       de AIF por la fecha límite de SAP-C02.*
-- [ ] **0.9** **A partir del 27/10/2026:** descargar las guías SAP-C03 y DVA-C03, guardar sus listas en
+- [x] **0.9** **A partir del 27/10/2026:** descargar las guías SAP-C03 y DVA-C03, guardar sus listas en
       `data/fuentes/SAP-C03.txt` y `DVA-C03.txt`, añadir `SAP-C03`/`DVA-C03` a los servicios que
       corresponda (y crear los nuevos), completar sus dominios y examen en `certificaciones.json`,
       cambiar su `estado` a `"vigente"` y añadir a la cola los servicios nuevos.
+      *Hecho el 2026-10-28, quitando además SAP-C02 y DVA-C02 (decisión "SAP-C03 y DVA-C03").*
 - [x] **0.10** Añadir CLF-C02 y DVA-C02 (y DVA-C03 como pendiente de guía).
       *Hecho el 2026-09-26: `data/fuentes/CLF-C02.txt` (111 servicios, 19 categorías) y
       `DVA-C02.txt` (47, 10), dominios y examen en `certificaciones.json`, 9 servicios nuevos (164
@@ -511,6 +522,31 @@ esta lista es solo el orden de trabajo.
 - [x] `personalize` Amazon Personalize — Machine learning (SAP-C02, AIF-C01)
 - [x] `transform` AWS Transform — Machine learning (AIF-C01)
 
+#### Prioridad 6: nuevos con SAP-C03 y DVA-C03 (19)
+
+Añadidos el 28/10/2026 (tarea 0.9) en `pendiente`, sin icono propio (el paquete de iconos no está
+en este equipo: copiar el SVG de cada uno cuando se publique, si lo tiene).
+
+- [ ] `vpc-lattice` Amazon VPC Lattice — Redes y entrega de contenido (SAP-C03)
+- [ ] `cloud-wan` AWS Cloud WAN — Redes y entrega de contenido (SAP-C03)
+- [ ] `verified-access` AWS Verified Access — Seguridad, identidad y cumplimiento (SAP-C03)
+- [ ] `verified-permissions` Amazon Verified Permissions — Seguridad, identidad y cumplimiento (SAP-C03)
+- [ ] `security-lake` Amazon Security Lake — Seguridad, identidad y cumplimiento (SAP-C03)
+- [ ] `private-ca` AWS Private CA — Seguridad, identidad y cumplimiento (DVA-C03)
+- [ ] `sam` AWS SAM — Herramientas para desarrolladores (DVA-C03)
+- [ ] `application-auto-scaling` AWS Application Auto Scaling — Computación (SAP-C03)
+- [ ] `local-zones` AWS Local Zones — Computación (SAP-C03)
+- [ ] `memorydb` Amazon MemoryDB — Base de datos (SAP-C03)
+- [ ] `resilience-hub` AWS Resilience Hub — Administración y gobernanza (SAP-C03)
+- [ ] `fault-injection-service` AWS Fault Injection Service — Administración y gobernanza (SAP-C03; en la guía, categoría *Testing and Resilience*)
+- [ ] `clean-rooms` AWS Clean Rooms — Análisis (SAP-C03)
+- [ ] `cost-categories` AWS Cost Categories — Administración financiera en la nube (SAP-C03)
+- [ ] `reserved-instances` Reserved Instances — Administración financiera en la nube (SAP-C03)
+- [ ] `data-lifecycle-manager` Amazon Data Lifecycle Manager — Almacenamiento (SAP-C03)
+- [ ] `codecommit` AWS CodeCommit — Herramientas para desarrolladores (SAP-C03)
+- [ ] `distro-for-opentelemetry` AWS Distro for OpenTelemetry — Herramientas para desarrolladores (SAP-C03)
+- [ ] `data-transfer-terminal` AWS Data Transfer Terminal — Migración y transferencia (SAP-C03)
+
 #### Prioridad 5: nuevos con CLF-C02 y DVA-C02 (9)
 
 Primero los de DVA-C02 por su fecha límite (01/12/2026). Las certificaciones entre paréntesis del
@@ -624,7 +660,7 @@ abajo, dos por turno), pero hay **dos tipos de carta**:
 - **Filtros** iguales al modo 1: certificación y categorías (con una sola categoría el juego se
   vuelve difícil, porque las funciones se parecen).
 - **Modo difícil:** la carta de servicio solo muestra el icono, sin nombre.
-- En la URL: `memoria.html?modo=funciones&tablero=16&cert=DVA-C02&dificil=1`.
+- En la URL: `memoria.html?modo=funciones&tablero=16&cert=DVA-C03&dificil=1`.
 
 **De dónde sale la frase:** un campo nuevo `frase` en `servicios.json`, no el `resumen`, porque:
 el resumen solo existe en los servicios publicados (el juego no debe depender de la Fase 2), a
@@ -693,9 +729,10 @@ veces nombra el propio servicio y es algo largo para una carta. Reglas de redacc
 
 ---
 
-## Fase 5: profundización para SAP-C02
+## Fase 5: profundización para SAP-C02 (ahora SAP-C03)
 
-Pedido por el usuario el 2026-10-06. Algunos servicios pesan mucho en SAP-C02 y sus guías y
+Desde el 28/10/2026 el objetivo es **SAP-C03** (SAP-C02 se quitó del sitio); donde abajo dice
+SAP-C02, léase SAP-C03, con sus cinco dominios. Pedido por el usuario el 2026-10-06. Algunos servicios pesan mucho en SAP-C02 y sus guías y
 preguntas actuales tienen nivel de Associate. En esos servicios se añade **contenido más concreto,
 profundo y complejo, adaptado a SAP-C02**, y **preguntas de mucha más complejidad**, parecidas a
 las de esa certificación, marcadas con `"dificil": true`. SAP-C02 se retira el 17/11/2026, así que
@@ -890,3 +927,5 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-13 | **Logo nuevo** (pedido por el usuario): nube azul con cuerno de neón sobre fondo oscuro. Recorte cuadrado de la imagen del usuario regenerando `assets/logo.png` (256), `favicon-192.png`, `apple-touch-icon.png` (180) y `favicon-32.png` con los mismos nombres, así que menú, pie, favicons y PDF de Arquitecto lo usan sin tocar el HTML. |
 | 2026-10-16 | **Logo cambiado otra vez** (pedido por el usuario): nube de neón azul y morada con cuerno sobre fondo de código binario (`aws-cert-study.png`, 1254 px, ya cuadrada). Regenerados `assets/logo.png` (256), `favicon-192.png`, `apple-touch-icon.png` (180) y `favicon-32.png` con los mismos nombres; sin cambios en el HTML. |
 | 2026-10-16 | **IAM, servicio clave** (pedido por el usuario): `"clave": true`, sección "A fondo: temas avanzados" (evaluación de una petición paso a paso, rol frente a política de recurso entre cuentas y *confused deputy*, ABAC con etiquetas de sesión, delegación sin escalada con límites de permisos e `iam:PassRole`, tabla de cuotas y organización sin credenciales permanentes: raíz centralizado con `sts:AssumeRoot`, Roles Anywhere, OIDC, Pod Identity y Access Analyzer) y 5 preguntas difíciles de SAP-C02 (iam-012 a iam-016, una por dominio y dos de complejidad organizativa). Datos contrastados con la documentación actual. Python 3.12 instalado en el equipo (winget, usuario) para `revisar_texto.py`. Probado en navegador (16 preguntas, 5 difíciles, aviso de la cabecera, sin desplazamiento horizontal a 375 px). Tarea 5.2: `iam` hecho. |
+| 2026-10-28 | **Tarea 0.9: guías SAP-C03 y DVA-C03** (pedido por el usuario, que también pidió quitar las que se retiran): `certificaciones.json` sin SAP-C02 ni DVA-C02 y con SAP-C03 y DVA-C03 vigentes (dominios, examen, `examenDesde`); `data/fuentes/SAP-C03.txt` y `DVA-C03.txt` (las de C02 se borran; quedan en git); `servicios.json` con el alcance nuevo y 19 servicios nuevos en `pendiente` (Prioridad 6); preguntas migradas: 207 a SAP-C03 en cinco dominios, las de DVA a DVA-C03 y 170 sin certificación por estar su servicio fuera de alcance; escenarios de Arquitecto, chips y meta description de las guías, avisos de las guías que citaban SAP-C02, enlaces a los "Próximamente" nuevos (`revisar_texto.py --escribir`), `sitemap.xml`, README y `CLAUDE.md`. Nota "Examen disponible a partir del…" en la tarjeta y en la ficha del simulacro. |
+| 2026-10-28 | **Servicios fuera de los exámenes** (pedido por el usuario): siguen en el sitio salvo los retirados o integrados en otro servicio. Borrados `iot-1-click`, `iot-events`, `iot-things-graph`, `proton`, `pinpoint` y `managed-blockchain` (página, preguntas, icono y entrada; ninguna otra página los enlazaba) y la categoría Blockchain (20 categorías, 177 servicios). `sitemap.xml` regenerado. |

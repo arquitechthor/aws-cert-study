@@ -2,10 +2,8 @@
   {
     "id": "iot-greengrass-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una fábrica debe detectar fallos en sus máquinas en milisegundos aunque se corte la conexión a internet, y enviar a AWS solo un resumen. ¿Qué solución encaja?",
     "opciones": [
       "Enviar todos los datos a IoT Core y procesarlos en Lambda.",
@@ -24,10 +22,8 @@
   {
     "id": "iot-greengrass-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Unas cámaras en un almacén deben reconocer objetos localmente con un modelo entrenado en SageMaker AI. ¿Cómo se despliega el modelo en las pasarelas?",
     "opciones": [
       "Con un componente de Greengrass desplegado desde la nube.",
@@ -46,10 +42,8 @@
   {
     "id": "iot-greengrass-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una pasarela de Greengrass recoge datos durante cortes de red de horas. ¿Qué característica los guarda y los exporta a Kinesis al volver la conexión?",
     "opciones": [
       "La sombra del dispositivo.",
@@ -68,10 +62,8 @@
   {
     "id": "iot-greengrass-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa todavía tiene dispositivos con AWS IoT Greengrass V1. ¿Qué debe hacer?",
     "opciones": [
       "Nada: V1 sigue teniendo soporte.",
@@ -90,10 +82,8 @@
   {
     "id": "iot-greengrass-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Qué diferencia principal hay entre IoT Greengrass y AWS Outposts?",
     "opciones": [
       "Ninguna.",

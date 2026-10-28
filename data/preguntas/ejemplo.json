@@ -18,7 +18,7 @@
   {
     "id": "ejemplo-002",
     "tipo": "multiple",
-    "certificaciones": ["SAA-C03", "SAP-C02"],
+    "certificaciones": ["SAA-C03", "SAP-C03"],
     "dominio": "Diseñar arquitecturas con costos optimizados",
     "enunciado": "Pregunta de ejemplo de la plantilla (respuesta múltiple). ¿Qué dos prácticas reducen costes en una carga de trabajo estable y predecible?",
     "opciones": [

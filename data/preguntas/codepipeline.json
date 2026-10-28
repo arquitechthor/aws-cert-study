@@ -3,9 +3,9 @@
     "id": "codepipeline-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo quiere que cada cambio en la rama principal de GitHub se compile, se pruebe y se despliegue automáticamente en ECS, con una aprobación humana antes de producción. ¿Qué solución usa?",
     "opciones": [
       "CodeBuild con un webhook de GitHub y nada más.",
@@ -25,9 +25,9 @@
     "id": "codepipeline-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Una canalización solo debe ejecutarse cuando se crea una etiqueta de Git con el formato v*, no con cada commit. ¿Qué se configura?",
     "opciones": [
       "Un disparador por etiquetas en una canalización de tipo V2.",
@@ -47,9 +47,9 @@
     "id": "codepipeline-003",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una canalización en la cuenta de herramientas debe desplegar con CloudFormation en las cuentas de preproducción y producción. ¿Qué se necesita? (Elige dos.)",
     "opciones": [
       "Roles en las cuentas de destino que la canalización pueda asumir.",
@@ -93,7 +93,7 @@
     "id": "codepipeline-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una canalización falla en la acción de despliegue y el equipo quiere recibir un aviso en Slack cada vez que una ejecución falle. ¿Qué usa?",

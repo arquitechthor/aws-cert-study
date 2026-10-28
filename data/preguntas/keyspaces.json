@@ -47,9 +47,9 @@
     "id": "keyspaces-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una aplicación global basada en Cassandra necesita escribir con baja latencia desde Europa y América y seguir funcionando si cae una región, sin operar clústeres. ¿Qué solución usa?",
     "opciones": [
       "Keyspaces con replicación multirregión.",
@@ -69,9 +69,9 @@
     "id": "keyspaces-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Al migrar a Keyspaces, una aplicación falla al insertar algunos registros muy grandes. ¿Qué límite es el más probable?",
     "opciones": [
       "El número de tablas por región.",

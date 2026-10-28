@@ -68,10 +68,8 @@
   {
     "id": "lightsail-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una aplicación que empezó en una instancia de Amazon Lightsail necesita ahora escalado automático y tipos de instancia que Lightsail no ofrece. ¿Cuál es el camino con menos trabajo?",
     "opciones": [
       "Reinstalar la aplicación desde cero en una instancia de EC2.",
@@ -90,10 +88,8 @@
   {
     "id": "lightsail-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una instancia de Amazon Lightsail debe conectarse de forma privada a una base de datos de Amazon RDS situada en la VPC por defecto de la misma cuenta y región. ¿Qué hay que activar?",
     "opciones": [
       "Una conexión de AWS Direct Connect.",
@@ -112,10 +108,8 @@
   {
     "id": "lightsail-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa evalúa Amazon Lightsail para una aplicación con picos de tráfico imprevisibles que multiplican por diez la carga durante minutos. ¿Por qué no es la opción adecuada?",
     "opciones": [
       "Porque Lightsail no admite instancias con Linux, solo con Windows.",

@@ -5,7 +5,7 @@
  * El tiempo corre desde que se pulsa "Empezar" (antes las cartas no se ven, para que nadie las
  * lea con el reloj parado) y el acierto es parejas / intentos. Los tiempos van a la clasificación
  * común de los juegos (assets/juegos.js).
- * La configuración vive en la URL (?tablero=8&cert=DVA-C02&cat=a,b&dificil=1) y la última usada
+ * La configuración vive en la URL (?tablero=8&cert=DVA-C03&cat=a,b&dificil=1) y la última usada
  * en localStorage (apuntes-aws.empareja, ver aviso legal, privacidad).
  */
 (function () {

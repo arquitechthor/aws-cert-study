@@ -91,9 +91,9 @@
     "id": "neptune-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa tiene un grafo con miles de millones de relaciones y quiere ejecutar algoritmos como la detección de comunidades y el cálculo de centralidad en segundos. ¿Qué opción es la adecuada?",
     "opciones": [
       "Neptune Analytics, el motor analítico en memoria.",

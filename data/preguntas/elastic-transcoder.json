@@ -68,10 +68,8 @@
   {
     "id": "elastic-transcoder-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa aún tenía flujos en Elastic Transcoder a finales de 2025. ¿Qué debía hacer y por qué?",
     "opciones": [
       "Nada: el servicio sigue funcionando para clientes existentes.",

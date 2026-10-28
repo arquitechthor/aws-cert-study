@@ -91,7 +91,7 @@
     "id": "sns-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador necesita que los eventos de cada cuenta de cliente se entreguen en orden y sin duplicados a dos colas, una de facturación y otra de auditoría. ¿Qué configuración es la adecuada?",
@@ -113,7 +113,7 @@
     "id": "sns-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una suscripción HTTP de SNS falla a menudo porque el endpoint del cliente está caído, y los mensajes se pierden al agotarse los reintentos. ¿Qué mejora permite recuperarlos?",
@@ -135,7 +135,7 @@
     "id": "sns-007",
     "tipo": "multiple",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "¿Qué DOS tipos de suscriptor admite un tema estándar de Amazon SNS? (Elige 2.)",
@@ -159,9 +159,9 @@
     "id": "sns-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una cuenta central publica eventos de seguridad en un tema SNS y cuentas de otros equipos deben suscribir sus propias colas SQS. ¿Qué configuración lo permite?",
     "opciones": [
       "Una política de acceso en el tema que permita sns:Subscribe a esas cuentas, y en cada cola una política que permita al tema enviar mensajes.",
@@ -181,9 +181,9 @@
     "id": "sns-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una aplicación envía mensajes de 800 KB a través de SNS guardando el contenido en S3 y publicando solo la referencia, lo que añade latencia y código. Los suscriptores son colas SQS y funciones Lambda. ¿Qué mejora es la más sencilla hoy?",
     "opciones": [
       "Configurar MaximumMessageSize del tema para admitir hasta 1 MiB y publicar el mensaje completo.",

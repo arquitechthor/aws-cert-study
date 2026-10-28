@@ -90,10 +90,8 @@
   {
     "id": "license-manager-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Durante una migración, una empresa necesita saber qué software licenciado hay instalado tanto en sus servidores locales como en sus instancias de EC2, y contarlo contra sus contratos. ¿Qué combinación lo resuelve?",
     "opciones": [
       "AWS Application Discovery Service y AWS Budgets.",
@@ -112,10 +110,8 @@
   {
     "id": "license-manager-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una organización con muchas cuentas quiere definir una sola vez las reglas de sus licencias y ver el consumo agregado de todas las cuentas. ¿Cómo debe plantearlo?",
     "opciones": [
       "Crear las reglas por separado en cada cuenta y sumar los informes a mano.",
@@ -134,10 +130,8 @@
   {
     "id": "license-manager-007",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa quiere ofrecer Microsoft Visual Studio a sus desarrolladores en instancias de EC2 pagando por usuario y mes, sin comprar licencias por adelantado. ¿Qué función lo permite?",
     "opciones": [
       "Las suscripciones por usuario de AWS License Manager.",

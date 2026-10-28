@@ -113,7 +113,7 @@
     "id": "ecs-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Un contenedor en ECS falla al escribir en un bucket de S3 con AccessDenied, aunque la tarea arranca bien y descarga su imagen de ECR. ¿Qué hay que revisar?",
@@ -136,9 +136,9 @@
     "id": "ecs-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un desarrollador quiere que ECS detenga y revierta automáticamente un despliegue cuyas nuevas tareas no llegan a estar sanas. ¿Qué debe activar?",
     "opciones": [
       "El circuit breaker de despliegue con rollback.",
@@ -158,9 +158,9 @@
     "id": "ecs-008",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa migra 40 aplicaciones Java a contenedores. El equipo no conoce Kubernetes, quiere mínima operación de infraestructura pero necesita instancias con GPU para dos de ellas. ¿Qué DOS decisiones son adecuadas? (Elige 2.)",
     "opciones": [
       "Usar Amazon ECS como orquestador.",
@@ -183,9 +183,9 @@
     "id": "ecs-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Un servicio de ECS procesa mensajes de una cola SQS y a menudo se queda corto en los picos o sobra capacidad por la noche. ¿Qué mejora ajusta el número de tareas a la carga real?",
     "opciones": [
       "Service Auto Scaling con seguimiento de objetivo sobre los mensajes pendientes por tarea.",

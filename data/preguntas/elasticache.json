@@ -113,7 +113,7 @@
     "id": "elasticache-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador implementa lazy loading con ElastiCache y observa que los usuarios ven precios desactualizados durante horas. ¿Qué cambio lo mitiga sin cachear todo el catálogo?",
@@ -135,7 +135,7 @@
     "id": "elasticache-007",
     "tipo": "multiple",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "¿Qué DOS afirmaciones sobre la estrategia write-through son correctas? (Elige 2.)",
@@ -159,9 +159,9 @@
     "id": "elasticache-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un juego multijugador global necesita clasificaciones en tiempo real con lecturas locales en tres regiones y capacidad de recuperación si cae la región principal. ¿Qué solución es la adecuada?",
     "opciones": [
       "ElastiCache for Memcached en cada región, sincronizado por la aplicación.",
@@ -181,9 +181,9 @@
     "id": "elasticache-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Un clúster de ElastiCache for Redis OSS con picos muy variables está sobredimensionado casi todo el día para aguantar los picos. ¿Qué cambio reduce el trabajo de dimensionar y el coste en horas valle?",
     "opciones": [
       "Migrar a ElastiCache Serverless con el motor Valkey.",

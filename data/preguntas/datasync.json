@@ -69,9 +69,9 @@
     "id": "datasync-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa migra 5 PB a S3 y su enlace de 10 Gbps está casi libre. Una sola tarea de DataSync no basta para cumplir el plazo. ¿Qué hace?",
     "opciones": [
       "Comprar más ancho de banda de internet para la misma tarea.",

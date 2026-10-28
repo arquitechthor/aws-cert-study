@@ -113,7 +113,7 @@
     "id": "aurora-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador quiere que su aplicación envíe las escrituras a la instancia correcta aunque cambie la escritora tras una conmutación. ¿A qué endpoint debe conectar las escrituras?",
@@ -135,9 +135,9 @@
     "id": "aurora-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo necesita una copia de la base de datos de producción de Aurora para probar una migración de esquema, en minutos y sin duplicar el almacenamiento. ¿Qué función usa?",
     "opciones": [
       "Restaurar la última instantánea.",
@@ -157,9 +157,9 @@
     "id": "aurora-008",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa diseña una base de datos relacional con RPO de segundos y RTO de minutos ante la pérdida de una región, con lecturas locales en una segunda región. ¿Qué DOS elementos incluye la solución? (Elige 2.)",
     "opciones": [
       "Aurora Global Database con un clúster secundario en la segunda región.",
@@ -181,9 +181,9 @@
     "id": "aurora-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Un clúster de Aurora PostgreSQL con carga de E/S muy intensiva tiene una factura en la que las operaciones de E/S superan una cuarta parte del gasto de la base de datos. ¿Qué cambio lo optimiza?",
     "opciones": [
       "Pasar la configuración de almacenamiento a Aurora I/O-Optimized.",

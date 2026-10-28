@@ -2,10 +2,8 @@
   {
     "id": "appstream-2-0-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una universidad quiere que sus estudiantes usen un programa de CAD de Windows desde el navegador de cualquier equipo, sin instalarlo y sin dar un escritorio completo. ¿Qué servicio usa?",
     "opciones": [
       "Amazon WorkSpaces Personal.",
@@ -24,10 +22,8 @@
   {
     "id": "appstream-2-0-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Los usuarios de una aplicación transmitida la usan de vez en cuando y aceptan esperar un par de minutos al conectarse. ¿Qué tipo de flota abarata el coste?",
     "opciones": [
       "Always-On.",
@@ -46,10 +42,8 @@
   {
     "id": "appstream-2-0-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa quiere que los usuarios de una aplicación transmitida no puedan copiar datos al portapapeles local ni descargar ficheros. ¿Dónde lo configura?",
     "opciones": [
       "En la política de IAM del usuario.",
@@ -90,10 +84,8 @@
   {
     "id": "appstream-2-0-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Los usuarios de una aplicación transmitida deben iniciar sesión con el proveedor de identidad corporativo y su MFA. ¿Qué se configura?",
     "opciones": [
       "Un grupo de usuarios local sin MFA.",

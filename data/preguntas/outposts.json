@@ -113,9 +113,9 @@
     "id": "outposts-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un arquitecto diseña una carga crítica sobre un único rack de AWS Outposts. ¿Qué debe tener en cuenta sobre la capacidad y la disponibilidad?",
     "opciones": [
       "La capacidad es ilimitada porque el Outpost toma recursos de la región automáticamente.",
@@ -135,9 +135,9 @@
     "id": "outposts-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa debe migrar una aplicación con dependencias de baja latencia hacia un sistema central que seguirá años en su centro de datos. Quiere modernizarla ya con servicios de AWS. ¿Qué enfoque encaja?",
     "opciones": [
       "Migrar toda la aplicación a la región y conectar con el sistema central por una VPN.",

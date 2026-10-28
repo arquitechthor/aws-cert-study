@@ -47,9 +47,9 @@
     "id": "cost-and-usage-report-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una empresa procesa el CUR heredado y sus consultas fallan cada mes porque cambian las columnas según los servicios usados. ¿Qué mejora resuelve el problema?",
     "opciones": [
       "Pasar a CUR 2.0 en AWS Data Exports, con un esquema fijo.",

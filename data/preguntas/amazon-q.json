@@ -24,10 +24,8 @@
   {
     "id": "amazon-q-002",
     "tipo": "unica",
-    "certificaciones": [
-      "DVA-C02"
-    ],
-    "dominio": "Seguridad",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un desarrollador quiere detectar en su IDE, mientras escribe, una contraseña escrita en el código y otras vulnerabilidades. ¿Qué herramienta de AWS lo hace?",
     "opciones": [
       "AWS CloudTrail.",
@@ -46,10 +44,8 @@
   {
     "id": "amazon-q-003",
     "tipo": "unica",
-    "certificaciones": [
-      "DVA-C02"
-    ],
-    "dominio": "Desarrollo con servicios de AWS",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un desarrollador necesita generar pruebas unitarias para un módulo existente y que le expliquen una función compleja, desde su IDE. ¿Qué usa?",
     "opciones": [
       "AWS CodeBuild.",
@@ -90,10 +86,8 @@
   {
     "id": "amazon-q-005",
     "tipo": "unica",
-    "certificaciones": [
-      "DVA-C02"
-    ],
-    "dominio": "Desarrollo con servicios de AWS",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo usa los plugins de Amazon Q Developer en su IDE. ¿Qué debe tener en cuenta según el aviso de AWS?",
     "opciones": [
       "Que ya no funcionan desde 2025.",

@@ -2,10 +2,8 @@
   {
     "id": "iot-device-defender-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo de seguridad sospecha que varios dispositivos de una flota usan el mismo certificado y que algunas políticas de IoT permiten todos los temas. ¿Qué función lo comprueba?",
     "opciones": [
       "La auditoría de IoT Device Defender.",
@@ -24,10 +22,8 @@
   {
     "id": "iot-device-defender-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una flota de cámaras conectadas debe generar una alerta si alguna empieza a enviar muchos más datos de lo habitual, sin fijar umbrales a mano. ¿Qué usa?",
     "opciones": [
       "Detección con reglas de umbral fijo.",
@@ -46,10 +42,8 @@
   {
     "id": "iot-device-defender-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Cuando Device Defender detecta un dispositivo comprometido, el equipo quiere aislarlo automáticamente. ¿Qué hace?",
     "opciones": [
       "Borrar la cuenta.",
@@ -68,10 +62,8 @@
   {
     "id": "iot-device-defender-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Qué servicio vigila amenazas en las cuentas de AWS, EC2 y S3, a diferencia de Device Defender, que vigila dispositivos IoT?",
     "opciones": [
       "IoT Device Management.",
@@ -90,10 +82,8 @@
   {
     "id": "iot-device-defender-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo quiere detectar puertos abiertos inesperados en los propios dispositivos, algo que no se ve desde la nube. ¿Qué necesita?",
     "opciones": [
       "Métricas del lado del dispositivo enviadas con el agente de Device Defender.",

@@ -91,9 +91,9 @@
     "id": "artifact-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización con 200 cuentas debe tener aceptado el BAA en todas ellas, incluidas las que se creen en el futuro. ¿Cuál es la forma con menos esfuerzo operativo?",
     "opciones": [
       "Aceptarlo cuenta por cuenta con el usuario raíz de cada una.",

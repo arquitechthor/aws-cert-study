@@ -91,9 +91,9 @@
     "id": "security-hub-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización opera en cinco regiones y cientos de cuentas. El equipo de seguridad quiere consultar todos los hallazgos de AWS Security Hub desde una sola cuenta y una sola región. ¿Qué debe configurar?",
     "opciones": [
       "Un administrador delegado de Security Hub para la organización y la agregación entre regiones.",
@@ -113,9 +113,9 @@
     "id": "security-hub-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Un equipo recibe miles de hallazgos y no sabe cuáles suponen un riesgo real. ¿Qué aporta el nuevo AWS Security Hub sobre Security Hub CSPM para priorizar?",
     "opciones": [
       "Sustituye a GuardDuty analizando directamente los registros de red.",

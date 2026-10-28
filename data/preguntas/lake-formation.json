@@ -47,9 +47,9 @@
     "id": "lake-formation-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa con una arquitectura de malla de datos quiere que las cuentas productoras compartan tablas con las cuentas consumidoras de varias OU, sin copiar los datos y con un gobierno central. ¿Qué debe usar?",
     "opciones": [
       "Replicación entre cuentas de los buckets de S3.",
@@ -69,9 +69,9 @@
     "id": "lake-formation-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "El lago de datos de una empresa tiene miles de tablas y cientos de usuarios. Conceder permisos tabla a tabla se ha vuelto inmanejable. ¿Qué función de AWS Lake Formation resuelve el problema?",
     "opciones": [
       "Los filtros de datos a nivel de celda.",

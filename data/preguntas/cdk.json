@@ -3,9 +3,9 @@
     "id": "cdk-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo quiere definir su infraestructura de AWS en TypeScript, con bucles, funciones y pruebas unitarias, y que el despliegue siga gestionándose como pilas con reversión. ¿Qué debe usar?",
     "opciones": [
       "El SDK de AWS para JavaScript.",
@@ -25,9 +25,9 @@
     "id": "cdk-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Al ejecutar cdk deploy por primera vez en una cuenta y región nuevas, el despliegue falla porque no existe el bucket donde subir el código de las funciones Lambda. ¿Qué falta?",
     "opciones": [
       "Ejecutar cdk synth para generar el bucket.",
@@ -47,9 +47,9 @@
     "id": "cdk-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Antes de aplicar un cambio en producción, un desarrollador quiere ver qué recursos y permisos de IAM cambiarían respecto a lo ya desplegado. ¿Qué comando de la CLI del CDK lo muestra?",
     "opciones": [
       "cdk diff",
@@ -69,7 +69,7 @@
     "id": "cdk-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "En una app de CDK, una función Lambda debe leer objetos de un bucket de S3. ¿Cuál es la forma recomendada de darle el permiso con mínimo privilegio?",
@@ -91,7 +91,7 @@
     "id": "cdk-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador necesita configurar una propiedad muy reciente de un recurso que todavía no está expuesta en el construct de alto nivel del CDK. ¿Qué nivel de construct le da acceso directo a todas las propiedades de CloudFormation?",
@@ -113,9 +113,9 @@
     "id": "cdk-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "¿Qué produce el comando cdk synth?",
     "opciones": [
       "Un plan de ejecución que se aplica sin pasar por CloudFormation.",

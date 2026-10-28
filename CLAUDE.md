@@ -28,7 +28,8 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   filters (text, category, status, certifications and the "Destacados" chips (key services, used
   in Kopi); the union/intersection mode applies within each of those two groups, and the groups
   combine with AND). Filter state
-  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1`). `kopi=1` shows only
+  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1`). The retired SAP-C02 and DVA-C02 were removed on 2026-10-28 (only current guides are listed); a
+  certification with `examenDesde` in the future shows "Examen disponible a partir del…". `kopi=1` shows only
   services with `"kopi": true` in `servicios.json` (the ones Kopi uses); `clave=1` only the key
   services (see "Key services" below). Certifications with
   `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
@@ -49,7 +50,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   Exam length and duration come from `examen` in `certificaciones.json`.
 - Games, grouped in the nav under a "Juegos" dropdown (`.nav-menu`, opened by `assets/nav.js`):
   - `memoria.html` + `assets/memoria.js`: memory game; two service cards match when they share the
-    main `categoria`. Config in the URL (`?tablero=8x8&cert=DVA-C02&cat=a,b&dificil=1`), last one in
+    main `categoria`. Config in the URL (`?tablero=8x8&cert=DVA-C03&cat=a,b&dificil=1`), last one in
     `localStorage` (`apuntes-aws.memoria`). Rules in `PLAN.md` (Fase 4).
   - `empareja.html` + `assets/empareja.js` (the old memory "funciones" mode, now its own game):
     services (icon + name; icon only in hard mode) on the left, their `frase` on the right, all
@@ -97,7 +98,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   exam guide, kept for diffing when AWS updates a guide.
 - `data/asset-package/`: official AWS Architecture Icons, **gitignored** (29 MB). Only the
   64 px SVGs in use are copied to `assets/iconos/servicios/<id>.svg` (services with
-  `"icono": true` in `servicios.json`) and `assets/iconos/categorias/<id>.svg` (all 21
+  `"icono": true` in `servicios.json`) and `assets/iconos/categorias/<id>.svg` (all 20
   categories). `AwsDatos.iconoServicio()` falls back to the category icon when a service has
   none.
 
@@ -132,7 +133,8 @@ horizontal scroll).
 3. Write `data/preguntas/<id>.json` with 5–15 **original** questions tagged with certification
    and domain (domain names from `certificaciones.json`; if a question has several certifications,
    add `"dominios": {"<cert>": "<domain>"}` for the ones where `dominio` doesn't exist). Spread the
-   correct answer across positions. Mark SAP-level questions with `"dificil": true` (criteria in
+   correct answer across positions. A question whose service is in no current guide keeps
+   `"certificaciones": []` and `"dominio": ""`. Mark SAP-level questions with `"dificil": true` (criteria in
    `PLAN.md`, Fase 5).
 4. In `data/servicios.json`, set `estado` to `"publicado"` and write `resumen`. Then run
    `python scripts/revisar_texto.py --escribir <id>` (acronyms and links; add any new acronym

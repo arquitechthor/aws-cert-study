@@ -2,10 +2,8 @@
   {
     "id": "migration-hub-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa migra servidores con Application Migration Service y bases de datos con DMS. La dirección quiere ver el estado de toda la migración en un único panel. ¿Qué servicio lo ofrece?",
     "opciones": [
       "AWS Migration Hub.",
@@ -24,10 +22,8 @@
   {
     "id": "migration-hub-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo ha recogido datos con Application Discovery Service, pero no los encuentra en la consola de Migration Hub. ¿Cuál es la causa más probable?",
     "opciones": [
       "Los datos tardan 30 días en aparecer.",
@@ -68,10 +64,8 @@
   {
     "id": "migration-hub-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Para decidir si cada aplicación se rehospeda, se replataforma o se refactoriza, un equipo quiere recomendaciones basadas en el análisis de sus servidores y código. ¿Qué función de Migration Hub lo hace?",
     "opciones": [
       "Refactor Spaces.",
@@ -90,10 +84,8 @@
   {
     "id": "migration-hub-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa que empieza ahora su primera migración a AWS quiere una herramienta de AWS que la ayude a descubrir su entorno, planificar las olas y seguir el avance. ¿Qué le recomienda AWS?",
     "opciones": [
       "AWS Migration Hub, que es la opción para clientes nuevos.",

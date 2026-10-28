@@ -69,9 +69,9 @@
     "id": "mq-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa tiene un clúster de RabbitMQ autogestionado de tres nodos que usan decenas de aplicaciones con AMQP 0-9-1. Quiere dejar de operarlo en la migración a AWS, con resistencia a fallos de zona. ¿Qué opción requiere menos cambios?",
     "opciones": [
       "Amazon MQ para RabbitMQ en despliegue de clúster de tres nodos.",
@@ -91,9 +91,9 @@
     "id": "mq-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Tras migrar a Amazon MQ, un broker ActiveMQ de producción es público en internet porque así se configuró por prisas, aunque todas las aplicaciones están en la VPC. ¿Qué cambio mejora la seguridad?",
     "opciones": [
       "Crear un broker privado en subredes de la VPC, con security groups que solo permitan a las aplicaciones, y migrar a él.",

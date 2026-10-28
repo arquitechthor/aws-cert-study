@@ -47,9 +47,9 @@
     "id": "msk-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa quiere que los temas de su clúster MSK de us-east-1 se repliquen de forma continua a un clúster de eu-west-1 para recuperación ante desastres, sin gestionar MirrorMaker. ¿Qué usa?",
     "opciones": [
       "MSK Replicator.",
@@ -91,9 +91,9 @@
     "id": "msk-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Un clúster MSK aprovisionado debe retener datos durante meses para reprocesarlos, pero el coste de los discos de los brokers se dispara. ¿Qué mejora lo abarata sin cambiar las aplicaciones?",
     "opciones": [
       "Reducir las réplicas a una.",

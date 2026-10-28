@@ -69,7 +69,7 @@
     "id": "data-firehose-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Antes de guardar los eventos en S3, hay que eliminar un campo con datos personales de cada registro. ¿Cómo se hace con Firehose?",
@@ -91,7 +91,7 @@
     "id": "data-firehose-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un desarrollador ve que los datos tardan hasta 5 minutos en aparecer en S3 desde Firehose y necesita que lleguen en segundos. ¿Qué ajusta?",
@@ -112,10 +112,8 @@
   {
     "id": "data-firehose-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa quiere que los cambios de pedidos que llegan en streaming se reflejen en tablas Apache Iceberg en S3 (con inserciones, actualizaciones y borrados) consultables por varios motores, con la mínima operación. ¿Qué opción es la adecuada?",
     "opciones": [
       "Firehose con destino tablas Iceberg (o S3 Tables) usando el catálogo de Glue.",

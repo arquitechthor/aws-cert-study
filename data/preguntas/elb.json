@@ -69,7 +69,7 @@
     "id": "elb-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una aplicación detrás de un ALB registra como IP de origen de todas las peticiones una IP privada de la VPC. ¿Cómo obtiene la IP real del cliente?",
@@ -91,7 +91,7 @@
     "id": "elb-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador quiere que un ALB invoque directamente una función Lambda para la ruta /webhook, sin servidores. ¿Es posible?",
@@ -113,9 +113,9 @@
     "id": "elb-006",
     "tipo": "multiple",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa quiere que todo el tráfico que entra y sale de sus VPC pase por una flota de firewalls virtuales de un tercero, que debe escalar y tolerar fallos sin cambiar las aplicaciones. ¿Qué DOS componentes forman la solución? (Elige 2.)",
     "opciones": [
       "Un Gateway Load Balancer delante de la flota de firewalls.",
@@ -137,9 +137,9 @@
     "id": "elb-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un equipo ofrece un servicio interno a cientos de VPC de otras cuentas, con rangos de IP que se solapan, sin peering ni Transit Gateway. ¿Qué diseño es el adecuado?",
     "opciones": [
       "Un Network Load Balancer delante del servicio, publicado como servicio de endpoint de PrivateLink.",

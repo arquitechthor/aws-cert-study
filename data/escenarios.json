@@ -4,7 +4,7 @@
       "id": "kopi",
       "titulo": "La arquitectura de Kopi Tools",
       "nivel": "intermedio",
-      "certificaciones": ["CLF-C02", "SAA-C03", "DVA-C02", "DVA-C03"],
+      "certificaciones": ["CLF-C02", "SAA-C03", "DVA-C03"],
       "kopi": true,
       "enunciado": "Kopi Tools es una aplicación web y Android hecha por una sola persona. Debe costar casi nada cuando no se usa y no tener servidores que mantener.",
       "requisitos": [
@@ -143,7 +143,7 @@
       "id": "pedidos",
       "titulo": "Pedidos desacoplados con colas",
       "nivel": "intermedio",
-      "certificaciones": ["SAA-C03", "DVA-C02", "DVA-C03"],
+      "certificaciones": ["SAA-C03", "DVA-C03"],
       "enunciado": "Una tienda online pierde pedidos en las rebajas porque el código que los procesa no da abasto. Quieren separar la recepción del procesamiento.",
       "requisitos": [
         "Ningún pedido se pierde aunque el procesador vaya lento o esté caído: espera guardado hasta que se procese.",
@@ -204,7 +204,7 @@
       "id": "fotos",
       "titulo": "Etiquetado automático de fotos",
       "nivel": "intermedio",
-      "certificaciones": ["SAA-C03", "DVA-C02", "DVA-C03", "AIF-C01"],
+      "certificaciones": ["SAA-C03", "DVA-C03", "AIF-C01"],
       "enunciado": "Una app de recetas quiere que cada foto que suben los usuarios se etiquete sola (\"pasta\", \"horno\", \"tomate\") para poder buscar por ingredientes.",
       "requisitos": [
         "La app sube la foto directamente al almacenamiento, sin pasar por un servidor propio.",
@@ -377,7 +377,7 @@
       "id": "tiempo-real",
       "titulo": "Flujo de eventos en tiempo real",
       "nivel": "avanzado",
-      "certificaciones": ["SAA-C03", "DVA-C02", "DVA-C03", "SAP-C02"],
+      "certificaciones": ["SAA-C03", "DVA-C03", "SAP-C03"],
       "enunciado": "Un juego online envía millones de eventos por minuto (partidas, compras, clics). Quieren marcadores al segundo y, además, guardar todo para analizarlo después.",
       "requisitos": [
         "Un flujo duradero y ordenado por jugador que varios consumidores leen a la vez y pueden releer.",
@@ -432,7 +432,7 @@
       "id": "multirregion",
       "titulo": "Recuperación ante desastres entre regiones",
       "nivel": "avanzado",
-      "certificaciones": ["SAA-C03", "SAP-C02"],
+      "certificaciones": ["SAA-C03", "SAP-C03"],
       "enunciado": "Un banco digital tiene su aplicación en una región y quiere seguir funcionando si esa región entera falla.",
       "requisitos": [
         "El tráfico pasa solo a la región de respaldo cuando las comprobaciones de salud de la principal fallan.",
@@ -486,7 +486,7 @@
       "id": "hibrida",
       "titulo": "Conectividad híbrida con varias VPC",
       "nivel": "avanzado",
-      "certificaciones": ["SAA-C03", "SAP-C02"],
+      "certificaciones": ["SAA-C03", "SAP-C03"],
       "enunciado": "Una aseguradora conecta su centro de datos con tres VPC (producción, desarrollo y servicios compartidos) y quiere que todo se comunique sin una maraña de conexiones.",
       "requisitos": [
         "Un enlace privado dedicado, con latencia estable y mucho ancho de banda, que no pase por Internet.",
@@ -538,7 +538,7 @@
       "id": "multicuenta",
       "titulo": "Organización con varias cuentas",
       "nivel": "avanzado",
-      "certificaciones": ["SAA-C03", "SAP-C02"],
+      "certificaciones": ["SAA-C03", "SAP-C03"],
       "enunciado": "Una empresa pasa de una sola cuenta de AWS a una cuenta por entorno y equipo, y quiere gobernarlas todas desde un sitio.",
       "requisitos": [
         "Montar el entorno multicuenta (landing zone) con buenas prácticas y controles ya preparados.",
@@ -607,7 +607,7 @@
       "id": "migracion",
       "titulo": "Migración de un centro de datos",
       "nivel": "intermedio",
-      "certificaciones": ["SAA-C03", "SAP-C02"],
+      "certificaciones": ["SAA-C03", "SAP-C03"],
       "enunciado": "Una empresa cierra su centro de datos en seis meses. Quiere mover los servidores tal cual, pasar su base de datos Oracle a Aurora PostgreSQL con el mínimo corte y llevarse un servidor de ficheros NFS de 40 TB.",
       "requisitos": [
         "Servidores Windows y Linux migrados sin cambios (rehost), con replicación continua y prueba antes del corte.",
@@ -669,7 +669,7 @@
       "id": "cicd-contenedores",
       "titulo": "Entrega continua de contenedores",
       "nivel": "intermedio",
-      "certificaciones": ["DVA-C02", "DVA-C03", "SAP-C02"],
+      "certificaciones": ["DVA-C03", "SAP-C03"],
       "enunciado": "Un equipo tiene su código en GitHub y sus servicios en contenedores con ECS. Quieren que cada cambio en main acabe en producción sin pasos manuales y sin gestionar servidores.",
       "requisitos": [
         "Un flujo que se dispara con cada cambio en main y coordina las etapas.",
@@ -779,7 +779,7 @@
       "id": "signmad",
       "titulo": "SignMad: del servidor viejo a una web estática",
       "nivel": "intermedio",
-      "certificaciones": ["SAA-C03", "DVA-C02", "DVA-C03"],
+      "certificaciones": ["SAA-C03", "DVA-C03"],
       "enunciado": "SignMad tenía todas sus webs en un servidor EC2 con todo dentro (Apache, PHP, base de datos y correo), sin actualizar. Ahora solo publica su web corporativa, ya estática, y quiere que cueste un par de dólares al mes y que se despliegue sola.",
       "requisitos": [
         "El dominio y su subdominio www apuntan a la web sin pagar por cada consulta DNS.",

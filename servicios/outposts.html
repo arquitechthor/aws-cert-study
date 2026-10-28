@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS Outposts — Apuntes AWS</title>
-<meta name="description" content="Infraestructura de AWS (racks gestionados) instalada en tu centro de datos para ejecutar servicios de AWS en local con baja latencia y residencia de datos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, CLF-C02.">
+<meta name="description" content="Infraestructura de AWS (racks gestionados) instalada en tu centro de datos para ejecutar servicios de AWS en local con baja latencia y residencia de datos. Apuntes y preguntas de práctica para SAA-C03, SAP-C03, CLF-C02.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/outposts.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Apuntes AWS">
@@ -60,7 +60,7 @@
         <strong>Certificaciones:</strong>
         <span class="chips">
           <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
-          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
           <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
         </span>
       </div>
@@ -131,7 +131,7 @@
           <thead><tr><th>Opción</th><th>Dónde está el hardware</th><th>Para qué</th></tr></thead>
           <tbody>
             <tr><td>Outposts</td><td>En tu centro de datos, gestionado por AWS</td><td>Latencia local, residencia de datos, híbrido</td></tr>
-            <tr><td>Local Zones</td><td>En una ciudad, operado por AWS</td><td>Baja latencia para usuarios de esa zona</td></tr>
+            <tr><td><a href="../servicio.html?id=local-zones">Local Zones</a></td><td>En una ciudad, operado por AWS</td><td>Baja latencia para usuarios de esa zona</td></tr>
             <tr><td><a href="wavelength.html">Wavelength</a></td><td>En la red de una operadora de telecomunicaciones</td><td>Latencia mínima para dispositivos <abbr class="sigla" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G</abbr></td></tr>
             <tr><td><a href="snow-family.html">Snow Family</a></td><td>Dispositivos portátiles que te envían</td><td>Sitios sin conexión y transferencia de datos</td></tr>
             <tr><td><a href="storage-gateway.html">Storage Gateway</a></td><td>Un dispositivo o una máquina virtual tuyos</td><td>Almacenamiento híbrido hacia <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></td></tr>
@@ -166,7 +166,7 @@
           enlace local.</li>
         <li><strong>AWS gestiona el hardware; el cliente pone el sitio</strong>, la energía y la red.</li>
         <li><strong>No es una región aislada:</strong> necesita conexión con su región de anclaje.</li>
-        <li><strong>No confundir con Local Zones</strong> (infraestructura de AWS en una ciudad) ni con
+        <li><strong>No confundir con <a href="../servicio.html?id=local-zones">Local Zones</a></strong> (infraestructura de AWS en una ciudad) ni con
           <strong><a href="wavelength.html">Wavelength</a></strong> (en la red <abbr class="sigla" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G</abbr>).</li>
       </ul>
 

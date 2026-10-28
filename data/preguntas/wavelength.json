@@ -90,10 +90,8 @@
   {
     "id": "wavelength-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa de transmisión de vídeo en directo quiere baja latencia para los espectadores de una gran ciudad que se conectan por fibra y wifi, no por una red móvil concreta. ¿Qué opción es más adecuada que AWS Wavelength?",
     "opciones": [
       "AWS Snowball Edge.",
@@ -112,10 +110,8 @@
   {
     "id": "wavelength-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un arquitecto despliega una aplicación crítica en una única zona de AWS Wavelength. ¿Qué riesgo debe abordar en el diseño?",
     "opciones": [
       "Que las instancias de la zona no admiten grupos de seguridad ni ACL de red.",

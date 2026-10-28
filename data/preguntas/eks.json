@@ -113,9 +113,9 @@
     "id": "eks-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un desarrollador empaqueta su aplicación con charts de Helm y la despliega en Kubernetes en local. ¿Qué servicio de AWS le permite reutilizar esos charts sin cambios?",
     "opciones": [
       "Amazon EKS.",
@@ -135,7 +135,7 @@
     "id": "eks-007",
     "tipo": "multiple",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "¿Qué DOS mecanismos permiten que el código de un pod en EKS obtenga credenciales temporales de AWS sin claves de larga duración? (Elige 2.)",
@@ -159,9 +159,9 @@
     "id": "eks-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa con varios equipos quiere una plataforma común de Kubernetes con la mínima operación de nodos, incluidos parches, escalado y actualizaciones de la AMI. ¿Qué opción es la adecuada?",
     "opciones": [
       "EKS con nodos autogestionados.",
@@ -181,9 +181,9 @@
     "id": "eks-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una organización tiene varios clústeres de EKS en versiones de Kubernetes que ya salieron del soporte estándar y la factura del plano de control ha subido. ¿Qué acción la reduce?",
     "opciones": [
       "Planificar y aplicar las actualizaciones de versión para volver al soporte estándar.",

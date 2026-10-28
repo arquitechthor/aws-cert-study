@@ -91,9 +91,9 @@
     "id": "redshift-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Los analistas necesitan consultar en Redshift, con minutos de retraso, los datos transaccionales de una base de datos Aurora MySQL, sin construir ni mantener canalizaciones de ETL (extraer, transformar y cargar). ¿Qué solución es la adecuada?",
     "opciones": [
       "Una integración zero-ETL de Aurora con Redshift.",
@@ -113,9 +113,9 @@
     "id": "redshift-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una canalización carga en Redshift millones de filas diarias con sentencias INSERT fila a fila desde una aplicación, y tarda horas. ¿Qué cambio es el más eficaz?",
     "opciones": [
       "Escribir los datos en ficheros en S3 (divididos y comprimidos) y cargarlos con COPY.",

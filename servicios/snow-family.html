@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS Snow Family — Apuntes AWS</title>
-<meta name="description" content="Dispositivos físicos resistentes (Snowball Edge) para mover muchos terabytes sin red o procesar datos en el borde. Ya no admite clientes nuevos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<meta name="description" content="Dispositivos físicos resistentes (Snowball Edge) para mover muchos terabytes sin red o procesar datos en el borde. Ya no admite clientes nuevos. Apuntes y preguntas de práctica para SAA-C03.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/snow-family.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Apuntes AWS">
@@ -60,7 +60,6 @@
         <strong>Certificaciones:</strong>
         <span class="chips">
           <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
-          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
         </span>
       </div>
       <div class="meta-row">
@@ -73,7 +72,7 @@
       <div class="callout callout-warn"><strong>Aviso:</strong> AWS Snowball Edge <strong>no admite clientes nuevos</strong>, así que AWS ya no ofrece ningún dispositivo de
         Snow Family a quien no los usara (los clientes actuales pueden seguir pidiéndolos). Antes se retiraron Snowcone y
         Snowmobile. Alternativas para clientes nuevos: <strong><a href="datasync.html">DataSync</a></strong> para transferencias en línea,
-        <strong>AWS Data Transfer Terminal</strong> para llevar tus propios discos a una instalación de AWS, soluciones
+        <strong><a href="../servicio.html?id=data-transfer-terminal">AWS Data Transfer Terminal</a></strong> para llevar tus propios discos a una instalación de AWS, soluciones
         de socios y <strong><a href="outposts.html">Outposts</a></strong> para cómputo en el borde. Las guías de examen todavía lo incluyen.</div>
 
       <h2 id="que-es">Qué es</h2>
@@ -116,7 +115,7 @@
       <h2 id="comparativa">Comparativa con servicios parecidos</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Necesidad</th><th>Snow Family</th><th><a href="datasync.html">DataSync</a></th><th>Data Transfer Terminal</th></tr></thead>
+          <thead><tr><th>Necesidad</th><th>Snow Family</th><th><a href="datasync.html">DataSync</a></th><th><a href="../servicio.html?id=data-transfer-terminal">Data Transfer Terminal</a></th></tr></thead>
           <tbody>
             <tr><td>Medio</td><td>Dispositivo de AWS enviado por mensajería</td><td>Red</td><td>Tus discos en una instalación de AWS</td></tr>
             <tr><td>Cuándo</td><td>Mucho volumen y poca red; borde desconectado</td><td>Red suficiente</td><td>Datos ya en tus discos, cerca de una instalación</td></tr>
@@ -144,7 +143,7 @@
         <li><strong>"Procesar en un lugar sin conexión"</strong>: Snowball Edge optimizado para cómputo.</li>
         <li><strong>"Exabytes"</strong>: era Snowmobile (ya retirado).</li>
         <li><strong>"Red suficiente y copia recurrente"</strong>: <a href="datasync.html">DataSync</a>, no Snow.</li>
-        <li>Fuera del examen, recuerda que hoy un cliente nuevo usaría DataSync, Data Transfer Terminal o socios.</li>
+        <li>Fuera del examen, recuerda que hoy un cliente nuevo usaría DataSync, <a href="../servicio.html?id=data-transfer-terminal">Data Transfer Terminal</a> o socios.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

@@ -47,9 +47,9 @@
     "id": "appflow-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Cuando un comercial cierra una oportunidad en Salesforce, un proceso en AWS debe arrancar en minutos para generar el contrato. ¿Qué diseño es el más sencillo?",
     "opciones": [
       "Un flujo de AppFlow disparado por evento que envía el cambio a EventBridge, donde una regla inicia el proceso.",
@@ -69,9 +69,9 @@
     "id": "appflow-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Un flujo de AppFlow copia cada hora la tabla completa de clientes de un SaaS a S3, lo que genera muchos datos duplicados y coste. ¿Qué cambio es el adecuado?",
     "opciones": [
       "Configurar el flujo programado con transferencia incremental de los registros nuevos o modificados.",

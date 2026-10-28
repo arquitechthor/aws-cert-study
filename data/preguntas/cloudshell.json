@@ -3,7 +3,7 @@
     "id": "cloudshell-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador necesita ejecutar comandos de la AWS CLI desde un ordenador prestado, sin instalar nada ni guardar claves de acceso. ¿Qué usa?",
@@ -25,7 +25,7 @@
     "id": "cloudshell-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un desarrollador guardó un script en /tmp en CloudShell y al día siguiente no está. ¿Por qué?",
@@ -47,7 +47,7 @@
     "id": "cloudshell-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "¿Con qué permisos se ejecutan los comandos de la CLI en CloudShell?",
@@ -69,7 +69,7 @@
     "id": "cloudshell-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un desarrollador necesita, desde CloudShell, conectarse a una base de datos en una subred privada. ¿Qué usa?",
@@ -91,7 +91,7 @@
     "id": "cloudshell-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "¿Cuánto cuesta usar AWS CloudShell?",

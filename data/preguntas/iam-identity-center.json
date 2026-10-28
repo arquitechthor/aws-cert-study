@@ -91,9 +91,9 @@
     "id": "iam-identity-center-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización quiere gestionar el acceso de su plantilla a todas sus cuentas con AWS IAM Identity Center, sin que los administradores de identidades trabajen a diario en la cuenta de administración. ¿Qué diseño es el adecuado?",
     "opciones": [
       "Una instancia de cuenta de Identity Center en cada cuenta miembro.",
@@ -113,9 +113,9 @@
     "id": "iam-identity-center-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa quiere que cada empleado solo pueda actuar sobre los recursos etiquetados con su propio proyecto, sin crear un conjunto de permisos por proyecto. ¿Qué capacidad de AWS IAM Identity Center lo permite?",
     "opciones": [
       "El control de acceso basado en atributos, con los atributos como etiquetas de sesión.",

@@ -69,7 +69,7 @@
     "id": "systems-manager-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una aplicación necesita leer la URL de un servicio externo y una clave cifrada, cambiables sin redesplegar, con el menor coste y sin rotación automática. ¿Dónde se guardan?",
@@ -91,9 +91,9 @@
     "id": "systems-manager-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo necesita ejecutar un script de actualización en 300 instancias etiquetadas como \"web\", de 20 en 20, deteniéndose si fallan más de 5. ¿Qué capacidad de Systems Manager lo permite?",
     "opciones": [
       "Run Command con objetivo por etiquetas, control de concurrencia y umbral de errores.",
@@ -113,9 +113,9 @@
     "id": "systems-manager-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una empresa con servidores en AWS y en su centro de datos quiere un único proceso de parcheo y un informe de cumplimiento conjunto. ¿Qué solución es la adecuada?",
     "opciones": [
       "Registrar los servidores locales como nodos híbridos de Systems Manager y usar Patch Manager para todos.",

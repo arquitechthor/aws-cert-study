@@ -69,9 +69,9 @@
     "id": "glue-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Un trabajo de Glue que se ejecuta cada hora vuelve a procesar todos los ficheros del bucket, aunque solo llegan unos pocos nuevos, y su coste crece sin parar. ¿Qué cambio lo corrige?",
     "opciones": [
       "Activar los job bookmarks para procesar solo los datos nuevos.",

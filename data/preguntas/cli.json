@@ -69,7 +69,7 @@
     "id": "cli-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un desarrollador ejecuta un comando de la AWS CLI que lista decenas de miles de recursos y recibe errores de tiempo de espera agotado. ¿Qué opción ayuda sin cambiar el resultado final?",
@@ -91,7 +91,7 @@
     "id": "cli-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un desarrollador tiene configurado un perfil por defecto en ~/.aws/credentials, pero la CLI actúa con otra identidad. Descubre que tiene definidas AWS_ACCESS_KEY_ID y AWS_SECRET_ACCESS_KEY en el entorno. ¿Por qué ocurre?",
@@ -113,7 +113,7 @@
     "id": "cli-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "La política de un usuario de IAM exige MFA para las llamadas a la API. ¿Cómo puede usar la AWS CLI cumpliendo esa condición?",
@@ -134,10 +134,8 @@
   {
     "id": "cli-007",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un ingeniero administra 30 cuentas de una organización desde la AWS CLI y no quiere guardar claves de larga duración en su equipo. ¿Qué configuración es la recomendada?",
     "opciones": [
       "Perfiles con nombre vinculados a AWS IAM Identity Center e inicio de sesión con aws sso login.",

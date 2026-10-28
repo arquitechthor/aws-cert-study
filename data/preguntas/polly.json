@@ -90,10 +90,8 @@
   {
     "id": "polly-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una aplicación de formación lee textos con Amazon Polly, pero pronuncia mal el nombre de la marca y varias siglas internas. ¿Cuál es la solución adecuada?",
     "opciones": [
       "Entrenar un modelo propio de síntesis de voz en SageMaker AI.",

@@ -26,11 +26,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas de alto rendimiento",
     "dominios": {
-      "SAP-C02": "Diseñar nuevas soluciones"
+      "SAP-C03": "Diseño e implementación de arquitecturas nativas de la nube"
     },
     "enunciado": "Los usuarios de una aplicación deben subir vídeos de hasta 2 GB. El backend está en API Gateway y Lambda. ¿Qué diseño es el adecuado?",
     "opciones": [
@@ -51,9 +51,9 @@
     "id": "api-gateway-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa ofrece una API pública a clientes externos con tres niveles de suscripción, cada uno con su propio límite de peticiones y cuota mensual. ¿Qué solución lo implementa de forma nativa?",
     "opciones": [
       "HTTP API con un autorizador JWT distinto por nivel.",
@@ -163,7 +163,7 @@
     "id": "api-gateway-008",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una API REST con integración de proxy de Lambda devuelve 502 Bad Gateway. Los registros muestran que la función termina sin errores y devuelve el texto \"OK\". ¿Cuál es la causa más probable?",
@@ -185,7 +185,7 @@
     "id": "api-gateway-009",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Durante un pico de uso, los clientes de una API reciben respuestas 429 Too Many Requests de API Gateway. ¿Qué deben hacer los clientes para comportarse correctamente ante este error?",
@@ -207,9 +207,9 @@
     "id": "api-gateway-010",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo despliega la misma API REST en las etapas dev y prod, y cada etapa debe invocar un alias distinto de la misma función Lambda sin duplicar la definición de la API. ¿Qué característica usa?",
     "opciones": [
       "Planes de uso con claves de API distintas.",

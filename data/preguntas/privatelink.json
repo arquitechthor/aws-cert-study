@@ -69,9 +69,9 @@
     "id": "privatelink-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un proveedor SaaS en AWS quiere que 300 clientes accedan a su API de forma privada desde sus propias VPC, muchas con rangos de IP que se solapan, sin dar acceso a su red. ¿Qué diseño es el adecuado?",
     "opciones": [
       "Publicar la API como servicio de endpoint de PrivateLink detrás de un NLB y que cada cliente cree un endpoint de interfaz.",
@@ -91,9 +91,9 @@
     "id": "privatelink-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una auditoría exige que, a través del endpoint de S3 de una VPC, solo se pueda acceder a los buckets de la empresa, para evitar la exfiltración de datos a buckets ajenos. ¿Qué control lo consigue?",
     "opciones": [
       "Una política de endpoint que permita solo los buckets (o la organización) de la empresa.",

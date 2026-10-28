@@ -91,7 +91,7 @@
     "id": "step-functions-005",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un paso que llama a una API de pagos externa falla a veces por errores temporales. ¿Cómo debe gestionarse en la definición de la máquina de estados?",
@@ -113,7 +113,7 @@
     "id": "step-functions-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un paso de un flujo solo debe guardar un elemento en DynamoDB. ¿Cuál es la forma más sencilla y barata?",
@@ -135,7 +135,7 @@
     "id": "step-functions-007",
     "tipo": "multiple",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "¿Qué DOS afirmaciones sobre los flujos Express de Step Functions son correctas? (Elige 2.)",
@@ -159,9 +159,9 @@
     "id": "step-functions-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una reserva de viaje debe reservar vuelo, hotel y coche en tres servicios distintos; si falla el coche, hay que cancelar el hotel y el vuelo ya reservados. ¿Qué diseño lo implementa de forma mantenible?",
     "opciones": [
       "Un flujo de Step Functions con Catch en cada paso que desvía a pasos de compensación en orden inverso (patrón saga).",
@@ -181,9 +181,9 @@
     "id": "step-functions-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una empresa procesa 50 millones de eventos de IoT (internet de las cosas) al día con flujos Standard de Step Functions de 3 segundos cada uno, y el coste por transiciones es alto. La lógica tolera ejecutar un paso más de una vez. ¿Qué cambio lo reduce?",
     "opciones": [
       "Migrar a flujos Express.",

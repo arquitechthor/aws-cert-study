@@ -2,10 +2,8 @@
   {
     "id": "codeguru-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una aplicación Java en producción consume mucha más CPU de lo esperado y el equipo quiere saber qué métodos son los responsables. ¿Qué usa?",
     "opciones": [
       "AWS X-Ray.",
@@ -24,10 +22,8 @@
   {
     "id": "codeguru-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "En 2026 un equipo quiere asociar un repositorio nuevo a CodeGuru Reviewer para revisar su código. ¿Qué ocurre?",
     "opciones": [
       "Funciona igual que siempre.",
@@ -46,10 +42,8 @@
   {
     "id": "codeguru-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Qué diferencia hay entre CodeGuru Profiler y X-Ray?",
     "opciones": [
       "Profiler analiza el código dentro de una aplicación en ejecución; X-Ray sigue las peticiones entre servicios.",
@@ -68,10 +62,8 @@
   {
     "id": "codeguru-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo quiere reducir el coste de cómputo de una flota de servicios Python identificando código ineficiente, con el mínimo impacto en producción. ¿Qué solución encaja?",
     "opciones": [
       "Desplegar un depurador en cada instancia.",
@@ -90,10 +82,8 @@
   {
     "id": "codeguru-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo de seguridad quiere encontrar vulnerabilidades en el código de las funciones Lambda y en sus dependencias de forma automática. ¿Qué servicio usa hoy?",
     "opciones": [
       "CodeGuru Profiler.",

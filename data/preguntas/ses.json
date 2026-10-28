@@ -2,10 +2,8 @@
   {
     "id": "ses-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una aplicación recién desplegada envía correos con SES, pero solo llegan a las direcciones del equipo, que están verificadas, y el resto falla. ¿Cuál es la causa más probable?",
     "opciones": [
       "La cuenta de SES sigue en el sandbox de esa región.",
@@ -24,10 +22,8 @@
   {
     "id": "ses-002",
     "tipo": "multiple",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Los correos que envía una aplicación con SES llegan con frecuencia a la carpeta de spam. ¿Qué dos medidas mejoran la entregabilidad?",
     "opciones": [
       "Verificar el dominio del remitente y activar Easy DKIM.",
@@ -48,10 +44,8 @@
   {
     "id": "ses-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa quiere que los correos enviados a soporte@ejemplo.com creen automáticamente un ticket, guardando el mensaje y sus adjuntos. ¿Qué solución es la más sencilla?",
     "opciones": [
       "Una regla de recepción de SES que guarde el correo en S3 e invoque una función Lambda que cree el ticket.",
@@ -70,10 +64,8 @@
   {
     "id": "ses-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo necesita analizar rebotes, quejas y entregas de sus campañas de correo en SES y alertar si la tasa de rebote sube. ¿Qué configuración lo permite?",
     "opciones": [
       "Un conjunto de configuración con destino de eventos hacia CloudWatch (y Firehose para el análisis), más una alarma de CloudWatch sobre la tasa de rebote.",

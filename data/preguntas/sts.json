@@ -3,7 +3,7 @@
     "id": "sts-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una aplicación de la cuenta A debe leer objetos de un bucket de la cuenta B sin usar claves de larga duración. ¿Qué enfoque es el recomendado?",
@@ -25,7 +25,7 @@
     "id": "sts-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Un pipeline de GitHub Actions debe desplegar en AWS sin guardar claves de acceso como secretos. El proveedor OIDC de GitHub ya está registrado en IAM. ¿Qué operación de STS usa el pipeline?",
@@ -47,7 +47,7 @@
     "id": "sts-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un desarrollador no está seguro de con qué identidad se ejecutan sus comandos de la AWS CLI. ¿Qué llamada lo indica sin necesidad de permisos especiales?",
@@ -69,7 +69,7 @@
     "id": "sts-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una llamada a sts:AssumeRole devuelve un error de acceso denegado, aunque la política de IAM del usuario permite sts:AssumeRole sobre ese rol. ¿Qué conviene revisar?",
@@ -91,9 +91,9 @@
     "id": "sts-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Un proveedor de software necesita acceder a recursos de las cuentas de muchos clientes asumiendo un rol en cada una. ¿Qué mecanismo evita que un cliente consiga que el proveedor actúe sobre la cuenta de otro (el problema del suplente confundido)?",
     "opciones": [
       "Un identificador externo único por cliente, exigido en la política de confianza del rol.",
@@ -113,9 +113,9 @@
     "id": "sts-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una aplicación asume un rol con permisos amplios, pero para una operación concreta quiere limitar la sesión a un único prefijo de S3. ¿Qué puede usar sin crear un rol nuevo?",
     "opciones": [
       "Un límite de permisos asociado al usuario que llama a AssumeRole.",
@@ -135,9 +135,9 @@
     "id": "sts-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Se sospecha que las credenciales temporales emitidas a partir de un rol se han filtrado. ¿Cómo se invalida el acceso de esas sesiones sin borrar el rol?",
     "opciones": [
       "Rotando las claves de acceso del rol desde la consola de IAM.",

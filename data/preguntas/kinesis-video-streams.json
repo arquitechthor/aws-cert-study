@@ -46,10 +46,8 @@
   {
     "id": "kinesis-video-streams-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un fabricante de timbres inteligentes necesita vídeo y audio en ambos sentidos entre el timbre y el móvil del usuario, con latencia inferior a un segundo. ¿Qué usa?",
     "opciones": [
       "Kinesis Data Streams.",

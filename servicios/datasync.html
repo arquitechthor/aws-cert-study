@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS DataSync — Apuntes AWS</title>
-<meta name="description" content="Copia en línea, programada y verificada de ficheros y objetos entre almacenamiento local, otras nubes y S3, EFS o FSx. Apuntes y preguntas de práctica para SAA-C03, SAP-C02.">
+<meta name="description" content="Copia en línea, programada y verificada de ficheros y objetos entre almacenamiento local, otras nubes y S3, EFS o FSx. Apuntes y preguntas de práctica para SAA-C03, SAP-C03.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/datasync.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Apuntes AWS">
@@ -60,7 +60,7 @@
         <strong>Certificaciones:</strong>
         <span class="chips">
           <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
-          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
         </span>
       </div>
       <div class="meta-row">
@@ -103,7 +103,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Si la red no da para mover el volumen en un plazo razonable: transferencia física (<a href="snow-family.html">Snow Family</a> para clientes
-          existentes, Data Transfer Terminal para nuevos).</li>
+          existentes, <a href="../servicio.html?id=data-transfer-terminal">Data Transfer Terminal</a> para nuevos).</li>
         <li>Para que las aplicaciones locales sigan accediendo a los datos en AWS de forma continua, con caché local:
           <a href="storage-gateway.html">Storage Gateway</a>.</li>
         <li>Para que socios externos suban ficheros por <abbr class="sigla sigla-1" data-s="SFTP" data-en="SSH File Transfer Protocol" data-es="transferencia de ficheros sobre SSH" tabindex="0">SFTP<span class="sigla-exp"> (SSH File Transfer Protocol: transferencia de ficheros sobre SSH)</span></abbr>: <a href="transfer-family.html">Transfer Family</a>.</li>

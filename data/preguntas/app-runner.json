@@ -2,10 +2,8 @@
   {
     "id": "app-runner-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un equipo pequeño, sin experiencia en contenedores, tiene una API web en un repositorio de código y quiere publicarla con HTTPS y escalado automático sin configurar clústeres ni balanceadores. Ya usa AWS App Runner en su cuenta. ¿Qué opción requiere menos esfuerzo operativo?",
     "opciones": [
       "Un clúster de Amazon EKS con nodos gestionados.",
@@ -24,10 +22,8 @@
   {
     "id": "app-runner-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un servicio de AWS App Runner debe consultar una base de datos de Amazon RDS situada en subredes privadas. ¿Qué hay que configurar?",
     "opciones": [
       "Hacer la base de datos accesible desde internet.",
@@ -46,10 +42,8 @@
   {
     "id": "app-runner-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa nueva en AWS quería usar AWS App Runner, pero el servicio ya no acepta clientes nuevos. ¿Qué alternativa recomienda AWS para desplegar una aplicación en contenedor con una simplicidad parecida?",
     "opciones": [
       "AWS Elastic Beanstalk con plataforma Docker.",
@@ -68,10 +62,8 @@
   {
     "id": "app-runner-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Cómo escala AWS App Runner un servicio cuando aumenta el tráfico?",
     "opciones": [
       "Añade instancias cuando se supera el número de peticiones simultáneas configurado por instancia, hasta el máximo definido.",
@@ -90,10 +82,8 @@
   {
     "id": "app-runner-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un servicio de AWS App Runner de pruebas solo recibe tráfico dos horas al día. ¿Qué describe mejor cómo se factura el resto del tiempo si no se pausa?",
     "opciones": [
       "No se factura nada, porque escala a cero instancias.",

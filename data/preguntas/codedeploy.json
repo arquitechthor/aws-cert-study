@@ -3,9 +3,9 @@
     "id": "codedeploy-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo quiere publicar una nueva versión de una función Lambda enviando el 10 % del tráfico durante 10 minutos y, si no hay errores, el 100 %. ¿Qué usa?",
     "opciones": [
       "CodeDeploy con una configuración canary sobre un alias de Lambda.",
@@ -25,9 +25,9 @@
     "id": "codedeploy-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Durante un despliegue con CodeDeploy, la tasa de errores 5xx de la aplicación se dispara. El equipo quiere que en ese caso el despliegue vuelva solo a la versión anterior. ¿Qué configura?",
     "opciones": [
       "Una aprobación manual en CodePipeline.",
@@ -47,7 +47,7 @@
     "id": "codedeploy-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "En un despliegue in situ en EC2, hay que reiniciar un servicio y comprobar que responde después de copiar los ficheros. ¿Dónde se define?",
@@ -69,7 +69,7 @@
     "id": "codedeploy-004",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un despliegue de CodeDeploy en instancias EC2 se queda esperando y termina fallando en todas ellas. ¿Cuál es una causa frecuente?",
@@ -91,9 +91,9 @@
     "id": "codedeploy-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una empresa despliega en una flota de EC2 tras un balanceador y quiere evitar cualquier pérdida de capacidad durante el despliegue y poder volver atrás al instante. ¿Qué tipo de despliegue usa?",
     "opciones": [
       "In situ, de una en una.",

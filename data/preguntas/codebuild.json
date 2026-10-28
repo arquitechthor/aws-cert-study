@@ -3,9 +3,9 @@
     "id": "codebuild-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un equipo quiere que cada commit se compile y se ejecuten las pruebas unitarias sin mantener servidores de compilación. ¿Qué servicio usa y dónde define los comandos?",
     "opciones": [
       "CodeDeploy, en el archivo AppSpec.",
@@ -25,7 +25,7 @@
     "id": "codebuild-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una compilación necesita la contraseña de un registro privado. ¿Cuál es la forma más segura de dársela?",
@@ -47,7 +47,7 @@
     "id": "codebuild-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Cada compilación tarda varios minutos en descargar las mismas dependencias de npm. ¿Qué mejora tiene más impacto?",
@@ -69,9 +69,9 @@
     "id": "codebuild-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Las pruebas de integración de una compilación deben conectarse a una base de datos RDS en subredes privadas. ¿Qué se configura?",
     "opciones": [
       "Hacer pública la base de datos.",

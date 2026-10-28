@@ -113,9 +113,9 @@
     "id": "ebs-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
-    "dominio": "Implementación",
+    "dominio": "Pruebas e implementación",
     "enunciado": "Un script de despliegue termina instancias EC2 y el equipo descubre que el volumen raíz se borra con ellas, pero el volumen adicional de datos no. ¿Qué lo explica?",
     "opciones": [
       "El atributo DeleteOnTermination, activo por defecto en el volumen raíz y desactivado en los adicionales.",
@@ -135,9 +135,9 @@
     "id": "ebs-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una aplicación de clúster certificada necesita un almacenamiento de bloque compartido por varias instancias de la misma zona, con IOPS muy altas, y gestiona ella misma la escritura concurrente. ¿Qué opción de EBS lo permite?",
     "opciones": [
       "Volúmenes io2 con Multi-Attach en instancias Nitro.",
@@ -157,9 +157,9 @@
     "id": "ebs-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una empresa tiene miles de instantáneas EBS que debe conservar 7 años por normativa y casi nunca restaura. ¿Qué cambio reduce su coste?",
     "opciones": [
       "Mover las instantáneas antiguas al nivel de archivo de instantáneas de EBS.",

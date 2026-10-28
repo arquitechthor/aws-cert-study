@@ -91,9 +91,9 @@
     "id": "control-tower-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización gobernada con AWS Control Tower despliega todo con CloudFormation y quiere que un recurso no conforme ni siquiera llegue a crearse, sin escribir SCP propias. ¿Qué tipo de control debe activar?",
     "opciones": [
       "De detección.",
@@ -113,9 +113,9 @@
     "id": "control-tower-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa ya tiene una organización de AWS Organizations con 60 cuentas y quiere adoptar AWS Control Tower. ¿Qué afirmación es correcta?",
     "opciones": [
       "Debe crear una organización nueva con Control Tower y migrar a ella todas las cuentas.",
@@ -135,9 +135,9 @@
     "id": "control-tower-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Por requisitos de residencia de datos, una organización con AWS Control Tower debe impedir el uso de regiones fuera de la Unión Europea en todas las cuentas miembro. ¿Qué opción requiere menos esfuerzo operativo?",
     "opciones": [
       "Activar el control de denegación de regiones de Control Tower.",
@@ -157,9 +157,9 @@
     "id": "control-tower-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Un administrador mueve una cuenta a otra OU directamente desde la consola de AWS Organizations, sin pasar por AWS Control Tower. ¿Qué consecuencia tiene?",
     "opciones": [
       "Ninguna: Control Tower no supervisa los cambios hechos en Organizations.",

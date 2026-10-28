@@ -91,9 +91,9 @@
     "id": "documentdb-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Un catálogo sobre Amazon DocumentDB crece hasta el punto de que una sola instancia principal no da abasto con las escrituras ni con el volumen de datos. ¿Qué opción permite seguir creciendo?",
     "opciones": [
       "Añadir más réplicas de lectura al clúster.",
@@ -113,9 +113,9 @@
     "id": "documentdb-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una aplicación mundial sobre Amazon DocumentDB necesita lecturas con baja latencia en tres continentes y poder recuperarse de la caída de una región entera. ¿Qué debe usar?",
     "opciones": [
       "Réplicas de lectura en distintas AZ de una sola región.",

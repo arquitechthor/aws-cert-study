@@ -115,7 +115,7 @@
     "id": "ec2-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una aplicación en EC2 debe leer objetos de un bucket de S3. ¿Cuál es la forma más segura de darle credenciales?",
@@ -138,7 +138,7 @@
     "id": "ec2-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Tras exigir IMDSv2 en una instancia, un script antiguo que hacía un simple GET a http://169.254.169.254/latest/meta-data/ empieza a recibir errores 401. ¿Qué debe cambiar?",
@@ -160,9 +160,9 @@
     "id": "ec2-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa migra un software comercial con licencia por núcleo físico y la auditoría exige demostrar en qué servidor se ejecuta. ¿Qué opción de EC2 lo permite?",
     "opciones": [
       "Instancias dedicadas.",
@@ -182,9 +182,9 @@
     "id": "ec2-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una flota de EC2 tiene un uso estable, pero la empresa planea mover parte de la carga a Fargate y Lambda durante el próximo año. Quiere un descuento por compromiso que acompañe ese cambio. ¿Qué opción es la adecuada?",
     "opciones": [
       "Instancias reservadas estándar de 3 años.",

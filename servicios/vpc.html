@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amazon VPC — Apuntes AWS</title>
-<meta name="description" content="Tu red privada y aislada dentro de AWS: rangos de IP, subredes, tablas de rutas, gateways y firewalls para tus recursos. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<meta name="description" content="Tu red privada y aislada dentro de AWS: rangos de IP, subredes, tablas de rutas, gateways y firewalls para tus recursos. Apuntes y preguntas de práctica para SAA-C03, SAP-C03, AIF-C01, CLF-C02, DVA-C03.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/vpc.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Apuntes AWS">
@@ -62,10 +62,10 @@
         <strong>Certificaciones:</strong>
         <span class="chips">
           <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
-          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
           <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
           <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
-          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C03#catalogo" title="AWS Certified Developer – Associate">DVA-C03</a>
         </span>
       </div>
       <div class="meta-row">
@@ -147,7 +147,7 @@
       </div>
 
       <h2 id="a-fondo">A fondo: temas avanzados</h2>
-      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios de redes de SAP-C02:
+      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios de redes de SAP-C03:
         direcciones sin solapes en muchas cuentas, <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> compartidas, topologías en estrella con salida e inspección
         centralizadas, endpoints y <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> a escala, y cómo elegir entre las formas de conectar redes.</p>
 
@@ -238,7 +238,7 @@
             <tr><td><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> peering</td><td>Pocas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>; sin coste por conexión, solo la transferencia de datos.</td><td>No</td><td>No</td></tr>
             <tr><td>Transit Gateway</td><td>Decenas o miles de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y redes locales, con segmentación por tablas de rutas.</td><td>Sí</td><td>No</td></tr>
             <tr><td>PrivateLink</td><td>Exponer un servicio concreto (detrás de un <a href="elb.html"><abbr class="sigla sigla-1" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB<span class="sigla-exp"> (Network Load Balancer: balanceador TCP/UDP)</span></abbr></a>) a otras cuentas o como <abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr>; solo en un sentido.</td><td>No aplica</td><td>Sí</td></tr>
-            <tr><td>VPC Lattice</td><td>Comunicación entre servicios de varias <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y cuentas en la capa de aplicación, con autorización de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</td><td>No aplica</td><td>Sí</td></tr>
+            <tr><td><a href="../servicio.html?id=vpc-lattice">VPC Lattice</a></td><td>Comunicación entre servicios de varias <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y cuentas en la capa de aplicación, con autorización de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</td><td>No aplica</td><td>Sí</td></tr>
             <tr><td>Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr></td><td>Red global en varias regiones y oficinas gestionada con una política central.</td><td>Sí</td><td>No</td></tr>
           </tbody>
         </table>

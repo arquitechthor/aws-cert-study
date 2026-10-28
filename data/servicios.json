@@ -7,8 +7,9 @@
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
-      "CLF-C02"
+      "SAP-C03",
+      "CLF-C02",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Emite, gestiona y renueva certificados SSL/TLS para servicios de AWS como CloudFront, ELB y API Gateway.",
@@ -24,8 +25,7 @@
       "herramientas-desarrolladores"
     ],
     "certificaciones": [
-      "CLF-C02",
-      "DVA-C02"
+      "CLF-C02"
     ],
     "incluye": [
       "Amazon Q Developer"
@@ -45,9 +45,8 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Herramientas y servicios para crear, desplegar y alojar aplicaciones web y móviles full stack, con CI/CD desde Git y backend en AWS.",
@@ -65,9 +64,9 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Crea, publica y protege APIs REST, HTTP y WebSocket delante de Lambda u otros backends.",
@@ -79,9 +78,7 @@
     "nombre": "AWS App Runner",
     "categoria": "computacion",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Despliega aplicaciones web y API en contenedores a partir del código fuente o de una imagen, con HTTPS, balanceo y escalado automáticos. Cerrado a clientes nuevos desde el 30/04/2026.",
     "frase": "De imagen de contenedor o repositorio a una web con HTTPS, sin ver ni gestionar máquinas",
@@ -93,7 +90,7 @@
     "categoria": "administracion-gobernanza",
     "icono": true,
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Despliega cambios de configuración y feature flags sin redesplegar el código: validación previa, despliegue gradual y marcha atrás automática con alarmas de CloudWatch.",
@@ -107,7 +104,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Transfiere datos entre aplicaciones SaaS (Salesforce, SAP, Google Analytics…) y servicios de AWS con flujos sin código, programados o por evento.",
@@ -115,12 +112,23 @@
     "documentacion": "https://docs.aws.amazon.com/appflow/"
   },
   {
+    "id": "application-auto-scaling",
+    "nombre": "AWS Application Auto Scaling",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Ajusta la capacidad de ECS, DynamoDB, Aurora o Lambda según métricas o un horario",
+    "documentacion": "https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html"
+  },
+  {
     "id": "application-discovery-service",
     "nombre": "AWS Application Discovery Service",
     "categoria": "migracion-transferencia",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -135,7 +143,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -152,7 +160,6 @@
     "categoria": "computacion-usuarios-finales",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -168,10 +175,7 @@
     "nombre": "AWS AppSync",
     "categoria": "integracion-aplicaciones",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02",
-      "DVA-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "API GraphQL y de eventos en tiempo real sin servidores: una sola API para leer y escribir de varias fuentes de datos, con suscripciones por WebSocket.",
     "frase": "Sirve APIs GraphQL gestionadas con suscripciones en tiempo real y datos offline",
@@ -184,7 +188,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -200,9 +204,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Consultas SQL sin servidores directamente sobre ficheros en S3: sin cargar datos ni gestionar infraestructura, pagando por los datos analizados.",
@@ -214,9 +218,7 @@
     "nombre": "AWS Audit Manager",
     "categoria": "seguridad-identidad-cumplimiento",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Servicio que recopila evidencias de forma continua y las organiza por controles de marcos como PCI DSS, HIPAA o SOC 2 para preparar auditorías. Cerrado a clientes nuevos desde el 30/04/2026.",
     "frase": "Recoge evidencias automáticas para preparar auditorías frente a marcos como PCI DSS",
@@ -229,10 +231,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "incluye": [
       "Amazon Aurora Serverless"
@@ -252,7 +254,7 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -267,7 +269,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -282,7 +284,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -297,7 +298,9 @@
     "icono": true,
     "kopi": true,
     "certificaciones": [
-      "AIF-C01"
+      "SAP-C03",
+      "AIF-C01",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Acceso por API a modelos fundacionales de varios proveedores para crear aplicaciones de IA generativa.",
@@ -309,7 +312,9 @@
     "nombre": "Amazon Bedrock AgentCore",
     "categoria": "machine-learning",
     "certificaciones": [
-      "AIF-C01"
+      "SAP-C03",
+      "AIF-C01",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Plataforma para ejecutar agentes de IA en producción con seguridad: entorno de ejecución aislado, memoria, puerta de enlace de herramientas, identidad, políticas y observabilidad.",
@@ -323,7 +328,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -339,12 +344,25 @@
     "categoria": "administracion-gobernanza",
     "icono": true,
     "certificaciones": [
-      "DVA-C02"
+      "SAP-C03",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Marco de código abierto para definir infraestructura con lenguajes de programación (TypeScript, Python, Java y otros) que se sintetiza en plantillas de CloudFormation.",
     "frase": "Define infraestructura con TypeScript, Python o Java y la convierte en plantillas",
     "documentacion": "https://docs.aws.amazon.com/cdk/"
+  },
+  {
+    "id": "clean-rooms",
+    "nombre": "AWS Clean Rooms",
+    "categoria": "analisis",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Analiza datos con socios sin que ninguna parte vea los datos en bruto de la otra",
+    "documentacion": "https://docs.aws.amazon.com/clean-rooms/"
   },
   {
     "id": "cli",
@@ -357,9 +375,8 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Herramienta de línea de comandos para llamar a las API de todos los servicios de AWS desde la terminal y automatizar tareas con scripts.",
@@ -373,7 +390,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "alias": [
@@ -385,15 +402,27 @@
     "documentacion": "https://docs.aws.amazon.com/vpn/"
   },
   {
+    "id": "cloud-wan",
+    "nombre": "AWS Cloud WAN",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Red global gestionada que une regiones y oficinas con una política central declarativa",
+    "documentacion": "https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html"
+  },
+  {
     "id": "cloudformation",
     "nombre": "AWS CloudFormation",
     "categoria": "administracion-gobernanza",
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Infraestructura como código: describes tus recursos de AWS en plantillas YAML o JSON y CloudFormation los crea, actualiza y borra como una unidad.",
@@ -408,10 +437,10 @@
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Red de entrega de contenido (CDN) que acerca contenido estático y dinámico a los usuarios con caché en el borde.",
@@ -425,7 +454,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -439,7 +468,7 @@
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Terminal en el navegador, ya autenticada con tus credenciales de la consola, con la AWS CLI y otras herramientas instaladas y 1 GB persistente por región, sin coste.",
@@ -453,10 +482,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Registro de auditoría de la actividad en tu cuenta de AWS: quién hizo qué llamada a la API, cuándo y desde dónde.",
@@ -471,10 +500,10 @@
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "incluye": [
       "Amazon CloudWatch Logs"
@@ -490,8 +519,7 @@
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Repositorios privados y gestionados de paquetes (npm, PyPI, Maven, NuGet…) con conexión a los repositorios públicos y control de acceso con IAM.",
@@ -504,9 +532,9 @@
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Servicio de compilación gestionado: compila, ejecuta pruebas y genera artefactos en entornos efímeros definidos en un buildspec, pagando por minuto.",
@@ -514,13 +542,25 @@
     "documentacion": "https://docs.aws.amazon.com/codebuild/"
   },
   {
+    "id": "codecommit",
+    "nombre": "AWS CodeCommit",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Repositorios Git privados y gestionados, integrados con IAM y las canalizaciones de AWS",
+    "documentacion": "https://docs.aws.amazon.com/codecommit/"
+  },
+  {
     "id": "codedeploy",
     "nombre": "AWS CodeDeploy",
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
-      "DVA-C02"
+      "SAP-C03",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Automatiza despliegues en EC2, servidores locales, Lambda y ECS, con estrategias in situ, azul/verde, canary o lineal y reversión automática.",
@@ -532,9 +572,7 @@
     "nombre": "Amazon CodeGuru",
     "categoria": "herramientas-desarrolladores",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Herramientas con aprendizaje automático para el código: Profiler analiza el rendimiento en ejecución y Reviewer revisaba el código (sin asociaciones nuevas desde 2025).",
     "frase": "Revisa el código con aprendizaje automático y señala fallos y problemas de rendimiento",
@@ -546,9 +584,9 @@
     "categoria": "herramientas-desarrolladores",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Orquesta la entrega continua: encadena fuente, compilación, pruebas, aprobaciones y despliegue en etapas que se ejecutan con cada cambio.",
@@ -563,9 +601,9 @@
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Registro, inicio de sesión y control de acceso de usuarios para aplicaciones web y móviles.",
@@ -579,7 +617,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -595,7 +632,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -610,7 +647,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -639,7 +676,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -654,7 +691,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -663,13 +700,25 @@
     "documentacion": "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
   },
   {
+    "id": "cost-categories",
+    "nombre": "AWS Cost Categories",
+    "categoria": "administracion-financiera",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Agrupa el gasto con reglas propias, como equipos o proyectos, para repartir la factura",
+    "documentacion": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html"
+  },
+  {
     "id": "cost-explorer",
     "nombre": "AWS Cost Explorer",
     "categoria": "administracion-financiera",
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -685,7 +734,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01"
     ],
     "estado": "publicado",
@@ -700,14 +748,37 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Entrega flujos de datos casi en tiempo real a S3, Redshift, OpenSearch, tablas Iceberg o terceros, sin servidores ni código, con transformación opcional.",
     "frase": "Entrega flujos de datos a S3, Redshift u OpenSearch casi en tiempo real, sin código",
     "documentacion": "https://docs.aws.amazon.com/firehose/"
+  },
+  {
+    "id": "data-lifecycle-manager",
+    "nombre": "Amazon Data Lifecycle Manager",
+    "categoria": "almacenamiento",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Automatiza la creación, copia y borrado de instantáneas EBS y AMI con políticas",
+    "documentacion": "https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html"
+  },
+  {
+    "id": "data-transfer-terminal",
+    "nombre": "AWS Data Transfer Terminal",
+    "categoria": "migracion-transferencia",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Sedes físicas donde llevas tus discos y subes datos a AWS por enlaces muy rápidos",
+    "documentacion": "https://docs.aws.amazon.com/datatransferterminal/"
   },
   {
     "id": "datasync",
@@ -716,7 +787,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Copia en línea, programada y verificada de ficheros y objetos entre almacenamiento local, otras nubes y S3, EFS o FSx.",
@@ -730,7 +801,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -744,8 +814,7 @@
     "categoria": "frontend-web-movil",
     "icono": true,
     "certificaciones": [
-      "SAA-C03",
-      "SAP-C02"
+      "SAA-C03"
     ],
     "estado": "publicado",
     "resumen": "Pruebas de aplicaciones móviles y web en dispositivos Android e iOS reales y navegadores alojados en AWS, automatizadas o interactivas.",
@@ -759,7 +828,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -774,13 +843,26 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
     "resumen": "Directorios gestionados en AWS: Microsoft Active Directory real (AWS Managed Microsoft AD), un conector hacia tu directorio local (AD Connector) y Simple AD.",
     "frase": "Controladores de dominio de Microsoft AD gestionados o un conector hacia tu AD local",
     "documentacion": "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/what_is.html"
+  },
+  {
+    "id": "distro-for-opentelemetry",
+    "nombre": "AWS Distro for OpenTelemetry",
+    "nombreCompleto": "AWS Distro for OpenTelemetry (ADOT)",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Recoge trazas y métricas con un estándar abierto y las envía a X-Ray o CloudWatch",
+    "documentacion": "https://aws-otel.github.io/docs/introduction"
   },
   {
     "id": "dms",
@@ -790,7 +872,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -806,7 +888,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -823,10 +905,10 @@
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Base de datos NoSQL clave-valor y de documentos, serverless, con latencia de milisegundos a cualquier escala.",
@@ -841,9 +923,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Discos de bloque persistentes para instancias EC2: volúmenes SSD o HDD que sobreviven a la instancia, con instantáneas en S3.",
@@ -858,10 +940,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Servidores virtuales en la nube: eliges tipo de instancia, sistema operativo, red y almacenamiento, y pagas por el tiempo de uso.",
@@ -875,7 +957,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Mantiene el número adecuado de instancias EC2 en un grupo: sustituye las que fallan y añade o quita instancias según la carga o un horario.",
@@ -890,9 +972,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Registro de imágenes de contenedores gestionado, privado o público, con escaneo de vulnerabilidades, políticas de ciclo de vida y replicación.",
@@ -907,10 +989,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "incluye": [
       "Amazon ECS Anywhere"
@@ -928,9 +1010,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Sistema de ficheros compartido NFS, elástico y sin servidores, que miles de instancias, contenedores y funciones pueden montar a la vez.",
@@ -945,10 +1027,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "incluye": [
       "Amazon EKS Anywhere",
@@ -966,9 +1048,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Despliega aplicaciones web subiendo el código: Beanstalk crea y gestiona instancias, balanceador, Auto Scaling y monitorización por ti.",
@@ -981,7 +1063,7 @@
     "categoria": "almacenamiento",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -995,8 +1077,7 @@
     "categoria": "servicios-multimedia",
     "icono": true,
     "certificaciones": [
-      "SAA-C03",
-      "SAP-C02"
+      "SAA-C03"
     ],
     "estado": "publicado",
     "resumen": "Transcodificaba vídeos guardados en S3 a formatos para móviles, webs y televisores. Retirado el 13/11/2025; su sustituto es MediaConvert.",
@@ -1010,10 +1091,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Caché en memoria gestionada compatible con Valkey, Redis OSS y Memcached, para respuestas de microsegundos y quitar carga a las bases de datos.",
@@ -1027,8 +1108,8 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
-      "DVA-C02"
+      "SAP-C03",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Balanceadores de carga gestionados que reparten el tráfico entre instancias, contenedores, IP o funciones, y solo lo envían a los destinos sanos.",
@@ -1042,7 +1123,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1058,9 +1139,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Bus de eventos sin servidores: recibe eventos de AWS, de tus aplicaciones y de SaaS, y los enruta por reglas a más de 20 destinos; incluye Scheduler y Pipes.",
@@ -1077,13 +1158,27 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
-      "CLF-C02"
+      "SAP-C03",
+      "CLF-C02",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Motor de cómputo sin servidores para contenedores: ejecuta tareas de ECS y pods de EKS sin aprovisionar ni gestionar instancias.",
     "frase": "Motor sin servidor para contenedores: tú defines la tarea y AWS pone las máquinas",
     "documentacion": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
+  },
+  {
+    "id": "fault-injection-service",
+    "nombre": "AWS Fault Injection Service",
+    "nombreCompleto": "AWS Fault Injection Service (AWS FIS)",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Provoca fallos controlados en tus recursos para probar cómo resiste la aplicación",
+    "documentacion": "https://docs.aws.amazon.com/fis/"
   },
   {
     "id": "firewall-manager",
@@ -1092,7 +1187,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1105,9 +1199,7 @@
     "nombre": "Amazon Fraud Detector",
     "categoria": "machine-learning",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Modelos de aprendizaje automático gestionados que puntúan el riesgo de fraude en pagos, altas de cuentas o inicios de sesión. Cerrado a clientes nuevos.",
     "frase": "Modelos de aprendizaje automático que puntúan pagos y altas sospechosas de fraude",
@@ -1121,7 +1213,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1136,7 +1228,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1151,7 +1243,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1180,7 +1272,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1195,7 +1287,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1213,10 +1304,10 @@
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Control de identidades y permisos: decide quién puede hacer qué sobre qué recurso de AWS.",
@@ -1230,7 +1321,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1245,7 +1336,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1255,24 +1346,11 @@
     "documentacion": "https://docs.aws.amazon.com/inspector/"
   },
   {
-    "id": "iot-1-click",
-    "nombre": "AWS IoT 1-Click",
-    "categoria": "iot",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "estado": "publicado",
-    "resumen": "Gestionaba dispositivos sencillos de un botón que, al pulsarse, invocaban una función Lambda. Servicio retirado; hoy se usa IoT Core.",
-    "frase": "Dispositivos de un botón que lanzan una función con una simple pulsación",
-    "documentacion": "https://docs.aws.amazon.com/iot-1-click/"
-  },
-  {
     "id": "iot-core",
     "nombre": "AWS IoT Core",
     "categoria": "iot",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1285,9 +1363,7 @@
     "nombre": "AWS IoT Device Defender",
     "categoria": "iot",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Audita la configuración de seguridad de una flota de IoT y detecta comportamientos anómalos de los dispositivos, con alertas y acciones de mitigación.",
     "frase": "Audita la configuración de tu flota de sensores y alerta de comportamientos anómalos",
@@ -1298,35 +1374,18 @@
     "nombre": "AWS IoT Device Management",
     "categoria": "iot",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Registra, organiza, busca, actualiza (OTA) y gestiona en remoto flotas de dispositivos IoT a escala.",
     "frase": "Registra, organiza, actualiza por OTA y controla en remoto flotas de sensores",
     "documentacion": "https://docs.aws.amazon.com/iot-device-management/"
   },
   {
-    "id": "iot-events",
-    "nombre": "AWS IoT Events",
-    "categoria": "iot",
-    "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "estado": "publicado",
-    "resumen": "Detectaba patrones en los datos de sensores con máquinas de estados y disparaba alertas o acciones. Retirado tras el aviso de fin de soporte de 2025.",
-    "frase": "Modela estados de equipos con datos de sensores y actúa cuando pasan de uno a otro",
-    "documentacion": "https://aws.amazon.com/about-aws/whats-new/2025/05/aws-service-changes/"
-  },
-  {
     "id": "iot-greengrass",
     "nombre": "AWS IoT Greengrass",
     "categoria": "iot",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Software para ejecutar lógica, contenedores y modelos de ML en dispositivos del borde, con comunicación local y sincronización con AWS incluso sin conexión.",
     "frase": "Ejecuta funciones y modelos de ML en dispositivos del borde, incluso sin conexión",
@@ -1337,34 +1396,18 @@
     "nombre": "AWS IoT SiteWise",
     "categoria": "iot",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Recoge, organiza y analiza datos de equipos industriales a escala, con modelos de activos, métricas calculadas y pasarelas en planta.",
     "frase": "Recoge y modela datos de equipos industriales para vigilar el rendimiento de plantas",
     "documentacion": "https://docs.aws.amazon.com/iot-sitewise/"
   },
   {
-    "id": "iot-things-graph",
-    "nombre": "AWS IoT Things Graph",
-    "categoria": "iot",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "estado": "publicado",
-    "resumen": "Permitía conectar visualmente dispositivos y servicios web en flujos sin programar. Retirado en 2022; AWS orienta a IoT TwinMaker.",
-    "frase": "Conecta visualmente dispositivos y servicios web en flujos sin programar",
-    "documentacion": "https://docs.aws.amazon.com/thingsgraph/"
-  },
-  {
     "id": "kendra",
     "nombre": "Amazon Kendra",
     "categoria": "machine-learning",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Búsqueda empresarial inteligente sobre los documentos internos, con conectores a decenas de fuentes, permisos por usuario y recuperación para RAG.",
     "frase": "Buscador empresarial inteligente que responde preguntas sobre tus documentos internos",
@@ -1378,7 +1421,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Base de datos sin servidor compatible con Apache Cassandra: mismo CQL y controladores, sin gestionar nodos, con capacidad bajo demanda o aprovisionada.",
@@ -1392,9 +1435,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Flujos de datos en tiempo real: ingiere millones de eventos por segundo, los guarda de 24 horas a 365 días y varios consumidores los leen en orden.",
@@ -1407,8 +1450,7 @@
     "categoria": "servicios-multimedia",
     "icono": true,
     "certificaciones": [
-      "SAA-C03",
-      "SAP-C02"
+      "SAA-C03"
     ],
     "estado": "publicado",
     "resumen": "Ingiere, guarda y reproduce vídeo y audio de cámaras y dispositivos en tiempo real, para verlo en directo o analizarlo con servicios de ML.",
@@ -1420,7 +1462,8 @@
     "nombre": "Kiro",
     "categoria": "herramientas-desarrolladores",
     "certificaciones": [
-      "AIF-C01"
+      "AIF-C01",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Entorno de desarrollo (IDE y CLI) con agentes de IA que parte de especificaciones: requisitos, diseño y tareas antes de escribir el código.",
@@ -1435,10 +1478,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Crea y controla claves criptográficas para cifrar datos en casi todos los servicios de AWS, con permisos por política y auditoría de cada uso.",
@@ -1452,7 +1495,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01"
     ],
     "estado": "publicado",
@@ -1472,10 +1515,10 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Ejecuta código en respuesta a eventos sin gestionar servidores y pagando solo por el tiempo de ejecución.",
@@ -1489,7 +1532,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1505,7 +1547,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1519,7 +1560,6 @@
     "categoria": "computacion",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1528,13 +1568,24 @@
     "documentacion": "https://docs.aws.amazon.com/lightsail/"
   },
   {
+    "id": "local-zones",
+    "nombre": "AWS Local Zones",
+    "categoria": "computacion",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Lleva cómputo y almacenamiento a grandes ciudades para latencias de milisegundos",
+    "documentacion": "https://docs.aws.amazon.com/local-zones/"
+  },
+  {
     "id": "macie",
     "nombre": "Amazon Macie",
     "categoria": "seguridad-identidad-cumplimiento",
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1544,26 +1595,12 @@
     "documentacion": "https://docs.aws.amazon.com/macie/"
   },
   {
-    "id": "managed-blockchain",
-    "nombre": "Amazon Managed Blockchain",
-    "categoria": "blockchain",
-    "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "estado": "publicado",
-    "resumen": "Acceso gestionado a blockchains públicas (Ethereum, Bitcoin, Polygon) y redes privadas Hyperledger Fabric sin operar nodos. Fin de soporte en 2027.",
-    "frase": "Redes de libro mayor distribuido Hyperledger Fabric o Ethereum sin montar nodos",
-    "documentacion": "https://docs.aws.amazon.com/managed-blockchain/"
-  },
-  {
     "id": "managed-grafana",
     "nombre": "Amazon Managed Grafana",
     "categoria": "administracion-gobernanza",
     "icono": true,
     "certificaciones": [
-      "SAA-C03",
-      "SAP-C02"
+      "SAA-C03"
     ],
     "estado": "publicado",
     "resumen": "Grafana como servicio gestionado: paneles que combinan métricas, logs y trazas de CloudWatch, Prometheus, OpenSearch y otras fuentes, con inicio de sesión único.",
@@ -1575,9 +1612,7 @@
     "nombre": "Amazon Managed Service for Apache Flink",
     "categoria": "analisis",
     "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
+    "certificaciones": [],
     "estado": "publicado",
     "resumen": "Ejecuta aplicaciones de Apache Flink gestionadas para procesar flujos en tiempo real con estado, en Java, Python o SQL, sin servidores.",
     "frase": "Procesa flujos en tiempo real con aplicaciones Java, SQL o Python con estado",
@@ -1589,8 +1624,7 @@
     "categoria": "administracion-gobernanza",
     "icono": true,
     "certificaciones": [
-      "SAA-C03",
-      "SAP-C02"
+      "SAA-C03"
     ],
     "estado": "publicado",
     "resumen": "Servicio gestionado compatible con Prometheus para ingerir, almacenar y consultar con PromQL métricas de contenedores a gran escala, sin administrar servidores.",
@@ -1604,7 +1638,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1626,6 +1659,18 @@
     "documentacion": "https://docs.aws.amazon.com/marketplace/"
   },
   {
+    "id": "memorydb",
+    "nombre": "Amazon MemoryDB",
+    "categoria": "base-de-datos",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Base de datos en memoria compatible con Valkey y Redis, duradera con registro multi-AZ",
+    "documentacion": "https://docs.aws.amazon.com/memorydb/"
+  },
+  {
     "id": "migration-evaluator",
     "nombre": "Migration Evaluator",
     "categoria": "migracion-transferencia",
@@ -1644,7 +1689,6 @@
     "categoria": "migracion-transferencia",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1659,7 +1703,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Brokers de mensajería gestionados de Apache ActiveMQ y RabbitMQ, para migrar aplicaciones que usan protocolos estándar sin reescribirlas.",
@@ -1674,7 +1718,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Apache Kafka gestionado: clústeres con brokers Standard o Express, o sin servidor, compatibles con las aplicaciones y herramientas de Kafka.",
@@ -1688,7 +1732,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1704,7 +1748,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Cortafuegos de red gestionado para las VPC, con reglas sin estado y con estado compatibles con Suricata, filtrado por dominios y prevención de intrusiones.",
@@ -1731,10 +1775,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Búsqueda de texto completo, análisis de registros y búsqueda vectorial gestionados con OpenSearch, en clústeres o sin servidor.",
@@ -1749,7 +1793,7 @@
     "clave": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1764,7 +1808,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1778,7 +1822,6 @@
     "categoria": "machine-learning",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
       "AIF-C01"
     ],
     "estado": "publicado",
@@ -1787,26 +1830,12 @@
     "documentacion": "https://docs.aws.amazon.com/personalize/"
   },
   {
-    "id": "pinpoint",
-    "nombre": "Amazon Pinpoint",
-    "categoria": "frontend-web-movil",
-    "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "estado": "publicado",
-    "resumen": "Campañas y recorridos de marketing por correo, SMS y push con segmentación de usuarios. Fin de soporte el 30/10/2026; sus canales siguen como End User Messaging.",
-    "frase": "Campañas de marketing multicanal con segmentos de usuarios, recorridos y métricas",
-    "documentacion": "https://docs.aws.amazon.com/pinpoint/"
-  },
-  {
     "id": "polly",
     "nombre": "Amazon Polly",
     "categoria": "machine-learning",
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1816,14 +1845,28 @@
     "documentacion": "https://docs.aws.amazon.com/polly/"
   },
   {
+    "id": "private-ca",
+    "nombre": "AWS Private CA",
+    "nombreCompleto": "AWS Private Certificate Authority (AWS Private CA)",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Emite certificados privados para identificar servidores, dispositivos y servicios internos",
+    "documentacion": "https://docs.aws.amazon.com/privateca/"
+  },
+  {
     "id": "privatelink",
     "nombre": "AWS PrivateLink",
     "categoria": "redes-entrega-contenido",
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
-      "CLF-C02"
+      "SAP-C03",
+      "CLF-C02",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Conectividad privada a servicios de AWS, de terceros o propios mediante endpoints de interfaz en tu VPC, sin internet, NAT ni peering.",
@@ -1831,27 +1874,15 @@
     "documentacion": "https://docs.aws.amazon.com/vpc/latest/privatelink/"
   },
   {
-    "id": "proton",
-    "nombre": "AWS Proton",
-    "categoria": "administracion-gobernanza",
-    "icono": true,
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "estado": "publicado",
-    "resumen": "Plantillas de entorno y de servicio con las que el equipo de plataforma estandariza cómo los desarrolladores despliegan infraestructura. AWS lo retiró el 07/10/2026.",
-    "frase": "El equipo de plataforma define entornos y servicios con su pipeline y los demás los usan",
-    "documentacion": "https://docs.aws.amazon.com/proton/"
-  },
-  {
     "id": "quick",
     "nombre": "Amazon Quick",
     "categoria": "analisis",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
-      "CLF-C02"
+      "CLF-C02",
+      "DVA-C03"
     ],
     "alias": [
       "Amazon QuickSight"
@@ -1869,7 +1900,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -1885,10 +1916,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Bases de datos relacionales gestionadas (MySQL, PostgreSQL, MariaDB, Oracle, SQL Server y Db2) con copias, parches y alta disponibilidad automáticos.",
@@ -1905,7 +1936,7 @@
     ],
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1921,7 +1952,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -1931,6 +1961,30 @@
     "documentacion": "https://docs.aws.amazon.com/rekognition/"
   },
   {
+    "id": "reserved-instances",
+    "nombre": "Reserved Instances",
+    "categoria": "administracion-financiera",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Descuento por comprometer uso de EC2 o RDS durante uno o tres años en una región",
+    "documentacion": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html"
+  },
+  {
+    "id": "resilience-hub",
+    "nombre": "AWS Resilience Hub",
+    "categoria": "administracion-gobernanza",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Evalúa si tu aplicación cumple sus objetivos de RTO y RPO y propone cómo mejorarla",
+    "documentacion": "https://docs.aws.amazon.com/resilience-hub/"
+  },
+  {
     "id": "route-53",
     "nombre": "Amazon Route 53",
     "categoria": "redes-entrega-contenido",
@@ -1938,9 +1992,9 @@
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "DNS gestionado y registro de dominios, con políticas de enrutamiento y comprobaciones de estado.",
@@ -1957,10 +2011,10 @@
     "kopi": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Almacenamiento de objetos duradero, escalable y barato, con clases de almacenamiento para cada patrón de acceso.",
@@ -1974,9 +2028,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
-      "CLF-C02"
+      "CLF-C02",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Clases de almacenamiento de archivo de S3 de muy bajo coste: Instant Retrieval (milisegundos), Flexible Retrieval (minutos u horas) y Deep Archive (hasta 12 o 48 horas).",
@@ -1990,7 +2045,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -2003,13 +2058,26 @@
     "documentacion": "https://docs.aws.amazon.com/sagemaker/"
   },
   {
+    "id": "sam",
+    "nombre": "AWS SAM",
+    "nombreCompleto": "AWS Serverless Application Model (AWS SAM)",
+    "categoria": "herramientas-desarrolladores",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Plantillas abreviadas para definir, probar en local y desplegar aplicaciones sin servidor",
+    "documentacion": "https://docs.aws.amazon.com/serverless-application-model/"
+  },
+  {
     "id": "savings-plans",
     "nombre": "Savings Plans",
     "categoria": "administracion-financiera",
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Modelo de precios con descuento a cambio de comprometer un gasto por hora durante 1 o 3 años, en cómputo, bases de datos o SageMaker AI.",
@@ -2022,7 +2090,7 @@
     "nombreCompleto": "AWS Schema Conversion Tool (AWS SCT)",
     "categoria": "migracion-transferencia",
     "certificaciones": [
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -2037,10 +2105,10 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Guarda, cifra y rota automáticamente contraseñas, claves de API y otros secretos, para no tenerlos nunca en el código.",
@@ -2054,13 +2122,25 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
     "resumen": "Vista unificada de la seguridad en AWS: agrega los hallazgos de GuardDuty, Inspector, Macie y otros, y evalúa las cuentas frente a estándares como CIS, PCI DSS o las buenas prácticas de AWS.",
     "frase": "Reúne hallazgos de seguridad de varios servicios y puntúa tu cumplimiento de normas",
     "documentacion": "https://docs.aws.amazon.com/securityhub/"
+  },
+  {
+    "id": "security-lake",
+    "nombre": "Amazon Security Lake",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Centraliza en S3 los registros de seguridad de cuentas y regiones en formato OCSF",
+    "documentacion": "https://docs.aws.amazon.com/security-lake/"
   },
   {
     "id": "serverless-application-repository",
@@ -2082,7 +2162,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -2095,7 +2174,7 @@
     "nombre": "Service Quotas",
     "categoria": "administracion-gobernanza",
     "certificaciones": [
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -2111,7 +2190,6 @@
     "icono": true,
     "kopi": true,
     "certificaciones": [
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -2126,7 +2204,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -2141,7 +2219,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "alias": [
@@ -2158,8 +2236,7 @@
     "categoria": "migracion-transferencia",
     "icono": true,
     "certificaciones": [
-      "SAA-C03",
-      "SAP-C02"
+      "SAA-C03"
     ],
     "estado": "publicado",
     "resumen": "Dispositivos físicos resistentes (Snowball Edge) para mover muchos terabytes sin red o procesar datos en el borde. Ya no admite clientes nuevos.",
@@ -2174,9 +2251,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Mensajería pub/sub gestionada: publicas un mensaje en un tema y SNS lo entrega a todos sus suscriptores (colas, funciones, HTTP, correo, SMS o móviles).",
@@ -2191,9 +2268,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Colas de mensajes totalmente gestionadas para desacoplar componentes: un productor deja mensajes y los consumidores los procesan a su ritmo.",
@@ -2207,9 +2284,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Orquestación visual de flujos de trabajo sin servidores: encadena servicios de AWS con pasos, ramas, esperas, reintentos y ejecución en paralelo.",
@@ -2223,7 +2300,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -2249,8 +2326,8 @@
     "nombreCompleto": "AWS Security Token Service (AWS STS)",
     "categoria": "seguridad-identidad-cumplimiento",
     "certificaciones": [
-      "SAP-C02",
-      "DVA-C02"
+      "SAP-C03",
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Servicio que emite credenciales temporales de seguridad para asumir roles de IAM, federar identidades externas y acceder a otras cuentas sin claves de larga duración.",
@@ -2277,9 +2354,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Operación centralizada de servidores y aplicaciones: acceso sin SSH, parches, comandos remotos, inventario y parámetros de configuración, en AWS y en local.",
@@ -2293,7 +2370,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -2308,7 +2384,7 @@
     "categoria": "base-de-datos",
     "icono": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Bases de datos de series temporales: Timestream for InfluxDB (gestiona InfluxDB) y Timestream for LiveAnalytics (sin servidor, cerrado a clientes nuevos).",
@@ -2322,7 +2398,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -2338,7 +2413,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "estado": "publicado",
     "resumen": "Servidores SFTP, FTPS, FTP y AS2 gestionados que guardan los ficheros directamente en S3 o EFS, con usuarios propios o de tu proveedor de identidad.",
@@ -2351,6 +2426,7 @@
     "categoria": "machine-learning",
     "icono": true,
     "certificaciones": [
+      "SAP-C03",
       "AIF-C01"
     ],
     "estado": "publicado",
@@ -2365,7 +2441,7 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -2380,7 +2456,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -2396,7 +2471,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -2404,6 +2478,30 @@
     "resumen": "Revisa tu cuenta frente a las buenas prácticas de AWS y recomienda mejoras de coste, rendimiento, seguridad, tolerancia a fallos, cuotas y excelencia operativa.",
     "frase": "Revisa tu cuenta y recomienda ahorros, mejoras de seguridad y límites a punto de agotarse",
     "documentacion": "https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html"
+  },
+  {
+    "id": "verified-access",
+    "nombre": "AWS Verified Access",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Da acceso a apps internas sin VPN, comprobando identidad y dispositivo en cada petición",
+    "documentacion": "https://docs.aws.amazon.com/verified-access/"
+  },
+  {
+    "id": "verified-permissions",
+    "nombre": "Amazon Verified Permissions",
+    "categoria": "seguridad-identidad-cumplimiento",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Autoriza acciones dentro de tus aplicaciones con políticas Cedar fuera del código",
+    "documentacion": "https://docs.aws.amazon.com/verifiedpermissions/"
   },
   {
     "id": "vmware-cloud-on-aws",
@@ -2426,15 +2524,27 @@
     "clave": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "AIF-C01",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Tu red privada y aislada dentro de AWS: rangos de IP, subredes, tablas de rutas, gateways y firewalls para tus recursos.",
     "frase": "Red aislada y lógica en la nube con subredes, tablas de rutas y grupos de seguridad",
     "documentacion": "https://docs.aws.amazon.com/vpc/"
+  },
+  {
+    "id": "vpc-lattice",
+    "nombre": "Amazon VPC Lattice",
+    "categoria": "redes-entrega-contenido",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "estado": "pendiente",
+    "resumen": "",
+    "frase": "Conecta y protege la comunicación entre servicios de varias cuentas sin gestionar redes",
+    "documentacion": "https://docs.aws.amazon.com/vpc-lattice/"
   },
   {
     "id": "waf",
@@ -2443,9 +2553,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Firewall de aplicaciones web: filtra peticiones HTTP hacia CloudFront, ALB, API Gateway y otros, frente a inyecciones, bots y abusos.",
@@ -2458,8 +2568,7 @@
     "categoria": "computacion",
     "icono": true,
     "certificaciones": [
-      "SAA-C03",
-      "SAP-C02"
+      "SAA-C03"
     ],
     "estado": "publicado",
     "resumen": "Zonas con cómputo y almacenamiento de AWS dentro de las redes 5G de las operadoras, para aplicaciones que necesitan latencia mínima hacia dispositivos móviles.",
@@ -2473,7 +2582,6 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
       "AIF-C01",
       "CLF-C02"
     ],
@@ -2488,7 +2596,6 @@
     "categoria": "computacion-usuarios-finales",
     "icono": true,
     "certificaciones": [
-      "SAP-C02",
       "CLF-C02"
     ],
     "estado": "publicado",
@@ -2515,9 +2622,9 @@
     "icono": true,
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02",
+      "SAP-C03",
       "CLF-C02",
-      "DVA-C02"
+      "DVA-C03"
     ],
     "estado": "publicado",
     "resumen": "Trazado distribuido: sigue cada petición a través de servicios, muestra un mapa con latencias y errores y ayuda a encontrar cuellos de botella.",

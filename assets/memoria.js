@@ -2,7 +2,7 @@
  * Juego de memoria (memoria.html): cada carta es un servicio y dos cartas son pareja si comparten
  * categoría principal. No hay una pareja única: cualquier servicio de la misma categoría vale.
  * (El antiguo modo "funciones", servicio con su frase, es ahora el juego Empareja.)
- * La configuración vive en la URL (?tablero=8x8&cert=DVA-C02&cat=a,b&dificil=1) y la última
+ * La configuración vive en la URL (?tablero=8x8&cert=DVA-C03&cat=a,b&dificil=1) y la última
  * usada en localStorage (ver aviso legal, privacidad). Los tiempos van a la clasificación común
  * de los juegos (assets/juegos.js).
  */

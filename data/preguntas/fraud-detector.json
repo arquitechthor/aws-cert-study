@@ -2,11 +2,9 @@
   {
     "id": "fraud-detector-001",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
-    "enunciado": "Una tienda online quiere puntuar el riesgo de fraude de cada pago en tiempo real, usando sus datos históricos y sin científicos de datos. ¿Qué servicio de la guía de SAP-C02 encaja?",
+    "certificaciones": [],
+    "dominio": "",
+    "enunciado": "Una tienda online quiere puntuar el riesgo de fraude de cada pago en tiempo real, usando sus datos históricos y sin científicos de datos. ¿Qué servicio de AWS encaja?",
     "opciones": [
       "Amazon Macie.",
       "Amazon GuardDuty.",
@@ -24,10 +22,8 @@
   {
     "id": "fraud-detector-002",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "En 2026, una empresa nueva en AWS quiere detectar fraude en pagos con aprendizaje automático. ¿Qué le sugiere AWS?",
     "opciones": [
       "Amazon Fraud Detector.",
@@ -46,10 +42,8 @@
   {
     "id": "fraud-detector-003",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un sitio sufre la creación masiva de cuentas falsas por bots. ¿Qué servicio actual ayuda a frenarlo en el borde?",
     "opciones": [
       "AWS WAF, con su protección contra el fraude en la creación de cuentas.",
@@ -68,10 +62,8 @@
   {
     "id": "fraud-detector-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "En Fraud Detector, ¿qué decidía el resultado final (aprobar, revisar o bloquear) de un evento?",
     "opciones": [
       "Una alarma de CloudWatch.",
@@ -90,10 +82,8 @@
   {
     "id": "fraud-detector-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar nuevas soluciones",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "¿Qué servicio detecta amenazas en la propia cuenta de AWS (credenciales comprometidas, minería de criptomonedas), a diferencia del fraude en una aplicación?",
     "opciones": [
       "Amazon Fraud Detector.",

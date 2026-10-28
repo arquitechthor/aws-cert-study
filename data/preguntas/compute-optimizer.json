@@ -91,9 +91,9 @@
     "id": "compute-optimizer-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una empresa tiene cargas con un pico fuerte a final de cada trimestre. Las recomendaciones de AWS Compute Optimizer, basadas en dos semanas, proponen tamaños que se quedarían cortos en ese pico. ¿Qué solución es la adecuada?",
     "opciones": [
       "Activar las métricas de infraestructura mejoradas para ampliar el periodo de análisis hasta 93 días.",
@@ -113,9 +113,9 @@
     "id": "compute-optimizer-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "El equipo de FinOps quiere ver las recomendaciones de dimensionamiento de todas las cuentas de la organización desde un solo sitio. ¿Qué debe hacer?",
     "opciones": [
       "Crear un agregador de AWS Config en la cuenta de seguridad.",
@@ -135,9 +135,9 @@
     "id": "compute-optimizer-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Además de las instancias de EC2, ¿para cuál de estos recursos genera recomendaciones AWS Compute Optimizer?",
     "opciones": [
       "Distribuciones de Amazon CloudFront.",

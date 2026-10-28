@@ -69,9 +69,9 @@
     "id": "network-firewall-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una organización con decenas de VPC conectadas mediante Transit Gateway quiere inspeccionar todo el tráfico entre VPC y hacia internet en un único punto. ¿Qué arquitectura es la adecuada?",
     "opciones": [
       "Un cortafuegos de Network Firewall en una sola VPC, sin cambiar las rutas del resto.",
@@ -91,9 +91,9 @@
     "id": "network-firewall-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "El equipo de seguridad ya dispone de un amplio conjunto de reglas de detección de intrusiones en formato Suricata y quiere reutilizarlas en AWS con un servicio gestionado. ¿Qué opción encaja?",
     "opciones": [
       "Grupos de reglas sin estado de AWS Network Firewall, con prioridad numérica.",
@@ -113,9 +113,9 @@
     "id": "network-firewall-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "enunciado": "Una empresa despliega AWS Network Firewall en una sola AZ para una carga que usa tres. ¿Qué problema tiene el diseño?",
     "opciones": [
       "Que el cortafuegos no puede inspeccionar tráfico HTTPS si está en una sola AZ.",

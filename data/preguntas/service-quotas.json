@@ -69,9 +69,9 @@
     "id": "service-quotas-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una organización crea cuentas nuevas cada semana y todas necesitan los mismos cinco aumentos de cuota. ¿Qué opción evita pedirlos a mano en cada cuenta?",
     "opciones": [
       "Una SCP asociada a la OU que aumente las cuotas de las cuentas nuevas.",
@@ -91,9 +91,9 @@
     "id": "service-quotas-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "El equipo de operaciones quiere recibir un aviso cuando el uso de vCPU bajo demanda de EC2 supere el 80 % de la cuota, para pedir el aumento con tiempo. ¿Qué solución es la adecuada?",
     "opciones": [
       "Revisar cada mes el historial de solicitudes de aumento en Service Quotas.",
@@ -113,9 +113,9 @@
     "id": "service-quotas-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una arquitectura de recuperación ante desastres conmuta a una segunda región, pero en la prueba el escalado falla allí al lanzar instancias. La cuenta nunca había usado esa región. ¿Cuál es la causa más probable?",
     "opciones": [
       "La cuota de vCPU de EC2 de la región de respaldo sigue en su valor por defecto.",

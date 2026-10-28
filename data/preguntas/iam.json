@@ -26,11 +26,11 @@
     "tipo": "unica",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
     "dominios": {
-      "SAP-C02": "Diseñar soluciones para la complejidad organizativa"
+      "SAP-C03": "Seguridad, cumplimiento y gobernanza"
     },
     "enunciado": "Un usuario tiene una política que permite s3:* sobre todos los recursos y pertenece a un grupo con una política que deniega s3:DeleteObject en un bucket concreto. ¿Qué ocurre si intenta borrar un objeto de ese bucket?",
     "opciones": [
@@ -51,9 +51,9 @@
     "id": "iam-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa con decenas de cuentas en AWS Organizations quiere impedir que nadie, en ninguna cuenta miembro, pueda desactivar CloudTrail, incluidos los administradores de esas cuentas. ¿Qué debe usar?",
     "opciones": [
       "Una política IAM en cada cuenta que deniegue cloudtrail:StopLogging.",
@@ -97,9 +97,9 @@
     "id": "iam-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Un equipo de plataforma quiere que los desarrolladores puedan crear roles IAM para sus funciones Lambda, pero sin que ninguno de esos roles supere un conjunto máximo de permisos. ¿Qué mecanismo lo permite?",
     "opciones": [
       "Exigir, mediante condición en la política del desarrollador, que todo rol creado lleve un límite de permisos concreto.",
@@ -207,7 +207,7 @@
     "id": "iam-010",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Seguridad",
     "enunciado": "Una función Lambda debe escribir en una tabla de DynamoDB. ¿Cuál es la forma correcta de darle permiso?",
@@ -229,7 +229,7 @@
     "id": "iam-011",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Una llamada a la API desde una aplicación devuelve AccessDenied. La política de identidad del rol permite la acción. ¿Qué otra causa debe revisar el desarrollador?",
@@ -250,11 +250,11 @@
   {
     "id": "iam-012",
     "tipo": "unica",
-    "dificil": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
     "enunciado": "Una empresa da acceso a una cuenta de análisis a 40 equipos que inician sesión con federación SAML desde su proveedor de identidad corporativo. Cada semana aparecen proyectos nuevos. Cada equipo solo debe poder leer y modificar los recursos de sus proyectos, y el equipo de seguridad quiere el menor esfuerzo operativo posible al crear proyectos, sin acercarse a la cuota de roles de la cuenta. ¿Qué solución cumple todos los requisitos?",
     "opciones": [
       "Crear un rol por proyecto con una política que liste los ARN de sus recursos y asignar cada grupo del proveedor de identidad a su rol.",
@@ -274,11 +274,11 @@
   {
     "id": "iam-013",
     "tipo": "multiple",
-    "dificil": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
     "enunciado": "Un equipo de plataforma permite a los desarrolladores crear roles para sus funciones Lambda siempre que lleven el límite de permisos aprobado (condición iam:PermissionsBoundary en iam:CreateRole). Una auditoría demuestra que un desarrollador aún puede acabar con más permisos de los que permite ese límite. Los desarrolladores deben seguir creando roles por su cuenta. ¿Qué DOS controles cierran la escalada? (Elige 2)",
     "opciones": [
       "Denegar la modificación y el borrado de la política usada como límite, y la acción iam:DeleteRolePermissionsBoundary.",
@@ -300,11 +300,11 @@
   {
     "id": "iam-014",
     "tipo": "unica",
-    "dificil": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
     "enunciado": "Un proceso de la cuenta A copia cada noche objetos de un bucket S3 de un socio (cuenta B, en otra organización) a un bucket de la cuenta A. Hoy asume un rol en la cuenta B y falla al escribir en el bucket de A, porque la organización del socio tiene una SCP que deniega escribir en recursos de fuera de su organización (aws:ResourceOrgID). La copia debe hacerse en el servidor, sin descargar los objetos a la máquina del proceso. ¿Qué cambio lo resuelve?",
     "opciones": [
       "Añadir en el bucket de A una política que permita s3:PutObject al rol de la cuenta B y seguir asumiéndolo.",
@@ -324,11 +324,11 @@
   {
     "id": "iam-015",
     "tipo": "unica",
-    "dificil": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Acelerar la migración y modernización de cargas de trabajo",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
     "enunciado": "Una empresa migrará a AWS en 18 meses. Mientras tanto, 200 aplicaciones de su centro de datos llaman a S3 y SQS con claves de acceso de usuarios de IAM guardadas en ficheros de configuración. Seguridad exige eliminar ya las credenciales de larga duración y aprovechar la autoridad de certificación interna, que emite certificados a todos los servidores. ¿Qué solución cumple los requisitos con el menor cambio en las aplicaciones?",
     "opciones": [
       "Guardar las claves en Secrets Manager con rotación automática cada 30 días y que las aplicaciones las lean al arrancar.",
@@ -347,11 +347,11 @@
   {
     "id": "iam-016",
     "tipo": "multiple",
-    "dificil": true,
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
     "enunciado": "Una organización con 300 cuentas miembro guarda la contraseña y un dispositivo MFA del usuario raíz de cada cuenta en una caja fuerte, y quiere dejar de gestionarlos. A veces, un error deja un bucket S3 con una política que deniega el acceso a todo el mundo, y solo el usuario raíz de la cuenta puede borrarla. ¿Qué DOS acciones resuelven las dos necesidades? (Elige 2)",
     "opciones": [
       "Aplicar una SCP que deniegue cualquier acción al usuario raíz de las cuentas miembro.",

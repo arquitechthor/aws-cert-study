@@ -3,9 +3,9 @@
     "id": "elastic-disaster-recovery-001",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Una empresa quiere usar AWS como sitio de recuperación para 150 servidores locales con un RPO de segundos y un RTO inferior a 30 minutos, sin pagar por servidores encendidos en espera. ¿Qué solución elige?",
     "opciones": [
       "AWS Backup con copias diarias a otra región.",
@@ -25,9 +25,9 @@
     "id": "elastic-disaster-recovery-002",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Un ataque cifró los servidores de origen y DRS ya replicó los datos cifrados. ¿Cómo se recupera la empresa?",
     "opciones": [
       "Lanzando instancias de recuperación desde un punto anterior al ataque.",
@@ -69,9 +69,9 @@
     "id": "elastic-disaster-recovery-004",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Un equipo debe demostrar cada trimestre que puede recuperar sus servidores en AWS sin interrumpir la replicación ni la producción. ¿Qué hace con DRS?",
     "opciones": [
       "Desinstalar el agente durante la prueba.",
@@ -91,9 +91,9 @@
     "id": "elastic-disaster-recovery-005",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Resiliencia, migración y continuidad del negocio",
     "enunciado": "Tras una caída del centro de datos, la carga lleva dos semanas funcionando en AWS con DRS. El centro de datos ya está reparado. ¿Qué proceso devuelve la carga a él?",
     "opciones": [
       "La conmutación de vuelta (failback) de Elastic Disaster Recovery.",

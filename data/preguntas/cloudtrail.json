@@ -115,7 +115,7 @@
     "id": "cloudtrail-006",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Un despliegue falla porque alguien cambió la política de un bucket, pero nadie recuerda quién. ¿Cómo lo averigua el desarrollador?",
@@ -137,7 +137,7 @@
     "id": "cloudtrail-007",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una función Lambda debe ejecutarse cada vez que alguien crea un usuario de IAM. ¿Cuál es la forma más sencilla de lograrlo?",
@@ -159,9 +159,9 @@
     "id": "cloudtrail-008",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización con 200 cuentas quiere registrar la actividad de todas, incluidas las futuras, en un único bucket de la cuenta de registro, sin que las cuentas miembro puedan desactivarlo. ¿Qué solución es la adecuada?",
     "opciones": [
       "Un trail de organización creado desde la cuenta de administración o una administradora delegada.",
@@ -182,9 +182,9 @@
     "id": "cloudtrail-009",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una empresa guarda años de registros de CloudTrail en S3 y quiere consultarlos con SQL para investigaciones puntuales al menor coste. ¿Qué opción es la adecuada?",
     "opciones": [
       "Amazon Athena sobre los ficheros de CloudTrail en S3.",

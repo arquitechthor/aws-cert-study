@@ -113,9 +113,9 @@
     "id": "shield-006",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una organización se suscribe a AWS Shield Advanced y quiere que todos los balanceadores y distribuciones de CloudFront de sus cuentas, presentes y futuros, queden protegidos. ¿Cuál es la forma con menos esfuerzo operativo?",
     "opciones": [
       "Añadir cada recurso a mano en la consola de Shield de cada cuenta.",
@@ -135,9 +135,9 @@
     "id": "shield-007",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Diseñar nuevas soluciones",
+    "dominio": "Seguridad, cumplimiento y gobernanza",
     "enunciado": "Una aplicación protegida con AWS Shield Advanced tiene una distribución de CloudFront delante de un balanceador de aplicación. Para evitar pagar dos veces la transferencia de datos de Shield, ¿qué recurso conviene registrar como protegido?",
     "opciones": [
       "La distribución de CloudFront, que es el punto de entrada.",

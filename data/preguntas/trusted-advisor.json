@@ -112,10 +112,8 @@
   {
     "id": "trusted-advisor-006",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "El equipo de FinOps de una organización con 150 cuentas quiere un informe único con los resultados de AWS Trusted Advisor de todas ellas. ¿Qué debe usar?",
     "opciones": [
       "Iniciar sesión cuenta por cuenta y exportar cada informe.",
@@ -134,10 +132,8 @@
   {
     "id": "trusted-advisor-007",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una empresa con Enterprise Support quiere que, cuando una comprobación de seguridad de AWS Trusted Advisor pase a estado de alerta, se abra automáticamente una incidencia en su herramienta interna. ¿Cómo se consigue?",
     "opciones": [
       "Con una regla de Amazon EventBridge sobre los cambios de estado de las comprobaciones, que invoque una función Lambda.",

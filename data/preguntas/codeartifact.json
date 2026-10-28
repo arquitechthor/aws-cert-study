@@ -3,7 +3,7 @@
     "id": "codeartifact-001",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Una empresa quiere publicar bibliotecas internas de Python y Node.js para sus equipos, con acceso controlado por IAM y sin mantener servidores. ¿Qué servicio usa?",
@@ -25,7 +25,7 @@
     "id": "codeartifact-002",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Desarrollo con servicios de AWS",
     "enunciado": "Un equipo quiere que sus compilaciones descarguen paquetes de npmjs a través de su repositorio privado y que se guarde copia de cada paquete usado. ¿Qué configura?",
@@ -47,7 +47,7 @@
     "id": "codeartifact-003",
     "tipo": "unica",
     "certificaciones": [
-      "DVA-C02"
+      "DVA-C03"
     ],
     "dominio": "Solución de problemas y optimización",
     "enunciado": "Por la mañana, npm install falla con un error 401 contra CodeArtifact, aunque ayer funcionaba. ¿Cuál es la causa más probable?",
@@ -68,10 +68,8 @@
   {
     "id": "codeartifact-004",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Diseñar soluciones para la complejidad organizativa",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Una organización quiere un único almacén de paquetes compartido por cuentas de varios equipos, sin duplicar el almacenamiento. ¿Qué diseño usa?",
     "opciones": [
       "Un bucket de S3 por cuenta.",
@@ -90,10 +88,8 @@
   {
     "id": "codeartifact-005",
     "tipo": "unica",
-    "certificaciones": [
-      "SAP-C02"
-    ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "certificaciones": [],
+    "dominio": "",
     "enunciado": "Un atacante podría publicar en npmjs un paquete con el mismo nombre que una biblioteca interna para que se descargue por error. ¿Qué característica de CodeArtifact lo evita?",
     "opciones": [
       "Las etiquetas inmutables.",

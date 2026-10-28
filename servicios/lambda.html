@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS Lambda — Apuntes AWS</title>
-<meta name="description" content="Ejecuta código en respuesta a eventos sin gestionar servidores y pagando solo por el tiempo de ejecución. Apuntes y preguntas de práctica para SAA-C03, SAP-C02, AIF-C01, CLF-C02, DVA-C02.">
+<meta name="description" content="Ejecuta código en respuesta a eventos sin gestionar servidores y pagando solo por el tiempo de ejecución. Apuntes y preguntas de práctica para SAA-C03, SAP-C03, AIF-C01, CLF-C02, DVA-C03.">
 <link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/lambda.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Apuntes AWS">
@@ -62,10 +62,10 @@
         <strong>Certificaciones:</strong>
         <span class="chips">
           <a class="chip chip-cert" href="../index.html?cert=SAA-C03#catalogo" title="AWS Certified Solutions Architect – Associate">SAA-C03</a>
-          <a class="chip chip-cert" href="../index.html?cert=SAP-C02#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
           <a class="chip chip-cert" href="../index.html?cert=AIF-C01#catalogo" title="AWS Certified AI Practitioner">AIF-C01</a>
           <a class="chip chip-cert" href="../index.html?cert=CLF-C02#catalogo" title="AWS Certified Cloud Practitioner">CLF-C02</a>
-          <a class="chip chip-cert" href="../index.html?cert=DVA-C02#catalogo" title="AWS Certified Developer – Associate">DVA-C02</a>
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C03#catalogo" title="AWS Certified Developer – Associate">DVA-C03</a>
         </span>
       </div>
       <div class="meta-row">
@@ -145,7 +145,7 @@
       </div>
 
       <h2 id="a-fondo">A fondo: temas avanzados</h2>
-      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios de SAP-C02: cómo escala
+      <p>Esta es la parte ampliada de la guía, con el nivel de detalle que piden los escenarios de SAP-C03: cómo escala
         Lambda de verdad, cómo protegerse de picos y de los sistemas que hay detrás, colas y flujos a gran volumen,
         redes, procesos largos, despliegues seguros, varias cuentas y cuándo Lambda deja de ser la opción más barata.</p>
 
@@ -157,7 +157,7 @@
         <li><strong>Concurrencia reservada:</strong> aparta una parte de la cuota para una función crítica y, a la vez, es
           su techo. Con valor 0 la función queda parada, un interruptor de emergencia útil.</li>
         <li><strong>Concurrencia aprovisionada:</strong> entornos ya iniciados, sin arranque en frío, para picos
-          previsibles; se programa con Application Auto Scaling (por ejemplo, más en horario laboral). Se paga aunque no
+          previsibles; se programa con <a href="../servicio.html?id=application-auto-scaling">Application Auto Scaling</a> (por ejemplo, más en horario laboral). Se paga aunque no
           se use.</li>
         <li><strong>Proteger lo que hay detrás:</strong> una base de datos relacional no aguanta mil conexiones nuevas.
           Se combina un techo de concurrencia (reservada en la función o máxima en la fuente de eventos) con

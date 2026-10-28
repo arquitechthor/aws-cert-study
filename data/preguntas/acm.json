@@ -47,9 +47,9 @@
     "id": "acm-003",
     "tipo": "unica",
     "certificaciones": [
-      "SAP-C02"
+      "SAP-C03"
     ],
-    "dominio": "Mejora continua de soluciones existentes",
+    "dominio": "Excelencia operativa y automatización",
     "enunciado": "Una empresa tiene decenas de certificados comprados a una CA externa e importados en ACM, y quiere evitar que caduquen sin aviso. ¿Qué solución es la adecuada?",
     "opciones": [
       "Confiar en la renovación automática de ACM.",
@@ -70,11 +70,11 @@
     "tipo": "multiple",
     "certificaciones": [
       "SAA-C03",
-      "SAP-C02"
+      "SAP-C03"
     ],
     "dominio": "Diseñar arquitecturas seguras",
     "dominios": {
-      "SAP-C02": "Diseñar nuevas soluciones"
+      "SAP-C03": "Seguridad, cumplimiento y gobernanza"
     },
     "enunciado": "Una aplicación web corre en instancias EC2 detrás de un Application Load Balancer y debe servirse por HTTPS con el menor esfuerzo de gestión de certificados. ¿Qué dos pasos son los adecuados?",
     "opciones": [
