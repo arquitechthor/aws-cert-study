@@ -90,8 +90,16 @@
   {
     "id": "textract-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "AIF-C01",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "AIF-C01": "Directrices para una IA responsable",
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Un banco automatiza la lectura de solicitudes con Amazon Textract, pero exige que una persona revise los campos que el servicio extrae con poca seguridad. ¿Qué diseño cumple el requisito con menos desarrollo?",
     "opciones": [
       "Integrar Amazon Augmented AI para enviar a revisión humana los resultados con poca confianza.",

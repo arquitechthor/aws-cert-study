@@ -68,8 +68,10 @@
   {
     "id": "snow-family-004",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
     "enunciado": "En 2026, una empresa que nunca ha usado Snow Family necesita llevar a AWS 300 TB que ya tiene en sus propios discos, porque su red es insuficiente. ¿Qué opción de AWS considera?",
     "opciones": [
       "Pedir un Snowmobile.",

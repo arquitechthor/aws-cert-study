@@ -90,8 +90,14 @@
   {
     "id": "service-catalog-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Una organización con 80 cuentas quiere que el equipo de plataforma mantenga los productos en una cuenta central y que estén disponibles en todas las cuentas de ciertas OU, incluidas las que se creen en el futuro. ¿Qué diseño es el adecuado?",
     "opciones": [
       "Copiar las plantillas a un bucket de S3 y avisar a cada cuenta para que cree sus productos.",
@@ -110,8 +116,14 @@
   {
     "id": "service-catalog-006",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Al compartir una cartera con otras cuentas, el equipo quiere que los recursos se aprovisionen en la cuenta de quien lanza el producto, usando un rol que existe en cada cuenta con el mismo nombre. ¿Cómo debe definir la restricción de lanzamiento?",
     "opciones": [
       "Indicando el ARN del rol de la cuenta central.",
@@ -130,8 +142,14 @@
   {
     "id": "service-catalog-007",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Una empresa estandariza su infraestructura con Terraform y quiere ofrecer esos módulos a los equipos en autoservicio, con control de acceso y versiones, dentro de AWS. ¿Qué opción encaja?",
     "opciones": [
       "Productos de Terraform en AWS Service Catalog, con una restricción de lanzamiento.",

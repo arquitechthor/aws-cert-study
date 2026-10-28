@@ -2,8 +2,10 @@
   {
     "id": "application-discovery-service-001",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Antes de migrar, una empresa necesita saber qué servidores físicos y virtuales se comunican entre sí y qué procesos ejecutan, para agruparlos en olas. ¿Qué opción de Application Discovery Service usa?",
     "opciones": [
       "El recolector sin agente en vCenter.",
@@ -22,8 +24,10 @@
   {
     "id": "application-discovery-service-002",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Un equipo tiene 2000 máquinas virtuales VMware y no se le permite instalar software en ellas. Necesita inventario y uso de CPU y memoria para dimensionar EC2. ¿Qué usa?",
     "opciones": [
       "El recolector sin agente desplegado en vCenter.",
@@ -42,8 +46,10 @@
   {
     "id": "application-discovery-service-003",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Un arquitecto quiere consultar con SQL los datos recogidos por Application Discovery Service para encontrar servidores infrautilizados. ¿Qué hace?",
     "opciones": [
       "Conectarse a la base de datos interna de Migration Hub.",
@@ -84,8 +90,10 @@
   {
     "id": "application-discovery-service-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Una empresa que nunca ha usado AWS quiere empezar hoy el descubrimiento y la evaluación de su centro de datos con ayuda de AWS. ¿Qué debe tener en cuenta?",
     "opciones": [
       "Solo puede usar el Discovery Connector para VMware.",

@@ -90,8 +90,16 @@
   {
     "id": "amplify-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02",
+      "DVA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube",
+      "DVA-C03": "Pruebas e implementación"
+    },
     "enunciado": "Una empresa con una aplicación Next.js con renderizado en servidor quiere alojarla con CI/CD y sin gestionar servidores ni contenedores. ¿Qué opción encaja?",
     "opciones": [
       "S3 con alojamiento estático.",

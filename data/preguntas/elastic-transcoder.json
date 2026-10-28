@@ -68,8 +68,10 @@
   {
     "id": "elastic-transcoder-004",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
     "enunciado": "Una empresa aún tenía flujos en Elastic Transcoder a finales de 2025. ¿Qué debía hacer y por qué?",
     "opciones": [
       "Nada: el servicio sigue funcionando para clientes existentes.",

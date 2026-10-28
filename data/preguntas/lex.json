@@ -90,8 +90,16 @@
   {
     "id": "lex-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "AIF-C01",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "dominios": {
+      "AIF-C01": "Fundamentos de IA y ML",
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Un bot de Amazon Lex debe pasar de pruebas a producción sin que los cambios en curso afecten a los usuarios. ¿Qué mecanismo ofrece el servicio?",
     "opciones": [
       "Un bot distinto por cada desarrollador, sin versiones.",

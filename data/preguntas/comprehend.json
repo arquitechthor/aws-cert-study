@@ -90,8 +90,16 @@
   {
     "id": "comprehend-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "AIF-C01",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "AIF-C01": "Fundamentos de IA y ML",
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Una aseguradora recibe miles de correos al día y quiere encaminarlos automáticamente a siniestros, altas o reclamaciones, que son categorías propias. El equipo no tiene especialistas en aprendizaje automático. ¿Qué solución encaja?",
     "opciones": [
       "Un clasificador personalizado de Amazon Comprehend entrenado con correos ya etiquetados.",

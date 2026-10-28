@@ -2,8 +2,10 @@
   {
     "id": "iot-core-001",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Una empresa conecta 200 000 sensores que envían lecturas por MQTT cada minuto y quiere guardarlas en DynamoDB sin gestionar servidores. ¿Qué solución usa?",
     "opciones": [
       "Una flota de EC2 con un broker MQTT.",
@@ -22,8 +24,10 @@
   {
     "id": "iot-core-002",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Una aplicación móvil debe cambiar la temperatura deseada de un termostato que a veces está desconectado, y el termostato debe aplicarla al reconectarse. ¿Qué usa?",
     "opciones": [
       "La sombra del dispositivo de IoT Core.",
@@ -42,8 +46,10 @@
   {
     "id": "iot-core-003",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
     "enunciado": "En una flota, cualquier dispositivo puede publicar en los temas de los demás. ¿Cómo se aplica el mínimo privilegio?",
     "opciones": [
       "Con grupos de seguridad.",
@@ -84,8 +90,10 @@
   {
     "id": "iot-core-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Una regla de IoT debe guardar en S3 todas las lecturas agrupadas en ficheros grandes para analizarlas con Athena. ¿Qué acción es la más adecuada?",
     "opciones": [
       "Escribir cada mensaje como un objeto de S3.",

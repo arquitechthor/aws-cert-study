@@ -90,8 +90,14 @@
   {
     "id": "health-dashboard-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "El equipo de operaciones de una organización con 120 cuentas quiere recibir en un único punto los eventos de AWS Health de todas ellas y enviarlos a su herramienta de incidencias. ¿Qué debe configurar?",
     "opciones": [
       "Una regla de EventBridge distinta en cada cuenta que escriba en un bucket compartido.",
@@ -110,8 +116,14 @@
   {
     "id": "health-dashboard-006",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "dominios": {
+      "CLF-C02": "Facturación, precios y soporte"
+    },
     "enunciado": "Un equipo intenta consultar la API de AWS Health desde una cuenta con el plan de soporte básico y recibe el error SubscriptionRequiredException. ¿Qué alternativa tiene sin cambiar de plan?",
     "opciones": [
       "Recibir los eventos de AWS Health mediante Amazon EventBridge.",
@@ -130,8 +142,14 @@
   {
     "id": "health-dashboard-007",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "¿Qué tipo de información NO proporciona AWS Health Dashboard?",
     "opciones": [
       "Los mantenimientos programados de las instancias de la cuenta.",

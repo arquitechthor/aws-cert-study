@@ -68,8 +68,10 @@
   {
     "id": "managed-service-for-prometheus-004",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
     "enunciado": "Una plataforma con 40 clústeres de Kubernetes en varias cuentas necesita almacenar las métricas de forma centralizada, con alertas basadas en PromQL y paneles compartidos. ¿Qué diseño usa servicios gestionados de principio a fin?",
     "opciones": [
       "Un Prometheus por clúster con volúmenes de EBS y un Grafana en EC2.",
@@ -88,8 +90,10 @@
   {
     "id": "managed-service-for-prometheus-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
     "enunciado": "La factura de Amazon Managed Service for Prometheus de una empresa ha crecido mucho. ¿Qué factor suele ser el principal y cómo se reduce?",
     "opciones": [
       "El número de espacios de trabajo; se reduce uniendo todos los clústeres en uno solo.",
@@ -108,8 +112,10 @@
   {
     "id": "managed-service-for-prometheus-006",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
     "enunciado": "Un panel ejecuta continuamente una consulta PromQL muy costosa sobre millones de series y tarda demasiado. ¿Qué función del servicio ayuda?",
     "opciones": [
       "Aumentar la retención del espacio de trabajo a tres años.",

@@ -90,8 +90,16 @@
   {
     "id": "polly-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "AIF-C01",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "AIF-C01": "Fundamentos de IA y ML",
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Una aplicación de formación lee textos con Amazon Polly, pero pronuncia mal el nombre de la marca y varias siglas internas. ¿Cuál es la solución adecuada?",
     "opciones": [
       "Entrenar un modelo propio de síntesis de voz en SageMaker AI.",

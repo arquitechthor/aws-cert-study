@@ -90,8 +90,16 @@
   {
     "id": "rekognition-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "AIF-C01",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "AIF-C01": "Fundamentos de IA y ML",
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Un fabricante quiere detectar en las fotos de la línea de montaje un tipo de defecto propio de sus piezas. Dispone de unos cientos de imágenes etiquetadas y no tiene especialistas en aprendizaje automático. ¿Qué opción encaja?",
     "opciones": [
       "La detección de etiquetas genérica de Amazon Rekognition.",

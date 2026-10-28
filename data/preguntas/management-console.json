@@ -112,8 +112,14 @@
   {
     "id": "management-console-006",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Un equipo crea a mano en la consola los recursos de cada entorno nuevo y los entornos acaban siendo distintos entre sí. ¿Qué cambio resuelve el problema de fondo?",
     "opciones": [
       "Dar a todo el equipo permisos de administrador en la consola.",
@@ -132,8 +138,14 @@
   {
     "id": "management-console-007",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Un ingeniero trabaja en la consola y necesita ejecutar unos comandos de la AWS CLI sin instalar nada en su equipo ni configurar claves. ¿Qué opción tiene?",
     "opciones": [
       "Crear una instancia de EC2 con un par de claves nuevo.",

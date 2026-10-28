@@ -46,8 +46,10 @@
   {
     "id": "device-farm-003",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
     "enunciado": "Un equipo ejecuta muchas horas de pruebas al mes en Device Farm y la factura por minuto crece. ¿Qué opción reduce el coste si el uso es alto y constante?",
     "opciones": [
       "Usar dispositivos privados para todo.",
@@ -88,8 +90,10 @@
   {
     "id": "device-farm-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas resilientes",
     "enunciado": "Una canalización de CI/CD debe ejecutar las pruebas de interfaz de una app en dispositivos reales tras cada compilación y detenerse si fallan. ¿Qué combinación usa?",
     "opciones": [
       "CodePipeline con una acción de prueba de Device Farm.",

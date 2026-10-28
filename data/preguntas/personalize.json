@@ -24,8 +24,10 @@
   {
     "id": "personalize-002",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
     "enunciado": "Un servicio de vídeo quiere no recomendar títulos que el usuario ya ha visto ni contenidos premium a quien no paga. ¿Qué usa en Personalize?",
     "opciones": [
       "Otra receta.",
@@ -44,8 +46,10 @@
   {
     "id": "personalize-003",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
     "enunciado": "Cada noche se envía un correo con diez recomendaciones a dos millones de usuarios. ¿Qué forma de obtenerlas es más eficiente en Personalize?",
     "opciones": [
       "Llamar a la campaña en tiempo real dos millones de veces.",
@@ -86,8 +90,10 @@
   {
     "id": "personalize-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
     "enunciado": "Las recomendaciones deben reaccionar a los clics que el usuario hace en la sesión actual, no solo al historial del último entrenamiento. ¿Qué se configura?",
     "opciones": [
       "Un entrenamiento cada minuto.",

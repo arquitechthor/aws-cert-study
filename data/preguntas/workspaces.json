@@ -2,8 +2,10 @@
   {
     "id": "workspaces-001",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Una empresa contrata 300 consultores externos que deben trabajar con escritorios Windows corporativos sin que los datos queden en sus portátiles. ¿Qué servicio usa?",
     "opciones": [
       "Amazon WorkSpaces.",
@@ -22,8 +24,10 @@
   {
     "id": "workspaces-002",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Facturación, precios y soporte",
     "enunciado": "La mayoría de los usuarios de WorkSpaces solo trabajan unas 20 horas al mes. ¿Qué cambio reduce el coste?",
     "opciones": [
       "Cambiar a paquetes más grandes.",
@@ -42,8 +46,10 @@
   {
     "id": "workspaces-003",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Seguridad y cumplimiento",
     "enunciado": "Los usuarios de WorkSpaces deben iniciar sesión con sus cuentas del Active Directory local, sin replicar el directorio en AWS. ¿Qué se usa?",
     "opciones": [
       "Cognito.",
@@ -62,8 +68,10 @@
   {
     "id": "workspaces-004",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "CLF-C02"
+    ],
+    "dominio": "Tecnología y servicios de la nube",
     "enunciado": "Un centro de formación necesita escritorios iguales para grupos que cambian cada semana; no hace falta conservar nada entre sesiones. ¿Qué opción encaja mejor?",
     "opciones": [
       "WorkSpaces Personal con AlwaysOn.",

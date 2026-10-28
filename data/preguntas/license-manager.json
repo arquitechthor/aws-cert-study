@@ -90,8 +90,14 @@
   {
     "id": "license-manager-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Durante una migración, una empresa necesita saber qué software licenciado hay instalado tanto en sus servidores locales como en sus instancias de EC2, y contarlo contra sus contratos. ¿Qué combinación lo resuelve?",
     "opciones": [
       "AWS Application Discovery Service y AWS Budgets.",
@@ -110,8 +116,14 @@
   {
     "id": "license-manager-006",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Una organización con muchas cuentas quiere definir una sola vez las reglas de sus licencias y ver el consumo agregado de todas las cuentas. ¿Cómo debe plantearlo?",
     "opciones": [
       "Crear las reglas por separado en cada cuenta y sumar los informes a mano.",
@@ -130,8 +142,14 @@
   {
     "id": "license-manager-007",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
+    "dominios": {
+      "CLF-C02": "Facturación, precios y soporte"
+    },
     "enunciado": "Una empresa quiere ofrecer Microsoft Visual Studio a sus desarrolladores en instancias de EC2 pagando por usuario y mes, sin comprar licencias por adelantado. ¿Qué función lo permite?",
     "opciones": [
       "Las suscripciones por usuario de AWS License Manager.",

@@ -68,8 +68,10 @@
   {
     "id": "managed-grafana-004",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
     "enunciado": "Una organización quiere un único espacio de trabajo de Amazon Managed Grafana que lea las métricas de CloudWatch de las cuentas de varias OU, sin crear roles a mano en cada cuenta. ¿Qué opción lo permite?",
     "opciones": [
       "Copiar las métricas de cada cuenta a un bucket de S3 central y leerlas desde allí.",
@@ -88,8 +90,10 @@
   {
     "id": "managed-grafana-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
     "enunciado": "Un equipo de plataforma necesita un panel que muestre a la vez métricas de Amazon CloudWatch, métricas de un Prometheus autogestionado y datos de una herramienta de observabilidad de terceros. ¿Qué servicio lo resuelve con menos desarrollo?",
     "opciones": [
       "Los paneles de CloudWatch con métricas personalizadas.",
@@ -108,8 +112,10 @@
   {
     "id": "managed-grafana-006",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas con costos optimizados",
     "enunciado": "¿Cómo se factura Amazon Managed Grafana?",
     "opciones": [
       "Por usuario activo al mes en cada espacio de trabajo, con tarifas distintas para editores y lectores.",

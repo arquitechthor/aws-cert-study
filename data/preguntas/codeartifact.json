@@ -68,8 +68,10 @@
   {
     "id": "codeartifact-004",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Pruebas e implementación",
     "enunciado": "Una organización quiere un único almacén de paquetes compartido por cuentas de varios equipos, sin duplicar el almacenamiento. ¿Qué diseño usa?",
     "opciones": [
       "Un bucket de S3 por cuenta.",
@@ -88,8 +90,10 @@
   {
     "id": "codeartifact-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Seguridad",
     "enunciado": "Un atacante podría publicar en npmjs un paquete con el mismo nombre que una biblioteca interna para que se descargue por error. ¿Qué característica de CodeArtifact lo evita?",
     "opciones": [
       "Las etiquetas inmutables.",

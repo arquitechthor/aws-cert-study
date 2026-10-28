@@ -134,8 +134,16 @@
   {
     "id": "cli-007",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02",
+      "DVA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas seguras",
+    "dominios": {
+      "CLF-C02": "Seguridad y cumplimiento",
+      "DVA-C03": "Seguridad"
+    },
     "enunciado": "Un ingeniero administra 30 cuentas de una organización desde la AWS CLI y no quiere guardar claves de larga duración en su equipo. ¿Qué configuración es la recomendada?",
     "opciones": [
       "Perfiles con nombre vinculados a AWS IAM Identity Center e inicio de sesión con aws sso login.",

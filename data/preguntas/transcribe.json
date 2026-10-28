@@ -90,8 +90,16 @@
   {
     "id": "transcribe-005",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "AIF-C01",
+      "CLF-C02"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "AIF-C01": "Fundamentos de IA y ML",
+      "CLF-C02": "Tecnología y servicios de la nube"
+    },
     "enunciado": "Las transcripciones de Amazon Transcribe confunden sistemáticamente los nombres de los productos y las siglas internas de una empresa. ¿Cuál es el primer cambio que conviene aplicar?",
     "opciones": [
       "Aumentar la calidad de compresión del audio.",

@@ -112,8 +112,16 @@
   {
     "id": "data-firehose-006",
     "tipo": "unica",
-    "certificaciones": [],
-    "dominio": "",
+    "certificaciones": [
+      "SAA-C03",
+      "CLF-C02",
+      "DVA-C03"
+    ],
+    "dominio": "Diseñar arquitecturas de alto rendimiento",
+    "dominios": {
+      "CLF-C02": "Tecnología y servicios de la nube",
+      "DVA-C03": "Desarrollo con servicios de AWS"
+    },
     "enunciado": "Una empresa quiere que los cambios de pedidos que llegan en streaming se reflejen en tablas Apache Iceberg en S3 (con inserciones, actualizaciones y borrados) consultables por varios motores, con la mínima operación. ¿Qué opción es la adecuada?",
     "opciones": [
       "Firehose con destino tablas Iceberg (o S3 Tables) usando el catálogo de Glue.",
