@@ -180,6 +180,10 @@
    "en": "Cassandra Query Language",
    "es": "lenguaje de consultas de Apache Cassandra"
   },
+  "CRL": {
+   "en": "Certificate Revocation List",
+   "es": "lista de certificados revocados que publica una autoridad de certificación"
+  },
   "CRM": {
    "en": "Customer Relationship Management",
    "es": "software de gestión de clientes"
@@ -191,6 +195,10 @@
   "CSPM": {
    "en": "Cloud Security Posture Management",
    "es": "gestión de la postura de seguridad en la nube"
+  },
+  "CSR": {
+   "en": "Certificate Signing Request",
+   "es": "solicitud de firma de un certificado"
   },
   "CSS": {
    "en": "Cascading Style Sheets",
@@ -720,6 +728,10 @@
    "en": "Open Cybersecurity Schema Framework",
    "es": "esquema abierto para datos de seguridad"
   },
+  "OCSP": {
+   "en": "Online Certificate Status Protocol",
+   "es": "protocolo para consultar al momento si un certificado está revocado"
+  },
   "OCU": {
    "en": "OpenSearch Compute Unit",
    "es": "unidad de capacidad de OpenSearch Serverless"
@@ -803,6 +815,10 @@
   "PKCS": {
    "en": "Public-Key Cryptography Standards",
    "es": "estándares de criptografía de clave pública"
+  },
+  "PKI": {
+   "en": "Public Key Infrastructure",
+   "es": "infraestructura de clave pública: autoridades, certificados y sus reglas"
   },
   "POSIX": {
    "en": "Portable Operating System Interface",
@@ -963,6 +979,10 @@
   "SOC": {
    "en": "System and Organization Controls",
    "es": "informes de auditoría sobre los controles de un proveedor"
+  },
+  "SOP": {
+   "en": "Standard Operating Procedure",
+   "es": "procedimiento operativo estándar, el paso a paso ante un incidente"
   },
   "SPA": {
    "en": "Single-Page Application",

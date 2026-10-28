@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon MemoryDB — Apuntes AWS</title>
+<meta name="description" content="Base de datos en memoria y duradera, compatible con Valkey y Redis OSS: lecturas en microsegundos y un registro de transacciones multi-AZ que permite usarla como base de datos principal. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/memorydb.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon MemoryDB — Apuntes AWS">
+<meta property="og:description" content="Base de datos en memoria y duradera, compatible con Valkey y Redis OSS: lecturas en microsegundos y un registro de transacciones multi-AZ que permite usarla como base de datos principal.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/memorydb.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/base-de-datos.svg" alt="" width="56" height="56"><span>Amazon MemoryDB</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Base de datos en memoria compatible con Valkey y Redis, duradera con registro multi-AZ</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=base-de-datos#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/base-de-datos.svg" alt="" width="18" height="18">Base de datos <span class="cat-en">(Database)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/memorydb/" target="_blank" rel="noopener">Documentación de Amazon MemoryDB ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon MemoryDB es una <strong>base de datos en memoria y duradera</strong>, compatible con Valkey y Redis <abbr class="sigla sigla-1" data-s="OSS" data-en="Open Source Software" data-es="la versión de código abierto" tabindex="0">OSS<span class="sigla-exp"> (Open Source Software: la versión de código abierto)</span></abbr>
+        (las mismas estructuras de datos, APIs y comandos). Guarda todos los datos en memoria, con lecturas en
+        <strong>microsegundos</strong> y escrituras en pocos milisegundos, y además escribe cada cambio en un
+        <strong>registro de transacciones distribuido en varias zonas de disponibilidad</strong>. Por eso puede ser la
+        <strong>base de datos principal</strong> de una aplicación, no solo una caché delante de otra base de datos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Clúster, particiones y nodos:</strong> los datos se reparten en particiones (<em>shards</em>); cada
+          una tiene un nodo principal que escribe y réplicas de lectura en otras zonas.</li>
+        <li><strong>Registro de transacciones multi-AZ:</strong> una escritura se confirma cuando queda guardada de forma
+          duradera en varias zonas. Si cae el principal, una réplica toma el relevo <strong>sin perder datos
+          confirmados</strong>.</li>
+        <li><strong>Consistencia:</strong> lecturas del nodo principal con consistencia fuerte; las réplicas tienen
+          consistencia eventual.</li>
+        <li><strong>Instantáneas:</strong> copias del clúster para restaurar o crear clústeres nuevos (también a partir
+          de una instantánea de <a href="elasticache.html">ElastiCache</a>).</li>
+        <li><strong>Niveles de datos (<em>data tiering</em>):</strong> con ciertos tipos de nodo, los datos menos usados
+          bajan a <abbr class="sigla sigla-1" data-s="SSD" data-en="Solid-State Drive" data-es="disco de estado sólido" tabindex="0">SSD<span class="sigla-exp"> (Solid-State Drive: disco de estado sólido)</span></abbr> locales para guardar más datos por menos coste.</li>
+        <li><strong>Búsqueda vectorial:</strong> guarda e indexa vectores de inserción (<em>embeddings</em>) para <abbr class="sigla sigla-1" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG<span class="sigla-exp"> (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos)</span></abbr>,
+          recomendaciones o detección de fraude con latencias de milisegundos, sin coste extra.</li>
+        <li><strong>Control de acceso:</strong> usuarios y listas de control de acceso propias de Valkey y Redis <abbr class="sigla" data-s="OSS" data-en="Open Source Software" data-es="la versión de código abierto" tabindex="0">OSS</abbr>
+          (<abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr>), además de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para administrar el servicio.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Base de datos principal de microservicios que necesitan latencia muy baja y no pueden perder datos: carritos,
+          sesiones, perfiles de usuario, inventario.</li>
+        <li>Clasificaciones y contadores en tiempo real (juegos, votaciones) que deben sobrevivir a un fallo.</li>
+        <li>Sustituir la pareja "caché + base de datos" cuando los datos ya caben en memoria, simplificando la
+          arquitectura.</li>
+        <li>Búsqueda vectorial en tiempo real para aplicaciones de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr> generativa.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>acelerar</strong> una base de datos existente (<a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a>…) con una caché:
+          <a href="elasticache.html">ElastiCache</a>, más barato para ese papel.</li>
+        <li>Para conjuntos de datos enormes que no caben en memoria de forma rentable o con consultas relacionales
+          complejas: <a href="aurora.html">Aurora</a>, <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr> o DynamoDB.</li>
+        <li>Para lecturas en microsegundos sobre DynamoDB sin cambiar su <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>: el acelerador de DynamoDB.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>MemoryDB</th><th><a href="elasticache.html">ElastiCache</a></th><th><a href="dynamodb.html">DynamoDB</a></th></tr></thead>
+          <tbody>
+            <tr><td>Papel</td><td>Base de datos principal en memoria</td><td>Caché delante de otra base de datos</td><td>Base de datos principal clave-valor</td></tr>
+            <tr><td>Durabilidad</td><td>Registro de transacciones multi-AZ</td><td>Réplicas y copias; puede perder escrituras recientes</td><td>Almacenamiento duradero en varias zonas</td></tr>
+            <tr><td>Latencia de lectura</td><td>Microsegundos</td><td>Microsegundos</td><td>Milisegundos de un dígito</td></tr>
+            <tr><td><abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></td><td>Valkey / Redis <abbr class="sigla" data-s="OSS" data-en="Open Source Software" data-es="la versión de código abierto" tabindex="0">OSS</abbr></td><td>Valkey / Redis <abbr class="sigla" data-s="OSS" data-en="Open Source Software" data-es="la versión de código abierto" tabindex="0">OSS</abbr> / Memcached</td><td><abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> de DynamoDB</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>hora de nodo</strong> según su tipo (con nodos reservados para ahorrar), por los
+        <strong>GB escritos</strong> en el registro de transacciones, por el almacenamiento de
+        <strong>instantáneas</strong> por encima del gratuito y por la transferencia de datos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Siempre dentro de una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>, con grupos de seguridad.</li>
+        <li>Cifrado en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> (clave propia opcional) y en tránsito con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr>.</li>
+        <li>Autenticación de clientes con usuarios y <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> de Valkey o Redis <abbr class="sigla" data-s="OSS" data-en="Open Source Software" data-es="la versión de código abierto" tabindex="0">OSS</abbr>.</li>
+        <li>Réplicas en varias zonas y conmutación automática sin pérdida de escrituras confirmadas.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Compatible con Redis, microsegundos y durable como base de datos principal"</strong>: MemoryDB.</li>
+        <li><strong>"Caché para reducir la carga de la base de datos"</strong>: <a href="elasticache.html">ElastiCache</a>, no MemoryDB.</li>
+        <li><strong>"Eliminar la caché y la base de datos aparte para simplificar"</strong>: MemoryDB.</li>
+        <li><strong>"No perder escrituras confirmadas si falla el nodo principal"</strong>: registro de transacciones
+          multi-AZ de MemoryDB.</li>
+        <li><strong>"Búsqueda vectorial con la máxima velocidad"</strong>: búsqueda vectorial de MemoryDB.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="memorydb"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/memorydb/latest/devguide/what-is-memorydb.html" target="_blank" rel="noopener">What is MemoryDB</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/memorydb/latest/devguide/related-services-choose-between-memorydb-and-redis.html" target="_blank" rel="noopener">Related services (MemoryDB or ElastiCache)</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/memorydb/latest/devguide/vector-search.html" target="_blank" rel="noopener">Vector search</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/memorydb/features/" target="_blank" rel="noopener">Amazon MemoryDB features</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

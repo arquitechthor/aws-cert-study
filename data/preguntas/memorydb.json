@@ -1,0 +1,134 @@
+[
+  {
+    "id": "memorydb-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Un servicio de carritos usa ElastiCache como caché y DynamoDB como base de datos. Necesita lecturas en microsegundos, no puede perder escrituras confirmadas y el equipo quiere simplificar la arquitectura usando la API de Redis que ya conoce. ¿Qué propone el arquitecto?",
+    "opciones": [
+      "Activar la persistencia en disco de ElastiCache y quitar DynamoDB.",
+      "Añadir DynamoDB Accelerator y mantener ElastiCache.",
+      "Sustituir la pareja de caché y base de datos por Amazon MemoryDB como base de datos principal.",
+      "Mover los datos a Aurora con réplicas de lectura."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "MemoryDB ofrece latencia de microsegundos y durabilidad con un registro de transacciones multi-AZ, compatible con la API de Redis OSS, así que puede ser la única base de datos. ElastiCache es una caché que puede perder escrituras recientes, añadir un acelerador mantiene dos capas y Aurora no da microsegundos ni usa la API de Redis.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/memorydb/latest/devguide/related-services-choose-between-memorydb-and-redis.html"
+    ]
+  },
+  {
+    "id": "memorydb-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Falla el nodo principal de una partición de un clúster de MemoryDB. ¿Qué ocurre con las escrituras que ya se habían confirmado a la aplicación?",
+    "opciones": [
+      "Se conservan: estaban guardadas en el registro de transacciones multi-AZ y una réplica toma el relevo.",
+      "Se pierden las de los últimos segundos, como en una caché.",
+      "Hay que restaurarlas desde la última instantánea diaria.",
+      "Solo se conservan si la aplicación las reintenta."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "MemoryDB confirma una escritura cuando queda guardada de forma duradera en el registro de transacciones distribuido en varias zonas; al conmutar, la réplica no pierde datos confirmados. Esa es la diferencia con una caché.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/memorydb/latest/devguide/what-is-memorydb.html"
+    ]
+  },
+  {
+    "id": "memorydb-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Una base de datos relacional en RDS sufre por las mismas consultas de lectura repetidas miles de veces por segundo. Se quiere reducir su carga con el menor coste, y si se pierden datos de la capa nueva no pasa nada porque se pueden volver a leer de RDS. ¿Qué servicio encaja?",
+    "opciones": [
+      "Amazon MemoryDB.",
+      "Amazon Neptune.",
+      "Amazon Keyspaces.",
+      "Amazon ElastiCache."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Para una caché delante de una base de datos existente, ElastiCache es la opción indicada y más barata; la durabilidad de MemoryDB no aporta nada si los datos se pueden recuperar de RDS. Neptune y Keyspaces son bases de datos de otro tipo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/memorydb/latest/devguide/related-services-choose-between-memorydb-and-redis.html"
+    ]
+  },
+  {
+    "id": "memorydb-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Un asistente de IA generativa necesita guardar millones de vectores de inserción junto a los datos de sesión de los usuarios y hacer búsquedas por similitud en pocos milisegundos con alta precisión. El equipo ya usa la API de Valkey. ¿Qué opción simplifica la arquitectura?",
+    "opciones": [
+      "Un índice de S3 con búsqueda por prefijo.",
+      "La búsqueda vectorial de Amazon MemoryDB.",
+      "Amazon Redshift con consultas SQL.",
+      "Amazon EFS montado en cada función."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "MemoryDB indexa y busca vectores en memoria con latencias de milisegundos y alta exhaustividad, junto al resto de datos y con la misma API, sin coste adicional. Las demás opciones no hacen búsqueda vectorial en tiempo real.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/memorydb/latest/devguide/vector-search.html"
+    ]
+  },
+  {
+    "id": "memorydb-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "El conjunto de datos de un clúster de MemoryDB crece mucho, pero solo una parte pequeña se consulta a menudo. ¿Qué opción reduce el coste manteniendo el servicio?",
+    "opciones": [
+      "Desactivar el registro de transacciones.",
+      "Borrar las réplicas de todas las zonas.",
+      "Mover los datos fríos a un depósito de S3 desde la aplicación.",
+      "Pasar a nodos con niveles de datos (data tiering), que bajan los datos menos usados a SSD locales."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los nodos con niveles de datos guardan en SSD lo que se usa poco y dejan en memoria lo más consultado, con más capacidad por menos coste. El registro de transacciones no se puede desactivar, quitar réplicas reduce la disponibilidad y mover datos a S3 obliga a cambiar la aplicación.",
+    "fuentes": [
+      "https://aws.amazon.com/memorydb/features/"
+    ]
+  },
+  {
+    "id": "memorydb-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Una auditoría pide para un clúster de MemoryDB cifrado en reposo con una clave gestionada por la empresa, cifrado en tránsito y que cada aplicación se autentique con su propio usuario y permisos limitados. ¿Qué configuración lo cumple?",
+    "opciones": [
+      "Cifrado en reposo con una clave de KMS administrada por el cliente, TLS y usuarios con listas de control de acceso (ACL).",
+      "Un grupo de seguridad abierto y una contraseña común para todas las aplicaciones.",
+      "Cifrado en el cliente y desactivar TLS para ganar rendimiento.",
+      "Mover el clúster a una subred pública con una IP fija."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "MemoryDB cifra en reposo con KMS (también con clave propia), en tránsito con TLS, y autentica a los clientes con usuarios y ACL de Valkey o Redis OSS, lo que permite permisos por aplicación. Las demás opciones debilitan la seguridad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/memorydb/latest/devguide/what-is-memorydb.html"
+    ]
+  }
+]

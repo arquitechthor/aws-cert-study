@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Cloud WAN — Apuntes AWS</title>
+<meta name="description" content="Red WAN global gestionada que une VPC de varias regiones, oficinas y centros de datos sobre la red de AWS, configurada con una única política declarativa y segmentos aislados. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cloud-wan.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Cloud WAN — Apuntes AWS">
+<meta property="og:description" content="Red WAN global gestionada que une VPC de varias regiones, oficinas y centros de datos sobre la red de AWS, configurada con una única política declarativa y segmentos aislados.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cloud-wan.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="56" height="56"><span>AWS Cloud WAN</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Red global gestionada que une regiones y oficinas con una política central declarativa</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html" target="_blank" rel="noopener">Documentación de AWS Cloud WAN ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Cloud <abbr class="sigla sigla-1" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN<span class="sigla-exp"> (Wide Area Network: red de área extensa)</span></abbr> es un servicio de <strong>red de área extensa (<abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr>) gestionada</strong> para construir una red
+        global única que une <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> de varias regiones, oficinas y centros de datos sobre la red troncal de AWS. En lugar
+        de configurar y enlazar a mano un <a href="transit-gateway.html">Transit Gateway</a> por región, describes la red en una <strong>política
+        declarativa</strong> (qué regiones, qué segmentos, qué se conecta con qué) y Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr> la despliega y la
+        mantiene coherente en todas partes.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Red global:</strong> el contenedor de todos los objetos de red, que puede incluir redes troncales de
+          Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr> y también <a href="transit-gateway.html">Transit Gateway</a> existentes.</li>
+        <li><strong>Red troncal (<em>core network</em>):</strong> la parte gestionada por AWS, que opera en las regiones
+          que indica la política.</li>
+        <li><strong>Política de la red troncal:</strong> un documento <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> con versiones que define regiones,
+          segmentos, cómo se asignan los anexos y cómo se comparten rutas. Solo una versión está activa y se puede
+          volver a una anterior.</li>
+        <li><strong>Borde de la red troncal (<em>core network edge</em>):</strong> el punto de conexión regional
+          gestionado por AWS (funciona como un Transit Gateway). Los bordes de todas las regiones se unen entre sí en
+          malla completa de forma automática.</li>
+        <li><strong>Segmentos:</strong> dominios de enrutamiento aislados y globales (producción, desarrollo,
+          servicios compartidos…). Por defecto solo se comunican los anexos del mismo segmento; las acciones de
+          segmento comparten rutas entre segmentos de forma explícita. Pueden exigir aprobación para unirse.</li>
+        <li><strong>Anexos y políticas de anexo:</strong> <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>, <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr>, Connect (para equipos <abbr class="sigla sigla-1" data-s="SD-WAN" data-en="Software-Defined Wide Area Network" data-es="red extensa entre sedes gestionada por software" tabindex="0">SD-WAN<span class="sigla-exp"> (Software-Defined Wide Area Network: red extensa entre sedes gestionada por software)</span></abbr>) o tablas de rutas de
+          Transit Gateway. Las políticas de anexo asignan cada anexo a su segmento según sus <strong>etiquetas</strong>.</li>
+        <li><strong>Grupos de funciones de red:</strong> anexos con cortafuegos o sistemas de inspección; la política
+          desvía por ellos el tráfico entre segmentos o regiones sin rutas estáticas.</li>
+        <li><strong>Propietario de la red y de los anexos:</strong> el equipo de red comparte la red troncal con <a href="ram.html"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a> y
+          las cuentas de aplicación solo pueden crear sus anexos y etiquetas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Red global de una empresa con <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> en muchas regiones y oficinas en varios continentes.</li>
+        <li>Separar producción y desarrollo (o unidades de negocio) en segmentos aislados en todo el mundo.</li>
+        <li>Inspeccionar con cortafuegos centralizados el tráfico entre segmentos y entre regiones.</li>
+        <li>Sustituir la red privada de un operador o una malla de <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> entre sedes por la red troncal de AWS.</li>
+        <li>Convivir con <a href="transit-gateway.html">Transit Gateway</a> existentes mediante emparejamiento, durante una migración.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para pocas <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> en una o dos regiones: <a href="transit-gateway.html">Transit Gateway</a> es más sencillo y suele salir más barato.</li>
+        <li>Para conectar dos <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> concretas: emparejamiento de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (peering).</li>
+        <li>Para comunicación entre servicios de aplicación (no redes enteras): <a href="vpc-lattice.html">VPC Lattice</a> o <a href="privatelink.html">PrivateLink</a>.</li>
+        <li>Para el enlace físico privado con el centro de datos: <a href="direct-connect.html">Direct Connect</a> (que se puede unir a Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr>).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr></th><th><a href="transit-gateway.html">Transit Gateway</a></th></tr></thead>
+          <tbody>
+            <tr><td>Ámbito</td><td>Global (varias regiones en una red)</td><td>Regional (se emparejan entre regiones)</td></tr>
+            <tr><td>Configuración</td><td>Una política declarativa central</td><td>Tablas de rutas y emparejamientos a mano</td></tr>
+            <tr><td>Segmentación</td><td>Segmentos globales integrados</td><td>Varias tablas de rutas por región</td></tr>
+            <tr><td>Asignación de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a></td><td>Automática por etiquetas</td><td>Asociación y propagación manuales</td></tr>
+            <tr><td>Encaja mejor</td><td>Muchas regiones y sedes</td><td>Pocas regiones, control fino propio</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>hora de cada borde</strong> de la red troncal (uno por región), por <strong>hora de cada
+        anexo</strong> y por <strong>GB procesado</strong>. Algunas funciones, como la <abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr> 1:1, añaden su propio coste,
+        y la transferencia entre regiones se factura aparte.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Segmentos aislados por defecto y aprobación opcional para unir anexos a un segmento.</li>
+        <li>Inspección centralizada con grupos de funciones de red (por ejemplo, <a href="network-firewall.html">Network Firewall</a>).</li>
+        <li>Bordes en malla completa con caminos redundantes por la red global de AWS.</li>
+        <li>Cambios controlados: versiones de la política, conjunto de cambios previo y vuelta atrás.</li>
+        <li>Visibilidad central (mapas de topología, eventos y rutas) en Network Manager, con región base en us-west-2.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Red global, muchas regiones y sedes, configuración central con una política"</strong>: Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr>.</li>
+        <li><strong>"Aislar producción y desarrollo en todo el mundo"</strong>: segmentos de Cloud <abbr class="sigla" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN</abbr>.</li>
+        <li><strong>"Que cada <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> nueva quede en su segmento sin intervención del equipo de red"</strong>: políticas de
+          anexo por etiquetas.</li>
+        <li><strong>"Pocas <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> en una región"</strong>: <a href="transit-gateway.html">Transit Gateway</a>.</li>
+        <li><strong>"Pasar por un cortafuegos el tráfico entre segmentos"</strong>: grupo de funciones de red.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cloud-wan"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html" target="_blank" rel="noopener">What is AWS Cloud WAN?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/designing-control-tower-landing-zone/cloud-wan.html" target="_blank" rel="noopener">AWS Cloud WAN (AWS Prescriptive Guidance)</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/compare/cloud-wan-and-transit-gateway/" target="_blank" rel="noopener">What is the difference between AWS Cloud WAN and AWS Transit Gateway?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

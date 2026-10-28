@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Resilience Hub — Apuntes AWS</title>
+<meta name="description" content="Panel central para fijar objetivos de RTO y RPO por aplicación, evaluar si la arquitectura los cumple y recibir recomendaciones de resiliencia, alarmas, procedimientos y experimentos de FIS. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/resilience-hub.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Resilience Hub — Apuntes AWS">
+<meta property="og:description" content="Panel central para fijar objetivos de RTO y RPO por aplicación, evaluar si la arquitectura los cumple y recibir recomendaciones de resiliencia, alarmas, procedimientos y experimentos de FIS.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/resilience-hub.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="56" height="56"><span>AWS Resilience Hub</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Evalúa si tu aplicación cumple sus objetivos de <abbr class="sigla sigla-1" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO<span class="sigla-exp"> (Recovery Time Objective: cuánto tiempo puedes estar sin servicio)</span></abbr> y <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr> y propone cómo mejorarla</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/resilience-hub/" target="_blank" rel="noopener">Documentación de AWS Resilience Hub ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Resilience Hub es el sitio central para <strong>gestionar y mejorar la resiliencia</strong> de tus
+        aplicaciones en AWS. Defines los <strong>objetivos de recuperación</strong> de cada aplicación (<abbr class="sigla" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO</abbr> y <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr>), el
+        servicio <strong>evalúa</strong> su arquitectura real frente a ellos siguiendo el marco Well-Architected y te
+        dice qué cambiar para cumplirlos. También propone alarmas, procedimientos operativos y experimentos de Fault
+        Injection Service para comprobar que la recuperación funciona de verdad.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Aplicación:</strong> el conjunto de recursos que se evalúa juntos. Se describe a partir de pilas de
+          <a href="cloudformation.html">CloudFormation</a>, ficheros de estado de Terraform, grupos de recursos, aplicaciones de myApplications o
+          AppRegistry, y opcionalmente espacios de nombres de clústeres de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>. Hay que <strong>publicarla</strong>
+          antes de evaluarla.</li>
+        <li><strong>Política de resiliencia:</strong> los objetivos de <abbr class="sigla" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO</abbr> y <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> que debe cumplir la aplicación para
+          cuatro tipos de interrupción: fallo de la propia <strong>aplicación</strong> (un proceso o servicio de
+          software), de la <strong>infraestructura</strong> (por ejemplo, una instancia), de una <strong>zona de
+          disponibilidad</strong> y de una <strong>región</strong>. Varias aplicaciones pueden compartir política y la
+          política no cambia nada en los recursos.</li>
+        <li><strong>Evaluación:</strong> calcula el <abbr class="sigla" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO</abbr> y el <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> estimados de cada componente y de la aplicación, y dice
+          si cumple la política. Da una <strong>puntuación de resiliencia</strong> según cuánto sigue la aplicación las
+          recomendaciones.</li>
+        <li><strong>Recomendaciones de resiliencia:</strong> cambios de arquitectura por componente (por ejemplo,
+          multi-AZ en una base de datos, réplicas entre regiones, copias de seguridad), con sus compromisos de coste.</li>
+        <li><strong>Recomendaciones operativas:</strong> <strong>alarmas</strong> de <a href="cloudwatch.html">CloudWatch</a>, <strong><abbr class="sigla sigla-1" data-s="SOP" data-en="Standard Operating Procedure" data-es="procedimiento operativo estándar, el paso a paso ante un incidente" tabindex="0">SOP<span class="sigla-exp"> (Standard Operating Procedure: procedimiento operativo estándar, el paso a paso ante un incidente)</span></abbr></strong>
+          (procedimientos operativos estándar, como documentos de <a href="systems-manager.html">Systems Manager</a>) y <strong>experimentos</strong> de
+          <a href="fault-injection-service.html">FIS</a> para probar cada tipo de interrupción. Se pueden exportar como plantillas de CloudFormation.</li>
+        <li><strong>Detección de deriva:</strong> evaluaciones diarias automáticas con aviso (por ejemplo, por <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>) si
+          la aplicación deja de cumplir su política o si cambian sus recursos.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Comprobar, antes de pasar a producción, si una arquitectura cumple los <abbr class="sigla" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO</abbr> y <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> que exige el negocio.</li>
+        <li>Añadir una evaluación de resiliencia a la canalización de <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> y frenar el despliegue si empeora.</li>
+        <li>Vigilar de forma continua que los cambios no rompen los objetivos de recuperación.</li>
+        <li>Preparar alarmas, procedimientos y experimentos de caos coherentes con cada tipo de fallo.</li>
+        <li>Dar a auditores o clientes una prueba periódica de que se cumplen los objetivos acordados.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>provocar</strong> fallos y ver qué pasa: <a href="fault-injection-service.html">Fault Injection Service</a> (Resilience Hub lo recomienda
+          y lo lanza, pero el que actúa es FIS).</li>
+        <li>Para <strong>hacer</strong> las copias o la recuperación: Backup o <a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a>.</li>
+        <li>Para conmutar el tráfico durante un incidente real: Application Recovery Controller o <a href="route-53.html">Route 53</a>.</li>
+        <li>Para revisar una carga contra todos los pilares del marco (seguridad, costes…), no solo la fiabilidad:
+          <a href="well-architected-tool.html">Well-Architected Tool</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Resilience Hub</th><th><a href="fault-injection-service.html">Fault Injection Service</a></th><th><a href="well-architected-tool.html">Well-Architected Tool</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué hace</td><td>Evalúa frente a <abbr class="sigla" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO</abbr> y <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> y recomienda</td><td>Provoca fallos controlados</td><td>Revisión guiada por preguntas</td></tr>
+            <tr><td>Mira los recursos reales</td><td>Sí, los analiza</td><td>Sí, actúa sobre ellos</td><td>No, responde el equipo</td></tr>
+            <tr><td>Alcance</td><td>Resiliencia de una aplicación</td><td>Un experimento concreto</td><td>Los seis pilares del marco</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga una tarifa mensual por cada <strong>aplicación</strong> que se evalúa, según el tiempo que está dada
+        de alta. Los experimentos de <a href="fault-injection-service.html">FIS</a>, las alarmas de <a href="cloudwatch.html">CloudWatch</a> y los demás servicios que uses se pagan aparte.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Accede a los recursos con un rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> que tú creas o eliges (permisos de solo lectura para la evaluación).</li>
+        <li>Puede evaluar aplicaciones con recursos en varias cuentas y regiones, mediante roles en cada cuenta.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Comprobar si la aplicación cumple el <abbr class="sigla" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO</abbr> y el <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr>"</strong> o <strong>"puntuación de
+          resiliencia"</strong>: Resilience Hub.</li>
+        <li><strong>"Aviso cuando un cambio hace que deje de cumplir los objetivos"</strong>: detección de deriva con
+          evaluaciones diarias.</li>
+        <li><strong>"Alarmas, procedimientos y experimentos recomendados"</strong>: recomendaciones operativas de
+          Resilience Hub (que se ejecutan con <a href="cloudwatch.html">CloudWatch</a>, <a href="systems-manager.html">Systems Manager</a> y <a href="fault-injection-service.html">FIS</a>).</li>
+        <li><strong>"Inyectar fallos"</strong>: FIS, no Resilience Hub.</li>
+        <li><strong>"Evaluar en la canalización antes de desplegar"</strong>: evaluación de Resilience Hub como paso de
+          <a href="codepipeline.html">CodePipeline</a>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="resilience-hub"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/resilience-hub/latest/userguide/what-is.html" target="_blank" rel="noopener">What is AWS Resilience Hub?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/resilience-hub/latest/userguide/how-app-manage.html" target="_blank" rel="noopener">Select how this application is managed</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/help-panel/resilience-hub/latest/console/resiliency-policies-hp.html" target="_blank" rel="noopener">Resiliency policies</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/mt/validating-and-improving-the-rto-and-rpo-using-aws-resilience-hub/" target="_blank" rel="noopener">Validating and Improving the RTO and RPO Using AWS Resilience Hub</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

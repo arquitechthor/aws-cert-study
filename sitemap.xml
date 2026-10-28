@@ -31,6 +31,7 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cdk.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cli.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/client-vpn.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cloud-wan.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cloudformation.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cloudfront.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cloudhsm.html</loc><lastmod>2026-10-28</lastmod></url>
@@ -109,6 +110,7 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/managed-service-for-prometheus.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/management-console.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/marketplace.html</loc><lastmod>2026-10-13</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/memorydb.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/migration-evaluator.html</loc><lastmod>2026-10-13</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/migration-hub.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/mq.html</loc><lastmod>2026-10-28</lastmod></url>
@@ -121,12 +123,14 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/outposts.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/personalize.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/polly.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/private-ca.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/privatelink.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/quick.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/ram.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/rds.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/redshift.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/rekognition.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/resilience-hub.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/route-53.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/s3.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/s3-glacier.html</loc><lastmod>2026-10-28</lastmod></url>

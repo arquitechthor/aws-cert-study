@@ -408,8 +408,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Red WAN global gestionada que une VPC de varias regiones, oficinas y centros de datos sobre la red de AWS, configurada con una única política declarativa y segmentos aislados.",
     "frase": "Red global gestionada que une regiones y oficinas con una política central declarativa",
     "documentacion": "https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html"
   },
@@ -1665,8 +1665,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Base de datos en memoria y duradera, compatible con Valkey y Redis OSS: lecturas en microsegundos y un registro de transacciones multi-AZ que permite usarla como base de datos principal.",
     "frase": "Base de datos en memoria compatible con Valkey y Redis, duradera con registro multi-AZ",
     "documentacion": "https://docs.aws.amazon.com/memorydb/"
   },
@@ -1852,8 +1852,8 @@
     "certificaciones": [
       "DVA-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Autoridad de certificación privada gestionada: crea jerarquías de CA raíz y subordinadas y emite certificados privados para TLS interno, dispositivos, usuarios y firma de código.",
     "frase": "Emite certificados privados para identificar servidores, dispositivos y servicios internos",
     "documentacion": "https://docs.aws.amazon.com/privateca/"
   },
@@ -1979,8 +1979,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Panel central para fijar objetivos de RTO y RPO por aplicación, evaluar si la arquitectura los cumple y recibir recomendaciones de resiliencia, alarmas, procedimientos y experimentos de FIS.",
     "frase": "Evalúa si tu aplicación cumple sus objetivos de RTO y RPO y propone cómo mejorarla",
     "documentacion": "https://docs.aws.amazon.com/resilience-hub/"
   },

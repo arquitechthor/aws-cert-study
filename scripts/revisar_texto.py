@@ -22,6 +22,11 @@ S = {s['id']: s for s in SERV}
 G = {
     'ACID': (None, 'atomicidad, consistencia, aislamiento y durabilidad de las transacciones'),
     'ACL': ('Access Control List', 'lista de control de acceso'),
+    'CRL': ('Certificate Revocation List', 'lista de certificados revocados que publica una autoridad de certificación'),
+    'CSR': ('Certificate Signing Request', 'solicitud de firma de un certificado'),
+    'OCSP': ('Online Certificate Status Protocol', 'protocolo para consultar al momento si un certificado está revocado'),
+    'PKI': ('Public Key Infrastructure', 'infraestructura de clave pública: autoridades, certificados y sus reglas'),
+    'SOP': ('Standard Operating Procedure', 'procedimiento operativo estándar, el paso a paso ante un incidente'),
     'NACL': ('Network Access Control List', 'firewall a nivel de subred'),
     'ACU': ('Aurora Capacity Unit', 'unidad de capacidad de Aurora Serverless'),
     'AES-256': ('Advanced Encryption Standard', 'cifrado simétrico con claves de 256 bits'),

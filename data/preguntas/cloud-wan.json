@@ -1,0 +1,135 @@
+[
+  {
+    "id": "cloud-wan-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Una multinacional tiene VPC en ocho regiones, 40 oficinas con equipos SD-WAN y dos centros de datos. Quiere una única red global, con producción y desarrollo aislados en todas las regiones y configurada desde un único documento central, sin mantener a mano tablas de rutas ni emparejamientos entre regiones. ¿Qué solución cumple los requisitos?",
+    "opciones": [
+      "AWS Cloud WAN con una política de red troncal que defina las regiones y los segmentos de producción y desarrollo.",
+      "Un Transit Gateway por región, emparejados entre sí, con tablas de rutas separadas para producción y desarrollo.",
+      "Emparejamiento de VPC en malla completa entre todas las VPC.",
+      "Una VPN de sitio a sitio desde cada oficina a cada VPC."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cloud WAN crea la red global a partir de una política declarativa: bordes en cada región unidos en malla y segmentos aislados que se mantienen coherentes en todas ellas, con anexos Connect para SD-WAN. Transit Gateway por región funciona, pero obliga a gestionar a mano rutas y emparejamientos; el peering en malla y las VPN por VPC no escalan.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "cloud-wan-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "En Cloud WAN, el equipo de red quiere que cada VPC nueva que creen los equipos de aplicación quede en el segmento correcto (producción o desarrollo) sin intervenir. ¿Qué usa?",
+    "opciones": [
+      "Una función Lambda que modifique las tablas de rutas de cada VPC.",
+      "Un acuerdo de emparejamiento por cada VPC.",
+      "Grupos de seguridad compartidos con RAM.",
+      "Políticas de anexo que asignan el segmento según las etiquetas del anexo."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las políticas de anexo de la política de red troncal asignan cada anexo a un segmento a partir de sus etiquetas, sin pasos manuales. Las demás opciones no asignan segmentos de Cloud WAN.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html"
+    ]
+  },
+  {
+    "id": "cloud-wan-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Todo el tráfico entre el segmento de desarrollo y el de servicios compartidos, en cualquier región, debe pasar por cortafuegos de inspección, sin mantener rutas estáticas. ¿Qué configura en Cloud WAN?",
+    "opciones": [
+      "Una ruta estática en cada VPC hacia el cortafuegos.",
+      "Un grupo de funciones de red con los anexos de los cortafuegos, indicado en la política para ese par de segmentos.",
+      "Un Gateway Load Balancer en cada VPC de desarrollo.",
+      "Listas de control de acceso de red en todas las subredes."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los grupos de funciones de red contienen los anexos de inspección y la política desvía por ellos el tráfico entre los segmentos indicados, dentro de una región y entre regiones, sin rutas estáticas. Las demás opciones exigen configuración por VPC o no inspeccionan el tráfico.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html"
+    ]
+  },
+  {
+    "id": "cloud-wan-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Una empresa con 12 VPC en una sola región necesita que se comuniquen entre sí y con su centro de datos por Direct Connect, y su equipo de red prefiere controlar las tablas de rutas. ¿Qué opción es la más adecuada?",
+    "opciones": [
+      "AWS Cloud WAN con un segmento por VPC.",
+      "VPC Lattice.",
+      "Emparejamiento de VPC transitivo.",
+      "AWS Transit Gateway."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Para pocas VPC en una región con control propio del enrutamiento, Transit Gateway es la opción natural y más sencilla; Cloud WAN aporta más cuando hay muchas regiones y sedes. VPC Lattice conecta servicios, no redes, y el emparejamiento de VPC no es transitivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/designing-control-tower-landing-zone/cloud-wan.html"
+    ]
+  },
+  {
+    "id": "cloud-wan-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Un equipo de FinOps estima el coste de una red de Cloud WAN en cinco regiones. ¿Qué dimensiones factura el servicio?",
+    "opciones": [
+      "Horas de cada borde de la red troncal, horas de cada anexo y GB procesados.",
+      "Solo los GB que salen a internet.",
+      "Una tarifa fija anual por organización.",
+      "El número de segmentos definidos en la política."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Cloud WAN cobra por hora de cada borde de la red troncal (uno por región), por hora de anexo y por datos procesados, más la transferencia entre regiones y funciones opcionales como la NAT 1:1.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html"
+    ]
+  },
+  {
+    "id": "cloud-wan-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Un cambio en la política de Cloud WAN rompió la conectividad de un segmento en producción. ¿Cuál es la forma más rápida y controlada de volver al estado anterior?",
+    "opciones": [
+      "Borrar la red troncal y volver a crearla.",
+      "Editar a mano las tablas de rutas de cada borde.",
+      "Restaurar como activa la versión anterior de la política de red troncal.",
+      "Pedir a AWS Support que revierta el cambio."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La política tiene versiones: solo una está activa y se puede volver a una anterior en cualquier momento. Recrear la red o editar rutas a mano es lento y arriesgado, y no hace falta pasar por soporte.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html"
+    ]
+  }
+]

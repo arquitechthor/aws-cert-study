@@ -1,0 +1,135 @@
+[
+  {
+    "id": "resilience-hub-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "La dirección exige que una aplicación crítica se recupere en menos de 1 hora con una pérdida máxima de 15 minutos de datos ante la caída de una zona o de una región, y quiere saber, sin provocar fallos, si la arquitectura actual lo cumple y qué cambiar si no. ¿Qué usa?",
+    "opciones": [
+      "Un experimento de AWS FIS que simule la caída de una zona.",
+      "AWS Trusted Advisor con las comprobaciones de tolerancia a fallos.",
+      "AWS Resilience Hub con una política de resiliencia de RTO 1 h y RPO 15 min, y una evaluación de la aplicación.",
+      "AWS Backup con un plan de copias cada 15 minutos."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Resilience Hub compara la arquitectura real con los RTO y RPO de la política para cada tipo de interrupción, sin tocar los recursos, y recomienda cambios. FIS provoca fallos, Trusted Advisor no evalúa frente a objetivos de recuperación y Backup solo hace copias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/help-panel/resilience-hub/latest/console/resiliency-policies-hp.html"
+    ]
+  },
+  {
+    "id": "resilience-hub-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "¿Para qué cuatro tipos de interrupción define RTO y RPO una política de resiliencia de AWS Resilience Hub?",
+    "opciones": [
+      "Red, almacenamiento, cómputo y base de datos.",
+      "Aplicación, infraestructura, zona de disponibilidad y región.",
+      "Ataque, error humano, fallo de hardware y desastre natural.",
+      "Desarrollo, pruebas, preproducción y producción."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La política fija objetivos para el fallo de la propia aplicación (un proceso o servicio de software), de la infraestructura (como una instancia), de una zona de disponibilidad y de una región. Las demás listas no son las dimensiones del servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/help-panel/resilience-hub/latest/console/resiliency-policies-hp.html"
+    ]
+  },
+  {
+    "id": "resilience-hub-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Un equipo quiere enterarse en cuanto un cambio de infraestructura haga que su aplicación deje de cumplir los objetivos de recuperación, sin lanzar evaluaciones a mano. ¿Qué configura en Resilience Hub?",
+    "opciones": [
+      "Una regla de AWS Config para cada recurso.",
+      "Un experimento de FIS cada noche.",
+      "Evaluaciones diarias programadas con detección de deriva y notificaciones por SNS.",
+      "Una alarma de CloudWatch sobre la CPU de cada instancia."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Resilience Hub puede evaluar a diario la aplicación y avisar (por ejemplo, con SNS) si su resiliencia se aleja de la política o cambian sus recursos. Las otras opciones no miden el cumplimiento de RTO y RPO.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/publicsector/track-application-resiliency-in-public-sector-organizations-using-aws-resilience-hub/"
+    ]
+  },
+  {
+    "id": "resilience-hub-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Tras evaluar una aplicación, el equipo de operaciones quiere poner en marcha las alarmas, los procedimientos operativos estándar y los experimentos de caos que recomienda Resilience Hub, de forma repetible y como código. ¿Qué hace?",
+    "opciones": [
+      "Exportar las recomendaciones operativas como plantillas de CloudFormation y desplegarlas.",
+      "Copiar a mano la configuración de cada alarma en la consola.",
+      "Pedir a AWS Support que las configure.",
+      "Activar AWS Trusted Advisor en la cuenta."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las recomendaciones operativas de Resilience Hub (alarmas de CloudWatch, SOP con Systems Manager y experimentos de FIS) se pueden generar como plantillas de CloudFormation para desplegarlas como código. Las demás opciones no aplican las recomendaciones de forma repetible.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/resilience-hub/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "resilience-hub-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Una empresa define su infraestructura con Terraform y quiere evaluar con Resilience Hub la resiliencia de una aplicación que además tiene cargas en un clúster de EKS. ¿Cómo describe la aplicación?",
+    "opciones": [
+      "Solo se pueden evaluar pilas de CloudFormation, así que debe migrar de Terraform.",
+      "Etiquetando cada recurso con el nombre de la aplicación en Trusted Advisor.",
+      "Con una lista de ARN en un documento de Systems Manager.",
+      "Con el fichero de estado de Terraform como colección de recursos y, además, los espacios de nombres del clúster de EKS."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Resilience Hub descubre recursos a partir de pilas de CloudFormation, ficheros de estado de Terraform, grupos de recursos o aplicaciones de myApplications, y puede añadir espacios de nombres de clústeres de EKS. No hace falta migrar de Terraform.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/resilience-hub/latest/userguide/how-app-manage.html"
+    ]
+  },
+  {
+    "id": "resilience-hub-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Una organización quiere impedir que llegue a producción un cambio que empeore la resiliencia de una aplicación por debajo de su política. ¿Qué diseño lo consigue con menos trabajo?",
+    "opciones": [
+      "Revisar manualmente cada cambio con la Well-Architected Tool.",
+      "Un paso en CodePipeline que lance una evaluación de Resilience Hub y detenga el despliegue si la aplicación no cumple la política.",
+      "Un experimento de FIS en producción después de cada despliegue.",
+      "Una regla de EventBridge que revierta cualquier cambio de CloudFormation."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Resilience Hub se integra en canalizaciones de CI/CD: una evaluación previa al despliegue frena los cambios que incumplen la política. La revisión manual no escala, el experimento llega tarde (ya en producción) y revertir todo bloquea cualquier cambio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/resilience-hub/latest/userguide/what-is.html"
+    ],
+    "dificil": true
+  }
+]

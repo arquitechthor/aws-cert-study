@@ -1,0 +1,136 @@
+[
+  {
+    "id": "private-ca-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Unas APIs internas detrás de un balanceador de aplicación interno deben servirse por HTTPS con certificados en los que solo confíen los sistemas de la empresa, y los certificados deben renovarse solos. ¿Qué solución usa el desarrollador?",
+    "opciones": [
+      "Un certificado público de ACM.",
+      "Un certificado autofirmado generado en cada instancia.",
+      "Una clave de KMS asociada al balanceador.",
+      "Un certificado privado de ACM firmado por una CA de AWS Private CA."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "ACM puede emitir certificados privados firmados por una CA de Private CA y renovarlos automáticamente en los servicios integrados, como ELB. Un certificado público no es privado, uno autofirmado no se renueva solo ni es de confianza común, y KMS no da certificados.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/privateca/latest/userguide/PcaWelcome.html"
+    ]
+  },
+  {
+    "id": "private-ca-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Unos microservicios en EKS se autentican entre sí con TLS mutuo y reciben certificados nuevos cada pocas horas; el equipo no quiere gestionar revocaciones y busca el menor coste. ¿Qué configura?",
+    "opciones": [
+      "Una CA de uso general con una CRL publicada cada minuto.",
+      "Una CA de Private CA en modo de certificados de corta duración.",
+      "Certificados públicos de ACM exportados.",
+      "Claves SSH guardadas en Secrets Manager."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El modo de corta duración emite certificados de siete días como máximo, pensados para no necesitar revocación, y es más barato que el de uso general. Los certificados públicos de ACM no se exportan y las claves SSH no sirven para TLS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/privateca/latest/userguide/short-lived-certificates.html"
+    ]
+  },
+  {
+    "id": "private-ca-003",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una aplicación cliente debe rechazar los certificados privados que la empresa ya ha revocado. ¿Qué mecanismos de Private CA puede consultar? (Elige 2.)",
+    "opciones": [
+      "Una lista de revocación de certificados (CRL) publicada en un depósito de S3.",
+      "El protocolo OCSP.",
+      "El historial de CloudTrail.",
+      "Las métricas de CloudWatch de la CA.",
+      "El panel de AWS Health."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Private CA comunica la revocación con una CRL en S3 o respondiendo por OCSP. CloudTrail, CloudWatch y Health no son mecanismos de revocación que consulte un cliente TLS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/privateca/latest/userguide/PcaWelcome.html"
+    ]
+  },
+  {
+    "id": "private-ca-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una organización quiere una única CA central y que los equipos de otras cuentas puedan emitir sus certificados con ella, sin darles permisos para administrarla. ¿Qué hace?",
+    "opciones": [
+      "Compartir la CA con las cuentas u OU mediante AWS RAM.",
+      "Copiar la CA a cada cuenta.",
+      "Exportar la clave privada de la CA a cada equipo.",
+      "Crear un usuario de IAM compartido en la cuenta de la CA."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Private CA se comparte con RAM, de modo que otras cuentas emiten certificados firmados por la CA central sin poder administrarla. Las CA no se copian, su clave privada nunca sale de AWS y compartir usuarios de IAM es una mala práctica.",
+    "fuentes": [
+      "https://repost.aws/knowledge-center/acm-share-pca-with-another-account"
+    ]
+  },
+  {
+    "id": "private-ca-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Al diseñar la jerarquía de AWS Private CA, ¿cuál es la buena práctica recomendada para la CA raíz?",
+    "opciones": [
+      "Usarla para emitir directamente todos los certificados de servidor.",
+      "Compartirla con todas las cuentas de la organización con permisos de administración.",
+      "Ponerla en una cuenta propia con acceso mínimo y MFA, y emitir los certificados desde CA subordinadas.",
+      "Crear una raíz nueva cada vez que se necesita un certificado."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La CA raíz es la base de la confianza: se aísla en su propia cuenta, con acceso mínimo y MFA, y el día a día lo hacen las CA subordinadas. Si se viera comprometida, habría que revocar y rehacer toda la jerarquía.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/privateca/latest/userguide/ca-best-practices.html"
+    ]
+  },
+  {
+    "id": "private-ca-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Una aplicación de una segunda región debe recibir certificados privados de la misma jerarquía que usa us-east-1. El desarrollador intenta copiar la CA a eu-west-1 y no encuentra la opción. ¿Por qué?",
+    "opciones": [
+      "Falta activar la replicación entre regiones de la CA.",
+      "Las CA de Private CA son regionales y no se copian: hay que crear una CA (por ejemplo, subordinada de la misma raíz) en esa región.",
+      "Private CA solo funciona en us-east-1.",
+      "Hay que exportar la clave privada de la CA y volver a importarla."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Cada CA es un recurso regional; para usar la misma jerarquía en otra región se crea allí otra CA, por ejemplo una subordinada firmada por la misma raíz. No hay replicación entre regiones y la clave privada no se exporta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/privateca/latest/userguide/PcaWelcome.html"
+    ]
+  }
+]

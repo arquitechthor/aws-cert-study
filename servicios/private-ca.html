@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Private CA — Apuntes AWS</title>
+<meta name="description" content="Autoridad de certificación privada gestionada: crea jerarquías de CA raíz y subordinadas y emite certificados privados para TLS interno, dispositivos, usuarios y firma de código. Apuntes y preguntas de práctica para DVA-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/private-ca.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Private CA — Apuntes AWS">
+<meta property="og:description" content="Autoridad de certificación privada gestionada: crea jerarquías de CA raíz y subordinadas y emite certificados privados para TLS interno, dispositivos, usuarios y firma de código.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/private-ca.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="56" height="56"><span>AWS Private CA</span></h1>
+      <p class="full-name">AWS Private Certificate Authority (AWS Private CA)</p>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Emite certificados privados para identificar servidores, dispositivos y servicios internos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C03#catalogo" title="AWS Certified Developer – Associate">DVA-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/privateca/" target="_blank" rel="noopener">Documentación de AWS Private CA ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> (<em>Private Certificate Authority</em>) crea y gestiona <strong>autoridades de certificación
+        privadas</strong>, con su jerarquía de <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> raíz y subordinadas, sin montar ni mantener una <abbr class="sigla sigla-1" data-s="PKI" data-en="Public Key Infrastructure" data-es="infraestructura de clave pública: autoridades, certificados y sus reglas" tabindex="0">PKI<span class="sigla-exp"> (Public Key Infrastructure: infraestructura de clave pública: autoridades, certificados y sus reglas)</span></abbr> propia. Sus <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>
+        emiten <strong>certificados privados</strong> en los que solo confían tus sistemas: para cifrar con <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> las
+        comunicaciones internas, identificar servidores, contenedores, dispositivos y usuarios, o firmar código.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Jerarquía de <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>:</strong> una <strong><abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> raíz</strong> (la base de la confianza, que se usa lo
+          mínimo) firma una o varias <strong><abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> subordinadas</strong>, que son las que emiten los certificados del día a
+          día.</li>
+        <li><strong>Modo de uso:</strong> <strong>uso general</strong> (certificados con cualquier validez) o
+          <strong>certificados de corta duración</strong> (siete días como máximo, más baratos y pensados para no
+          necesitar revocación, por ejemplo para <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> mutuo entre servicios).</li>
+        <li><strong>Revocación:</strong> la <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> publica una <strong><abbr class="sigla sigla-1" data-s="CRL" data-en="Certificate Revocation List" data-es="lista de certificados revocados que publica una autoridad de certificación" tabindex="0">CRL<span class="sigla-exp"> (Certificate Revocation List: lista de certificados revocados que publica una autoridad de certificación)</span></abbr></strong> en un depósito de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o responde por
+          <strong><abbr class="sigla sigla-1" data-s="OCSP" data-en="Online Certificate Status Protocol" data-es="protocolo para consultar al momento si un certificado está revocado" tabindex="0">OCSP<span class="sigla-exp"> (Online Certificate Status Protocol: protocolo para consultar al momento si un certificado está revocado)</span></abbr></strong> para que los clientes sepan qué certificados ya no valen.</li>
+        <li><strong>Integración con <a href="acm.html"><abbr class="sigla sigla-1" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM<span class="sigla-exp"> (AWS Certificate Manager)</span></abbr></a>:</strong> <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> puede pedir certificados privados firmados por tu <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> y
+          <strong>renovarlos solo</strong> para usarlos en balanceadores, <a href="cloudfront.html">CloudFront</a> o <a href="api-gateway.html">API Gateway</a>. Para instalarlos en
+          otro sitio, se exportan desde <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> o se emiten con la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> a partir de una <strong><abbr class="sigla sigla-1" data-s="CSR" data-en="Certificate Signing Request" data-es="solicitud de firma de un certificado" tabindex="0">CSR<span class="sigla-exp"> (Certificate Signing Request: solicitud de firma de un certificado)</span></abbr></strong>.</li>
+        <li><strong>Plantillas de certificado:</strong> definen el tipo de certificado que se emite (servidor, cliente,
+          firma de código, <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> subordinada…).</li>
+        <li><strong>Compartir con <a href="ram.html"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a>:</strong> otras cuentas de la organización pueden emitir certificados con una <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>
+          central sin tener permisos sobre ella.</li>
+        <li><strong>Regional:</strong> cada <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> vive en una región; para otra región hay que crear otra <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> (no se copian).</li>
+        <li><strong>Algoritmos:</strong> <abbr class="sigla sigla-1" data-s="RSA" data-en="Rivest-Shamir-Adleman" data-es="algoritmo de clave pública" tabindex="0">RSA<span class="sigla-exp"> (Rivest-Shamir-Adleman: algoritmo de clave pública)</span></abbr> y ECDSA, y también algoritmos de firma poscuánticos.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> dentro de la empresa (APIs internas, balanceadores internos) sin certificados públicos.</li>
+        <li><abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> mutuo entre microservicios o pods de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>, con certificados de corta duración.</li>
+        <li>Identidad de dispositivos de <abbr class="sigla sigla-1" data-s="IoT" data-en="Internet of Things" data-es="internet de las cosas: dispositivos conectados" tabindex="0">IoT<span class="sigla-exp"> (Internet of Things: internet de las cosas: dispositivos conectados)</span></abbr> y de equipos corporativos.</li>
+        <li>Firma de código y de artefactos internos.</li>
+        <li>Sustituir una <abbr class="sigla" data-s="PKI" data-en="Public Key Infrastructure" data-es="infraestructura de clave pública: autoridades, certificados y sus reglas" tabindex="0">PKI</abbr> local (por ejemplo, Microsoft AD CS) que cuesta mantener.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para una web o <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> <strong>pública</strong>: un certificado público de <a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a>, en el que confían los navegadores
+          (y que es gratuito con los servicios integrados).</li>
+        <li>Para cifrar datos en reposo o guardar claves de cifrado: <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> o <a href="cloudhsm.html">CloudHSM</a>.</li>
+        <li>Para guardar contraseñas o claves de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>: <a href="secrets-manager.html">Secrets Manager</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr></th><th><a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a> (certificado público)</th><th><a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué da</td><td>Tu propia <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> privada y sus certificados</td><td>Certificados públicos de confianza</td><td>Claves de cifrado</td></tr>
+            <tr><td>Quién confía</td><td>Solo tus sistemas</td><td>Navegadores y clientes de internet</td><td>No aplica</td></tr>
+            <tr><td>Renovación automática</td><td>A través de <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></td><td>Sí</td><td>Rotación de claves</td></tr>
+            <tr><td>Coste</td><td>Por <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> al mes y por certificado</td><td>Gratis con servicios integrados</td><td>Por clave y por uso</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga una <strong>cuota mensual por cada <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr></strong> desde que se crea (menor en el modo de corta duración)
+        y un precio <strong>por certificado emitido</strong>, más barato cuantos más se emiten al mes. Los certificados
+        privados de <a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a> cuya clave no puedes extraer (los que usan <a href="elb.html"><abbr class="sigla sigla-1" data-s="ELB" data-en="Elastic Load Balancing" tabindex="0">ELB<span class="sigla-exp"> (Elastic Load Balancing)</span></abbr></a>, <a href="cloudfront.html">CloudFront</a> o <a href="api-gateway.html">API Gateway</a>) no se cobran; los que
+        se exportan, sí.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las claves privadas de las <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> se generan y quedan en <abbr class="sigla sigla-1" data-s="HSM" data-en="Hardware Security Module" data-es="dispositivo físico que protege claves" tabindex="0">HSM<span class="sigla-exp"> (Hardware Security Module: dispositivo físico que protege claves)</span></abbr> gestionados por AWS; nunca salen.</li>
+        <li>Buenas prácticas: <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> raíz en una <strong>cuenta propia</strong> con acceso mínimo y <abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr>, y <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> subordinadas en
+          otras cuentas.</li>
+        <li>Políticas de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> y de recurso para separar quién administra la <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> y quién solo emite certificados.</li>
+        <li><abbr class="sigla" data-s="CRL" data-en="Certificate Revocation List" data-es="lista de certificados revocados que publica una autoridad de certificación" tabindex="0">CRL</abbr> en un depósito de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> aparte, accesible para quien deba comprobar revocaciones.</li>
+        <li>Registro de todas las operaciones en <a href="cloudtrail.html">CloudTrail</a> e informes de auditoría de los certificados emitidos.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Certificados para servicios internos en los que solo confía la empresa"</strong>: Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>.</li>
+        <li><strong>"Web pública con <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr>"</strong>: certificado público de <a href="acm.html"><abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr></a>, no Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>.</li>
+        <li><strong>"Renovación automática de certificados privados en un balanceador"</strong>: certificado privado de
+          <abbr class="sigla" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM</abbr> firmado por Private <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr>.</li>
+        <li><strong>"Certificados que duran horas o días, sin revocación"</strong>: modo de corta duración.</li>
+        <li><strong>"Una <abbr class="sigla" data-s="CA" data-en="Certificate Authority" data-es="autoridad de certificación" tabindex="0">CA</abbr> central para todas las cuentas"</strong>: compartirla con <a href="ram.html"><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></a>.</li>
+        <li><strong>"Comprobar si un certificado está revocado"</strong>: <abbr class="sigla" data-s="CRL" data-en="Certificate Revocation List" data-es="lista de certificados revocados que publica una autoridad de certificación" tabindex="0">CRL</abbr> u <abbr class="sigla" data-s="OCSP" data-en="Online Certificate Status Protocol" data-es="protocolo para consultar al momento si un certificado está revocado" tabindex="0">OCSP</abbr>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="private-ca"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/privateca/latest/userguide/PcaWelcome.html" target="_blank" rel="noopener">What is AWS Private CA?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/privateca/latest/userguide/short-lived-certificates.html" target="_blank" rel="noopener">Understand AWS Private CA CA modes</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/privateca/latest/userguide/ca-best-practices.html" target="_blank" rel="noopener">AWS Private CA best practices</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/private-ca/pricing/" target="_blank" rel="noopener">AWS Private CA pricing</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
