@@ -79,7 +79,7 @@
         disponibilidad, coste o un equilibrio entre ambos. Por debajo se apoya en dos motores:</p>
       <ul>
         <li><strong>Amazon EC2 Auto Scaling:</strong> crea y mantiene grupos de instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>.</li>
-        <li><strong><a href="../servicio.html?id=application-auto-scaling">Application Auto Scaling</a>:</strong> escala otros recursos: tareas de servicios de
+        <li><strong><a href="application-auto-scaling.html">Application Auto Scaling</a>:</strong> escala otros recursos: tareas de servicios de
           <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, capacidad de lectura y escritura de <a href="dynamodb.html">DynamoDB</a>, réplicas de <a href="aurora.html">Aurora</a>, Spot Fleet,
           concurrencia aprovisionada de <a href="lambda.html">Lambda</a>, variantes de endpoints de <a href="sagemaker-ai.html">SageMaker AI</a>, etc.</li>
       </ul>
@@ -125,7 +125,7 @@
           <thead><tr><th>Recurso</th><th>Motor</th></tr></thead>
           <tbody>
             <tr><td>Instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></td><td><a href="ec2-auto-scaling.html">EC2 Auto Scaling</a></td></tr>
-            <tr><td>Tareas de un servicio de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a></td><td><a href="../servicio.html?id=application-auto-scaling">Application Auto Scaling</a> (Service Auto Scaling)</td></tr>
+            <tr><td>Tareas de un servicio de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a></td><td><a href="application-auto-scaling.html">Application Auto Scaling</a> (Service Auto Scaling)</td></tr>
             <tr><td>Capacidad aprovisionada de <a href="dynamodb.html">DynamoDB</a></td><td>Application Auto Scaling</td></tr>
             <tr><td>Réplicas de <a href="aurora.html">Aurora</a></td><td>Application Auto Scaling</td></tr>
             <tr><td>Varios de los anteriores con una estrategia común</td><td>AWS Auto Scaling (planes de escalado)</td></tr>
@@ -135,7 +135,7 @@
       </div>
 
       <h2 id="precios">Modelo de precios</h2>
-      <p>AWS Auto Scaling y <a href="../servicio.html?id=application-auto-scaling">Application Auto Scaling</a> no tienen coste propio. Se pagan los recursos que
+      <p>AWS Auto Scaling y <a href="application-auto-scaling.html">Application Auto Scaling</a> no tienen coste propio. Se pagan los recursos que
         se añaden al escalar y las alarmas de <a href="cloudwatch.html">CloudWatch</a> que se crean.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
@@ -149,7 +149,7 @@
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Escalar varios recursos de distintos servicios de una aplicación desde un solo sitio"</strong>: AWS Auto Scaling.</li>
-        <li><strong>"Escalar el número de tareas de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>"</strong> o <strong>"la capacidad de <a href="dynamodb.html">DynamoDB</a>"</strong>: <a href="../servicio.html?id=application-auto-scaling">Application Auto Scaling</a>.</li>
+        <li><strong>"Escalar el número de tareas de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>"</strong> o <strong>"la capacidad de <a href="dynamodb.html">DynamoDB</a>"</strong>: <a href="application-auto-scaling.html">Application Auto Scaling</a>.</li>
         <li><strong>"Sustituir instancias no sanas"</strong> o <strong>"crear un grupo"</strong>: <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>, no AWS Auto Scaling.</li>
         <li><strong>"Escalado programado"</strong>: se configura en EC2 Auto Scaling o Application Auto Scaling; los planes solo usan seguimiento de objetivo y predictivo.</li>
       </ul>

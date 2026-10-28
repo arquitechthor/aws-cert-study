@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon VPC Lattice — Apuntes AWS</title>
+<meta name="description" content="Red de aplicaciones gestionada que conecta, protege y monitoriza servicios y recursos entre VPC y cuentas, con autorización de IAM por petición y sin gestionar el enrutamiento. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/vpc-lattice.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon VPC Lattice — Apuntes AWS">
+<meta property="og:description" content="Red de aplicaciones gestionada que conecta, protege y monitoriza servicios y recursos entre VPC y cuentas, con autorización de IAM por petición y sin gestionar el enrutamiento.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/vpc-lattice.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="56" height="56"><span>Amazon VPC Lattice</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Conecta y protege la comunicación entre servicios de varias cuentas sin gestionar redes</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=redes-entrega-contenido#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/redes-entrega-contenido.svg" alt="" width="18" height="18">Redes y entrega de contenido <span class="cat-en">(Networking and Content Delivery)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/vpc-lattice/" target="_blank" rel="noopener">Documentación de Amazon VPC Lattice ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon VPC Lattice es un servicio de <strong>red de aplicaciones</strong> totalmente gestionado. Sirve para que
+        los microservicios y los recursos de una aplicación (APIs, bases de datos, puntos de enlace con nombre <abbr class="sigla sigla-1" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS<span class="sigla-exp"> (Domain Name System: traduce nombres de dominio a direcciones IP)</span></abbr> o <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr>)
+        se encuentren y se hablen entre sí aunque estén repartidos en <strong>muchas <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> y cuentas</strong>, sin montar
+        peering, tablas de rutas ni balanceadores intermedios. Cada petición puede autorizarse con una
+        <strong>política de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a></strong>, y el servicio deja métricas y registros de todo el tráfico.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Servicio:</strong> una pieza de software que se despliega por separado (en <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, contenedores de <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>
+          o <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>, <a href="fargate.html">Fargate</a> o funciones <a href="lambda.html">Lambda</a>). Se define con <strong>agentes de escucha</strong> (protocolo y puerto),
+          <strong>reglas</strong> (prioridad, condiciones y acciones) y <strong>grupos de destino</strong>.</li>
+        <li><strong>Grupo de destino:</strong> los destinos que atienden el servicio: instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, direcciones <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>,
+          funciones Lambda, balanceadores <a href="elb.html"><abbr class="sigla sigla-1" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB<span class="sigla-exp"> (Application Load Balancer: balanceador HTTP/HTTPS)</span></abbr></a>, tareas de <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> o pods de Kubernetes. Se parecen a los de <abbr class="sigla sigla-1" data-s="ELB" data-en="Elastic Load Balancing" tabindex="0">ELB<span class="sigla-exp"> (Elastic Load Balancing)</span></abbr>, pero no son
+          intercambiables.</li>
+        <li><strong>Red de servicios (<em>service network</em>):</strong> el límite lógico que agrupa servicios y
+          recursos. Los clientes de una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> asociada a la red pueden llamar a los servicios de esa red si están
+          autorizados.</li>
+        <li><strong>Recursos, pasarela de recursos y configuración de recursos:</strong> para exponer algo que no es un
+          servicio <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr> (una base de datos <a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>, un nombre <abbr class="sigla" data-s="DNS" data-en="Domain Name System" data-es="traduce nombres de dominio a direcciones IP" tabindex="0">DNS</abbr>), el dueño crea una <em>resource gateway</em> en
+          su <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y una <em>resource configuration</em> que lo representa, y la comparte con <a href="ram.html"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a>.</li>
+        <li><strong>Políticas de autorización (<em>auth policies</em>):</strong> documentos de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> asociados a la red
+          de servicios (control grueso) o a cada servicio (control fino). Con el tipo de autenticación
+          <code>AWS_IAM</code>, el cliente debe <strong>firmar cada petición con SigV4</strong>; para que pase, tanto la
+          política de autorización como la de identidad del llamante deben permitirlo.</li>
+        <li><strong>Directorio de servicios:</strong> registro central de los servicios propios o compartidos con la
+          cuenta.</li>
+        <li><strong>Funciones por rol:</strong> el <strong>dueño de la red</strong> (equipo de red o de plataforma)
+          crea y comparte la red y fija el acceso general; el <strong>dueño del servicio</strong> (desarrollo) crea su
+          servicio, sus reglas y su control de acceso fino.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Comunicación entre microservicios repartidos en decenas de cuentas de una organización, incluso con
+          <strong>rangos <abbr class="sigla sigla-1" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR<span class="sigla-exp"> (Classless Inter-Domain Routing: notación de rangos de IP como 10.0.0.0/16)</span></abbr> solapados</strong>.</li>
+        <li>Seguridad de confianza cero entre servicios: cada llamada se autentica con la identidad de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> del que llama,
+          no por su <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr>.</li>
+        <li>Migración y modernización: enrutar por ruta o cabecera una parte del tráfico a la versión nueva (por
+          ejemplo, de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> a <a href="lambda.html">Lambda</a> o contenedores) con pesos en las reglas.</li>
+        <li>Compartir de forma privada una base de datos o un servicio de otra cuenta como recurso de la red.</li>
+        <li>Acceso desde el centro de datos a los servicios de la red mediante un punto de enlace de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> de tipo
+          <em>service network</em> a través de <a href="direct-connect.html">Direct Connect</a> o <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para dar <strong>acceso desde internet</strong> a tu aplicación: un balanceador <a href="elb.html"><abbr class="sigla" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB</abbr></a> o <abbr class="sigla sigla-1" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB<span class="sigla-exp"> (Network Load Balancer: balanceador TCP/UDP)</span></abbr>, <a href="api-gateway.html">API Gateway</a> o
+          <a href="cloudfront.html">CloudFront</a>.</li>
+        <li>Para conectar redes enteras con enrutamiento <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> general (todas las subredes entre sí, tráfico no ligado a
+          un servicio concreto): <a href="transit-gateway.html">Transit Gateway</a> o <a href="../servicio.html?id=cloud-wan">Cloud <abbr class="sigla sigla-1" data-s="WAN" data-en="Wide Area Network" data-es="red de área extensa" tabindex="0">WAN<span class="sigla-exp"> (Wide Area Network: red de área extensa)</span></abbr></a>.</li>
+        <li>Para publicar un único servicio a muchos consumidores externos tipo <abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr>, cuando basta un punto de enlace
+          por consumidor: <a href="privatelink.html">PrivateLink</a>.</li>
+        <li>Si la aplicación necesita WebSocket de forma nativa: Lattice no lo admite directamente (solo con agentes de
+          escucha <abbr class="sigla sigla-1" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS<span class="sigla-exp"> (Transport Layer Security: cifrado de las conexiones)</span></abbr> o como recurso).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>VPC Lattice</th><th><a href="privatelink.html">PrivateLink</a></th><th><a href="transit-gateway.html">Transit Gateway</a></th></tr></thead>
+          <tbody>
+            <tr><td>Unidad que conecta</td><td>Servicios y recursos</td><td>Un servicio por punto de enlace</td><td>Redes (<a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> y <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>) completas</td></tr>
+            <tr><td><abbr class="sigla" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR</abbr> solapados</td><td>Sí</td><td>Sí</td><td>No</td></tr>
+            <tr><td>Autorización por petición con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a></td><td>Sí (políticas de autorización)</td><td>Política del punto de enlace</td><td>No (grupos de seguridad y <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr>)</td></tr>
+            <tr><td>Enrutamiento de capa 7 (ruta, cabecera, pesos)</td><td>Sí</td><td>No</td><td>No</td></tr>
+            <tr><td>Quién lo gestiona</td><td>Red de plataforma + equipos de servicio</td><td>Proveedor y consumidor</td><td>Equipo de red</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Dentro de un clúster, <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> Service Connect y las mallas de servicios hacen un papel parecido; Lattice lo extiende
+        entre <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> y cuentas sin instalar intermediarios (<em>sidecars</em>) en cada tarea.</p>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Tres dimensiones por servicio: las <strong>horas que el servicio está aprovisionado</strong>, los
+        <strong>GB procesados</strong> (lo que recibe más lo que responde) y el número de <strong>peticiones <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr></strong>
+        (o de <strong>conexiones <abbr class="sigla sigla-1" data-s="TCP" data-en="Transmission Control Protocol" data-es="protocolo de transporte fiable" tabindex="0">TCP<span class="sigla-exp"> (Transmission Control Protocol: protocolo de transporte fiable)</span></abbr></strong> con agentes de escucha <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr>). Para recursos, el dueño de la red paga por hora
+        cada configuración de recursos asociada y el consumidor, los datos que intercambia. No hay cargo aparte por el
+        tráfico <strong>entre zonas de disponibilidad</strong>: va incluido en el de datos procesados.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Defensa en capas: sin asociación de la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> (o punto de enlace de tipo <em>service network</em>) no hay
+          acceso; después, grupos de seguridad en la asociación de la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr> (hasta cinco); después, políticas de
+          autorización en la red y en cada servicio.</li>
+        <li>Las políticas de autorización de la red <strong>no se aplican a las configuraciones de recursos</strong>.</li>
+        <li>Agentes de escucha <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> con certificado gestionado por Lattice (o propio con <a href="acm.html"><abbr class="sigla sigla-1" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM<span class="sigla-exp"> (AWS Certificate Manager)</span></abbr></a> y dominio personalizado),
+          y agentes <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> que <strong>no terminan el cifrado</strong> (paso directo hasta el destino).</li>
+        <li>Afinidad de zona: el cliente recibe la <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> de Lattice de su misma zona y, si cae, la de otra.</li>
+        <li>Registros de acceso a <a href="cloudwatch.html">CloudWatch</a> Logs, <a href="data-firehose.html">Data Firehose</a> o <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, y métricas por petición en CloudWatch.</li>
+        <li>Compartición entre cuentas de redes, servicios y recursos con <a href="ram.html"><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Microservicios en muchas cuentas, <abbr class="sigla" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR</abbr> solapados, mínima gestión de red"</strong>: VPC Lattice, no
+          peering ni <a href="transit-gateway.html">Transit Gateway</a>.</li>
+        <li><strong>"Autorizar cada llamada entre servicios con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>"</strong>: política de autorización con
+          <code>AWS_IAM</code>; el cliente firma con SigV4 (si no firma, recibe 403).</li>
+        <li><strong>"La aplicación debe descifrar ella misma el tráfico"</strong>: agente de escucha <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr> (paso
+          directo), no <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr>.</li>
+        <li><strong>"Acceso desde el centro de datos"</strong>: punto de enlace de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> de tipo <em>service network</em>
+          por <a href="direct-connect.html">Direct Connect</a> o <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>.</li>
+        <li><strong>"Compartir una base de datos <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> de otra cuenta"</strong>: pasarela y configuración de recursos
+          compartidas con <a href="ram.html"><abbr class="sigla" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM</abbr></a>.</li>
+        <li><strong>"Probar la versión nueva con el 10 % del tráfico"</strong>: reglas con grupos de destino ponderados.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="vpc-lattice"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html" target="_blank" rel="noopener">What is Amazon VPC Lattice?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc-lattice/latest/ug/auth-policies.html" target="_blank" rel="noopener">Control access to VPC Lattice services using auth policies</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html" target="_blank" rel="noopener">Listeners for your VPC Lattice service</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/general/latest/gr/vpc-lattice-service.html" target="_blank" rel="noopener">Amazon VPC Lattice endpoints and quotas</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/vpc/lattice/pricing/" target="_blank" rel="noopener">Amazon VPC Lattice pricing</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -34,8 +34,8 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   usuario: simulacro por certificación (`simulacro.html`), progreso y repaso de falladas
   (`progreso.html`), `sitemap.xml` + `robots.txt` (en la raíz del dominio), enlace desde `kopi-web`
   y preguntas de ordenar y emparejar. Además, etiqueta ⚠ "Pregunta difícil" (`"dificil": true`).
-- **Próximo paso (siguiente sesión):** publicar las guías de la **Prioridad 6** (servicios nuevos de
-  SAP-C03 y DVA-C03) y después la **Fase 5** (profundización, ahora para SAP-C03), tarea
+- **Próximo paso (siguiente sesión):** publicar las 15 guías que quedan de la **Prioridad 6** (servicios
+  nuevos de SAP-C03 y DVA-C03; hechas VPC Lattice, Fault Injection Service, Application Auto Scaling y SAM) y después la **Fase 5** (profundización, ahora para SAP-C03), tarea
   5.1 y luego los servicios de la cola 5.A en orden. Pendiente de datos: AIF-C01 solo tiene 5
   preguntas de "Fundamentos de IA generativa" (pesa el 24 %, un simulacro completo pide 16); el
   simulacro completa con otros dominios y lo avisa.
@@ -527,18 +527,18 @@ esta lista es solo el orden de trabajo.
 Añadidos el 28/10/2026 (tarea 0.9) en `pendiente`, sin icono propio (el paquete de iconos no está
 en este equipo: copiar el SVG de cada uno cuando se publique, si lo tiene).
 
-- [ ] `vpc-lattice` Amazon VPC Lattice — Redes y entrega de contenido (SAP-C03)
+- [x] `vpc-lattice` Amazon VPC Lattice — Redes y entrega de contenido (SAP-C03)
 - [ ] `cloud-wan` AWS Cloud WAN — Redes y entrega de contenido (SAP-C03)
 - [ ] `verified-access` AWS Verified Access — Seguridad, identidad y cumplimiento (SAP-C03)
 - [ ] `verified-permissions` Amazon Verified Permissions — Seguridad, identidad y cumplimiento (SAP-C03)
 - [ ] `security-lake` Amazon Security Lake — Seguridad, identidad y cumplimiento (SAP-C03)
 - [ ] `private-ca` AWS Private CA — Seguridad, identidad y cumplimiento (DVA-C03)
-- [ ] `sam` AWS SAM — Herramientas para desarrolladores (DVA-C03)
-- [ ] `application-auto-scaling` AWS Application Auto Scaling — Computación (SAP-C03)
+- [x] `sam` AWS SAM — Herramientas para desarrolladores (DVA-C03)
+- [x] `application-auto-scaling` AWS Application Auto Scaling — Computación (SAP-C03)
 - [ ] `local-zones` AWS Local Zones — Computación (SAP-C03)
 - [ ] `memorydb` Amazon MemoryDB — Base de datos (SAP-C03)
 - [ ] `resilience-hub` AWS Resilience Hub — Administración y gobernanza (SAP-C03)
-- [ ] `fault-injection-service` AWS Fault Injection Service — Administración y gobernanza (SAP-C03; en la guía, categoría *Testing and Resilience*)
+- [x] `fault-injection-service` AWS Fault Injection Service — Administración y gobernanza (SAP-C03; en la guía, categoría *Testing and Resilience*)
 - [ ] `clean-rooms` AWS Clean Rooms — Análisis (SAP-C03)
 - [ ] `cost-categories` AWS Cost Categories — Administración financiera en la nube (SAP-C03)
 - [ ] `reserved-instances` Reserved Instances — Administración financiera en la nube (SAP-C03)
@@ -929,3 +929,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-16 | **IAM, servicio clave** (pedido por el usuario): `"clave": true`, sección "A fondo: temas avanzados" (evaluación de una petición paso a paso, rol frente a política de recurso entre cuentas y *confused deputy*, ABAC con etiquetas de sesión, delegación sin escalada con límites de permisos e `iam:PassRole`, tabla de cuotas y organización sin credenciales permanentes: raíz centralizado con `sts:AssumeRoot`, Roles Anywhere, OIDC, Pod Identity y Access Analyzer) y 5 preguntas difíciles de SAP-C02 (iam-012 a iam-016, una por dominio y dos de complejidad organizativa). Datos contrastados con la documentación actual. Python 3.12 instalado en el equipo (winget, usuario) para `revisar_texto.py`. Probado en navegador (16 preguntas, 5 difíciles, aviso de la cabecera, sin desplazamiento horizontal a 375 px). Tarea 5.2: `iam` hecho. |
 | 2026-10-28 | **Tarea 0.9: guías SAP-C03 y DVA-C03** (pedido por el usuario, que también pidió quitar las que se retiran): `certificaciones.json` sin SAP-C02 ni DVA-C02 y con SAP-C03 y DVA-C03 vigentes (dominios, examen, `examenDesde`); `data/fuentes/SAP-C03.txt` y `DVA-C03.txt` (las de C02 se borran; quedan en git); `servicios.json` con el alcance nuevo y 19 servicios nuevos en `pendiente` (Prioridad 6); preguntas migradas: 207 a SAP-C03 en cinco dominios, las de DVA a DVA-C03 y 170 sin certificación por estar su servicio fuera de alcance; escenarios de Arquitecto, chips y meta description de las guías, avisos de las guías que citaban SAP-C02, enlaces a los "Próximamente" nuevos (`revisar_texto.py --escribir`), `sitemap.xml`, README y `CLAUDE.md`. Nota "Examen disponible a partir del…" en la tarjeta y en la ficha del simulacro. |
 | 2026-10-28 | **Servicios fuera de los exámenes** (pedido por el usuario): siguen en el sitio salvo los retirados o integrados en otro servicio. Borrados `iot-1-click`, `iot-events`, `iot-things-graph`, `proton`, `pinpoint` y `managed-blockchain` (página, preguntas, icono y entrada; ninguna otra página los enlazaba) y la categoría Blockchain (20 categorías, 177 servicios). `sitemap.xml` regenerado. |
+| 2026-10-28 | **Prioridad 6: 4 guías nuevas** (pedidas por el usuario): VPC Lattice, Fault Injection Service y Application Auto Scaling (SAP-C03, 7 preguntas cada una, 2 difíciles en Lattice y 1 en FIS y en Application Auto Scaling) y SAM (DVA-C03, 8 preguntas). Datos contrastados con la documentación actual; icono de su categoría (sin paquete de iconos en este equipo). Enlaces "Próximamente" reapuntados (`--publicado`), `sitemap.xml` (168 URL). La "CLI de SAM" se redacta como "herramienta de línea de comandos `sam`" para que `revisar_texto.py` no la enlace a AWS CLI. Probado en navegador a 375 px (sin desplazamiento horizontal, cuestionarios cargados, sin errores en consola). Pendiente de decisión del usuario: pasar a SAA-C03 las 48 preguntas sin certificación de servicios que siguen en SAA. |

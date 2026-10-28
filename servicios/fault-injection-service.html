@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Fault Injection Service — Apuntes AWS</title>
+<meta name="description" content="Servicio gestionado de ingeniería del caos: ejecuta experimentos que provocan fallos reales (paradas, latencia, cortes de red o de una zona) con condiciones de parada para comprobar la resiliencia. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/fault-injection-service.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Fault Injection Service — Apuntes AWS">
+<meta property="og:description" content="Servicio gestionado de ingeniería del caos: ejecuta experimentos que provocan fallos reales (paradas, latencia, cortes de red o de una zona) con condiciones de parada para comprobar la resiliencia.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/fault-injection-service.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="56" height="56"><span>AWS Fault Injection Service</span></h1>
+      <p class="full-name">AWS Fault Injection Service (AWS FIS)</p>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Provoca fallos controlados en tus recursos para probar cómo resiste la aplicación</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-gobernanza#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-gobernanza.svg" alt="" width="18" height="18">Administración y gobernanza <span class="cat-en">(Management and Governance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/fis/" target="_blank" rel="noopener">Documentación de AWS Fault Injection Service ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Fault Injection Service (antes <em>Fault Injection Simulator</em>) es el servicio de
+        <strong>ingeniería del caos</strong> de AWS. Ejecuta <strong>experimentos</strong> que provocan fallos de verdad
+        sobre recursos reales (parar instancias, añadir latencia, cortar la red, simular la caída de una zona) para
+        ver cómo responde la aplicación y si se recupera como se espera. Incluye controles para hacerlo con seguridad,
+        incluso en producción: si algo se tuerce, el experimento se detiene solo.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Plantilla de experimento:</strong> el plano del experimento, con sus acciones, objetivos,
+          condiciones de parada y el rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> que usa FIS. Cada ejecución de una plantilla es un
+          <strong>experimento</strong>.</li>
+        <li><strong>Acciones:</strong> lo que FIS hace a un recurso durante un tiempo: parar o reiniciar instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>,
+          estresar <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> o memoria con <a href="systems-manager.html">Systems Manager</a>, inyectar errores o limitación (<em>throttling</em>) en las
+          llamadas a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de un rol, cortar la conectividad de una subred, hacer conmutar una base de datos, y
+          acciones para <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>, <a href="lambda.html">Lambda</a> o <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>. Pueden ir en serie o en paralelo.</li>
+        <li><strong>Objetivos (<em>targets</em>):</strong> los recursos afectados, elegidos por <abbr class="sigla sigla-1" data-s="ARN" data-en="Amazon Resource Name" data-es="identificador único de un recurso de AWS" tabindex="0">ARN<span class="sigla-exp"> (Amazon Resource Name: identificador único de un recurso de AWS)</span></abbr>, por etiquetas o
+          por filtros, todos o solo una parte (un número o un porcentaje), para limitar el <strong>radio de
+          impacto</strong>.</li>
+        <li><strong>Condiciones de parada:</strong> alarmas de <a href="cloudwatch.html">CloudWatch</a>; si una salta, FIS detiene el experimento.</li>
+        <li><strong>Rol del experimento:</strong> rol de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> que FIS asume para actuar; sin el permiso de una acción,
+          esa acción falla.</li>
+        <li><strong>Biblioteca de escenarios:</strong> plantillas listas para fallos complejos, como <strong><abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>:
+          Power Interruption</strong> (pérdida total de una zona), <strong>Cross-Region: Connectivity</strong> (corte
+          entre regiones) o fallos parciales y difíciles de detectar (<em>gray failures</em>), como la lentitud de una
+          zona.</li>
+        <li><strong>Experimentos multicuenta:</strong> desde una <strong>cuenta orquestadora</strong> se actúa sobre
+          recursos de varias <strong>cuentas de destino</strong> de la misma región, con encadenamiento de roles; las
+          cuentas afectadas lo ven en su panel de AWS Health.</li>
+        <li><strong>Registros e informes:</strong> la actividad del experimento puede ir a CloudWatch Logs o <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, y las
+          llamadas que hace FIS quedan en <a href="cloudtrail.html">CloudTrail</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Comprobar que una arquitectura multi-AZ aguanta la pérdida de una zona y medir cuánto tarda en
+          recuperarse.</li>
+        <li>Validar un plan de recuperación ante desastres entre regiones cortando la conectividad entre ellas.</li>
+        <li>Probar reintentos con espera exponencial e interruptores (<em>circuit breakers</em>) inyectando errores y
+          limitación en las <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>.</li>
+        <li>Jornadas de juego (<em>game days</em>) periódicas y experimentos dentro de la canalización de <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> antes
+          de pasar a producción.</li>
+        <li>Comprobar que las alarmas y los procedimientos de respuesta a incidentes saltan de verdad.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>evaluar</strong> si una aplicación cumple sus objetivos de <abbr class="sigla sigla-1" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO<span class="sigla-exp"> (Recovery Time Objective: cuánto tiempo puedes estar sin servicio)</span></abbr> y <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr> sin romper nada: Resilience
+          Hub (que, eso sí, puede recomendar experimentos de FIS).</li>
+        <li>Para pruebas de carga o rendimiento: herramientas de carga (FIS puede añadir estrés, pero no genera
+          tráfico de usuarios).</li>
+        <li>Para conmutar de verdad el tráfico durante un incidente real: el desplazamiento de zona de Application
+          Recovery Controller o <a href="route-53.html">Route 53</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Fault Injection Service</th><th><a href="../servicio.html?id=resilience-hub">Resilience Hub</a></th><th><a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué hace</td><td>Provoca fallos reales y controlados</td><td>Evalúa la resiliencia frente a objetivos</td><td>Replica servidores para recuperarlos</td></tr>
+            <tr><td>Afecta a los recursos</td><td>Sí, a propósito</td><td>No</td><td>Solo al lanzar la recuperación</td></tr>
+            <tr><td>Pregunta que responde</td><td>¿Aguanta de verdad este fallo?</td><td>¿Cumple mi <abbr class="sigla" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO</abbr> y <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> en teoría?</td><td>¿Puedo levantar mis servidores en AWS?</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga <strong>por minuto de acción</strong>, desde que empieza hasta que acaba, multiplicado por el número de
+        <strong>cuentas de destino</strong> del experimento. No hay coste por las plantillas.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>FIS hace <strong>acciones reales</strong>: AWS recomienda planificar y probar primero en preproducción.</li>
+        <li>Mínimo privilegio en el rol del experimento y objetivos acotados por etiquetas o porcentaje.</li>
+        <li>Condiciones de parada con alarmas de <a href="cloudwatch.html">CloudWatch</a> y parada manual en cualquier momento.</li>
+        <li>Permisos para crear y lanzar experimentos controlados con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> (por ejemplo, solo el equipo de fiabilidad).</li>
+        <li>Auditoría con <a href="cloudtrail.html">CloudTrail</a> en todas las cuentas implicadas.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Ingeniería del caos", "inyectar fallos", "game day"</strong>: Fault Injection Service.</li>
+        <li><strong>"Simular la caída de una zona de disponibilidad completa"</strong>: escenario <abbr class="sigla" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ</abbr>: Power
+          Interruption.</li>
+        <li><strong>"Detener el experimento si suben los errores"</strong>: condición de parada con una alarma de
+          <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li><strong>"Un solo experimento sobre una aplicación repartida en varias cuentas"</strong>: experimento
+          multicuenta desde una cuenta orquestadora.</li>
+        <li><strong>"Probar la reacción ante limitación de la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>"</strong>: acción
+          <code>aws:fis:inject-api-throttle-error</code> sobre el rol que hace las llamadas.</li>
+        <li><strong>"Evaluar sin provocar fallos"</strong>: <a href="../servicio.html?id=resilience-hub">Resilience Hub</a>, no FIS.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="fault-injection-service"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/fis/latest/userguide/what-is.html" target="_blank" rel="noopener">What is AWS Fault Injection Service?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/fis/latest/userguide/fis-actions-reference.html" target="_blank" rel="noopener">AWS FIS Actions reference</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/fis/latest/userguide/multi-account.html" target="_blank" rel="noopener">Working with multi-account experiments for AWS FIS</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/fis/faqs/" target="_blank" rel="noopener">AWS Fault Injection Service FAQs</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

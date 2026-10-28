@@ -1,0 +1,180 @@
+[
+  {
+    "id": "sam-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Pruebas e implementación",
+    "enunciado": "Un desarrollador quiere probar en su portátil una función Lambda que está detrás de una API de API Gateway, haciendo peticiones HTTP con curl antes de desplegar. ¿Qué comando de la CLI de SAM usa?",
+    "opciones": [
+      "sam deploy --guided",
+      "sam local start-api",
+      "sam logs --tail",
+      "sam pipeline init"
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "sam local start-api emula en local la API (con contenedores de Docker) y atiende peticiones HTTP que invocan la función. deploy despliega en AWS, logs lee los registros de la nube y pipeline genera una canalización de CI/CD.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/using-sam-cli-local-invoke.html"
+    ]
+  },
+  {
+    "id": "sam-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Pruebas e implementación",
+    "enunciado": "Un equipo quiere que cada versión nueva de una función reciba primero el 10 % del tráfico durante 10 minutos y después el 100 %, y que todo se revierta si una alarma de errores salta. ¿Qué añade a la función en la plantilla SAM?",
+    "opciones": [
+      "Una sección Globals con Timeout: 600.",
+      "ReservedConcurrentExecutions: 10.",
+      "Un evento Schedule cada 10 minutos.",
+      "AutoPublishAlias y DeploymentPreference de tipo Canary10Percent10Minutes con la alarma en Alarms."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "AutoPublishAlias publica una versión y mueve un alias, y DeploymentPreference usa CodeDeploy para el desvío canario, revirtiendo si salta alguna de las alarmas indicadas. Las otras opciones no controlan el desvío de tráfico.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/automating-updates-to-serverless-apps.html"
+    ]
+  },
+  {
+    "id": "sam-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Solución de problemas y optimización",
+    "enunciado": "Al desplegar una plantilla SAM con DeploymentPreference en una función, la transformación falla. ¿Qué falta casi con seguridad?",
+    "opciones": [
+      "La propiedad AutoPublishAlias en la función.",
+      "Un recurso AWS::CodeDeploy::Application escrito a mano.",
+      "La sección Outputs.",
+      "Una capa (layer) de Lambda."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "DeploymentPreference exige AutoPublishAlias en la misma función; sin él la transformación da error. SAM crea él mismo los recursos de CodeDeploy, y Outputs o las capas no son obligatorios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-function-deploymentpreference.html"
+    ]
+  },
+  {
+    "id": "sam-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Seguridad",
+    "enunciado": "Una función definida con SAM solo debe leer y escribir en la tabla Pedidos de DynamoDB, con el mínimo privilegio y el menor código posible en la plantilla. ¿Qué escribe?",
+    "opciones": [
+      "Policies: AmazonDynamoDBFullAccess.",
+      "Un usuario de IAM con claves de acceso en variables de entorno.",
+      "Policies con la plantilla de política DynamoDBCrudPolicy y TableName: Pedidos.",
+      "Role: el rol de administrador de la cuenta."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las plantillas de políticas de SAM generan permisos acotados a un recurso concreto: DynamoDBCrudPolicy con el nombre de la tabla da lectura y escritura solo sobre ella. La política gestionada completa y el rol de administrador dan de más, y las claves en variables de entorno son una mala práctica.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-template-list.html"
+    ]
+  },
+  {
+    "id": "sam-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Un desarrollador tiene una plantilla de CloudFormation y quiere empezar a usar recursos como AWS::Serverless::Function en ella. ¿Qué tiene que añadir?",
+    "opciones": [
+      "Un parámetro llamado Serverless.",
+      "La línea Transform: AWS::Serverless-2016-10-31.",
+      "Una sección Mappings con los entornos de ejecución.",
+      "Nada: CloudFormation entiende los tipos SAM sin más."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La transformación AWS::Serverless-2016-10-31 indica a CloudFormation que expanda los recursos SAM en recursos normales; con ella, ambos tipos conviven en la misma plantilla. Sin la transformación, los tipos SAM no son válidos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html"
+    ]
+  },
+  {
+    "id": "sam-006",
+    "tipo": "multiple",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Pruebas e implementación",
+    "enunciado": "¿Qué dos afirmaciones sobre el despliegue con la CLI de SAM son correctas? (Elige 2.)",
+    "opciones": [
+      "sam deploy crea y ejecuta un conjunto de cambios de CloudFormation.",
+      "SAM despliega llamando directamente a la API de Lambda, sin CloudFormation.",
+      "sam deploy --guided guarda las respuestas en samconfig.toml para los siguientes despliegues.",
+      "sam local invoke ejecuta la función en la cuenta de AWS.",
+      "Una plantilla SAM no puede incluir recursos normales de CloudFormation."
+    ],
+    "correctas": [
+      0,
+      2
+    ],
+    "explicacion": "SAM transforma la plantilla y despliega con un conjunto de cambios de CloudFormation, y --guided deja la configuración en samconfig.toml. sam local invoke se ejecuta en un contenedor local, y las plantillas SAM admiten también recursos normales.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html"
+    ]
+  },
+  {
+    "id": "sam-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "En un entorno de desarrollo, un programador quiere que cada vez que guarda un cambio en el código de una función, este llegue a la nube en segundos para probarlo, sin esperar a un despliegue completo. ¿Qué usa?",
+    "opciones": [
+      "sam sync --watch",
+      "sam build --use-container",
+      "sam local generate-event",
+      "sam deploy --no-execute-changeset"
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "sam sync --watch vigila los cambios locales y los sincroniza con la nube rápidamente, saltándose cuando puede el despliegue completo; por eso es solo para desarrollo. build compila, generate-event crea eventos de prueba y --no-execute-changeset deja el despliegue sin aplicar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html"
+    ]
+  },
+  {
+    "id": "sam-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "DVA-C03"
+    ],
+    "dominio": "Desarrollo con servicios de AWS",
+    "enunciado": "Una plantilla SAM tiene doce funciones y todas deben usar el mismo entorno de ejecución, 30 segundos de tiempo de espera y la misma variable de entorno. ¿Cómo se evita repetirlo en cada función?",
+    "opciones": [
+      "Con una capa de Lambda.",
+      "Con una pila anidada por función.",
+      "Con un parámetro por propiedad.",
+      "Con la sección Globals."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La sección Globals define propiedades comunes que heredan todas las funciones (y APIs) de la plantilla. Una capa comparte código, no configuración, y las pilas anidadas o los parámetros no evitan repetir las propiedades.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html"
+    ]
+  }
+]

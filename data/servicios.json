@@ -118,8 +118,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Escala automáticamente recursos de otros servicios distintos de EC2 (servicios de ECS, tablas de DynamoDB, réplicas de Aurora, concurrencia aprovisionada de Lambda…) con políticas de seguimiento, por pasos, programadas o predictivas.",
     "frase": "Ajusta la capacidad de ECS, DynamoDB, Aurora o Lambda según métricas o un horario",
     "documentacion": "https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html"
   },
@@ -1175,8 +1175,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio gestionado de ingeniería del caos: ejecuta experimentos que provocan fallos reales (paradas, latencia, cortes de red o de una zona) con condiciones de parada para comprobar la resiliencia.",
     "frase": "Provoca fallos controlados en tus recursos para probar cómo resiste la aplicación",
     "documentacion": "https://docs.aws.amazon.com/fis/"
   },
@@ -2065,8 +2065,8 @@
     "certificaciones": [
       "DVA-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Marco de código abierto para aplicaciones sin servidor: plantillas abreviadas que se transforman en CloudFormation y una CLI para compilar, probar en local, sincronizar y desplegar.",
     "frase": "Plantillas abreviadas para definir, probar en local y desplegar aplicaciones sin servidor",
     "documentacion": "https://docs.aws.amazon.com/serverless-application-model/"
   },
@@ -2541,8 +2541,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Red de aplicaciones gestionada que conecta, protege y monitoriza servicios y recursos entre VPC y cuentas, con autorización de IAM por petición y sin gestionar el enrutamiento.",
     "frase": "Conecta y protege la comunicación entre servicios de varias cuentas sin gestionar redes",
     "documentacion": "https://docs.aws.amazon.com/vpc-lattice/"
   },

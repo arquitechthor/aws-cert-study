@@ -1,0 +1,160 @@
+[
+  {
+    "id": "application-auto-scaling-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Una API sobre Lambda sufre arranques en frío en horario laboral. La empresa quiere 200 de concurrencia aprovisionada de 8:00 a 20:00 en días laborables y 20 el resto del tiempo, sin procesos propios. ¿Qué solución lo consigue?",
+    "opciones": [
+      "Una regla de EventBridge que invoque una función que cambie la concurrencia reservada.",
+      "Un grupo de EC2 Auto Scaling con instancias precalentadas.",
+      "Acciones programadas de Application Auto Scaling sobre la concurrencia aprovisionada del alias de la función.",
+      "Subir la memoria de la función para reducir el arranque en frío."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Application Auto Scaling escala la concurrencia aprovisionada de un alias o versión de Lambda y admite acciones programadas que cambian el mínimo y el máximo por horario. La concurrencia reservada no precalienta entornos, EC2 Auto Scaling no aplica y más memoria no evita el arranque en frío.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html"
+    ]
+  },
+  {
+    "id": "application-auto-scaling-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Un clúster de Aurora PostgreSQL recibe picos de consultas de lectura varias veces al día. El equipo quiere añadir y quitar réplicas de lectura de forma automática según la CPU media de las réplicas. ¿Qué usa?",
+    "opciones": [
+      "Una política de seguimiento de objetivo de Application Auto Scaling sobre el número de réplicas de Aurora.",
+      "EC2 Auto Scaling con un grupo de instancias de base de datos.",
+      "Multi-AZ con una instancia en espera.",
+      "Una función Lambda que cree réplicas cuando salte una alarma."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El escalado automático de réplicas de Aurora lo hace Application Auto Scaling, con seguimiento de objetivo sobre la CPU o las conexiones medias de las réplicas. EC2 Auto Scaling no gestiona réplicas de Aurora, la instancia en espera no atiende lecturas y una función propia añade trabajo innecesario.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/application/userguide/integrated-services-list.html"
+    ]
+  },
+  {
+    "id": "application-auto-scaling-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "El número de tareas de un servicio de ECS con seguimiento de objetivo sube y baja varias veces cada hora: al reducirse, la CPU vuelve a superar el objetivo y se vuelve a ampliar. ¿Qué ajuste lo estabiliza con menos cambios?",
+    "opciones": [
+      "Desactivar la política y fijar el número de tareas.",
+      "Pasar a una política de escalado por pasos sin enfriamiento.",
+      "Bajar la capacidad máxima del objetivo escalable.",
+      "Alargar el periodo de enfriamiento de reducción (ScaleInCooldown)."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Un enfriamiento de reducción más largo hace que el servicio reduzca con más calma y evita la oscilación. Fijar las tareas pierde la elasticidad, quitar el enfriamiento la empeora y bajar el máximo no afecta a la reducción.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/application/APIReference/API_TargetTrackingScalingPolicyConfiguration.html"
+    ]
+  },
+  {
+    "id": "application-auto-scaling-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Una tabla de DynamoDB en modo aprovisionado debe crecer automáticamente con la carga, pero la empresa quiere reducir la capacidad solo a mano tras revisar el consumo. ¿Cómo se configura?",
+    "opciones": [
+      "Una capacidad mínima igual a la máxima.",
+      "Seguimiento de objetivo con DisableScaleIn activado.",
+      "Cambiar la tabla al modo bajo demanda.",
+      "Suspender el escalado programado."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con DisableScaleIn, la política de seguimiento de objetivo solo añade capacidad y la reducción queda en manos del equipo. Igualar mínimo y máximo impide crecer, el modo bajo demanda no usa capacidad aprovisionada y suspender lo programado no afecta a la política.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/application/APIReference/API_TargetTrackingScalingPolicyConfiguration.html"
+    ]
+  },
+  {
+    "id": "application-auto-scaling-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "¿Qué tres recursos puede escalar Application Auto Scaling? (Elige 3.)",
+    "opciones": [
+      "El número de tareas de un servicio de Amazon ECS.",
+      "Las instancias de un grupo de EC2 Auto Scaling.",
+      "La capacidad de lectura y escritura de un índice secundario global de DynamoDB.",
+      "La concurrencia aprovisionada de una función Lambda.",
+      "El tamaño de un depósito de S3."
+    ],
+    "correctas": [
+      0,
+      2,
+      3
+    ],
+    "explicacion": "Application Auto Scaling escala servicios de ECS, tablas e índices de DynamoDB, concurrencia aprovisionada de Lambda, réplicas de Aurora y otros recursos. Las instancias de un grupo las escala EC2 Auto Scaling, y S3 no tiene capacidad que escalar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html"
+    ]
+  },
+  {
+    "id": "application-auto-scaling-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Durante una ventana de mantenimiento de dos horas, un servicio de ECS no debe cambiar de tamaño. El equipo quiere conservar sus políticas de seguimiento y programadas para que vuelvan a funcionar después, sin recrearlas. ¿Qué hace?",
+    "opciones": [
+      "Suspender el escalado hacia fuera, hacia dentro y programado del objetivo escalable, y reanudarlo después.",
+      "Borrar las políticas y volver a crearlas desde CloudFormation al terminar.",
+      "Poner la capacidad máxima a cero.",
+      "Desactivar las alarmas de CloudWatch que creó la política."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Application Auto Scaling permite suspender y reanudar el escalado de un objetivo (hacia fuera, hacia dentro y programado) sin borrar las políticas. Borrar y recrear es más trabajo y arriesga errores, un máximo de cero apagaría el servicio, y las alarmas de la política las gestiona el propio servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cli/v1/reference/application-autoscaling/index.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "application-auto-scaling-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Un operador cambió el umbral de una alarma de CloudWatch creada por una política de seguimiento de objetivo de Application Auto Scaling, y al poco tiempo la alarma volvió a su valor anterior. ¿Qué debería haber hecho?",
+    "opciones": [
+      "Crear una copia de la alarma con el umbral nuevo.",
+      "Activar la protección contra borrado de la alarma.",
+      "Cambiar el valor objetivo de la política de seguimiento.",
+      "Subir el periodo de enfriamiento de ampliación."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las alarmas de una política de seguimiento de objetivo las crea y gestiona Application Auto Scaling: no se editan a mano; se cambia el valor objetivo de la política. Una alarma copiada no dispara la política y las otras opciones no cambian el umbral.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html"
+    ]
+  }
+]

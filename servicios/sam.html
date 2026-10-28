@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS SAM — Apuntes AWS</title>
+<meta name="description" content="Marco de código abierto para aplicaciones sin servidor: plantillas abreviadas que se transforman en CloudFormation y una CLI para compilar, probar en local, sincronizar y desplegar. Apuntes y preguntas de práctica para DVA-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/sam.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS SAM — Apuntes AWS">
+<meta property="og:description" content="Marco de código abierto para aplicaciones sin servidor: plantillas abreviadas que se transforman en CloudFormation y una CLI para compilar, probar en local, sincronizar y desplegar.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/sam.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="56" height="56"><span>AWS SAM</span></h1>
+      <p class="full-name">AWS Serverless Application Model (AWS SAM)</p>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Plantillas abreviadas para definir, probar en local y desplegar aplicaciones sin servidor</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=herramientas-desarrolladores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="18" height="18">Herramientas para desarrolladores <span class="cat-en">(Developer Tools)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=DVA-C03#catalogo" title="AWS Certified Developer – Associate">DVA-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/serverless-application-model/" target="_blank" rel="noopener">Documentación de AWS SAM ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS <abbr class="sigla sigla-1" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM<span class="sigla-exp"> (Serverless Application Model: extensión de CloudFormation para aplicaciones sin servidores)</span></abbr> es un marco de <strong>código abierto</strong> para construir aplicaciones sin servidor como
+        <strong>infraestructura como código</strong>. Tiene dos partes: las <strong>plantillas <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr></strong>, una
+        extensión de <a href="cloudformation.html">CloudFormation</a> con una sintaxis abreviada para funciones <a href="lambda.html">Lambda</a>, APIs, tablas y máquinas de
+        estado, y la <strong>herramienta de línea de comandos <code>sam</code></strong>, que compila, prueba en local, sincroniza y despliega. Al desplegar,
+        <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> <strong>transforma</strong> la plantilla en recursos normales de CloudFormation.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Transformación:</strong> la línea <code>Transform: AWS::Serverless-2016-10-31</code> convierte una
+          plantilla de <a href="cloudformation.html">CloudFormation</a> en una plantilla <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr>. En la misma plantilla pueden convivir recursos <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> y
+          recursos normales de CloudFormation.</li>
+        <li><strong>Tipos de recurso <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr>:</strong> <code>AWS::Serverless::Function</code>, <code>Api</code>,
+          <code>HttpApi</code>, <code>SimpleTable</code>, <code>LayerVersion</code>, <code>StateMachine</code> o
+          <code>Application</code>, entre otros. Una función con su evento <code>Api</code> genera la función, su rol,
+          la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> y los permisos entre ellas.</li>
+        <li><strong>Sección <code>Globals</code>:</strong> propiedades comunes (entorno de ejecución, tiempo de espera,
+          memoria, variables) para todas las funciones o APIs.</li>
+        <li><strong>Permisos:</strong> <code>Policies</code> con <strong>plantillas de políticas</strong> como
+          <code>DynamoDBCrudPolicy</code> o <code>S3ReadPolicy</code> acotadas a un recurso, o un <code>Role</code>
+          propio (no los dos a la vez). Los <strong>conectores</strong> describen la relación entre recursos y <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr>
+          genera los permisos de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li><strong>Comandos de <code>sam</code>:</strong> <code>sam init</code> (proyecto), <code>sam build</code> (dependencias y
+          artefactos), <code>sam local invoke</code>, <code>start-api</code>, <code>start-lambda</code> y
+          <code>generate-event</code> (pruebas en local con contenedores de Docker), <code>sam deploy</code>
+          (con <code>--guided</code> guarda las respuestas en <code>samconfig.toml</code>), <code>sam sync</code>
+          (sincroniza cambios con la nube mientras desarrollas), <code>sam logs</code> y <code>sam pipeline</code>.</li>
+        <li><strong>Despliegues graduales:</strong> <code>AutoPublishAlias</code> publica una versión nueva y mueve un
+          alias; <code>DeploymentPreference</code> usa <a href="codedeploy.html">CodeDeploy</a> para desviar el tráfico de forma canaria, lineal o de
+          golpe, con <strong>alarmas</strong> que revierten y funciones de comprobación antes y después
+          (<code>PreTraffic</code> y <code>PostTraffic</code>). Sin <code>AutoPublishAlias</code>,
+          <code>DeploymentPreference</code> da error.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Definir con pocas líneas una <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> con <a href="api-gateway.html">API Gateway</a>, funciones <a href="lambda.html">Lambda</a> y una tabla de <a href="dynamodb.html">DynamoDB</a>.</li>
+        <li>Probar y depurar funciones en el portátil antes de desplegar, con eventos de prueba generados.</li>
+        <li>Canalizaciones de <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr> para aplicaciones sin servidor con despliegues canarios y reversión automática.</li>
+        <li>Pasar a código funciones y APIs creadas a mano en la consola.</li>
+        <li>Usar las pruebas locales de <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> con proyectos de <a href="cdk.html">CDK</a> o Terraform.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si prefieres definir la infraestructura con un lenguaje de programación (bucles, clases, abstracciones):
+          <a href="cdk.html">CDK</a>.</li>
+        <li>Para infraestructura que no es sin servidor (redes, flotas de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>): <a href="cloudformation.html">CloudFormation</a> o CDK directamente
+          (<abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> no aporta sus atajos ahí).</li>
+        <li>Para desplegar una aplicación web o móvil de frontend con su alojamiento: <a href="amplify.html">Amplify</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>AWS <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr></th><th><a href="cloudformation.html">CloudFormation</a></th><th><a href="cdk.html">CDK</a></th></tr></thead>
+          <tbody>
+            <tr><td>Cómo se escribe</td><td><abbr class="sigla sigla-1" data-s="YAML" data-en="YAML Ain&#x27;t Markup Language" data-es="formato de configuración legible" tabindex="0">YAML<span class="sigla-exp"> (YAML Ain&#x27;t Markup Language: formato de configuración legible)</span></abbr> o <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> declarativo y abreviado</td><td><abbr class="sigla" data-s="YAML" data-en="YAML Ain&#x27;t Markup Language" data-es="formato de configuración legible" tabindex="0">YAML</abbr> o <abbr class="sigla" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON</abbr> declarativo completo</td><td>Código (TypeScript, Python, Java…)</td></tr>
+            <tr><td>Resultado</td><td>Plantilla de CloudFormation</td><td>Pila de CloudFormation</td><td>Plantilla de CloudFormation (síntesis)</td></tr>
+            <tr><td>Pruebas en local de <a href="lambda.html">Lambda</a> y APIs</td><td>Sí (<code>sam local</code>)</td><td>No</td><td>Con <code>sam local</code></td></tr>
+            <tr><td>Despliegue canario de Lambda</td><td>Integrado (<code>DeploymentPreference</code>)</td><td>Definiendo los recursos de <a href="codedeploy.html">CodeDeploy</a></td><td>Con constructos de CodeDeploy</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p><abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr> es gratuito: se pagan los recursos que despliega (<a href="lambda.html">Lambda</a>, <a href="api-gateway.html">API Gateway</a>, <a href="dynamodb.html">DynamoDB</a>…) y el depósito de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o
+        el repositorio de <a href="ecr.html"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a> donde sube los artefactos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Plantillas de políticas y conectores para dar a cada función solo los permisos que necesita.</li>
+        <li><code>PermissionsBoundary</code> para limitar los roles que crea la plantilla.</li>
+        <li>Secretos fuera del código: referencias dinámicas a <a href="secrets-manager.html">Secrets Manager</a> o <a href="systems-manager.html">Parameter Store</a> de Systems Manager.</li>
+        <li>Despliegues graduales con reversión automática por alarmas de <a href="cloudwatch.html">CloudWatch</a>.</li>
+        <li><code>sam sync</code> es para entornos de desarrollo: se salta los conjuntos de cambios, así que no se usa
+          en producción.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Probar en local la función detrás de un punto de enlace <abbr class="sigla sigla-1" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP<span class="sigla-exp"> (HyperText Transfer Protocol: protocolo de la web)</span></abbr>"</strong>: <code>sam local
+          start-api</code>.</li>
+        <li><strong>"Enviar el 10 % del tráfico a la versión nueva y revertir si salta una alarma"</strong>:
+          <code>AutoPublishAlias</code> + <code>DeploymentPreference</code> (<code>Canary10Percent10Minutes</code>)
+          con <code>Alarms</code>.</li>
+        <li><strong>"Qué identifica una plantilla <abbr class="sigla" data-s="SAM" data-en="Serverless Application Model" data-es="extensión de CloudFormation para aplicaciones sin servidores" tabindex="0">SAM</abbr>"</strong>: la línea <code>Transform</code>.</li>
+        <li><strong>"Permisos mínimos sobre una tabla con poco código"</strong>: plantilla de política
+          <code>DynamoDBCrudPolicy</code> con el nombre de la tabla.</li>
+        <li><strong>"La misma configuración para todas las funciones"</strong>: sección <code>Globals</code>.</li>
+        <li><strong>"Ver los cambios en la nube en segundos mientras desarrollo"</strong>: <code>sam sync
+          --watch</code>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="sam"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html" target="_blank" rel="noopener">What is the AWS Serverless Application Model (AWS SAM)?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/automating-updates-to-serverless-apps.html" target="_blank" rel="noopener">Deploying serverless applications gradually with AWS SAM</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-template-list.html" target="_blank" rel="noopener">AWS SAM policy template list</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/using-sam-cli-local-invoke.html" target="_blank" rel="noopener">Introduction to testing with sam local invoke</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

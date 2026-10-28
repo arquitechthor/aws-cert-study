@@ -1,0 +1,160 @@
+[
+  {
+    "id": "fault-injection-service-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Una empresa quiere comprobar, de forma realista y repetible, que su aplicación multi-AZ (instancias EC2 en grupos de Auto Scaling, Aurora y ElastiCache) sigue sirviendo si una zona de disponibilidad pierde la alimentación, y medir cuánto tarda en recuperarse. ¿Qué opción es la adecuada?",
+    "opciones": [
+      "Detener a mano las instancias de una zona desde la consola.",
+      "El escenario AZ Availability: Power Interruption de la biblioteca de escenarios de AWS FIS.",
+      "Una evaluación de AWS Resilience Hub de la aplicación.",
+      "Una alarma de CloudWatch que avise cuando una zona falle."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El escenario de pérdida de alimentación de una zona de FIS reproduce a la vez los síntomas en varios servicios (EC2, bases de datos, cachés, red) de forma controlada y repetible. Parar instancias a mano solo cubre una parte, Resilience Hub evalúa sin provocar fallos y una alarma solo avisa.",
+    "fuentes": [
+      "https://aws.amazon.com/fis/faqs/"
+    ]
+  },
+  {
+    "id": "fault-injection-service-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Un equipo va a ejecutar un experimento de FIS en producción y exige que se detenga solo si la tasa de errores 5XX del balanceador supera el 2 %. ¿Qué se configura?",
+    "opciones": [
+      "Un tiempo máximo de 2 minutos en cada acción.",
+      "Una regla de EventBridge que borre la plantilla del experimento.",
+      "Una condición de parada con una alarma de CloudWatch sobre esa métrica.",
+      "Una política de IAM que deniegue la acción al llegar al umbral."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las condiciones de parada de FIS son alarmas de CloudWatch: si una entra en estado de alarma, el experimento se detiene. La duración de una acción no mira los errores, y borrar la plantilla o una política de IAM no paran un experimento en curso.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fis/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "fault-injection-service-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Una aplicación se reparte entre una cuenta de red, una de aplicación y una de datos de la misma región. El equipo de fiabilidad quiere un único experimento que afecte a recursos de las tres a la vez, con control y registro centralizados. ¿Qué solución lo permite?",
+    "opciones": [
+      "Un experimento multicuenta desde una cuenta orquestadora, con un rol en cada cuenta de destino que confíe en el rol del orquestador.",
+      "Tres experimentos separados, uno por cuenta, lanzados a la vez con un script.",
+      "Compartir con RAM la plantilla de experimento con las tres cuentas.",
+      "Mover temporalmente todos los recursos a una sola cuenta para la prueba."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los experimentos multicuenta de FIS se lanzan desde una cuenta orquestadora y actúan en las cuentas de destino mediante encadenamiento de roles, con control centralizado y aviso en el panel de AWS Health de cada cuenta. Tres experimentos sueltos no se coordinan ni se paran juntos, y las plantillas no se comparten con RAM.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fis/latest/userguide/multi-account.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "fault-injection-service-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Un servicio llama a las API de EC2 con un rol de IAM y el equipo quiere comprobar que sus reintentos con espera exponencial funcionan cuando AWS limita esas llamadas. ¿Qué acción de FIS usa?",
+    "opciones": [
+      "aws:ec2:stop-instances sobre las instancias del servicio.",
+      "aws:network:disrupt-connectivity sobre la subred del servicio.",
+      "aws:ssm:send-command para estresar la CPU.",
+      "aws:fis:inject-api-throttle-error dirigida al rol de IAM que hace las llamadas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La acción de inyectar limitación de API devuelve errores de throttling en las operaciones elegidas para las llamadas de un rol concreto, justo lo que prueba los reintentos. Parar instancias, cortar la red o estresar la CPU prueban otros fallos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fis/latest/userguide/experiment-template-example.html"
+    ]
+  },
+  {
+    "id": "fault-injection-service-005",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Un arquitecto escribe su primera plantilla de experimento de FIS. ¿Qué tres elementos forman parte de ella? (Elige 3.)",
+    "opciones": [
+      "Las acciones que se ejecutarán.",
+      "El RTO que debe cumplir la aplicación.",
+      "Los objetivos (recursos afectados).",
+      "Las condiciones de parada.",
+      "Un plan de recuperación que FIS aplica al terminar."
+    ],
+    "correctas": [
+      0,
+      2,
+      3
+    ],
+    "explicacion": "Una plantilla de FIS contiene acciones, objetivos, condiciones de parada y el rol de IAM del experimento. FIS no guarda objetivos de RTO (eso es de Resilience Hub) ni ejecuta planes de recuperación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fis/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "fault-injection-service-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Una empresa planifica jornadas de caos mensuales con FIS y quiere estimar su coste. ¿Cómo se factura?",
+    "opciones": [
+      "Por plantilla de experimento creada.",
+      "Una cuota fija mensual por cuenta.",
+      "Por GB de registros que genera el experimento.",
+      "Por minuto de cada acción, multiplicado por el número de cuentas de destino del experimento."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "FIS cobra por minuto que una acción está en marcha, de principio a fin, según el número de cuentas de destino. Las plantillas no cuestan nada y no hay cuota fija; los registros que se guarden se pagan aparte en su servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/fis/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "fault-injection-service-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Las caídas completas de una zona se detectan bien, pero en un incidente reciente una zona solo iba lenta y la aplicación tardó una hora en reaccionar. ¿Qué experimento de FIS prueba mejor esta situación?",
+    "opciones": [
+      "Un escenario de lentitud de aplicación en una zona (fallo parcial o gray failure) de la biblioteca de escenarios.",
+      "El escenario AZ Availability: Power Interruption.",
+      "Terminar todas las instancias de la región.",
+      "Cortar la conectividad entre dos regiones."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los escenarios de fallos parciales, como la lentitud de una zona, comprueban si se detecta y se reacciona ante una degradación, que es más difícil de ver que una caída total. Las otras opciones provocan caídas completas, no degradación.",
+    "fuentes": [
+      "https://aws.amazon.com/fis/faqs/"
+    ]
+  }
+]

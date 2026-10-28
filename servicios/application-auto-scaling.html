@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Application Auto Scaling — Apuntes AWS</title>
+<meta name="description" content="Escala automáticamente recursos de otros servicios distintos de EC2 (servicios de ECS, tablas de DynamoDB, réplicas de Aurora, concurrencia aprovisionada de Lambda…) con políticas de seguimiento, por pasos, programadas o predictivas. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/application-auto-scaling.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Application Auto Scaling — Apuntes AWS">
+<meta property="og:description" content="Escala automáticamente recursos de otros servicios distintos de EC2 (servicios de ECS, tablas de DynamoDB, réplicas de Aurora, concurrencia aprovisionada de Lambda…) con políticas de seguimiento, por pasos, programadas o predictivas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/application-auto-scaling.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/computacion.svg" alt="" width="56" height="56"><span>AWS Application Auto Scaling</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Ajusta la capacidad de <abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr>, DynamoDB, Aurora o Lambda según métricas o un horario</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html" target="_blank" rel="noopener">Documentación de AWS Application Auto Scaling ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Application Auto Scaling es el servicio que ajusta de forma automática la capacidad de
+        <strong>recursos de otros servicios de AWS que no son grupos de instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a></strong>: el número de tareas de
+        un servicio de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, la capacidad de lectura y escritura de una tabla de <a href="dynamodb.html">DynamoDB</a>, las réplicas de <a href="aurora.html">Aurora</a>, la
+        concurrencia aprovisionada de <a href="lambda.html">Lambda</a>, los nodos de <a href="elasticache.html">ElastiCache</a> o los puntos de enlace de <a href="sagemaker-ai.html">SageMaker AI</a>, entre
+        otros. Para las instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> se usa su servicio hermano, <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Objetivo escalable (<em>scalable target</em>):</strong> el recurso que se escala, identificado por
+          su espacio de nombres (<code>ecs</code>, <code>dynamodb</code>, <code>lambda</code>…), su ID de recurso y la
+          <strong>dimensión escalable</strong> (por ejemplo, <code>ecs:service:DesiredCount</code>). Se registra con
+          una capacidad <strong>mínima y máxima</strong>; ninguna política sale de ese rango.</li>
+        <li><strong>Seguimiento de objetivo (<em>target tracking</em>):</strong> mantiene una métrica cerca de un valor
+          (por ejemplo, 70 % de <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> media o de uso de la concurrencia aprovisionada). Crea y gestiona él mismo las
+          alarmas de <a href="cloudwatch.html">CloudWatch</a>: no hay que editarlas a mano.</li>
+        <li><strong>Escalado por pasos:</strong> ajustes distintos según cuánto se supere una alarma.</li>
+        <li><strong>Escalado programado:</strong> cambia el mínimo y el máximo a una hora o de forma periódica (horario
+          laboral, campañas).</li>
+        <li><strong>Escalado predictivo:</strong> se adelanta a la carga a partir del historial (disponible, por
+          ejemplo, para servicios de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>).</li>
+        <li><strong>Periodos de enfriamiento (<em>cooldown</em>):</strong> tiempo de espera tras escalar hacia fuera o
+          hacia dentro antes de otra actividad del mismo tipo; reducir con cautela protege la disponibilidad.</li>
+        <li><strong>Desactivar la reducción (<code>DisableScaleIn</code>):</strong> la política solo añade capacidad y
+          la reducción se hace a mano o con otra política.</li>
+        <li><strong>Suspender y reanudar:</strong> se puede pausar el escalado hacia fuera, hacia dentro o el
+          programado (por ejemplo, durante un despliegue) sin borrar las políticas.</li>
+        <li><strong>Recursos personalizados:</strong> también escala capacidad de tus propias aplicaciones mediante una
+          <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> que tú expones.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Añadir y quitar tareas de un servicio de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> (también en <a href="fargate.html">Fargate</a>) según la <abbr class="sigla" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU</abbr> o la profundidad de una cola.</li>
+        <li>Ajustar la capacidad aprovisionada de una tabla de <a href="dynamodb.html">DynamoDB</a> o de sus índices secundarios globales.</li>
+        <li>Añadir réplicas de lectura de <a href="aurora.html">Aurora</a> cuando sube la carga de consultas.</li>
+        <li>Subir la concurrencia aprovisionada de una función <a href="lambda.html">Lambda</a> en horario laboral para evitar arranques en frío.</li>
+        <li>Escalar flotas de spot, clústeres de <a href="emr.html"><abbr class="sigla sigla-1" data-s="EMR" data-en="Elastic MapReduce" tabindex="0">EMR<span class="sigla-exp"> (Elastic MapReduce)</span></abbr></a>, almacenamiento de brokers de <a href="msk.html"><abbr class="sigla sigla-1" data-s="MSK" data-en="Managed Streaming for Apache Kafka" tabindex="0">MSK<span class="sigla-exp"> (Managed Streaming for Apache Kafka)</span></abbr></a> o tablas de <a href="keyspaces.html">Keyspaces</a>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> en un grupo: <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>.</li>
+        <li>Para tablas de <a href="dynamodb.html">DynamoDB</a> con tráfico muy impredecible o con picos repentinos: el modo bajo demanda suele
+          encajar mejor que escalar la capacidad aprovisionada.</li>
+        <li>Para cargas que ya escalan solas por diseño (<a href="lambda.html">Lambda</a> sin concurrencia aprovisionada, <a href="aurora.html">Aurora</a> Serverless,
+          servicios totalmente gestionados).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Application Auto Scaling</th><th><a href="ec2-auto-scaling.html">EC2 Auto Scaling</a></th><th><a href="auto-scaling.html">AWS Auto Scaling</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué escala</td><td>Recursos de otros servicios (<a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, <a href="dynamodb.html">DynamoDB</a>, <a href="aurora.html">Aurora</a>, <a href="lambda.html">Lambda</a>…)</td><td>Instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> de un grupo</td><td>Varios recursos de una aplicación a la vez</td></tr>
+            <tr><td>Además</td><td>Recursos personalizados</td><td>Sustituye instancias no sanas</td><td>Planes de escalado con estrategia común</td></tr>
+            <tr><td>Políticas</td><td>Seguimiento, pasos, programado, predictivo</td><td>Las mismas</td><td>Usa las de los otros dos</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>No tiene coste propio: se paga la capacidad que añade en cada servicio (tareas, unidades de capacidad,
+        réplicas, concurrencia aprovisionada…) y, si las hay, las métricas y alarmas de <a href="cloudwatch.html">CloudWatch</a> según su uso.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Usa un <strong>rol vinculado al servicio</strong> para cambiar la capacidad de cada recurso.</li>
+        <li>Permisos de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para registrar objetivos y crear políticas (separar quién puede cambiar mínimos y máximos).</li>
+        <li>Un mínimo adecuado mantiene capacidad en varias zonas aunque baje la carga.</li>
+        <li>Reducir más despacio que se crece (enfriamiento de reducción mayor) evita oscilaciones.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Escalar tareas de <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a>, réplicas de <a href="aurora.html">Aurora</a> o capacidad de <a href="dynamodb.html">DynamoDB</a>"</strong>: Application Auto
+          Scaling, no <a href="ec2-auto-scaling.html">EC2 Auto Scaling</a>.</li>
+        <li><strong>"Más concurrencia aprovisionada de <a href="lambda.html">Lambda</a> en horario laboral"</strong>: acción programada (o
+          seguimiento de objetivo) sobre la concurrencia aprovisionada del alias o la versión.</li>
+        <li><strong>"La capacidad sube y baja sin parar"</strong>: alargar el enfriamiento de reducción o revisar el
+          objetivo.</li>
+        <li><strong>"Solo crecer automáticamente; reducir a mano"</strong>: <code>DisableScaleIn</code>.</li>
+        <li><strong>"Pausar el escalado durante un despliegue sin borrar nada"</strong>: suspender el escalado del
+          objetivo.</li>
+        <li><strong>"Cambié el umbral de la alarma y volvió a su valor"</strong>: las alarmas del seguimiento de
+          objetivo las gestiona el servicio; se cambia el valor objetivo.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="application-auto-scaling"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/autoscaling/application/userguide/what-is-application-auto-scaling.html" target="_blank" rel="noopener">What is Application Auto Scaling?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/autoscaling/application/userguide/integrated-services-list.html" target="_blank" rel="noopener">AWS services that you can use with Application Auto Scaling</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html" target="_blank" rel="noopener">RegisterScalableTarget, Application Auto Scaling API Reference</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/autoscaling/application/userguide/services-that-can-integrate-ecs.html" target="_blank" rel="noopener">Amazon ECS and Application Auto Scaling</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

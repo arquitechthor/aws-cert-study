@@ -1,0 +1,161 @@
+[
+  {
+    "id": "vpc-lattice-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Una organización tiene 120 microservicios HTTP repartidos en 40 cuentas y muchas VPC, varias con rangos CIDR solapados. Cada equipo debe publicar su servicio y decidir qué otros servicios pueden llamarlo según su rol de IAM, y el equipo de red no quiere gestionar tablas de rutas ni balanceadores intermedios. ¿Qué solución cumple todos los requisitos con menos esfuerzo operativo?",
+    "opciones": [
+      "Un Transit Gateway compartido con RAM, con un balanceador interno por servicio y grupos de seguridad que filtren por CIDR.",
+      "Una red de servicios de VPC Lattice compartida con RAM, con cada VPC asociada y políticas de autorización con AWS_IAM en cada servicio.",
+      "Una malla de peering entre todas las VPC y políticas de bucket para controlar quién llama a quién.",
+      "Un punto de enlace de PrivateLink por cada par de servicio y consumidor, con políticas de punto de enlace."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "VPC Lattice conecta servicios entre VPC y cuentas aunque los CIDR se solapen, sin rutas ni balanceadores que gestionar, y las políticas de autorización deciden por identidad de IAM. Transit Gateway y el peering no admiten CIDR solapados, y PrivateLink por cada par de servicio y consumidor multiplica los puntos de enlace y la gestión.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "vpc-lattice-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Un servicio de VPC Lattice usa el tipo de autenticación AWS_IAM. Su política de autorización permite al rol de una función Lambda llamar al servicio, y la política de identidad del rol también lo permite, pero todas las peticiones reciben 403. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "El grupo de destino no tiene comprobaciones de estado.",
+      "La VPC de la función no tiene una puerta de enlace NAT.",
+      "Las políticas de autorización solo funcionan con instancias EC2.",
+      "La función no firma las peticiones con SigV4 para el servicio vpc-lattice-svcs."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con AWS_IAM, Lattice exige que cada petición vaya firmada con SigV4; una petición sin firmar se rechaza con 403 aunque las políticas lo permitan. Lattice no necesita NAT, las comprobaciones de estado no dan 403 y las políticas valen para cualquier llamante con identidad de IAM.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc-lattice/latest/ug/auth-policies.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "vpc-lattice-003",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Un arquitecto diseña los grupos de destino de un servicio de VPC Lattice. ¿Qué tres tipos de destino admite? (Elige 3.)",
+    "opciones": [
+      "Funciones Lambda.",
+      "Depósitos de S3.",
+      "Instancias EC2.",
+      "Distribuciones de CloudFront.",
+      "Balanceadores de carga de aplicación (ALB)."
+    ],
+    "correctas": [
+      0,
+      2,
+      4
+    ],
+    "explicacion": "Los grupos de destino de Lattice admiten instancias EC2, direcciones IP, funciones Lambda, balanceadores ALB, tareas de ECS y pods de Kubernetes. Ni S3 ni CloudFront son destinos de un grupo de destino.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html"
+    ]
+  },
+  {
+    "id": "vpc-lattice-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Un equipo de FinOps analiza el coste de mover la comunicación entre microservicios a VPC Lattice. ¿Cómo se factura un servicio de Lattice con un agente de escucha HTTPS?",
+    "opciones": [
+      "Solo por GB transferidos entre zonas de disponibilidad.",
+      "Por número de VPC asociadas y por hora de cada grupo de destino.",
+      "Por horas de servicio aprovisionado, GB procesados y número de peticiones HTTP, sin cargo aparte por el tráfico entre zonas de disponibilidad.",
+      "Es gratuito; solo se paga la transferencia de datos estándar de EC2."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Lattice cobra por horas de servicio, por GB procesados (petición más respuesta) y por peticiones HTTP, o por conexiones TCP con agentes TLS. El tráfico entre zonas va incluido en los datos procesados, sin cargo aparte.",
+    "fuentes": [
+      "https://aws.amazon.com/vpc/lattice/pricing/"
+    ]
+  },
+  {
+    "id": "vpc-lattice-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Unas aplicaciones del centro de datos, conectadas a AWS con Direct Connect, deben llamar a servicios publicados en una red de servicios de VPC Lattice. ¿Qué se configura?",
+    "opciones": [
+      "Asociar la red del centro de datos directamente con la red de servicios.",
+      "Un punto de enlace de VPC de tipo service network en una VPC alcanzable desde el centro de datos.",
+      "Un acelerador de Global Accelerator delante de cada servicio.",
+      "Una conexión de peering entre el centro de datos y la VPC de cada servicio."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Un punto de enlace de VPC de tipo service network (basado en PrivateLink) da acceso a los servicios y recursos de la red desde redes locales por Direct Connect o VPN. Solo se asocian VPC a la red, no redes locales, y ni Global Accelerator ni el peering con el centro de datos sirven para esto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html"
+    ]
+  },
+  {
+    "id": "vpc-lattice-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Por normativa, el tráfico entre un servicio cliente y un servicio de pagos publicado en VPC Lattice debe ir cifrado de extremo a extremo, y solo los destinos del servicio de pagos pueden descifrarlo. ¿Qué agente de escucha se usa?",
+    "opciones": [
+      "Un agente de escucha HTTPS con un certificado de ACM.",
+      "Un agente de escucha HTTP con grupos de seguridad restrictivos.",
+      "Un agente de escucha TLS (paso directo), con un dominio personalizado.",
+      "Un agente de escucha HTTPS con el certificado gestionado por Lattice."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Con un agente de escucha TLS, Lattice no termina el cifrado y lo pasa tal cual a los destinos, que son los únicos que descifran. Los agentes HTTPS terminan el TLS en Lattice, sea cual sea el certificado, y HTTP no cifra.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html"
+    ]
+  },
+  {
+    "id": "vpc-lattice-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Una cuenta de datos tiene una base de datos de Amazon RDS que deben usar aplicaciones de otras cuentas conectadas a una red de servicios de VPC Lattice, sin peering ni Transit Gateway. ¿Qué crea el dueño de la base de datos?",
+    "opciones": [
+      "Una pasarela de recursos en su VPC y una configuración de recursos para la base de datos, compartida con RAM y asociada a la red de servicios.",
+      "Un servicio de Lattice con un grupo de destino de tipo RDS.",
+      "Un punto de enlace de interfaz de RDS en cada VPC consumidora.",
+      "Una réplica de lectura de RDS en cada cuenta consumidora."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los recursos que no son servicios HTTP, como una base de datos RDS, se exponen con una pasarela de recursos (punto de entrada a su VPC) y una configuración de recursos que se comparte con RAM y se asocia a la red. RDS no es un tipo de grupo de destino, y las otras opciones no usan Lattice o duplican datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html"
+    ]
+  }
+]
