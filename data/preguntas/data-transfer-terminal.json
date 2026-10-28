@@ -1,0 +1,113 @@
+[
+  {
+    "id": "data-transfer-terminal-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "En 2026, una productora que nunca ha usado AWS tiene 400 TB de material de rodaje en discos propios y su conexión a internet tardaría meses en subirlos. No quiere enviar los discos por mensajería. Tiene soporte Enterprise. ¿Qué opción de AWS encaja?",
+    "opciones": [
+      "Pedir dispositivos AWS Snowball Edge.",
+      "AWS DataSync por su conexión a internet actual.",
+      "Reservar una sesión en AWS Data Transfer Terminal y subir los datos desde sus discos por las conexiones de 100 Gb/s.",
+      "AWS Transfer Family con SFTP."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Data Transfer Terminal permite llevar los discos propios a una instalación de AWS y subirlos por fibra de alta velocidad, sin enviarlos. Snowball ya no se ofrece a clientes nuevos, y DataSync o Transfer Family dependen de la conexión lenta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/datatransferterminal/latest/userguide/what-is-dtt.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "data-transfer-terminal-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Un equipo planifica el coste de subir 200 TB con Data Transfer Terminal. ¿Cómo se factura?",
+    "opciones": [
+      "Por GB transferido.",
+      "Por horas de puerto reservadas y número de puertos usados, con tarifa según la ubicación de la instalación y el destino; no por volumen de datos.",
+      "Una cuota fija mensual por cuenta.",
+      "Por número de discos que se llevan."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Data Transfer Terminal cobra por horas de puerto (mínimo una) y por puertos usados, más barato si la instalación y el destino están en el mismo continente, sin cargo por volumen. No hay cuota mensual ni se cobra por disco.",
+    "fuentes": [
+      "https://aws.amazon.com/data-transfer-terminal/pricing/"
+    ]
+  },
+  {
+    "id": "data-transfer-terminal-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Un equipo quiere usar Data Transfer Terminal mañana por la mañana durante ocho horas seguidas. ¿Qué debe tener en cuenta al reservar?",
+    "opciones": [
+      "Puede presentarse sin reserva en cualquier momento.",
+      "Las reservas duran un día completo como mínimo.",
+      "Cada reserva dura de una a seis horas y debe hacerse con al menos 24 horas de antelación; puede encadenar reservas con una hora de separación.",
+      "Solo se puede reservar con una semana de antelación y una vez al mes."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las reservas son de una a seis horas, con 24 horas de antelación, y se pueden encadenar con al menos una hora entre ellas. No se puede acudir sin reserva.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/datatransferterminal/latest/userguide/scheduling.html"
+    ]
+  },
+  {
+    "id": "data-transfer-terminal-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Una empresa sincroniza cada noche 2 TB de cambios de su servidor de ficheros local con S3 y su red lo permite. ¿Es Data Transfer Terminal la mejor opción?",
+    "opciones": [
+      "No: para transferencias periódicas por la red encaja mejor AWS DataSync.",
+      "Sí: es la única forma de llegar a S3.",
+      "Sí: es más rápido que cualquier red.",
+      "No: debería usar AWS Snowball Edge cada noche."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Data Transfer Terminal está pensado para cargas puntuales y grandes desde discos propios; para sincronizaciones periódicas por la red, DataSync automatiza y programa la transferencia. Snowball no sirve para algo diario (y no admite clientes nuevos).",
+    "fuentes": [
+      "https://docs.aws.amazon.com/datatransferterminal/latest/userguide/what-is-dtt.html"
+    ]
+  },
+  {
+    "id": "data-transfer-terminal-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "El responsable de seguridad de una empresa no acepta que sus discos con datos sensibles pasen por manos de terceros durante la migración a AWS. ¿Qué característica de Data Transfer Terminal responde a esta exigencia?",
+    "opciones": [
+      "AWS recoge los discos por mensajería con un sello de seguridad.",
+      "Los datos se suben por internet público cifrados con TLS.",
+      "AWS custodia los discos en su centro de datos hasta terminar la carga.",
+      "La empresa conserva sus dispositivos durante todo el proceso: los lleva su equipo autorizado a una sala privada reservada y se los vuelve a llevar."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "En Data Transfer Terminal el equipo autorizado lleva sus propios discos a una instalación privada y exclusiva durante la reserva, y no los entrega a nadie. No hay mensajería ni custodia de AWS, y la subida no va por internet público.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/datatransferterminal/latest/userguide/features.html"
+    ]
+  }
+]

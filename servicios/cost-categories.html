@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Cost Categories — Apuntes AWS</title>
+<meta name="description" content="Reglas para agrupar los costes de AWS según tu propia estructura (equipos, proyectos, centros de coste) y repartir los compartidos, visibles en Cost Explorer, Budgets y el informe de costes y uso. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/cost-categories.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Cost Categories — Apuntes AWS">
+<meta property="og:description" content="Reglas para agrupar los costes de AWS según tu propia estructura (equipos, proyectos, centros de coste) y repartir los compartidos, visibles en Cost Explorer, Budgets y el informe de costes y uso.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/cost-categories.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="56" height="56"><span>AWS Cost Categories</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Agrupa el gasto con reglas propias, como equipos o proyectos, para repartir la factura</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-financiera#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="18" height="18">Administración financiera en la nube <span class="cat-en">(Cloud Financial Management)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html" target="_blank" rel="noopener">Documentación de AWS Cost Categories ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Cost Categories permite <strong>clasificar los costes de AWS según la estructura de tu empresa</strong>:
+        equipos, unidades de negocio, proyectos o centros de coste. Defines <strong>reglas</strong> (por cuenta,
+        etiqueta, servicio, tipo de cargo u otra categoría) y cada línea de la factura recibe un valor de la categoría.
+        Esos valores aparecen después en <a href="cost-explorer.html">Cost Explorer</a>, Budgets, el informe de costes y uso (<abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr>) y la detección de
+        anomalías de costes, sin tocar los recursos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Categoría y valores:</strong> por ejemplo, la categoría "Equipo" con los valores "Pagos",
+          "Catálogo" y "Plataforma".</li>
+        <li><strong>Reglas:</strong> asignan un valor según dimensiones como la cuenta, una etiqueta de asignación de
+          costes, el servicio o el tipo de cargo. Se evalúan en orden y gana la <strong>primera</strong> que
+          coincide.</li>
+        <li><strong>Valor heredado:</strong> el valor se toma directamente de una etiqueta o del nombre de la cuenta,
+          sin escribir una regla por cada caso.</li>
+        <li><strong>Valor por defecto:</strong> nombre para lo que no encaja en ninguna regla (si no, queda sin
+          categorizar).</li>
+        <li><strong>Reglas de reparto de cargos (<em>split charges</em>):</strong> reparten costes compartidos (soporte
+          Enterprise, transferencia de datos, la cuenta de red común) entre varios valores, a partes iguales, en
+          proporción al gasto o con porcentajes fijos.</li>
+        <li><strong>Jerarquías:</strong> una categoría puede usar otra como dimensión (centro de coste → departamento →
+          equipo).</li>
+        <li><strong>Aplicación:</strong> las reglas organizan el coste desde el principio del mes y se pueden aplicar
+          a meses anteriores.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li><strong>Showback y chargeback:</strong> mostrar o cobrar a cada equipo lo que gasta.</li>
+        <li>Presupuestos de Budgets por unidad de negocio aunque cada una use varias cuentas y etiquetas.</li>
+        <li>Repartir de forma justa los costes de la plataforma compartida entre los equipos que la usan.</li>
+        <li>Informes de FinOps con la misma clasificación en <a href="cost-explorer.html">Cost Explorer</a> y en el <abbr class="sigla" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR</abbr>.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>obligar</strong> a etiquetar los recursos: políticas de etiquetas de <a href="organizations.html">Organizations</a> y <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> (las
+          categorías solo clasifican lo que ya hay).</li>
+        <li>Para limitar o avisar de un gasto: Budgets (que sí puede usar las categorías como filtro).</li>
+        <li>Para analizar gasto con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> a nivel de recurso: el informe de costes y uso con <a href="athena.html">Athena</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Cost Categories</th><th>Etiquetas de asignación de costes</th><th>Budgets</th></tr></thead>
+          <tbody>
+            <tr><td>Qué hace</td><td>Agrupa costes con reglas propias</td><td>Marcan cada recurso con clave y valor</td><td>Avisa o actúa al pasar un umbral</td></tr>
+            <tr><td>Costes sin etiqueta</td><td>Los clasifica por cuenta, servicio…</td><td>Quedan sin asignar</td><td>No aplica</td></tr>
+            <tr><td>Reparto de compartidos</td><td>Sí (split charges)</td><td>No</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Crear y usar categorías de costes no tiene coste adicional. Se pagan, en su caso, las herramientas que las
+        consumen, como las llamadas a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de <a href="cost-explorer.html">Cost Explorer</a> o los presupuestos de Budgets.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Se gestionan desde la cuenta de administración de la organización (o con permisos de facturación de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>).</li>
+        <li>No cambian los recursos ni la factura real: solo cómo se agrupa para analizarla.</li>
+        <li>Se pueden definir con <a href="cloudformation.html">CloudFormation</a> para versionarlas como código.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Agrupar el gasto por unidad de negocio que usa varias cuentas y etiquetas"</strong>: Cost
+          Categories.</li>
+        <li><strong>"Repartir el coste del soporte o de la red compartida entre equipos"</strong>: reglas de reparto de
+          cargos.</li>
+        <li><strong>"Presupuesto por centro de coste"</strong>: Budgets filtrado por una categoría de costes.</li>
+        <li><strong>"Exigir etiquetas en todos los recursos"</strong>: políticas de etiquetas o <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>, no Cost
+          Categories.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="cost-categories"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html" target="_blank" rel="noopener">Organizing costs using AWS Cost Categories</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/aws-cost-management/aws-cost-categories/features/" target="_blank" rel="noopener">AWS Cost Categories features</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/help-panel/awsaccountbilling/latest/console/hp-costcategories-default.html" target="_blank" rel="noopener">Default value (Cost Categories)</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

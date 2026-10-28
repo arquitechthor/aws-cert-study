@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS CodeCommit — Apuntes AWS</title>
+<meta name="description" content="Repositorios Git privados y gestionados en AWS, con acceso por IAM, cifrado con KMS, solicitudes de extracción con reglas de aprobación e integración con CodePipeline. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/codecommit.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS CodeCommit — Apuntes AWS">
+<meta property="og:description" content="Repositorios Git privados y gestionados en AWS, con acceso por IAM, cifrado con KMS, solicitudes de extracción con reglas de aprobación e integración con CodePipeline.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/codecommit.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="56" height="56"><span>AWS CodeCommit</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Repositorios Git privados y gestionados, integrados con <abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr> y las canalizaciones de AWS</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=herramientas-desarrolladores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="18" height="18">Herramientas para desarrolladores <span class="cat-en">(Developer Tools)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/codecommit/" target="_blank" rel="noopener">Documentación de AWS CodeCommit ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS CodeCommit es un servicio de <strong>repositorios Git privados</strong> totalmente gestionado. Guarda el
+        código en AWS, cifrado, con el acceso controlado por <strong><a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a></strong> y sin servidores de control de
+        versiones que mantener. Se usa con cualquier cliente Git y se integra con <a href="codepipeline.html">CodePipeline</a>, <a href="codebuild.html">CodeBuild</a> y los demás
+        servicios de <abbr class="sigla sigla-1" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD<span class="sigla-exp"> (Continuous Integration / Continuous Delivery: integración y entrega continuas)</span></abbr>. Tras dejar de admitir clientes nuevos en julio de 2024, AWS lo devolvió a
+        <strong>disponibilidad general</strong> el 25/11/2025.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Repositorio:</strong> un repositorio Git normal (ramas, etiquetas, historial) en una región.</li>
+        <li><strong>Conexión:</strong> por <abbr class="sigla sigla-1" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS<span class="sigla-exp"> (HTTP Secure: HTTP cifrado con TLS)</span></abbr> con credenciales de Git de un usuario de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>, por <abbr class="sigla sigla-1" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH<span class="sigla-exp"> (Secure Shell: acceso remoto cifrado por terminal)</span></abbr> con una clave
+          pública asociada al usuario, o con el ayudante de credenciales o <code>git-remote-codecommit</code> usando
+          <strong>credenciales temporales</strong> (roles, federación o la consola de identidades), que evita usuarios de
+          <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>.</li>
+        <li><strong>Permisos de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>:</strong> acciones como <code>codecommit:GitPull</code> y
+          <code>codecommit:GitPush</code> sobre el <abbr class="sigla sigla-1" data-s="ARN" data-en="Amazon Resource Name" data-es="identificador único de un recurso de AWS" tabindex="0">ARN<span class="sigla-exp"> (Amazon Resource Name: identificador único de un recurso de AWS)</span></abbr> del repositorio, y condiciones por rama (por ejemplo, impedir el
+          push directo a <code>main</code>).</li>
+        <li><strong>Solicitudes de extracción y reglas de aprobación:</strong> revisión de cambios antes de fusionarlos,
+          con reglas que exigen un número de aprobaciones de un grupo de personas; las <strong>plantillas de reglas de
+          aprobación</strong> las aplican a varios repositorios.</li>
+        <li><strong>Desencadenadores y notificaciones:</strong> hasta 10 desencadenadores por repositorio que publican en
+          <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> o invocan <a href="lambda.html">Lambda</a> al hacer push o crear ramas; además, eventos en <a href="eventbridge.html">EventBridge</a> para arrancar <a href="codepipeline.html">CodePipeline</a>.</li>
+        <li><strong>Acceso entre cuentas:</strong> un rol en la cuenta del repositorio que los usuarios de otra cuenta
+          asumen.</li>
+        <li><strong>Cifrado:</strong> en reposo con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> (clave gestionada por AWS o propia) y en tránsito con <abbr class="sigla" data-s="HTTPS" data-en="HTTP Secure" data-es="HTTP cifrado con TLS" tabindex="0">HTTPS</abbr> o
+          <abbr class="sigla" data-s="SSH" data-en="Secure Shell" data-es="acceso remoto cifrado por terminal" tabindex="0">SSH</abbr>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Repositorio de origen de canalizaciones de <a href="codepipeline.html">CodePipeline</a> dentro de AWS, sin depender de servicios externos.</li>
+        <li>Código sujeto a normativa que debe quedarse en la cuenta y región de la empresa, con acceso por <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>.</li>
+        <li>Repositorios de infraestructura como código para despliegues multicuenta.</li>
+        <li>Acceso desde instancias o contenedores con roles de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr>, sin claves guardadas.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si el equipo ya trabaja en GitHub, GitLab o Bitbucket: <a href="codepipeline.html">CodePipeline</a> y <a href="codebuild.html">CodeBuild</a> se conectan a ellos
+          directamente (con conexiones de CodeConnections).</li>
+        <li>Para guardar paquetes y dependencias (npm, Maven, PyPI): <a href="codeartifact.html">CodeArtifact</a>.</li>
+        <li>Para imágenes de contenedor: <a href="ecr.html"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>.</li>
+        <li>Para ficheros binarios grandes o artefactos de compilación: <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>CodeCommit</th><th><a href="codeartifact.html">CodeArtifact</a></th><th><a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué guarda</td><td>Código fuente (Git)</td><td>Paquetes de software</td><td>Imágenes de contenedor</td></tr>
+            <tr><td>Control de acceso</td><td><a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a></td><td><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> y políticas de dominio</td><td><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> y políticas de repositorio</td></tr>
+            <tr><td>Uso en <abbr class="sigla" data-s="CI/CD" data-en="Continuous Integration / Continuous Delivery" data-es="integración y entrega continuas" tabindex="0">CI/CD</abbr></td><td>Origen de la canalización</td><td>Dependencias de la compilación</td><td>Artefacto que se despliega</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>usuario activo al mes</strong> (los primeros, gratis), con almacenamiento y peticiones Git
+        incluidos por usuario; lo que se pase de esas cantidades se cobra aparte.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Acceso con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>, preferiblemente con credenciales temporales en lugar de credenciales de Git de larga
+          duración.</li>
+        <li>Políticas que bloquean el push directo a ramas protegidas y reglas de aprobación obligatorias.</li>
+        <li>Cifrado con <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a> y puntos de enlace de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> de interfaz para usarlo sin salir a internet.</li>
+        <li>Registro de llamadas en <a href="cloudtrail.html">CloudTrail</a> y almacenamiento redundante gestionado por AWS.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Repositorio Git privado y gestionado, con acceso por <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>"</strong>: CodeCommit.</li>
+        <li><strong>"Exigir dos aprobaciones antes de fusionar"</strong>: regla de aprobación de solicitudes de
+          extracción.</li>
+        <li><strong>"Impedir el push directo a main"</strong>: política de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> con condición por rama.</li>
+        <li><strong>"Lanzar la canalización al hacer push"</strong>: evento de <a href="eventbridge.html">EventBridge</a> (o desencadenador) que arranca
+          <a href="codepipeline.html">CodePipeline</a>.</li>
+        <li><strong>"Clonar desde una instancia sin guardar credenciales"</strong>: rol de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> con el ayudante de
+          credenciales o <code>git-remote-codecommit</code>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="codecommit"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/codecommit/latest/userguide/history.html" target="_blank" rel="noopener">AWS CodeCommit User Guide document history</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/devops/aws-codecommit-returns-to-general-availability/" target="_blank" rel="noopener">The Future of AWS CodeCommit</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-create-pull-request-approval-rule.html" target="_blank" rel="noopener">Create an approval rule for a pull request</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-notify.html" target="_blank" rel="noopener">Manage triggers for an AWS CodeCommit repository</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

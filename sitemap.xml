@@ -29,6 +29,7 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/bedrock-agentcore.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/budgets.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cdk.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/clean-rooms.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cli.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/client-vpn.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cloud-wan.html</loc><lastmod>2026-10-28</lastmod></url>
@@ -40,6 +41,7 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cloudwatch.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/codeartifact.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/codebuild.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/codecommit.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/codedeploy.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/codeguru.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/codepipeline.html</loc><lastmod>2026-10-28</lastmod></url>
@@ -50,14 +52,18 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/connect.html</loc><lastmod>2026-10-13</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/control-tower.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cost-and-usage-report.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cost-categories.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/cost-explorer.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/data-exchange.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/data-firehose.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/data-lifecycle-manager.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/data-transfer-terminal.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/datasync.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/detective.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/device-farm.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/direct-connect.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/directory-service.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/distro-for-opentelemetry.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/dms.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/documentdb.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/dynamodb.html</loc><lastmod>2026-10-28</lastmod></url>

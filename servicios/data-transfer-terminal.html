@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Data Transfer Terminal — Apuntes AWS</title>
+<meta name="description" content="Instalaciones físicas seguras donde llevas tus propios discos con reserva previa y subes datos a AWS por conexiones de fibra de 100 Gb/s, sin enviar dispositivos ni esperar. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/data-transfer-terminal.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Data Transfer Terminal — Apuntes AWS">
+<meta property="og:description" content="Instalaciones físicas seguras donde llevas tus propios discos con reserva previa y subes datos a AWS por conexiones de fibra de 100 Gb/s, sin enviar dispositivos ni esperar.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/data-transfer-terminal.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="56" height="56"><span>AWS Data Transfer Terminal</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Sedes físicas donde llevas tus discos y subes datos a AWS por enlaces muy rápidos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=migracion-transferencia#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/migracion-transferencia.svg" alt="" width="18" height="18">Migración y transferencia <span class="cat-en">(Migration and Transfer)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/datatransferterminal/" target="_blank" rel="noopener">Documentación de AWS Data Transfer Terminal ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Data Transfer Terminal son <strong>instalaciones físicas</strong> de AWS, seguras y conectadas a la red,
+        donde puedes <strong>llevar tus propios dispositivos de almacenamiento</strong> y subir (o bajar) grandes
+        volúmenes de datos a los servicios de AWS por <strong>conexiones de fibra de alta velocidad</strong>. Se reserva
+        un horario desde la consola, se acude con el equipo y, al terminar, la sala se prepara para la siguiente
+        reserva. Tú conservas los discos en todo momento.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Reserva:</strong> desde la consola de Data Transfer Terminal, de una a seis horas, con al menos 24
+          horas de antelación. La ubicación exacta se comunica al reservar.</li>
+        <li><strong>Equipo de transferencia:</strong> las personas autorizadas que pueden acudir a la instalación.</li>
+        <li><strong>Conexiones:</strong> cada instalación tiene al menos dos puertos de fibra de 100 Gb/s, para velocidad
+          y redundancia.</li>
+        <li><strong>Destino:</strong> cualquier servicio de AWS accesible por la red, normalmente <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>.</li>
+        <li><strong>Disponibilidad:</strong> de momento, solo para clientes con soporte Enterprise (los demás pueden
+          pedir acceso a <a href="support.html">AWS Support</a>).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Rodajes, eventos deportivos o vehículos de pruebas que generan terabytes en discos y deben subirlos
+          rápido.</li>
+        <li>Migraciones de datos cuando la red de la empresa no da abasto y ya no se pueden pedir dispositivos <a href="snow-family.html">Snowball</a>
+          como cliente nuevo.</li>
+        <li>Datos científicos o de sensores capturados en sitios remotos.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si la red propia basta: <a href="datasync.html">DataSync</a> o la transferencia por internet o <a href="direct-connect.html">Direct Connect</a>.</li>
+        <li>Para transferencias continuas o programadas: DataSync, <a href="transfer-family.html">Transfer Family</a> o Direct Connect.</li>
+        <li>Si no se pueden desplazar los discos hasta una instalación: dispositivos <a href="snow-family.html">Snowball</a> (solo para clientes que
+          ya los usaban).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Data Transfer Terminal</th><th><a href="datasync.html">DataSync</a></th><th><a href="snow-family.html">Snow Family</a></th></tr></thead>
+          <tbody>
+            <tr><td>Cómo viajan los datos</td><td>Llevas tus discos a una sede de AWS</td><td>Por tu red</td><td>Por mensajería en un dispositivo de AWS</td></tr>
+            <tr><td>Quién tiene el dispositivo</td><td>Tú, siempre</td><td>No hay dispositivo</td><td>AWS lo envía y lo recoge</td></tr>
+            <tr><td>Clientes nuevos</td><td>Sí (soporte Enterprise)</td><td>Sí</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>horas de puerto</strong> reservadas (mínimo una) y por el <strong>número de puertos</strong>
+        que se usan. La tarifa es menor si la instalación y el destino de AWS están en el mismo continente. No se cobra
+        por volumen de datos transferidos en la instalación.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Instalación privada y exclusiva durante la reserva; solo entra el equipo autorizado.</li>
+        <li>Los discos no salen de tus manos: no hay envíos ni custodia de terceros.</li>
+        <li>Cifra los datos en tus discos y en el destino (por ejemplo, <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>).</li>
+        <li>Dos conexiones de 100 Gb/s para redundancia.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Cientos de terabytes en discos propios, red insuficiente, cliente nuevo"</strong>: Data Transfer
+          Terminal.</li>
+        <li><strong>"No queremos enviar los discos por mensajería"</strong>: Data Transfer Terminal.</li>
+        <li><strong>"Sincronizar cada noche un servidor de ficheros"</strong>: <a href="datasync.html">DataSync</a>.</li>
+        <li><strong>"<a href="snow-family.html">Snowball</a> para un cliente nuevo"</strong>: ya no se ofrece; las alternativas son Data Transfer
+          Terminal o DataSync.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="data-transfer-terminal"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/datatransferterminal/latest/userguide/what-is-dtt.html" target="_blank" rel="noopener">What is Data Transfer Terminal?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/datatransferterminal/latest/userguide/features.html" target="_blank" rel="noopener">Features (Data Transfer Terminal)</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/datatransferterminal/latest/userguide/scheduling.html" target="_blank" rel="noopener">Scheduling considerations</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/data-transfer-terminal/pricing/" target="_blank" rel="noopener">AWS Data Transfer Terminal pricing</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

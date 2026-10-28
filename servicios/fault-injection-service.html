@@ -80,17 +80,17 @@
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
         <li><strong>Plantilla de experimento:</strong> el plano del experimento, con sus acciones, objetivos,
-          condiciones de parada y el rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> que usa FIS. Cada ejecución de una plantilla es un
+          condiciones de parada y el rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> que usa <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr>. Cada ejecución de una plantilla es un
           <strong>experimento</strong>.</li>
-        <li><strong>Acciones:</strong> lo que FIS hace a un recurso durante un tiempo: parar o reiniciar instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>,
+        <li><strong>Acciones:</strong> lo que <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr> hace a un recurso durante un tiempo: parar o reiniciar instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>,
           estresar <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr> o memoria con <a href="systems-manager.html">Systems Manager</a>, inyectar errores o limitación (<em>throttling</em>) en las
           llamadas a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de un rol, cortar la conectividad de una subred, hacer conmutar una base de datos, y
           acciones para <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>, <a href="lambda.html">Lambda</a> o <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>. Pueden ir en serie o en paralelo.</li>
         <li><strong>Objetivos (<em>targets</em>):</strong> los recursos afectados, elegidos por <abbr class="sigla sigla-1" data-s="ARN" data-en="Amazon Resource Name" data-es="identificador único de un recurso de AWS" tabindex="0">ARN<span class="sigla-exp"> (Amazon Resource Name: identificador único de un recurso de AWS)</span></abbr>, por etiquetas o
           por filtros, todos o solo una parte (un número o un porcentaje), para limitar el <strong>radio de
           impacto</strong>.</li>
-        <li><strong>Condiciones de parada:</strong> alarmas de <a href="cloudwatch.html">CloudWatch</a>; si una salta, FIS detiene el experimento.</li>
-        <li><strong>Rol del experimento:</strong> rol de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> que FIS asume para actuar; sin el permiso de una acción,
+        <li><strong>Condiciones de parada:</strong> alarmas de <a href="cloudwatch.html">CloudWatch</a>; si una salta, <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr> detiene el experimento.</li>
+        <li><strong>Rol del experimento:</strong> rol de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr> que <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr> asume para actuar; sin el permiso de una acción,
           esa acción falla.</li>
         <li><strong>Biblioteca de escenarios:</strong> plantillas listas para fallos complejos, como <strong><abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>:
           Power Interruption</strong> (pérdida total de una zona), <strong>Cross-Region: Connectivity</strong> (corte
@@ -100,7 +100,7 @@
           recursos de varias <strong>cuentas de destino</strong> de la misma región, con encadenamiento de roles; las
           cuentas afectadas lo ven en su panel de AWS Health.</li>
         <li><strong>Registros e informes:</strong> la actividad del experimento puede ir a CloudWatch Logs o <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, y las
-          llamadas que hace FIS quedan en <a href="cloudtrail.html">CloudTrail</a>.</li>
+          llamadas que hace <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr> quedan en <a href="cloudtrail.html">CloudTrail</a>.</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -118,8 +118,8 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para <strong>evaluar</strong> si una aplicación cumple sus objetivos de <abbr class="sigla sigla-1" data-s="RTO" data-en="Recovery Time Objective" data-es="cuánto tiempo puedes estar sin servicio" tabindex="0">RTO<span class="sigla-exp"> (Recovery Time Objective: cuánto tiempo puedes estar sin servicio)</span></abbr> y <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr> sin romper nada: Resilience
-          Hub (que, eso sí, puede recomendar experimentos de FIS).</li>
-        <li>Para pruebas de carga o rendimiento: herramientas de carga (FIS puede añadir estrés, pero no genera
+          Hub (que, eso sí, puede recomendar experimentos de <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr>).</li>
+        <li>Para pruebas de carga o rendimiento: herramientas de carga (<abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr> puede añadir estrés, pero no genera
           tráfico de usuarios).</li>
         <li>Para conmutar de verdad el tráfico durante un incidente real: el desplazamiento de zona de Application
           Recovery Controller o <a href="route-53.html">Route 53</a>.</li>
@@ -143,7 +143,7 @@
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
-        <li>FIS hace <strong>acciones reales</strong>: AWS recomienda planificar y probar primero en preproducción.</li>
+        <li><abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr> hace <strong>acciones reales</strong>: AWS recomienda planificar y probar primero en preproducción.</li>
         <li>Mínimo privilegio en el rol del experimento y objetivos acotados por etiquetas o porcentaje.</li>
         <li>Condiciones de parada con alarmas de <a href="cloudwatch.html">CloudWatch</a> y parada manual en cualquier momento.</li>
         <li>Permisos para crear y lanzar experimentos controlados con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> (por ejemplo, solo el equipo de fiabilidad).</li>
@@ -161,7 +161,7 @@
           multicuenta desde una cuenta orquestadora.</li>
         <li><strong>"Probar la reacción ante limitación de la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr>"</strong>: acción
           <code>aws:fis:inject-api-throttle-error</code> sobre el rol que hace las llamadas.</li>
-        <li><strong>"Evaluar sin provocar fallos"</strong>: <a href="resilience-hub.html">Resilience Hub</a>, no FIS.</li>
+        <li><strong>"Evaluar sin provocar fallos"</strong>: <a href="resilience-hub.html">Resilience Hub</a>, no <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr>.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>

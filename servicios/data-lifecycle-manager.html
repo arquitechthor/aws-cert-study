@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Data Lifecycle Manager — Apuntes AWS</title>
+<meta name="description" content="Automatiza sin coste adicional la creación, copia, retención y borrado de instantáneas de EBS y de AMI respaldadas por EBS mediante políticas por etiquetas o predeterminadas. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/data-lifecycle-manager.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Data Lifecycle Manager — Apuntes AWS">
+<meta property="og:description" content="Automatiza sin coste adicional la creación, copia, retención y borrado de instantáneas de EBS y de AMI respaldadas por EBS mediante políticas por etiquetas o predeterminadas.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/data-lifecycle-manager.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/almacenamiento.svg" alt="" width="56" height="56"><span>Amazon Data Lifecycle Manager</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Automatiza la creación, copia y borrado de instantáneas <abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr> y <abbr class="sigla sigla-1" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI<span class="sigla-exp"> (Amazon Machine Image: plantilla con el sistema operativo para arrancar instancias)</span></abbr> con políticas</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=almacenamiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/almacenamiento.svg" alt="" width="18" height="18">Almacenamiento <span class="cat-en">(Storage)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html" target="_blank" rel="noopener">Documentación de Amazon Data Lifecycle Manager ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Data Lifecycle Manager es una función de <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> que <strong>automatiza la creación, la retención, la copia
+        y el borrado</strong> de <strong>instantáneas de volúmenes <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></strong> y de <strong><abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> respaldadas por
+        <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></strong>. Con políticas sencillas consigues copias periódicas, <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> actualizadas y copias en otras regiones
+        o cuentas, y borras lo antiguo para no pagar de más. No tiene coste adicional.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Políticas predeterminadas:</strong> una por región para instantáneas y otra para <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr>; cubren todos
+          los volúmenes o instancias de la región que no tengan ya una copia reciente, con exclusiones por etiqueta.
+          Es la forma más rápida de no dejar nada sin copia.</li>
+        <li><strong>Políticas personalizadas:</strong> eligen los recursos por <strong>etiquetas</strong> y pueden tener
+          hasta cuatro programaciones (horaria, diaria, semanal, mensual o con expresión cron).</li>
+        <li><strong>Retención:</strong> por número de copias o por antigüedad.</li>
+        <li><strong>Copia entre regiones:</strong> hasta tres regiones de destino, con su propia retención y cifrado.</li>
+        <li><strong>Compartir y copiar entre cuentas:</strong> una política comparte las instantáneas con otra cuenta y
+          otra, en la cuenta de destino, las copia y las vuelve a cifrar con su propia clave.</li>
+        <li><strong>Archivado:</strong> pasa las instantáneas antiguas al nivel de archivo de <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a>, mucho más barato.</li>
+        <li><strong>Restauración rápida de instantáneas:</strong> la activa en las nuevas para que los volúmenes creados
+          a partir de ellas rindan al máximo desde el primer momento.</li>
+        <li><strong>Copias coherentes:</strong> para instancias, puede ejecutar scripts antes y después de la copia (con
+          <a href="systems-manager.html">Systems Manager</a>) para que las aplicaciones queden en un estado consistente.</li>
+        <li><strong>Límite importante:</strong> solo gestiona las instantáneas y <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> que ella misma crea, y no <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> de
+          almacén de instancia.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Copias diarias de todos los volúmenes de producción con retención de 30 días.</li>
+        <li><abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> de referencia que se regeneran cada semana.</li>
+        <li>Recuperación ante desastres con copias en otra región y en una cuenta aislada.</li>
+        <li>Retención larga por normativa con paso automático al nivel de archivo.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para una política de copias <strong>común a muchos servicios</strong> (<a href="rds.html"><abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr></a>, <a href="dynamodb.html">DynamoDB</a>, <a href="efs.html"><abbr class="sigla sigla-1" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS<span class="sigla-exp"> (Elastic File System)</span></abbr></a>, <a href="fsx.html">FSx</a>…) y a toda la
+          organización, con almacenes inmutables: Backup.</li>
+        <li>Para replicación continua de servidores con <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr> de segundos: <a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a>.</li>
+        <li>Para gestionar instantáneas creadas por otros medios: Data Lifecycle Manager no las toca.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Data Lifecycle Manager</th><th>Backup</th></tr></thead>
+          <tbody>
+            <tr><td>Qué copia</td><td>Volúmenes <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> y <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> respaldadas por <abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></td><td>Muchos servicios (<abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr>, <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="dynamodb.html">DynamoDB</a>, <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a>, <a href="fsx.html">FSx</a>, <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>…)</td></tr>
+            <tr><td>Gestión central en la organización</td><td>No (política por cuenta y región)</td><td>Sí, con políticas de copia de <a href="organizations.html">Organizations</a></td></tr>
+            <tr><td>Bloqueo e inmutabilidad</td><td>No</td><td>Sí (Vault Lock)</td></tr>
+            <tr><td>Coste del servicio</td><td>Gratis (pagas las instantáneas)</td><td>Pagas el almacenamiento de copias y funciones</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Data Lifecycle Manager no cuesta nada: se paga el almacenamiento de las instantáneas (estándar o de archivo),
+        las copias entre regiones (transferencia) y, si se activa, la restauración rápida de instantáneas.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las políticas usan un rol de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> para crear, copiar y borrar.</li>
+        <li>Cifrado de las copias con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>, con otra clave en la región o la cuenta de destino.</li>
+        <li>Copias en otra región y en otra cuenta para protegerse de un fallo regional o de una cuenta comprometida.</li>
+        <li>Supervisión con <a href="eventbridge.html">EventBridge</a> y <a href="cloudtrail.html">CloudTrail</a>.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Automatizar instantáneas de <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> y borrar las antiguas, sin coste adicional"</strong>: Data Lifecycle
+          Manager.</li>
+        <li><strong>"Que ningún volumen de la región se quede sin copia"</strong>: política predeterminada.</li>
+        <li><strong>"Copias en otra región y otra cuenta"</strong>: copia entre regiones y uso compartido entre
+          cuentas.</li>
+        <li><strong>"Copias de varios servicios, centralizadas e inmutables"</strong>: Backup.</li>
+        <li><strong>"Conservar instantáneas años y pagar poco"</strong>: regla de archivado.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="data-lifecycle-manager"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html" target="_blank" rel="noopener">Automate backups with Amazon Data Lifecycle Manager</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/dlm/latest/APIReference/API_Schedule.html" target="_blank" rel="noopener">Schedule, Data Lifecycle Manager API Reference</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/dlm/latest/APIReference/API_UpdateLifecyclePolicy.html" target="_blank" rel="noopener">UpdateLifecyclePolicy, Data Lifecycle Manager API Reference</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

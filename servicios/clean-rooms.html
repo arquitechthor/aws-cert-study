@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Clean Rooms — Apuntes AWS</title>
+<meta name="description" content="Espacio de colaboración seguro para analizar datos con socios sin que ninguna parte vea los datos en bruto de la otra, con reglas de análisis, privacidad diferencial y computación criptográfica. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/clean-rooms.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Clean Rooms — Apuntes AWS">
+<meta property="og:description" content="Espacio de colaboración seguro para analizar datos con socios sin que ninguna parte vea los datos en bruto de la otra, con reglas de análisis, privacidad diferencial y computación criptográfica.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/clean-rooms.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/analisis.svg" alt="" width="56" height="56"><span>AWS Clean Rooms</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Analiza datos con socios sin que ninguna parte vea los datos en bruto de la otra</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=analisis#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/analisis.svg" alt="" width="18" height="18">Análisis <span class="cat-en">(Analytics)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/clean-rooms/" target="_blank" rel="noopener">Documentación de AWS Clean Rooms ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Clean Rooms es un <strong>espacio de colaboración seguro</strong> para que dos o más empresas analicen
+        juntas sus conjuntos de datos <strong>sin revelarse los datos en bruto</strong>. Cada parte deja sus datos donde
+        están (en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>, <a href="athena.html">Athena</a>, Snowflake o Databricks), elige con quién colabora y fija qué tipo de consultas se pueden
+        hacer sobre sus tablas y qué resultados pueden salir. Nadie copia los datos del otro.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Colaboración y miembros:</strong> el creador invita a otras cuentas y decide quién puede consultar,
+          quién recibe los resultados y quién paga el cómputo.</li>
+        <li><strong>Tabla configurada:</strong> la referencia a los datos de un miembro (por ejemplo, una tabla del
+          catálogo de <a href="glue.html">Glue</a> sobre <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>), con las columnas que se permiten usar.</li>
+        <li><strong>Reglas de análisis:</strong> <strong>de agregación</strong> (solo estadísticas, con un mínimo de
+          personas por fila de resultado), <strong>de lista</strong> (la lista de coincidencias entre conjuntos, con
+          restricciones) o <strong>personalizada</strong> (consultas <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> o trabajos de PySpark revisados y aprobados).</li>
+        <li><strong>Plantillas de análisis:</strong> consultas acordadas de antemano, con parámetros, que los demás
+          miembros revisan y aprueban.</li>
+        <li><strong>Privacidad diferencial:</strong> añade ruido calculado a los resultados para impedir identificar a
+          una persona concreta mediante consultas repetidas.</li>
+        <li><strong>Computación criptográfica:</strong> los datos se mantienen cifrados incluso mientras se procesa la
+          consulta, para políticas de datos muy estrictas.</li>
+        <li><strong>Clean Rooms <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>:</strong> modelos de audiencias similares (<em>lookalike</em>) entre dos partes sin
+          compartir los datos.</li>
+        <li><strong>Registros de análisis:</strong> cada consulta queda registrada para auditoría.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Un anunciante y un medio miden el alcance de una campaña cruzando impresiones y ventas sin intercambiar
+          clientes.</li>
+        <li>Bancos o aseguradoras detectan fraude cruzando señales sin compartir datos personales.</li>
+        <li>Investigación sanitaria entre instituciones con datos que no pueden salir de cada una.</li>
+        <li>Enriquecer audiencias con un socio para marketing respetando la privacidad.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>vender o distribuir</strong> un conjunto de datos a terceros: <a href="data-exchange.html">Data Exchange</a>.</li>
+        <li>Para compartir tablas completas entre cuentas de tu propia organización: <a href="lake-formation.html">Lake Formation</a> o el uso compartido
+          de datos de <a href="redshift.html">Redshift</a>.</li>
+        <li>Si los socios pueden ver los datos del otro sin problema: un análisis normal con <a href="athena.html">Athena</a> o Redshift es más
+          simple.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Clean Rooms</th><th><a href="data-exchange.html">Data Exchange</a></th><th><a href="lake-formation.html">Lake Formation</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué resuelve</td><td>Analizar juntos sin ver los datos del otro</td><td>Comprar y vender datos</td><td>Gobernar y compartir datos del lago</td></tr>
+            <tr><td>¿Ve el otro los datos?</td><td>No, solo resultados permitidos</td><td>Sí, el suscriptor los recibe</td><td>Sí, según permisos</td></tr>
+            <tr><td>Entre quién</td><td>Empresas distintas</td><td>Proveedor y suscriptores</td><td>Sobre todo cuentas propias</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga el cómputo de las consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> o los trabajos de PySpark por <strong>unidad de procesamiento y
+        hora</strong>, y lo paga el miembro que la colaboración designe. Clean Rooms <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> y la resolución de entidades se
+        cobran aparte, según los registros o perfiles procesados.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los datos no se mueven ni se copian: Clean Rooms los lee de su origen al ejecutar cada consulta.</li>
+        <li>Reglas de análisis, umbrales mínimos de agregación y privacidad diferencial para evitar reidentificar
+          personas.</li>
+        <li>Cifrado de los datos durante el cálculo con la computación criptográfica.</li>
+        <li>Registros de consultas y llamadas a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> en <a href="cloudtrail.html">CloudTrail</a> para auditoría.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Analizar datos con un socio sin compartir los datos en bruto"</strong>: Clean Rooms.</li>
+        <li><strong>"Solo resultados agregados de al menos 100 personas"</strong>: regla de agregación con umbral
+          mínimo.</li>
+        <li><strong>"Evitar que consultas repetidas identifiquen a una persona"</strong>: privacidad diferencial.</li>
+        <li><strong>"Los datos deben seguir cifrados durante el cálculo"</strong>: computación criptográfica de Clean
+          Rooms.</li>
+        <li><strong>"Vender un conjunto de datos"</strong>: <a href="data-exchange.html">Data Exchange</a>, no Clean Rooms.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="clean-rooms"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html" target="_blank" rel="noopener">What is AWS Clean Rooms?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/clean-rooms/latest/userguide/analysis-rules-custom.html" target="_blank" rel="noopener">Custom analysis rule in AWS Clean Rooms</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/clean-rooms/pricing/" target="_blank" rel="noopener">AWS Clean Rooms pricing</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

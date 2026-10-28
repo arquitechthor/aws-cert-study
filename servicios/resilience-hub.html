@@ -94,7 +94,7 @@
           multi-AZ en una base de datos, réplicas entre regiones, copias de seguridad), con sus compromisos de coste.</li>
         <li><strong>Recomendaciones operativas:</strong> <strong>alarmas</strong> de <a href="cloudwatch.html">CloudWatch</a>, <strong><abbr class="sigla sigla-1" data-s="SOP" data-en="Standard Operating Procedure" data-es="procedimiento operativo estándar, el paso a paso ante un incidente" tabindex="0">SOP<span class="sigla-exp"> (Standard Operating Procedure: procedimiento operativo estándar, el paso a paso ante un incidente)</span></abbr></strong>
           (procedimientos operativos estándar, como documentos de <a href="systems-manager.html">Systems Manager</a>) y <strong>experimentos</strong> de
-          <a href="fault-injection-service.html">FIS</a> para probar cada tipo de interrupción. Se pueden exportar como plantillas de CloudFormation.</li>
+          <a href="fault-injection-service.html"><abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr></a> para probar cada tipo de interrupción. Se pueden exportar como plantillas de CloudFormation.</li>
         <li><strong>Detección de deriva:</strong> evaluaciones diarias automáticas con aviso (por ejemplo, por <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a>) si
           la aplicación deja de cumplir su política o si cambian sus recursos.</li>
       </ul>
@@ -111,7 +111,7 @@
       <h2 id="cuando-no">Cuándo NO usarlo</h2>
       <ul>
         <li>Para <strong>provocar</strong> fallos y ver qué pasa: <a href="fault-injection-service.html">Fault Injection Service</a> (Resilience Hub lo recomienda
-          y lo lanza, pero el que actúa es FIS).</li>
+          y lo lanza, pero el que actúa es <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr>).</li>
         <li>Para <strong>hacer</strong> las copias o la recuperación: Backup o <a href="elastic-disaster-recovery.html">Elastic Disaster Recovery</a>.</li>
         <li>Para conmutar el tráfico durante un incidente real: Application Recovery Controller o <a href="route-53.html">Route 53</a>.</li>
         <li>Para revisar una carga contra todos los pilares del marco (seguridad, costes…), no solo la fiabilidad:
@@ -132,7 +132,7 @@
 
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga una tarifa mensual por cada <strong>aplicación</strong> que se evalúa, según el tiempo que está dada
-        de alta. Los experimentos de <a href="fault-injection-service.html">FIS</a>, las alarmas de <a href="cloudwatch.html">CloudWatch</a> y los demás servicios que uses se pagan aparte.</p>
+        de alta. Los experimentos de <a href="fault-injection-service.html"><abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr></a>, las alarmas de <a href="cloudwatch.html">CloudWatch</a> y los demás servicios que uses se pagan aparte.</p>
 
       <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
       <ul>
@@ -147,8 +147,8 @@
         <li><strong>"Aviso cuando un cambio hace que deje de cumplir los objetivos"</strong>: detección de deriva con
           evaluaciones diarias.</li>
         <li><strong>"Alarmas, procedimientos y experimentos recomendados"</strong>: recomendaciones operativas de
-          Resilience Hub (que se ejecutan con <a href="cloudwatch.html">CloudWatch</a>, <a href="systems-manager.html">Systems Manager</a> y <a href="fault-injection-service.html">FIS</a>).</li>
-        <li><strong>"Inyectar fallos"</strong>: FIS, no Resilience Hub.</li>
+          Resilience Hub (que se ejecutan con <a href="cloudwatch.html">CloudWatch</a>, <a href="systems-manager.html">Systems Manager</a> y <a href="fault-injection-service.html"><abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr></a>).</li>
+        <li><strong>"Inyectar fallos"</strong>: <abbr class="sigla" data-s="FIS" data-en="Fault Injection Service" data-es="servicio de AWS para experimentos de ingeniería del caos" tabindex="0">FIS</abbr>, no Resilience Hub.</li>
         <li><strong>"Evaluar en la canalización antes de desplegar"</strong>: evaluación de Resilience Hub como paso de
           <a href="codepipeline.html">CodePipeline</a>.</li>
       </ul>

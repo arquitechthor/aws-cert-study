@@ -1,0 +1,113 @@
+[
+  {
+    "id": "distro-for-opentelemetry-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Una empresa con 60 microservicios en EKS quiere trazas distribuidas y métricas en CloudWatch y X-Ray, pero también enviar las mismas trazas a una herramienta de observabilidad de terceros, sin reinstrumentar el código si en el futuro cambia de herramienta. ¿Qué solución cumple los requisitos?",
+    "opciones": [
+      "Instrumentar con el SDK de X-Ray y exportar las trazas a mano cada día.",
+      "Activar solo los registros de flujo de VPC.",
+      "Instrumentar con AWS Distro for OpenTelemetry y desplegar el recolector de ADOT con exportadores a X-Ray, CloudWatch y la herramienta de terceros.",
+      "Usar el agente de CloudWatch en cada nodo."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "ADOT usa el estándar abierto OpenTelemetry: el código se instrumenta una vez y el recolector envía la misma telemetría a varios destinos, que se cambian solo en su configuración. El SDK de X-Ray está atado a X-Ray (y en mantenimiento), los registros de flujo no son trazas y el agente de CloudWatch no envía trazas a terceros.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/opentelemetry.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "distro-for-opentelemetry-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Unas aplicaciones en EKS exponen métricas en formato de Prometheus y el equipo quiere guardarlas en Amazon Managed Service for Prometheus. ¿Qué componentes del recolector de ADOT usa?",
+    "opciones": [
+      "El receptor de Prometheus, el exportador de escritura remota de Prometheus y la extensión de autenticación SigV4.",
+      "El exportador de X-Ray y el receptor de CloudTrail.",
+      "Una capa de Lambda de ADOT.",
+      "El agente de Systems Manager."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El recolector de ADOT recoge las métricas con el receptor de Prometheus y las envía al espacio de trabajo con la escritura remota, firmada con SigV4. Las demás opciones no recogen ni envían métricas de Prometheus.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-ingest-metrics-OpenTelemetry.html"
+    ]
+  },
+  {
+    "id": "distro-for-opentelemetry-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Un equipo quiere instrumentar con OpenTelemetry unas funciones Lambda en Python con el menor cambio posible en el código. ¿Qué usa?",
+    "opciones": [
+      "Un recolector de ADOT en una instancia EC2 por función.",
+      "El demonio de X-Ray instalado en la función.",
+      "Registros de flujo de VPC.",
+      "La capa de Lambda de AWS Distro for OpenTelemetry."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "ADOT se distribuye como capa de Lambda, que añade la instrumentación sin apenas tocar el código. Una instancia por función es desproporcionado, el demonio de X-Ray no es OpenTelemetry y los registros de flujo no instrumentan aplicaciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/opentelemetry.html"
+    ]
+  },
+  {
+    "id": "distro-for-opentelemetry-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "La factura de X-Ray y CloudWatch crece por el enorme volumen de trazas y métricas que envía el recolector de ADOT. ¿Qué medida reduce el coste sin perder la observabilidad esencial?",
+    "opciones": [
+      "Desactivar la instrumentación en producción.",
+      "Configurar en el recolector el muestreo de trazas y filtrar las métricas que no se usan.",
+      "Enviar todo a un depósito de S3 público.",
+      "Duplicar los recolectores."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "ADOT es gratuito, pero el destino cobra por volumen: muestrear trazas y filtrar métricas en el recolector reduce lo que se envía. Desactivar la instrumentación pierde visibilidad, un depósito público es un riesgo y duplicar recolectores no reduce datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-ingest-metrics-OpenTelemetry.html"
+    ]
+  },
+  {
+    "id": "distro-for-opentelemetry-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Un equipo empieza un proyecto nuevo y duda entre instrumentar las trazas con el SDK de X-Ray o con OpenTelemetry. ¿Qué recomienda AWS hoy?",
+    "opciones": [
+      "El SDK de X-Ray, porque OpenTelemetry no puede enviar a X-Ray.",
+      "Ninguno: X-Ray ya no existe.",
+      "El agente de CloudWatch para trazas.",
+      "OpenTelemetry (por ejemplo, con ADOT): los SDK y el demonio de X-Ray están en modo de mantenimiento."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los SDK y el demonio de X-Ray están en mantenimiento desde 2026 y la instrumentación recomendada es OpenTelemetry, que envía a X-Ray sin problema. El servicio X-Ray sigue existiendo, y el agente de CloudWatch no es la vía para trazas.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/mt/aws-x-ray-sdks-daemon-migration-to-opentelemetry/"
+    ]
+  }
+]

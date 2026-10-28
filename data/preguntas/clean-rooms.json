@@ -1,0 +1,113 @@
+[
+  {
+    "id": "clean-rooms-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Un minorista y una cadena de televisión quieren medir cuántos clientes del minorista vieron un anuncio. Ninguno puede compartir sus datos personales con el otro, los datos deben quedarse en sus cuentas de AWS y solo deben salir resultados agregados. ¿Qué solución lo permite?",
+    "opciones": [
+      "Un conjunto de datos de AWS Data Exchange que el minorista compra a la cadena.",
+      "Una colaboración de AWS Clean Rooms con tablas configuradas y reglas de análisis de agregación.",
+      "Compartir con Lake Formation las tablas de cada uno con la cuenta del otro.",
+      "Copiar los datos de ambos a un depósito de S3 común y consultarlos con Athena."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Clean Rooms permite analizar juntos los datos sin que ninguna parte vea los del otro: cada uno deja sus datos en su cuenta y las reglas de agregación solo dejan salir estadísticas. Data Exchange y Lake Formation entregan o comparten los datos, y el depósito común los expone a ambos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "clean-rooms-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "En una colaboración de Clean Rooms, el dueño de una tabla quiere que ninguna fila del resultado represente a menos de 100 personas distintas. ¿Qué configura?",
+    "opciones": [
+      "Una política de bucket de S3 que limite las descargas.",
+      "Un grupo de seguridad en la colaboración.",
+      "Cifrado con una clave propia de KMS.",
+      "Una regla de análisis con un umbral mínimo de agregación de 100 identidades distintas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las reglas de análisis de Clean Rooms admiten un número mínimo de identidades distintas por fila de resultado, lo que evita sacar datos de grupos pequeños o individuos. Las políticas de S3, los grupos de seguridad o el cifrado no controlan qué devuelve una consulta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/clean-rooms/latest/userguide/analysis-rules-custom.html"
+    ]
+  },
+  {
+    "id": "clean-rooms-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Un socio podría lanzar muchas consultas agregadas ligeramente distintas para deducir datos de una persona concreta. ¿Qué función de Clean Rooms protege contra ello?",
+    "opciones": [
+      "La privacidad diferencial.",
+      "Los registros de análisis.",
+      "Clean Rooms ML.",
+      "La resolución de entidades."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "La privacidad diferencial añade ruido calculado a los resultados para que, aunque se repitan consultas, no se pueda identificar a nadie. Los registros solo permiten auditar después, y las otras funciones sirven para modelos y para unir registros.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "clean-rooms-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "La política de datos de un banco exige que sus datos sigan cifrados incluso mientras se procesan las consultas conjuntas con un socio. ¿Qué usa en Clean Rooms?",
+    "opciones": [
+      "Cifrado en reposo de S3 con SSE-KMS.",
+      "Un punto de enlace de VPC para Clean Rooms.",
+      "La computación criptográfica para Clean Rooms.",
+      "TLS entre el banco y AWS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La computación criptográfica de Clean Rooms mantiene los datos cifrados durante el cálculo. El cifrado en reposo y TLS protegen los datos guardados o en tránsito, no durante el procesamiento, y un punto de enlace de VPC solo cambia la ruta de red.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html"
+    ]
+  },
+  {
+    "id": "clean-rooms-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "En una colaboración de Clean Rooms, el socio que consulta no quiere pagar el cómputo; lo paga la empresa que creó la colaboración. ¿Es posible?",
+    "opciones": [
+      "No: siempre paga quien ejecuta la consulta.",
+      "Sí: el creador de la colaboración designa qué miembro paga el cómputo de las consultas.",
+      "No: el coste se reparte a partes iguales entre todos.",
+      "Solo si ambos están en la misma organización de AWS."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Clean Rooms permite al creador designar qué miembro paga el cómputo de las consultas o los trabajos, aunque no sea el que consulta. No hace falta compartir organización.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html"
+    ]
+  }
+]

@@ -1,0 +1,113 @@
+[
+  {
+    "id": "codecommit-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Una empresa regulada quiere repositorios Git privados dentro de sus cuentas de AWS, con acceso por IAM y sin credenciales de larga duración, que arranquen sus canalizaciones de CodePipeline al hacer push a la rama principal y que exijan dos aprobaciones antes de fusionar. ¿Qué solución cumple los requisitos?",
+    "opciones": [
+      "Repositorios en S3 con versiones activadas y una función Lambda que compare cambios.",
+      "AWS CodeArtifact con un repositorio por equipo.",
+      "Amazon ECR con políticas de repositorio.",
+      "AWS CodeCommit con acceso mediante roles y credenciales temporales (git-remote-codecommit), un evento de EventBridge que arranca CodePipeline y una plantilla de reglas de aprobación."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "CodeCommit ofrece repositorios Git privados con IAM, admite credenciales temporales, emite eventos que arrancan CodePipeline y tiene reglas de aprobación para solicitudes de extracción. S3 no es un repositorio Git, CodeArtifact guarda paquetes y ECR imágenes de contenedor.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-create-pull-request-approval-rule.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "codecommit-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Los desarrolladores no deben poder hacer push directamente a la rama main de un repositorio de CodeCommit; los cambios deben llegar por solicitud de extracción. ¿Cómo se impide?",
+    "opciones": [
+      "Con un grupo de seguridad en el repositorio.",
+      "Con una política de IAM que deniegue GitPush y la fusión en esa rama mediante una condición por referencia.",
+      "Cifrando la rama main con otra clave de KMS.",
+      "Con un desencadenador que avise a SNS después del push."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las políticas de IAM de CodeCommit admiten condiciones por rama para denegar el push y la fusión directa en ramas protegidas. Los grupos de seguridad no aplican a CodeCommit, el cifrado no controla quién escribe y un aviso llega después del cambio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-conditional-branch.html"
+    ]
+  },
+  {
+    "id": "codecommit-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Unas instancias EC2 de compilación deben clonar repositorios de CodeCommit sin guardar en ellas usuarios de IAM ni credenciales de Git. ¿Qué configuración es la adecuada?",
+    "opciones": [
+      "Credenciales de Git de un usuario de IAM guardadas en el disco.",
+      "Una clave SSH compartida por todo el equipo.",
+      "Hacer público el repositorio.",
+      "Un rol de IAM en la instancia con permisos GitPull y el ayudante de credenciales de la AWS CLI (o git-remote-codecommit)."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Con un rol de IAM en la instancia y el ayudante de credenciales o git-remote-codecommit, Git usa credenciales temporales sin guardar nada en la máquina. Las credenciales o claves en disco son de larga duración y CodeCommit no tiene repositorios públicos.",
+    "fuentes": [
+      "https://repost.aws/knowledge-center/codecommit-git-repositories-ec2-windows"
+    ]
+  },
+  {
+    "id": "codecommit-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "enunciado": "Un equipo quiere recibir un correo cada vez que alguien hace push a la rama de producción de un repositorio de CodeCommit. ¿Qué configura con menos esfuerzo?",
+    "opciones": [
+      "Un desencadenador del repositorio para esa rama que publique en un tema de SNS con suscripción de correo.",
+      "Una función Lambda que consulte el repositorio cada minuto.",
+      "Un trabajo de CodeBuild programado.",
+      "Una alarma de CloudWatch sobre el tamaño del repositorio."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Los desencadenadores de CodeCommit reaccionan a pushes en ramas concretas y pueden publicar en SNS, que envía el correo. Consultar cada minuto o programar compilaciones es más trabajo, y el tamaño del repositorio no indica pushes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-notify.html"
+    ]
+  },
+  {
+    "id": "codecommit-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Un arquitecto lee que AWS CodeCommit dejó de admitir clientes nuevos en 2024 y lo descarta para un proyecto nuevo de 2026. ¿Qué debería saber?",
+    "opciones": [
+      "CodeCommit se retiró y sus repositorios pasaron a CodeArtifact.",
+      "Solo puede usarse en la región us-east-1.",
+      "CodeCommit volvió a disponibilidad general el 25/11/2025 y admite de nuevo clientes nuevos.",
+      "Solo admite repositorios de menos de 1 GB."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Tras cerrarse a clientes nuevos en julio de 2024, AWS devolvió CodeCommit a disponibilidad general el 25/11/2025, así que puede usarse en proyectos nuevos. No se retiró ni está limitado a una región.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codecommit/latest/userguide/history.html"
+    ]
+  }
+]

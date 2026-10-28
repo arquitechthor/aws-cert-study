@@ -1,0 +1,112 @@
+[
+  {
+    "id": "data-lifecycle-manager-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Una empresa quiere instantáneas diarias de todos los volúmenes EBS de producción (etiquetados entorno=prod), conservar 14, copiarlas a otra región para recuperación ante desastres y borrar las antiguas, sin coste por el servicio de automatización. ¿Qué usa?",
+    "opciones": [
+      "Una función Lambda programada que llame a CreateSnapshot y DeleteSnapshot.",
+      "AWS Elastic Disaster Recovery.",
+      "Una política personalizada de Amazon Data Lifecycle Manager por etiqueta, con retención de 14 y copia entre regiones.",
+      "Replicación entre regiones de S3."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Data Lifecycle Manager automatiza la creación, la retención, la copia entre regiones y el borrado de instantáneas de EBS por etiqueta, sin coste adicional. Una función propia hay que mantenerla, Elastic Disaster Recovery replica servidores en continuo y S3 no copia instantáneas de EBS.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html"
+    ]
+  },
+  {
+    "id": "data-lifecycle-manager-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Un equipo quiere asegurarse de que ningún volumen EBS de una región se quede sin instantánea, aunque alguien olvide etiquetarlo, excepto los de desarrollo. ¿Qué configura?",
+    "opciones": [
+      "Una política personalizada por cada etiqueta posible.",
+      "La política predeterminada de instantáneas de Data Lifecycle Manager, con exclusión por etiqueta para desarrollo.",
+      "Una regla de AWS Config que avise de los volúmenes sin etiqueta.",
+      "Un plan de AWS Backup sin selección de recursos."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La política predeterminada cubre todos los volúmenes de la región que no tengan una copia reciente y admite exclusiones por etiqueta. Las políticas por etiqueta dependen de que se etiquete bien, Config solo avisa y un plan de Backup sin recursos asignados no copia nada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dlm/latest/APIReference/API_UpdateLifecyclePolicy.html"
+    ]
+  },
+  {
+    "id": "data-lifecycle-manager-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Por normativa hay que conservar siete años las instantáneas mensuales de unos volúmenes, aunque casi nunca se restauran. ¿Qué reduce el coste con Data Lifecycle Manager?",
+    "opciones": [
+      "Activar la restauración rápida de instantáneas.",
+      "Copiarlas a tres regiones.",
+      "Una regla de archivado que pase las instantáneas al nivel de archivo de EBS.",
+      "Crear AMI en lugar de instantáneas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El nivel de archivo de EBS cuesta mucho menos para instantáneas que casi no se restauran, y Data Lifecycle Manager puede moverlas allí automáticamente. La restauración rápida y las copias a otras regiones añaden coste, y una AMI no abarata nada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dlm/latest/APIReference/API_Schedule.html"
+    ]
+  },
+  {
+    "id": "data-lifecycle-manager-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Tras un incidente de seguridad, la empresa quiere que las copias de sus volúmenes estén también en una cuenta aislada y cifradas con una clave de esa cuenta. ¿Qué diseño con Data Lifecycle Manager lo consigue?",
+    "opciones": [
+      "Una política que comparta las instantáneas con la cuenta aislada y, en esa cuenta, otra política que las copie y las vuelva a cifrar con su clave.",
+      "Dar a la cuenta aislada permisos de administrador en la cuenta de producción.",
+      "Exportar las instantáneas a un depósito de S3 público.",
+      "Etiquetar las instantáneas con el ID de la otra cuenta."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Data Lifecycle Manager puede compartir instantáneas con otra cuenta, y una política en la cuenta de destino las copia y las cifra con su propia clave de KMS, de modo que no dependen de la cuenta de origen. Las demás opciones abren la seguridad o no copian nada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/dlm/latest/APIReference/API_Schedule.html"
+    ]
+  },
+  {
+    "id": "data-lifecycle-manager-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Un equipo descubre que Data Lifecycle Manager no borra unas instantáneas antiguas creadas hace meses con un script propio. ¿Por qué?",
+    "opciones": [
+      "Las instantáneas no tienen la etiqueta de la región.",
+      "Data Lifecycle Manager solo borra AMI.",
+      "Hay que activar la restauración rápida para poder borrarlas.",
+      "Data Lifecycle Manager solo gestiona las instantáneas y AMI que crean sus propias políticas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Data Lifecycle Manager no gestiona instantáneas ni AMI creadas por otros medios; las del script hay que borrarlas aparte. Las otras opciones no son reglas del servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html"
+    ]
+  }
+]

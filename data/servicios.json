@@ -359,8 +359,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Espacio de colaboración seguro para analizar datos con socios sin que ninguna parte vea los datos en bruto de la otra, con reglas de análisis, privacidad diferencial y computación criptográfica.",
     "frase": "Analiza datos con socios sin que ninguna parte vea los datos en bruto de la otra",
     "documentacion": "https://docs.aws.amazon.com/clean-rooms/"
   },
@@ -548,8 +548,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Repositorios Git privados y gestionados en AWS, con acceso por IAM, cifrado con KMS, solicitudes de extracción con reglas de aprobación e integración con CodePipeline.",
     "frase": "Repositorios Git privados y gestionados, integrados con IAM y las canalizaciones de AWS",
     "documentacion": "https://docs.aws.amazon.com/codecommit/"
   },
@@ -706,8 +706,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Reglas para agrupar los costes de AWS según tu propia estructura (equipos, proyectos, centros de coste) y repartir los compartidos, visibles en Cost Explorer, Budgets y el informe de costes y uso.",
     "frase": "Agrupa el gasto con reglas propias, como equipos o proyectos, para repartir la factura",
     "documentacion": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html"
   },
@@ -763,8 +763,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Automatiza sin coste adicional la creación, copia, retención y borrado de instantáneas de EBS y de AMI respaldadas por EBS mediante políticas por etiquetas o predeterminadas.",
     "frase": "Automatiza la creación, copia y borrado de instantáneas EBS y AMI con políticas",
     "documentacion": "https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-lifecycle.html"
   },
@@ -775,8 +775,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Instalaciones físicas seguras donde llevas tus propios discos con reserva previa y subes datos a AWS por conexiones de fibra de 100 Gb/s, sin enviar dispositivos ni esperar.",
     "frase": "Sedes físicas donde llevas tus discos y subes datos a AWS por enlaces muy rápidos",
     "documentacion": "https://docs.aws.amazon.com/datatransferterminal/"
   },
@@ -859,8 +859,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Distribución de OpenTelemetry mantenida por AWS: instrumenta aplicaciones una vez con un estándar abierto y envía trazas, métricas y registros a X-Ray, CloudWatch, Prometheus u otros destinos.",
     "frase": "Recoge trazas y métricas con un estándar abierto y las envía a X-Ray o CloudWatch",
     "documentacion": "https://aws-otel.github.io/docs/introduction"
   },

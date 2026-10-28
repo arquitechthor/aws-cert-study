@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Distro for OpenTelemetry — Apuntes AWS</title>
+<meta name="description" content="Distribución de OpenTelemetry mantenida por AWS: instrumenta aplicaciones una vez con un estándar abierto y envía trazas, métricas y registros a X-Ray, CloudWatch, Prometheus u otros destinos. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/distro-for-opentelemetry.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Distro for OpenTelemetry — Apuntes AWS">
+<meta property="og:description" content="Distribución de OpenTelemetry mantenida por AWS: instrumenta aplicaciones una vez con un estándar abierto y envía trazas, métricas y registros a X-Ray, CloudWatch, Prometheus u otros destinos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/distro-for-opentelemetry.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="56" height="56"><span>AWS Distro for OpenTelemetry</span></h1>
+      <p class="full-name">AWS Distro for OpenTelemetry (ADOT)</p>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Recoge trazas y métricas con un estándar abierto y las envía a X-Ray o CloudWatch</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=herramientas-desarrolladores#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/herramientas-desarrolladores.svg" alt="" width="18" height="18">Herramientas para desarrolladores <span class="cat-en">(Developer Tools)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://aws-otel.github.io/docs/introduction" target="_blank" rel="noopener">Documentación de AWS Distro for OpenTelemetry ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Distro for OpenTelemetry es la <strong>distribución de OpenTelemetry</strong> que mantiene y da soporte
+        AWS. OpenTelemetry es el <strong>estándar abierto</strong> de observabilidad para instrumentar aplicaciones
+        (trazas, métricas y registros) sin atarse a un proveedor. Con <abbr class="sigla" data-s="ADOT" data-en="AWS Distro for OpenTelemetry" data-es="distribución de AWS de OpenTelemetry para trazas y métricas" tabindex="0">ADOT</abbr> instrumentas el código una sola vez y el
+        <strong>recolector</strong> envía los datos a <a href="x-ray.html">X-Ray</a>, <a href="cloudwatch.html">CloudWatch</a>, <a href="managed-service-for-prometheus.html">Managed Service for Prometheus</a> o herramientas
+        de terceros, cambiando solo su configuración.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong><abbr class="sigla sigla-1" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK<span class="sigla-exp"> (Software Development Kit: bibliotecas para programar contra AWS)</span></abbr> y agentes de instrumentación:</strong> para lenguajes como Java, Python, JavaScript, .NET o Go;
+          algunos instrumentan de forma automática (sin cambiar el código) las bibliotecas habituales y las llamadas a
+          los <abbr class="sigla" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK</abbr> de AWS.</li>
+        <li><strong>Recolector (<em>collector</em>):</strong> recibe, procesa y exporta la telemetría. Se compone de
+          <strong>receptores</strong> (por ejemplo, de Prometheus), <strong>procesadores</strong> y
+          <strong>exportadores</strong> (a <a href="x-ray.html">X-Ray</a>, <a href="cloudwatch.html">CloudWatch</a> o la escritura remota de Prometheus, firmando con
+          SigV4).</li>
+        <li><strong>Despliegue:</strong> como complemento (<em>add-on</em>) de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a> con el operador de <abbr class="sigla" data-s="ADOT" data-en="AWS Distro for OpenTelemetry" data-es="distribución de AWS de OpenTelemetry para trazas y métricas" tabindex="0">ADOT</abbr>, como
+          contenedor auxiliar en tareas de <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, en instancias <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a> o como <strong>capa de <a href="lambda.html">Lambda</a></strong>.</li>
+        <li><strong>Soporte de AWS:</strong> componentes probados y con parches de seguridad, a diferencia de montar la
+          distribución de la comunidad por tu cuenta.</li>
+        <li><strong>Relación con X-Ray:</strong> los <abbr class="sigla" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK</abbr> y el demonio de X-Ray están en mantenimiento desde 2026 y la
+          instrumentación recomendada para trazas es OpenTelemetry.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Trazas distribuidas de microservicios en <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> o <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> hacia <a href="x-ray.html">X-Ray</a> o <a href="cloudwatch.html">CloudWatch</a> Application Signals.</li>
+        <li>Recoger métricas con formato de Prometheus y enviarlas a <a href="managed-service-for-prometheus.html">Managed Service for Prometheus</a>.</li>
+        <li>Estrategia multinube o con herramientas de terceros, sin reinstrumentar si se cambia de destino.</li>
+        <li>Instrumentar funciones <a href="lambda.html">Lambda</a> con una capa sin tocar mucho el código.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si basta con las métricas y los registros que los servicios ya envían a <a href="cloudwatch.html">CloudWatch</a> sin instrumentar.</li>
+        <li>Para métricas del sistema operativo y registros de instancias sin trazas: el agente de CloudWatch puede ser
+          suficiente.</li>
+        <li>Para auditar llamadas a la <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> de AWS: <a href="cloudtrail.html">CloudTrail</a>.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Distro for OpenTelemetry</th><th><abbr class="sigla" data-s="SDK" data-en="Software Development Kit" data-es="bibliotecas para programar contra AWS" tabindex="0">SDK</abbr> de <a href="x-ray.html">X-Ray</a></th><th>Agente de <a href="cloudwatch.html">CloudWatch</a></th></tr></thead>
+          <tbody>
+            <tr><td>Estándar</td><td>OpenTelemetry (abierto)</td><td>Propio de AWS</td><td>Propio de AWS</td></tr>
+            <tr><td>Señales</td><td>Trazas, métricas y registros</td><td>Trazas</td><td>Métricas y registros</td></tr>
+            <tr><td>Destinos</td><td>X-Ray, CloudWatch, Prometheus y terceros</td><td>X-Ray</td><td>CloudWatch</td></tr>
+            <tr><td>Situación</td><td>Recomendado</td><td>En mantenimiento</td><td>Vigente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p><abbr class="sigla" data-s="ADOT" data-en="AWS Distro for OpenTelemetry" data-es="distribución de AWS de OpenTelemetry para trazas y métricas" tabindex="0">ADOT</abbr> es gratuito: se paga el cómputo donde corre el recolector y el servicio de destino (trazas de <a href="x-ray.html">X-Ray</a>,
+        métricas y registros de <a href="cloudwatch.html">CloudWatch</a>, muestras de Prometheus…). Muestrear las trazas y filtrar métricas en el
+        recolector reduce ese coste.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>El recolector usa roles de <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> (por ejemplo, de cuenta de servicio en <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>) con permisos mínimos de
+          escritura en cada destino.</li>
+        <li>Envío firmado con SigV4 y cifrado en tránsito.</li>
+        <li>Filtrar en el recolector los datos sensibles antes de exportarlos.</li>
+        <li>Desplegar el recolector con réplicas para no perder telemetría si cae uno.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Instrumentar con un estándar abierto, sin atarse a un proveedor"</strong>: Distro for
+          OpenTelemetry.</li>
+        <li><strong>"Enviar las mismas trazas a <a href="x-ray.html">X-Ray</a> y a una herramienta de terceros"</strong>: recolector de <abbr class="sigla" data-s="ADOT" data-en="AWS Distro for OpenTelemetry" data-es="distribución de AWS de OpenTelemetry para trazas y métricas" tabindex="0">ADOT</abbr> con
+          dos exportadores.</li>
+        <li><strong>"Métricas de Prometheus de <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a> a <a href="managed-service-for-prometheus.html">Managed Service for Prometheus</a>"</strong>: recolector de <abbr class="sigla" data-s="ADOT" data-en="AWS Distro for OpenTelemetry" data-es="distribución de AWS de OpenTelemetry para trazas y métricas" tabindex="0">ADOT</abbr> (o el
+          recolector gestionado).</li>
+        <li><strong>"Instrumentar <a href="lambda.html">Lambda</a>"</strong>: capa de Lambda de <abbr class="sigla" data-s="ADOT" data-en="AWS Distro for OpenTelemetry" data-es="distribución de AWS de OpenTelemetry para trazas y métricas" tabindex="0">ADOT</abbr>.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="distro-for-opentelemetry"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/opentelemetry.html" target="_blank" rel="noopener">Send metric and trace data with ADOT Operator</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-ingest-metrics-OpenTelemetry.html" target="_blank" rel="noopener">Set up metrics ingestion using AWS Distro for OpenTelemetry on an Amazon EKS cluster</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/mt/adding-metrics-and-traces-to-your-application-on-amazon-eks-with-aws-distro-for-opentelemetry-aws-x-ray-and-amazon-cloudwatch/" target="_blank" rel="noopener">Adding metrics and traces to your application on Amazon EKS with AWS Distro for OpenTelemetry</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

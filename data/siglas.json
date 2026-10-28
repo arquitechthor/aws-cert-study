@@ -360,6 +360,10 @@
    "en": "Federal Information Processing Standards",
    "es": "normas de seguridad del gobierno de EE. UU."
   },
+  "FIS": {
+   "en": "Fault Injection Service",
+   "es": "servicio de AWS para experimentos de ingeniería del caos"
+  },
   "FM": {
    "en": "Foundation Model",
    "es": "modelo fundacional"

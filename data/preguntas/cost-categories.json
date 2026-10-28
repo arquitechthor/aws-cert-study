@@ -1,0 +1,113 @@
+[
+  {
+    "id": "cost-categories-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Una empresa tiene 60 cuentas. Algunas unidades de negocio usan cuentas propias y otras comparten cuentas, distinguiéndose por la etiqueta \"proyecto\". Finanzas quiere ver en Cost Explorer y en Budgets el gasto por unidad de negocio, incluido un reparto proporcional del soporte Enterprise y de la cuenta de red compartida. ¿Qué solución cumple los requisitos con menos esfuerzo?",
+    "opciones": [
+      "Una organización nueva por unidad de negocio.",
+      "Una categoría de costes \"Unidad\" con reglas por cuenta y por etiqueta, y reglas de reparto de cargos para el soporte y la red.",
+      "Un informe de costes y uso con consultas de Athena hechas a mano cada mes.",
+      "Etiquetar todos los recursos con la unidad y desactivar las cuentas compartidas."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Cost Categories agrupa costes con reglas por cuenta y por etiqueta, y las reglas de reparto de cargos distribuyen los costes compartidos; los valores aparecen en Cost Explorer y Budgets. Separar organizaciones o reetiquetar todo es mucho más trabajo, y las consultas manuales no alimentan Budgets.",
+    "fuentes": [
+      "https://aws.amazon.com/aws-cost-management/aws-cost-categories/features/"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "cost-categories-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Una línea de la factura coincide con dos reglas de una misma categoría de costes. ¿Qué valor recibe?",
+    "opciones": [
+      "El de la última regla.",
+      "Se reparte entre los dos valores a partes iguales.",
+      "El de la primera regla que coincide, porque las reglas se evalúan en orden.",
+      "Ninguno: queda sin categorizar."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las reglas de Cost Categories se procesan en orden y la primera que coincide decide el valor. Para repartir un coste entre valores se usan las reglas de reparto de cargos, no reglas solapadas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cdk/api/v1/dotnet/api/Amazon.CDK.AWS.CE.CfnCostCategoryProps.html"
+    ]
+  },
+  {
+    "id": "cost-categories-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Tras crear una categoría \"Centro de coste\", parte del gasto aparece sin valor en Cost Explorer y en el informe de costes y uso. El equipo quiere que esos costes figuren como \"Sin asignar\" para que se vean claramente. ¿Qué configura?",
+    "opciones": [
+      "El valor por defecto de la categoría.",
+      "Una regla de reparto de cargos.",
+      "Una SCP en la organización.",
+      "Un presupuesto de Budgets."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El valor por defecto da nombre a los costes que no encajan en ninguna regla. Las reglas de reparto distribuyen costes compartidos, y ni una SCP ni un presupuesto clasifican costes.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/help-panel/awsaccountbilling/latest/console/hp-costcategories-default.html"
+    ]
+  },
+  {
+    "id": "cost-categories-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Un equipo de FinOps quiere recibir un aviso cuando el gasto de la unidad de negocio Marketing, repartida en varias cuentas, vaya a superar 50 000 USD este mes. Ya tiene definida la categoría de costes \"Unidad\". ¿Qué hace?",
+    "opciones": [
+      "Crear una alarma de CloudWatch sobre la métrica de facturación de cada cuenta.",
+      "Activar Trusted Advisor.",
+      "Pedir a Marketing que revise la factura cada semana.",
+      "Crear un presupuesto de Budgets filtrado por el valor Marketing de la categoría \"Unidad\", con alerta por previsión."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Budgets puede filtrar por valores de categorías de costes y avisar con previsiones antes de superar el importe. Las alarmas de facturación por cuenta no agrupan la unidad repartida, y Trusted Advisor no hace presupuestos.",
+    "fuentes": [
+      "https://aws.amazon.com/aws-cost-management/aws-cost-categories/features/"
+    ]
+  },
+  {
+    "id": "cost-categories-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "La dirección quiere que todos los recursos lleven la etiqueta \"centro-coste\" para poder clasificar el gasto. Alguien propone resolverlo con Cost Categories. ¿Por qué no basta?",
+    "opciones": [
+      "Cost Categories no puede leer etiquetas.",
+      "Cost Categories solo clasifica los costes; para exigir etiquetas se usan políticas de etiquetas y SCP de Organizations.",
+      "Cost Categories borra los recursos sin etiqueta.",
+      "Cost Categories solo funciona con una cuenta."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Cost Categories agrupa el gasto, incluidas reglas por etiqueta, pero no obliga a etiquetar: eso se hace con políticas de etiquetas y SCP. Sí lee etiquetas, no borra nada y funciona con varias cuentas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html"
+    ]
+  }
+]
