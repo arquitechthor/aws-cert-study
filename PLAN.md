@@ -39,9 +39,9 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   usuario: simulacro por certificación (`simulacro.html`), progreso y repaso de falladas
   (`progreso.html`), `sitemap.xml` + `robots.txt` (en la raíz del dominio), enlace desde `kopi-web`
   y preguntas de ordenar y emparejar. Además, etiqueta ⚠ "Pregunta difícil" (`"dificil": true`).
-- **Próximo paso (siguiente sesión):** publicar las 11 guías que quedan de la **Prioridad 6** (servicios
-  nuevos de SAP-C03 y DVA-C03; hechas VPC Lattice, Fault Injection Service, Application Auto Scaling, SAM,
-  Resilience Hub, MemoryDB, Cloud WAN y Private CA) y después la **Fase 5** (profundización, ahora para SAP-C03), tarea
+- **Próximo paso (siguiente sesión):** publicar las 6 guías que quedan de la **Prioridad 6** (Clean Rooms, Cost
+  Categories, Data Lifecycle Manager, CodeCommit, Distro for OpenTelemetry y Data Transfer Terminal; hechas
+  13 de 19) y después la **Fase 5** (profundización, ahora para SAP-C03), tarea
   5.1 y luego los servicios de la cola 5.A en orden. Pendiente de datos: AIF-C01 solo tiene 5
   preguntas de "Fundamentos de IA generativa" (pesa el 24 %, un simulacro completo pide 16); el
   simulacro completa con otros dominios y lo avisa.
@@ -535,19 +535,19 @@ en este equipo: copiar el SVG de cada uno cuando se publique, si lo tiene).
 
 - [x] `vpc-lattice` Amazon VPC Lattice — Redes y entrega de contenido (SAP-C03)
 - [x] `cloud-wan` AWS Cloud WAN — Redes y entrega de contenido (SAP-C03)
-- [ ] `verified-access` AWS Verified Access — Seguridad, identidad y cumplimiento (SAP-C03)
-- [ ] `verified-permissions` Amazon Verified Permissions — Seguridad, identidad y cumplimiento (SAP-C03)
-- [ ] `security-lake` Amazon Security Lake — Seguridad, identidad y cumplimiento (SAP-C03)
+- [x] `verified-access` AWS Verified Access — Seguridad, identidad y cumplimiento (SAP-C03)
+- [x] `verified-permissions` Amazon Verified Permissions — Seguridad, identidad y cumplimiento (SAP-C03)
+- [x] `security-lake` Amazon Security Lake — Seguridad, identidad y cumplimiento (SAP-C03)
 - [x] `private-ca` AWS Private CA — Seguridad, identidad y cumplimiento (DVA-C03)
 - [x] `sam` AWS SAM — Herramientas para desarrolladores (DVA-C03)
 - [x] `application-auto-scaling` AWS Application Auto Scaling — Computación (SAP-C03)
-- [ ] `local-zones` AWS Local Zones — Computación (SAP-C03)
+- [x] `local-zones` AWS Local Zones — Computación (SAP-C03)
 - [x] `memorydb` Amazon MemoryDB — Base de datos (SAP-C03)
 - [x] `resilience-hub` AWS Resilience Hub — Administración y gobernanza (SAP-C03)
 - [x] `fault-injection-service` AWS Fault Injection Service — Administración y gobernanza (SAP-C03; en la guía, categoría *Testing and Resilience*)
 - [ ] `clean-rooms` AWS Clean Rooms — Análisis (SAP-C03)
 - [ ] `cost-categories` AWS Cost Categories — Administración financiera en la nube (SAP-C03)
-- [ ] `reserved-instances` Reserved Instances — Administración financiera en la nube (SAP-C03)
+- [x] `reserved-instances` Reserved Instances — Administración financiera en la nube (SAP-C03)
 - [ ] `data-lifecycle-manager` Amazon Data Lifecycle Manager — Almacenamiento (SAP-C03)
 - [ ] `codecommit` AWS CodeCommit — Herramientas para desarrolladores (SAP-C03)
 - [ ] `distro-for-opentelemetry` AWS Distro for OpenTelemetry — Herramientas para desarrolladores (SAP-C03)
@@ -938,3 +938,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-28 | **Prioridad 6: 4 guías nuevas** (pedidas por el usuario): VPC Lattice, Fault Injection Service y Application Auto Scaling (SAP-C03, 7 preguntas cada una, 2 difíciles en Lattice y 1 en FIS y en Application Auto Scaling) y SAM (DVA-C03, 8 preguntas). Datos contrastados con la documentación actual; icono de su categoría (sin paquete de iconos en este equipo). Enlaces "Próximamente" reapuntados (`--publicado`), `sitemap.xml` (168 URL). La "CLI de SAM" se redacta como "herramienta de línea de comandos `sam`" para que `revisar_texto.py` no la enlace a AWS CLI. Probado en navegador a 375 px (sin desplazamiento horizontal, cuestionarios cargados, sin errores en consola). Pendiente de decisión del usuario: pasar a SAA-C03 las 48 preguntas sin certificación de servicios que siguen en SAA. |
 | 2026-10-28 | **Preguntas sin certificación repartidas** (pedido por el usuario): 83 preguntas de servicios que salieron de SAP o DVA pasan a las guías vigentes que incluyen su servicio, si el tema encaja (SAA +48, CLF +63, AIF +12, DVA +5; con `dominios` cuando van a varias). Criterio: AIF solo para preguntas de IA y ML o de gobernanza de datos (Macie), no para las de operaciones (Trusted Advisor, Well-Architected Tool). La dificultad no se usó como filtro: el usuario indica que las preguntas reales de SAA y SAP-C02 son mucho más difíciles que las de este sitio, y se revisará más adelante. Quedan 57 sin certificación (11 servicios fuera de todos los exámenes). |
 | 2026-10-28 | **Prioridad 6: 4 guías más** (pedidas por el usuario): Resilience Hub, MemoryDB y Cloud WAN (SAP-C03, 6 preguntas cada una, una difícil en Resilience Hub y otra en Cloud WAN) y Private CA (DVA-C03, 6 preguntas). Siglas nuevas en el glosario: CRL, CSR, OCSP, PKI y SOP. El usuario confirma que las 57 preguntas de los 11 servicios fuera de todos los exámenes se quedan en sus guías, sin certificación, por si una certificación futura las incluye. |
+| 2026-10-28 | **Prioridad 6: 5 guías más** (pedidas por el usuario): Security Lake (6 preguntas), Verified Access (5), Verified Permissions (5), Local Zones (5) y Reserved Instances (6), todas de SAP-C03, con una pregunta difícil en cada una de las tres primeras. Sigla nueva en el glosario: SIEM. Quedan 6 de 19. |

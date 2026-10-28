@@ -1574,8 +1574,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Extensiones de una región de AWS en grandes ciudades que acercan cómputo, almacenamiento y otros servicios a los usuarios para latencias de milisegundos o para cumplir la residencia de datos.",
     "frase": "Lleva cómputo y almacenamiento a grandes ciudades para latencias de milisegundos",
     "documentacion": "https://docs.aws.amazon.com/local-zones/"
   },
@@ -1967,8 +1967,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Descuento en la factura a cambio de comprometer durante uno o tres años el uso de una configuración concreta de instancias de EC2 (y nodos reservados en RDS, ElastiCache, Redshift u OpenSearch).",
     "frase": "Descuento por comprometer uso de EC2 o RDS durante uno o tres años en una región",
     "documentacion": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html"
   },
@@ -2137,8 +2137,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Lago de datos de seguridad gestionado: centraliza en S3 de tu cuenta los registros de seguridad de AWS, de terceros y propios, normalizados al esquema OCSF, para analizarlos y compartirlos con suscriptores.",
     "frase": "Centraliza en S3 los registros de seguridad de cuentas y regiones en formato OCSF",
     "documentacion": "https://docs.aws.amazon.com/security-lake/"
   },
@@ -2486,8 +2486,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Acceso a aplicaciones internas sin VPN, con modelo de confianza cero: cada petición se evalúa con políticas que tienen en cuenta la identidad del usuario y el estado de su dispositivo.",
     "frase": "Da acceso a apps internas sin VPN, comprobando identidad y dispositivo en cada petición",
     "documentacion": "https://docs.aws.amazon.com/verified-access/"
   },
@@ -2498,8 +2498,8 @@
     "certificaciones": [
       "SAP-C03"
     ],
-    "estado": "pendiente",
-    "resumen": "",
+    "estado": "publicado",
+    "resumen": "Servicio de autorización para tus propias aplicaciones: guarda permisos finos escritos en Cedar y responde si un usuario puede hacer una acción sobre un recurso, fuera del código de la aplicación.",
     "frase": "Autoriza acciones dentro de tus aplicaciones con políticas Cedar fuera del código",
     "documentacion": "https://docs.aws.amazon.com/verifiedpermissions/"
   },

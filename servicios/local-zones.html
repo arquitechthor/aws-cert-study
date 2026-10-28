@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Local Zones — Apuntes AWS</title>
+<meta name="description" content="Extensiones de una región de AWS en grandes ciudades que acercan cómputo, almacenamiento y otros servicios a los usuarios para latencias de milisegundos o para cumplir la residencia de datos. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/local-zones.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Local Zones — Apuntes AWS">
+<meta property="og:description" content="Extensiones de una región de AWS en grandes ciudades que acercan cómputo, almacenamiento y otros servicios a los usuarios para latencias de milisegundos o para cumplir la residencia de datos.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/local-zones.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/computacion.svg" alt="" width="56" height="56"><span>AWS Local Zones</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Lleva cómputo y almacenamiento a grandes ciudades para latencias de milisegundos</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=computacion#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/computacion.svg" alt="" width="18" height="18">Computación <span class="cat-en">(Compute)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/local-zones/" target="_blank" rel="noopener">Documentación de AWS Local Zones ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Las AWS Local Zones son <strong>extensiones de una región</strong> situadas en grandes ciudades y centros
+        industriales, cerca de los usuarios. Acercan cómputo, almacenamiento, bases de datos y otros servicios para dar
+        <strong>latencias de pocos milisegundos</strong> a esa zona geográfica, o para que los datos se queden en un
+        lugar concreto. Se usan como una subred más de tu <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> y con las mismas APIs y herramientas.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Región principal:</strong> cada Local Zone depende de una región (su nombre lo indica, por ejemplo
+          <code>us-west-2-lax-1a</code> en Los Ángeles para Oregón). Los planos de control (de <a href="ec2.html"><abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr></a>, <a href="ecs.html"><abbr class="sigla sigla-1" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS<span class="sigla-exp"> (Elastic Container Service)</span></abbr></a>, <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>…) siguen en
+          la región.</li>
+        <li><strong>Activación (<em>opt-in</em>):</strong> hay que activar cada Local Zone en la cuenta antes de
+          usarla.</li>
+        <li><strong>Subred en la Local Zone:</strong> se amplía la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> creando una subred allí; sigue las mismas reglas de
+          tablas de rutas, grupos de seguridad y <abbr class="sigla sigla-1" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL<span class="sigla-exp"> (Access Control List: lista de control de acceso)</span></abbr> de red.</li>
+        <li><strong>Grupo de borde de red:</strong> las <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> públicas se anuncian desde la Local Zone y el tráfico de
+          internet sale por ella, sin pasar por la región; esas <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> no se mueven entre la zona y la región.</li>
+        <li><strong>Servicios:</strong> un subconjunto que varía por zona: instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, volúmenes <a href="ebs.html"><abbr class="sigla sigla-1" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS<span class="sigla-exp"> (Elastic Block Store)</span></abbr></a>, balanceadores
+          <a href="elb.html"><abbr class="sigla sigla-1" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB<span class="sigla-exp"> (Application Load Balancer: balanceador HTTP/HTTPS)</span></abbr></a>, <a href="fsx.html">FSx</a>, nodos de <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> y <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr> y, en algunas, más servicios. Tienen conexión a internet propia y admiten Direct
+          Connect.</li>
+        <li><strong>Dedicated Local Zones:</strong> infraestructura dedicada a un cliente u organismo, para requisitos
+          de soberanía y aislamiento.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Juegos en tiempo real, emisión en directo, realidad virtual o aumentada y estaciones de trabajo virtuales
+          para una ciudad concreta.</li>
+        <li>Migraciones híbridas: mover a la Local Zone cercana aplicaciones que necesitan baja latencia con sistemas
+          que siguen en el centro de datos.</li>
+        <li>Residencia de datos en un estado o país donde no hay región completa.</li>
+        <li>Producción de contenido y renderizado cerca de los estudios.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para baja latencia a dispositivos <strong>móviles <abbr class="sigla sigla-1" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G<span class="sigla-exp"> (quinta generación de redes móviles)</span></abbr></strong> de un operador: <a href="wavelength.html">Wavelength</a>.</li>
+        <li>Para ejecutar AWS <strong>dentro de tu propio centro de datos</strong>: <a href="outposts.html">Outposts</a>.</li>
+        <li>Para acelerar contenido web para usuarios de todo el mundo: <a href="cloudfront.html">CloudFront</a> o <a href="global-accelerator.html">Global Accelerator</a>.</li>
+        <li>Si la aplicación necesita servicios que la Local Zone no ofrece, o alta disponibilidad entre varias zonas
+          (muchas ciudades tienen una sola Local Zone).</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Local Zones</th><th><a href="wavelength.html">Wavelength</a></th><th><a href="outposts.html">Outposts</a></th></tr></thead>
+          <tbody>
+            <tr><td>Dónde está</td><td>Ciudades, en instalaciones de AWS</td><td>Dentro de la red <abbr class="sigla" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G</abbr> de un operador</td><td>En tu centro de datos</td></tr>
+            <tr><td>Para quién</td><td>Usuarios de una zona geográfica</td><td>Dispositivos móviles <abbr class="sigla" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G</abbr></td><td>Sistemas locales y datos que no salen del edificio</td></tr>
+            <tr><td>Hardware</td><td>Lo gestiona AWS</td><td>Lo gestiona AWS</td><td>AWS lo instala en tu sitio</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Activar una Local Zone no cuesta nada: se pagan los recursos que se lanzan en ella, con <strong>precios
+        propios</strong> que suelen ser distintos (normalmente más altos) que en la región principal, más la
+        transferencia de datos.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Mismos controles que en la región: <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>, grupos de seguridad, <abbr class="sigla" data-s="ACL" data-en="Access Control List" data-es="lista de control de acceso" tabindex="0">ACL</abbr> de red, cifrado de <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> con <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a>.</li>
+        <li>Una Local Zone es un único dominio de fallo: para alta disponibilidad, usar dos Local Zones de la misma
+          ciudad (si existen) o tener la región como respaldo.</li>
+        <li>Los datos en reposo se quedan en la ubicación de la Local Zone, útil para requisitos de residencia.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Latencia de milisegundos para usuarios de una ciudad concreta"</strong>: Local Zones.</li>
+        <li><strong>"Usuarios con móviles <abbr class="sigla" data-s="5G" data-es="quinta generación de redes móviles" tabindex="0">5G</abbr> de un operador"</strong>: <a href="wavelength.html">Wavelength</a>.</li>
+        <li><strong>"Dentro de nuestro propio centro de datos"</strong>: <a href="outposts.html">Outposts</a>.</li>
+        <li><strong>"No veo la Local Zone al crear la subred"</strong>: falta activarla (opt-in).</li>
+        <li><strong>"Los datos no pueden salir del estado o de la ciudad"</strong>: Local Zone (o Dedicated Local Zone)
+          en esa ubicación.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="local-zones"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/local-zones/latest/ug/what-is-aws-local-zones.html" target="_blank" rel="noopener">What is AWS Local Zones?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/vpc/latest/userguide/local-zone.html" target="_blank" rel="noopener">Subnets in AWS Local Zones</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/aws-local-zones.html" target="_blank" rel="noopener">AWS Local Zones (Overview of Deployment Options on AWS)</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

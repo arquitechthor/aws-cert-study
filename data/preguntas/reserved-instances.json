@@ -1,0 +1,134 @@
+[
+  {
+    "id": "reserved-instances-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Una base de datos de Amazon RDS for PostgreSQL de producción funcionará 24/7 al menos tres años con la misma clase de instancia. La empresa quiere el menor coste posible y puede pagar por adelantado. ¿Qué compra?",
+    "opciones": [
+      "Un Compute Savings Plan a tres años.",
+      "Instancias de spot para la base de datos.",
+      "Una instancia reservada de RDS a un año sin pago por adelantado, renovada cada año.",
+      "Una instancia reservada de RDS a tres años con todo el pago por adelantado."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Para RDS se usan instancias reservadas; tres años y todo por adelantado dan el mayor descuento. Los Compute Savings Plans cubren EC2, Fargate y Lambda, no RDS; el spot no sirve para una base de datos de producción, y la reserva a un año sin pago adelantado ahorra menos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html"
+    ]
+  },
+  {
+    "id": "reserved-instances-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Una empresa compró Reserved Instances Standard para m5.xlarge en Linux, pero en un año quiere pasar a instancias de otra familia más moderna. ¿Qué habría sido mejor comprar para cambiar de familia sin perder el descuento?",
+    "opciones": [
+      "Reserved Instances zonales.",
+      "Reserved Instances Convertible (o un Savings Plan), que permiten cambiar de familia.",
+      "Reserved Instances Standard con pago parcial por adelantado.",
+      "Instancias bajo demanda con reservas de capacidad."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las Convertible se pueden intercambiar por otras con distinta familia, y los Savings Plans aplican el descuento a cualquier familia. Las Standard solo se modifican dentro de ciertos atributos (y se pueden vender), las zonales son aún menos flexibles y bajo demanda no da descuento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html"
+    ]
+  },
+  {
+    "id": "reserved-instances-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Una aplicación crítica necesita tener garantizadas 20 instancias en una zona de disponibilidad concreta durante tres años, con descuento. ¿Qué opción de Reserved Instances lo cumple?",
+    "opciones": [
+      "Reserved Instances de ámbito regional.",
+      "Reserved Instances Convertible regionales.",
+      "Un Compute Savings Plan.",
+      "Reserved Instances de ámbito zonal en esa zona."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Solo las Reserved Instances zonales reservan capacidad en una zona, además del descuento. Las regionales y los Savings Plans dan descuento sin reservar capacidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/reserved-instances-scope.html"
+    ]
+  },
+  {
+    "id": "reserved-instances-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Una empresa tiene Reserved Instances regionales de c5.2xlarge en Linux con tenencia compartida, pero ha redimensionado su flota a c5.xlarge (la mitad de tamaño). ¿Qué ocurre con el descuento?",
+    "opciones": [
+      "Se sigue aplicando gracias a la flexibilidad de tamaño dentro de la familia: una reserva de 2xlarge cubre dos xlarge.",
+      "Se pierde por completo hasta que vuelvan a usar c5.2xlarge.",
+      "Hay que cancelar la reserva y comprar otra.",
+      "Solo se aplica en la zona donde se compró."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las Reserved Instances regionales de Linux con tenencia compartida tienen flexibilidad de tamaño: el descuento se reparte por la familia según el factor de normalización. Las reservas no se cancelan y las regionales valen en cualquier zona.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/reserved-instances-scope.html"
+    ]
+  },
+  {
+    "id": "reserved-instances-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Tras una migración a contenedores, una empresa ya no usa unas Reserved Instances Standard de EC2 a las que les quedan dos años. ¿Qué puede hacer?",
+    "opciones": [
+      "Cancelarlas desde la consola de facturación y recuperar el dinero.",
+      "Convertirlas en un Savings Plan.",
+      "Venderlas en el Reserved Instance Marketplace.",
+      "Intercambiarlas por instancias reservadas de RDS."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las Reserved Instances no se cancelan; las Standard se pueden vender a terceros en el Marketplace. No se convierten en Savings Plans ni se intercambian por reservas de otro servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html"
+    ]
+  },
+  {
+    "id": "reserved-instances-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "En una organización con facturación consolidada, la cuenta A tiene Reserved Instances que no usa por completo y la cuenta B tiene instancias iguales bajo demanda. ¿Qué ocurre por defecto?",
+    "opciones": [
+      "El descuento se pierde porque las reservas son de A.",
+      "El descuento sobrante de A se aplica a las instancias de B.",
+      "B debe comprar sus propias reservas para tener descuento.",
+      "Hay que mover las instancias de B a la cuenta A."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con facturación consolidada, el descuento de las reservas se comparte por defecto entre las cuentas de la organización (y se puede desactivar). No hace falta mover instancias ni comprar más reservas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ri-turn-off.html"
+    ]
+  }
+]

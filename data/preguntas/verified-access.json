@@ -1,0 +1,113 @@
+[
+  {
+    "id": "verified-access-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Una empresa quiere retirar su VPN corporativa. Sus 30 aplicaciones web internas, detrás de balanceadores internos, deben ser accesibles solo para empleados autenticados con su proveedor de identidad OIDC y desde portátiles gestionados con un agente de seguridad y riesgo bajo, evaluando cada petición. ¿Qué solución cumple los requisitos?",
+    "opciones": [
+      "AWS Client VPN con autenticación federada y reglas de autorización por grupo.",
+      "AWS Verified Access con un proveedor de identidad OIDC, un proveedor de confianza de dispositivo y políticas por grupo de aplicaciones.",
+      "Balanceadores públicos con autenticación OIDC en el agente de escucha.",
+      "Amazon Verified Permissions con un almacén de políticas por aplicación."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Verified Access sustituye la VPN para aplicaciones y evalúa cada petición combinando identidad y estado del dispositivo. Client VPN sigue siendo VPN y no comprueba el dispositivo de serie, el balanceador público con OIDC no evalúa el dispositivo y Verified Permissions autoriza acciones dentro de una aplicación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verified-access/latest/ug/what-is-verified-access.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "verified-access-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Las 12 aplicaciones del departamento de ventas deben aplicar las mismas reglas de acceso, y solo una de ellas exige además pertenecer al grupo Dirección. ¿Cómo se organiza en Verified Access con menos políticas?",
+    "opciones": [
+      "Una instancia de Verified Access por aplicación.",
+      "Doce políticas idénticas, una por punto de enlace, y una más estricta en la especial.",
+      "Un grupo con la política común para las 12 y una política adicional en el punto de enlace de esa aplicación.",
+      "Un proveedor de confianza distinto para cada aplicación."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Los puntos de enlace de un grupo heredan su política, y cada punto de enlace puede añadir la suya, más estricta. Las demás opciones multiplican instancias, políticas o proveedores sin necesidad.",
+    "fuentes": [
+      "https://aws.amazon.com/blogs/networking-and-content-delivery/aws-verified-access-integration-with-3rd-party-identity-providers/"
+    ]
+  },
+  {
+    "id": "verified-access-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Unos administradores necesitan acceso de red completo a una VPC (SSH, bases de datos y otros protocolos) desde sus portátiles. ¿Qué servicio encaja mejor?",
+    "opciones": [
+      "AWS Client VPN.",
+      "AWS Verified Access.",
+      "Amazon Verified Permissions.",
+      "AWS Global Accelerator."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Client VPN da a cada usuario acceso de red a la VPC con cualquier protocolo. Verified Access está pensado para dar acceso a aplicaciones concretas petición a petición, Verified Permissions autoriza dentro de aplicaciones y Global Accelerator mejora el rendimiento de aplicaciones públicas.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verified-access/latest/ug/what-is-verified-access.html"
+    ]
+  },
+  {
+    "id": "verified-access-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Una auditoría pide saber, para cada intento de acceso a una aplicación interna, qué usuario lo hizo, desde qué dispositivo y si se permitió o se denegó. ¿Qué se configura en Verified Access?",
+    "opciones": [
+      "Los registros de flujo de VPC de la subred del balanceador.",
+      "Un registro de seguimiento de CloudTrail solo de eventos de datos de S3.",
+      "Las métricas de CloudWatch del balanceador.",
+      "Los registros de acceso de la instancia de Verified Access, enviados a CloudWatch Logs, S3 o Data Firehose."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Verified Access registra todos los intentos de acceso con la identidad, los datos del dispositivo y la decisión. Los registros de flujo solo ven IP y puertos, los eventos de datos de S3 no tienen relación y las métricas no identifican usuarios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verified-access/latest/ug/what-is-verified-access.html"
+    ]
+  },
+  {
+    "id": "verified-access-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Un equipo de FinOps quiere estimar el coste de publicar 20 aplicaciones internas con Verified Access. ¿Cómo se factura?",
+    "opciones": [
+      "Por usuario registrado en el proveedor de identidad.",
+      "Por hora de cada aplicación asociada y por GB procesado.",
+      "Una tarifa fija por cuenta.",
+      "Solo por política creada."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Verified Access cobra por hora de cada aplicación (punto de enlace) asociada y por los datos que procesa. No cobra por usuario, por cuenta ni por política.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verified-access/latest/ug/what-is-verified-access.html"
+    ]
+  }
+]

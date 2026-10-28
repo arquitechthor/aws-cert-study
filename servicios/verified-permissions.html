@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Verified Permissions — Apuntes AWS</title>
+<meta name="description" content="Servicio de autorización para tus propias aplicaciones: guarda permisos finos escritos en Cedar y responde si un usuario puede hacer una acción sobre un recurso, fuera del código de la aplicación. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/verified-permissions.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Verified Permissions — Apuntes AWS">
+<meta property="og:description" content="Servicio de autorización para tus propias aplicaciones: guarda permisos finos escritos en Cedar y responde si un usuario puede hacer una acción sobre un recurso, fuera del código de la aplicación.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/verified-permissions.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="56" height="56"><span>Amazon Verified Permissions</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Autoriza acciones dentro de tus aplicaciones con políticas Cedar fuera del código</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/verifiedpermissions/" target="_blank" rel="noopener">Documentación de Amazon Verified Permissions ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Verified Permissions es un servicio de <strong>autorización fina</strong> para las aplicaciones que
+        desarrollas tú. Saca la lógica de permisos del código: las reglas se escriben como <strong>políticas en el
+        lenguaje Cedar</strong> (de código abierto), se guardan en el servicio y la aplicación pregunta en cada caso
+        "¿puede este usuario hacer esta acción sobre este recurso?". Verified Permissions responde <em>Allow</em> o
+        <em>Deny</em>. La <strong>autenticación</strong> (saber quién es el usuario) la hace otro, por ejemplo
+        <a href="cognito.html">Cognito</a>.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Almacén de políticas (<em>policy store</em>):</strong> el contenedor de las políticas y del esquema
+          de una aplicación (o de un inquilino, en aplicaciones multiinquilino).</li>
+        <li><strong>Esquema:</strong> describe los tipos de entidad (usuarios, grupos, documentos…), sus atributos y las
+          acciones; las políticas se validan contra él.</li>
+        <li><strong>Políticas Cedar:</strong> reglas <code>permit</code> o <code>forbid</code> sobre un principal, una
+          acción y un recurso, con condiciones sobre atributos y contexto. Permiten modelos por roles (<abbr class="sigla" data-s="RBAC" data-en="Role-Based Access Control" data-es="permisos según el rol" tabindex="0">RBAC</abbr>), por
+          atributos (<abbr class="sigla" data-s="ABAC" data-en="Attribute-Based Access Control" data-es="permisos según etiquetas o atributos" tabindex="0">ABAC</abbr>) o por relaciones. Un <code>forbid</code> que coincide gana siempre, y si nada coincide la
+          respuesta es <em>Deny</em>.</li>
+        <li><strong>Plantillas de política:</strong> una regla con huecos que se rellena por usuario o recurso (por
+          ejemplo, "este usuario puede editar este documento" al compartirlo).</li>
+        <li><strong>Fuente de identidad:</strong> un grupo de usuarios de <a href="cognito.html">Cognito</a> u otro proveedor <abbr class="sigla sigla-1" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC<span class="sigla-exp"> (OpenID Connect: estándar de identidad sobre OAuth 2.0)</span></abbr>. Con
+          <code>IsAuthorizedWithToken</code> la aplicación envía el token <abbr class="sigla sigla-1" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT<span class="sigla-exp"> (JSON Web Token: token firmado con datos del usuario)</span></abbr> y el servicio saca de él el principal y
+          sus grupos.</li>
+        <li><strong>Llamadas de autorización:</strong> <code>IsAuthorized</code>, <code>IsAuthorizedWithToken</code> y
+          sus versiones por lotes para decidir varias cosas en una sola llamada (por ejemplo, qué botones mostrar).</li>
+        <li><strong>Integración con <a href="api-gateway.html">API Gateway</a>:</strong> puede crear el almacén a partir de una <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr> y un autorizador de
+          <a href="lambda.html">Lambda</a> que protege sus rutas.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Permisos finos en una aplicación <abbr class="sigla sigla-1" data-s="SaaS" data-en="Software as a Service" data-es="software que se usa como servicio" tabindex="0">SaaS<span class="sigla-exp"> (Software as a Service: software que se usa como servicio)</span></abbr>: quién ve o edita cada documento, expediente o pedido.</li>
+        <li>Aislamiento entre inquilinos con un almacén de políticas por inquilino o reglas por atributo.</li>
+        <li>Cambiar reglas de negocio de acceso sin volver a desplegar el código.</li>
+        <li>Auditar decisiones de acceso y saber qué política las determinó.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para permisos sobre <strong>recursos de AWS</strong> (quién puede borrar un depósito de <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>): <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a>.</li>
+        <li>Para el inicio de sesión y la gestión de usuarios de la aplicación: <a href="cognito.html">Cognito</a>.</li>
+        <li>Para el acceso a la red o a aplicaciones internas completas: <a href="verified-access.html">Verified Access</a>.</li>
+        <li>Si la aplicación solo necesita "usuario conectado o no": la autenticación basta.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Verified Permissions</th><th><a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a></th><th><a href="cognito.html">Cognito</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué decide</td><td>Acciones dentro de tu aplicación</td><td>Acciones sobre servicios de AWS</td><td>Quién es el usuario (autenticación)</td></tr>
+            <tr><td>Lenguaje</td><td>Cedar</td><td>Políticas <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> de <abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></td><td>No aplica</td></tr>
+            <tr><td>Recursos</td><td>Los que defines en el esquema</td><td><abbr class="sigla sigla-1" data-s="ARN" data-en="Amazon Resource Name" data-es="identificador único de un recurso de AWS" tabindex="0">ARN<span class="sigla-exp"> (Amazon Resource Name: identificador único de un recurso de AWS)</span></abbr> de AWS</td><td>Usuarios y grupos</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>petición de autorización</strong> (las peticiones por lotes cuentan como una, aunque
+        decidan varias cosas) y por las peticiones de gestión de políticas. No hay mínimo.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Validación de las políticas contra el esquema para evitar errores antes de aplicarlas.</li>
+        <li>Respuesta con las políticas que decidieron, para auditar; llamadas registradas en <a href="cloudtrail.html">CloudTrail</a>.</li>
+        <li>Validación de la firma y la caducidad de los tokens de la fuente de identidad.</li>
+        <li>Separar los almacenes por inquilino para aislarlos.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Permisos finos dentro de la aplicación, fuera del código"</strong>: Verified Permissions.</li>
+        <li><strong>"Lenguaje Cedar"</strong>: Verified Permissions (también lo usa <a href="verified-access.html">Verified Access</a>).</li>
+        <li><strong>"Usuarios de <a href="cognito.html">Cognito</a> y autorización por grupo y atributo"</strong>: fuente de identidad de Cognito
+          con <code>IsAuthorizedWithToken</code>.</li>
+        <li><strong>"Decidir muchas cosas a la vez para pintar una pantalla"</strong>: autorización por lotes.</li>
+        <li><strong>"Permisos sobre recursos de AWS"</strong>: <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>, no Verified Permissions.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="verified-permissions"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/verifiedpermissions/latest/userguide/what-is-avp.html" target="_blank" rel="noopener">What is Amazon Verified Permissions?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html" target="_blank" rel="noopener">IsAuthorizedWithToken, Verified Permissions API Reference</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/verified-permissions/pricing/" target="_blank" rel="noopener">Amazon Verified Permissions pricing</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Verified Access — Apuntes AWS</title>
+<meta name="description" content="Acceso a aplicaciones internas sin VPN, con modelo de confianza cero: cada petición se evalúa con políticas que tienen en cuenta la identidad del usuario y el estado de su dispositivo. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/verified-access.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="AWS Verified Access — Apuntes AWS">
+<meta property="og:description" content="Acceso a aplicaciones internas sin VPN, con modelo de confianza cero: cada petición se evalúa con políticas que tienen en cuenta la identidad del usuario y el estado de su dispositivo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/verified-access.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="56" height="56"><span>AWS Verified Access</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Da acceso a apps internas sin <abbr class="sigla sigla-1" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN<span class="sigla-exp"> (Virtual Private Network: red privada virtual)</span></abbr>, comprobando identidad y dispositivo en cada petición</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/verified-access/" target="_blank" rel="noopener">Documentación de AWS Verified Access ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>AWS Verified Access da acceso a <strong>aplicaciones internas sin <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></strong>. En lugar de abrir la red
+        entera una vez conectado, <strong>evalúa cada petición</strong> a cada aplicación con políticas que combinan la
+        <strong>identidad del usuario</strong> (de <a href="iam-identity-center.html">IAM Identity Center</a> o de un proveedor <abbr class="sigla sigla-1" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC<span class="sigla-exp"> (OpenID Connect: estándar de identidad sobre OAuth 2.0)</span></abbr>) y, si se quiere, el
+        <strong>estado de seguridad de su dispositivo</strong>. Es la aplicación en AWS del modelo de <strong>confianza
+        cero</strong>: nadie es de fiar solo por estar "dentro" de la red.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Instancia de Verified Access:</strong> el componente que evalúa las peticiones y deja pasar solo las
+          que cumplen las políticas.</li>
+        <li><strong>Proveedores de confianza:</strong> uno de <strong>identidad de usuario</strong> (<a href="iam-identity-center.html">IAM Identity Center</a>
+          o un proveedor compatible con <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr>) y, opcionalmente, varios de <strong>estado del dispositivo</strong>
+          (soluciones de gestión o seguridad de equipos como CrowdStrike o Jamf).</li>
+        <li><strong>Datos de confianza:</strong> lo que esos proveedores envían en cada petición: correo, grupos,
+          puntuación de riesgo del equipo…</li>
+        <li><strong>Grupos:</strong> conjuntos de aplicaciones con requisitos parecidos (por ejemplo, todas las de
+          ventas), con una <strong>política de grupo</strong> que heredan.</li>
+        <li><strong>Puntos de enlace:</strong> cada aplicación, detrás de un balanceador (<a href="elb.html"><abbr class="sigla sigla-1" data-s="ALB" data-en="Application Load Balancer" data-es="balanceador HTTP/HTTPS" tabindex="0">ALB<span class="sigla-exp"> (Application Load Balancer: balanceador HTTP/HTTPS)</span></abbr></a> o <abbr class="sigla sigla-1" data-s="NLB" data-en="Network Load Balancer" data-es="balanceador TCP/UDP" tabindex="0">NLB<span class="sigla-exp"> (Network Load Balancer: balanceador TCP/UDP)</span></abbr>) o de una interfaz de
+          red, con su política opcional más estricta.</li>
+        <li><strong>Políticas:</strong> se escriben en el lenguaje <strong>Cedar</strong> (por ejemplo, "solo el grupo
+          Finanzas, desde equipos con el agente de seguridad y riesgo bajo").</li>
+        <li><strong>Registros:</strong> todos los intentos de acceso, permitidos o denegados, a <a href="cloudwatch.html">CloudWatch</a> Logs, <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a> o
+          <a href="data-firehose.html">Data Firehose</a>.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Sustituir la <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr> corporativa para el acceso a aplicaciones web internas.</li>
+        <li>Dar a contratistas acceso a una sola aplicación, no a la red.</li>
+        <li>Exigir equipos gestionados y sanos para aplicaciones sensibles.</li>
+        <li>Auditar quién accedió a qué aplicación y desde qué dispositivo.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para dar a un usuario acceso de red completo a una <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> (administración, protocolos variados): <a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
+        <li>Para unir una oficina o un centro de datos con AWS: <a href="site-to-site-vpn.html">Site-to-Site <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a> o <a href="direct-connect.html">Direct Connect</a>.</li>
+        <li>Para entrar en la consola de una instancia sin abrir puertos: <a href="systems-manager.html">Session Manager</a> de Systems Manager.</li>
+        <li>Para autorizar acciones dentro de tu propia aplicación (quién puede ver qué factura): Verified
+          Permissions.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Verified Access</th><th><a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a></th><th><a href="verified-permissions.html">Verified Permissions</a></th></tr></thead>
+          <tbody>
+            <tr><td>Qué protege</td><td>El acceso a cada aplicación</td><td>El acceso a la red</td><td>Las acciones dentro de la aplicación</td></tr>
+            <tr><td>Cuándo decide</td><td>En cada petición</td><td>Al conectarse</td><td>En cada llamada de la aplicación</td></tr>
+            <tr><td>Estado del dispositivo</td><td>Sí</td><td>No de serie</td><td>Si la aplicación lo envía</td></tr>
+            <tr><td>Software en el equipo</td><td>Solo el navegador (para web)</td><td>Cliente de <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></td><td>No aplica</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por <strong>hora de cada aplicación</strong> (punto de enlace) asociada a Verified Access y por los
+        <strong>GB procesados</strong>.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Evaluación continua de cada petición: dificulta que un atacante salte de una aplicación a otra.</li>
+        <li>Integración con <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> para filtrar ataques a las aplicaciones.</li>
+        <li>Certificados de <a href="acm.html"><abbr class="sigla sigla-1" data-s="ACM" data-en="AWS Certificate Manager" tabindex="0">ACM<span class="sigla-exp"> (AWS Certificate Manager)</span></abbr></a> para los dominios de las aplicaciones.</li>
+        <li>Registros detallados para auditoría y respuesta a incidentes.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Acceso a aplicaciones internas sin <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr>"</strong> o <strong>"confianza cero"</strong>: Verified
+          Access.</li>
+        <li><strong>"Comprobar también el estado del dispositivo"</strong>: proveedor de confianza de dispositivo.</li>
+        <li><strong>"Las mismas reglas para todas las aplicaciones de un departamento"</strong>: grupo con política
+          común.</li>
+        <li><strong>"Acceso de red completo para administradores"</strong>: <a href="client-vpn.html">Client <abbr class="sigla" data-s="VPN" data-en="Virtual Private Network" data-es="red privada virtual" tabindex="0">VPN</abbr></a>.</li>
+        <li><strong>"Autorización fina dentro de la aplicación"</strong>: <a href="verified-permissions.html">Verified Permissions</a>, no Verified Access.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="verified-access"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/verified-access/latest/ug/what-is-verified-access.html" target="_blank" rel="noopener">What is AWS Verified Access?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/verified-access/latest/ug/user-trust.html" target="_blank" rel="noopener">User-identity trust providers for Verified Access</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/networking-and-content-delivery/integrating-aws-verified-access-with-device-trust-providers/" target="_blank" rel="noopener">Integrating AWS Verified Access with device trust providers</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

@@ -944,6 +944,10 @@
    "en": "SSH File Transfer Protocol",
    "es": "transferencia de ficheros sobre SSH"
   },
+  "SIEM": {
+   "en": "Security Information and Event Management",
+   "es": "herramienta que centraliza y correlaciona registros y alertas de seguridad"
+  },
   "SLA": {
    "en": "Service Level Agreement",
    "es": "compromiso de disponibilidad"

@@ -1,0 +1,113 @@
+[
+  {
+    "id": "verified-permissions-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Una plataforma SaaS de gestión documental tiene reglas de acceso complejas (por rol, por departamento del documento y por quién lo compartió) repartidas en el código de varios microservicios, y cada cambio exige desplegar todos. Los usuarios se autentican con Cognito. ¿Qué diseño centraliza la autorización con menos cambios en la aplicación?",
+    "opciones": [
+      "Un rol de IAM por usuario y políticas de IAM sobre cada documento.",
+      "AWS Verified Access delante de cada microservicio.",
+      "Grupos de Cognito y comprobaciones por grupo en el código de cada servicio.",
+      "Amazon Verified Permissions con políticas Cedar, el grupo de usuarios de Cognito como fuente de identidad y llamadas a IsAuthorizedWithToken desde cada servicio."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Verified Permissions saca las reglas del código a políticas Cedar centralizadas, usa los tokens de Cognito como identidad y responde Allow o Deny en cada llamada. IAM es para recursos de AWS, Verified Access controla el acceso a la aplicación entera y los grupos en el código mantienen el problema.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verifiedpermissions/latest/userguide/what-is-avp.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "verified-permissions-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "En un almacén de políticas, una política permit da acceso a un usuario a un expediente y otra política forbid, que también coincide, lo prohíbe. ¿Cuál es la decisión?",
+    "opciones": [
+      "Deny, porque una política forbid que coincide gana siempre.",
+      "Allow, porque la política permit es más específica.",
+      "Depende del orden en que se crearon.",
+      "Error, porque las políticas son contradictorias."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En Cedar, un forbid que coincide prevalece sobre cualquier permit; y si ninguna política coincide, la respuesta también es Deny. El orden de creación no importa.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html"
+    ]
+  },
+  {
+    "id": "verified-permissions-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Al compartir un documento, la aplicación debe dar a ese usuario permiso de edición solo sobre ese documento, y lo mismo para miles de documentos y usuarios. ¿Qué función de Verified Permissions lo modela mejor?",
+    "opciones": [
+      "Un almacén de políticas por documento.",
+      "Una política estática escrita a mano por cada documento compartido.",
+      "Plantillas de política vinculadas a cada usuario y documento.",
+      "Un grupo de Cognito por documento."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las plantillas de política definen la regla una vez con huecos para el principal y el recurso, y se vinculan cada vez que alguien comparte. Las demás opciones multiplican almacenes, políticas o grupos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verifiedpermissions/latest/userguide/what-is-avp.html"
+    ]
+  },
+  {
+    "id": "verified-permissions-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Para pintar una pantalla, la aplicación comprueba 25 permisos (qué botones mostrar) y hace 25 llamadas a IsAuthorized, lo que añade latencia y coste. ¿Qué cambio lo mejora?",
+    "opciones": [
+      "Guardar en la aplicación todas las decisiones para siempre.",
+      "Usar BatchIsAuthorized para decidir los 25 permisos en una sola llamada.",
+      "Pasar a políticas de IAM.",
+      "Crear un almacén de políticas por botón."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La autorización por lotes decide varias peticiones en una llamada, con menos latencia, y se factura por llamada. Guardar decisiones para siempre ignora los cambios de permisos, IAM no sirve para la lógica de la aplicación y más almacenes no reduce llamadas.",
+    "fuentes": [
+      "https://aws.amazon.com/verified-permissions/pricing/"
+    ]
+  },
+  {
+    "id": "verified-permissions-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Un arquitecto debe decidir dónde se controla que un empleado pueda borrar un depósito de S3 de la cuenta y dónde que un cliente pueda ver una factura dentro de la aplicación. ¿Qué combinación es correcta?",
+    "opciones": [
+      "Verified Permissions para ambos.",
+      "IAM para ambos.",
+      "IAM para el depósito de S3 y Verified Permissions para la factura.",
+      "Cognito para el depósito de S3 y Verified Access para la factura."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "IAM controla las acciones sobre los recursos de AWS, como borrar un depósito; Verified Permissions decide las acciones dentro de tu aplicación. Cognito autentica usuarios y Verified Access controla el acceso a la aplicación en conjunto.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/verifiedpermissions/latest/userguide/what-is-avp.html"
+    ]
+  }
+]

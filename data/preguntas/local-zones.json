@@ -1,0 +1,112 @@
+[
+  {
+    "id": "local-zones-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Un estudio de animación de Los Ángeles quiere estaciones de trabajo virtuales y renderizado en AWS con latencia de pocos milisegundos para sus artistas. La región más cercana está a demasiada distancia. ¿Qué opción cumple el requisito con servicios gestionados por AWS?",
+    "opciones": [
+      "AWS Wavelength en la red 5G de un operador.",
+      "Instancias EC2 en la Local Zone de Los Ángeles, en una subred de la VPC de la región principal.",
+      "Un rack de AWS Outposts en las oficinas del estudio.",
+      "CloudFront delante de las instancias de la región."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Una Local Zone acerca cómputo y almacenamiento a una gran ciudad y se usa como una subred más de la VPC. Wavelength es para dispositivos móviles 5G, Outposts exige alojar el hardware en tus instalaciones y CloudFront no acelera escritorios ni renderizado interactivo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/local-zones/latest/ug/what-is-aws-local-zones.html"
+    ]
+  },
+  {
+    "id": "local-zones-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "enunciado": "Un ingeniero quiere crear una subred en una Local Zone, pero esa zona no aparece en la lista de zonas al crearla. ¿Cuál es la causa más probable?",
+    "opciones": [
+      "Las Local Zones no admiten subredes.",
+      "Hace falta un Transit Gateway en la Local Zone.",
+      "La VPC debe crearse de nuevo en la Local Zone.",
+      "La cuenta no ha activado (opt-in) esa Local Zone."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Hay que activar cada Local Zone en la cuenta antes de usarla; después se crea una subred que amplía la VPC existente. No hace falta Transit Gateway ni una VPC nueva.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/local-zone.html"
+    ]
+  },
+  {
+    "id": "local-zones-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Una normativa estatal exige que los datos de un servicio de juego en línea se procesen y guarden dentro de un estado donde AWS no tiene región, pero sí una Local Zone. ¿Qué diseño lo cumple?",
+    "opciones": [
+      "Desplegar las instancias y los volúmenes EBS en la Local Zone de ese estado.",
+      "Usar la región más cercana con cifrado de KMS.",
+      "Usar CloudFront con restricción geográfica.",
+      "Guardar los datos en S3 con replicación entre regiones."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Las Local Zones sirven para cumplir requisitos de residencia de datos: los recursos y los datos en reposo se quedan en su ubicación. Cifrar en otra región, restringir por país o replicar no mantienen los datos dentro del estado.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/local-zones/latest/ug/what-is-aws-local-zones.html"
+    ]
+  },
+  {
+    "id": "local-zones-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "enunciado": "Una aplicación crítica de baja latencia funciona en una sola Local Zone. ¿Qué riesgo debe tratar el arquitecto?",
+    "opciones": [
+      "Las Local Zones no admiten grupos de seguridad.",
+      "El plano de control de EC2 se ejecuta en la Local Zone y puede fallar con ella.",
+      "La Local Zone es un único dominio de fallo: necesita otra Local Zone de la ciudad o la región principal como respaldo.",
+      "Las IP públicas de la Local Zone cambian cada día."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Una sola Local Zone es un único punto de fallo; para alta disponibilidad hay que repartir entre dos Local Zones (si existen) o tener la región como respaldo. Las Local Zones admiten grupos de seguridad, los planos de control están en la región y las IP no cambian.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/aws-local-zones.html"
+    ]
+  },
+  {
+    "id": "local-zones-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "Un equipo de FinOps compara el coste de una carga en una Local Zone con el de su región principal. ¿Qué debe tener en cuenta?",
+    "opciones": [
+      "Las Local Zones cobran una cuota mensual de activación.",
+      "Activar la Local Zone es gratis, pero sus recursos tienen precios propios, normalmente distintos de los de la región.",
+      "Los recursos cuestan lo mismo que en la región principal.",
+      "Solo se paga la transferencia de datos."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "No hay cargo por activar una Local Zone; se pagan los recursos que se lanzan allí, con precios propios, y la transferencia de datos. No son iguales a los de la región ni se paga solo la transferencia.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/local-zones/latest/ug/what-is-aws-local-zones.html"
+    ]
+  }
+]

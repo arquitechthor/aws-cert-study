@@ -1,0 +1,135 @@
+[
+  {
+    "id": "security-lake-001",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Una organización con 400 cuentas y cinco regiones quiere centralizar los registros de CloudTrail, los de flujo de VPC, las consultas de DNS y los hallazgos de Security Hub en un formato común, guardados en S3 de una cuenta de seguridad, para que su SIEM externo los consuma sin procesos de transformación propios. ¿Qué solución cumple los requisitos con menos esfuerzo?",
+    "opciones": [
+      "Amazon Security Lake activado desde una cuenta de administración delegada, con el SIEM como suscriptor.",
+      "Un registro de seguimiento de organización de CloudTrail y funciones Lambda que conviertan los demás registros.",
+      "Amazon Detective con la cuenta de seguridad como administradora.",
+      "Data Firehose en cada cuenta enviando los registros en bruto al SIEM."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Security Lake recoge esas fuentes de todas las cuentas y regiones, las normaliza a OCSF en S3 de tu cuenta y entrega los datos a suscriptores como un SIEM. El registro de CloudTrail no cubre las demás fuentes sin desarrollo propio, Detective investiga pero no exporta un lago normalizado y Firehose en bruto deja la normalización al SIEM.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/security-lake/latest/userguide/what-is-security-lake.html"
+    ],
+    "dificil": true
+  },
+  {
+    "id": "security-lake-002",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Por residencia de datos, los registros de seguridad de las regiones europeas de una organización deben guardarse juntos en eu-central-1. ¿Qué función de Security Lake se usa?",
+    "opciones": [
+      "La replicación entre regiones de S3 configurada a mano en cada depósito.",
+      "Un suscriptor con acceso a consultas en cada región.",
+      "Una región de agregación (rollup) que reúna los datos de las regiones europeas.",
+      "Un filtro de Security Hub por región."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las regiones de agregación de Security Lake consolidan en una región los datos de otras, lo que ayuda a cumplir la residencia. La replicación a mano es más trabajo, un suscriptor consume datos pero no los mueve y Security Hub no gestiona dónde se guardan los registros.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/security-lake/latest/userguide/what-is-security-lake.html"
+    ]
+  },
+  {
+    "id": "security-lake-003",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Un equipo de búsqueda de amenazas quiere consultar con SQL los datos de Security Lake de solo dos fuentes y una región, sin poder ver el resto. ¿Cómo se le da acceso?",
+    "opciones": [
+      "Con permisos de lectura sobre todos los depósitos de S3 del lago.",
+      "Como suscriptor con acceso a consultas limitado a esas fuentes y región, mediante Lake Formation y Athena.",
+      "Copiando los datos a una base de datos de RDS para el equipo.",
+      "Dándole acceso de administrador a la cuenta delegada de Security Lake."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los suscriptores de Security Lake reciben acceso solo a las fuentes y regiones elegidas; con acceso a consultas usan las tablas mediante Lake Formation (por ejemplo, desde Athena). Los permisos sobre todos los depósitos o de administrador dan demasiado, y copiar a RDS duplica datos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/security-lake/latest/userguide/what-is-security-lake.html"
+    ]
+  },
+  {
+    "id": "security-lake-004",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Un equipo duda entre activar Amazon Security Lake o Amazon GuardDuty para \"mejorar la seguridad\". ¿Cuál es la diferencia principal?",
+    "opciones": [
+      "Son el mismo servicio con dos nombres.",
+      "Security Lake bloquea el tráfico malicioso y GuardDuty guarda los registros.",
+      "Security Lake centraliza y normaliza los registros para analizarlos y conservarlos; GuardDuty los analiza para detectar amenazas.",
+      "GuardDuty solo funciona si antes se activa Security Lake."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Security Lake es un lago de datos de seguridad: recoge, normaliza y guarda. GuardDuty detecta amenazas analizando fuentes como CloudTrail, los registros de flujo o DNS, y no necesita Security Lake. Ninguno de los dos bloquea tráfico.",
+    "fuentes": [
+      "https://aws.amazon.com/security-lake/faqs/"
+    ]
+  },
+  {
+    "id": "security-lake-005",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "enunciado": "El volumen del lago de Security Lake crece y la empresa debe conservar los datos dos años, aunque casi solo consulta los últimos 30 días. ¿Qué reduce el coste con menos esfuerzo?",
+    "opciones": [
+      "Configurar en Security Lake la retención y el paso automático a clases de almacenamiento más baratas.",
+      "Borrar a mano cada mes los objetos antiguos.",
+      "Desactivar la normalización a OCSF.",
+      "Mover los datos a volúmenes EBS."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Security Lake gestiona el ciclo de vida de los datos con retención configurable y paso automático a clases de S3 más baratas. Borrar a mano incumple la retención, la normalización no es opcional y EBS es más caro y no sirve como lago.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/security-lake/latest/userguide/what-is-security-lake.html"
+    ]
+  },
+  {
+    "id": "security-lake-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "enunciado": "Una aplicación propia genera registros de auditoría que el equipo de seguridad quiere analizar junto a los de AWS en Security Lake. ¿Qué requisito deben cumplir?",
+    "opciones": [
+      "Enviarse primero a CloudTrail como eventos de administración.",
+      "Guardarse en un depósito de S3 público.",
+      "No se puede: Security Lake solo acepta fuentes de AWS.",
+      "Estar en formato OCSF para añadirlos como fuente personalizada."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Security Lake acepta fuentes personalizadas y de terceros siempre que los datos estén en OCSF. No hace falta pasarlos por CloudTrail ni, desde luego, hacerlos públicos.",
+    "fuentes": [
+      "https://aws.amazon.com/security-lake/faqs/"
+    ]
+  }
+]

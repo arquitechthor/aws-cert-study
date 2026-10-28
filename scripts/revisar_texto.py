@@ -27,6 +27,7 @@ G = {
     'OCSP': ('Online Certificate Status Protocol', 'protocolo para consultar al momento si un certificado está revocado'),
     'PKI': ('Public Key Infrastructure', 'infraestructura de clave pública: autoridades, certificados y sus reglas'),
     'SOP': ('Standard Operating Procedure', 'procedimiento operativo estándar, el paso a paso ante un incidente'),
+    'SIEM': ('Security Information and Event Management', 'herramienta que centraliza y correlaciona registros y alertas de seguridad'),
     'NACL': ('Network Access Control List', 'firewall a nivel de subred'),
     'ACU': ('Aurora Capacity Unit', 'unidad de capacidad de Aurora Serverless'),
     'AES-256': ('Advanced Encryption Standard', 'cifrado simétrico con claves de 256 bits'),

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Security Lake — Apuntes AWS</title>
+<meta name="description" content="Lago de datos de seguridad gestionado: centraliza en S3 de tu cuenta los registros de seguridad de AWS, de terceros y propios, normalizados al esquema OCSF, para analizarlos y compartirlos con suscriptores. Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/security-lake.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Amazon Security Lake — Apuntes AWS">
+<meta property="og:description" content="Lago de datos de seguridad gestionado: centraliza en S3 de tu cuenta los registros de seguridad de AWS, de terceros y propios, normalizados al esquema OCSF, para analizarlos y compartirlos con suscriptores.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/security-lake.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="56" height="56"><span>Amazon Security Lake</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Centraliza en <abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr> los registros de seguridad de cuentas y regiones en formato <abbr class="sigla sigla-1" data-s="OCSF" data-en="Open Cybersecurity Schema Framework" data-es="esquema abierto para datos de seguridad" tabindex="0">OCSF<span class="sigla-exp"> (Open Cybersecurity Schema Framework: esquema abierto para datos de seguridad)</span></abbr></span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=seguridad-identidad-cumplimiento#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/seguridad-identidad-cumplimiento.svg" alt="" width="18" height="18">Seguridad, identidad y cumplimiento <span class="cat-en">(Security, Identity, and Compliance)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/security-lake/" target="_blank" rel="noopener">Documentación de Amazon Security Lake ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Amazon Security Lake es un <strong>lago de datos de seguridad</strong> totalmente gestionado. Recoge de forma
+        automática los registros y eventos de seguridad de las cuentas y regiones de tu organización, de otras nubes,
+        de herramientas de terceros y de tu centro de datos, los <strong>normaliza al esquema abierto <abbr class="sigla" data-s="OCSF" data-en="Open Cybersecurity Schema Framework" data-es="esquema abierto para datos de seguridad" tabindex="0">OCSF</abbr></strong> en
+        formato Apache Parquet y los guarda en <strong>depósitos de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> de tu propia cuenta</strong>, de los que sigues
+        siendo dueño. Desde ahí, tus herramientas de análisis y las de terceros los consultan o se suscriben a ellos.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Fuentes nativas de AWS:</strong> eventos de administración y de datos (<a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, <a href="lambda.html">Lambda</a>) de <a href="cloudtrail.html">CloudTrail</a>,
+          registros de flujo de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a>, consultas del resolutor de <a href="route-53.html">Route 53</a>, registros de auditoría de <a href="eks.html"><abbr class="sigla sigla-1" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS<span class="sigla-exp"> (Elastic Kubernetes Service)</span></abbr></a>, registros de
+          <a href="waf.html"><abbr class="sigla sigla-1" data-s="WAF" data-en="Web Application Firewall" tabindex="0">WAF<span class="sigla-exp"> (Web Application Firewall)</span></abbr></a> y hallazgos de <a href="security-hub.html">Security Hub</a> (que a su vez agrega <a href="guardduty.html">GuardDuty</a>, <a href="inspector.html">Inspector</a>, <a href="macie.html">Macie</a>, Config…). Security Lake lee
+          su propia copia de los eventos: no hace falta cambiar la configuración de registros (salvo los eventos de
+          administración de CloudTrail).</li>
+        <li><strong>Fuentes personalizadas y de terceros:</strong> cualquier dato que ya esté en formato <abbr class="sigla" data-s="OCSF" data-en="Open Cybersecurity Schema Framework" data-es="esquema abierto para datos de seguridad" tabindex="0">OCSF</abbr>, de
+          aplicaciones propias, equipos de red o productos de seguridad.</li>
+        <li><strong><abbr class="sigla" data-s="OCSF" data-en="Open Cybersecurity Schema Framework" data-es="esquema abierto para datos de seguridad" tabindex="0">OCSF</abbr>:</strong> un esquema común que permite que muchas herramientas lean los mismos datos sin
+          transformarlos.</li>
+        <li><strong>Administración multicuenta y multirregión:</strong> se activa desde la cuenta de administración
+          delegada de <a href="organizations.html">Organizations</a> para todas las cuentas. Las <strong>regiones de agregación</strong> (<em>rollup</em>)
+          reúnen los datos de varias regiones en una sola, lo que ayuda con la residencia de datos.</li>
+        <li><strong>Suscriptores:</strong> herramientas que consumen los datos, con acceso limitado a ciertas fuentes y
+          regiones. Con <strong>acceso a datos</strong> reciben avisos de los objetos nuevos y los leen de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>; con
+          <strong>acceso a consultas</strong> consultan las tablas (por ejemplo, con <a href="athena.html">Athena</a>) mediante <a href="lake-formation.html">Lake Formation</a>.</li>
+        <li><strong>Ciclo de vida:</strong> retención configurable y paso automático a clases de almacenamiento más
+          baratas.</li>
+        <li><strong>Servicios que usa por debajo:</strong> <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, <a href="glue.html">Glue</a> (catálogo de datos), Lake Formation (permisos de las
+          tablas), <a href="eventbridge.html">EventBridge</a> (avisos) y Lambda.</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Centralizar los registros de seguridad de cientos de cuentas para investigaciones y análisis forenses.</li>
+        <li>Alimentar un <abbr class="sigla sigla-1" data-s="SIEM" data-en="Security Information and Event Management" data-es="herramienta que centraliza y correlaciona registros y alertas de seguridad" tabindex="0">SIEM<span class="sigla-exp"> (Security Information and Event Management: herramienta que centraliza y correlaciona registros y alertas de seguridad)</span></abbr> u otra herramienta de terceros con datos ya normalizados, sin procesos de <abbr class="sigla sigla-1" data-s="ETL" data-en="Extract, Transform, Load" data-es="extraer, transformar y cargar datos" tabindex="0">ETL<span class="sigla-exp"> (Extract, Transform, Load: extraer, transformar y cargar datos)</span></abbr> propios.</li>
+        <li>Buscar amenazas con <abbr class="sigla sigla-1" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL<span class="sigla-exp"> (Structured Query Language: lenguaje de consultas de bases de datos relacionales)</span></abbr> sobre meses o años de registros con coste de almacenamiento bajo.</li>
+        <li>Cumplir requisitos de retención y residencia de datos de los registros de seguridad.</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Para <strong>detectar</strong> amenazas: <a href="guardduty.html">GuardDuty</a> (Security Lake guarda datos, no los analiza).</li>
+        <li>Para ver y priorizar hallazgos y el cumplimiento de estándares: <a href="security-hub.html">Security Hub</a>.</li>
+        <li>Para investigar visualmente un hallazgo concreto: <a href="detective.html">Detective</a>.</li>
+        <li>Si solo necesitas guardar los registros de <a href="cloudtrail.html">CloudTrail</a> de la organización en un depósito: un registro de
+          seguimiento de organización de CloudTrail.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Security Lake</th><th><a href="security-hub.html">Security Hub</a></th><th><a href="cloudtrail.html">CloudTrail</a> Lake</th></tr></thead>
+          <tbody>
+            <tr><td>Qué guarda</td><td>Registros y eventos de muchas fuentes</td><td>Hallazgos de seguridad</td><td>Eventos de CloudTrail (y algunos más)</td></tr>
+            <tr><td>Formato</td><td><abbr class="sigla" data-s="OCSF" data-en="Open Cybersecurity Schema Framework" data-es="esquema abierto para datos de seguridad" tabindex="0">OCSF</abbr> en Parquet, en tu <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></td><td>Formato de hallazgos de AWS</td><td>Almacén gestionado por AWS</td></tr>
+            <tr><td>Para qué</td><td>Análisis, retención y compartir con terceros</td><td>Priorizar y gestionar hallazgos</td><td>Consultas <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> de auditoría</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>Se paga por el <strong>volumen de datos</strong> que Security Lake recoge de las fuentes de AWS y por el que
+        normaliza de fuentes personalizadas. Aparte se pagan el almacenamiento en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, las consultas (por ejemplo, de
+        <a href="athena.html">Athena</a>) y los demás servicios que use.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Los datos se quedan en tu cuenta y tus depósitos, cifrados (con clave propia de <a href="kms.html"><abbr class="sigla sigla-1" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS<span class="sigla-exp"> (Key Management Service)</span></abbr></a> si quieres).</li>
+        <li>Acceso de cada suscriptor limitado a ciertas fuentes y regiones, con permisos de <a href="lake-formation.html">Lake Formation</a>.</li>
+        <li>Administración delegada en una cuenta de seguridad, separada de la de administración de la organización.</li>
+        <li>Durabilidad de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> y replicación entre regiones de agregación.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Centralizar registros de seguridad en formato <abbr class="sigla" data-s="OCSF" data-en="Open Cybersecurity Schema Framework" data-es="esquema abierto para datos de seguridad" tabindex="0">OCSF</abbr>"</strong>: Security Lake.</li>
+        <li><strong>"Dar al <abbr class="sigla" data-s="SIEM" data-en="Security Information and Event Management" data-es="herramienta que centraliza y correlaciona registros y alertas de seguridad" tabindex="0">SIEM</abbr> de un tercero los datos sin procesos de transformación"</strong>: suscriptor de Security
+          Lake.</li>
+        <li><strong>"Los datos de varias regiones deben quedarse en una sola"</strong>: región de agregación.</li>
+        <li><strong>"Consultar con <abbr class="sigla" data-s="SQL" data-en="Structured Query Language" data-es="lenguaje de consultas de bases de datos relacionales" tabindex="0">SQL</abbr> los registros del lago"</strong>: suscriptor con acceso a consultas (<a href="athena.html">Athena</a> con
+          <a href="lake-formation.html">Lake Formation</a>).</li>
+        <li><strong>"Detectar actividad maliciosa"</strong>: <a href="guardduty.html">GuardDuty</a>, no Security Lake.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="security-lake"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/security-lake/latest/userguide/what-is-security-lake.html" target="_blank" rel="noopener">What is Amazon Security Lake?</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html" target="_blank" rel="noopener">Collecting data from AWS services in Security Lake</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://aws.amazon.com/security-lake/faqs/" target="_blank" rel="noopener">Amazon Security Lake FAQs</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>

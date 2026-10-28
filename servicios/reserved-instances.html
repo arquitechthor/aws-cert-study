@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reserved Instances — Apuntes AWS</title>
+<meta name="description" content="Descuento en la factura a cambio de comprometer durante uno o tres años el uso de una configuración concreta de instancias de EC2 (y nodos reservados en RDS, ElastiCache, Redshift u OpenSearch). Apuntes y preguntas de práctica para SAP-C03.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/servicios/reserved-instances.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Reserved Instances — Apuntes AWS">
+<meta property="og:description" content="Descuento en la factura a cambio de comprometer durante uno o tres años el uso de una configuración concreta de instancias de EC2 (y nodos reservados en RDS, ElastiCache, Redshift u OpenSearch).">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/servicios/reserved-instances.html">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">
+      <img class="nav-logo" src="../assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Inicio</a>
+      <a href="../index.html#certificaciones">Certificaciones</a>
+      <a href="../index.html#catalogo">Catálogo</a>
+      <a href="../simulacro.html">Simulacro</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="../memoria.html">Memoria</a>
+          <a href="../empareja.html">Empareja</a>
+          <a href="../arquitecto.html">Arquitecto</a>
+          <a href="../clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <a href="../progreso.html">Mi progreso</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <a class="back-link" href="../index.html#catalogo">← Volver al catálogo</a>
+
+    <div class="service-head">
+      <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="56" height="56"><span>Reserved Instances</span></h1>
+      <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Descuento por comprometer uso de <abbr class="sigla sigla-1" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2<span class="sigla-exp"> (Elastic Compute Cloud)</span></abbr> o <abbr class="sigla sigla-1" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS<span class="sigla-exp"> (Relational Database Service)</span></abbr> durante uno o tres años en una región</span></div>
+      <div class="meta-row">
+        <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=administracion-financiera#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/administracion-financiera.svg" alt="" width="18" height="18">Administración financiera en la nube <span class="cat-en">(Cloud Financial Management)</span></a></span>
+      </div>
+      <div class="meta-row">
+        <strong>Certificaciones:</strong>
+        <span class="chips">
+          <a class="chip chip-cert" href="../index.html?cert=SAP-C03#catalogo" title="AWS Certified Solutions Architect – Professional">SAP-C03</a>
+        </span>
+      </div>
+      <div class="meta-row">
+        <strong>Documentación oficial:</strong>
+        <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html" target="_blank" rel="noopener">Documentación de Reserved Instances ↗</a>
+      </div>
+    </div>
+
+    <article class="doc">
+      <h2 id="que-es">Qué es</h2>
+      <p>Las Reserved Instances son un <strong>descuento en la factura</strong>, no instancias físicas: te comprometes a
+        usar durante <strong>uno o tres años</strong> una configuración concreta de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> (tipo de instancia, región,
+        sistema operativo y tenencia) y, a cambio, las horas de instancias bajo demanda que encajan con ella se cobran
+        mucho más baratas. Otros servicios ofrecen reservas parecidas (instancias o nodos reservados de <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>,
+        <a href="elasticache.html">ElastiCache</a>, <a href="redshift.html">Redshift</a> u <a href="opensearch-service.html">OpenSearch Service</a>). Para <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, <a href="fargate.html">Fargate</a> y <a href="lambda.html">Lambda</a>, AWS recomienda hoy los
+        <strong><a href="savings-plans.html">Savings Plans</a></strong>, que dan el mismo nivel de ahorro con más flexibilidad.</p>
+
+      <h2 id="conceptos">Conceptos clave</h2>
+      <ul>
+        <li><strong>Atributos:</strong> tipo de instancia, región, tenencia (compartida o dedicada) y plataforma
+          (sistema operativo). El descuento se aplica a las instancias en marcha que coinciden.</li>
+        <li><strong>Plazo:</strong> uno o tres años (más descuento a tres). No se renuevan solas: al caducar se vuelve a
+          pagar bajo demanda.</li>
+        <li><strong>Formas de pago:</strong> todo por adelantado, parte por adelantado o nada por adelantado; cuanto más
+          se adelanta, mayor el ahorro. Se paga el plazo completo aunque no se use.</li>
+        <li><strong>Clases:</strong> <strong>Standard</strong> (más descuento; se pueden modificar y vender en el
+          Reserved Instance Marketplace, pero no cambiar por otras) y <strong>Convertible</strong> (menos descuento; se
+          pueden <strong>intercambiar</strong> por otras Convertible con otros atributos).</li>
+        <li><strong>Ámbito regional:</strong> el descuento vale en cualquier zona de la región y, en Linux con tenencia
+          compartida, para cualquier tamaño de la familia (flexibilidad de tamaño). <strong>No reserva
+          capacidad</strong>.</li>
+        <li><strong>Ámbito zonal:</strong> solo en una zona y un tamaño concretos, pero <strong>reserva capacidad</strong>
+          en esa zona.</li>
+        <li><strong>Organizaciones:</strong> con la facturación consolidada, el descuento de una cuenta se aprovecha en
+          otras de la organización si la primera no lo usa (se puede desactivar).</li>
+        <li><strong>No se cancelan:</strong> una vez compradas, solo se modifican, se intercambian (Convertible) o se
+          venden (Standard).</li>
+      </ul>
+
+      <h2 id="casos-de-uso">Casos de uso típicos</h2>
+      <ul>
+        <li>Bases de datos de <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="elasticache.html">ElastiCache</a> u <a href="opensearch-service.html">OpenSearch</a> con uso estable 24/7 (donde no aplican los <a href="savings-plans.html">Savings Plans</a> de
+          cómputo).</li>
+        <li>Flotas de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> estables durante años con configuración conocida.</li>
+        <li>Reservar capacidad garantizada en una zona concreta (Reserved Instances zonales o, mejor, reservas de
+          capacidad bajo demanda combinadas con Savings Plans).</li>
+      </ul>
+
+      <h2 id="cuando-no">Cuándo NO usarlo</h2>
+      <ul>
+        <li>Si la carga de cómputo va a cambiar de familia, región o pasar a <a href="fargate.html">Fargate</a> o <a href="lambda.html">Lambda</a>: <a href="savings-plans.html">Savings Plans</a>.</li>
+        <li>Para cargas temporales, de prueba o con picos impredecibles: bajo demanda.</li>
+        <li>Para cargas que toleran interrupciones (lotes, análisis): instancias de spot, mucho más baratas.</li>
+      </ul>
+
+      <h2 id="comparativa">Comparativa con servicios parecidos</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Reserved Instances</th><th><a href="savings-plans.html">Savings Plans</a></th><th>Spot</th></tr></thead>
+          <tbody>
+            <tr><td>Compromiso</td><td>Una configuración durante 1 o 3 años</td><td>Gasto por hora durante 1 o 3 años</td><td>Ninguno</td></tr>
+            <tr><td>Flexibilidad</td><td>Baja (Convertible: intercambio)</td><td>Alta (Compute Savings Plans: familia, región, <a href="fargate.html">Fargate</a>, <a href="lambda.html">Lambda</a>)</td><td>Total, pero AWS puede interrumpir</td></tr>
+            <tr><td>Otros servicios</td><td><a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a>, <a href="elasticache.html">ElastiCache</a>, <a href="redshift.html">Redshift</a>, <a href="opensearch-service.html">OpenSearch</a></td><td><a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, Fargate, Lambda (y <a href="sagemaker-ai.html">SageMaker AI</a> con sus propios planes)</td><td><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> (y Fargate Spot)</td></tr>
+            <tr><td>Reserva capacidad</td><td>Solo las zonales</td><td>No</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="precios">Modelo de precios</h2>
+      <p>El precio depende de los atributos, el plazo, la forma de pago y la clase. Se paga todo el plazo, se use o no.
+        <a href="cost-explorer.html">Cost Explorer</a> recomienda qué reservar según el uso pasado y muestra la <strong>utilización</strong> y la
+        <strong>cobertura</strong> de las reservas; Budgets puede avisar si bajan.</p>
+
+      <h2 id="seguridad-ha">Seguridad y alta disponibilidad</h2>
+      <ul>
+        <li>Las de ámbito regional no garantizan capacidad: para tenerla en un incidente de zona, reservas zonales o
+          reservas de capacidad bajo demanda.</li>
+        <li>Comprarlas desde la cuenta de administración o una cuenta central y controlar con <a href="iam.html"><abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr></a> quién puede comprar.</li>
+      </ul>
+
+      <h2 id="trampas">Trampas de examen</h2>
+      <ul>
+        <li><strong>"Base de datos <a href="rds.html"><abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr></a> estable 24/7 durante tres años, el menor coste"</strong>: instancias reservadas de
+          <abbr class="sigla" data-s="RDS" data-en="Relational Database Service" tabindex="0">RDS</abbr>.</li>
+        <li><strong>"Cómputo que cambiará de familia o pasará a contenedores"</strong>: <a href="savings-plans.html">Savings Plans</a>, no Reserved
+          Instances Standard.</li>
+        <li><strong>"Cambiar la reserva por otro tipo de instancia"</strong>: Convertible (intercambio).</li>
+        <li><strong>"Garantizar capacidad en una zona"</strong>: Reserved Instance zonal o reserva de capacidad bajo
+          demanda.</li>
+        <li><strong>"Ya no necesito la reserva"</strong>: venderla en el Marketplace (solo Standard), no se cancela.</li>
+        <li><strong>"Aprovechar en otras cuentas las reservas que una no usa"</strong>: compartir el descuento en la
+          organización.</li>
+      </ul>
+
+      <h2 id="preguntas">Preguntas de práctica</h2>
+      <p class="text-faint">Preguntas originales escritas para estos apuntes. No son preguntas reales de examen.</p>
+      <div class="quiz" data-quiz="reserved-instances"></div>
+
+      <h2 id="fuentes">Fuentes</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-reserved-instances.html" target="_blank" rel="noopener">Reserved Instances for Amazon EC2 overview</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/reserved-instances-scope.html" target="_blank" rel="noopener">Regional and zonal Reserved Instances (scope)</a>, documentación de AWS (consultada el 28/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/whitepapers/latest/cost-optimization-reservation-models/regional-and-zonal-reserved-instances.html" target="_blank" rel="noopener">Regional and zonal Reserved Instances (Cost Optimization: Reservation Models)</a>, documentación de AWS (consultada el 28/10/2026).</li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="../assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="../aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="../aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/">Sobre mí</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/nav.js" defer></script>
+<script src="../assets/datos.js" defer></script>
+<script src="../assets/siglas.js" defer></script>
+<script src="../assets/preguntas.js" defer></script>
+<script src="../assets/quiz.js" defer></script>
+</body>
+</html>
