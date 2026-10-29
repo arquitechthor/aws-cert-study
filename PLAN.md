@@ -11,12 +11,19 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 ## Estado actual
 
 - **Audio y "Números interesantes" (29/10/2026, pedido por el usuario):** S3 estrena las dos cosas.
-  (1) Un resumen en audio generado con NotebookLM (`assets/audios/s3.m4a`, 51 MB, 26 min) en un
+  (1) Un resumen en audio generado con NotebookLM (`assets/audios/s3.m4a`, 13 MB, 26 min) en un
   `<audio preload="none">` antes de "Qué es"; los servicios con `"audio": true` llevan el chip 🎧 en el
   catálogo y se filtran con "🎧 Con audio" (`audio=1`, en el grupo "Destacados"). (2) Sección
   `id="numeros"` "Números interesantes" tras "Qué es": seis fichas (`.numeros` / `.numero-ficha`) con
-  cifras contrastadas en la documentación actual. Si se añaden más audios, vigilar el tamaño: GitHub
-  avisa por encima de 50 MB por fichero y rechaza más de 100 MB.
+  cifras contrastadas en la documentación actual.
+- **Norma para los audios (29/10/2026):** antes de subir un audio, recomprimirlo a **AAC mono a 64 kbps**
+  (unos 0,5 MB por minuto; el de S3 bajó de 51 a 13 MB sin pérdida apreciable en la voz):
+  `ffmpeg -i entrada -vn -map_metadata -1 -ac 1 -ar 44100 -c:a aac -b:a 64k -movflags +faststart assets/audios/<id>.m4a`
+  (ffmpeg instalado con `winget install Gyan.FFmpeg`). Motivos: GitHub avisa por encima de 50 MB por
+  fichero y rechaza más de 100 MB, Pages tiene un límite flexible de 100 GB de transferencia al mes y 1 GB
+  de sitio, y cada versión de un audio se queda para siempre en el historial (no reemplazar un audio sin
+  necesidad). Pages no sirve ficheros de Git LFS. Si los audios llegan a cientos de MB en total, valorar
+  alojarlos fuera (y reflejarlo en el aviso legal, que hoy dice que se sirven desde el propio sitio).
 - **Guías nuevas SAP-C03 y DVA-C03 (28/10/2026, tarea 0.9):** pasan a `vigente` con sus dominios,
   examen y servicios, y **se quitan SAP-C02 y DVA-C02** del sitio aunque aún se puedan presentar
   (decisión del usuario). Las preguntas de SAP-C02 pasan a SAP-C03 reclasificadas en los cinco
@@ -950,3 +957,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-28 | **Prioridad 6: 5 guías más** (pedidas por el usuario): Security Lake (6 preguntas), Verified Access (5), Verified Permissions (5), Local Zones (5) y Reserved Instances (6), todas de SAP-C03, con una pregunta difícil en cada una de las tres primeras. Sigla nueva en el glosario: SIEM. Quedan 6 de 19. |
 | 2026-10-28 | **Prioridad 6 completa** (pedido por el usuario): últimas 6 guías, todas de SAP-C03: Clean Rooms, Cost Categories, Data Lifecycle Manager, CodeCommit (sin aviso: volvió a disponibilidad general el 25/11/2025), Distro for OpenTelemetry y Data Transfer Terminal, con 5 preguntas cada una y una difícil en las seis. Sigla FIS añadida al glosario (faltaba en las guías de Fault Injection Service y Resilience Hub, ya corregidas). 177 de 177 servicios publicados; `sitemap.xml` con 183 URL. |
 | 2026-10-29 | **Audio y "Números interesantes" en S3** (pedido por el usuario): audio de NotebookLM antes de "Qué es", campo `audio` en `servicios.json` con chip 🎧 y filtro "🎧 Con audio" (`audio=1`) en "Destacados", y sección "Números interesantes" con seis fichas (durabilidad, disponibilidad, 50 TB, 5 GB por subida, 3.500/5.500 peticiones por prefijo, 10.000 buckets), contrastadas con la documentación de AWS. Nota sobre audios generados con IA en el aviso legal. Probado en navegador (filtro, chip, reproducción del audio, una columna sin desplazamiento horizontal a 375 px). |
+| 2026-10-29 | **Audio de S3 recomprimido** (pedido por el usuario): de AAC estéreo a 257 kbps (51,4 MB) a AAC mono a 64 kbps con `+faststart` (13,4 MB, misma duración), con ffmpeg instalado vía winget. Norma de formato para los audios nuevos anotada en "Estado actual". |
