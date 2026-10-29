@@ -2009,6 +2009,7 @@
     "icono": true,
     "clave": true,
     "kopi": true,
+    "audio": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C03",

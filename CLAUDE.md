@@ -26,12 +26,14 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   each service's `frase` (name matches are listed first).
 - `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
   filters (text, category, status, certifications and the "Destacados" chips (key services, used
-  in Kopi); the union/intersection mode applies within each of those two groups, and the groups
+  in Kopi, with audio); the union/intersection mode applies within each of those two groups, and the groups
   combine with AND). Filter state
-  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1`). The retired SAP-C02 and DVA-C02 were removed on 2026-10-28 (only current guides are listed); a
+  lives in the URL (`?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1&audio=1`). The retired SAP-C02 and DVA-C02 were removed on 2026-10-28 (only current guides are listed); a
   certification with `examenDesde` in the future shows "Examen disponible a partir del…". `kopi=1` shows only
   services with `"kopi": true` in `servicios.json` (the ones Kopi uses); `clave=1` only the key
-  services (see "Key services" below). Certifications with
+  services (see "Key services" below); `audio=1` only services with `"audio": true`, whose guide
+  plays `assets/audios/<id>.m4a` (NotebookLM summary) right before "Qué es" and whose card shows a
+  🎧 chip (S3 so far; it also has a "Números interesantes" section of `.numero-ficha` cards). Certifications with
   `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
 - Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store, per service
   in `localStorage` (`apuntes-aws.progreso`), the correct answers and the `fallos` (questions whose

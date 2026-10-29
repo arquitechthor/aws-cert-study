@@ -10,6 +10,13 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
+- **Audio y "Números interesantes" (29/10/2026, pedido por el usuario):** S3 estrena las dos cosas.
+  (1) Un resumen en audio generado con NotebookLM (`assets/audios/s3.m4a`, 51 MB, 26 min) en un
+  `<audio preload="none">` antes de "Qué es"; los servicios con `"audio": true` llevan el chip 🎧 en el
+  catálogo y se filtran con "🎧 Con audio" (`audio=1`, en el grupo "Destacados"). (2) Sección
+  `id="numeros"` "Números interesantes" tras "Qué es": seis fichas (`.numeros` / `.numero-ficha`) con
+  cifras contrastadas en la documentación actual. Si se añaden más audios, vigilar el tamaño: GitHub
+  avisa por encima de 50 MB por fichero y rechaza más de 100 MB.
 - **Guías nuevas SAP-C03 y DVA-C03 (28/10/2026, tarea 0.9):** pasan a `vigente` con sus dominios,
   examen y servicios, y **se quitan SAP-C02 y DVA-C02** del sitio aunque aún se puedan presentar
   (decisión del usuario). Las preguntas de SAP-C02 pasan a SAP-C03 reclasificadas en los cinco
@@ -180,7 +187,9 @@ aws-cert-study/
 petición HTTP 200 el 2026-09-26); solo falta en servicios retirados sin documentación publicada
 (`elastic-transcoder`, `iot-events`), que enlazan a la búsqueda de docs.aws.amazon.com. `clave: true` marca los servicios clave (decisión "Servicios clave"). `kopi: true` marca los
 servicios que usa Kopi (su guía incluye "Así lo uso en Kopi") y alimenta el filtro "Usados en
-Kopi" (`kopi=1` en la URL). `icono: true`
+Kopi" (`kopi=1` en la URL). `audio: true` indica que existe `assets/audios/<id>.m4a`: la guía lo
+muestra antes de "Qué es", la tarjeta lleva el chip 🎧 y alimenta el filtro "🎧 Con audio" del grupo
+"Destacados" (`audio=1` en la URL). `icono: true`
 indica que existe `assets/iconos/servicios/<id>.svg`; si falta, se usa el icono de la categoría.
 Todas las categorías tienen icono en `assets/iconos/categorias/<id>.svg`. `resumen` se
 redacta al publicar el servicio en la Fase 2. `data/fuentes/<código>.txt` guarda la lista
@@ -940,3 +949,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-28 | **Prioridad 6: 4 guías más** (pedidas por el usuario): Resilience Hub, MemoryDB y Cloud WAN (SAP-C03, 6 preguntas cada una, una difícil en Resilience Hub y otra en Cloud WAN) y Private CA (DVA-C03, 6 preguntas). Siglas nuevas en el glosario: CRL, CSR, OCSP, PKI y SOP. El usuario confirma que las 57 preguntas de los 11 servicios fuera de todos los exámenes se quedan en sus guías, sin certificación, por si una certificación futura las incluye. |
 | 2026-10-28 | **Prioridad 6: 5 guías más** (pedidas por el usuario): Security Lake (6 preguntas), Verified Access (5), Verified Permissions (5), Local Zones (5) y Reserved Instances (6), todas de SAP-C03, con una pregunta difícil en cada una de las tres primeras. Sigla nueva en el glosario: SIEM. Quedan 6 de 19. |
 | 2026-10-28 | **Prioridad 6 completa** (pedido por el usuario): últimas 6 guías, todas de SAP-C03: Clean Rooms, Cost Categories, Data Lifecycle Manager, CodeCommit (sin aviso: volvió a disponibilidad general el 25/11/2025), Distro for OpenTelemetry y Data Transfer Terminal, con 5 preguntas cada una y una difícil en las seis. Sigla FIS añadida al glosario (faltaba en las guías de Fault Injection Service y Resilience Hub, ya corregidas). 177 de 177 servicios publicados; `sitemap.xml` con 183 URL. |
+| 2026-10-29 | **Audio y "Números interesantes" en S3** (pedido por el usuario): audio de NotebookLM antes de "Qué es", campo `audio` en `servicios.json` con chip 🎧 y filtro "🎧 Con audio" (`audio=1`) en "Destacados", y sección "Números interesantes" con seis fichas (durabilidad, disponibilidad, 50 TB, 5 GB por subida, 3.500/5.500 peticiones por prefijo, 10.000 buckets), contrastadas con la documentación de AWS. Nota sobre audios generados con IA en el aviso legal. Probado en navegador (filtro, chip, reproducción del audio, una columna sin desplazamiento horizontal a 375 px). |

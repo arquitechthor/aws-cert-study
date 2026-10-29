@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://arquitechthor.github.io/aws-cert-study/</loc><lastmod>2026-10-13</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/simulacro.html</loc><lastmod>2026-10-13</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/memoria.html</loc><lastmod>2026-10-13</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/empareja.html</loc><lastmod>2026-10-13</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/arquitecto.html</loc><lastmod>2026-10-13</lastmod></url>
-  <url><loc>https://arquitechthor.github.io/aws-cert-study/aviso-legal.html</loc><lastmod>2026-10-13</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/aviso-legal.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/acm.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/amazon-q.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/amplify.html</loc><lastmod>2026-10-28</lastmod></url>
@@ -140,7 +140,7 @@
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/reserved-instances.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/resilience-hub.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/route-53.html</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/s3.html</loc><lastmod>2026-10-28</lastmod></url>
+  <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/s3.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/s3-glacier.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/sagemaker-ai.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://arquitechthor.github.io/aws-cert-study/servicios/sam.html</loc><lastmod>2026-10-28</lastmod></url>

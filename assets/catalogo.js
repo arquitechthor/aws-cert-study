@@ -1,6 +1,6 @@
 /**
  * Portada: tarjetas de certificación y catálogo de servicios con filtros. El estado de los
- * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1) para poder
+ * filtros vive en la URL (?q=&cat=&estado=&cert=A,B&modo=union&clave=1&kopi=1&audio=1) para poder
  * compartir vistas filtradas. "finalizado" no es un estado del catálogo sino del progreso local del
  * usuario (localStorage), que se superpone a "publicado".
  */
@@ -19,6 +19,7 @@
     modoAyuda: $('f-modo-ayuda'),
     clave: $('f-clave'),
     kopi: $('f-kopi'),
+    audio: $('f-audio'),
     limpiar: $('f-limpiar'),
     resultados: $('resultados'),
     grid: $('service-grid'),
@@ -38,8 +39,10 @@
   const ESTADOS = ['publicado', 'finalizado', 'pendiente'];
   // Servicios clave ("clave": true en servicios.json): guía ampliada y preguntas difíciles.
   const TITULO_CLAVE = 'Servicio clave: guía ampliada con temas avanzados y preguntas difíciles';
+  // Servicios con recurso de audio ("audio": true): la guía lo muestra antes de "Qué es".
+  const TITULO_AUDIO = 'Tiene un recurso de audio';
 
-  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', clave: false, kopi: false };
+  const estado = { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', clave: false, kopi: false, audio: false };
   let datos = null;
   let progreso = {};
 
@@ -87,6 +90,7 @@
     estado.modo = p.get('modo') === 'union' ? 'union' : 'interseccion';
     estado.clave = p.get('clave') === '1';
     estado.kopi = p.get('kopi') === '1';
+    estado.audio = p.get('audio') === '1';
   }
 
   function escribirUrl() {
@@ -98,6 +102,7 @@
     if (estado.modo !== 'interseccion') p.set('modo', estado.modo);
     if (estado.clave) p.set('clave', '1');
     if (estado.kopi) p.set('kopi', '1');
+    if (estado.audio) p.set('audio', '1');
     const q = p.toString();
     history.replaceState(null, '', `${location.pathname}${q ? `?${q}` : ''}${location.hash}`);
   }
@@ -171,6 +176,11 @@
       sincronizarControles();
       aplicar();
     });
+    el.audio.addEventListener('click', () => {
+      estado.audio = !estado.audio;
+      sincronizarControles();
+      aplicar();
+    });
     el.modo.addEventListener('click', (ev) => {
       const btn = ev.target.closest('button[data-modo]');
       if (!btn) return;
@@ -179,7 +189,7 @@
       aplicar();
     });
     el.limpiar.addEventListener('click', () => {
-      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', clave: false, kopi: false });
+      Object.assign(estado, { q: '', cat: '', estado: '', certs: new Set(), modo: 'interseccion', clave: false, kopi: false, audio: false });
       sincronizarControles();
       aplicar();
     });
@@ -202,6 +212,7 @@
     el.modoAyuda.textContent = MODOS[estado.modo];
     el.clave.setAttribute('aria-pressed', String(estado.clave));
     el.kopi.setAttribute('aria-pressed', String(estado.kopi));
+    el.audio.setAttribute('aria-pressed', String(estado.audio));
   }
 
   // ── Filtrado y render ───────────────────────────────────────
@@ -212,7 +223,7 @@
       if (estado.cat && s.categoria !== estado.cat && !(s.categoriasAdicionales || []).includes(estado.cat)) return false;
       if (estado.estado === 'finalizado' && estadoDe(s) !== 'finalizado') return false;
       if (estado.estado && estado.estado !== 'finalizado' && s.estado !== estado.estado) return false;
-      const destacados = [[estado.clave, s.clave], [estado.kopi, s.kopi]].filter(([marcado]) => marcado);
+      const destacados = [[estado.clave, s.clave], [estado.kopi, s.kopi], [estado.audio, s.audio]].filter(([marcado]) => marcado);
       if (destacados.length) {
         const coincide = estado.modo === 'interseccion'
           ? destacados.every(([, tiene]) => tiene)
@@ -256,7 +267,8 @@
         <p class="service-cat cat-link">${categoriaHtml(cat)}</p>
         ${s.frase ? `<p class="service-resumen">${esc(s.frase)}</p>` : ''}
         <div class="chips">${s.clave ? `<span class="chip chip-clave" title="${esc(TITULO_CLAVE)}">★ Servicio clave</span>` : ''}${s.certificaciones.map((c) => `<span class="chip chip-cert">${esc(c)}</span>`).join('')}${s.kopi
-          ? '<span class="chip chip-kopi" title="Lo usa Kopi en producción">Kopi</span>' : ''}</div>
+          ? '<span class="chip chip-kopi" title="Lo usa Kopi en producción">Kopi</span>' : ''}${s.audio
+          ? `<span class="chip chip-audio" title="${esc(TITULO_AUDIO)}" aria-label="${esc(TITULO_AUDIO)}">🎧</span>` : ''}</div>
       </a>`;
   }
 

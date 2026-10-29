@@ -75,12 +75,51 @@
     </div>
 
     <article class="doc">
+      <figure class="audio-recurso">
+        <figcaption><span aria-hidden="true">🎧</span> <strong>Escucha el resumen en audio</strong> <span class="audio-nota">(conversación generada con NotebookLM)</span></figcaption>
+        <audio controls preload="none" src="../assets/audios/s3.m4a">Tu navegador no puede reproducir el audio: <a href="../assets/audios/s3.m4a">descárgalo</a>.</audio>
+      </figure>
+
 <h2 id="que-es">Qué es</h2>
       <p>Amazon Simple Storage Service (<abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>) guarda <strong>objetos</strong> (ficheros más sus
         metadatos) dentro de <strong>buckets</strong>, sin límite de capacidad total. Está diseñado para
         una durabilidad de <strong>11 nueves</strong> (99,999999999 %) y ofrece consistencia fuerte de
         lectura tras escritura. Es la base de lagos de datos, copias de seguridad, sitios estáticos y
         casi cualquier arquitectura en AWS.</p>
+
+      <h2 id="numeros">Números interesantes</h2>
+      <div class="numeros">
+        <div class="numero-ficha">
+          <p class="numero-valor">99,999999999 %</p>
+          <p class="numero-titulo">Durabilidad (11 nueves)</p>
+          <p>Si guardas 10 millones de objetos, cabe esperar perder uno cada 10.000 años. <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> lo consigue copiando cada objeto en al menos 3 <abbr class="sigla sigla-1" data-s="AZ" data-en="Availability Zone" data-es="zona de disponibilidad" tabindex="0">AZ<span class="sigla-exp"> (Availability Zone: zona de disponibilidad)</span></abbr>.</p>
+        </div>
+        <div class="numero-ficha">
+          <p class="numero-valor">99,99 %</p>
+          <p class="numero-titulo">Disponibilidad de diseño de S3 Standard</p>
+          <p>Menos de una hora de indisponibilidad al año. El <abbr class="sigla sigla-1" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA<span class="sigla-exp"> (Service Level Agreement: compromiso de disponibilidad)</span></abbr> que AWS compensa es algo menor (99,9 %), y baja en clases como One Zone-IA.</p>
+        </div>
+        <div class="numero-ficha">
+          <p class="numero-valor">50 TB</p>
+          <p class="numero-titulo">Tamaño máximo de un objeto</p>
+          <p>Unos 48,8 TiB, y solo con carga multiparte: hasta 10.000 partes de entre 5 MiB y 5 GiB cada una.</p>
+        </div>
+        <div class="numero-ficha">
+          <p class="numero-valor">5 GB</p>
+          <p class="numero-titulo">Máximo en una sola subida</p>
+          <p>Por encima hay que usar carga multiparte, y AWS la recomienda ya a partir de unos 100 MB.</p>
+        </div>
+        <div class="numero-ficha">
+          <p class="numero-valor">3.500 / 5.500</p>
+          <p class="numero-titulo">Escrituras / lecturas por segundo y prefijo</p>
+          <p>Como mínimo, por cada prefijo particionado. No hay límite de prefijos, así que repartir las claves multiplica el rendimiento.</p>
+        </div>
+        <div class="numero-ficha">
+          <p class="numero-valor">10.000</p>
+          <p class="numero-titulo">Buckets por cuenta (cuota por defecto)</p>
+          <p>Es una cuota ampliable hasta 1 millón. Dentro de cada bucket, el número de objetos es ilimitado.</p>
+        </div>
+      </div>
 
       <h2 id="conceptos">Conceptos clave</h2>
       <ul>
@@ -222,7 +261,7 @@
         <li><strong>Qué replica y qué no:</strong> solo los objetos nuevos desde que existe la regla (los anteriores, con <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>
           Batch Replication); los marcadores de borrado, solo si se activa su replicación (y nunca los que crea una regla
           de ciclo de vida); los borrados de una versión concreta, nunca, para protegerse de borrados maliciosos.</li>
-        <li><strong>Replication Time Control:</strong> replica el 99,99 % de los objetos en 15 minutos, con un <abbr class="sigla sigla-1" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA<span class="sigla-exp"> (Service Level Agreement: compromiso de disponibilidad)</span></abbr> del
+        <li><strong>Replication Time Control:</strong> replica el 99,99 % de los objetos en 15 minutos, con un <abbr class="sigla" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA</abbr> del
           99,9 % y métricas de lo pendiente. Es la respuesta cuando el escenario pide un <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr> de minutos medible. La
           replicación de marcadores de borrado no entra en ese <abbr class="sigla" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA</abbr>.</li>
         <li><strong>Replicación en los dos sentidos:</strong> dos reglas, una en cada bucket, más la sincronización de
