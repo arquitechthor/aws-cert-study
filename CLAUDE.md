@@ -78,6 +78,12 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
     missing from `siglas.json`, and the size limits `TOPES` that guarantee the PDF fits one page; if you
     change the PDF layout, re-test a scenario at every limit); write texts with
     bare acronyms (tooltips at render time) and check new layouts in a browser so no arrow crosses a node.
+- `assets/lectura.js` (copied from Tech Spider, adapted): "🔊 Escuchar la guía" button appended to
+  `.service-head` of every guide; reads the guide aloud with the browser's Web Speech API (no library,
+  no requests of our own), skipping `<pre>`, the NotebookLM audio, "Preguntas de práctica", "Fuentes"
+  and `[data-sin-lectura]`. Acronyms are spelled out unless listed in `LEER` in
+  `scripts/revisar_texto.py` (exported as `leer` in `data/siglas.json`). Speed and voice in
+  `apuntes-aws.lectura`. Every guide loads it after `siglas.js` (see the template).
 - `servicio.html` + `assets/servicio.js`: generic "Próximamente disponible" page
   (`?id=<id>`), used for every service with `estado: "pendiente"`. It redirects to
   `servicios/<id>.html` once the service is `publicado`.

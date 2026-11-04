@@ -621,12 +621,27 @@ def revisar_preguntas(sid, escribir):
     return n
 
 
+# Cómo se pronuncian en la lectura en voz alta (assets/lectura.js) las siglas que se dicen como
+# palabra; las demás se deletrean ("VPC" → "V P C"). Escrito para una voz en español.
+LEER = {
+    'ACID': 'ácid', 'CAPTCHA': 'cápcha', 'COBOL': 'cóbol', 'CORS': 'cors', 'CUDA': 'cuda',
+    'DAX': 'dax', 'DKIM': 'di kim', 'DMARC': 'di marc', 'FIFO': 'fifo', 'FOCUS': 'fócus',
+    'GENEVE': 'yeneve', 'GraphRAG': 'graf rag', 'IaC': 'i a ce', 'IoT': 'i o te', 'JSON': 'yéison',
+    'LAMP': 'lamp', 'LoRaWAN': 'lora uan', 'MLOps': 'eme ele ops', 'NACL': 'nákel', 'NAT': 'nat',
+    'OAuth': 'o auz', 'OWASP': 'óuasp', 'PKCE': 'píxi', 'POSIX': 'pósix', 'RADIUS': 'radius',
+    'RAG': 'rag', 'RAM': 'ram', 'REST': 'rest', 'SaaS': 'sas', 'SAM': 'sam', 'SAML': 'sámel',
+    'SCIM': 'skim', 'SIEM': 'sim', 'SPICE': 'spáis', 'STOMP': 'stomp', 'VoIP': 'voip',
+    'WAF': 'uaf', 'WebRTC': 'web erre te ce', 'YAML': 'yámel',
+}
+
+
 def exportar_glosario(escribir):
     """data/siglas.json: el glosario para el quiz (mismas reglas de detección que aquí)."""
     datos = {
         'siglas': {tok: {'en': eng, 'es': gloss} for tok, (eng, gloss) in sorted(G.items())},
         'porPagina': {tok: {pag: {'en': e, 'es': s} for pag, (e, s) in ops.items()} for tok, ops in POR_PAGINA.items()},
         'sufijos': SUFIJOS,
+        'leer': {tok: LEER[tok] for tok in sorted(LEER) if tok in G},
     }
     ruta = os.path.join(REPO, 'data', 'siglas.json')
     nuevo = json.dumps(datos, indent=1, ensure_ascii=False) + '\n'

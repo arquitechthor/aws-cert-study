@@ -803,6 +803,26 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 .clas-form-fila .input { flex: 1; min-width: 0; }
 .clas-error:empty { display: none; }
 
+/* ── Lectura en voz alta (assets/lectura.js) ────────────── */
+.btn[hidden] { display: none; }
+.leyendo { background: rgba(34, 211, 238, 0.10); box-shadow: 0 0 0 6px rgba(34, 211, 238, 0.10); border-radius: 4px; }
+.lectura-barra {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 20px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: var(--surface); border-top: 1px solid var(--border-strong);
+  box-shadow: 0 -10px 30px -10px rgba(0, 0, 0, 0.6);
+}
+.lectura-botones, .lectura-ajustes { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.lectura-botones .btn { padding: 8px 12px; }
+.lectura-pos { font-size: 13px; min-width: 4.5em; }
+.lectura-ajustes label { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); }
+.lectura-ajustes select {
+  max-width: 220px; padding: 6px 8px; border-radius: 8px; font: inherit; font-size: 13px;
+  background: var(--surface-2); color: var(--text); border: 1px solid var(--border-strong);
+}
+body.con-lectura footer { padding-bottom: 190px; }
+
 /* ── Footer ──────────────────────────────────────────────── */
 footer { padding: 36px 0; border-top: 1px solid var(--border); }
 .footer-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
