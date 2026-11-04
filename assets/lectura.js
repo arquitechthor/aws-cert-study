@@ -38,9 +38,14 @@
   }
 
   // ── Voces ─────────────────────────────────────────────────────────────────────────────
+  /**
+   * Voces en español, la predeterminada primero: las de Google (en Chrome suenan mejor, aunque son en
+   * línea; decisión del usuario, 04/11/2026), después las de España y después las locales. La voz que
+   * el usuario elija en el selector se recuerda y manda sobre este orden.
+   */
   function vocesEs() {
-    return voz.getVoices().filter((v) => /^es([-_]|$)/i.test(v.lang))
-      .sort((a, b) => (b.localService - a.localService) || (/es[-_]ES/i.test(b.lang) - /es[-_]ES/i.test(a.lang)));
+    const puntos = (v) => (/google/i.test(v.name) ? 4 : 0) + (/es[-_]ES/i.test(v.lang) ? 2 : 0) + (v.localService ? 1 : 0);
+    return voz.getVoices().filter((v) => /^es([-_]|$)/i.test(v.lang)).sort((a, b) => puntos(b) - puntos(a));
   }
 
   /** Espera a que el navegador cargue la lista de voces (en Chrome llega después, asíncrona). */

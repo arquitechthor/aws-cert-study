@@ -15,7 +15,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   navegador: gratis, sin librerías ni peticiones propias. Lee nombre, "En una frase" y el texto por bloques
   frase a frase con resaltado; se salta `<pre>`, el audio de NotebookLM, "Preguntas de práctica",
   "Fuentes" y `[data-sin-lectura]`. Barra fija (anterior/pausar/siguiente/parar, velocidad, voz en español
-  con las no locales marcadas "(en línea)"), preferencias en `apuntes-aws.lectura`. Pronunciación de siglas:
+  con las no locales marcadas "(en línea)"; Google primero por decisión del usuario el 04/11/2026), preferencias en `apuntes-aws.lectura`. Pronunciación de siglas:
   diccionario `LEER` de `scripts/revisar_texto.py`, exportado como `leer` en `data/siglas.json`; las demás
   se deletrean. Pausa el audio de NotebookLM al empezar y se pausa si este arranca. Pendiente de que el
   usuario lo pruebe en producción.
@@ -911,6 +911,7 @@ guía donde aparece. Coste muy bajo.
 
 | Fecha | Qué se hizo |
 |---|---|
+| 2026-11-04 | Voz de Google como predeterminada de "Escuchar la guía" (igual que en Tech Spider, petición del usuario); la elegida en el selector sigue mandando. Aviso legal actualizado. |
 | 2026-11-04 | **Lectura en voz alta** en las 177 guías y la plantilla (`assets/lectura.js`, de Tech Spider): Web Speech API, barra de control, `apuntes-aws.lectura`, diccionario `LEER` → `leer` en `data/siglas.json`, aviso legal (voces en línea). |
 | 2026-09-25 | Plan creado. Decisiones iniciales: 3 certificaciones, GitHub Pages, CC BY-SA 4.0, nombre `aws-cert-study`. |
 | 2026-09-25 | Fase 0: repo renombrado, `.mcp.json`, guías verificadas (SAP-C02 se retira y SAP-C03 entra como certificación aparte), `servicios.json` (155), `categorias.json` (20), `certificaciones.json`, `data/fuentes/` y cola priorizada. |
