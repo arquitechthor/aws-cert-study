@@ -44,7 +44,7 @@
 <section class="page-section" style="padding-top:40px">
   <div class="container doc">
     <h1>Aviso legal, condiciones de uso y privacidad</h1>
-    <p class="text-faint">Última actualización: 04/11/2026</p>
+    <p class="text-faint">Última actualización: 06/11/2026</p>
 
     <p>Al usar este sitio aceptas estas condiciones. Si no estás de acuerdo con ellas, no lo uses.</p>
 
@@ -157,7 +157,8 @@
     <h2 id="privacidad">10. Privacidad</h2>
     <ul>
       <li><strong>No se usan cookies</strong>, analítica, píxeles de seguimiento, formularios ni
-        servicios de terceros que recojan datos.</li>
+        servicios de terceros que recojan datos. Solo si entras con tu cuenta Kopi (ver más abajo) el
+        sitio se comunica con Kopi para guardar tu progreso.</li>
       <li>Algunas funciones pueden guardar datos en el <strong>almacenamiento local de tu
         navegador</strong> (<code>localStorage</code>): tu progreso de estudio (qué preguntas de
         práctica has acertado, cuáles fallaste para repasarlas y qué temas has finalizado, con la
@@ -166,9 +167,26 @@
         última configuración usada y la clasificación de los 10 mejores tiempos de cada tablero,
         con el nombre que escribas al entrar en ella, la fecha y el porcentaje de acierto; y en el
         juego Arquitecto, el último escenario elegido y qué escenarios has resuelto; y la velocidad y la voz elegidas para la lectura en voz alta. Puedes borrar el progreso y los simulacros desde
-        <a href="progreso.html">Mi progreso</a>. No hay cuentas: el progreso solo existe en ese
-        navegador y se pierde si borras sus datos o cambias de dispositivo. Esos datos no salen de tu dispositivo, no se envían a ningún
-        servidor y puedes borrarlos cuando quieras desde la configuración de tu navegador.</li>
+        <a href="progreso.html">Mi progreso</a>. Si no entras con una cuenta Kopi, el progreso solo existe
+        en ese navegador y se pierde si borras sus datos o cambias de dispositivo; esos datos no salen
+        de tu dispositivo, no se envían a ningún servidor y puedes borrarlos cuando quieras desde la
+        configuración de tu navegador.</li>
+      <li><strong>Cuenta Kopi (opcional)</strong>, en <a href="cuenta.html">Tu cuenta Kopi</a>: si
+        tienes cuenta en Kopi Tools, el proyecto personal del mismo autor, puedes entrar con ella para
+        guardar también en Kopi tu progreso de estudio y tus simulacros (cada dato con la hora de su
+        último cambio) y tenerlos en cualquier dispositivo. Las preferencias y récords de los juegos y
+        la configuración de la lectura no se suben. El inicio de sesión se hace en la página de Kopi
+        (servicio Amazon Cognito de AWS, en la Unión Europea), que usa sus propias cookies de sesión; tu
+        contraseña nunca pasa por esta web. Esta web guarda en el almacenamiento local de tu navegador
+        (clave <code>kopi.estudio.sesion</code>, compartida con
+        <a href="https://arquitechthor.github.io/arquitechthor-spider/">Tech Spider</a>, del mismo autor y
+        en el mismo dominio) tu correo y los permisos de acceso, que solo sirven para leer y guardar tu
+        progreso de estudio, y en <code>apuntes-aws.sincronizacion</code> la hora del último cambio de
+        cada dato. El progreso se guarda en la infraestructura de Kopi en AWS (región de España)
+        asociado a tu cuenta, no se comparte con nadie y lo puedes borrar desde
+        <a href="cuenta.html">Tu cuenta Kopi</a>; si se elimina tu cuenta Kopi, se borra con ella. El
+        resto del tratamiento de tu cuenta se rige por la
+        <a href="https://kopitools.link/legal/privacidad" target="_blank" rel="noopener">política de privacidad de Kopi Tools</a>.</li>
       <li><strong>Lectura en voz alta</strong> ("Escuchar la guía"): usa las voces de tu navegador o
         de tu sistema operativo. Con una voz local el texto no sale de tu dispositivo. Algunos
         navegadores ofrecen además voces en línea (en el selector aparecen con "(en línea)", como las

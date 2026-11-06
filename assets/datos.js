@@ -99,6 +99,15 @@
     const todo = leerProgreso();
     if (entrada) todo[id] = entrada; else delete todo[id];
     try { localStorage.setItem(CLAVE_PROGRESO, JSON.stringify(todo)); } catch { /* sin almacenamiento: no se guarda */ }
+    avisarGuardado('progreso');
+  }
+
+  /**
+   * Aviso para assets/cuenta.js (cuenta Kopi opcional): quien escribe "progreso" o "simulacros"
+   * en localStorage lo llama después, y cuenta.js sube el cambio a la cuenta si hay sesión.
+   */
+  function avisarGuardado(clave) {
+    document.dispatchEvent(new CustomEvent('aws:guardado', { detail: clave }));
   }
 
   function estaFinalizado(id, progreso = leerProgreso()) {
@@ -116,5 +125,5 @@
   }
 
   window.AwsDatos = { url, json, cargar, esc, urlServicio, iconoServicio, iconoCategoria, categoriaHtml, urlCatalogo, urlDocumentacion,
-    leerProgreso, guardarProgreso, estaFinalizado, formatoFecha };
+    leerProgreso, guardarProgreso, estaFinalizado, formatoFecha, avisarGuardado };
 })();

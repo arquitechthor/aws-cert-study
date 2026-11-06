@@ -54,6 +54,7 @@
 
   function escribirGuardado(d) {
     try { localStorage.setItem(CLAVE, JSON.stringify(d)); } catch { /* sin almacenamiento */ }
+    window.AwsDatos.avisarGuardado('simulacros');
   }
 
   // ── Utilidades ────────────────────────────────────────────────────────────────────────

@@ -5,7 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Repository context
 
 `aws-cert-study` is one of the independent git repos in the `kopi/` workspace (see
-`../CLAUDE.md`). It has **no runtime dependency** on the shared Kopi AWS backend: it is a
+`../CLAUDE.md`). Its only (optional) runtime dependency on the shared Kopi AWS backend is saving
+study progress in the user's Kopi account (`assets/cuenta.js`, below); otherwise it is a
 static study site for AWS certifications, published with **GitHub Pages** from `main` / root
 at `https://arquitechthor.github.io/aws-cert-study/`. Every push to `main` redeploys it (no
 workflow file; Pages builds the branch directly, and `.nojekyll` makes it serve files as-is).
@@ -35,11 +36,22 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   plays `assets/audios/<id>.m4a` (NotebookLM summary) right before "Qué es" and whose card shows a
   🎧 chip (S3 so far; it also has a "Números interesantes" section of `.numero-ficha` cards). Certifications with
   `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
-- Study progress is client-only: `AwsDatos.leerProgreso()/guardarProgreso()` store, per service
+- Study progress lives in the browser (and optionally in the Kopi account, see below): `AwsDatos.leerProgreso()/guardarProgreso()` store, per service
   in `localStorage` (`apuntes-aws.progreso`), the correct answers and the `fallos` (questions whose
   last attempt was wrong, i.e. the review queue). `assets/preguntas.js` writes it from both the
   guides and the simulacro; a published service whose questions are all answered correctly shows
   as "Finalizado" in the catalog. It is derived in the browser, never stored in `servicios.json`.
+- **Optional Kopi account** (same as Tech Spider, whose `docs/PLAN.md` 4.5.1 is the reference):
+  `assets/cuenta.js` (copied from `../arquitechthor-spider/assets/cuenta.js`; only the `SITIO` block
+  differs, keep the rest identical), `cuenta.html` (OAuth redirect URI and account page) and
+  `assets/pagina-cuenta.js`. Login with Cognito's managed login page (Authorization Code + PKCE, no
+  library); backend `/study/aws-cert-study/progress` in `../../kopi/kopi-media-admin`, whose App Client
+  and authorizer are **only** for these routes. Synced keys: `apuntes-aws.progreso` and
+  `apuntes-aws.simulacros` (intentos are merged on the first sync); whoever writes them must call
+  `AwsDatos.avisarGuardado('progreso'|'simulacros')` afterwards; `aws:sincronizado` repaints the catalog
+  and Mi progreso. Session in `kopi.estudio.sesion`, shared with Tech Spider (same origin). Every page
+  that loads `datos.js` loads `cuenta.js` right after it. Disabled while `CONFIG.dominio`/`clientId`
+  are empty.
 - `assets/preguntas.js` (`window.AwsPreguntas`): the shared question component (render, read,
   grade, mark, solution, Noria text, progress) for the four types `unica`, `multiple`, `ordenar`
   and `emparejar`, plus the ⚠ "Pregunta difícil" tag (`"dificil": true`) and per-certification

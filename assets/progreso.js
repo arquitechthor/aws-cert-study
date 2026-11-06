@@ -153,9 +153,15 @@
         localStorage.removeItem(CLAVE_PROGRESO);
         localStorage.removeItem(CLAVE_SIMULACROS);
       } catch { /* sin almacenamiento */ }
+      // Con cuenta Kopi, el borrado también se sincroniza (gana el cambio más reciente).
+      window.AwsDatos.avisarGuardado('progreso');
+      window.AwsDatos.avisarGuardado('simulacros');
       iniciar();
     });
   }
+
+  // Progreso traído de la cuenta Kopi (assets/cuenta.js).
+  document.addEventListener('aws:sincronizado', () => { iniciar().catch(console.error); });
 
   iniciar().catch((err) => {
     console.error(err);

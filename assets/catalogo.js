@@ -303,6 +303,11 @@
       progreso = leerProgreso();
       aplicar();
     });
+    // Progreso traído de la cuenta Kopi (assets/cuenta.js).
+    document.addEventListener('aws:sincronizado', () => {
+      progreso = leerProgreso();
+      aplicar();
+    });
   }).catch((err) => {
     console.error(err);
     const msg = '<p class="empty-state">No se pudo cargar el catálogo. Si abriste el archivo directamente, sírvelo con <code>npx serve .</code> o <code>python -m http.server</code>.</p>';
