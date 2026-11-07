@@ -123,6 +123,14 @@ p { color: var(--text-muted); margin: 0 0 16px; }
 .nav-links a { color: var(--text-muted); font-size: 14px; font-weight: 500; }
 .nav-links a:hover, .nav-links a[aria-current] { color: var(--text); text-decoration: none; }
 .nav-toggle { display: none; }
+/* Menú largo (8 entradas): sin cortar palabras y más compacto entre 761 y 1040 px. */
+.nav-brand, .nav-links a, .nav-menu-btn { white-space: nowrap; }
+@media (min-width: 761px) and (max-width: 1040px) {
+  .nav-inner { gap: 16px; }
+  .nav-links { gap: 12px; }
+  .nav-links a, .nav-menu-btn { font-size: 13px; }
+}
+@media (min-width: 761px) and (max-width: 860px) { .nav-links { gap: 9px; } }
 
 /* Submenú desplegable ("Juegos"), lo abre assets/nav.js. */
 .nav-menu { position: relative; }

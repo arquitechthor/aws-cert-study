@@ -50,7 +50,10 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   `apuntes-aws.simulacros` (intentos are merged on the first sync); whoever writes them must call
   `AwsDatos.avisarGuardado('progreso'|'simulacros')` afterwards; `aws:sincronizado` repaints the catalog
   and Mi progreso. Session in `kopi.estudio.sesion`, shared with Tech Spider (same origin). Every page
-  that loads `datos.js` loads `cuenta.js` right after it. Disabled while `CONFIG.dominio`/`clientId`
+  that loads `datos.js` loads `cuenta.js` right after it (all pages do, including `aviso-legal.html` and
+  `clasificacion.html`): `cuenta.js` adds the nav link to `cuenta.html` before "Sobre mí" ("Guardar
+  progreso" / "Mi cuenta"). With 8 entries the nav gets compact (13px, smaller gaps, `nowrap`) between
+  761 and 1040px in `styles.css`. Disabled while `CONFIG.dominio`/`clientId`
   are empty.
 - `assets/preguntas.js` (`window.AwsPreguntas`): the shared question component (render, read,
   grade, mark, solution, Noria text, progress) for the four types `unica`, `multiple`, `ordenar`
