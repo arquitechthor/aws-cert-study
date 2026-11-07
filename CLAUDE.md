@@ -21,7 +21,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 `kopi-web`, whose palette and base components were copied into `styles.css`).
 
 - Every page shares the same `<nav>` and closing footer line (`.footer-sitios`: Kopi Tools ·
-  Apuntes AWS · Tech Spider · Kopi Chess · Prompt Quest · Sobre mí) as `kopi-web` and the personal site ("Inicio" first, "Sobre mí" last, no
+  Apuntes AWS · Tech Spider · Kopi Chess · Prompt Quest · Arquitechthor) as `kopi-web` and the personal site ("Inicio" first, "Arquitechthor" last, no
   call-to-action button, active link via `aria-current` set by `assets/nav.js`): policy "Mismo
   menú y pie en las tres webs" in `../kopi-docs/politicas.md`. The catalog search also matches
   each service's `frase` (name matches are listed first).
@@ -51,7 +51,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   `AwsDatos.avisarGuardado('progreso'|'simulacros')` afterwards; `aws:sincronizado` repaints the catalog
   and Mi progreso. Session in `kopi.estudio.sesion`, shared with Tech Spider (same origin). Every page
   that loads `datos.js` loads `cuenta.js` right after it (all pages do, including `aviso-legal.html` and
-  `clasificacion.html`): `cuenta.js` adds the nav link to `cuenta.html` before "Sobre mí" ("Guardar
+  `clasificacion.html`): `cuenta.js` adds the nav link to `cuenta.html` before "Arquitechthor" ("Guardar
   progreso" / "Mi cuenta"). With 8 entries the nav gets compact (13px, smaller gaps, `nowrap`) between
   761 and 1040px in `styles.css`. Disabled while `CONFIG.dominio`/`clientId`
   are empty.
