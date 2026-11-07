@@ -10,7 +10,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
-- **Cuenta Kopi (06/11/2026, decisión del usuario), pendiente del bootstrap en AWS:** el progreso
+- **Cuenta Kopi (06/11/2026, decisión del usuario), activa desde el 07/11/2026** (bootstrap hecho y `CONFIG` relleno; falta la prueba real con login, ver la lista en el PLAN de Tech Spider): el progreso
   (`apuntes-aws.progreso`) y los simulacros (`apuntes-aws.simulacros`) se pueden guardar también en la
   cuenta Kopi, igual que en Tech Spider (su `docs/PLAN.md` 4.5.1 es la referencia; allí está la lista de
   pasos para terminarlo). `assets/cuenta.js` (copiado de Tech Spider; solo cambia el bloque `SITIO`),
@@ -921,6 +921,7 @@ guía donde aparece. Coste muy bajo.
 | Fecha | Qué se hizo |
 |---|---|
 | 2026-11-06 | **Cuenta Kopi opcional** (decisión del usuario, misma estrategia que Tech Spider: login gestionado de Cognito con PKCE, App Client y authorizer propios en Kopi). `assets/cuenta.js`, `cuenta.html`, `pagina-cuenta.js`; `AwsDatos.avisarGuardado()` desde `guardarProgreso`, `simulacro.js` y el borrado de Mi progreso; catálogo y Mi progreso se repintan al sincronizar; unión de simulacros por intentos; aviso legal. Pendiente del bootstrap en AWS y de rellenar `CONFIG`. |
+| 2026-11-07 | **Cuenta Kopi activada:** bootstrap `bootstrap-study-progress.ps1` ejecutado (reutiliza el dominio existente del User Pool, `eu-south-2yunp5zgur`, login gestionado v2) y `CONFIG` de `assets/cuenta.js` relleno. Falta la prueba con login real. |
 | 2026-11-04 | Voz de Google como predeterminada de "Escuchar la guía" (igual que en Tech Spider, petición del usuario); la elegida en el selector sigue mandando. Aviso legal actualizado. |
 | 2026-11-04 | **Lectura en voz alta** en las 177 guías y la plantilla (`assets/lectura.js`, de Tech Spider): Web Speech API, barra de control, `apuntes-aws.lectura`, diccionario `LEER` → `leer` en `data/siglas.json`, aviso legal (voces en línea). |
 | 2026-09-25 | Plan creado. Decisiones iniciales: 3 certificaciones, GitHub Pages, CC BY-SA 4.0, nombre `aws-cert-study`. |
