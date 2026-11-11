@@ -10,6 +10,14 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
+- **Audios desde Kopi (11/11/2026, decisión del usuario):** los resúmenes en audio nuevos **no se suben
+  al repo** (con 177 servicios se superaría el límite de GitHub). Son recursos públicos de un tema de
+  Conocimiento de Kopi y se leen de su API pública al pulsar "▶ Escuchar" (`assets/audio-kopi.js`,
+  enlace temporal de S3 que se renueva si caduca). El primero es **CodeArtifact**; S3 conserva su
+  fichero local. Los demás audios del tema AWS de Kopi tratan la SAP-C02, ya retirada, y no se usan.
+  Para añadir otro: subirlo a un tema de Conocimiento en Kopi Media Admin, copiar el id del recurso al
+  `data-kopi` de la guía, poner `"audio": true` en `servicios.json` y ejecutar
+  `python scripts/importar_aws.py` en Tech Spider (allí sale como insignia 🎧). Aviso legal actualizado.
 - **Mi telaraña de AWS (11/11/2026, decisión del usuario), publicada:** en Mi progreso (`progreso.html`,
   sección `#mi-telarana`) se dibujan todos los servicios con AWS en el centro, las categorías en el primer
   anillo y sus servicios en el segundo, en verde (finalizado ✓), ámbar (en curso) o gris (sin empezar).
@@ -931,6 +939,7 @@ guía donde aparece. Coste muy bajo.
 
 | Fecha | Qué se hizo |
 |---|---|
+| 2026-11-11 | **Audio de CodeArtifact desde Kopi** (decisión del usuario: leer los audios de la API pública de Kopi en vez de subirlos): `assets/audio-kopi.js`, guía de CodeArtifact, `"audio": true`, estilos y aviso legal. Probado con la API simulada (desde localhost no hay CORS), también el caso de error. |
 | 2026-11-11 | **Mi telaraña de AWS** en Mi progreso (decisión del usuario): `assets/telarana.js` copiado de Tech Spider, árbol AWS → categorías → servicios coloreado por progreso, `?cat=`, teclado (flechas, Esc), enlace desde el catálogo, estilos en `styles.css`, aviso legal (Tech Spider lee el progreso). Probado en Chrome sin ventana a 1300 y 520 px. |
 | 2026-11-06 | **Cuenta Kopi opcional** (decisión del usuario, misma estrategia que Tech Spider: login gestionado de Cognito con PKCE, App Client y authorizer propios en Kopi). `assets/cuenta.js`, `cuenta.html`, `pagina-cuenta.js`; `AwsDatos.avisarGuardado()` desde `guardarProgreso`, `simulacro.js` y el borrado de Mi progreso; catálogo y Mi progreso se repintan al sincronizar; unión de simulacros por intentos; aviso legal. Pendiente del bootstrap en AWS y de rellenar `CONFIG`. |
 | 2026-11-07 | **Cuenta Kopi activada:** bootstrap `bootstrap-study-progress.ps1` ejecutado (reutiliza el dominio existente del User Pool, `eu-south-2yunp5zgur`, login gestionado v2) y `CONFIG` de `assets/cuenta.js` relleno. Falta la prueba con login real. |

@@ -518,6 +518,7 @@
     "nombre": "AWS CodeArtifact",
     "categoria": "herramientas-desarrolladores",
     "icono": true,
+    "audio": true,
     "certificaciones": [
       "DVA-C03"
     ],

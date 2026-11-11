@@ -139,8 +139,11 @@
     <p>Los apuntes resumen y explican con palabras propias. No se copian textos de la
       documentación de AWS ni de otras fuentes.</p>
     <p>Algunas guías incluyen un resumen en audio (🎧) generado con inteligencia artificial
-      (NotebookLM) a partir de los apuntes. Se sirve desde este mismo sitio, sin peticiones a terceros,
-      y puede contener imprecisiones: ante cualquier duda, manda el texto de la guía y la documentación
+      (NotebookLM) a partir de los apuntes. Algunos se sirven desde este mismo sitio; otros, desde
+      Kopi Tools, el proyecto personal del mismo autor: <strong>solo cuando pulsas «Escuchar»</strong>, tu
+      navegador pide el audio a la API pública de Kopi (<code>api.kopitools.link</code>) y lo descarga de su
+      almacenamiento en AWS (Amazon S3, región de España). Esa petición no lleva ningún dato tuyo más allá
+      de los que envía cualquier navegador (dirección IP, navegador). Pueden contener imprecisiones: ante cualquier duda, manda el texto de la guía y la documentación
       oficial.</p>
 
     <h2 id="retirada">8. Solicitudes de retirada</h2>
@@ -157,8 +160,9 @@
     <h2 id="privacidad">10. Privacidad</h2>
     <ul>
       <li><strong>No se usan cookies</strong>, analítica, píxeles de seguimiento, formularios ni
-        servicios de terceros que recojan datos. Solo si entras con tu cuenta Kopi (ver más abajo) el
-        sitio se comunica con Kopi para guardar tu progreso.</li>
+        servicios de terceros que recojan datos. El sitio solo se comunica con Kopi en dos casos: si
+        entras con tu cuenta Kopi (ver más abajo), para guardar tu progreso, y cuando pulsas «Escuchar» en
+        un resumen en audio servido desde Kopi (ver la sección 7), para descargarlo.</li>
       <li>Algunas funciones pueden guardar datos en el <strong>almacenamiento local de tu
         navegador</strong> (<code>localStorage</code>): tu progreso de estudio (qué preguntas de
         práctica has acertado, cuáles fallaste para repasarlas y qué temas has finalizado, con la

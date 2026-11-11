@@ -366,6 +366,9 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 .audio-recurso figcaption { font-size: 14.5px; color: var(--text-muted); margin-bottom: 10px; }
 .audio-recurso .audio-nota { color: var(--text-faint); font-size: 13px; }
 .audio-recurso audio { display: block; width: 100%; }
+.audio-recurso audio[hidden] { display: none; }
+.audio-recurso .audio-aviso { margin: 8px 0 0; font-size: 13.5px; color: var(--amber); }
+.audio-recurso .audio-aviso:empty { display: none; }
 
 /* Fichas de "Números interesantes". */
 .numeros { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin: 0 0 16px; }
