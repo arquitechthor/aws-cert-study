@@ -10,6 +10,17 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
+- **Mi telaraña de AWS (11/11/2026, decisión del usuario), publicada:** en Mi progreso (`progreso.html`,
+  sección `#mi-telarana`) se dibujan todos los servicios con AWS en el centro, las categorías en el primer
+  anillo y sus servicios en el segundo, en verde (finalizado ✓), ámbar (en curso) o gris (sin empezar).
+  Una categoría se pone verde cuando están todos finalizados. Al pulsar una categoría se ve de cerca
+  (`?cat=<categoria>`) y al pulsar un servicio se abre su guía. `assets/telarana.js` (`AwsTelarana`)
+  está **copiado** de Tech Spider (solo dibuja): un arreglo en el dibujo hay que llevarlo a los dos
+  repos. El catálogo enlaza a ella. Parte del plan conjunto con Tech Spider (su `docs/PLAN.md` 5.6): ahora
+  Spider tiene como nodos `externo` los 177 servicios con estas mismas categorías y lee, sin modificarlo,
+  `apuntes-aws.progreso` para marcarlos (aviso legal actualizado en las dos webs). **Si se publica un
+  servicio nuevo o cambia una categoría**, hay que ejecutar `python scripts/importar_aws.py` en Tech
+  Spider (su validador avisa de los que faltan). Pendiente de que el usuario lo pruebe en producción.
 - **Cuenta Kopi (06/11/2026, decisión del usuario), activa desde el 07/11/2026** (bootstrap hecho y `CONFIG` relleno; falta la prueba real con login, ver la lista en el PLAN de Tech Spider): el progreso
   (`apuntes-aws.progreso`) y los simulacros (`apuntes-aws.simulacros`) se pueden guardar también en la
   cuenta Kopi, igual que en Tech Spider (su `docs/PLAN.md` 4.5.1 es la referencia; allí está la lista de
@@ -920,6 +931,7 @@ guía donde aparece. Coste muy bajo.
 
 | Fecha | Qué se hizo |
 |---|---|
+| 2026-11-11 | **Mi telaraña de AWS** en Mi progreso (decisión del usuario): `assets/telarana.js` copiado de Tech Spider, árbol AWS → categorías → servicios coloreado por progreso, `?cat=`, teclado (flechas, Esc), enlace desde el catálogo, estilos en `styles.css`, aviso legal (Tech Spider lee el progreso). Probado en Chrome sin ventana a 1300 y 520 px. |
 | 2026-11-06 | **Cuenta Kopi opcional** (decisión del usuario, misma estrategia que Tech Spider: login gestionado de Cognito con PKCE, App Client y authorizer propios en Kopi). `assets/cuenta.js`, `cuenta.html`, `pagina-cuenta.js`; `AwsDatos.avisarGuardado()` desde `guardarProgreso`, `simulacro.js` y el borrado de Mi progreso; catálogo y Mi progreso se repintan al sincronizar; unión de simulacros por intentos; aviso legal. Pendiente del bootstrap en AWS y de rellenar `CONFIG`. |
 | 2026-11-07 | **Cuenta Kopi activada:** bootstrap `bootstrap-study-progress.ps1` ejecutado (reutiliza el dominio existente del User Pool, `eu-south-2yunp5zgur`, login gestionado v2) y `CONFIG` de `assets/cuenta.js` relleno. Falta la prueba con login real. |
 | 2026-11-04 | Voz de Google como predeterminada de "Escuchar la guía" (igual que en Tech Spider, petición del usuario); la elegida en el selector sigue mandando. Aviso legal actualizado. |

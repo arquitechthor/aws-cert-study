@@ -63,7 +63,12 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 - `simulacro.html` + `assets/simulacro.js`: practice exam per certification (questions spread by
   domain weight, full/half/quick length with the real exam's time, flag for review, grading by
   domain, history in `localStorage` `apuntes-aws.simulacros`) and the review of failed questions
-  (`?repaso=1[&cert=]`). `progreso.html` + `assets/progreso.js`: "Mi progreso" summary (noindex).
+  (`?repaso=1[&cert=]`). `progreso.html` + `assets/progreso.js`: "Mi progreso" summary (noindex),
+  including **Mi telaraña de AWS** (`#mi-telarana`, `?cat=<categoria>`): every published service by
+  category drawn with `assets/telarana.js` (`AwsTelarana`, a **copy** of Tech Spider's drawer: fix the
+  drawing in both repos) and colored by progress. Tech Spider (same origin) has the 177 services as
+  `externo` nodes and reads `apuntes-aws.progreso` read-only: after publishing a service or changing a
+  category, run `python scripts/importar_aws.py` in `../arquitechthor-spider`.
   Exam length and duration come from `examen` in `certificaciones.json`.
 - Games, grouped in the nav under a "Juegos" dropdown (`.nav-menu`, opened by `assets/nav.js`):
   - `memoria.html` + `assets/memoria.js`: memory game; two service cards match when they share the
