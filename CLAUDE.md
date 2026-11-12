@@ -183,6 +183,27 @@ horizontal scroll).
 5. Run `python scripts/generar_sitemap.py`, serve locally, check the page and quiz, then commit
    and push to `main` (no PRs) and tick the service in the `PLAN.md` queue.
 
+## Workflow: embedding a Kopi resource
+
+The user gives a Kopi Conocimiento resource ID and the service guide to embed it in. It is not always an
+audio: resources can be `AUDIO`, `VIDEO`, `IMAGE`, `RICH_TEXT` (html + preguntas) or a URL. Audios are the
+ones with `tipo: "AUDIO"`.
+
+1. Always check the resource first: `curl https://api.kopitools.link/public/knowledge/resources/<id>`
+   (public, no auth). Read `tipo`, `title` and `originalName`, and confirm they match the requested
+   service. If they don't match, or the call fails, stop and tell the user before changing anything.
+2. If `tipo` is `AUDIO`:
+   - In `servicios/<id>.html`, add the `<figure class="audio-recurso" data-kopi="<resource id>">` block
+     (copy it from `servicios/codeartifact.html` or `bedrock.html`) right before `<h2 id="que-es">`, and
+     add `<script src="../assets/audio-kopi.js" defer></script>` after `lectura.js`.
+   - Add `"audio": true` to the service in `data/servicios.json`. Add the service to the list of Kopi
+     audios in "Stack and layout" above and in `PLAN.md` ("Audios desde Kopi"). Run
+     `python scripts/generar_sitemap.py`.
+   - Run `python scripts/importar_aws.py` in `../arquitechthor-spider` (Tech Spider shows the 🎧 badge) and
+     commit it there too.
+3. For any other `tipo`, there is no pattern yet (`audio-kopi.js` only handles audio). Propose how to embed
+   it, or ask where and how. Once agreed, document the new pattern in this section.
+
 ## Key services ("Servicios clave")
 
 The owner names them while using the site (so far `vpc`, `organizations`, `s3`, `lambda`, `iam` and `bedrock`); never mark one on
