@@ -297,6 +297,7 @@
     "categoria": "machine-learning",
     "icono": true,
     "kopi": true,
+    "clave": true,
     "certificaciones": [
       "SAP-C03",
       "AIF-C01",

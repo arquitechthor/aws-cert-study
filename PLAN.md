@@ -97,8 +97,16 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   revisadas a mano las 265 preguntas de SAP-C03 sin marcar: 15 cumplen el criterio y pasan a
   `"dificil": true` (54 difíciles de 304). El resto tiene distractores descartables a simple vista o
   nivel de Associate; no se reescriben aquí, eso lo hace la cola de la Fase 5 con preguntas nuevas.
-- **Próximo paso (siguiente sesión):** afinar con el usuario las colas 5.A y 5.B y seguir con el
-  primer servicio de la cola (`ec2`). Pendiente de datos: AIF-C01 solo tiene 5
+- **Cola práctica (12/11/2026, decisión del usuario):** el usuario también usa el sitio para aprender los
+  servicios de AWS de su trabajo, así que en paralelo a la Fase 5 hay una cola de secciones "Comandos de
+  ejemplo" (`id="comandos"`), en este orden: ~~`iam-identity-center`~~, ~~`sts`~~ (hechos el 12/11/2026),
+  `ecr`, `secrets-manager`, `sqs`, `s3`, ~~`bedrock`~~ (hecho el 12/11/2026), `eks`. Antes ya estaba
+  ~~`codeartifact`~~. Ejemplos siempre genéricos: nada del empleador en el repo, que es público.
+- **Bedrock, servicio clave (12/11/2026, pedido por el usuario):** sección "A fondo" (cuotas y
+  `max_tokens`, inferencia entre regiones y SCP, gobierno multicuenta con guardrails obligatorios, acceso
+  privado, diseño de RAG y opciones de consumo) y 5 preguntas difíciles de SAP-C03, una por dominio.
+- **Próximo paso (siguiente sesión):** seguir la cola práctica con `ecr` y la cola 5.A, que empieza ahora
+  por `eks`. Pendiente de datos: AIF-C01 solo tiene 5
   preguntas de "Fundamentos de IA generativa" (pesa el 24 %, un simulacro completo pide 16); el
   simulacro completa con otros dominios y lo avisa.
   **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `support` (planes antiguos) el 01/01/2027. La nota "Examen disponible a partir del…"
@@ -122,7 +130,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   pendiente. Ese mismo día, a petición del usuario, **la solución en PDF de una hoja A4** (tarea 6.9):
   solo con la solución completa y solo en escenarios resueltos.
 - **Servicios clave (08/10/2026):** pedidos por el usuario, que irá diciendo cuáles son mientras
-  prueba la web. Hechos: `vpc`, `organizations`, `s3`, `lambda` e `iam` (el 16/10/2026) (resaltado en catálogo y guía, filtro `clave=1`,
+  prueba la web. Hechos: `vpc`, `organizations`, `s3`, `lambda`, `iam` (el 16/10/2026) y `bedrock` (el 12/11/2026) (resaltado en catálogo y guía, filtro `clave=1`,
   sección "A fondo: temas avanzados" y 5 preguntas difíciles cada uno). Ver la decisión
   "Servicios clave" y `CLAUDE.md`.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
@@ -833,8 +841,10 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
       `route-53-004`, `s3-glacier-005`, `sct-002`, `secrets-manager-009`, `site-to-site-vpn-004`,
       `transit-gateway-004`, `vpc-lattice-006`, `vpc-lattice-007`).
 - [ ] **5.2** Cola 5.A (pedidos por el usuario), en este orden: ~~`organizations`~~ (hecho el
-      08/10/2026 al hacerlo servicio clave: sección "A fondo" y 5 preguntas difíciles), ~~`iam`~~ (hecho el 16/10/2026 como servicio clave), `ec2`,
-      `ecs`, `eks`, `fargate`, `codepipeline`, `codebuild`, `codedeploy`, `codeartifact`.
+      08/10/2026 al hacerlo servicio clave: sección "A fondo" y 5 preguntas difíciles), ~~`iam`~~ (hecho el 16/10/2026 como servicio clave). Reordenada
+      el 12/11/2026 a petición del usuario, según lo que usa en su trabajo: `eks`, `ec2`, `codedeploy`,
+      `ecs`, `fargate`, `codepipeline`, `codebuild` y, al final, `codeartifact` (su parte práctica ya está
+      hecha). También hecho `bedrock` (12/11/2026, como servicio clave).
 - [ ] **5.3** Cola 5.B (propuesta: también pesan mucho en SAP-C02; confirmar con el usuario
       antes de empezarla): `control-tower`, `iam-identity-center`, `ram`, `transit-gateway`,
       `direct-connect`, ~~`vpc`~~ (hecho el 08/10/2026 como servicio clave), `privatelink`, `route-53`, `cloudformation`, `service-catalog`,
@@ -1015,3 +1025,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-29 | **Audio de S3 recomprimido** (pedido por el usuario): de AAC estéreo a 257 kbps (51,4 MB) a AAC mono a 64 kbps con `+faststart` (13,4 MB, misma duración), con ffmpeg instalado vía winget. Norma de formato para los audios nuevos anotada en "Estado actual". |
 | 2026-11-12 | **Tarea 5.1** (pedida por el usuario): criterio de "pregunta difícil" documentado en `CLAUDE.md` (sección "Hard questions and the SAP-C03 deep dive"); la sección "A fondo" de Fase 5 es la misma `a-fondo` de los servicios clave (plantilla y `PLAN.md` alineados). Revisadas a mano las 265 preguntas de SAP-C03 sin marcar: 15 pasan a `"dificil": true` (54 de 304 en total). Las demás no cumplen el criterio (distractores descartables o nivel de Associate). |
 | 2026-11-12 | **Comandos de ejemplo en CodeArtifact** (pedido por el usuario, que también usa el sitio para aprender los servicios de su trabajo): sección opcional nueva `id="comandos"` tras "Conceptos clave" con `login` (npm, pip, twine; duración del token, `--dry-run`, permiso `sts:GetServiceBearerToken` en la política de la identidad), token y punto de enlace para Maven/Gradle con `settings.xml`, e instalar y publicar. Datos contrastados con la documentación actual (3 fuentes nuevas) y una trampa de examen más. Estilo `.doc pre` (desplazamiento dentro del bloque); plantilla, `CLAUDE.md` y estructura fija actualizados. Probado en navegador a escritorio y 375 px (sin desplazamiento horizontal de la página, cuestionario cargado). |
+| 2026-11-12 | **Bedrock, servicio clave, y cola práctica** (pedidos por el usuario): `"clave": true` en Bedrock, sección "A fondo: temas avanzados" (cuotas, reserva de `max_tokens` y consumo de los tokens de salida, perfiles geográficos y global con sus permisos y el choque con las SCP de regiones, guardrails obligatorios con `bedrock:GuardrailIdentifier`, guardrail de cuenta y política de Bedrock de Organizations, perfiles de inferencia de aplicación para repartir costes, registro de invocaciones, puntos de enlace, tabla de almacenes vectoriales, metadatos para filtrar por usuario y tabla de opciones de consumo), 4 trampas nuevas y 5 preguntas difíciles de SAP-C03 (bedrock-008 a 012, una por dominio). Secciones "Comandos de ejemplo" en Bedrock (`converse`, perfiles, `retrieve-and-generate`), IAM Identity Center (`configure sso`, `sso-session`, perfiles, `sso login`, `export-credentials`) y STS (`get-caller-identity`, `assume-role` exportando variables, perfil con `role_arn`, `decode-authorization-message`). Cola 5.A reordenada según el trabajo del usuario. Datos contrastados con la documentación actual; probado en navegador a 375 px (sin desplazamiento horizontal, cuestionarios cargados, 5 etiquetas ⚠ en Bedrock, sin errores). |

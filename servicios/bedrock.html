@@ -52,6 +52,7 @@
 
     <div class="service-head">
       <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/bedrock.svg" alt="" width="56" height="56"><span>Amazon Bedrock</span></h1>
+      <p class="clave-aviso"><span class="chip chip-clave">★ Servicio clave</span> <span>Guía ampliada con <a href="#a-fondo">temas avanzados</a> y preguntas difíciles en el cuestionario.</span></p>
       <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Acceso por <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> a modelos fundacionales de varias empresas para crear apps de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr></span></div>
       <div class="meta-row">
         <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
@@ -107,6 +108,58 @@
           típicamente para modelos personalizados).</li>
       </ul>
 
+      <h2 id="comandos">Comandos de ejemplo</h2>
+      <p>Se necesita la <a href="cli.html">AWS <abbr class="sigla sigla-1" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI<span class="sigla-exp"> (Command Line Interface: línea de comandos)</span></abbr></a> configurada con un rol que tenga permiso sobre el modelo. Los identificadores son de
+        ejemplo (<code>KB12345678</code> es una base de conocimiento inventada y <code>111122223333</code> la cuenta
+        ficticia que usa AWS). Los comandos están escritos para bash; en PowerShell, el <abbr class="sigla sigla-1" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON<span class="sigla-exp"> (JavaScript Object Notation: formato de datos en texto)</span></abbr> entre comillas da
+        problemas, así que es más cómodo guardarlo en un fichero y pasarlo con <code>file://peticion.json</code>.</p>
+
+      <h3>Ver qué modelos y perfiles de inferencia hay en la región</h3>
+      <pre><code>aws bedrock list-foundation-models --by-provider anthropic \
+  --query 'modelSummaries[].modelId' --output table
+
+# Perfiles entre regiones (eu., us., global.…)
+aws bedrock list-inference-profiles --type-equals SYSTEM_DEFINED \
+  --query 'inferenceProfileSummaries[].inferenceProfileId' --output table</code></pre>
+
+      <h3>Preguntar a un modelo con Converse</h3>
+      <pre><code>aws bedrock-runtime converse \
+  --model-id eu.amazon.nova-lite-v1:0 \
+  --messages '[{"role":"user","content":[{"text":"Resume en una frase qué es Amazon SQS."}]}]' \
+  --inference-config '{"maxTokens":300,"temperature":0.2}' \
+  --query 'output.message.content[0].text' --output text</code></pre>
+      <ul>
+        <li><code>converse</code> usa el mismo formato con todos los modelos; <code>invoke-model</code> exige el formato
+          propio de cada proveedor.</li>
+        <li>Como <code>--model-id</code> sirve un modelo o un perfil de inferencia (el prefijo <code>eu.</code> reparte
+          las peticiones entre regiones europeas). Muchos modelos recientes solo se pueden invocar a través de un
+          perfil.</li>
+        <li>Sin <code>--query</code>, la respuesta incluye <code>usage</code> con los tokens de entrada y de salida, útil
+          para estimar el coste.</li>
+        <li>Para exigir un guardrail, se añade
+          <code>--guardrail-config '{"guardrailIdentifier":"&lt;id&gt;","guardrailVersion":"1"}'</code>.</li>
+      </ul>
+
+      <h3>Consultar una base de conocimiento (RAG)</h3>
+      <pre><code>aws bedrock-agent-runtime retrieve-and-generate \
+  --input '{"text":"¿Cuántos días de vacaciones hay?"}' \
+  --retrieve-and-generate-configuration '{
+    "type": "KNOWLEDGE_BASE",
+    "knowledgeBaseConfiguration": {
+      "knowledgeBaseId": "KB12345678",
+      "modelArn": "arn:aws:bedrock:eu-west-1:111122223333:inference-profile/eu.amazon.nova-lite-v1:0"
+    }
+  }'</code></pre>
+      <ul>
+        <li><code>retrieve-and-generate</code> busca los fragmentos y genera la respuesta con sus citas;
+          <code>retrieve</code> solo devuelve los fragmentos, para montar tú el prompt.</li>
+        <li>Las bases de conocimiento y los agentes van por <code>bedrock-agent-runtime</code>; la inferencia directa, por
+          <code>bedrock-runtime</code>; y la gestión (crear, listar), por <code>bedrock</code> y
+          <code>bedrock-agent</code>.</li>
+        <li>Tras cambiar documentos en el origen hay que sincronizar:
+          <code>aws bedrock-agent start-ingestion-job --knowledge-base-id KB12345678 --data-source-id &lt;id&gt;</code>.</li>
+      </ul>
+
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Asistentes y chatbots que responden con la documentación de la empresa (<abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr>).</li>
@@ -138,6 +191,138 @@
             <tr><td>Adaptar el modelo al vocabulario de un dominio con mucho texto sin etiquetar</td><td>Continued pre-training</td></tr>
             <tr><td>Guiar la respuesta sin coste de entrenamiento</td><td>Ingeniería de prompts (zero-shot, few-shot, cadena de razonamiento)</td></tr>
             <tr><td>Entrenar y desplegar modelos propios</td><td><a href="sagemaker-ai.html">SageMaker AI</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>La parte ampliada de la guía, con el nivel de los escenarios de SAP-C03 y de un uso real en una empresa: por qué
+        llegan errores de limitación aunque se consuma poco, cómo se reparten las peticiones entre regiones sin saltarse
+        la residencia de los datos, cómo se gobierna Bedrock en muchas cuentas, cómo se diseña un <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr> serio y qué opción
+        de consumo sale más barata en cada caso.</p>
+
+      <h3>Cuotas, tokens y errores de limitación</h3>
+      <ul>
+        <li>En bajo demanda, las cuotas son <strong>por modelo y por región</strong>: tokens por minuto y peticiones por
+          minuto, además de un tope diario de tokens por cuenta. Al superarlas llega <code>ThrottlingException</code> y
+          hay que reintentar con espera exponencial y algo de aleatoriedad.</li>
+        <li><strong>La trampa de <code>max_tokens</code>:</strong> al llegar la petición, Bedrock aparta de la cuota los
+          tokens de entrada <strong>más</strong> el máximo de salida pedido, y devuelve lo que sobra mientras genera. Con
+          un <code>max_tokens</code> muy alto, unas pocas peticiones simultáneas agotan la cuota aunque las respuestas
+          reales sean cortas. Ajustarlo al tamaño real de las respuestas es la primera medida.</li>
+        <li>En muchos modelos (por ejemplo, los de Anthropic) cada token de salida <strong>descuenta varias veces</strong>
+          de la cuota; la ficha de cada modelo indica cuántas. Los tokens leídos de la caché de prompts no cuentan.</li>
+        <li>Para ganar capacidad: inferencia entre regiones, el nivel Priority, Provisioned Throughput o pedir un aumento
+          de cuota. Para quitar carga del tiempo real: inferencia por lotes, el nivel Flex y la caché de prompts.</li>
+        <li>Las métricas de <a href="cloudwatch.html">CloudWatch</a> del espacio <code>AWS/Bedrock</code> (invocaciones, latencia, tokens de entrada y
+          salida, limitaciones) permiten vigilar cuánto falta para la cuota.</li>
+      </ul>
+
+      <h3>Inferencia entre regiones y residencia de los datos</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Dónde se procesa</th><th>Cuándo elegirla</th></tr></thead>
+          <tbody>
+            <tr><td>Modelo en la propia región</td><td>Solo en esa región</td><td>Normativa estricta de una sola región,
+              si el modelo lo permite (muchos recientes solo admiten perfiles)</td></tr>
+            <tr><td>Perfil geográfico (<code>eu.</code>, <code>us.</code>, <code>apac.</code>…)</td><td>Cualquier región
+              de destino de esa geografía</td><td>Más capacidad manteniendo los datos dentro de la Unión Europea, de
+              Estados Unidos, etc.</td></tr>
+            <tr><td>Perfil global (<code>global.</code>)</td><td>Cualquier región comercial con capacidad</td><td>La
+              máxima capacidad cuando no hay requisitos de residencia</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li><strong>Permisos:</strong> el rol necesita <code>bedrock:InvokeModel</code> sobre el perfil
+          <strong>y</strong> sobre el modelo en las regiones de destino (en el perfil global, sobre el recurso del modelo
+          sin región). Si falta lo segundo, la llamada falla aunque el perfil esté permitido.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP<span class="sigla-exp"> (Service Control Policy: límite de permisos para las cuentas de una organización)</span></abbr> que bloquean regiones:</strong> si una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> solo permite la región de origen, el perfil geográfico
+          falla al enrutar hacia otra región de destino. Hay que permitir todas las regiones de destino del perfil o
+          añadir a la <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> la excepción para perfiles de inferencia que documenta AWS.</li>
+      </ul>
+
+      <h3>Gobierno en una organización con muchas cuentas</h3>
+      <ul>
+        <li><strong>Qué modelos se pueden usar:</strong> los modelos sin servidor están disponibles por defecto, así que
+          el control se hace con <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> y con <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> que deniegan <code>bedrock:InvokeModel*</code> y
+          <code>bedrock:Converse*</code> sobre los modelos no aprobados. Los de Anthropic piden además un formulario de
+          uso una sola vez; enviado por <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> desde la cuenta de administración, vale para toda la organización.</li>
+        <li><strong>Guardrails obligatorios</strong>, tres niveles:
+          <ul>
+            <li>La clave de condición <code>bedrock:GuardrailIdentifier</code> en una política deniega las llamadas
+              que no indiquen el guardrail exigido. Funciona, pero la aplicación tiene que indicarlo.</li>
+            <li>Un guardrail por defecto de la cuenta se aplica a todas sus invocaciones.</li>
+            <li>Una <strong>política de Bedrock</strong> de <a href="organizations.html">Organizations</a>, desde la cuenta de administración, aplica un
+              guardrail a todas las invocaciones de las cuentas u <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr> indicadas sin que la aplicación lo pida. Es una
+              política declarativa, no una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr>: si hay varias en el árbol no se suman, se resuelve una política efectiva
+              por cuenta según las reglas de herencia.</li>
+          </ul>
+        </li>
+        <li><strong><code>ApplyGuardrail</code></strong> evalúa un texto con un guardrail sin invocar ningún modelo: sirve
+          para proteger también modelos que no están en Bedrock.</li>
+        <li><strong>Repartir el coste</strong> por equipo, aplicación o cliente: perfiles de inferencia de aplicación con
+          etiquetas de asignación de costes (también cuentan las etiquetas del rol o de la sesión). Las etiquetas hay que
+          activarlas en Billing para que salgan en el <abbr class="sigla sigla-1" data-s="CUR" data-en="Cost and Usage Report" tabindex="0">CUR<span class="sigla-exp"> (Cost and Usage Report)</span></abbr>.</li>
+        <li><strong>Auditoría:</strong> <a href="cloudtrail.html">CloudTrail</a> registra las llamadas, pero no el contenido. El registro de
+          invocaciones (prompts y respuestas) está <strong>desactivado por defecto</strong>, se configura por región y
+          solo escribe en CloudWatch Logs o <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> de la misma cuenta y región; para centralizarlo, se replica desde ahí a la
+          cuenta de registro.</li>
+      </ul>
+
+      <h3>Acceso privado</h3>
+      <ul>
+        <li>Puntos de enlace de interfaz (<a href="privatelink.html">PrivateLink</a>) distintos para <code>bedrock-runtime</code> (inferencia),
+          <code>bedrock-agent-runtime</code> (bases de conocimiento y agentes) y <code>bedrock</code> (gestión). Una
+          aplicación de <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr> necesita al menos los dos primeros.</li>
+        <li>La política del punto de enlace limita qué acciones y qué modelos se pueden usar desde la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a>, y la condición
+          <code>aws:SourceVpce</code> en las políticas obliga a pasar por él.</li>
+      </ul>
+
+      <h3>Diseñar un RAG con Knowledge Bases</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Almacén vectorial</th><th>Cuándo encaja</th></tr></thead>
+          <tbody>
+            <tr><td><a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> Vectors</td><td>Muchos vectores al menor coste, si se acepta algo más de latencia</td></tr>
+            <tr><td><a href="opensearch-service.html">OpenSearch</a> Serverless</td><td>Baja latencia y búsqueda híbrida (palabras clave y
+              significado); Bedrock puede crearlo por ti</td></tr>
+            <tr><td><a href="aurora.html">Aurora</a> PostgreSQL (pgvector)</td><td>Ya se usa Aurora y se quieren los vectores junto a los datos
+              relacionales</td></tr>
+            <tr><td><a href="neptune.html">Neptune</a> Analytics</td><td><abbr class="sigla sigla-1" data-s="GraphRAG" data-es="generación aumentada por recuperación apoyada en un grafo de conocimiento" tabindex="0">GraphRAG<span class="sigla-exp"> (generación aumentada por recuperación apoyada en un grafo de conocimiento)</span></abbr>: las relaciones entre entidades importan para responder</td></tr>
+            <tr><td>Pinecone, MongoDB Atlas, Redis</td><td>La empresa ya tiene uno de esos productos</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li><strong>Troceado:</strong> fijo, jerárquico (fragmentos pequeños para buscar y su bloque padre como contexto),
+          semántico o sin trocear. Cambiarlo obliga a volver a ingerir los documentos.</li>
+        <li><strong>Que cada usuario vea solo lo suyo:</strong> la base de conocimiento lee con su propio rol, así que los
+          permisos del origen no se aplican a quien pregunta. Se añaden <strong>metadatos</strong> a cada documento (un
+          fichero <code>.metadata.json</code> junto a él en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, por ejemplo con el departamento) y la aplicación filtra
+          por ellos en cada consulta según la identidad del usuario.</li>
+        <li><strong>Calidad:</strong> búsqueda híbrida cuando el almacén la admite, un modelo de reordenación
+          (<em>reranking</em>) sobre los resultados y la evaluación de bases de conocimiento para medir los cambios.</li>
+        <li><strong>Datos al día:</strong> cada cambio en el origen necesita un trabajo de ingesta, que se puede programar
+          con <a href="eventbridge.html">EventBridge</a> Scheduler.</li>
+      </ul>
+
+      <h3>Qué opción de consumo sale más barata</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Situación</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>Millones de peticiones cuyo resultado se lee horas después</td><td>Inferencia por lotes (en torno a la
+              mitad de precio en los modelos que la admiten)</td></tr>
+            <tr><td>Peticiones en tiempo real que toleran más latencia</td><td>Nivel Flex</td></tr>
+            <tr><td>Latencia crítica en los picos</td><td>Nivel Priority (más caro)</td></tr>
+            <tr><td>Volumen alto y estable, o un modelo personalizado</td><td>Provisioned Throughput (sin compromiso, a 1 o
+              a 6 meses)</td></tr>
+            <tr><td>El mismo contexto largo en cada petición (instrucciones, un catálogo, un documento)</td><td>Caché de
+              prompts: el contenido fijo al principio; dura 5 minutos que se renuevan con cada acierto, y hasta 1 hora en
+              algunos modelos</td></tr>
+            <tr><td>Mezcla de preguntas sencillas y difíciles</td><td>Enrutado inteligente de prompts entre dos modelos de
+              la misma familia, o un modelo pequeño destilado</td></tr>
           </tbody>
         </table>
       </div>
@@ -178,6 +363,12 @@
         <li><strong>"Muchas peticiones sin urgencia al menor coste"</strong>: inferencia por lotes.</li>
         <li><strong>"¿Se usan mis datos para entrenar el modelo?"</strong>: no.</li>
         <li><strong>"Ejecutar varios pasos y llamar a APIs"</strong>: Agents.</li>
+        <li><strong>"Limitación aunque el consumo real es bajo"</strong>: <code>max_tokens</code> demasiado alto.</li>
+        <li><strong>"Más capacidad sin sacar los datos de la UE"</strong>: perfil de inferencia geográfico
+          <code>eu.</code>, no el global.</li>
+        <li><strong>"Guardrail en todas las cuentas aunque la aplicación no lo indique"</strong>: política de Bedrock en
+          <a href="organizations.html">Organizations</a>; una <abbr class="sigla" data-s="SCP" data-en="Service Control Policy" data-es="límite de permisos para las cuentas de una organización" tabindex="0">SCP</abbr> con <code>bedrock:GuardrailIdentifier</code> solo rechaza las llamadas sin él.</li>
+        <li><strong>"Coste por cliente o por equipo"</strong>: perfiles de inferencia de aplicación con etiquetas.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -190,6 +381,15 @@
         <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html" target="_blank" rel="noopener">Retrieve data and generate AI responses with Amazon Bedrock Knowledge Bases</a>, documentación de AWS (consultada el 25/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html" target="_blank" rel="noopener">Detect and filter harmful content by using Amazon Bedrock Guardrails</a>, documentación de AWS (consultada el 25/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html" target="_blank" rel="noopener">Route model inference requests across AWS Regions with cross-Region inference</a>, documentación de AWS (consultada el 25/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html" target="_blank" rel="noopener">Geographic cross-Region inference</a> y <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/global-cross-region-inference.html" target="_blank" rel="noopener">Global cross-Region inference</a>, documentación de AWS (consultadas el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/quotas-token-burndown.html" target="_blank" rel="noopener">How tokens are counted in Amazon Bedrock</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-permissions-id.html" target="_blank" rel="noopener">Enforce the use of specific guardrails in model inference requests</a> y <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-enforcements.html" target="_blank" rel="noopener">Apply cross-account safeguards with Amazon Bedrock Guardrails enforcements</a>, documentación de AWS (consultadas el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html" target="_blank" rel="noopener">Monitor model invocation using CloudWatch Logs and Amazon S3</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/vpc-interface-endpoints.html" target="_blank" rel="noopener">Use interface VPC endpoints (AWS PrivateLink)</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup.html" target="_blank" rel="noopener">Prerequisites for using a vector store you created for a knowledge base</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-routing.html" target="_blank" rel="noopener">Understanding intelligent prompt routing in Amazon Bedrock</a> y <a href="https://docs.aws.amazon.com/wellarchitected/latest/generative-ai-lens/gencost03-bp03.html" target="_blank" rel="noopener">GENCOST03-BP03 Implement prompt caching</a>, documentación de AWS (consultadas el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started-api-ex-cli.html" target="_blank" rel="noopener">Run example Amazon Bedrock API requests with the AWS CLI</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://aws.amazon.com/blogs/security/simplified-amazon-bedrock-model-access/" target="_blank" rel="noopener">Simplified model access in Amazon Bedrock</a>, blog de seguridad de AWS (consultado el 12/11/2026).</li>
       </ul>
     </article>
   </div>

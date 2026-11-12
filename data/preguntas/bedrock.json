@@ -168,5 +168,130 @@
       "https://docs.aws.amazon.com/bedrock/latest/userguide/inference-parameters.html",
       "https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html"
     ]
+  },
+  {
+    "id": "bedrock-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
+    "enunciado": "Una organización con 60 cuentas usa Amazon Bedrock en decenas de aplicaciones de equipos distintos. El comité de IA responsable exige que todas las invocaciones de modelos pasen por el guardrail corporativo, incluidas las de aplicaciones que no lo indican en la petición, sin modificar su código y con el menor esfuerzo operativo. Cada equipo debe poder añadir guardrails propios más estrictos. ¿Qué solución cumple todos los requisitos?",
+    "opciones": [
+      "Una SCP asociada a la raíz que deniegue bedrock:InvokeModel y bedrock:Converse cuando la condición bedrock:GuardrailIdentifier no coincida con el guardrail corporativo.",
+      "Un proxy con API Gateway y Lambda que llame a ApplyGuardrail antes de cada invocación, y una SCP que solo permita invocar modelos al rol de ese proxy.",
+      "Una política de Bedrock de AWS Organizations, creada desde la cuenta de administración y asociada a la raíz, que aplique el guardrail corporativo a todas las invocaciones de las cuentas miembro.",
+      "Una regla de AWS Config en cada cuenta que detecte las invocaciones sin guardrail en los registros de CloudTrail y avise al equipo de seguridad."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La política de Bedrock de Organizations aplica el guardrail corporativo a todas las invocaciones de las cuentas afectadas aunque la petición no lo indique, y es compatible con los guardrails que añadan las aplicaciones. Una SCP con bedrock:GuardrailIdentifier no aplica el guardrail: rechaza las llamadas que no lo indican, así que obliga a cambiar el código. El proxy funciona, pero exige construir y operar una pieza nueva y migrar todas las aplicaciones. AWS Config y CloudTrail solo detectan después; además, CloudTrail no registra el contenido de los prompts.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-enforcements.html",
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-permissions-id.html"
+    ]
+  },
+  {
+    "id": "bedrock-009",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Un asistente interno invoca un modelo de Anthropic con InvokeModel en eu-west-1, con max_tokens de 32.000, aunque sus respuestas rondan los 800 tokens. En las horas punta recibe muchos ThrottlingException, mientras que las métricas muestran un consumo real de tokens muy por debajo de la cuota. Los datos no pueden salir de la Unión Europea y el presupuesto no admite compromisos de capacidad. ¿Qué DOS cambios reducen los errores? (Elige 2.)",
+    "opciones": [
+      "Ajustar max_tokens al tamaño real de las respuestas, con un margen razonable.",
+      "Invocar el modelo mediante el perfil de inferencia global para usar la capacidad de cualquier región.",
+      "Comprar Provisioned Throughput con un compromiso de 6 meses para el modelo.",
+      "Invocar el modelo mediante el perfil de inferencia geográfico de la UE (prefijo eu.).",
+      "Reintentar inmediatamente cada petición limitada, sin espera, hasta cinco veces."
+    ],
+    "correctas": [
+      0,
+      3
+    ],
+    "explicacion": "Bedrock reserva de la cuota los tokens de entrada más max_tokens al recibir cada petición; con 32.000 reservados por llamada, pocas peticiones simultáneas agotan la cuota aunque se consuma poco, así que ajustar max_tokens es la primera medida. El perfil geográfico de la UE reparte las peticiones entre regiones europeas y suma capacidad sin sacar los datos de la UE. El perfil global puede procesar en regiones de fuera de la UE, Provisioned Throughput a 6 meses es un compromiso que el presupuesto no admite, y reintentar sin espera empeora la limitación.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/quotas-token-burndown.html",
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html"
+    ]
+  },
+  {
+    "id": "bedrock-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Por residencia de datos, una organización tiene una SCP que deniega cualquier acción fuera de eu-west-1, salvo los servicios globales. Un equipo cambia su aplicación para invocar un modelo con el perfil de inferencia geográfico de la UE desde eu-west-1. Su rol tiene permiso sobre el perfil y sobre el modelo, pero muchas invocaciones fallan con AccessDeniedException. Los datos deben seguir procesándose solo en la UE. ¿Qué cambio lo resuelve?",
+    "opciones": [
+      "Cambiar al perfil de inferencia global, que no depende de regiones concretas.",
+      "Modificar la SCP para permitir las regiones de destino del perfil geográfico de la UE, o añadir la excepción para perfiles de inferencia que documenta AWS.",
+      "Conceder bedrock:* al rol de la aplicación en todas las regiones.",
+      "Crear un punto de enlace de interfaz de bedrock-runtime en la VPC de eu-west-1 para que el tráfico no salga de la región."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El perfil geográfico enruta cada petición a una de sus regiones de destino de la UE, y la SCP deniega las que no son eu-west-1: por eso fallan unas sí y otras no. Hay que permitir esas regiones de destino o usar la excepción para perfiles de inferencia, y los datos siguen en la UE. El perfil global también choca con la SCP y además puede salir de la UE; los permisos de IAM no pueden superar lo que deniega una SCP; y el punto de enlace de VPC cambia la red, no la región donde se procesa la petición.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/geographic-cross-region-inference.html"
+    ]
+  },
+  {
+    "id": "bedrock-011",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una plataforma SaaS con 200 clientes usa Amazon Bedrock desde una única cuenta. Finanzas necesita el coste de Bedrock por cliente en el informe de costes y uso. Cada noche, un proceso resume todos los documentos nuevos de los clientes, y el resultado se consulta al día siguiente. El chat de la plataforma envía en cada petición las mismas instrucciones y el mismo catálogo de productos, unos 20.000 tokens, seguidos de la pregunta del usuario. El uso del chat tiene picos imprevisibles. ¿Qué TRES medidas reducen el coste y cumplen los requisitos con el menor esfuerzo operativo? (Elige 3.)",
+    "opciones": [
+      "Crear una cuenta de AWS por cliente para separar su factura.",
+      "Un perfil de inferencia de aplicación por cliente con una etiqueta de asignación de costes activada en Billing.",
+      "Pasar el proceso nocturno a inferencia por lotes.",
+      "Comprar Provisioned Throughput a 6 meses para el chat.",
+      "Activar la caché de prompts con las instrucciones y el catálogo al principio de cada petición.",
+      "Usar el nivel Priority en el proceso nocturno para que termine antes."
+    ],
+    "correctas": [
+      1,
+      2,
+      4
+    ],
+    "explicacion": "Los perfiles de inferencia de aplicación etiquetados reparten el coste por cliente en el CUR sin cambiar de arquitectura. La inferencia por lotes cuesta en torno a la mitad que la bajo demanda y encaja con resultados que se leen horas después. La caché de prompts evita volver a procesar a precio completo el prefijo fijo de 20.000 tokens. Una cuenta por cliente también separa costes, pero multiplica la operación; Provisioned Throughput desperdicia capacidad con picos imprevisibles; y Priority es más caro, justo lo contrario de lo que necesita un proceso sin urgencia.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/cost-mgmt-understanding-cur-data.html",
+      "https://docs.aws.amazon.com/wellarchitected/latest/generative-ai-lens/gencost03-bp03.html"
+    ]
+  },
+  {
+    "id": "bedrock-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
+    "enunciado": "Una empresa crea un asistente de RAG con Amazon Bedrock Knowledge Bases sobre 300.000 documentos internos en S3, de cinco departamentos. Cada empleado solo puede recibir respuestas basadas en los documentos de su departamento, que la aplicación conoce por el token de inicio de sesión. Los documentos cambian a diario y el equipo quiere el menor esfuerzo operativo. ¿Qué diseño cumple los requisitos?",
+    "opciones": [
+      "Una base de conocimiento por departamento, cada una con su origen de datos, y lógica en la aplicación para elegir a cuál consultar.",
+      "Un guardrail con un tema denegado por departamento, aplicado según el usuario que pregunta.",
+      "Políticas de bucket de S3 que solo permitan a cada departamento leer su prefijo, para que la base de conocimiento respete esos permisos.",
+      "Una sola base de conocimiento con un fichero .metadata.json por documento que indique su departamento, y un filtro de metadatos en cada llamada a Retrieve o RetrieveAndGenerate con el departamento del usuario."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los metadatos por documento y el filtro en cada consulta limitan la recuperación a los fragmentos del departamento del usuario con una única base de conocimiento que sincronizar. Cinco bases también funcionan, pero multiplican por cinco las ingestas, la configuración y el coste. Un guardrail filtra temas del texto, no garantiza de qué documentos sale la respuesta. Y la base de conocimiento lee S3 con su propio rol de servicio, así que los permisos del bucket no dependen de quién pregunta.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html",
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html"
+    ]
   }
 ]

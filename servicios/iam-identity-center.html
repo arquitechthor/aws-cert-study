@@ -102,6 +102,64 @@
         <li><strong><abbr class="sigla sigla-1" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA<span class="sigla-exp"> (Multi-Factor Authentication: inicio de sesión con un segundo factor)</span></abbr></strong> integrado y administración delegada en una cuenta miembro.</li>
       </ul>
 
+      <h2 id="comandos">Comandos de ejemplo</h2>
+      <p>Así se trabaja desde la <a href="cli.html">AWS <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a> v2 con varias cuentas a las que se entra por Identity Center, sin guardar claves
+        de acceso en el equipo. Los valores son inventados: <code>mi-sso</code>, el portal
+        <code>https://mi-empresa.awsapps.com/start</code> y las cuentas ficticias <code>111122223333</code> y
+        <code>444455556666</code>. Los comandos están escritos para bash; en PowerShell,
+        <code>export AWS_PROFILE=dev</code> se escribe <code>$env:AWS_PROFILE = "dev"</code>.</p>
+
+      <h3>Configurar los perfiles una vez</h3>
+      <pre><code>aws configure sso
+# Pide: nombre de la sesión (mi-sso), URL del portal, región de Identity Center
+# y abre el navegador; después eliges cuenta, rol, región por defecto y nombre del perfil.</code></pre>
+      <p>El asistente escribe en <code>~/.aws/config</code> una sección <code>sso-session</code> compartida y un perfil
+        por cada combinación de cuenta y rol. Para añadir más cuentas basta con copiar un perfil y cambiar la cuenta o el
+        rol:</p>
+      <pre><code>[sso-session mi-sso]
+sso_start_url = https://mi-empresa.awsapps.com/start
+sso_region = eu-west-1
+sso_registration_scopes = sso:account:access
+
+[profile dev]
+sso_session = mi-sso
+sso_account_id = 111122223333
+sso_role_name = Developer
+region = eu-west-1
+
+[profile pro-lectura]
+sso_session = mi-sso
+sso_account_id = 444455556666
+sso_role_name = ReadOnly
+region = eu-west-1</code></pre>
+
+      <h3>El día a día</h3>
+      <pre><code>aws sso login --sso-session mi-sso   # una vez: vale para todos los perfiles de esa sesión
+aws configure list-profiles           # qué perfiles hay
+aws sts get-caller-identity --profile dev
+
+aws s3 ls --profile pro-lectura       # perfil en cada comando…
+export AWS_PROFILE=dev                # …o para toda la terminal
+aws s3 ls
+
+aws sso logout                        # al terminar: borra el token y las credenciales en caché</code></pre>
+      <ul>
+        <li>El inicio de sesión guarda un token en <code>~/.aws/sso/cache</code>; con la sección
+          <code>sso-session</code>, la <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> lo renueva sola mientras siga vigente la sesión del portal. Con la
+          configuración antigua (sin <code>sso-session</code>) no se renueva.</li>
+        <li>Cuánto duran las credenciales de cada rol lo decide el administrador en el conjunto de permisos (de 1 a 12
+          horas). Al caducar, se vuelve a ejecutar <code>aws sso login</code>.</li>
+        <li>El nombre del rol (<code>sso_role_name</code>) es el del conjunto de permisos. En la cuenta, el rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>
+          real se llama <code>AWSReservedSSO_&lt;conjunto&gt;_&lt;sufijo&gt;</code>, y es lo que aparece en <a href="cloudtrail.html">CloudTrail</a> y en
+          <code>get-caller-identity</code>.</li>
+        <li>Para una herramienta que solo lee variables de entorno:
+          <code>eval "$(aws configure export-credentials --profile dev --format env)"</code> (en PowerShell,
+          <code>--format powershell</code> y pegar el resultado).</li>
+        <li>Si <code>get-caller-identity</code> devuelve otra identidad, suele haber variables
+          <code>AWS_ACCESS_KEY_ID</code> de antes en la terminal: tienen prioridad sobre el perfil por defecto. Se borran con
+          <code>unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN</code>.</li>
+      </ul>
+
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Acceso de los empleados a decenas de cuentas con su identidad corporativa y permisos por grupo.</li>
@@ -169,6 +227,8 @@
         <li><a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/permissionsetsconcept.html" target="_blank" rel="noopener">Permission sets</a>, documentación de AWS (consultada el 02/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/manage-your-identity-source.html" target="_blank" rel="noopener">Manage your identity source</a>, documentación de AWS (consultada el 02/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-overall-prerequisites.html" target="_blank" rel="noopener">Trusted identity propagation: prerequisites and considerations</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html" target="_blank" rel="noopener">Configuring IAM Identity Center authentication with the AWS CLI</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sdkref/latest/guide/feature-sso-credentials.html" target="_blank" rel="noopener">IAM Identity Center credential provider</a>, guía de referencia de los SDK y herramientas de AWS (consultada el 12/11/2026).</li>
       </ul>
     </article>
   </div>

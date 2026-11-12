@@ -113,6 +113,62 @@
           resiliencia.</li>
       </ul>
 
+      <h2 id="comandos">Comandos de ejemplo</h2>
+      <p>Con la <a href="cli.html">AWS <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a> configurada. Las cuentas <code>111122223333</code> y <code>444455556666</code> son ficticias, y
+        los roles, inventados. Los comandos están escritos para bash; en PowerShell, cada <code>export VAR=valor</code> se
+        escribe <code>$env:VAR = "valor"</code>.</p>
+
+      <h3>¿Quién soy?</h3>
+      <pre><code>aws sts get-caller-identity
+# {
+#   "UserId": "AROAEJEMPLO:ana@ejemplo.com",
+#   "Account": "111122223333",
+#   "Arn": "arn:aws:sts::111122223333:assumed-role/Developer/ana@ejemplo.com"
+# }</code></pre>
+      <p>Es lo primero que se comprueba ante un <code>AccessDenied</code>: muchas veces el problema es que se está usando
+        otra cuenta u otro rol. No necesita ningún permiso, así que funciona incluso con un rol sin políticas.</p>
+
+      <h3>Asumir un rol a mano</h3>
+      <pre><code>read -r AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN &lt; &lt;(
+  aws sts assume-role \
+    --role-arn arn:aws:iam::444455556666:role/Auditoria \
+    --role-session-name ana-revision \
+    --duration-seconds 3600 \
+    --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text)
+export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+
+aws sts get-caller-identity   # ahora: assumed-role/Auditoria/ana-revision</code></pre>
+      <ul>
+        <li><code>--role-session-name</code> aparece en <a href="cloudtrail.html">CloudTrail</a>: conviene que identifique a la persona o al
+          proceso.</li>
+        <li>Opcionales habituales: <code>--external-id</code> (si la política de confianza lo exige),
+          <code>--serial-number</code> y <code>--token-code</code> (<abbr class="sigla" data-s="MFA" data-en="Multi-Factor Authentication" data-es="inicio de sesión con un segundo factor" tabindex="0">MFA</abbr>), y <code>--policy</code> para recortar los permisos
+          de esa sesión.</li>
+        <li>Para volver a la identidad anterior:
+          <code>unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN</code>.</li>
+      </ul>
+
+      <h3>Mejor: un perfil que asume el rol solo</h3>
+      <pre><code># ~/.aws/config
+[profile auditoria]
+role_arn = arn:aws:iam::444455556666:role/Auditoria
+source_profile = dev          # perfil con el que se asume (puede ser uno de Identity Center)
+role_session_name = ana-revision
+region = eu-west-1</code></pre>
+      <p>Con <code>aws s3 ls --profile auditoria</code>, la <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr> llama a <code>AssumeRole</code>, guarda las credenciales en
+        caché y las renueva cuando caducan. Fuera de un portátil, <code>credential_source</code>
+        (<code>Ec2InstanceMetadata</code>, <code>EcsContainer</code> o <code>Environment</code>) sustituye a
+        <code>source_profile</code>. Si el perfil de origen ya es un rol, se están <strong>encadenando roles</strong> y la
+        sesión dura como mucho una hora, aunque el rol permita más.</p>
+
+      <h3>Descifrar un error de autorización</h3>
+      <pre><code>aws sts decode-authorization-message --encoded-message '&lt;mensaje codificado&gt;' \
+  --query DecodedMessage --output text | python -m json.tool</code></pre>
+      <p>Algunos servicios, como <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, devuelven un mensaje codificado al denegar una acción. Descifrado, dice qué acción,
+        qué recurso y qué contexto se evaluaron, y si fue una denegación explícita. Requiere el permiso
+        <code>sts:DecodeAuthorizationMessage</code>, y hay que usar credenciales de la misma cuenta que recibió el
+        error.</p>
+
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li><strong>Acceso entre cuentas:</strong> un rol en la cuenta de destino que asumen identidades de otra
@@ -191,6 +247,9 @@
         <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html" target="_blank" rel="noopener">The confused deputy problem</a>, documentación de AWS (consultada el 02/10/2026).</li>
         <li><a href="https://repost.aws/knowledge-center/iam-oidc-idp-federation" target="_blank" rel="noopener">How do I resolve OIDC IdP federation errors in IAM?</a>, documentación de AWS (consultada el 02/10/2026).</li>
         <li><a href="https://aws.amazon.com/blogs/security/how-to-monitor-and-query-iam-resources-at-scale-part-2/" target="_blank" rel="noopener">How to monitor and query IAM resources at scale – Part 2</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/cli/latest/reference/sts/assume-role.html" target="_blank" rel="noopener">assume-role</a>, referencia de la AWS CLI (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sdkref/latest/guide/access-assume-role.html" target="_blank" rel="noopener">Assuming a role with AWS credentials to authenticate AWS SDKs and tools</a>, guía de referencia de los SDK y herramientas de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://repost.aws/knowledge-center/ec2-not-auth-launch" target="_blank" rel="noopener">How do I decode and analyze "You are not authorized to perform this operation" errors?</a>, AWS re:Post (consultada el 12/11/2026).</li>
       </ul>
     </article>
   </div>
