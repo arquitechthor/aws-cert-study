@@ -298,6 +298,7 @@
     "icono": true,
     "kopi": true,
     "clave": true,
+    "audio": true,
     "certificaciones": [
       "SAP-C03",
       "AIF-C01",

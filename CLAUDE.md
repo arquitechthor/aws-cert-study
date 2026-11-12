@@ -39,7 +39,7 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   knowledge/resources/{id}` (CORS allows this origin; `fileUrl` is a presigned S3 URL that expires in 1 h,
   renewed on error). Markup: `<figure class="audio-recurso" data-kopi="<resource id>">` + `<button
   data-kopi-cargar>` + `<p class="audio-aviso">` (see `servicios/codeartifact.html`). Only S3 keeps its
-  old local file `assets/audios/s3.m4a`. CodeArtifact has one from Kopi; the other audios in that Kopi
+  old local file `assets/audios/s3.m4a`. CodeArtifact and Bedrock have one from Kopi; the other audios in that Kopi
   topic are about the retired SAP-C02, so they are not used (S3 so far; it also has a "Números interesantes" section of `.numero-ficha` cards). Certifications with
   `estado: "guia-pendiente"` are shown as cards only, never as filter chips.
 - Study progress lives in the browser (and optionally in the Kopi account, see below): `AwsDatos.leerProgreso()/guardarProgreso()` store, per service

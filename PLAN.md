@@ -13,7 +13,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 - **Audios desde Kopi (11/11/2026, decisión del usuario):** los resúmenes en audio nuevos **no se suben
   al repo** (con 177 servicios se superaría el límite de GitHub). Son recursos públicos de un tema de
   Conocimiento de Kopi y se leen de su API pública al pulsar "▶ Escuchar" (`assets/audio-kopi.js`,
-  enlace temporal de S3 que se renueva si caduca). El primero es **CodeArtifact**; S3 conserva su
+  enlace temporal de S3 que se renueva si caduca). El primero es **CodeArtifact** (luego **Bedrock**); S3 conserva su
   fichero local. Los demás audios del tema AWS de Kopi tratan la SAP-C02, ya retirada, y no se usan.
   Para añadir otro: subirlo a un tema de Conocimiento en Kopi Media Admin, copiar el id del recurso al
   `data-kopi` de la guía, poner `"audio": true` en `servicios.json` y ejecutar
