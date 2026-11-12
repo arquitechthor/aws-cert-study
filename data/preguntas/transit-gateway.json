@@ -76,6 +76,7 @@
       "SAP-C03"
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
     "enunciado": "Una empresa centraliza la inspección del tráfico entre VPC en una VPC de inspección con un cortafuegos con estado, conectada a un Transit Gateway. Algunas conexiones se cortan porque la respuesta vuelve por otra AZ. ¿Qué lo corrige?",
     "opciones": [
       "Desactivar la propagación de rutas.",

@@ -28,6 +28,7 @@
       "SAP-C03"
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
     "enunciado": "Una empresa migra un almacén de datos Teradata de 200 TB a Amazon Redshift. ¿Qué enfoque recomienda AWS?",
     "opciones": [
       "AWS DMS con una tarea de CDC directamente a Redshift.",

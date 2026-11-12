@@ -51,6 +51,7 @@
       "SAP-C03"
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
     "enunciado": "Todo el tráfico entre el segmento de desarrollo y el de servicios compartidos, en cualquier región, debe pasar por cortafuegos de inspección, sin mantener rutas estáticas. ¿Qué configura en Cloud WAN?",
     "opciones": [
       "Una ruta estática en cada VPC hacia el cortafuegos.",
@@ -73,6 +74,7 @@
       "SAP-C03"
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
     "enunciado": "Una empresa con 12 VPC en una sola región necesita que se comuniquen entre sí y con su centro de datos por Direct Connect, y su equipo de red prefiere controlar las tablas de rutas. ¿Qué opción es la más adecuada?",
     "opciones": [
       "AWS Cloud WAN con un segmento por VPC.",

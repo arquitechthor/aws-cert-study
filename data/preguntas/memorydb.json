@@ -6,6 +6,7 @@
       "SAP-C03"
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
     "enunciado": "Un servicio de carritos usa ElastiCache como caché y DynamoDB como base de datos. Necesita lecturas en microsegundos, no puede perder escrituras confirmadas y el equipo quiere simplificar la arquitectura usando la API de Redis que ya conoce. ¿Qué propone el arquitecto?",
     "opciones": [
       "Activar la persistencia en disco de ElastiCache y quitar DynamoDB.",

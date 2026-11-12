@@ -169,7 +169,7 @@ horizontal scroll).
    add `"dominios": {"<cert>": "<domain>"}` for the ones where `dominio` doesn't exist). Spread the
    correct answer across positions. A question whose service is in no current guide keeps
    `"certificaciones": []` and `"dominio": ""`. Mark SAP-level questions with `"dificil": true` (criteria in
-   `PLAN.md`, Fase 5).
+   "Hard questions" below).
 4. In `data/servicios.json`, set `estado` to `"publicado"` and write `resumen`. Then run
    `python scripts/revisar_texto.py --escribir <id>` (acronyms and links; add any new acronym
    to its glossary first) and `python scripts/revisar_texto.py --publicado <id>` so other pages'
@@ -187,8 +187,27 @@ your own. A key service has `"clave": true` in `servicios.json` and must have:
 - **A longer, deeper guide:** section `<h2 id="a-fondo">A fondo: temas avanzados</h2>` right
   before "Modelo de precios", with `<h3>` subsections (multi-account/multi-region patterns, quotas
   that drive a design, trade-offs, decision tables). Same as the Fase 5 deep-dive section.
-- **At least 2 hard questions** (`"dificil": true`, criteria in `PLAN.md`, Fase 5).
+- **At least 2 hard questions** (`"dificil": true`, criteria in "Hard questions" below).
 `revisar_texto.py` prints `AVISO servicio clave` when the section or the hard questions are missing.
+
+## Hard questions and the SAP-C03 deep dive (Phase 5)
+
+A question gets `"dificil": true` (shown as ⚠ "Pregunta difícil") only if it reads like the real
+SAP-C03 exam, not just because it is about an advanced service:
+- A long scenario with **several constraints at once** (e.g. multi-account + compliance + least
+  operational effort + cost).
+- **Every option is technically possible**; only one (or the 2–3 of a multiple answer) meets all
+  the constraints. Close distractors, none ruled out at a glance ("hacerlo a mano", "borrarlo todo"
+  disqualify a question).
+- It needs **two or more services combined**, or a specific limit, quota or behavior (e.g. AWS
+  managed KMS keys can't be shared across accounts; MACsec isn't available on 1 Gbps Direct Connect).
+- Multiple answer ("Elige 2/3") is common.
+When unsure, leave it unmarked: the owner, who passed SAA and SAP-C02, says real questions are much
+harder than this site's, so the tag must stay meaningful.
+
+Phase 5 services (queues in `PLAN.md`) get the same `<h2 id="a-fondo">A fondo: temas avanzados</h2>`
+section as key services (optional in the template, right before "Modelo de precios") and 5–10 new
+hard questions spread across the SAP-C03 domains, with the correct answer in varied positions.
 
 ## Content rules (non-negotiable)
 

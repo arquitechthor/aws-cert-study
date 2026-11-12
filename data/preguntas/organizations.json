@@ -138,6 +138,7 @@
       "SAP-C03"
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
     "enunciado": "Una empresa quiere asegurarse de que ninguna identidad ajena a la organización pueda acceder a sus buckets de S3, aunque el equipo de una cuenta escriba una política de bucket demasiado abierta. ¿Qué mecanismo lo impone de forma centralizada?",
     "opciones": [
       "Una SCP que deniegue s3:GetObject a los principales de fuera de la organización.",

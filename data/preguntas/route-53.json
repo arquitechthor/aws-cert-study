@@ -76,6 +76,7 @@
       "SAP-C03"
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
     "enunciado": "Las cargas de trabajo en varias VPC deben resolver nombres de un dominio interno alojado en los servidores DNS de un centro de datos, conectado por Direct Connect. ¿Qué solución es la adecuada?",
     "opciones": [
       "Una zona alojada pública con los mismos registros.",

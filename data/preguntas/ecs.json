@@ -161,6 +161,7 @@
       "SAP-C03"
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
     "enunciado": "Una empresa migra 40 aplicaciones Java a contenedores. El equipo no conoce Kubernetes, quiere mínima operación de infraestructura pero necesita instancias con GPU para dos de ellas. ¿Qué DOS decisiones son adecuadas? (Elige 2.)",
     "opciones": [
       "Usar Amazon ECS como orquestador.",

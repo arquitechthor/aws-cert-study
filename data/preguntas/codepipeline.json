@@ -50,6 +50,7 @@
       "SAP-C03"
     ],
     "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
     "enunciado": "Una canalización en la cuenta de herramientas debe desplegar con CloudFormation en las cuentas de preproducción y producción. ¿Qué se necesita? (Elige dos.)",
     "opciones": [
       "Roles en las cuentas de destino que la canalización pueda asumir.",

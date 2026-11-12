@@ -76,6 +76,7 @@
     "dominios": {
       "SAP-C03": "Seguridad, cumplimiento y gobernanza"
     },
+    "dificil": true,
     "enunciado": "Una empresa debe cifrar el tráfico que viaja por su conexión Direct Connect de 1 Gbps hacia un Transit Gateway. ¿Qué solución es correcta?",
     "opciones": [
       "Activar MACsec en la conexión.",

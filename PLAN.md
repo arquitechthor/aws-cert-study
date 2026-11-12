@@ -92,8 +92,13 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   y preguntas de ordenar y emparejar. Además, etiqueta ⚠ "Pregunta difícil" (`"dificil": true`).
 - **Prioridad 6 completa (28/10/2026):** publicados los 19 servicios nuevos de SAP-C03 y DVA-C03; el catálogo
   tiene **177 servicios, todos publicados**.
-- **Próximo paso (siguiente sesión):** la **Fase 5** (profundización, ahora para SAP-C03), tarea
-  5.1 y luego los servicios de la cola 5.A en orden. Pendiente de datos: AIF-C01 solo tiene 5
+- **Tarea 5.1 hecha (12/11/2026):** criterio de "pregunta difícil" en `CLAUDE.md` (sección "Hard
+  questions"), la sección "A fondo" de la plantilla es la misma para servicios clave y Fase 5, y
+  revisadas a mano las 265 preguntas de SAP-C03 sin marcar: 15 cumplen el criterio y pasan a
+  `"dificil": true` (54 difíciles de 304). El resto tiene distractores descartables a simple vista o
+  nivel de Associate; no se reescriben aquí, eso lo hace la cola de la Fase 5 con preguntas nuevas.
+- **Próximo paso (siguiente sesión):** afinar con el usuario las colas 5.A y 5.B y seguir con el
+  primer servicio de la cola (`ec2`). Pendiente de datos: AIF-C01 solo tiene 5
   preguntas de "Fundamentos de IA generativa" (pesa el 24 %, un simulacro completo pide 16); el
   simulacro completa con otros dominios y lo avisa.
   **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `support` (planes antiguos) el 01/01/2027. La nota "Examen disponible a partir del…"
@@ -122,7 +127,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   "Servicios clave" y `CLAUDE.md`.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-10-28
+- **Última actualización:** 2026-11-12
 
 ---
 
@@ -799,14 +804,14 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
 27/10/2026, tarea 0.9).
 
 **Qué cambia en cada servicio de la cola:**
-- Sección nueva en la guía, **"A fondo para SAP-C02"** (tras "Comparativa con servicios
-  parecidos"): patrones multicuenta y multirregión, límites y cuotas que deciden un diseño,
+- Sección nueva en la guía, **"A fondo: temas avanzados"** (`id="a-fondo"`, la misma que en los
+  servicios clave, justo antes de "Modelo de precios"; unificado en la tarea 5.1): patrones multicuenta y multirregión, límites y cuotas que deciden un diseño,
   decisiones con sus compromisos (coste, esfuerzo operativo, disponibilidad, seguridad),
   integración con los servicios vecinos y las "trampas" típicas de los escenarios del examen, con
   tablas de decisión cuando ayuden. Mismas reglas de siempre: palabras propias, siglas con
   tooltip, enlaces a los demás servicios y datos contrastados con la documentación actual.
 - **5–10 preguntas nuevas de nivel SAP-C02** por servicio, todas con `"dificil": true`,
-  repartidas por los cuatro dominios, con la respuesta correcta en posiciones variadas.
+  repartidas por los cinco dominios de SAP-C03, con la respuesta correcta en posiciones variadas.
 
 **Criterio de "pregunta difícil"** (también para marcar las que ya existen):
 - Escenario largo con **varias restricciones a la vez** (p. ej. multicuenta + cumplimiento + menor
@@ -817,9 +822,14 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
 - Respuesta múltiple ("Elige 2/3") frecuente.
 
 **Tareas:**
-- [ ] **5.1** Añadir la sección "A fondo para SAP-C02" (opcional, comentada) a
+- [x] **5.1** Añadir la sección "A fondo para SAP-C02" (opcional, comentada) a
       `plantillas/servicio.html` y documentar el criterio en `CLAUDE.md`. Revisar las preguntas de
-      SAP-C02 que ya existen y marcar `"dificil": true` en las que cumplan el criterio.
+      SAP-C02 que ya existen y marcar `"dificil": true` en las que cumplan el criterio. → Hecho el
+      12/11/2026: la plantilla ya tenía la sección `a-fondo` de los servicios clave y se reutiliza;
+      criterio en `CLAUDE.md`; 15 de 265 preguntas de SAP-C03 marcadas (`cloud-wan-003`, `-004`,
+      `codepipeline-003`, `directory-service-005`, `ecs-008`, `memorydb-001`, `organizations-007`,
+      `route-53-004`, `s3-glacier-005`, `sct-002`, `secrets-manager-009`, `site-to-site-vpn-004`,
+      `transit-gateway-004`, `vpc-lattice-006`, `vpc-lattice-007`).
 - [ ] **5.2** Cola 5.A (pedidos por el usuario), en este orden: ~~`organizations`~~ (hecho el
       08/10/2026 al hacerlo servicio clave: sección "A fondo" y 5 preguntas difíciles), ~~`iam`~~ (hecho el 16/10/2026 como servicio clave), `ec2`,
       `ecs`, `eks`, `fargate`, `codepipeline`, `codebuild`, `codedeploy`, `codeartifact`.
@@ -1001,3 +1011,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-28 | **Prioridad 6 completa** (pedido por el usuario): últimas 6 guías, todas de SAP-C03: Clean Rooms, Cost Categories, Data Lifecycle Manager, CodeCommit (sin aviso: volvió a disponibilidad general el 25/11/2025), Distro for OpenTelemetry y Data Transfer Terminal, con 5 preguntas cada una y una difícil en las seis. Sigla FIS añadida al glosario (faltaba en las guías de Fault Injection Service y Resilience Hub, ya corregidas). 177 de 177 servicios publicados; `sitemap.xml` con 183 URL. |
 | 2026-10-29 | **Audio y "Números interesantes" en S3** (pedido por el usuario): audio de NotebookLM antes de "Qué es", campo `audio` en `servicios.json` con chip 🎧 y filtro "🎧 Con audio" (`audio=1`) en "Destacados", y sección "Números interesantes" con seis fichas (durabilidad, disponibilidad, 50 TB, 5 GB por subida, 3.500/5.500 peticiones por prefijo, 10.000 buckets), contrastadas con la documentación de AWS. Nota sobre audios generados con IA en el aviso legal. Probado en navegador (filtro, chip, reproducción del audio, una columna sin desplazamiento horizontal a 375 px). |
 | 2026-10-29 | **Audio de S3 recomprimido** (pedido por el usuario): de AAC estéreo a 257 kbps (51,4 MB) a AAC mono a 64 kbps con `+faststart` (13,4 MB, misma duración), con ffmpeg instalado vía winget. Norma de formato para los audios nuevos anotada en "Estado actual". |
+| 2026-11-12 | **Tarea 5.1** (pedida por el usuario): criterio de "pregunta difícil" documentado en `CLAUDE.md` (sección "Hard questions and the SAP-C03 deep dive"); la sección "A fondo" de Fase 5 es la misma `a-fondo` de los servicios clave (plantilla y `PLAN.md` alineados). Revisadas a mano las 265 preguntas de SAP-C03 sin marcar: 15 pasan a `"dificil": true` (54 de 304 en total). Las demás no cumplen el criterio (distractores descartables o nivel de Associate). |

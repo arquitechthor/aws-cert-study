@@ -94,6 +94,7 @@
       "SAP-C03"
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
     "enunciado": "Una empresa archiva copias de seguridad en S3 Glacier Flexible Retrieval. Su plan de recuperación exige poder restaurar algunos ficheros críticos en menos de 10 minutos, también en momentos de mucha demanda. ¿Qué debe prever?",
     "opciones": [
       "Restauraciones aceleradas, con capacidad aprovisionada para garantizar que estén disponibles.",

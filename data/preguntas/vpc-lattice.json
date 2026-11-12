@@ -121,6 +121,7 @@
       "SAP-C03"
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
     "enunciado": "Por normativa, el tráfico entre un servicio cliente y un servicio de pagos publicado en VPC Lattice debe ir cifrado de extremo a extremo, y solo los destinos del servicio de pagos pueden descifrarlo. ¿Qué agente de escucha se usa?",
     "opciones": [
       "Un agente de escucha HTTPS con un certificado de ACM.",
@@ -143,6 +144,7 @@
       "SAP-C03"
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
     "enunciado": "Una cuenta de datos tiene una base de datos de Amazon RDS que deben usar aplicaciones de otras cuentas conectadas a una red de servicios de VPC Lattice, sin peering ni Transit Gateway. ¿Qué crea el dueño de la base de datos?",
     "opciones": [
       "Una pasarela de recursos en su VPC y una configuración de recursos para la base de datos, compartida con RAM y asociada a la red de servicios.",
