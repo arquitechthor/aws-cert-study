@@ -290,6 +290,8 @@ dominios con su nombre en español/inglés y su peso (%).
    certificaciones en las que entra, cada uno enlazado a la portada ya filtrada.
 2. **Qué es:** 2–3 frases.
 3. **Conceptos clave:** componentes, tipos, límites relevantes.
+   - **Comandos de ejemplo** (opcional, desde el 12/11/2026, pedido por el usuario): comandos de la
+     CLI o configuración en bloques `<pre><code>`, con nombres inventados. Primera guía: CodeArtifact.
 4. **Casos de uso típicos** y **cuándo NO usarlo**.
 5. **Comparativa con servicios parecidos**, por ejemplo EC2 vs Lambda vs Fargate.
 6. **Modelo de precios:** cómo se cobra, sin cifras.
@@ -1012,3 +1014,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-10-29 | **Audio y "Números interesantes" en S3** (pedido por el usuario): audio de NotebookLM antes de "Qué es", campo `audio` en `servicios.json` con chip 🎧 y filtro "🎧 Con audio" (`audio=1`) en "Destacados", y sección "Números interesantes" con seis fichas (durabilidad, disponibilidad, 50 TB, 5 GB por subida, 3.500/5.500 peticiones por prefijo, 10.000 buckets), contrastadas con la documentación de AWS. Nota sobre audios generados con IA en el aviso legal. Probado en navegador (filtro, chip, reproducción del audio, una columna sin desplazamiento horizontal a 375 px). |
 | 2026-10-29 | **Audio de S3 recomprimido** (pedido por el usuario): de AAC estéreo a 257 kbps (51,4 MB) a AAC mono a 64 kbps con `+faststart` (13,4 MB, misma duración), con ffmpeg instalado vía winget. Norma de formato para los audios nuevos anotada en "Estado actual". |
 | 2026-11-12 | **Tarea 5.1** (pedida por el usuario): criterio de "pregunta difícil" documentado en `CLAUDE.md` (sección "Hard questions and the SAP-C03 deep dive"); la sección "A fondo" de Fase 5 es la misma `a-fondo` de los servicios clave (plantilla y `PLAN.md` alineados). Revisadas a mano las 265 preguntas de SAP-C03 sin marcar: 15 pasan a `"dificil": true` (54 de 304 en total). Las demás no cumplen el criterio (distractores descartables o nivel de Associate). |
+| 2026-11-12 | **Comandos de ejemplo en CodeArtifact** (pedido por el usuario, que también usa el sitio para aprender los servicios de su trabajo): sección opcional nueva `id="comandos"` tras "Conceptos clave" con `login` (npm, pip, twine; duración del token, `--dry-run`, permiso `sts:GetServiceBearerToken` en la política de la identidad), token y punto de enlace para Maven/Gradle con `settings.xml`, e instalar y publicar. Datos contrastados con la documentación actual (3 fuentes nuevas) y una trampa de examen más. Estilo `.doc pre` (desplazamiento dentro del bloque); plantilla, `CLAUDE.md` y estructura fija actualizados. Probado en navegador a escritorio y 375 px (sin desplazamiento horizontal de la página, cuestionario cargado). |

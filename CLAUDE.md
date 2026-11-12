@@ -164,6 +164,12 @@ horizontal scroll).
    if Kopi uses the service (see `kopi-media-admin/documentation/servicios-aws/`), with no
    sensitive identifiers (account ID, bucket names, distribution IDs, ARNs); in that case also
    set `"kopi": true` in `servicios.json` so it appears under the "Usados en Kopi" filter.
+   Optional section `<h2 id="comandos">Comandos de ejemplo</h2>` right after "Conceptos clave"
+   (first used in `servicios/codeartifact.html`): AWS CLI commands or config snippets checked against
+   current docs, written in our own words, each in `<pre><code>` (styled by `.doc pre`, which scrolls
+   inside the block so the page never scrolls sideways at 375px), with made-up names and the fake
+   account `111122223333`. `revisar_texto.py` and `lectura.js` skip `<pre>`/`<code>`. The owner also
+   uses this site to learn the AWS services of their job, so practical content is welcome.
 3. Write `data/preguntas/<id>.json` with 5–15 **original** questions tagged with certification
    and domain (domain names from `certificaciones.json`; if a question has several certifications,
    add `"dominios": {"<cert>": "<domain>"}` for the ones where `dominio` doesn't exist). Spread the

@@ -96,6 +96,53 @@
           internamente, para evitar ataques de confusión de dependencias.</li>
       </ul>
 
+      <h2 id="comandos">Comandos de ejemplo</h2>
+      <p>Se necesita la <a href="cli.html">AWS <abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a> configurada con unas credenciales. Los nombres <code>mi-dominio</code> y <code>mi-repo</code>
+        son inventados, y <code>111122223333</code> es el número de cuenta ficticio que usa AWS en sus ejemplos. Los
+        comandos están escritos para bash; en PowerShell, la barra <code>\</code> del final de línea se cambia por el
+        acento grave y <code>export VAR=$(…)</code> por <code>$env:VAR = (…)</code>.</p>
+
+      <h3>Iniciar sesión con npm, pip o twine</h3>
+      <pre><code>aws codeartifact login --tool npm \
+  --domain mi-dominio --domain-owner 111122223333 \
+  --repository mi-repo</code></pre>
+      <ul>
+        <li><code>login</code> pide un token y deja configurada la herramienta: en npm edita <code>~/.npmrc</code>, en
+          pip <code>pip.conf</code> y en twine <code>~/.pypirc</code>. <code>--tool</code> admite <code>npm</code>,
+          <code>pip</code>, <code>twine</code>, <code>dotnet</code>, <code>nuget</code> y <code>swift</code>.</li>
+        <li><code>--domain-owner</code> solo hace falta si el dominio es de otra cuenta.</li>
+        <li>El token dura 12 horas por defecto. Con <code>--duration-seconds</code> se elige entre 900 y 43 200 segundos;
+          con <code>0</code>, si se ha asumido un rol, dura lo que le quede a la sesión del rol.</li>
+        <li><code>--dry-run</code> muestra lo que cambiaría sin tocar la configuración.</li>
+        <li>La identidad que llama necesita <code>codeartifact:GetAuthorizationToken</code> y también
+          <code>sts:GetServiceBearerToken</code>, este último en su propia política de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>: en la política del dominio no
+          tiene efecto.</li>
+      </ul>
+
+      <h3>Maven o Gradle: token y punto de enlace a mano</h3>
+      <p><code>login</code> no configura Maven ni Gradle: se guarda el token en una variable de entorno y se pide la <abbr class="sigla sigla-1" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL<span class="sigla-exp"> (Uniform Resource Locator: dirección web)</span></abbr> del
+        repositorio para ese formato.</p>
+      <pre><code>export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+  --domain mi-dominio --domain-owner 111122223333 \
+  --query authorizationToken --output text)
+
+aws codeartifact get-repository-endpoint \
+  --domain mi-dominio --repository mi-repo --format maven</code></pre>
+      <p>En <code>~/.m2/settings.xml</code>, el servidor usa el usuario <code>aws</code> y el token como contraseña; la <abbr class="sigla" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL</abbr>
+        que devuelve el segundo comando va en un <code>&lt;repository&gt;</code> con el mismo <code>id</code>.</p>
+      <pre><code>&lt;server&gt;
+  &lt;id&gt;codeartifact&lt;/id&gt;
+  &lt;username&gt;aws&lt;/username&gt;
+  &lt;password&gt;${env.CODEARTIFACT_AUTH_TOKEN}&lt;/password&gt;
+&lt;/server&gt;</code></pre>
+
+      <h3>Instalar y publicar paquetes</h3>
+      <pre><code># Tras el login, npm y twine ya apuntan a mi-repo
+npm install lodash     # si no está en mi-repo, lo busca en sus repositorios ascendentes
+npm publish            # publica el paquete del directorio actual
+
+twine upload --repository codeartifact dist/*</code></pre>
+
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
       <ul>
         <li>Publicar bibliotecas internas para que las usen otros equipos.</li>
@@ -140,6 +187,8 @@
         <li><strong>"Conservar copia de los paquetes públicos que usamos"</strong>: conexión externa.</li>
         <li><strong>"Compartir paquetes entre cuentas"</strong>: un dominio con política de dominio.</li>
         <li><strong>"npm install falla con 401"</strong>: el token caducó; obtener otro con la <a href="cli.html"><abbr class="sigla" data-s="CLI" data-en="Command Line Interface" data-es="línea de comandos" tabindex="0">CLI</abbr></a>.</li>
+        <li><strong>"El login falla aunque la política del dominio permite sts:GetServiceBearerToken"</strong>: ese permiso
+          tiene que estar en la política de la identidad.</li>
         <li><strong>"Imágenes Docker"</strong>: <a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>, no CodeArtifact.</li>
       </ul>
 
@@ -152,6 +201,9 @@
         <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/welcome.html" target="_blank" rel="noopener">What is AWS CodeArtifact?</a>, documentación de AWS (consultada el 03/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/external-connection.html" target="_blank" rel="noopener">Connect a CodeArtifact repository to a public repository</a>, documentación de AWS (consultada el 03/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/package-origin-controls.html" target="_blank" rel="noopener">Editing package origin controls</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html" target="_blank" rel="noopener">AWS CodeArtifact authentication and tokens</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html" target="_blank" rel="noopener">Configure and use npm with CodeArtifact</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/maven-mvn.html" target="_blank" rel="noopener">Use CodeArtifact with mvn</a>, documentación de AWS (consultada el 12/11/2026).</li>
       </ul>
     </article>
   </div>
