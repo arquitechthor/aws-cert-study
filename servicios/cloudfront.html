@@ -156,6 +156,24 @@
         el enrutado de la <abbr class="sigla" data-s="SPA" data-en="Single-Page Application" data-es="web de una sola página" tabindex="0">SPA</abbr>. <code>index.html</code> no se cachea, mientras que los <abbr class="sigla" data-s="JS" data-en="JavaScript" tabindex="0">JS</abbr> y <abbr class="sigla sigla-1" data-s="CSS" data-en="Cascading Style Sheets" data-es="hojas de estilo de una web" tabindex="0">CSS<span class="sigla-exp"> (Cascading Style Sheets: hojas de estilo de una web)</span></abbr>, con hash en
         el nombre, se cachean un año. Cada despliegue solo invalida <code>index.html</code>. El
         certificado tuvo que crearse en <strong>us-east-1</strong>, aunque el resto está en otra región.</p>
+      <p class="text-faint">Toda la arquitectura de Kopi, explicada: <a href="https://arquitechthor.github.io/aprendizajes/kopi-tools.html#arquitectura">Aprendizajes de Kopi Tools</a>.</p>
+
+      <h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>
+      <p><a href="https://github.com/arquitechthor/prompt-quest" target="_blank" rel="noopener">Prompt Quest</a>
+        (código público) sirve todo desde una sola distribución con tres comportamientos:</p>
+      <ul>
+        <li><strong>Por defecto</strong>: la web estática, desde un bucket <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> privado con
+          <abbr class="sigla" data-s="OAC" data-en="Origin Access Control" data-es="permite que solo CloudFront lea el origen" tabindex="0">OAC</abbr>.</li>
+        <li><strong><code>/replays/*</code></strong>: los ficheros de cada partida, inmutables, con la política gestionada
+          <code>CachingOptimized</code>.</li>
+        <li><strong><code>/api/*</code></strong>: la HTTP <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>, con una política de caché propia que
+          <strong>respeta el <code>Cache-Control</code> del origen</strong> (<abbr class="sigla" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL</abbr> por defecto 0, máximo 60 s).</li>
+      </ul>
+      <p>La consulta que hacen todos los móviles, <code>GET /api/arena</code>, responde con <code>max-age=2</code>:
+        <strong>micro-caché</strong>. Miles de espectadores se convierten en una petición a la función cada dos segundos.
+        Las rutas de cada jugador responden con <code>no-store</code> y no se cachean. Código:
+        <a href="https://github.com/arquitechthor/prompt-quest/blob/main/infra/app.ts" target="_blank" rel="noopener"><code>infra/app.ts</code></a>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/prompt-quest.html#replay">Aprendizajes de Prompt Quest</a>.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>

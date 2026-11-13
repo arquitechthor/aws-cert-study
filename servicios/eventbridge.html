@@ -159,6 +159,16 @@
         <li>Buses globales y replicación de eventos entre regiones con <em>global endpoints</em>.</li>
       </ul>
 
+      <h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>
+      <p><a href="https://github.com/arquitechthor/prompt-quest" target="_blank" rel="noopener">Prompt Quest</a>
+        (código público) usa una regla programada (<code>rate(1 minute)</code>) que invoca una función
+        <a href="lambda.html">Lambda</a>, <code>tick</code>, cada minuto. Si el modo automático del evento está apagado,
+        la función sale en milisegundos (coste casi cero). Si está encendido, lanza la siguiente partida en cuanto termina
+        la actual y repite dentro de su minuto, para que la pantalla del stand nunca se quede vacía. Es un «latido» barato
+        en lugar de un servidor encendido esperando. Código:
+        <a href="https://github.com/arquitechthor/prompt-quest/blob/main/src/lambda/handlers.ts" target="_blank" rel="noopener"><code>src/lambda/handlers.ts</code></a>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/prompt-quest.html#operacion">Aprendizajes de Prompt Quest</a>.</p>
+
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Reaccionar a un cambio de estado de un servicio de AWS"</strong>: regla de EventBridge.</li>

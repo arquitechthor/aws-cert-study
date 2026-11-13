@@ -283,6 +283,26 @@
         hay funciones disparadas por eventos: el disparador de registro de <a href="cognito.html">Cognito</a> y una función que
         reacciona a cada objeto nuevo en <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> para mantener <a href="dynamodb.html">DynamoDB</a> sincronizado. Con el tráfico de un
         proyecto personal, el coste de Lambda cabe en el nivel gratuito.</p>
+      <p class="text-faint">Toda la arquitectura de Kopi, explicada: <a href="https://arquitechthor.github.io/aprendizajes/kopi-tools.html#lambdas">Aprendizajes de Kopi Tools</a>.</p>
+
+      <h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>
+      <p><a href="https://github.com/arquitechthor/prompt-quest" target="_blank" rel="noopener">Prompt Quest</a>
+        (código público) tiene tres funciones (Node.js 22 en ARM64) sobre un único dominio: <code>api</code>
+        detrás de <a href="api-gateway.html">API Gateway</a>, <code>compile</code> consumiendo una cola
+        <a href="sqs.html"><abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr></a> y <code>tick</code>, invocada por <a href="eventbridge.html">EventBridge</a> cada
+        minuto. Tres detalles útiles:</p>
+      <ul>
+        <li><strong>La lógica no vive en los <em>handlers</em>:</strong> está separada con puertos y adaptadores, así que el
+          juego entero corre en local, sin AWS, con adaptadores de ficheros.</li>
+        <li><strong>Inicialización fuera del <em>handler</em>:</strong> la clave de administración se lee de
+          <a href="secrets-manager.html">Secrets Manager</a> una vez por entorno de ejecución y se reutiliza entre
+          invocaciones.</li>
+        <li><strong>Aprovechar el tiempo:</strong> <code>tick</code> consulta <code>context.getRemainingTimeInMillis()</code>
+          para encadenar partidas dentro de su minuto sin pasarse del tiempo máximo; si el modo automático está apagado,
+          termina en milisegundos.</li>
+      </ul>
+      <p>Código: <a href="https://github.com/arquitechthor/prompt-quest/blob/main/src/lambda/handlers.ts" target="_blank" rel="noopener"><code>src/lambda/handlers.ts</code></a>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/prompt-quest.html#hexagonal">Aprendizajes de Prompt Quest</a>.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>

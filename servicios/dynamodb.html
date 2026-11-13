@@ -171,6 +171,37 @@
         <code>OFFSET</code>. Una lección real: <code>Limit</code> se aplica <strong>antes</strong> que
         <code>FilterExpression</code>, así que una consulta con filtro puede devolver menos resultados
         de los pedidos, o ninguno, aunque haya más.</p>
+      <p class="text-faint">Toda la arquitectura de Kopi, explicada: <a href="https://arquitechthor.github.io/aprendizajes/kopi-tools.html#tenant">Aprendizajes de Kopi Tools</a>.</p>
+
+      <h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>
+      <p><a href="https://github.com/arquitechthor/prompt-quest" target="_blank" rel="noopener">Prompt Quest</a>
+        (código público) hace lo contrario que Kopi: <strong><em>single-table design</em></strong>. Agentes, partidas y el
+        estado de la arena viven en una sola tabla con <code>pk</code> = <code>AGENT#&lt;id&gt;</code>,
+        <code>MATCH#&lt;id&gt;</code> o <code>STATE</code>, y <code>sk</code> = <code>META</code>. Un
+        <abbr class="sigla" data-s="GSI" data-en="Global Secondary Index" data-es="índice secundario global" tabindex="0">GSI</abbr> <code>byType</code> (<code>type</code> + <code>createdAt</code>) lista agentes o las últimas
+        partidas con una <code>Query</code> ordenada, sin <code>Scan</code>.</p>
+      <p>El estado compartido lo tocan a la vez varias funciones, así que usa <strong>concurrencia optimista</strong>: un
+        <code>PutItem</code> con <code>ConditionExpression: 'attribute_not_exists(pk) OR #v = :v'</code>. Si otra escritura
+        ganó la carrera, llega <code>ConditionalCheckFailedException</code>, y el servicio relee y reintenta. Código:
+        <a href="https://github.com/arquitechthor/prompt-quest/blob/main/src/adapters/aws.ts" target="_blank" rel="noopener"><code>src/adapters/aws.ts</code></a>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/prompt-quest.html#datos">Aprendizajes de Prompt Quest</a>.</p>
+
+      <h2 id="kopi-chess">Así lo uso en Kopi Chess</h2>
+      <p>En <a href="https://github.com/arquitechthor/kopi-chess" target="_blank" rel="noopener">Kopi Chess</a>
+        (código público) DynamoDB guarda las partidas en línea entre dos personas. Cada partida es <strong>un solo
+        ítem</strong> con sus jugadas dentro: una partida larga ocupa unos pocos KB, lejos del límite de 400 KB por ítem.</p>
+      <ul>
+        <li><strong>Orden sin bloqueos:</strong> cada jugada se añade con una escritura condicional
+          (<code>lastPly = :anterior</code>), así que cada número de jugada se acepta una sola vez aunque lleguen dos a la
+          vez.</li>
+        <li><strong><abbr class="sigla" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL</abbr>:</strong> la partida caduca 30 días después de la última jugada. Como DynamoDB puede tardar
+          en borrar un ítem caducado, el código lo trata como inexistente en cuanto pasa la fecha.</li>
+        <li><strong>Límites por usuario:</strong> contadores en otra tabla, también con <abbr class="sigla" data-s="TTL" data-en="Time To Live" data-es="tiempo de vida antes de caducar" tabindex="0">TTL</abbr>, para responder
+          <code>429</code> a quien se pasa.</li>
+      </ul>
+      <p>La decisión completa está en el
+        <a href="https://github.com/arquitechthor/kopi-chess/blob/main/docs/adr/020-rele-de-partidas.md" target="_blank" rel="noopener">ADR-020</a>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/kopi-chess.html#en-linea">Aprendizajes de Kopi Chess</a>.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>

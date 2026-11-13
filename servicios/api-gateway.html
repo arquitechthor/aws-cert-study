@@ -163,6 +163,22 @@
         tenía todo lo necesario. La subida de ficheros <strong>no pasa por la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></strong>: por el límite
         de 10 MB, el navegador sube directamente a <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a> con una <abbr class="sigla" data-s="URL" data-en="Uniform Resource Locator" data-es="dirección web" tabindex="0">URL</abbr> prefirmada. El autorizador solo
         comprueba que el token es válido; que cada usuario vea solo sus datos lo comprueba cada Lambda.</p>
+      <p class="text-faint">Toda la arquitectura de Kopi, explicada: <a href="https://arquitechthor.github.io/aprendizajes/kopi-tools.html#auth">Aprendizajes de Kopi Tools</a>.</p>
+
+      <h2 id="kopi-chess">Así lo uso en Kopi Chess</h2>
+      <p>En <a href="https://github.com/arquitechthor/kopi-chess" target="_blank" rel="noopener">Kopi Chess</a>
+        (código público) el juego en línea usa dos APIs:</p>
+      <ul>
+        <li>Una <strong>HTTP <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr></strong> con un autorizador <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr> propio que solo acepta los clientes
+          de Kopi Chess: si sus <em>tokens</em> se filtraran, no servirían para el resto de Kopi.</li>
+        <li>Una <strong>API WebSocket</strong> que solo avisa («hay novedades en la partida X»). Los datos se
+          piden siempre por <abbr class="sigla" data-s="HTTP" data-en="HyperText Transfer Protocol" data-es="protocolo de la web" tabindex="0">HTTP</abbr>, así que perder un aviso no rompe nada.</li>
+      </ul>
+      <p>Las API WebSocket no admiten autorizadores <abbr class="sigla" data-s="JWT" data-en="JSON Web Token" data-es="token firmado con datos del usuario" tabindex="0">JWT</abbr>, así que la función de
+        <code>$connect</code> verifica el <em>token</em> a mano: firma RS256 con las claves públicas del grupo de usuarios de
+        <a href="cognito.html">Cognito</a>, emisor, cliente y caducidad. Cada petición lleva además la versión del protocolo
+        en una cabecera: con otra versión, la respuesta es <code>426</code>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/kopi-chess.html#en-linea">Aprendizajes de Kopi Chess</a>.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>

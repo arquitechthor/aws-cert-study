@@ -337,6 +337,20 @@
         <strong>notificación de evento</strong> dispara una Lambda con cada objeto nuevo para
         reconciliarlo con <a href="dynamodb.html">DynamoDB</a>. Así se registran también los ficheros que sube la aplicación de
         escritorio directamente a <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</p>
+      <p class="text-faint">Toda la arquitectura de Kopi, explicada: <a href="https://arquitechthor.github.io/aprendizajes/kopi-tools.html#ficheros">Aprendizajes de Kopi Tools</a>.</p>
+
+      <h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>
+      <p><a href="https://github.com/arquitechthor/prompt-quest" target="_blank" rel="noopener">Prompt Quest</a>
+        (código público) simula cada partida entera en milisegundos y la guarda en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> como un fichero
+        <strong>inmutable</strong> (<code>replays/&lt;id&gt;.json</code>, comprimido con gzip, con
+        <code>Cache-Control: public, max-age=31536000, immutable</code>). Todos los móviles y la pantalla del evento lo
+        descargan a través de <a href="cloudfront.html">CloudFront</a> y lo reproducen sincronizados con la hora de inicio,
+        sin WebSockets: el coste no depende del número de espectadores.</p>
+      <p>Los dos buckets (la web y los datos) bloquean todo el acceso público y exigen <abbr class="sigla" data-s="TLS" data-en="Transport Layer Security" data-es="cifrado de las conexiones" tabindex="0">TLS</abbr>; solo los lee
+        CloudFront con <abbr class="sigla" data-s="OAC" data-en="Origin Access Control" data-es="permite que solo CloudFront lea el origen" tabindex="0">OAC</abbr>. Una regla de ciclo de vida borra los replays a los 30 días. Código:
+        <a href="https://github.com/arquitechthor/prompt-quest/blob/main/src/adapters/aws.ts" target="_blank" rel="noopener"><code>src/adapters/aws.ts</code></a> e
+        <a href="https://github.com/arquitechthor/prompt-quest/blob/main/infra/app.ts" target="_blank" rel="noopener"><code>infra/app.ts</code></a>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/prompt-quest.html#replay">Aprendizajes de Prompt Quest</a>.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>

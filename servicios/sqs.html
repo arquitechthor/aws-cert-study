@@ -164,6 +164,26 @@
         <li>Endpoint de <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> para usar <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr> sin salir a internet.</li>
       </ul>
 
+      <h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>
+      <p>En <a href="https://github.com/arquitechthor/prompt-quest" target="_blank" rel="noopener">Prompt Quest</a>
+        (código público) una cola <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr> separa la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> de la compilación de estrategias con
+        <a href="bedrock.html">Bedrock</a>. La <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> responde al momento («compilando…») y una función
+        <a href="lambda.html">Lambda</a> consume la cola con estas opciones:</p>
+      <ul>
+        <li><strong>Concurrencia máxima de 5</strong> (<code>maxConcurrency</code> en el <em>event source mapping</em>):
+          aunque lleguen cien estrategias a la vez, Bedrock nunca recibe más de cinco llamadas simultáneas. Es
+          contrapresión sin código.</li>
+        <li><strong>Lotes de un mensaje</strong> y <strong>tiempo de visibilidad de 90 s</strong>, mayor que el tiempo máximo
+          de la función (60 s), para que un mensaje no reaparezca mientras se procesa.</li>
+        <li><strong><code>reportBatchItemFailures</code></strong>: la función devuelve los mensajes que fallaron y solo esos se
+          reintentan. A las tres recepciones, el mensaje va a una <abbr class="sigla" data-s="DLQ" data-en="Dead-Letter Queue" data-es="cola donde acaban los mensajes que fallan" tabindex="0">DLQ</abbr>.</li>
+        <li><strong>Mensajes obsoletos:</strong> cada mensaje lleva la versión de la estrategia; si el jugador ya la cambió,
+          se descarta. Procesar dos veces el mismo mensaje no hace daño.</li>
+      </ul>
+      <p>Código: <a href="https://github.com/arquitechthor/prompt-quest/blob/main/infra/app.ts" target="_blank" rel="noopener"><code>infra/app.ts</code></a> y
+        <a href="https://github.com/arquitechthor/prompt-quest/blob/main/src/lambda/handlers.ts" target="_blank" rel="noopener"><code>src/lambda/handlers.ts</code></a>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/prompt-quest.html#degradacion">Aprendizajes de Prompt Quest</a>.</p>
+
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Desacoplar"</strong> o <strong>"absorber picos"</strong> entre componentes: <abbr class="sigla" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS</abbr>.</li>

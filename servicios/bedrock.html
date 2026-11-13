@@ -359,6 +359,28 @@ aws bedrock list-inference-profiles --type-equals SYSTEM_DEFINED \
         código. Todo queda dentro de AWS, sin claves de <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> externas: el permiso es
         <code>bedrock:InvokeModel</code> en el rol de ejecución. Se eligió un modelo pequeño y rápido
         porque la tarea no necesita más y el coste por token es menor.</p>
+      <p class="text-faint">Toda la arquitectura de Kopi, explicada: <a href="https://arquitechthor.github.io/aprendizajes/kopi-tools.html#plataforma">Aprendizajes de Kopi Tools</a>.</p>
+
+      <h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>
+      <p>En <a href="https://github.com/arquitechthor/prompt-quest" target="_blank" rel="noopener">Prompt Quest</a>
+        (código público) Bedrock no decide cada jugada: <strong>compila</strong> la estrategia que cada jugador escribe en
+        lenguaje natural a una política <abbr class="sigla" data-s="JSON" data-en="JavaScript Object Notation" data-es="formato de datos en texto" tabindex="0">JSON</abbr>, que después ejecuta un motor determinista. Es una llamada por estrategia en
+        lugar de una por movimiento: sin latencia durante la partida y con partidas reproducibles.</p>
+      <ul>
+        <li><strong>Salida estructurada:</strong> la respuesta tiene que cumplir un JSON Schema con enumeraciones cerradas
+          (hechos, acciones y objetivos del juego), y el código la vuelve a validar y acotar.</li>
+        <li><strong><em>Prompt caching</em>:</strong> el mensaje de sistema es largo e idéntico en todas las llamadas, así
+          que lleva <code>cache_control</code> y las siguientes llamadas son más baratas y rápidas.</li>
+        <li><strong>Modelo pequeño:</strong> Claude Haiku, con un tiempo máximo de 25 s y dos reintentos; el modelo se elige
+          al desplegar.</li>
+        <li><strong>Inyección de prompts:</strong> el texto del jugador va delimitado como dato no confiable, el modelo marca
+          los intentos (<code>injectionAttempt</code>) y el vocabulario cerrado impide pedir ventajas imposibles.</li>
+        <li><strong>Plan B:</strong> si Bedrock falla o se niega, un compilador heurístico toma el relevo.</li>
+        <li><strong>Crónica sin inventos:</strong> al acabar la partida, el modelo escribe una crónica a partir de hechos
+          extraídos por el código, no de la partida entera.</li>
+      </ul>
+      <p>Código: <a href="https://github.com/arquitechthor/prompt-quest/blob/main/src/core/bedrock.ts" target="_blank" rel="noopener"><code>src/core/bedrock.ts</code></a>.</p>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/prompt-quest.html#bedrock">Aprendizajes de Prompt Quest</a>.</p>
 
       <h2 id="trampas">Trampas de examen</h2>
       <ul>

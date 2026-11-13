@@ -163,7 +163,12 @@ horizontal scroll).
    header icon at its category icon instead. Include the "Así lo uso en Kopi" section only
    if Kopi uses the service (see `kopi-media-admin/documentation/servicios-aws/`), with no
    sensitive identifiers (account ID, bucket names, distribution IDs, ARNs); in that case also
-   set `"kopi": true` in `servicios.json` so it appears under the "Usados en Kopi" filter.
+   set `"kopi": true` in `servicios.json` so it appears under the "Usados en Kopi" filter. Two more optional
+   sections, about the owner's **public** projects, go right after it (or right before "Trampas de examen" if
+   there is no Kopi section): `<h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>` and `<h2 id="kopi-chess">Así
+   lo uso en Kopi Chess</h2>`, with links to the files on GitHub and a closing `<p class="text-faint">` link to the
+   matching case study in `https://arquitechthor.github.io/aprendizajes/` (whose pages link back to these anchors).
+   They don't set `"kopi": true`.
    Optional section `<h2 id="comandos">Comandos de ejemplo</h2>` right after "Conceptos clave"
    (first used in `servicios/codeartifact.html`): AWS CLI commands or config snippets checked against
    current docs, written in our own words, each in `<pre><code>` (styled by `.doc pre`, which scrolls

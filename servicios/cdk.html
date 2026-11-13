@@ -156,6 +156,26 @@
           plantilla.</li>
       </ul>
 
+      <h2 id="prompt-quest">Así lo uso en Prompt Quest</h2>
+      <p><a href="https://github.com/arquitechthor/prompt-quest" target="_blank" rel="noopener">Prompt Quest</a>
+        (código público) define toda su infraestructura en un único <em>stack</em> de CDK en TypeScript
+        (<a href="https://github.com/arquitechthor/prompt-quest/blob/main/infra/app.ts" target="_blank" rel="noopener"><code>infra/app.ts</code></a>): <a href="cloudfront.html">CloudFront</a>, dos buckets
+        <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, tres funciones <a href="lambda.html">Lambda</a>, <a href="dynamodb.html">DynamoDB</a> bajo demanda, <a href="sqs.html"><abbr class="sigla sigla-1" data-s="SQS" data-en="Simple Queue Service" tabindex="0">SQS<span class="sigla-exp"> (Simple Queue Service)</span></abbr></a> con <abbr class="sigla sigla-1" data-s="DLQ" data-en="Dead-Letter Queue" data-es="cola donde acaban los mensajes que fallan" tabindex="0">DLQ<span class="sigla-exp"> (Dead-Letter Queue: cola donde acaban los mensajes que fallan)</span></abbr>, una regla de <a href="eventbridge.html">EventBridge</a>, un secreto y un
+        presupuesto. Algunas decisiones:</p>
+      <ul>
+        <li><strong><code>NodejsFunction</code></strong> empaqueta cada función con esbuild local, sin Docker.</li>
+        <li><strong>Parámetros de contexto</strong> (<code>-c modelId=…</code>, <code>-c compiler=heuristic</code>,
+          <code>-c budgetUsd=…</code>) para desplegar variantes sin tocar código.</li>
+        <li><strong>Permisos con <code>grant*</code></strong> (<code>table.grantReadWriteData(fn)</code>,
+          <code>queue.grantSendMessages(fn)</code>): mínimo privilegio sin escribir políticas a mano.</li>
+        <li><strong>Constructos de nivel 1 cuando hace falta:</strong> el presupuesto usa <code>CfnBudget</code> porque no
+          hay uno de nivel 2.</li>
+        <li><strong>Prototipo desechable:</strong> todo con <code>RemovalPolicy.DESTROY</code> (y
+          <code>autoDeleteObjects</code> en los buckets), así que <code>cdk destroy</code> no deja costes.</li>
+        <li>Se puede desplegar desde <a href="cloudshell.html">CloudShell</a> sin instalar nada en el equipo.</li>
+      </ul>
+      <p class="text-faint">Caso completo, con el código explicado: <a href="https://arquitechthor.github.io/aprendizajes/prompt-quest.html#operacion">Aprendizajes de Prompt Quest</a>.</p>
+
       <h2 id="trampas">Trampas de examen</h2>
       <ul>
         <li><strong>"Definir infraestructura con Python, TypeScript o Java"</strong>: CDK.</li>
