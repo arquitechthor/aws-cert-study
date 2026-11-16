@@ -10,6 +10,10 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
+- **Idiomas: inglés e italiano (16/11/2026, petición del usuario), solo planificado:** el español sigue
+  siendo el idioma por defecto. Plan completo en [`PLAN-IDIOMAS.md`](PLAN-IDIOMAS.md): traducción de
+  interfaz, catálogo, siglas, guías, preguntas y escenarios, y voces por idioma (lectura y audios de
+  Kopi). Pendiente de que el usuario resuelva sus decisiones I1–I8.
 - **Audios desde Kopi (11/11/2026, decisión del usuario):** los resúmenes en audio nuevos **no se suben
   al repo** (con 177 servicios se superaría el límite de GitHub). Son recursos públicos de un tema de
   Conocimiento de Kopi y se leen de su API pública al pulsar "▶ Escuchar" (`assets/audio-kopi.js`,
