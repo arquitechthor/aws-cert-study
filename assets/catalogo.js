@@ -315,3 +315,30 @@
     el.grid.innerHTML = msg;
   });
 })();
+
+/**
+ * Sección "Certificaciones" de la portada: plegada al cargar. El botón bajo su descripción la
+ * despliega y desaparece, así que no se puede volver a ocultar salvo recargando la página. El botón
+ * "Ver certificaciones" de la cabecera y un enlace directo a #certificaciones también la despliegan.
+ */
+(function () {
+  const boton = document.getElementById('cert-desplegar');
+  const grid = document.getElementById('cert-grid');
+  if (!boton || !grid) return;
+
+  function desplegar(enfocar) {
+    if (!grid.hidden) return;
+    grid.hidden = false;
+    boton.setAttribute('aria-expanded', 'true');
+    boton.hidden = true;
+    if (enfocar) {
+      grid.setAttribute('tabindex', '-1');
+      grid.focus({ preventScroll: true });
+    }
+  }
+
+  boton.addEventListener('click', () => desplegar(true));
+  document.querySelectorAll('a[href="#certificaciones"]').forEach((a) => a.addEventListener('click', () => desplegar(false)));
+  if (location.hash === '#certificaciones') desplegar(false);
+  window.addEventListener('hashchange', () => { if (location.hash === '#certificaciones') desplegar(false); });
+})();

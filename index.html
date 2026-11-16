@@ -28,9 +28,7 @@
     </a>
     <div class="nav-links">
       <a href="#top">Inicio</a>
-      <a href="#certificaciones">Certificaciones</a>
       <a href="#catalogo">Catálogo</a>
-      <a href="simulacro.html">Simulacro</a>
       <div class="nav-menu">
         <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
         <div class="nav-submenu">
@@ -40,7 +38,13 @@
           <a href="clasificacion.html">Clasificación</a>
         </div>
       </div>
-      <a href="progreso.html">Mi progreso</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Mi estudio</button>
+        <div class="nav-submenu" data-cuenta-destino>
+          <a href="simulacro.html">Simulacro</a>
+          <a href="progreso.html">Mi progreso</a>
+        </div>
+      </div>
       <a href="https://arquitechthor.github.io/">Arquitechthor</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
@@ -74,8 +78,9 @@
       <h2>Certificaciones</h2>
       <p>Los servicios de cada certificación salen de la lista oficial de servicios en alcance
         de su guía de examen. Pulsa en una para filtrar el catálogo.</p>
+      <button class="btn btn-secondary cert-desplegar" type="button" id="cert-desplegar" aria-controls="cert-grid" aria-expanded="false">Ver certificaciones</button>
     </div>
-    <div class="grid grid-4" id="cert-grid">
+    <div class="grid grid-4" id="cert-grid" hidden>
       <p class="text-faint">Cargando…</p>
     </div>
   </div>

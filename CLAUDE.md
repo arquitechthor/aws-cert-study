@@ -25,7 +25,10 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   call-to-action button, active link via `aria-current` set by `assets/nav.js`): policy "Mismo
   menú y pie en las tres webs" in `../kopi-docs/politicas.md`. The catalog search also matches
   each service's `frase` (name matches are listed first).
-- `index.html` + `assets/catalogo.js`: certification cards and the service catalog with
+- `index.html` + `assets/catalogo.js`: certification cards (the "Certificaciones" section starts
+  folded: its "Ver certificaciones" button, under the section description, unfolds it once and
+  disappears; only a reload folds it again; the hero button and `#certificaciones` also unfold it)
+  and the service catalog with
   filters (text, category, status, certifications and the "Destacados" chips (key services, used
   in Kopi, with audio); the union/intersection mode applies within each of those two groups, and the groups
   combine with AND). Filter state
@@ -57,9 +60,11 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   `AwsDatos.avisarGuardado('progreso'|'simulacros')` afterwards; `aws:sincronizado` repaints the catalog
   and Mi progreso. Session in `kopi.estudio.sesion`, shared with Tech Spider (same origin). Every page
   that loads `datos.js` loads `cuenta.js` right after it (all pages do, including `aviso-legal.html` and
-  `clasificacion.html`): `cuenta.js` adds the nav link to `cuenta.html` before "Arquitechthor" ("Guardar
-  progreso" / "Mi cuenta"). With 8 entries the nav gets compact (13px, smaller gaps, `nowrap`) between
-  761 and 1040px in `styles.css`. Disabled while `CONFIG.dominio`/`clientId`
+  `clasificacion.html`): `cuenta.js` adds the nav link to `cuenta.html` ("Guardar progreso" / "Mi
+  cuenta") at the end of the "Mi estudio" submenu (the one marked `data-cuenta-destino`). Since
+  2026-11-16 the nav is: Inicio · Catálogo · Juegos ▾ · Mi estudio ▾ (Simulacro, Mi progreso, Guardar
+  progreso) · Arquitechthor; there is no "Certificaciones" link. The nav stays compact (13px, smaller
+  gaps, `nowrap`) between 761 and 1040px in `styles.css`. Disabled while `CONFIG.dominio`/`clientId`
   are empty.
 - `assets/preguntas.js` (`window.AwsPreguntas`): the shared question component (render, read,
   grade, mark, solution, Noria text, progress) for the four types `unica`, `multiple`, `ordenar`

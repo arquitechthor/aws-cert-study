@@ -819,6 +819,10 @@ abbr.sigla:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; 
 
 /* ── Lectura en voz alta (assets/lectura.js) ────────────── */
 .btn[hidden] { display: none; }
+/* Portada: las certificaciones se despliegan con un botón y no se vuelven a ocultar (solo al recargar). */
+.cert-desplegar { margin-top: 16px; }
+#cert-grid[hidden] { display: none; }
+#cert-grid:focus { outline: none; }
 .leyendo { background: rgba(34, 211, 238, 0.10); box-shadow: 0 0 0 6px rgba(34, 211, 238, 0.10); border-radius: 4px; }
 .lectura-barra {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
