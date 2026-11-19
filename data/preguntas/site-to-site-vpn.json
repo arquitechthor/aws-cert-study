@@ -77,17 +77,17 @@
       "SAP-C03": "Seguridad, cumplimiento y gobernanza"
     },
     "dificil": true,
-    "enunciado": "Una empresa debe cifrar el tráfico que viaja por su conexión Direct Connect de 1 Gbps hacia un Transit Gateway. ¿Qué solución es correcta?",
+    "enunciado": "Una empresa tiene una conexión dedicada de Direct Connect de 1 Gb/s con una VIF de tránsito hacia un Transit Gateway. Una auditoría exige cifrar todo el tráfico entre el centro de datos y las VPC, sin que pase por internet y con direcciones IP privadas, y sin sustituir la conexión, cuyo contrato dura dos años más. Se busca el menor cambio en la red actual. ¿Qué solución es correcta?",
     "opciones": [
-      "Activar MACsec en la conexión.",
-      "Usar una VIF pública sin más cambios.",
-      "Usar una VPN sobre Direct Connect, con túneles IPsec que viajan por el enlace privado.",
-      "Activar el cifrado por defecto de la VPC."
+      "Activar MACsec en la conexión dedicada y configurar las claves CKN y CAK en el router local.",
+      "Crear una VIF pública y montar sobre ella una VPN de sitio a sitio con IP públicas hacia el Transit Gateway.",
+      "Una VPN de sitio a sitio con IP privadas hacia el Transit Gateway, cuyos túneles IPsec viajen por la conexión.",
+      "Contratar una conexión alojada de 1 Gb/s con un socio, que cifra el tráfico entre su router y AWS."
     ],
     "correctas": [
       2
     ],
-    "explicacion": "Direct Connect no cifra el tráfico. MACsec no está disponible en conexiones de 1 Gbps, así que se usa una VPN IPsec sobre Direct Connect, que puede usar direcciones IP privadas con Transit Gateway.",
+    "explicacion": "Direct Connect no cifra el tráfico. MACsec no está disponible en conexiones de 1 Gb/s, así que se usa una VPN IPsec sobre Direct Connect, que con Transit Gateway puede usar direcciones IP privadas por la VIF de tránsito. La VPN sobre una VIF pública también cifra, pero usa IP públicas. Cambiar a una conexión alojada sustituye la conexión, y el socio no cifra el tráfico por defecto.",
     "fuentes": [
       "https://docs.aws.amazon.com/vpn/latest/s2svpn/private-ip-dx.html"
     ]

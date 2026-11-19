@@ -125,6 +125,63 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de SAP-C03: cómo volver atrás de verdad rápido, cómo limitar el
+        daño de un despliegue malo, el reparto de papeles con <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> y los servidores fuera de AWS.</p>
+
+      <h3>Volver atrás rápido</h3>
+      <ul>
+        <li><strong>En el sitio</strong>, revertir es <strong>desplegar otra vez</strong> la versión anterior, instancia a
+          instancia: tarda lo mismo que el despliegue que falló.</li>
+        <li><strong>Azul/verde en <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a></strong>: CodeDeploy crea un grupo nuevo (copia del grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a>), mueve el
+          tráfico del balanceador y puede <strong>conservar las instancias originales</strong> un tiempo. Revertir es
+          devolver el tráfico: minutos. Terminarlas al instante ahorra, pero pierde esa vuelta rápida.</li>
+        <li><strong>Reversión automática</strong> por dos motivos: que el despliegue falle o que salte una alarma de
+          <a href="cloudwatch.html">CloudWatch</a> asociada al grupo de despliegue (5xx, latencia). Solo la segunda ve los problemas que aparecen con
+          tráfico real.</li>
+      </ul>
+
+      <h3>Limitar el daño</h3>
+      <ul>
+        <li><strong>Mínimo de instancias sanas</strong>: en número o porcentaje del total; no mira las zonas.</li>
+        <li><strong>Configuración zonal</strong>: despliega una zona de disponibilidad cada vez, con un tiempo de
+          observación tras cada zona (más largo tras la primera, si se quiere) y un mínimo de instancias sanas
+          <strong>por zona</strong>. Es la forma de que un despliegue malo nunca afecte a todas las zonas a la vez.</li>
+        <li><strong><a href="lambda.html">Lambda</a></strong>: configuraciones canarias (un porcentaje durante unos minutos y luego el resto) o
+          lineales (un porcentaje cada pocos minutos) sobre un alias; con <code>BeforeAllowTraffic</code> se prueban antes
+          de recibir tráfico real.</li>
+      </ul>
+
+      <h3>CodeDeploy y ECS hoy</h3>
+      <ul>
+        <li><a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> tiene desde 2025 <strong>despliegues azul/verde nativos</strong>: revisiones de servicio con su
+          historial, enlaces de <a href="lambda.html">Lambda</a> en la configuración del servicio (que pueden responder
+          <code>IN_PROGRESS</code> y volver a comprobar) y tiempo de observación antes de retirar la versión anterior.</li>
+        <li>Con CodeDeploy, los enlaces van en el AppSpec de cada despliegue y cada uno es una sola llamada con una hora de
+          plazo. AWS documenta la migración de uno a otro; para servicios nuevos, lo nativo tiene menos piezas.</li>
+      </ul>
+
+      <h3>Servidores fuera de AWS</h3>
+      <ul>
+        <li>Las instancias locales se registran con un usuario de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> (credenciales de larga duración, a evitar), con un <abbr class="sigla sigla-1" data-s="ARN" data-en="Amazon Resource Name" data-es="identificador único de un recurso de AWS" tabindex="0">ARN<span class="sigla-exp"> (Amazon Resource Name: identificador único de un recurso de AWS)</span></abbr> de
+          sesión o con un rol. Con <strong>IAM Roles Anywhere</strong>, el certificado X.509 que ya tiene cada servidor se
+          cambia por credenciales temporales del rol.</li>
+        <li>Una vez registradas y etiquetadas, entran en los mismos grupos de despliegue que las instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>.</li>
+      </ul>
+
+      <h3>Tabla de decisión</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>Volver atrás en minutos en <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></td><td>Azul/verde conservando las instancias originales</td></tr>
+            <tr><td>Nunca más de una zona a la vez</td><td>Configuración zonal</td></tr>
+            <tr><td>Probar con poco tráfico real en Lambda</td><td>Canary o Linear con alarmas</td></tr>
+            <tr><td>Azul/verde en <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> con pocas piezas</td><td>Despliegue azul/verde nativo de <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>En <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>, <a href="lambda.html">Lambda</a> y <a href="ecs.html"><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></a> <strong>no tiene coste adicional</strong>. En servidores locales se paga
         <strong>por cada actualización de instancia</strong>. Se pagan los recursos que uses (instancias, almacenamiento
@@ -161,6 +218,9 @@
         <li><a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html" target="_blank" rel="noopener">Working with deployment configurations in CodeDeploy</a>, documentación de AWS (consultada el 03/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html" target="_blank" rel="noopener">CodeDeploy AppSpec file reference</a>, documentación de AWS (consultada el 03/10/2026).</li>
         <li><a href="https://aws.amazon.com/blogs/containers/migrating-from-aws-codedeploy-to-amazon-ecs-for-blue-green-deployments/" target="_blank" rel="noopener">Migrating from AWS CodeDeploy to Amazon ECS for blue/green deployments</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations-create.html" target="_blank" rel="noopener">Create a deployment configuration (zonal configuration)</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/migrate-codedeploy-to-ecs-bluegreen.html" target="_blank" rel="noopener">Migrate CodeDeploy blue/green deployments to Amazon ECS blue/green deployments</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/register-on-premises-instance-iam-session-arn.html" target="_blank" rel="noopener">Register an on-premises instance (IAM session ARN)</a>, documentación de AWS (consultada el 19/11/2026).</li>
       </ul>
     </article>
   </div>

@@ -127,6 +127,53 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de SAP-C03: elegir el cómputo, la caché, el acceso a redes
+        privadas y secretos, las matrices de compilación y GitHub Actions.</p>
+
+      <h3>Elegir el cómputo</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Ventaja</th><th>Límite</th></tr></thead>
+          <tbody>
+            <tr><td><a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> bajo demanda</td><td>Todo vale: Docker, modo privilegiado, <abbr class="sigla sigla-1" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU<span class="sigla-exp"> (Graphics Processing Unit: procesador gráfico, muy usado en ML)</span></abbr></td><td>Tiempo de aprovisionamiento por compilación</td></tr>
+            <tr><td><a href="lambda.html">Lambda</a></td><td>Arranque casi inmediato, cobro por segundos</td><td>Sin Docker, sin modo privilegiado, tiempo y disco limitados</td></tr>
+            <tr><td>Flota de capacidad reservada</td><td>Sin espera de aprovisionamiento, máquinas a medida</td><td>Se paga mientras existe, se use o no</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Caché</h3>
+      <ul>
+        <li><strong>Caché de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a></strong>: se guarda al terminar y se recupera al empezar, en cualquier host. Útil cuando las
+          compilaciones están repartidas en el tiempo.</li>
+        <li><strong>Caché local</strong> (capas de Docker, código fuente o carpetas propias): solo se aprovecha si la
+          siguiente compilación cae poco después en el mismo host.</li>
+        <li>Los puntos de enlace de <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> son regionales: no evitan la transferencia si las dependencias están en otra región.</li>
+      </ul>
+
+      <h3>Redes privadas y secretos</h3>
+      <ul>
+        <li>Un proyecto en una <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> llega a recursos privados (<a href="aurora.html">Aurora</a>, registros internos), pero
+          <strong>no recibe <abbr class="sigla sigla-1" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP<span class="sigla-exp"> (Internet Protocol: dirección de red)</span></abbr> pública</strong>: para internet necesita subredes privadas con <abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT gateway<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr>.</li>
+        <li>Las variables de entorno de tipo <code>SECRETS_MANAGER</code> o <code>PARAMETER_STORE</code> se resuelven al
+          empezar con el rol de servicio: nada de credenciales en el buildspec y la rotación no exige cambios.</li>
+      </ul>
+
+      <h3>Compilaciones por lotes</h3>
+      <ul>
+        <li><code>build-list</code>, <code>build-matrix</code> y <code>build-graph</code> lanzan varias compilaciones desde
+          un proyecto: en lista, como todas las combinaciones de variables e imágenes, o con dependencias entre ellas.</li>
+        <li>Los <strong>informes de pruebas</strong> y de cobertura recogen los resultados de cada compilación.</li>
+      </ul>
+
+      <h3>GitHub Actions sobre CodeBuild</h3>
+      <ul>
+        <li>CodeBuild puede ser un <strong>ejecutor autoalojado</strong> de GitHub Actions: un webhook recibe cada trabajo en
+          cola y lanza un entorno efímero, con escalado gestionado, pago por uso y acceso a la <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>. Los flujos de trabajo
+          siguen escritos en GitHub.</li>
+      </ul>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Bajo demanda se paga <strong>por minuto de compilación</strong> según el tipo de cómputo (o por segundo en
         cómputo <a href="lambda.html">Lambda</a>). Las flotas de capacidad reservada se pagan por el tiempo que están aprovisionadas. Hay una capa
@@ -160,6 +207,8 @@
         <li><a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html" target="_blank" rel="noopener">Build specification reference for CodeBuild</a>, documentación de AWS (consultada el 03/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-caching.html" target="_blank" rel="noopener">Cache builds to improve performance</a>, documentación de AWS (consultada el 03/10/2026).</li>
         <li><a href="https://aws.amazon.com/codebuild/pricing/" target="_blank" rel="noopener">AWS CodeBuild pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codebuild/latest/userguide/lambda.html" target="_blank" rel="noopener">Run builds on AWS Lambda compute</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codebuild/latest/userguide/action-runner.html" target="_blank" rel="noopener">Self-hosted GitHub Actions runners in AWS CodeBuild</a>, documentación de AWS (consultada el 19/11/2026).</li>
       </ul>
     </article>
   </div>

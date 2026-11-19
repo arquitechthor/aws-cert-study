@@ -277,12 +277,12 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Una función Lambda consume mensajes de una cola SQS estándar y escribe en una base de datos Amazon RDS for PostgreSQL. En los picos, la base de datos agota sus conexiones, las escrituras fallan y otras funciones de la cuenta reciben errores de limitación porque esta consume casi toda la concurrencia. ¿Qué cambio lo resuelve sin perder mensajes?",
+    "enunciado": "Una función Lambda consume mensajes de una cola SQS estándar y escribe en una base de datos Amazon RDS for PostgreSQL. En los picos, la base de datos agota sus conexiones, las escrituras fallan y otras funciones de la cuenta reciben errores de limitación porque esta consume casi toda la concurrencia. El equipo quiere el menor cambio de código. ¿Qué cambio lo resuelve sin perder mensajes?",
     "opciones": [
-      "Aumentar el tamaño del lote del event source mapping a 10.000 mensajes.",
-      "Reducir el tiempo de visibilidad de la cola para que los mensajes fallidos se reintenten antes.",
-      "Ampliar la cuota de concurrencia de la cuenta y la clase de instancia de la base de datos.",
-      "Fijar una concurrencia máxima en el event source mapping de SQS y conectar la función a la base de datos a través de RDS Proxy."
+      "Aumentar el tamaño del lote del event source mapping a 10.000 mensajes con una ventana de agrupación de 5 minutos.",
+      "Reducir el tiempo de visibilidad de la cola para que los mensajes fallidos se reintenten antes y no se acumulen en los picos.",
+      "Ampliar la cuota de concurrencia de la cuenta y subir la clase de instancia de la base de datos para admitir más conexiones.",
+      "Fijar una concurrencia máxima en el event source mapping de SQS y conectar la función a la base de datos con RDS Proxy."
     ],
     "correctas": [
       3
@@ -303,11 +303,11 @@
     "dificil": true,
     "enunciado": "Una web de venta de entradas abre las ventas cada viernes a las 9:00. Su API síncrona con API Gateway y Lambda pasa en pocos segundos de casi nada a necesitar unas 3.000 ejecuciones simultáneas, y en el primer minuto hay errores 429 y respuestas lentas por arranques en frío. La cuenta tiene la cuota por defecto de 1.000. ¿Qué DOS acciones lo resuelven? (Elige 2.)",
     "opciones": [
-      "Configurar una concurrencia reservada de 3.000 en la función.",
-      "Programar con Application Auto Scaling una concurrencia aprovisionada de 3.000 en el alias, poco antes de las 9:00 de cada viernes.",
+      "Configurar una concurrencia reservada de 3.000 en la función para garantizar que siempre tenga capacidad disponible.",
+      "Programar con Application Auto Scaling 3.000 de concurrencia aprovisionada en el alias poco antes de cada apertura.",
       "Pedir con antelación un aumento de la cuota de concurrencia de la cuenta en esa región.",
-      "Duplicar la memoria de la función para que escale más rápido.",
-      "Conectar la función a una VPC con subredes en tres zonas de disponibilidad."
+      "Duplicar la memoria de la función, que también aumenta su CPU, para que cada entorno arranque y escale más rápido.",
+      "Conectar la función a una VPC con subredes en tres zonas de disponibilidad para repartir los entornos de ejecución."
     ],
     "correctas": [
       1,
@@ -327,17 +327,17 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Un equipo escribe en Python un proceso de pedidos con varios pasos: validar, cobrar, esperar la aprobación de una persona (hasta 3 días) y enviar. Quiere escribirlo todo como código dentro del modelo de Lambda, sin definir máquinas de estado aparte, que un fallo no repita los pasos ya hechos y no pagar cómputo mientras espera. ¿Qué debe usar?",
+    "enunciado": "Un equipo escribe en Python un proceso de pedidos con varios pasos: validar, cobrar, esperar la aprobación de una persona (hasta 3 días) y enviar. Quiere escribirlo todo como código dentro del modelo de Lambda, sin definir máquinas de estado aparte, que un fallo no repita los pasos ya hechos (sobre todo el cobro) y no pagar cómputo mientras espera. ¿Qué debe usar?",
     "opciones": [
       "Lambda durable functions, con un paso por etapa y una espera hasta que llegue la aprobación.",
-      "Una función Lambda con el tiempo máximo ampliado a 3 días.",
-      "Un flujo Express de Step Functions con un estado Wait de 3 días.",
-      "Una cola SQS con retraso de entrega de 3 días entre cada paso."
+      "Una función Lambda con el tiempo de espera máximo ampliado a 3 días mediante un aumento de cuota.",
+      "Un flujo Standard de Step Functions con una espera por token de tarea hasta que llegue la aprobación.",
+      "Una cola SQS con retraso de entrega de 3 días entre cada paso y una función por etapa que la consume."
     ],
     "correctas": [
       0
     ],
-    "explicacion": "Las durable functions guardan el progreso de cada paso, pueden suspenderse hasta un año sin coste de cómputo y, tras un fallo, repiten solo lo que no había terminado, todo en el código de la función. Ninguna invocación de Lambda dura 3 días, un flujo Express de Step Functions dura como mucho 5 minutos, y SQS permite como mucho 15 minutos de retraso.",
+    "explicacion": "Las durable functions guardan el progreso de cada paso, pueden suspenderse hasta un año sin coste de cómputo y, tras un fallo, repiten solo lo que no había terminado, todo en el código de la función. Un flujo Standard de Step Functions también espera días y no repite pasos, pero exige definir una máquina de estado aparte, justo lo que se quiere evitar. El tiempo máximo de una invocación de Lambda es de 15 minutos y no se puede ampliar, y SQS permite como mucho 15 minutos de retraso.",
     "fuentes": [
       "https://docs.aws.amazon.com/lambda/latest/dg/durable-functions.html",
       "https://aws.amazon.com/about-aws/whats-new/2025/12/lambda-durable-multi-step-applications-ai-workflows/"
@@ -351,17 +351,17 @@
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
-    "enunciado": "En una organización de AWS, la política de seguridad exige que todas las funciones Lambda de las cuentas de la OU de producción se conecten a VPC aprobadas, cuyo tráfico de salida pasa por un firewall central. Hoy algunos equipos crean funciones fuera de cualquier VPC. ¿Cómo se impide de forma preventiva y en todas las cuentas a la vez?",
+    "enunciado": "En una organización de AWS, la política de seguridad exige que todas las funciones Lambda de las cuentas de la OU de producción se conecten a VPC aprobadas, cuyo tráfico de salida pasa por un firewall central. Hoy algunos equipos crean funciones fuera de cualquier VPC. El control debe aplicarse también a las cuentas nuevas de esa OU. ¿Cómo se impide de forma preventiva y en todas las cuentas a la vez?",
     "opciones": [
-      "Una regla de AWS Config en cada cuenta que detecte las funciones sin VPC y avise al equipo.",
-      "Un límite de permisos (permissions boundary) en cada rol de despliegue de cada cuenta.",
-      "Una SCP en la OU de producción que deniegue lambda:CreateFunction y lambda:UpdateFunctionConfiguration si la condición lambda:VpcIds no coincide con las VPC aprobadas.",
-      "Una política de etiquetas que obligue a etiquetar cada función con el identificador de su VPC."
+      "Una regla de AWS Config desplegada en cada cuenta que detecte las funciones sin VPC y las corrija con una automatización de Systems Manager.",
+      "Un límite de permisos en cada rol de despliegue de cada cuenta que solo permita lambda:CreateFunction con subredes de las VPC aprobadas.",
+      "Una SCP en la OU de producción que deniegue crear o actualizar funciones si lambda:VpcIds no coincide con las VPC aprobadas.",
+      "Una política de etiquetas en la OU que obligue a etiquetar cada función con el identificador de una VPC aprobada antes de crearla."
     ],
     "correctas": [
       2
     ],
-    "explicacion": "Lambda ofrece las claves de condición lambda:VpcIds, lambda:SubnetIds y lambda:SecurityGroupIds; una SCP en la OU las aplica de forma preventiva a todas las cuentas, incluidas las nuevas. Config solo detecta después, los límites de permisos hay que mantenerlos rol a rol, y una política de etiquetas no controla la configuración de red.",
+    "explicacion": "Lambda ofrece las claves de condición lambda:VpcIds, lambda:SubnetIds y lambda:SecurityGroupIds; una SCP en la OU que deniegue lambda:CreateFunction y lambda:UpdateFunctionConfiguration sin ellas las aplica de forma preventiva a todas las cuentas, incluidas las nuevas. Config, aunque corrija, actúa después de crear la función. Los límites de permisos hay que mantenerlos rol a rol y no cubren las cuentas nuevas por sí solos. Una política de etiquetas normaliza etiquetas, no controla la configuración de red.",
     "fuentes": [
       "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html",
       "https://aws.amazon.com/blogs/compute/using-aws-lambda-iam-condition-keys-for-vpc-settings/"

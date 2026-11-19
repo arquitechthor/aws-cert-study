@@ -181,8 +181,8 @@
     "opciones": [
       "Una SCP asociada a la raíz que deniegue bedrock:InvokeModel y bedrock:Converse cuando la condición bedrock:GuardrailIdentifier no coincida con el guardrail corporativo.",
       "Un proxy con API Gateway y Lambda que llame a ApplyGuardrail antes de cada invocación, y una SCP que solo permita invocar modelos al rol de ese proxy.",
-      "Una política de Bedrock de AWS Organizations, creada desde la cuenta de administración y asociada a la raíz, que aplique el guardrail corporativo a todas las invocaciones de las cuentas miembro.",
-      "Una regla de AWS Config en cada cuenta que detecte las invocaciones sin guardrail en los registros de CloudTrail y avise al equipo de seguridad."
+      "Una política de Bedrock de AWS Organizations asociada a la raíz que aplique el guardrail corporativo a todas las invocaciones de las cuentas miembro.",
+      "Una regla de AWS Config en cada cuenta, desplegada con StackSets, que detecte en CloudTrail las invocaciones sin guardrail y avise al equipo de seguridad para corregirlas."
     ],
     "correctas": [
       2
@@ -229,10 +229,10 @@
     "dificil": true,
     "enunciado": "Por residencia de datos, una organización tiene una SCP que deniega cualquier acción fuera de eu-west-1, salvo los servicios globales. Un equipo cambia su aplicación para invocar un modelo con el perfil de inferencia geográfico de la UE desde eu-west-1. Su rol tiene permiso sobre el perfil y sobre el modelo, pero muchas invocaciones fallan con AccessDeniedException. Los datos deben seguir procesándose solo en la UE. ¿Qué cambio lo resuelve?",
     "opciones": [
-      "Cambiar al perfil de inferencia global, que no depende de regiones concretas.",
-      "Modificar la SCP para permitir las regiones de destino del perfil geográfico de la UE, o añadir la excepción para perfiles de inferencia que documenta AWS.",
-      "Conceder bedrock:* al rol de la aplicación en todas las regiones.",
-      "Crear un punto de enlace de interfaz de bedrock-runtime en la VPC de eu-west-1 para que el tráfico no salga de la región."
+      "Cambiar al perfil de inferencia global, que reparte las peticiones entre todas las regiones comerciales sin depender de las que permite la SCP.",
+      "Permitir en la SCP las regiones de destino del perfil geográfico de la UE, o usar la excepción para perfiles de inferencia que documenta AWS.",
+      "Conceder bedrock:InvokeModel* al rol de la aplicación con Resource \"*\" en todas las regiones para cubrir cualquier destino del perfil.",
+      "Crear un punto de enlace de interfaz de bedrock-runtime en la VPC de eu-west-1 para que el tráfico nunca salga de la región de origen."
     ],
     "correctas": [
       1
@@ -252,12 +252,12 @@
     "dificil": true,
     "enunciado": "Una plataforma SaaS con 200 clientes usa Amazon Bedrock desde una única cuenta. Finanzas necesita el coste de Bedrock por cliente en el informe de costes y uso. Cada noche, un proceso resume todos los documentos nuevos de los clientes, y el resultado se consulta al día siguiente. El chat de la plataforma envía en cada petición las mismas instrucciones y el mismo catálogo de productos, unos 20.000 tokens, seguidos de la pregunta del usuario. El uso del chat tiene picos imprevisibles. ¿Qué TRES medidas reducen el coste y cumplen los requisitos con el menor esfuerzo operativo? (Elige 3.)",
     "opciones": [
-      "Crear una cuenta de AWS por cliente para separar su factura.",
-      "Un perfil de inferencia de aplicación por cliente con una etiqueta de asignación de costes activada en Billing.",
+      "Crear una cuenta de AWS por cliente dentro de la organización para separar su factura en el informe de costes.",
+      "Un perfil de inferencia de aplicación por cliente, con una etiqueta de asignación de costes activada.",
       "Pasar el proceso nocturno a inferencia por lotes.",
-      "Comprar Provisioned Throughput a 6 meses para el chat.",
+      "Comprar Provisioned Throughput con compromiso de 6 meses para el chat, dimensionado para la hora punta.",
       "Activar la caché de prompts con las instrucciones y el catálogo al principio de cada petición.",
-      "Usar el nivel Priority en el proceso nocturno para que termine antes."
+      "Usar el nivel de servicio Priority en el proceso nocturno para que termine antes de que empiece la jornada."
     ],
     "correctas": [
       1,
@@ -280,10 +280,10 @@
     "dificil": true,
     "enunciado": "Una empresa crea un asistente de RAG con Amazon Bedrock Knowledge Bases sobre 300.000 documentos internos en S3, de cinco departamentos. Cada empleado solo puede recibir respuestas basadas en los documentos de su departamento, que la aplicación conoce por el token de inicio de sesión. Los documentos cambian a diario y el equipo quiere el menor esfuerzo operativo. ¿Qué diseño cumple los requisitos?",
     "opciones": [
-      "Una base de conocimiento por departamento, cada una con su origen de datos, y lógica en la aplicación para elegir a cuál consultar.",
-      "Un guardrail con un tema denegado por departamento, aplicado según el usuario que pregunta.",
-      "Políticas de bucket de S3 que solo permitan a cada departamento leer su prefijo, para que la base de conocimiento respete esos permisos.",
-      "Una sola base de conocimiento con un fichero .metadata.json por documento que indique su departamento, y un filtro de metadatos en cada llamada a Retrieve o RetrieveAndGenerate con el departamento del usuario."
+      "Una base de conocimiento por departamento, cada una con su origen de datos en un prefijo de S3, y lógica en la aplicación para elegir a cuál consultar.",
+      "Un guardrail por departamento con temas denegados para los demás departamentos, elegido en cada llamada según el usuario que pregunta.",
+      "Políticas de bucket de S3 que solo permitan a cada departamento leer su prefijo, para que la base de conocimiento respete esos permisos al recuperar.",
+      "Una sola base de conocimiento, un fichero .metadata.json por documento con su departamento y un filtro de metadatos en cada consulta según el usuario."
     ],
     "correctas": [
       3

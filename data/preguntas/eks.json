@@ -198,5 +198,128 @@
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html"
     ]
+  },
+  {
+    "id": "eks-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
+    "enunciado": "Una empresa tiene un clúster de Amazon EKS compartido en la cuenta de plataforma, con 30 equipos en espacios de nombres propios y pods en nodos EC2 Linux. Cada equipo debe acceder solo a sus tablas de DynamoDB y a sus buckets de S3, que viven en la cuenta de ese equipo. Seguridad exige credenciales temporales y que cada equipo gestione los permisos de sus recursos en su propia cuenta. El equipo de plataforma no quiere registrar un proveedor OIDC en cada cuenta ni mantener anotaciones en las cuentas de servicio. ¿Qué solución cumple los requisitos con el menor esfuerzo operativo?",
+    "opciones": [
+      "IRSA: registrar el proveedor OIDC del clúster en las 30 cuentas y anotar cada cuenta de servicio con el ARN del rol de su equipo.",
+      "Asociaciones de EKS Pod Identity con un rol en la cuenta de plataforma y un rol de destino en la cuenta de cada equipo que confíe en él.",
+      "Dar al rol de los nodos permiso para asumir los roles de las 30 cuentas, y que cada aplicación haga AssumeRole con el SDK al arrancar.",
+      "Compartir con AWS RAM las tablas y los buckets de cada equipo con la cuenta de plataforma, y dar allí los permisos al rol de cada pod."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "EKS Pod Identity admite roles de destino: la asociación indica un rol de la cuenta del clúster y otro de la cuenta del equipo, y EKS encadena los roles y entrega al pod credenciales temporales del rol de destino, cuyos permisos gestiona el equipo. IRSA también funciona entre cuentas, pero exige el proveedor OIDC en cada cuenta y anotar las cuentas de servicio. Si el rol del nodo puede asumir los 30 roles, cualquier pod de cualquier equipo puede hacerlo. RAM no comparte tablas de DynamoDB ni buckets de S3, y los permisos quedarían en la cuenta de plataforma.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/pod-id-assign-target-role.html",
+      "https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html"
+    ]
+  },
+  {
+    "id": "eks-011",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
+    "enunciado": "Un clúster de EKS vive en una VPC con el rango 10.20.0.0/22, enrutado en toda la red corporativa, y se queda sin direcciones: los pods nuevos se quedan en Pending por falta de IP aunque los nodos tienen CPU y memoria de sobra. La red corporativa no tiene más rangos privados libres para la VPC, los pods solo deben ser alcanzables desde otras VPC a través de los servicios publicados, el equipo quiere seguir con el VPC CNI sin recrear el clúster y no quiere que quepan menos pods en cada nodo. ¿Qué DOS cambios resuelven el problema? (Elige 2.)",
+    "opciones": [
+      "Añadir a la VPC un rango secundario de 100.64.0.0/10 y activar la red personalizada del VPC CNI para poner los pods en subredes de ese rango.",
+      "Cambiar los nodos a instancias más grandes, que admiten más interfaces de red y más direcciones secundarias para alojar pods.",
+      "Activar la delegación de prefijos del VPC CNI para asignar prefijos /28 a las interfaces de red de los nodos.",
+      "Pasar el clúster a IPv6 en la misma VPC, de forma que los pods dejen de consumir direcciones IPv4 de las subredes de los nodos.",
+      "Bajar WARM_IP_TARGET a 0 y fijar MINIMUM_IP_TARGET en el número actual de pods para que los nodos no reserven direcciones."
+    ],
+    "correctas": [
+      0,
+      2
+    ],
+    "explicacion": "La red personalizada pone los pods en subredes de un rango secundario que no se anuncia a la red corporativa (100.64.0.0/10 es el habitual), y los servicios publicados siguen en las subredes enrutables. Con la red personalizada, la interfaz principal del nodo ya no aloja pods y caben menos; la delegación de prefijos lo compensa con prefijos /28. La familia IP de un clúster no se puede cambiar: IPv6 exige crear otro. Las instancias más grandes no añaden direcciones a la subred, y ajustar las reservas templadas reduce el desperdicio, pero no crea espacio suficiente.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/best-practices/custom-networking.html",
+      "https://docs.aws.amazon.com/eks/latest/best-practices/prefix-mode-linux.html"
+    ]
+  },
+  {
+    "id": "eks-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una empresa tiene 45 clústeres de EKS en varias cuentas. Finanzas detecta que el coste por hora del plano de control se ha multiplicado por seis en 20 de ellos, sin cambios de carga ni de tamaño. Los equipos retrasan las actualizaciones porque temen romper aplicaciones, y la dirección quiere eliminar ese sobrecoste de forma duradera, con el menor esfuerzo y sin que ningún clúster se actualice sin revisar antes su compatibilidad. ¿Qué debe hacer?",
+    "opciones": [
+      "Fijar la política de actualización STANDARD en los 20 clústeres para que AWS los actualice de inmediato y deje de aplicar el recargo.",
+      "Comprar un Compute Savings Plan que cubra el precio por hora del plano de control de los 45 clústeres durante tres años.",
+      "Consolidar los 45 clústeres en uno multiinquilino, con un espacio de nombres y cuotas de recursos por equipo.",
+      "Actualizar esos clústeres a una versión con soporte estándar, revisando antes EKS Cluster Insights para detectar API obsoletas."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El precio del plano de control pasa de 0,10 a 0,60 USD por hora cuando la versión de Kubernetes entra en soporte extendido (tras 14 meses de soporte estándar). La solución es actualizar a una versión con soporte estándar, y Cluster Insights avisa de las API obsoletas que usan las cargas. La política STANDARD provoca actualizaciones automáticas sin revisión, justo lo que se quiere evitar. Los Savings Plans no cubren el plano de control de EKS. Consolidar en un clúster reduce el número de planos de control, pero es un cambio enorme de arquitectura y aislamiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html",
+      "https://docs.aws.amazon.com/eks/latest/userguide/cluster-insights.html",
+      "https://aws.amazon.com/eks/pricing/"
+    ]
+  },
+  {
+    "id": "eks-013",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una plataforma de pagos ejecuta en EKS 1.31, ya en soporte extendido, un clúster con 200 servicios, Karpenter y complementos gestionados, y debe llegar a 1.34. El negocio no tolera más de 5 minutos de degradación, el equipo quiere poder volver atrás en cualquier momento de la migración y toda la configuración del clúster y de las aplicaciones está en Git, desplegada con Argo CD. ¿Qué estrategia cumple los requisitos?",
+    "opciones": [
+      "Actualizar en el sitio el plano de control de 1.31 a 1.34 en una sola operación y, después, los nodos y los complementos.",
+      "Actualizar en el sitio de versión en versión (1.32, 1.33 y 1.34), con nodos y complementos tras cada salto y una copia de etcd para volver atrás.",
+      "Crear un clúster nuevo en 1.34, desplegar en él lo mismo desde Git con Argo CD y mover el tráfico de forma gradual con pesos de DNS.",
+      "Activar EKS Auto Mode en el clúster actual para que AWS actualice el plano de control y los nodos a 1.34 en una ventana de mantenimiento."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El plano de control de EKS se actualiza de una versión menor en una versión menor y no se puede volver a una anterior, así que ninguna actualización en el sitio permite volver atrás; además, en EKS no hay acceso a etcd para hacer copias propias. Un clúster nuevo desplegado desde Git (azul/verde) permite probar la versión 1.34 y mover el tráfico poco a poco, y volver atrás es devolver el tráfico al clúster antiguo. Auto Mode gestiona los nodos, pero la actualización del plano de control la decide el cliente y tampoco tiene vuelta atrás.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html",
+      "https://docs.aws.amazon.com/eks/latest/best-practices/cluster-upgrades.html"
+    ]
+  },
+  {
+    "id": "eks-014",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Una empresa ejecuta en EKS, en eu-west-1, una aplicación sin estado que guarda sus datos en DynamoDB. Su plan de continuidad exige un RTO de 30 minutos y un RPO de 1 minuto ante la caída de toda la región, con el menor coste posible mientras no haya desastre. Los manifiestos están en Git y se despliegan con Flux, y el tráfico entra por un dominio de Route 53. ¿Qué diseño cumple los requisitos?",
+    "opciones": [
+      "Copias de seguridad de DynamoDB cada hora copiadas a eu-central-1, y un clúster creado desde cero con eksctl en esa región al declarar el desastre.",
+      "Tablas globales de DynamoDB, un clúster mínimo en eu-central-1 sincronizado con Flux que se escala al conmutar y conmutación por error de Route 53.",
+      "Un clúster a plena capacidad en cada región y una tabla en cada una, replicadas con DynamoDB Streams y una función Lambda propia.",
+      "Velero con copias del clúster en un bucket de S3 replicado, y copias de DynamoDB entre regiones que se restauran en eu-central-1 al conmutar."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las tablas globales replican en segundos, lo que cumple el RPO de 1 minuto. Un clúster pequeño en la segunda región, al que Flux ya aplica los mismos manifiestos, solo tiene que escalar para cumplir el RTO, y Route 53 mueve el tráfico. Las copias horarias dan un RPO de una hora, y crear el clúster desde cero arriesga el RTO. Dos clústeres a plena capacidad funcionan, pero duplican el coste, y la replicación propia es código que mantener. Restaurar copias de Velero y de DynamoDB tarda y su RPO depende de la frecuencia de las copias.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html",
+      "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html"
+    ]
   }
 ]

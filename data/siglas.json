@@ -56,6 +56,10 @@
    "en": "Application Programming Interface",
    "es": "interfaz para que los programas se comuniquen"
   },
+  "ARC": {
+   "en": "Application Recovery Controller",
+   "es": "servicio de Route 53 para conmutar entre regiones o zonas"
+  },
   "ARM": {
    "en": null,
    "es": "arquitectura de procesador de bajo consumo"
@@ -96,6 +100,10 @@
    "en": "Business Intelligence",
    "es": "análisis de datos para el negocio"
   },
+  "BTEQ": {
+   "en": "Basic Teradata Query",
+   "es": "herramienta de scripts de Teradata"
+  },
   "BYOIP": {
    "en": "Bring Your Own IP",
    "es": "usar en AWS tus propios rangos de IP públicas"
@@ -115,6 +123,10 @@
   "CAD": {
    "en": "Computer-Aided Design",
    "es": "diseño asistido por ordenador"
+  },
+  "CAK": {
+   "en": "Connectivity Association Key",
+   "es": "clave secreta de MACsec"
   },
   "CAPTCHA": {
    "en": null,
@@ -139,6 +151,10 @@
   "CIS": {
    "en": "Center for Internet Security",
    "es": "organización que publica referencias de configuración segura"
+  },
+  "CKN": {
+   "en": "Connectivity Association Key Name",
+   "es": "nombre de la clave de MACsec"
   },
   "CLB": {
    "en": "Classic Load Balancer",
@@ -240,6 +256,10 @@
    "en": "Distributed File System",
    "es": "agrupa recursos compartidos de Windows bajo un mismo espacio de nombres"
   },
+  "DHCP": {
+   "en": "Dynamic Host Configuration Protocol",
+   "es": "asigna la configuración de red a los equipos"
+  },
   "DKIM": {
    "en": "DomainKeys Identified Mail",
    "es": "firma criptográfica de los correos"
@@ -320,6 +340,10 @@
    "en": "Electronic Data Interchange",
    "es": "intercambio electrónico de documentos comerciales"
   },
+  "EFA": {
+   "en": "Elastic Fabric Adapter",
+   "es": "red de baja latencia para cálculo acoplado"
+  },
   "EFS": {
    "en": "Elastic File System",
    "es": null
@@ -335,6 +359,10 @@
   "EMR": {
    "en": "Elastic MapReduce",
    "es": null
+  },
+  "ENA": {
+   "en": "Elastic Network Adapter",
+   "es": "tarjeta de red de alto rendimiento de EC2"
   },
   "ENI": {
    "en": "Elastic Network Interface",
@@ -544,6 +572,10 @@
    "en": "Java Cryptography Extension",
    "es": "interfaz criptográfica de Java"
   },
+  "JDK": {
+   "en": "Java Development Kit",
+   "es": "kit de desarrollo de Java"
+  },
   "JMS": {
    "en": "Java Message Service",
    "es": "API estándar de mensajería de Java"
@@ -643,6 +675,10 @@
   "MPEG-DASH": {
    "en": "Dynamic Adaptive Streaming over HTTP",
    "es": "estándar de vídeo con calidad adaptada a la conexión"
+  },
+  "MPI": {
+   "en": "Message Passing Interface",
+   "es": "estándar de paso de mensajes entre nodos de cálculo"
   },
   "MPP": {
    "en": "Massively Parallel Processing",
@@ -871,6 +907,10 @@
   "RFT": {
    "en": "Reinforcement Fine-Tuning",
    "es": "ajuste fino de un modelo con recompensas"
+  },
+  "RGPD": {
+   "en": "Reglamento General de Protección de Datos",
+   "es": "ley europea de protección de datos personales"
   },
   "RPO": {
    "en": "Recovery Point Objective",
@@ -1139,6 +1179,10 @@
   "VDI": {
    "en": "Virtual Desktop Infrastructure",
    "es": "escritorios virtuales alojados en servidores"
+  },
+  "VGW": {
+   "en": "Virtual Private Gateway",
+   "es": "puerta de enlace privada virtual de una VPC"
   },
   "VIF": {
    "en": "Virtual Interface",

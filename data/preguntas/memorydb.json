@@ -7,17 +7,17 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Un servicio de carritos usa ElastiCache como caché y DynamoDB como base de datos. Necesita lecturas en microsegundos, no puede perder escrituras confirmadas y el equipo quiere simplificar la arquitectura usando la API de Redis que ya conoce. ¿Qué propone el arquitecto?",
+    "enunciado": "Un servicio de carritos de compra usa ElastiCache for Redis OSS como caché delante de DynamoDB, y el equipo pierde tiempo manteniendo la coherencia entre las dos capas. Necesita lecturas de microsegundos y escrituras de pocos milisegundos, no puede perder ninguna escritura confirmada aunque falle un nodo o una zona de disponibilidad, y quiere simplificar la arquitectura reutilizando la API de Redis que ya conoce. ¿Qué propone el arquitecto?",
     "opciones": [
-      "Activar la persistencia en disco de ElastiCache y quitar DynamoDB.",
-      "Añadir DynamoDB Accelerator y mantener ElastiCache.",
-      "Sustituir la pareja de caché y base de datos por Amazon MemoryDB como base de datos principal.",
-      "Mover los datos a Aurora con réplicas de lectura."
+      "Activar las copias de seguridad y Multi-AZ con conmutación automática en ElastiCache, y retirar DynamoDB.",
+      "Añadir DynamoDB Accelerator delante de la tabla y retirar ElastiCache, con DynamoDB como fuente de verdad.",
+      "Sustituir la caché y la base de datos por Amazon MemoryDB como única base de datos principal.",
+      "Usar ElastiCache Serverless con Valkey como única base de datos, que replica los datos en varias zonas."
     ],
     "correctas": [
       2
     ],
-    "explicacion": "MemoryDB ofrece latencia de microsegundos y durabilidad con un registro de transacciones multi-AZ, compatible con la API de Redis OSS, así que puede ser la única base de datos. ElastiCache es una caché que puede perder escrituras recientes, añadir un acelerador mantiene dos capas y Aurora no da microsegundos ni usa la API de Redis.",
+    "explicacion": "MemoryDB ofrece lecturas de microsegundos y durabilidad con un registro de transacciones multi-AZ, compatible con la API de Redis OSS, así que puede ser la única base de datos. ElastiCache, incluso Multi-AZ o Serverless, replica de forma asíncrona y puede perder escrituras recientes si falla el primario. DAX da lecturas de microsegundos con DynamoDB como fuente duradera, pero no usa la API de Redis y mantiene dos capas.",
     "fuentes": [
       "https://docs.aws.amazon.com/memorydb/latest/devguide/related-services-choose-between-memorydb-and-redis.html"
     ]

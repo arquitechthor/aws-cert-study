@@ -139,12 +139,12 @@
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
-    "enunciado": "Una empresa quiere asegurarse de que ninguna identidad ajena a la organización pueda acceder a sus buckets de S3, aunque el equipo de una cuenta escriba una política de bucket demasiado abierta. ¿Qué mecanismo lo impone de forma centralizada?",
+    "enunciado": "Una empresa con 80 cuentas en AWS Organizations quiere asegurarse de que ninguna identidad ajena a la organización pueda acceder a sus buckets de S3, aunque el equipo de una cuenta escriba por error una política de bucket que conceda acceso a otra cuenta. El control debe ser preventivo, aplicarse también a las cuentas nuevas y no exigir revisar cada bucket. ¿Qué mecanismo lo impone de forma centralizada?",
     "opciones": [
-      "Una SCP que deniegue s3:GetObject a los principales de fuera de la organización.",
-      "Una política de etiquetas que marque los buckets como internos.",
-      "Una política de control de recursos (RCP) que deniegue el acceso a principales de fuera de la organización.",
-      "Un límite de permisos (permissions boundary) en cada rol de las cuentas miembro."
+      "Una SCP en la raíz que deniegue las acciones de S3 a cualquier principal cuyo aws:PrincipalOrgID no sea el de la organización.",
+      "Una política de etiquetas que obligue a marcar los buckets como internos y una regla de Config que avise si no lo están.",
+      "Una política de control de recursos (RCP) en la raíz que deniegue el acceso a principales de fuera de la organización.",
+      "Un límite de permisos (permissions boundary) en cada rol de las cuentas miembro que impida modificar políticas de bucket."
     ],
     "correctas": [
       2
@@ -231,10 +231,10 @@
     "dificil": true,
     "enunciado": "Para montar un perímetro de datos, una empresa asocia a la raíz una RCP que deniega s3:* cuando aws:PrincipalOrgID no es el de su organización. Desde entonces, el registro de AWS CloudTrail de la organización no entrega archivos en el bucket de la cuenta Log Archive, y una cuenta de un socio, que lee un bucket concreto gracias a la política de ese bucket, recibe errores de acceso denegado. Hay que recuperar los dos accesos sin renunciar al perímetro. ¿Qué DOS cambios hay que hacer en la RCP? (Elige 2.)",
     "opciones": [
-      "Sustituir la RCP por una SCP con la misma condición, que no afecta a los servicios de AWS.",
+      "Sustituir la RCP por una SCP con la misma condición en la raíz, porque las SCP no afectan a los servicios de AWS.",
       "Excluir de la denegación las peticiones en las que aws:PrincipalIsAWSService es verdadero.",
       "Añadir a la política del bucket de Log Archive un Allow explícito para cloudtrail.amazonaws.com.",
-      "Asociar la RCP solo a las OU de cargas de trabajo y dejar la OU Security sin ella.",
+      "Asociar la RCP solo a las OU de cargas de trabajo y dejar sin ella la OU Security, donde está Log Archive.",
       "Añadir una excepción con aws:PrincipalAccount para la cuenta del socio, limitada al ARN del bucket que comparte."
     ],
     "correctas": [
@@ -257,8 +257,8 @@
     "dificil": true,
     "enunciado": "Una empresa asoció a la raíz una SCP que deniega la acción \"*\" cuando aws:RequestedRegion no es eu-west-1 ni eu-central-1. Desde entonces los equipos no pueden crear roles de IAM, gestionar zonas alojadas de Amazon Route 53 ni actualizar distribuciones de Amazon CloudFront. Hay que mantener la restricción de regiones para los servicios regionales con el menor esfuerzo operativo. ¿Qué cambio lo consigue?",
     "opciones": [
-      "Añadir us-east-1 a la lista de regiones permitidas de la SCP.",
-      "Cambiar Action \"*\" por NotAction con los servicios globales (iam:*, route53:*, cloudfront:*, organizations:*, support:* y similares).",
+      "Añadir us-east-1 a las regiones permitidas de la SCP, porque los servicios globales tienen allí su punto de enlace.",
+      "Cambiar Action \"*\" por NotAction con las acciones de los servicios globales (iam:*, route53:*, cloudfront:*, support:*…).",
       "Sustituir la SCP por límites de permisos en los roles de cada cuenta que nieguen las demás regiones.",
       "Sustituir la SCP por una regla de AWS Config que detecte recursos creados fuera de las regiones aprobadas."
     ],
@@ -319,10 +319,10 @@
     "dificil": true,
     "enunciado": "Una empresa compra otra que tiene su propia organización con 40 cuentas. Las políticas de los buckets y de las claves de AWS KMS de las cuentas adquiridas usan aws:PrincipalOrgID con el ID de la organización antigua, y el equipo central administra esas cuentas con OrganizationAccountAccessRole. Hay que integrarlas en la organización de la empresa compradora sin cortar el servicio. ¿Qué plan es correcto?",
     "opciones": [
-      "Invitar ya las 40 cuentas a la nueva organización: durante la transición pueden pertenecer a las dos.",
-      "Eliminar primero la organización antigua para que todas las cuentas queden independientes a la vez y después invitarlas.",
-      "Compartir con AWS RAM los recursos de las cuentas adquiridas con la nueva organización en lugar de mover las cuentas.",
-      "Añadir el ID de la nueva organización a las condiciones de las políticas; mover las cuentas de una en una (salir, aceptar la invitación, entrar en una OU de pruebas con sus SCP); hacer que OrganizationAccountAccessRole confíe en la nueva cuenta de administración; y al final quitar el ID antiguo."
+      "Invitar ya las 40 cuentas a la nueva organización, porque durante la transición una cuenta puede pertenecer a las dos, y cambiar las condiciones de las políticas al terminar.",
+      "Eliminar primero la organización antigua para que todas las cuentas queden independientes a la vez, invitarlas a la nueva y actualizar después las políticas con el ID nuevo.",
+      "Compartir con AWS RAM los recursos de las cuentas adquiridas con la nueva organización y gobernarlas desde allí, sin mover las cuentas, para no tocar sus políticas.",
+      "Añadir el ID nuevo a las condiciones, mover las cuentas una a una a una OU de pruebas, que OrganizationAccountAccessRole confíe en la nueva administración y al final quitar el ID antiguo."
     ],
     "correctas": [
       3

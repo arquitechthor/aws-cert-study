@@ -10,6 +10,32 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
+- **SAP-C03, propuestas 1–4 (19/11/2026, pedido por el usuario), hechas:**
+  (1) `scripts/revisar_preguntas.py` avisa cuando la respuesta correcta es claramente la opción más
+  larga y cuando una difícil tiene un enunciado corto (menos de 350 caracteres), y con `--dominios`
+  compara las difíciles de cada dominio con las que pide un simulacro completo. Se reescribieron 53
+  difíciles de SAP-C03 (distractores igual de largos y concretos, enunciados con varias restricciones):
+  la correcta pasa de ser la más larga en el 80 % al 32 % (39 % contando las nuevas). **Las no
+  difíciles siguen con el mismo sesgo (80 %)**: pendiente de que el usuario decida si se revisan.
+  (2) y (3) 51 difíciles nuevas: 5 por servicio de la cola 5.A (`eks`, `ec2`, `codedeploy`, `ecs`,
+  `fargate`, `codepipeline`, `codebuild`, `codeartifact`), con su sección "A fondo", más 11 en
+  `savings-plans`, `compute-optimizer`, `backup`, `elastic-disaster-recovery`, `cloudformation`,
+  `systems-manager` y `config` para cubrir costes, resiliencia y operaciones. SAP-C03 tiene 107
+  difíciles de respuesta única o múltiple: costes 14, resiliencia 17, operaciones 23, nativas 27 y
+  seguridad 29; el simulacro completo de solo difíciles (75) se llena sin avisos (tarea 5.4).
+  (4) Tres escenarios avanzados de Arquitecto solo de SAP-C03: `inspeccion-centralizada`,
+  `perimetro-datos` y `activo-activo` (17 en total), comprobados en el navegador (ninguna flecha cruza
+  un nodo). Glosario: VGW, MPI, ENA, EFA, RGPD, JDK, ARC, BTEQ, CKN, CAK, DHCP.
+- **AIF-C01, conceptos en Tech Spider (19/11/2026), enfoque confirmado por el usuario, sin empezar:** el usuario
+  propone un menú nuevo "Conceptos" con un submenú "AIF-C01": una ficha que enlaza a las fichas teóricas
+  de IA de Tech Spider (`../arquitechthor-spider/temas/`) y a su evaluación. Recomendación: la teoría y
+  las preguntas viven solo en Tech Spider (mismo formato de pregunta y mismo origen,
+  `arquitechthor.github.io`); allí cada pregunta útil para AIF lleva además `"certificaciones":
+  ["AIF-C01"]` y `"dominio"`, y el simulacro de este sitio las lee en solo lectura de
+  `../arquitechthor-spider/data/preguntas/<tema>.json` (lista de temas en un JSON de aquí). Así no se
+  duplican preguntas y cuentan para el simulacro. Faltan en Tech Spider temas clave de AIF, hoy
+  `pendiente`: `prompt-engineering`, `rag`, `fine-tuning`, `tokens-context-window`, `hallucinations`,
+  `model-selection`, y no hay temas de métricas de evaluación ni de IA responsable.
 - **Idiomas: inglés e italiano (16/11/2026, petición del usuario), solo planificado:** el español sigue
   siendo el idioma por defecto. Plan completo en [`PLAN-IDIOMAS.md`](PLAN-IDIOMAS.md): traducción de
   interfaz, catálogo, siglas, guías, preguntas y escenarios, y voces por idioma (lectura y audios de
@@ -109,8 +135,17 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 - **Bedrock, servicio clave (12/11/2026, pedido por el usuario):** sección "A fondo" (cuotas y
   `max_tokens`, inferencia entre regiones y SCP, gobierno multicuenta con guardrails obligatorios, acceso
   privado, diseño de RAG y opciones de consumo) y 5 preguntas difíciles de SAP-C03, una por dominio.
-- **Próximo paso (siguiente sesión):** seguir la cola práctica con `ecr` y la cola 5.A, que empieza ahora
-  por `eks`. Pendiente de datos: AIF-C01 solo tiene 5
+- **Próximo paso (siguiente sesión):** implementar el enfoque de AIF-C01 ya confirmado (ver "AIF-C01,
+  conceptos en Tech Spider" arriba), en este orden: (1) en Tech Spider, escribir los temas que faltan
+  (`prompt-engineering`, `rag`, `fine-tuning`, `tokens-context-window`, `hallucinations`,
+  `model-selection`, más métricas de evaluación e IA responsable) con preguntas marcadas
+  `"certificaciones": ["AIF-C01"]` y `"dominio"`, y marcar también las útiles de los temas ya publicados;
+  (2) aquí, un JSON con la lista de temas de Tech Spider para AIF y el cambio en `simulacro.js` para leer
+  sus preguntas en solo lectura; (3) el menú "Conceptos" › "AIF-C01" con la ficha de enlaces a la teoría
+  y a `evaluacion.html` de Tech Spider (también en `CLAUDE.md` y `aviso-legal.html` si hace falta).
+  Preguntar al usuario si se revisa el sesgo de longitud de las preguntas no difíciles de SAP-C03 (la
+  correcta es la más larga en el 80 %). Después, la cola 5.B
+  (ordenándola por lo que falte en cada dominio según `revisar_preguntas.py --dominios`) y la cola práctica con `ecr`. Pendiente de datos: AIF-C01 solo tiene 5
   preguntas de "Fundamentos de IA generativa" (pesa el 24 %, un simulacro completo pide 16); el
   simulacro completa con otros dominios y lo avisa.
   **Avisos con fecha que hay que pasar a pasado cuando llegue el día:** `support` (planes antiguos) el 01/01/2027. La nota "Examen disponible a partir del…"
@@ -139,7 +174,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   "Servicios clave" y `CLAUDE.md`.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-11-12
+- **Última actualización:** 2026-11-19
 
 ---
 
@@ -844,18 +879,20 @@ la cola va por orden de peso en el examen; lo escrito servirá también para SAP
       `codepipeline-003`, `directory-service-005`, `ecs-008`, `memorydb-001`, `organizations-007`,
       `route-53-004`, `s3-glacier-005`, `sct-002`, `secrets-manager-009`, `site-to-site-vpn-004`,
       `transit-gateway-004`, `vpc-lattice-006`, `vpc-lattice-007`).
-- [ ] **5.2** Cola 5.A (pedidos por el usuario), en este orden: ~~`organizations`~~ (hecho el
+- [x] **5.2** Cola 5.A (pedidos por el usuario), en este orden: ~~`organizations`~~ (hecho el
       08/10/2026 al hacerlo servicio clave: sección "A fondo" y 5 preguntas difíciles), ~~`iam`~~ (hecho el 16/10/2026 como servicio clave). Reordenada
       el 12/11/2026 a petición del usuario, según lo que usa en su trabajo: `eks`, `ec2`, `codedeploy`,
       `ecs`, `fargate`, `codepipeline`, `codebuild` y, al final, `codeartifact` (su parte práctica ya está
-      hecha). También hecho `bedrock` (12/11/2026, como servicio clave).
-- [ ] **5.3** Cola 5.B (propuesta: también pesan mucho en SAP-C02; confirmar con el usuario
-      antes de empezarla): `control-tower`, `iam-identity-center`, `ram`, `transit-gateway`,
+      hecha). También hecho `bedrock` (12/11/2026, como servicio clave). → Hecha entera el 19/11/2026:
+      sección "A fondo" y 5 difíciles en cada uno de los ocho.
+- [ ] **5.3** Cola 5.B (aprobada por el usuario el 19/11/2026; ya tienen alguna difícil nueva
+      `cloudformation`, `systems-manager`, `config`, `backup`, `elastic-disaster-recovery`, sin "A fondo"): `control-tower`, `iam-identity-center`, `ram`, `transit-gateway`,
       `direct-connect`, ~~`vpc`~~ (hecho el 08/10/2026 como servicio clave), `privatelink`, `route-53`, `cloudformation`, `service-catalog`,
       `systems-manager`, `config`, `kms`, ~~`s3`~~ (hecho el 08/10/2026 como servicio clave), `aurora`, `dynamodb`, ~~`lambda`~~ (hecho el 08/10/2026 como servicio clave), `api-gateway`,
       `cloudfront`, `elastic-disaster-recovery`, `backup`, `dms`, `application-migration-service`.
-- [ ] **5.4** Con la cola 5.A hecha: que el simulacro de SAP-C02 "solo difíciles" pueda llegar a
-      65 preguntas repartidas por los cuatro dominios.
+- [x] **5.4** Con la cola 5.A hecha: que el simulacro de SAP-C02 "solo difíciles" pueda llegar a
+      65 preguntas repartidas por los cuatro dominios. → Hecho el 19/11/2026: el completo de SAP-C03 pide
+      75 y hay difíciles de sobra en los cinco dominios (`python scripts/revisar_preguntas.py --dominios`).
 
 ---
 
@@ -1031,3 +1068,4 @@ guía donde aparece. Coste muy bajo.
 | 2026-11-12 | **Comandos de ejemplo en CodeArtifact** (pedido por el usuario, que también usa el sitio para aprender los servicios de su trabajo): sección opcional nueva `id="comandos"` tras "Conceptos clave" con `login` (npm, pip, twine; duración del token, `--dry-run`, permiso `sts:GetServiceBearerToken` en la política de la identidad), token y punto de enlace para Maven/Gradle con `settings.xml`, e instalar y publicar. Datos contrastados con la documentación actual (3 fuentes nuevas) y una trampa de examen más. Estilo `.doc pre` (desplazamiento dentro del bloque); plantilla, `CLAUDE.md` y estructura fija actualizados. Probado en navegador a escritorio y 375 px (sin desplazamiento horizontal de la página, cuestionario cargado). |
 | 2026-11-12 | **Bedrock, servicio clave, y cola práctica** (pedidos por el usuario): `"clave": true` en Bedrock, sección "A fondo: temas avanzados" (cuotas, reserva de `max_tokens` y consumo de los tokens de salida, perfiles geográficos y global con sus permisos y el choque con las SCP de regiones, guardrails obligatorios con `bedrock:GuardrailIdentifier`, guardrail de cuenta y política de Bedrock de Organizations, perfiles de inferencia de aplicación para repartir costes, registro de invocaciones, puntos de enlace, tabla de almacenes vectoriales, metadatos para filtrar por usuario y tabla de opciones de consumo), 4 trampas nuevas y 5 preguntas difíciles de SAP-C03 (bedrock-008 a 012, una por dominio). Secciones "Comandos de ejemplo" en Bedrock (`converse`, perfiles, `retrieve-and-generate`), IAM Identity Center (`configure sso`, `sso-session`, perfiles, `sso login`, `export-credentials`) y STS (`get-caller-identity`, `assume-role` exportando variables, perfil con `role_arn`, `decode-authorization-message`). Cola 5.A reordenada según el trabajo del usuario. Datos contrastados con la documentación actual; probado en navegador a 375 px (sin desplazamiento horizontal, cuestionarios cargados, 5 etiquetas ⚠ en Bedrock, sin errores). |
 | 2026-11-13 | **Así lo uso en Prompt Quest y Kopi Chess** (pedido por el usuario, junto con las páginas "Aprendizajes de" de arquitechthor.github.io): secciones opcionales nuevas `id="prompt-quest"` y `id="kopi-chess"` (código público, con enlaces a los ficheros en GitHub y al caso de estudio en `arquitechthor.github.io/aprendizajes/`), justo después de "Así lo uso en Kopi" o, si no la hay, antes de "Trampas de examen". Prompt Quest en Bedrock, SQS, Lambda, DynamoDB, S3, CloudFront, EventBridge, CDK y Secrets Manager; Kopi Chess en DynamoDB y API Gateway. Cada "Así lo uso en Kopi" enlaza además a "Aprendizajes de Kopi Tools". `revisar_texto.py --escribir` aplicado a las 10 guías. |
+| 2026-11-19 | **Propuestas de SAP-C03 1–4** (pedidas por el usuario): `scripts/revisar_preguntas.py` (sesgo de la opción más larga, enunciados cortos en difíciles, difíciles por dominio frente al simulacro); 53 difíciles reescritas; 51 difíciles nuevas (cola 5.A completa con sus secciones "A fondo", y 11 de costes, resiliencia y operaciones); tareas 5.2 y 5.4 hechas; tres escenarios de Arquitecto de SAP-C03 (`inspeccion-centralizada`, `perimetro-datos`, `activo-activo`); 11 siglas nuevas. Comprobado en Chrome: diagramas sin cruces, las ocho guías a 1200 y 375 px sin desplazamiento horizontal y el simulacro completo de solo difíciles con 75 preguntas. AIF-C01: propuesta de "Conceptos" con Tech Spider, pendiente de confirmar. |

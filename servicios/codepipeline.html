@@ -126,6 +126,54 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de SAP-C03: tipos de canalización y su coste, condiciones y
+        reversiones, monorrepositorios, muchas cuentas y varias regiones.</p>
+
+      <h3>V1 frente a V2</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th></th><th>V1</th><th>V2</th></tr></thead>
+          <tbody>
+            <tr><td>Cobro</td><td>Precio fijo por canalización activa al mes</td><td>Por minuto de ejecución de acción</td></tr>
+            <tr><td>Conviene a</td><td>Canalizaciones que se ejecutan mucho</td><td>Canalizaciones que se ejecutan poco</td></tr>
+            <tr><td>Funciones</td><td>Básicas</td><td>Disparadores con filtros, variables, condiciones, reversión</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li>Una canalización que se ejecuta 30 veces al día con 24 minutos de acciones consume más de 20.000 minutos al mes:
+          en V2 cuesta mucho más que el precio fijo de V1. Una que se ejecuta una vez al mes, al revés.</li>
+      </ul>
+
+      <h3>Condiciones y reversión</h3>
+      <ul>
+        <li><strong>Condición de entrada</strong>: reglas que deben cumplirse para entrar en la etapa (sin alarmas activas
+          con <code>CloudWatchAlarm</code>, dentro del horario con <code>DeploymentWindow</code>, una comprobación con
+          <code>LambdaInvoke</code>); si fallan, la etapa falla o se salta.</li>
+        <li><strong>Condición de éxito o de fallo</strong>: tras la etapa, una regla puede provocar la
+          <strong>reversión</strong> a la última ejecución que completó esa etapa.</li>
+        <li><strong>Reversión automática</strong> al fallar la etapa (no en la de origen).</li>
+      </ul>
+
+      <h3>Disparadores y monorrepositorios</h3>
+      <ul>
+        <li>Los disparadores de V2 filtran los eventos de push por <strong>ramas</strong>, <strong>rutas de fichero</strong>
+          y <strong>etiquetas</strong>, y las solicitudes de extracción por sus eventos. Con un filtro por carpeta, cada
+          servicio de un monorrepositorio solo lanza su canalización.</li>
+      </ul>
+
+      <h3>Muchas cuentas y varias regiones</h3>
+      <ul>
+        <li><strong>Entre cuentas</strong>: la canalización asume roles en las cuentas de destino, y los artefactos se cifran
+          con una clave de <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a> gestionada por el cliente que esas cuentas puedan usar (la clave aws/s3 no se comparte).</li>
+        <li><strong>A cientos de cuentas</strong>: acciones de <a href="cloudformation.html">CloudFormation</a> StackSets con permisos administrados por el
+          servicio, una <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr> como destino, implementación automática para las cuentas nuevas y tolerancia a fallos. La cuenta
+          de la canalización debe ser administradora delegada de StackSets.</li>
+        <li><strong>Varias regiones</strong>: acciones en otra región dentro de la misma canalización; CodePipeline copia los
+          artefactos de esa ejecución al almacén de cada región, así que todas reciben la misma versión.</li>
+      </ul>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Canalizaciones V1: <strong>por canalización activa al mes</strong>. Canalizaciones V2: <strong>por minuto de
         ejecución de acciones</strong>. Aparte se pagan los servicios que ejecutan las acciones (<a href="codebuild.html">CodeBuild</a>, <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>…).</p>
@@ -162,6 +210,9 @@
         <li><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html" target="_blank" rel="noopener">Pipeline types</a>, documentación de AWS (consultada el 03/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-create-cross-account.html" target="_blank" rel="noopener">Create a pipeline in CodePipeline that uses resources from another AWS account</a>, documentación de AWS (consultada el 03/10/2026).</li>
         <li><a href="https://aws.amazon.com/codepipeline/pricing/" target="_blank" rel="noopener">AWS CodePipeline pricing</a>, documentación de AWS (consultada el 03/10/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html" target="_blank" rel="noopener">How do stage conditions work?</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-triggers.html" target="_blank" rel="noopener">Add triggers with code push or pull request event types</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/actions-create-cross-region.html" target="_blank" rel="noopener">Add a cross-Region action in CodePipeline</a>, documentación de AWS (consultada el 19/11/2026).</li>
       </ul>
     </article>
   </div>

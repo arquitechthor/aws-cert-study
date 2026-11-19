@@ -6,7 +6,7 @@
       "SAP-C03"
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
-    "enunciado": "Una multinacional tiene VPC en ocho regiones, 40 oficinas con equipos SD-WAN y dos centros de datos. Quiere una única red global, con producción y desarrollo aislados en todas las regiones y configurada desde un único documento central, sin mantener a mano tablas de rutas ni emparejamientos entre regiones. ¿Qué solución cumple los requisitos?",
+    "enunciado": "Una multinacional tiene VPC en ocho regiones, 40 oficinas con equipos SD-WAN y dos centros de datos. Quiere una única red global, con producción y desarrollo aislados en todas las regiones y configurada desde un único documento central, sin mantener a mano tablas de rutas ni emparejamientos entre regiones. Su equipo de red es pequeño y quiere el menor esfuerzo operativo al añadir regiones nuevas. ¿Qué solución cumple los requisitos?",
     "opciones": [
       "AWS Cloud WAN con una política de red troncal que defina las regiones y los segmentos de producción y desarrollo.",
       "Un Transit Gateway por región, emparejados entre sí, con tablas de rutas separadas para producción y desarrollo.",
@@ -52,17 +52,17 @@
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
-    "enunciado": "Todo el tráfico entre el segmento de desarrollo y el de servicios compartidos, en cualquier región, debe pasar por cortafuegos de inspección, sin mantener rutas estáticas. ¿Qué configura en Cloud WAN?",
+    "enunciado": "Una empresa usa AWS Cloud WAN con segmentos de producción, desarrollo y servicios compartidos en seis regiones. Seguridad exige que todo el tráfico entre desarrollo y servicios compartidos, tanto dentro de una región como entre regiones, pase por cortafuegos de inspección de terceros desplegados en VPC propias. El equipo de red no quiere mantener rutas estáticas por región ni tocar las VPC de desarrollo cuando se añadan regiones nuevas. ¿Qué configura en Cloud WAN?",
     "opciones": [
-      "Una ruta estática en cada VPC hacia el cortafuegos.",
-      "Un grupo de funciones de red con los anexos de los cortafuegos, indicado en la política para ese par de segmentos.",
-      "Un Gateway Load Balancer en cada VPC de desarrollo.",
-      "Listas de control de acceso de red en todas las subredes."
+      "Rutas estáticas en las tablas de cada VPC de desarrollo que envíen a las VPC de inspección el tráfico de servicios compartidos.",
+      "Un grupo de funciones de red con los anexos de las VPC de inspección, indicado en la política para ese par de segmentos.",
+      "Un Gateway Load Balancer con puntos de enlace en cada VPC de desarrollo que envíen el tráfico a los cortafuegos de terceros.",
+      "Un segmento de inspección compartido con los otros dos y rutas estáticas de ese segmento hacia los cortafuegos de cada región."
     ],
     "correctas": [
       1
     ],
-    "explicacion": "Los grupos de funciones de red contienen los anexos de inspección y la política desvía por ellos el tráfico entre los segmentos indicados, dentro de una región y entre regiones, sin rutas estáticas. Las demás opciones exigen configuración por VPC o no inspeccionan el tráfico.",
+    "explicacion": "Los grupos de funciones de red contienen los anexos de inspección, y la política desvía por ellos el tráfico entre los segmentos indicados, dentro de una región y entre regiones, sin rutas estáticas; al añadir una región basta con la política. Las rutas en cada VPC y los puntos de enlace de Gateway Load Balancer obligan a tocar todas las VPC de desarrollo. El segmento de inspección compartido con rutas estáticas era el patrón anterior: funciona, pero exige mantener rutas estáticas en cada región.",
     "fuentes": [
       "https://docs.aws.amazon.com/network-manager/latest/cloudwan/what-is-cloudwan.html"
     ]
@@ -75,17 +75,17 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Una empresa con 12 VPC en una sola región necesita que se comuniquen entre sí y con su centro de datos por Direct Connect, y su equipo de red prefiere controlar las tablas de rutas. ¿Qué opción es la más adecuada?",
+    "enunciado": "Una empresa tiene 12 VPC en una sola región, sin planes de expandirse a otras, y un centro de datos conectado por Direct Connect. Necesita que todas las VPC se comuniquen entre sí y con el centro de datos, con tablas de rutas separadas para aislar las VPC de pruebas de las de producción. Su equipo de red domina el enrutamiento y prefiere controlar directamente las tablas de rutas, con la solución más sencilla y de menor coste. ¿Qué opción es la más adecuada?",
     "opciones": [
-      "AWS Cloud WAN con un segmento por VPC.",
-      "VPC Lattice.",
-      "Emparejamiento de VPC transitivo.",
-      "AWS Transit Gateway."
+      "AWS Cloud WAN con una política de red troncal, un segmento para producción y otro para pruebas.",
+      "Amazon VPC Lattice con una red de servicios asociada a las 12 VPC y una VIF privada hacia el centro de datos.",
+      "Emparejamientos de VPC en malla entre las 12 VPC y una puerta de enlace de Direct Connect con sus VGW.",
+      "AWS Transit Gateway con una tabla de rutas por entorno y una puerta de enlace de Direct Connect asociada."
     ],
     "correctas": [
       3
     ],
-    "explicacion": "Para pocas VPC en una región con control propio del enrutamiento, Transit Gateway es la opción natural y más sencilla; Cloud WAN aporta más cuando hay muchas regiones y sedes. VPC Lattice conecta servicios, no redes, y el emparejamiento de VPC no es transitivo.",
+    "explicacion": "Para pocas VPC en una región, con control propio del enrutamiento, Transit Gateway es la opción natural: tablas de rutas por entorno y una sola asociación con la puerta de enlace de Direct Connect. Cloud WAN también funciona, pero se gestiona con una política declarativa y aporta más cuando hay muchas regiones y sedes, a mayor coste. VPC Lattice conecta servicios, no redes enteras. La malla de emparejamientos funciona, pero son 66 conexiones y una VGW por VPC que mantener, y el emparejamiento no es transitivo.",
     "fuentes": [
       "https://docs.aws.amazon.com/prescriptive-guidance/latest/designing-control-tower-landing-zone/cloud-wan.html"
     ]

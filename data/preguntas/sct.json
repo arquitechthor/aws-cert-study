@@ -29,17 +29,17 @@
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
     "dificil": true,
-    "enunciado": "Una empresa migra un almacén de datos Teradata de 200 TB a Amazon Redshift. ¿Qué enfoque recomienda AWS?",
+    "enunciado": "Una empresa migra a Amazon Redshift un almacén de datos Teradata de 200 TB con miles de vistas, macros y scripts BTEQ. Quiere convertir el esquema y el código de forma automática en lo posible, extraer los datos en paralelo aprovechando su enlace de Direct Connect de 10 Gb/s y validar la carga antes del corte. No necesita replicación continua: el negocio acepta congelar el almacén un fin de semana. ¿Qué enfoque recomienda AWS?",
     "opciones": [
-      "AWS DMS con una tarea de CDC directamente a Redshift.",
-      "Exportar a CSV con scripts manuales y cargar con COPY.",
-      "AWS Application Migration Service.",
-      "AWS SCT para convertir el esquema y sus agentes de extracción para extraer los datos en paralelo y cargarlos en Redshift a través de S3."
+      "AWS DMS con una tarea de carga completa y CDC directamente desde Teradata a Redshift, creando las tablas por defecto.",
+      "Exportar las tablas a CSV con las utilidades de Teradata, subirlas a S3 y cargarlas con COPY, convirtiendo el código a mano.",
+      "AWS Application Migration Service para replicar los servidores de Teradata a EC2 y migrar desde allí a Redshift.",
+      "AWS SCT para convertir el esquema y el código, y sus agentes de extracción para cargar los datos en paralelo vía S3."
     ],
     "correctas": [
       3
     ],
-    "explicacion": "SCT convierte el esquema de Teradata a Redshift y sus agentes de extracción leen los datos en paralelo, los suben a S3 y los cargan en Redshift, lo que escala mejor para almacenes de datos grandes.",
+    "explicacion": "SCT convierte el esquema y buena parte del código de Teradata a Redshift, y sus agentes de extracción leen los datos en paralelo, los suben a S3 y los cargan en Redshift, lo que escala bien para almacenes grandes. DMS mueve datos, pero no convierte vistas, macros ni scripts, y la CDC no hace falta. Exportar a CSV funciona, pero convertir a mano miles de objetos es justo el trabajo que se quiere automatizar. Application Migration Service rehospeda servidores; no migra un almacén de datos a Redshift.",
     "fuentes": [
       "https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/agents.html"
     ]

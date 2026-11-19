@@ -51,19 +51,19 @@
     ],
     "dominio": "Excelencia operativa y automatización",
     "dificil": true,
-    "enunciado": "Una canalización en la cuenta de herramientas debe desplegar con CloudFormation en las cuentas de preproducción y producción. ¿Qué se necesita? (Elige dos.)",
+    "enunciado": "Una canalización de AWS CodePipeline en la cuenta de herramientas de una organización debe desplegar plantillas de CloudFormation en las cuentas de preproducción y producción. Seguridad prohíbe las credenciales de larga duración, exige que los artefactos estén cifrados en reposo y no quiere copias del código fuente en las cuentas de destino. Hoy la canalización solo despliega en su propia cuenta, con la configuración por defecto. ¿Qué DOS cambios necesita para desplegar en las otras cuentas? (Elige 2.)",
     "opciones": [
-      "Roles en las cuentas de destino que la canalización pueda asumir.",
-      "Una clave de KMS gestionada por el cliente, compartida con esas cuentas, para cifrar los artefactos.",
-      "Usuarios de IAM con claves de acceso en cada cuenta.",
-      "Copiar el código a un repositorio en cada cuenta.",
-      "La clave de KMS gestionada por AWS por defecto de S3."
+      "Roles en las cuentas de destino que la canalización pueda asumir, con permiso para lanzar CloudFormation.",
+      "Una clave de KMS gestionada por el cliente cuya política permita a esas cuentas descifrar los artefactos.",
+      "Usuarios de IAM en cada cuenta de destino cuyas claves de acceso guarde la canalización en Secrets Manager.",
+      "Una canalización réplica en cada cuenta de destino que reciba los artefactos por replicación de buckets de S3.",
+      "Mantener la clave de KMS gestionada por AWS de S3 y dar acceso a las cuentas de destino en la política del bucket."
     ],
     "correctas": [
       0,
       1
     ],
-    "explicacion": "Las acciones entre cuentas asumen roles en las cuentas de destino, que también deben poder leer los artefactos. Por eso los artefactos se cifran con una clave de KMS gestionada por el cliente con una política que lo permita; la clave por defecto no se puede compartir.",
+    "explicacion": "Las acciones entre cuentas asumen roles en las cuentas de destino, y esas cuentas deben poder leer los artefactos. Por eso los artefactos se cifran con una clave de KMS gestionada por el cliente cuya política lo permita. La política del bucket no basta con la clave gestionada por AWS (aws/s3), porque esa clave no se puede compartir con otras cuentas. Los usuarios con claves de acceso son credenciales de larga duración, y una canalización réplica por cuenta multiplica la operación sin ser necesaria.",
     "fuentes": [
       "https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-create-cross-account.html"
     ]
@@ -110,6 +110,125 @@
     "explicacion": "CodePipeline publica eventos de cambio de estado; una regla de EventBridge o las notificaciones de las herramientas para desarrolladores pueden enviarlos a SNS o a Amazon Q Developer en aplicaciones de chat para Slack.",
     "fuentes": [
       "https://docs.aws.amazon.com/codepipeline/latest/userguide/detect-state-changes-cloudwatch-events.html"
+    ]
+  },
+  {
+    "id": "codepipeline-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una canalización V2 de CodePipeline despliega una aplicación en producción con CloudFormation. El equipo quiere que el despliegue no empiece si hay una alarma de CloudWatch activa en producción o fuera del horario de cambios permitido, y que, si la alarma de errores salta en los 30 minutos siguientes al despliegue, la etapa vuelva sola a la última revisión buena. Prefiere funciones nativas de CodePipeline a código propio. ¿Qué configura?",
+    "opciones": [
+      "Una aprobación manual antes del despliegue y una función Lambda que vigile la alarma y lance de nuevo la ejecución anterior si salta.",
+      "Una condición de entrada con reglas CloudWatchAlarm y DeploymentWindow, y una condición de éxito con la regla de la alarma y resultado Rollback.",
+      "Desencadenadores de reversión de CloudFormation con la alarma de errores, y una regla de EventBridge que pare la canalización fuera de horario.",
+      "Una regla de EventBridge que deshabilite la transición a la etapa de producción cuando salte la alarma o fuera del horario permitido."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las condiciones de etapa de las canalizaciones V2 comprueban reglas antes de entrar (aquí, que no haya alarma activa y que se esté dentro de la ventana de despliegue) y después de terminar la etapa, cuando pueden revertirla a la última ejecución correcta si la regla de la alarma falla. La aprobación manual y la función Lambda son trabajo humano y código propio. Los desencadenadores de reversión de CloudFormation revierten la pila, pero no impiden empezar con una alarma activa, y parar fuera de horario requiere más piezas. Deshabilitar la transición no revierte nada.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/concepts-how-it-works-conditions.html",
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/rule-reference.html"
+    ]
+  },
+  {
+    "id": "codepipeline-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Un monorrepositorio de GitHub contiene 25 microservicios, cada uno en su carpeta, con una canalización V2 por servicio. Hoy cualquier push a main lanza las 25 canalizaciones y se desperdician muchos minutos de compilación. Además, solo las etiquetas con formato v*.*.* deben desplegar en producción. ¿Qué configuración resuelve los dos problemas con el menor esfuerzo?",
+    "opciones": [
+      "Una sola canalización con una acción de CodeBuild que detecte con git diff las carpetas cambiadas y compile solo esos servicios.",
+      "Disparadores de las canalizaciones V2 filtrados por la ruta de cada servicio, y otro disparador por etiquetas v*.*.* para producción.",
+      "Webhooks de GitHub hacia una función Lambda que decida qué canalización arrancar según los ficheros del commit y su etiqueta.",
+      "Un repositorio por microservicio, migrando el código y el historial, para que cada push solo lance su propia canalización."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los disparadores de las canalizaciones V2 filtran los eventos de push por ramas y por rutas de fichero, y también por etiquetas, así que cada canalización solo arranca cuando cambia su carpeta y producción solo con las etiquetas de versión. La canalización única con git diff y la función Lambda funcionan, pero son lógica propia que mantener. Separar en 25 repositorios es un cambio de organización mucho mayor.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-triggers.html",
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html"
+    ]
+  },
+  {
+    "id": "codepipeline-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una empresa tiene 900 canalizaciones V1 de CodePipeline con más de un año de antigüedad. 700 son de servicios poco activos y se ejecutan una vez al mes, con 6 acciones de 4 minutos cada una. Las otras 200 se ejecutan 30 veces al día con esas mismas 6 acciones de 4 minutos. Finanzas quiere reducir el coste de CodePipeline sin perder funcionalidad. ¿Qué recomienda el arquitecto?",
+    "opciones": [
+      "Pasar las 900 a V2, que cobra por minuto de ejecución de acción y siempre sale más barata que el precio fijo por canalización.",
+      "Mantener las 900 en V1 y borrar cada mes las que no se han ejecutado, recreándolas desde una plantilla cuando hagan falta.",
+      "Agrupar varios servicios en cada canalización con acciones en paralelo, porque V1 cobra por cada acción que se ejecuta.",
+      "Pasar a V2 las 700 poco activas y dejar en V1 las 200 de uso diario, porque V2 cobra por minuto de acción y V1 por canalización activa."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "V1 cobra un precio fijo al mes por canalización activa (con algún cambio ese mes), y V2 cobra por minuto de ejecución de acción. Una canalización poco activa consume 24 minutos al mes en V2, mucho menos que el precio fijo; una que se ejecuta 30 veces al día consume unos 21.600 minutos al mes, muy por encima de ese precio. Por eso conviene mezclar. Borrar canalizaciones no ahorra, porque todas se ejecutan cada mes, y V1 no cobra por acción.",
+    "fuentes": [
+      "https://aws.amazon.com/codepipeline/pricing/",
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types-planning.html"
+    ]
+  },
+  {
+    "id": "codepipeline-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "La canalización de la cuenta de herramientas debe desplegar una plantilla de línea base de seguridad en las 250 cuentas de una OU, en tres regiones, incluidas las cuentas que se añadan después a la OU, sin crear roles a mano en cada cuenta y con despliegues escalonados que se detengan si fallan demasiadas cuentas. La cuenta de herramientas está registrada como administradora delegada de StackSets. ¿Qué diseño cumple los requisitos?",
+    "opciones": [
+      "Una acción de despliegue de CloudFormation por cuenta y región, 750 en total, cada una con un rol creado a mano en la cuenta de destino.",
+      "Una acción de CodeBuild que recorra las cuentas de la OU asumiendo OrganizationAccountAccessRole y despliegue la pila en cada región.",
+      "Acciones de StackSets en la canalización, con permisos administrados por el servicio, la OU como destino e implementación automática.",
+      "StackSets con permisos autoadministrados, y otra plantilla que cree los roles de administración y de ejecución en cada cuenta nueva."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las acciones de StackSets de CodePipeline despliegan en cuentas y regiones con los ajustes de concurrencia y tolerancia a fallos de StackSets. Con permisos administrados por el servicio, StackSets crea los roles que necesita en cada cuenta y, con la implementación automática, despliega en las cuentas que entran en la OU. 750 acciones con roles manuales no escalan. El rol OrganizationAccountAccessRole solo existe en las cuentas creadas desde Organizations, da acceso de administrador y obliga a programar el recorrido. Los permisos autoadministrados exigen crear los roles en cada cuenta y no tienen implementación automática.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-StackSets.html",
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-orgs-manage-auto-deployment.html"
+    ]
+  },
+  {
+    "id": "codepipeline-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Una aplicación se despliega con CodePipeline desde eu-west-1 en eu-west-1 y en us-east-1, su región de recuperación. Hoy un script copia los artefactos a un bucket de us-east-1 y arranca allí otra canalización, y a menudo las dos regiones quedan con versiones distintas. Se quiere que cada ejecución despliegue la misma versión en las dos regiones, primero en la principal, sin canalizaciones duplicadas ni scripts propios. ¿Qué configura?",
+    "opciones": [
+      "Replicación entre regiones del bucket de artefactos hacia us-east-1 y una regla de EventBridge que arranque allí la segunda canalización.",
+      "Una acción de CloudFormation en eu-west-1 con una plantilla que cree, mediante recursos personalizados, también los recursos de us-east-1.",
+      "Una canalización en us-east-1 cuya acción de origen lea la última ejecución correcta de la canalización de eu-west-1.",
+      "Acciones entre regiones en la misma canalización, con un almacén de artefactos por región y la acción de us-east-1 en una etapa posterior."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Una canalización puede tener acciones en otras regiones: CodePipeline copia los artefactos de esa ejecución al almacén de artefactos de cada región (cada uno con su clave de KMS), así que las dos regiones reciben exactamente la misma versión, en el orden de las etapas. La replicación con una segunda canalización mantiene el problema de las versiones distintas. Los recursos personalizados para otra región son código propio frágil, y no existe una acción de origen que lea otra canalización.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codepipeline/latest/userguide/actions-create-cross-region.html"
     ]
   }
 ]

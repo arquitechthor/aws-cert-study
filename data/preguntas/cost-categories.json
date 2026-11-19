@@ -8,15 +8,15 @@
     "dominio": "Diseño de arquitecturas con costos optimizados",
     "enunciado": "Una empresa tiene 60 cuentas. Algunas unidades de negocio usan cuentas propias y otras comparten cuentas, distinguiéndose por la etiqueta \"proyecto\". Finanzas quiere ver en Cost Explorer y en Budgets el gasto por unidad de negocio, incluido un reparto proporcional del soporte Enterprise y de la cuenta de red compartida. ¿Qué solución cumple los requisitos con menos esfuerzo?",
     "opciones": [
-      "Una organización nueva por unidad de negocio.",
-      "Una categoría de costes \"Unidad\" con reglas por cuenta y por etiqueta, y reglas de reparto de cargos para el soporte y la red.",
-      "Un informe de costes y uso con consultas de Athena hechas a mano cada mes.",
-      "Etiquetar todos los recursos con la unidad y desactivar las cuentas compartidas."
+      "Una organización de AWS nueva por unidad de negocio, con facturación unificada y presupuestos propios en cada una.",
+      "Una categoría de costes con reglas por cuenta y por etiqueta, y reglas de reparto para el soporte y la red.",
+      "Exportar el informe de costes y uso a S3 y repartir cada mes el soporte y la red con consultas de Athena y Quick.",
+      "Una política de etiquetas que exija la etiqueta de unidad en todos los recursos y presupuestos filtrados por ella."
     ],
     "correctas": [
       1
     ],
-    "explicacion": "Cost Categories agrupa costes con reglas por cuenta y por etiqueta, y las reglas de reparto de cargos distribuyen los costes compartidos; los valores aparecen en Cost Explorer y Budgets. Separar organizaciones o reetiquetar todo es mucho más trabajo, y las consultas manuales no alimentan Budgets.",
+    "explicacion": "Cost Categories agrupa costes con reglas por cuenta y por etiqueta, y sus reglas de reparto de cargos distribuyen los costes compartidos, como el soporte o la red; los valores aparecen en Cost Explorer y en Budgets. Separar organizaciones es un cambio enorme. Las consultas de Athena funcionan, pero son trabajo manual cada mes y no alimentan Budgets. La política de etiquetas no reparte el soporte ni los costes que no se pueden etiquetar, y no separa las cuentas propias de cada unidad.",
     "fuentes": [
       "https://aws.amazon.com/aws-cost-management/aws-cost-categories/features/"
     ],

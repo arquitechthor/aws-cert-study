@@ -173,6 +173,52 @@ twine upload --repository codeartifact dist/*</code></pre>
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de SAP-C03: dominios para toda una organización, la estructura
+        de repositorios, la cadena de suministro, redes sin internet y coste.</p>
+
+      <h3>Un dominio para toda la organización</h3>
+      <ul>
+        <li>El <strong>dominio</strong> agrupa los repositorios y guarda el contenido; su clave de <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a> se elige al crearlo
+          y no se cambia después.</li>
+        <li>El acceso entre cuentas se da con la <strong>política de dominio</strong> (con <code>aws:PrincipalOrgID</code>
+          para limitarlo a la organización) y las <strong>políticas de repositorio</strong> (por ejemplo, solo la
+          canalización publica en el repositorio de versiones). No se comparte con <a href="ram.html"><abbr class="sigla sigla-1" data-s="RAM" data-en="Resource Access Manager" tabindex="0">RAM<span class="sigla-exp"> (Resource Access Manager)</span></abbr></a>.</li>
+        <li>Los tokens de autorización duran como mucho 12 horas y se piden con el rol de cada identidad.</li>
+      </ul>
+
+      <h3>Estructura de repositorios</h3>
+      <ul>
+        <li>Un repositorio admite <strong>una sola conexión externa</strong> (npmjs, Maven Central, PyPI…).</li>
+        <li>Los repositorios <strong>ascendentes</strong> tienen que estar en el mismo dominio.</li>
+        <li>Patrón habitual: un repositorio intermedio por ecosistema con la conexión externa (por ejemplo,
+          <code>npm-store</code>), ascendente de los repositorios de equipo. Los paquetes públicos se guardan una vez y se
+          controlan en un solo sitio.</li>
+      </ul>
+
+      <h3>Cadena de suministro: confusión de dependencias</h3>
+      <ul>
+        <li>Si un atacante publica en el registro público un paquete con el nombre de uno interno y una versión mayor, un
+          repositorio con ascendente público podría traerlo.</li>
+        <li>Los <strong>controles de origen de paquetes</strong> deciden, paquete a paquete, si se aceptan versiones
+          publicadas directamente y si se aceptan las de los ascendentes. En los internos: publicar sí, ascendentes no.</li>
+        <li>Usar un ámbito propio (<code>@empresa/</code>) también reduce el riesgo.</li>
+      </ul>
+
+      <h3>Sin internet</h3>
+      <ul>
+        <li>Desde subredes sin <abbr class="sigla sigla-1" data-s="NAT" data-en="Network Address Translation" data-es="traducción de direcciones de red" tabindex="0">NAT<span class="sigla-exp"> (Network Address Translation: traducción de direcciones de red)</span></abbr> hacen falta dos puntos de enlace de interfaz (<code>codeartifact.api</code> y
+          <code>codeartifact.repositories</code>) y el de puerta de enlace de <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, porque el contenido de los paquetes se sirve
+          desde <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>.</li>
+      </ul>
+
+      <h3>Coste</h3>
+      <ul>
+        <li>Se paga almacenamiento, peticiones y transferencia. El contenido se guarda <strong>una vez por dominio</strong>
+          aunque esté en muchos repositorios: fusionar repositorios no ahorra almacenamiento; repartir en varios dominios lo
+          multiplica.</li>
+      </ul>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga el <strong>almacenamiento</strong> de los paquetes por GB y mes, las <strong>peticiones</strong> y la
         transferencia de datos de salida, con una capa gratuita mensual.</p>
@@ -208,6 +254,8 @@ twine upload --repository codeartifact dist/*</code></pre>
         <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html" target="_blank" rel="noopener">AWS CodeArtifact authentication and tokens</a>, documentación de AWS (consultada el 12/11/2026).</li>
         <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html" target="_blank" rel="noopener">Configure and use npm with CodeArtifact</a>, documentación de AWS (consultada el 12/11/2026).</li>
         <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/maven-mvn.html" target="_blank" rel="noopener">Use CodeArtifact with mvn</a>, documentación de AWS (consultada el 12/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/create-vpc-endpoints.html" target="_blank" rel="noopener">Create VPC endpoints</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/codeartifact/latest/ug/repos-upstream.html" target="_blank" rel="noopener">Working with upstream repositories in CodeArtifact</a>, documentación de AWS (consultada el 19/11/2026).</li>
       </ul>
     </article>
   </div>

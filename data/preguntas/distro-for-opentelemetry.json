@@ -6,17 +6,17 @@
       "SAP-C03"
     ],
     "dominio": "Excelencia operativa y automatización",
-    "enunciado": "Una empresa con 60 microservicios en EKS quiere trazas distribuidas y métricas en CloudWatch y X-Ray, pero también enviar las mismas trazas a una herramienta de observabilidad de terceros, sin reinstrumentar el código si en el futuro cambia de herramienta. ¿Qué solución cumple los requisitos?",
+    "enunciado": "Una empresa con 60 microservicios en Amazon EKS, escritos en Java, Go y Python, quiere trazas distribuidas y métricas en CloudWatch y X-Ray. El área de plataforma exige además enviar las mismas trazas a una herramienta de observabilidad de terceros que evaluará durante un año, y no quiere reinstrumentar el código si después cambia de herramienta o deja una de las dos. Se busca el menor esfuerzo operativo. ¿Qué solución cumple los requisitos?",
     "opciones": [
-      "Instrumentar con el SDK de X-Ray y exportar las trazas a mano cada día.",
-      "Activar solo los registros de flujo de VPC.",
-      "Instrumentar con AWS Distro for OpenTelemetry y desplegar el recolector de ADOT con exportadores a X-Ray, CloudWatch y la herramienta de terceros.",
-      "Usar el agente de CloudWatch en cada nodo."
+      "Instrumentar con el SDK de X-Ray y exportar cada noche las trazas de X-Ray a la herramienta de terceros con una función Lambda.",
+      "Instrumentar con el agente propio de la herramienta de terceros y reenviar sus datos a CloudWatch con Amazon Data Firehose.",
+      "Instrumentar con AWS Distro for OpenTelemetry y un recolector de ADOT con exportadores a X-Ray, CloudWatch y el tercero.",
+      "Desplegar el agente de CloudWatch como DaemonSet con Container Insights y activar Application Signals en el clúster."
     ],
     "correctas": [
       2
     ],
-    "explicacion": "ADOT usa el estándar abierto OpenTelemetry: el código se instrumenta una vez y el recolector envía la misma telemetría a varios destinos, que se cambian solo en su configuración. El SDK de X-Ray está atado a X-Ray (y en mantenimiento), los registros de flujo no son trazas y el agente de CloudWatch no envía trazas a terceros.",
+    "explicacion": "ADOT usa el estándar abierto OpenTelemetry: el código se instrumenta una vez y el recolector envía la misma telemetría a varios destinos, que se cambian solo en su configuración. El SDK de X-Ray ata el código a X-Ray (y está en mantenimiento), y la exportación nocturna no es continua. El agente del tercero ata el código a ese proveedor y no genera trazas de X-Ray. Container Insights y Application Signals dan métricas y trazas en CloudWatch, pero el agente de CloudWatch no envía la telemetría a una herramienta de terceros.",
     "fuentes": [
       "https://docs.aws.amazon.com/eks/latest/userguide/opentelemetry.html"
     ],

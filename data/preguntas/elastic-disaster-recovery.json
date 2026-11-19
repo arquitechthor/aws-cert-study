@@ -108,5 +108,29 @@
     "fuentes": [
       "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html"
     ]
+  },
+  {
+    "id": "elastic-disaster-recovery-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Una empresa tiene 150 servidores físicos y de VMware en su centro de datos, con SQL Server y aplicaciones .NET. Necesita recuperación ante desastres en AWS con un RPO de segundos y un RTO de minutos, pagando lo mínimo mientras no haya desastre, ensayos periódicos que no interrumpan la replicación y la posibilidad de volver al centro de datos cuando se recupere. ¿Qué solución cumple los requisitos?",
+    "opciones": [
+      "AWS Backup con copias cada hora de las máquinas de VMware y restauración como instancias EC2 cuando se declare el desastre.",
+      "Application Migration Service para replicar los servidores, con las instancias de destino encendidas como réplica en caliente.",
+      "Instancias EC2 en espera para cada servidor, con trasvase de registros de SQL Server y copias periódicas de los ficheros de la aplicación.",
+      "AWS Elastic Disaster Recovery con replicación continua a un área de preparación barata, lanzamientos de prueba y conmutación de vuelta."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Elastic Disaster Recovery replica de forma continua a nivel de bloque (RPO de segundos) hacia un área de preparación con instancias pequeñas y discos baratos, lanza las instancias de recuperación en minutos, permite lanzamientos de prueba sin parar la replicación y admite volver al origen. Las copias horarias dan un RPO de una hora. Application Migration Service está pensado para migrar, no para mantener una réplica, y tener instancias encendidas o en espera para cada servidor multiplica el coste.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/drs/latest/userguide/what-is-drs.html",
+      "https://docs.aws.amazon.com/drs/latest/userguide/failback.html"
+    ]
   }
 ]

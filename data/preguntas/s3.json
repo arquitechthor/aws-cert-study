@@ -255,7 +255,7 @@
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
     "dificil": true,
-    "enunciado": "Un contrato exige que los documentos que una empresa guarda en un bucket de S3 en eu-west-1 estén copiados en eu-central-1 con un RPO de 15 minutos, y que la empresa pueda demostrar con métricas cuánto falta por copiar en cada momento. ¿Qué solución lo cumple con menos esfuerzo operativo?",
+    "enunciado": "Un contrato exige que los documentos que una empresa guarda en un bucket de S3 en eu-west-1 estén copiados en eu-central-1 con un RPO de 15 minutos, y que la empresa pueda demostrar con métricas cuánto falta por copiar en cada momento. Se escriben unos 50.000 documentos al día, a todas horas, y el equipo no quiere mantener código propio. ¿Qué solución lo cumple con menos esfuerzo operativo?",
     "opciones": [
       "Una regla de ciclo de vida que transicione los objetos cada 15 minutos al bucket de eu-central-1.",
       "Replicación entre regiones (CRR) con S3 Replication Time Control activado.",
@@ -279,7 +279,7 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Una aplicación global lee y escribe ficheros en S3 desde us-east-1 y eu-west-1. Quiere un único nombre de acceso para todos los clientes, poder pasar todo el tráfico a una sola región en pocos minutos si la otra falla, y no perder lo escrito durante la conmutación cuando la región original vuelva. ¿Qué DOS acciones lo consiguen? (Elige 2.)",
+    "enunciado": "Una aplicación global lee y escribe ficheros en S3 desde us-east-1 y eu-west-1. Quiere un único nombre de acceso para todos los clientes, poder pasar todo el tráfico a una sola región en pocos minutos si la otra falla, y no perder lo escrito durante la conmutación cuando la región original vuelva. Se busca el menor esfuerzo operativo. ¿Qué DOS acciones lo consiguen? (Elige 2.)",
     "opciones": [
       "Crear un Multi-Region Access Point sobre los dos buckets y usar sus controles de conmutación por error en configuración activo-pasivo.",
       "Crear un registro de Route 53 con enrutamiento por latencia que apunte a los dos endpoints de sitio web estático de los buckets.",
@@ -305,7 +305,7 @@
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
-    "enunciado": "Una organización de AWS con 250 cuentas descubre que una bucket policy mal escrita daba lectura a una cuenta de un antiguo proveedor. Quiere garantizar que ninguna identidad de fuera de la organización pueda acceder a ningún bucket de S3 de ninguna cuenta, aunque una bucket policy lo permita, y sin revisar los buckets uno a uno. ¿Qué debe hacer?",
+    "enunciado": "Una organización de AWS con 250 cuentas descubre que una bucket policy mal escrita daba lectura a una cuenta de un antiguo proveedor. Quiere garantizar que ninguna identidad de fuera de la organización pueda acceder a ningún bucket de S3 de ninguna cuenta, aunque una bucket policy lo permita, y sin revisar los buckets uno a uno. El control debe valer también para las cuentas nuevas. ¿Qué debe hacer?",
     "opciones": [
       "Asociar a la raíz una SCP que deniegue s3:* cuando aws:PrincipalOrgID no sea el de la organización.",
       "Activar Block Public Access a nivel de organización.",
@@ -329,7 +329,7 @@
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
     "dificil": true,
-    "enunciado": "Hace un mes se configuró replicación entre regiones en un bucket con 400 millones de objetos. Los objetos nuevos llegan al destino, pero los que ya existían antes de crear la regla no están. ¿Cuál es la forma más sencilla de replicarlos conservando metadatos e identificadores de versión?",
+    "enunciado": "Hace un mes se configuró replicación entre regiones en un bucket con 400 millones de objetos. Los objetos nuevos llegan al destino, pero los que ya existían antes de crear la regla no están. El bucket de destino ya está en uso y el equipo quiere evitar código propio y servidores. ¿Cuál es la forma más sencilla de replicarlos conservando metadatos e identificadores de versión?",
     "opciones": [
       "Crear un trabajo de S3 Batch Replication sobre los objetos existentes.",
       "Activar Replication Time Control en la regla para que procese también el histórico.",

@@ -108,5 +108,128 @@
     "fuentes": [
       "https://docs.aws.amazon.com/codeartifact/latest/ug/package-origin-controls.html"
     ]
+  },
+  {
+    "id": "codeartifact-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
+    "enunciado": "Una organización quiere un único dominio de CodeArtifact en la cuenta de artefactos para que 80 cuentas de desarrollo publiquen y consuman paquetes internos de npm y Maven. Seguridad exige cifrado con una clave propia, que solo accedan identidades de la organización, que los desarrolladores no puedan publicar en el repositorio de versiones aprobadas (solo la canalización) y que no haya credenciales de larga duración. ¿Qué configuración cumple los requisitos?",
+    "opciones": [
+      "El dominio con la clave gestionada por AWS, compartido con la organización mediante AWS RAM, y el permiso de publicación quitado a los desarrolladores en IAM.",
+      "Un dominio por cuenta de desarrollo, cada uno con su clave propia, y como repositorios ascendentes los repositorios de versiones de la cuenta de artefactos.",
+      "El dominio con una clave de KMS propia, una política de dominio con aws:PrincipalOrgID y una política del repositorio de versiones que solo deje publicar a la canalización.",
+      "El dominio con una clave de KMS propia y tokens de autorización de CodeArtifact de 12 horas guardados en Secrets Manager para cada desarrollador."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La clave de KMS del dominio se elige al crearlo; la política de dominio permite el acceso entre cuentas y, con aws:PrincipalOrgID, lo limita a la organización; la política del repositorio de versiones reserva la publicación al rol de la canalización. Las identidades obtienen tokens temporales con sus propios roles. Los dominios de CodeArtifact no se comparten con RAM, sino con su política. Un repositorio solo puede tener ascendentes de su mismo dominio. Guardar tokens para cada persona no aporta nada frente a pedirlos con su rol.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/domain-policies.html",
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/repo-policies.html",
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/domain-create.html"
+    ]
+  },
+  {
+    "id": "codeartifact-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Cada equipo usa su propio repositorio de CodeArtifact para sus paquetes npm privados, y cada uno tiene su propia conexión externa a npmjs. Plataforma quiere que todos compartan una única copia en caché de los paquetes públicos, poder bloquear de forma central un paquete público comprometido para todos los equipos y que cada equipo siga viendo sus paquetes privados en su repositorio. ¿Qué estructura configura?",
+    "opciones": [
+      "Un repositorio npm-store con la única conexión externa a npmjs, como repositorio ascendente de los repositorios de equipo del mismo dominio.",
+      "Mantener una conexión externa en cada repositorio de equipo y una regla de EventBridge que borre de todos el paquete comprometido.",
+      "Un dominio aparte para los paquetes públicos, con su conexión externa, configurado como repositorio ascendente de los de cada equipo.",
+      "Un repositorio con conexiones externas a npmjs y a Maven Central a la vez, como repositorio ascendente de todos los de equipo."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "El patrón recomendado es un repositorio intermedio con la conexión externa, ascendente de los repositorios de equipo: los paquetes públicos se guardan una vez en él, y sus controles de origen permiten bloquear un paquete para todos. Una conexión por equipo duplica la gestión y el borrado con EventBridge es código propio que reacciona tarde. Los repositorios ascendentes tienen que estar en el mismo dominio, y un repositorio solo admite una conexión externa.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/repos-upstream.html",
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/external-connection.html"
+    ]
+  },
+  {
+    "id": "codeartifact-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
+    "enunciado": "Un atacante publica en npmjs un paquete con el mismo nombre que una librería interna de la empresa (que no usa un ámbito propio) y una versión mayor. Los repositorios de CodeArtifact de los equipos tienen como ascendente un repositorio con conexión externa a npmjs, y una compilación descargó la versión del atacante. Se quiere impedirlo para todos los paquetes internos, sin romper las descargas de paquetes públicos y con el menor esfuerzo. ¿Qué control lo consigue?",
+    "opciones": [
+      "Fijar en package-lock.json las versiones de todos los paquetes internos y revisar en cada solicitud de extracción que no cambien.",
+      "Controles de origen de paquetes: en los paquetes internos, permitir la publicación directa y bloquear las versiones que vengan de los ascendentes.",
+      "Quitar la conexión externa a npmjs, descargar a mano los paquetes públicos que se necesiten y publicarlos en el repositorio interno.",
+      "Activar Amazon Inspector en los repositorios de CodeArtifact para que analice los paquetes y bloquee los que tengan vulnerabilidades."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los controles de origen de paquetes deciden, paquete a paquete, si se aceptan versiones publicadas directamente y si se aceptan versiones de los repositorios ascendentes. Bloquear los ascendentes en los paquetes internos impide que una versión de npmjs con el mismo nombre entre en el repositorio, y el resto de paquetes públicos sigue llegando. Fijar versiones en cada proyecto es manual y fácil de saltar. Quitar la conexión externa rompe las descargas públicas. Inspector no analiza repositorios de CodeArtifact.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/package-origin-controls.html"
+    ]
+  },
+  {
+    "id": "codeartifact-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una empresa tiene un dominio de CodeArtifact con 40 repositorios de equipo, y muchos contienen las mismas versiones de paquetes públicos y de librerías internas. Finanzas cree que paga el almacenamiento de cada copia y propone fusionar los 40 repositorios en uno para ahorrar, aunque eso rompería el aislamiento de permisos entre equipos. Seguridad se opone. ¿Qué responde el arquitecto?",
+    "opciones": [
+      "Que fusione los repositorios, porque cada repositorio guarda su propia copia de cada paquete y se paga el almacenamiento de todas.",
+      "Que mueva cada equipo a su propio dominio, porque el almacenamiento de las copias repetidas solo se factura dentro de un mismo dominio.",
+      "Que el almacenamiento se agrupa en el dominio y cada recurso se guarda una vez aunque esté en varios repositorios: fusionar no ahorra.",
+      "Que aplique reglas de ciclo de vida de S3 sobre los repositorios para mover a S3 Glacier las versiones que no se han descargado en un año."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "En CodeArtifact los recursos de los paquetes se guardan a nivel de dominio: aunque la misma versión esté en 40 repositorios, se almacena y se paga una vez, así que fusionar no reduce el almacenamiento y sí rompe el aislamiento. Repartir en varios dominios haría lo contrario, porque cada dominio guarda su propia copia. Los repositorios de CodeArtifact no se gestionan como buckets de S3 del cliente, así que no admiten reglas de ciclo de vida.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/codeartifact-concepts.html",
+      "https://aws.amazon.com/codeartifact/pricing/"
+    ]
+  },
+  {
+    "id": "codeartifact-010",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
+    "enunciado": "Por normativa, las compilaciones de CodeBuild corren en subredes privadas sin acceso a internet ni NAT, y deben instalar paquetes de un repositorio de CodeArtifact de la misma región, que ya tiene en caché todos los paquetes públicos necesarios. El equipo quiere crear solo los puntos de enlace de VPC imprescindibles para CodeArtifact. ¿Qué TRES puntos de enlace hacen falta? (Elige 3.)",
+    "opciones": [
+      "Un punto de enlace de interfaz codeartifact.api, para pedir el token de autorización y para las llamadas a la API del servicio.",
+      "Un punto de enlace de interfaz codeartifact.repositories, para las operaciones de los gestores de paquetes contra el repositorio.",
+      "Un punto de enlace de interfaz de STS, porque cada gestor de paquetes llama directamente a sts:GetServiceBearerToken para obtener su token.",
+      "Un punto de enlace de puerta de enlace de S3, porque el contenido de los paquetes se descarga desde Amazon S3.",
+      "Un punto de enlace de interfaz de ECR, porque CodeArtifact guarda los paquetes como artefactos OCI en repositorios de ECR."
+    ],
+    "correctas": [
+      0,
+      1,
+      3
+    ],
+    "explicacion": "CodeArtifact necesita dos puntos de enlace de interfaz: codeartifact.api (tokens y API) y codeartifact.repositories (las peticiones de npm, Maven o pip). El contenido de los paquetes se sirve desde S3, así que hace falta también el punto de enlace de puerta de enlace de S3. El token se pide a CodeArtifact, que comprueba el permiso sts:GetServiceBearerToken del llamante, sin llamar el cliente a STS. CodeArtifact no usa ECR.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/create-vpc-endpoints.html",
+      "https://docs.aws.amazon.com/codeartifact/latest/ug/create-s3-gateway-endpoint.html"
+    ]
   }
 ]

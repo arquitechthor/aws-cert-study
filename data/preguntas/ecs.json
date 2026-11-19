@@ -162,19 +162,19 @@
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
     "dificil": true,
-    "enunciado": "Una empresa migra 40 aplicaciones Java a contenedores. El equipo no conoce Kubernetes, quiere mínima operación de infraestructura pero necesita instancias con GPU para dos de ellas. ¿Qué DOS decisiones son adecuadas? (Elige 2.)",
+    "enunciado": "Una empresa migra a contenedores, en seis meses, 40 aplicaciones Java que hoy corren en servidores de aplicaciones locales. El equipo de operaciones es pequeño, no conoce Kubernetes y quiere gestionar la menor infraestructura posible, sin parchear sistemas operativos. Dos de las aplicaciones hacen inferencia con modelos propios y necesitan instancias con GPU. Las aplicaciones deben moverse con cambios mínimos en el código. ¿Qué DOS decisiones son adecuadas? (Elige 2.)",
     "opciones": [
-      "Usar Amazon ECS como orquestador.",
-      "Ejecutar la mayoría de servicios en Fargate y los de GPU en ECS Managed Instances o en EC2 con un capacity provider.",
-      "Montar un clúster de Kubernetes autogestionado en EC2.",
-      "Reescribir todas las aplicaciones como funciones Lambda.",
-      "Ejecutar todo en Fargate, incluidas las cargas de GPU."
+      "Usar Amazon ECS como orquestador de todas las aplicaciones, con un servicio por aplicación.",
+      "Ejecutar casi todo en Fargate y las cargas con GPU en ECS Managed Instances con su proveedor de capacidad.",
+      "Usar Amazon EKS en modo automático, que delega en AWS los nodos, el escalado y los parches del clúster.",
+      "Ejecutar todo en Fargate, incluidas las dos cargas de inferencia, con tareas de más CPU y memoria.",
+      "Reescribir las dos aplicaciones de inferencia como funciones Lambda con imágenes de contenedor de 10 GB."
     ],
     "correctas": [
       0,
       1
     ],
-    "explicacion": "ECS evita la curva de Kubernetes y permite mezclar capacity providers: Fargate para lo general y Managed Instances o EC2 para las cargas que necesitan GPU, que Fargate no ofrece. Kubernetes autogestionado añade operación, reescribir en Lambda no es una migración razonable y Fargate no tiene GPU.",
+    "explicacion": "ECS evita la curva de Kubernetes y permite mezclar proveedores de capacidad: Fargate para lo general y ECS Managed Instances (o EC2) para las cargas con GPU, con AWS gestionando las instancias. EKS en modo automático reduce mucho la operación, pero el equipo tendría que aprender Kubernetes. Fargate no ofrece GPU, por mucha CPU y memoria que se le dé, y Lambda tampoco, además de obligar a reescribir.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html",
       "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
@@ -200,6 +200,129 @@
     "explicacion": "Escalar con una métrica de mensajes pendientes por tarea (backlog per task) hace que el número de tareas siga a la cola. Un número fijo desperdicia capacidad o se queda corto, más CPU por tarea no añade paralelismo suficiente y FIFO no cambia la capacidad.",
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html"
+    ]
+  },
+  {
+    "id": "ecs-010",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una empresa ejecuta en ECS sobre Fargate 120 servicios: 40 son API críticas con tráfico estable y 80 son trabajadores que procesan colas de SQS, toleran interrupciones y reintentan. Todo usa x86 bajo demanda y las imágenes ya se construyen para x86 y arm64. Quiere el máximo ahorro sin poner en riesgo las API y con cambios mínimos en la operación. ¿Qué DOS medidas aplica? (Elige 2.)",
+    "opciones": [
+      "Una estrategia de proveedores de capacidad en los trabajadores, con una base en FARGATE y casi todo el peso en FARGATE_SPOT.",
+      "Pasar las tareas a arm64 (Graviton) y cubrir el uso estable de Fargate con un Compute Savings Plan.",
+      "Mover también las API críticas a FARGATE_SPOT, con un mínimo de dos tareas por zona para absorber las interrupciones.",
+      "Comprar instancias reservadas de EC2 que cubran el uso de Fargate de las API, porque se aplican a las tareas por familia.",
+      "Pasar todos los servicios a ECS sobre EC2 con instancias de spot y un grupo de Auto Scaling por servicio."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "FARGATE_SPOT da un gran descuento a los trabajadores, que toleran interrupciones, y la base en FARGATE mantiene un mínimo de capacidad. Graviton cuesta menos por vCPU y memoria que x86, y el Compute Savings Plan cubre Fargate. Las API críticas no deben depender de Spot. Las instancias reservadas de EC2 no se aplican a Fargate. Pasar a EC2 con spot puede salir barato, pero añade la gestión de instancias y grupos, en contra de los cambios mínimos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-capacity-providers.html",
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
+    ]
+  },
+  {
+    "id": "ecs-011",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Un servicio de ECS con despliegue continuo (rolling) a veces se queda atascado: las tareas nuevas fallan las comprobaciones de estado y ECS las reinicia sin parar durante horas, hasta que los clientes avisan. Otras veces las tareas nuevas arrancan bien, pero la tasa de errores 5xx del ALB sube tras el despliegue. El equipo quiere que en ambos casos el servicio vuelva solo a la última versión buena, sin pasar a azul/verde ni añadir herramientas. ¿Qué configura?",
+    "opciones": [
+      "Una regla de EventBridge sobre los eventos de ECS que lance una función Lambda que actualice el servicio con la definición de tarea anterior.",
+      "El disyuntor de despliegue con reversión automática y alarmas de CloudWatch de 5xx en la configuración de despliegue del servicio.",
+      "minimumHealthyPercent al 100 % y maximumPercent al 200 %, para que las tareas antiguas no se retiren hasta que las nuevas estén sanas.",
+      "Comprobaciones de estado del contenedor en la definición de tarea y un periodo de gracia más largo para que las tareas nuevas tengan tiempo de arrancar."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El disyuntor de despliegue detecta las tareas que no llegan a estar en ejecución estable y, con la reversión activada, vuelve a la última revisión buena. Las alarmas de CloudWatch en la configuración de despliegue cubren el segundo caso: si saltan durante el despliegue, ECS también revierte. La regla de EventBridge con Lambda es código propio. Los porcentajes evitan perder capacidad, pero no revierten nada, y un periodo de gracia mayor retrasa la detección sin resolverla.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-circuit-breaker.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-alarm-failure.html"
+    ]
+  },
+  {
+    "id": "ecs-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
+    "enunciado": "Un servicio de ECS sobre Fargate en la cuenta de aplicación debe descargar su imagen de un repositorio de ECR de la cuenta de artefactos, recibir al arrancar la contraseña de la base de datos de Secrets Manager como variable de entorno y escribir en una tabla de DynamoDB mientras se ejecuta. Seguridad exige mínimo privilegio y que el código de la aplicación no pueda leer el secreto por su cuenta ni descargar imágenes. ¿Qué reparto de permisos es correcto?",
+    "opciones": [
+      "Un único rol de tarea con permisos de ECR, Secrets Manager y DynamoDB, y la política del repositorio de ECR abierta a toda la cuenta de aplicación.",
+      "El rol de ejecución con permisos sobre la tabla y el rol de tarea con los de ECR y del secreto, más una política del repositorio para ese rol de tarea.",
+      "El rol de ejecución con permisos de ECR y del secreto, la política del repositorio permitiéndolo, y el rol de tarea solo con permisos sobre la tabla.",
+      "Un rol de instancia del clúster con todos los permisos, que heredan las tareas, y la política del repositorio abierta a la cuenta de aplicación."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El rol de ejecución lo usa el agente de ECS para descargar la imagen e inyectar los secretos al arrancar; el rol de tarea es el que usa el código. Separándolos, la aplicación solo puede escribir en la tabla. Para ECR entre cuentas, la política del repositorio debe permitir al rol de ejecución. Un único rol, o los roles al revés, dan al código permisos sobre el secreto y ECR. En Fargate no hay instancias ni roles de instancia que heredar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/secrets-envvar-secrets-manager.html"
+    ]
+  },
+  {
+    "id": "ecs-013",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
+    "enunciado": "Una empresa tiene 60 microservicios HTTP y gRPC en ECS, repartidos en 6 clústeres de la misma cuenta y región, en dos VPC unidas por Transit Gateway. Hoy cada servicio expone un ALB interno y los demás lo llaman por DNS; preocupan el coste de 60 balanceadores y la falta de métricas por llamada. Quiere descubrimiento de servicios, reintentos y métricas de tráfico entre servicios sin balanceadores intermedios, sin gestionar proxies propios y con una solución que AWS siga desarrollando. ¿Qué solución lo cumple?",
+    "opciones": [
+      "Descubrimiento de servicios de Cloud Map con registros DNS y reintentos implementados en el cliente HTTP y gRPC de cada servicio.",
+      "Una malla de AWS App Mesh con proxies Envoy en cada tarea, y nodos y enrutadores virtuales definidos para cada servicio.",
+      "ECS Service Connect con un espacio de nombres de Cloud Map común a los seis clústeres, que añade el proxy gestionado a cada tarea.",
+      "Un único ALB interno compartido con reglas de enrutamiento por ruta y por cabecera hacia los 60 grupos de destino."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Service Connect añade a cada tarea un proxy que gestiona ECS, con descubrimiento por nombre, reintentos y métricas de tráfico en CloudWatch, y un mismo espacio de nombres sirve a varios clústeres. Cloud Map por DNS descubre, pero deja los reintentos y las métricas al código. App Mesh deja de funcionar el 30 de septiembre de 2026 y AWS recomienda migrar a Service Connect o a VPC Lattice. Un ALB compartido sigue siendo un balanceador intermedio y no da métricas por llamada entre servicios.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-connect.html",
+      "https://docs.aws.amazon.com/app-mesh/latest/userguide/what-is-app-mesh.html"
+    ]
+  },
+  {
+    "id": "ecs-014",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Un servicio crítico de ECS sobre Fargate ejecuta 12 tareas en subredes de tres zonas de disponibilidad, detrás de un ALB, con maximumPercent al 200 %. Tras la caída de una zona, ECS recolocó las tareas en las otras dos; cuando la zona volvió, las tareas siguieron concentradas en dos zonas durante días, porque ECS no mueve tareas sanas por su cuenta. Se quiere que, sin intervención y sin cortes, las tareas vuelvan a repartirse entre las tres zonas en cuanto sea posible. ¿Qué activa el equipo?",
+    "opciones": [
+      "Bajar maximumPercent al 100 % para que ECS sustituya las tareas de una en una y las vaya colocando en la zona que se ha recuperado.",
+      "Una función Lambda programada que fuerce cada noche un nuevo despliegue del servicio para que el planificador vuelva a colocar las tareas.",
+      "Pasar el servicio a ECS sobre EC2 con una estrategia de colocación spread por zona, que mueve las tareas cuando la zona se recupera.",
+      "El reequilibrio entre zonas de disponibilidad del servicio de ECS, que redistribuye las tareas cuando detecta un desequilibrio."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El reequilibrio entre zonas de disponibilidad de ECS vigila el reparto de las tareas de un servicio y, cuando está desequilibrado, lanza tareas en la zona con menos y retira después las sobrantes, sin cortes; en Fargate puede usar cualquier zona del servicio. No se puede usar con maximumPercent al 100 %, y ese valor tampoco recoloca nada por sí solo. La estrategia spread solo actúa al colocar tareas nuevas, no mueve las que ya funcionan. El despliegue nocturno es código propio y deja el desequilibrio durante el día.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement-strategies.html"
     ]
   }
 ]

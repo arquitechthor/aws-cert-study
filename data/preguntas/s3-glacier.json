@@ -95,12 +95,12 @@
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
     "dificil": true,
-    "enunciado": "Una empresa archiva copias de seguridad en S3 Glacier Flexible Retrieval. Su plan de recuperación exige poder restaurar algunos ficheros críticos en menos de 10 minutos, también en momentos de mucha demanda. ¿Qué debe prever?",
+    "enunciado": "Una empresa archiva copias de seguridad en S3 Glacier Flexible Retrieval para ahorrar costes. Su plan de recuperación ante desastres exige poder restaurar algunos ficheros críticos en menos de 10 minutos, también en los momentos de mucha demanda en la región, cuando AWS puede no atender las peticiones aceleradas. El resto del archivo puede tardar horas. Quiere el menor coste que cumpla el requisito. ¿Qué debe prever?",
     "opciones": [
-      "Restauraciones aceleradas, con capacidad aprovisionada para garantizar que estén disponibles.",
-      "Restauraciones masivas lanzadas con S3 Batch Operations.",
-      "Pasar las copias a S3 Glacier Deep Archive.",
-      "Restauraciones estándar y un tema de SNS para avisar al terminar."
+      "Restauraciones aceleradas de los ficheros críticos, con unidades de capacidad aprovisionada compradas de antemano.",
+      "Restauraciones masivas lanzadas con S3 Batch Operations sobre un manifiesto con los ficheros críticos.",
+      "Mover todo el archivo a S3 Glacier Deep Archive y usar restauraciones aceleradas cuando haga falta.",
+      "Restauraciones estándar de los ficheros críticos y un tema de SNS que avise al terminar para iniciar la recuperación."
     ],
     "correctas": [
       0

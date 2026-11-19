@@ -119,17 +119,17 @@
       "SAP-C03"
     ],
     "dominio": "Excelencia operativa y automatización",
-    "enunciado": "Durante una ventana de mantenimiento de dos horas, un servicio de ECS no debe cambiar de tamaño. El equipo quiere conservar sus políticas de seguimiento y programadas para que vuelvan a funcionar después, sin recrearlas. ¿Qué hace?",
+    "enunciado": "Una plataforma de pagos ejecuta un servicio de Amazon ECS con una política de seguimiento de destino sobre la CPU y dos acciones programadas que amplían la capacidad antes del cierre diario. Durante una ventana de mantenimiento de dos horas en la base de datos, el servicio no debe cambiar su número de tareas, ni por las alarmas ni por las acciones programadas. Al terminar la ventana, todo debe volver a funcionar como antes, sin recrear políticas ni acciones y con el menor esfuerzo operativo. ¿Qué hace el equipo?",
     "opciones": [
-      "Suspender el escalado hacia fuera, hacia dentro y programado del objetivo escalable, y reanudarlo después.",
-      "Borrar las políticas y volver a crearlas desde CloudFormation al terminar.",
-      "Poner la capacidad máxima a cero.",
-      "Desactivar las alarmas de CloudWatch que creó la política."
+      "Suspender en el objetivo escalable el escalado hacia fuera, hacia dentro y programado, y reanudarlo al terminar.",
+      "Borrar las políticas y las acciones programadas, y volver a crearlas desde la plantilla de CloudFormation al terminar.",
+      "Fijar la capacidad mínima y la máxima del objetivo escalable en el número actual de tareas y restaurarlas después.",
+      "Deshabilitar las acciones de las alarmas de CloudWatch que creó la política de seguimiento y habilitarlas después."
     ],
     "correctas": [
       0
     ],
-    "explicacion": "Application Auto Scaling permite suspender y reanudar el escalado de un objetivo (hacia fuera, hacia dentro y programado) sin borrar las políticas. Borrar y recrear es más trabajo y arriesga errores, un máximo de cero apagaría el servicio, y las alarmas de la política las gestiona el propio servicio.",
+    "explicacion": "Application Auto Scaling permite suspender y reanudar el escalado de un objetivo (hacia fuera, hacia dentro y programado) sin tocar las políticas ni las acciones. Borrar y recrear es justo lo que se quiere evitar. Fijar mínimo y máximo parece suficiente, pero las acciones programadas cambian ese mínimo y ese máximo, así que una de ellas podría escalar en plena ventana; además hay que recordar y restaurar los valores. Las alarmas de una política de seguimiento las gestiona el propio servicio: no se deben modificar y no frenan las acciones programadas.",
     "fuentes": [
       "https://docs.aws.amazon.com/cli/v1/reference/application-autoscaling/index.html"
     ],

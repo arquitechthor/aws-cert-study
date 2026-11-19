@@ -20,6 +20,17 @@ S = {s['id']: s for s in SERV}
 
 # ── Glosario: sigla -> (inglés o None, explicación en español o None) ─────────────────────
 G = {
+    'VGW': ('Virtual Private Gateway', 'puerta de enlace privada virtual de una VPC'),
+    'MPI': ('Message Passing Interface', 'estándar de paso de mensajes entre nodos de cálculo'),
+    'ENA': ('Elastic Network Adapter', 'tarjeta de red de alto rendimiento de EC2'),
+    'EFA': ('Elastic Fabric Adapter', 'red de baja latencia para cálculo acoplado'),
+    'RGPD': ('Reglamento General de Protección de Datos', 'ley europea de protección de datos personales'),
+    'JDK': ('Java Development Kit', 'kit de desarrollo de Java'),
+    'ARC': ('Application Recovery Controller', 'servicio de Route 53 para conmutar entre regiones o zonas'),
+    'BTEQ': ('Basic Teradata Query', 'herramienta de scripts de Teradata'),
+    'CKN': ('Connectivity Association Key Name', 'nombre de la clave de MACsec'),
+    'CAK': ('Connectivity Association Key', 'clave secreta de MACsec'),
+    'DHCP': ('Dynamic Host Configuration Protocol', 'asigna la configuración de red a los equipos'),
     'ACID': (None, 'atomicidad, consistencia, aislamiento y durabilidad de las transacciones'),
     'ACL': ('Access Control List', 'lista de control de acceso'),
     'CRL': ('Certificate Revocation List', 'lista de certificados revocados que publica una autoridad de certificación'),

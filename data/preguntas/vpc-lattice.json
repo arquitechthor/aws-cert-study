@@ -29,17 +29,17 @@
       "SAP-C03"
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
-    "enunciado": "Un servicio de VPC Lattice usa el tipo de autenticación AWS_IAM. Su política de autorización permite al rol de una función Lambda llamar al servicio, y la política de identidad del rol también lo permite, pero todas las peticiones reciben 403. ¿Cuál es la causa más probable?",
+    "enunciado": "Una función Lambda de la cuenta A llama a un servicio de VPC Lattice de la cuenta B a través de una red de servicios compartida con RAM y asociada a la VPC de la función; la red de servicios no usa autenticación. El servicio usa el tipo de autenticación AWS_IAM: su política de autorización permite al rol de la función invocarlo, y la política de identidad del rol también lo permite. El DNS y la conectividad funcionan, pero todas las peticiones reciben 403. ¿Cuál es la causa más probable?",
     "opciones": [
-      "El grupo de destino no tiene comprobaciones de estado.",
-      "La VPC de la función no tiene una puerta de enlace NAT.",
-      "Las políticas de autorización solo funcionan con instancias EC2.",
+      "El grupo de destino del servicio no tiene comprobaciones de estado y Lattice rechaza las peticiones.",
+      "La VPC de la función no tiene puerta de enlace NAT para llegar al punto de enlace público de Lattice.",
+      "Las políticas de autorización de Lattice solo admiten principales de la misma cuenta que el servicio.",
       "La función no firma las peticiones con SigV4 para el servicio vpc-lattice-svcs."
     ],
     "correctas": [
       3
     ],
-    "explicacion": "Con AWS_IAM, Lattice exige que cada petición vaya firmada con SigV4; una petición sin firmar se rechaza con 403 aunque las políticas lo permitan. Lattice no necesita NAT, las comprobaciones de estado no dan 403 y las políticas valen para cualquier llamante con identidad de IAM.",
+    "explicacion": "Con AWS_IAM, Lattice exige que cada petición vaya firmada con SigV4; una petición sin firmar se rechaza con 403 aunque las políticas lo permitan. Lattice no necesita NAT (el tráfico no sale a internet), las comprobaciones de estado no producen 403, y las políticas de autorización admiten principales de otras cuentas.",
     "fuentes": [
       "https://docs.aws.amazon.com/vpc-lattice/latest/ug/auth-policies.html"
     ],
@@ -122,7 +122,7 @@
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
     "dificil": true,
-    "enunciado": "Por normativa, el tráfico entre un servicio cliente y un servicio de pagos publicado en VPC Lattice debe ir cifrado de extremo a extremo, y solo los destinos del servicio de pagos pueden descifrarlo. ¿Qué agente de escucha se usa?",
+    "enunciado": "Por normativa, el tráfico entre un servicio cliente en Amazon ECS y un servicio de pagos publicado en VPC Lattice, en otra cuenta, debe ir cifrado de extremo a extremo: ni Lattice ni ningún otro componente intermedio puede descifrarlo, solo los destinos del servicio de pagos. Los equipos quieren seguir usando un nombre DNS propio para el servicio. ¿Qué agente de escucha se configura?",
     "opciones": [
       "Un agente de escucha HTTPS con un certificado de ACM.",
       "Un agente de escucha HTTP con grupos de seguridad restrictivos.",
@@ -145,17 +145,17 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Una cuenta de datos tiene una base de datos de Amazon RDS que deben usar aplicaciones de otras cuentas conectadas a una red de servicios de VPC Lattice, sin peering ni Transit Gateway. ¿Qué crea el dueño de la base de datos?",
+    "enunciado": "Una cuenta de datos tiene una base de datos Amazon RDS for PostgreSQL en una VPC privada. Aplicaciones de otras 15 cuentas, cuyas VPC ya están asociadas a una red de servicios de VPC Lattice, deben conectarse a ella por TCP, sin peering, sin Transit Gateway, sin réplicas y sin poner balanceadores delante de la base de datos. ¿Qué crea el dueño de la base de datos?",
     "opciones": [
-      "Una pasarela de recursos en su VPC y una configuración de recursos para la base de datos, compartida con RAM y asociada a la red de servicios.",
-      "Un servicio de Lattice con un grupo de destino de tipo RDS.",
-      "Un punto de enlace de interfaz de RDS en cada VPC consumidora.",
-      "Una réplica de lectura de RDS en cada cuenta consumidora."
+      "Una pasarela de recursos en su VPC y una configuración de recursos de la base de datos, compartida con RAM y asociada a la red.",
+      "Un servicio de Lattice con un agente de escucha TCP y un grupo de destino de tipo IP con la dirección de la base de datos.",
+      "Un servicio de endpoint de PrivateLink con un Network Load Balancer, y un endpoint de tipo interface en cada VPC consumidora.",
+      "Un proxy de RDS compartido con AWS RAM con las 15 cuentas y asociado como destino a la red de servicios."
     ],
     "correctas": [
       0
     ],
-    "explicacion": "Los recursos que no son servicios HTTP, como una base de datos RDS, se exponen con una pasarela de recursos (punto de entrada a su VPC) y una configuración de recursos que se comparte con RAM y se asocia a la red. RDS no es un tipo de grupo de destino, y las otras opciones no usan Lattice o duplican datos.",
+    "explicacion": "Los recursos que no son servicios HTTP, como una base de datos RDS, se exponen con una pasarela de recursos (punto de entrada a su VPC) y una configuración de recursos que se comparte con RAM y se asocia a la red de servicios. Los servicios de Lattice solo admiten agentes de escucha HTTP, HTTPS y TLS, no TCP. PrivateLink funcionaría, pero exige un balanceador delante de la base de datos, y RDS Proxy no se comparte con RAM ni se asocia a una red de servicios.",
     "fuentes": [
       "https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html"
     ]

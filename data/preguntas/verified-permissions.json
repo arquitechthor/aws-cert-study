@@ -6,17 +6,17 @@
       "SAP-C03"
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
-    "enunciado": "Una plataforma SaaS de gestión documental tiene reglas de acceso complejas (por rol, por departamento del documento y por quién lo compartió) repartidas en el código de varios microservicios, y cada cambio exige desplegar todos. Los usuarios se autentican con Cognito. ¿Qué diseño centraliza la autorización con menos cambios en la aplicación?",
+    "enunciado": "Una plataforma SaaS de gestión documental tiene reglas de acceso complejas (por rol, por departamento del documento y por quién lo compartió) repartidas en el código de varios microservicios, y cada cambio exige desplegar todos. Las reglas cambian casi cada semana. Los usuarios se autentican con Cognito. ¿Qué diseño centraliza la autorización con menos cambios en la aplicación?",
     "opciones": [
-      "Un rol de IAM por usuario y políticas de IAM sobre cada documento.",
-      "AWS Verified Access delante de cada microservicio.",
-      "Grupos de Cognito y comprobaciones por grupo en el código de cada servicio.",
-      "Amazon Verified Permissions con políticas Cedar, el grupo de usuarios de Cognito como fuente de identidad y llamadas a IsAuthorizedWithToken desde cada servicio."
+      "Un rol de IAM por usuario creado al registrarse, con políticas de IAM basadas en etiquetas sobre cada documento.",
+      "AWS Verified Access delante de cada microservicio, con políticas que evalúen el rol y el departamento del usuario.",
+      "Grupos de Cognito por rol y departamento, con las comprobaciones en una librería común que usen todos los servicios.",
+      "Amazon Verified Permissions con políticas Cedar, Cognito como fuente de identidad y llamadas a IsAuthorizedWithToken."
     ],
     "correctas": [
       3
     ],
-    "explicacion": "Verified Permissions saca las reglas del código a políticas Cedar centralizadas, usa los tokens de Cognito como identidad y responde Allow o Deny en cada llamada. IAM es para recursos de AWS, Verified Access controla el acceso a la aplicación entera y los grupos en el código mantienen el problema.",
+    "explicacion": "Verified Permissions saca las reglas del código a políticas Cedar centralizadas, usa los tokens de Cognito como identidad y responde Allow o Deny en cada llamada: cambiar una regla no exige desplegar. IAM es para recursos de AWS, no para los documentos de la aplicación, y un rol por usuario no escala. Verified Access controla el acceso a la aplicación entera, no a cada documento. La librería común centraliza el código, pero cada cambio sigue exigiendo desplegar todos los servicios.",
     "fuentes": [
       "https://docs.aws.amazon.com/verifiedpermissions/latest/userguide/what-is-avp.html"
     ],

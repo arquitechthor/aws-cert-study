@@ -108,5 +108,125 @@
     "fuentes": [
       "https://docs.aws.amazon.com/codedeploy/latest/userguide/welcome.html"
     ]
+  },
+  {
+    "id": "codedeploy-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una aplicación en 60 instancias EC2 de un grupo de Auto Scaling, detrás de un ALB, se despliega con CodeDeploy en el sitio, de 10 en 10. Dos despliegues recientes dejaron errores 5xx durante 40 minutos: el fallo solo aparecía con tráfico real y volver a la versión anterior tardó otro tanto, porque hubo que desplegarla de nuevo. El equipo quiere volver a la versión anterior en menos de 2 minutos y que esa vuelta sea automática si suben los 5xx. ¿Qué cambia?",
+    "opciones": [
+      "Despliegue azul/verde con copia del grupo de Auto Scaling, conservar las instancias originales un tiempo y reversión automática con una alarma de 5xx.",
+      "Mantener el despliegue en el sitio, pasar a una instancia cada vez (OneAtATime) y activar la reversión automática ante el fallo del despliegue.",
+      "Despliegue en el sitio con la configuración HalfAtATime y un enlace AfterInstall que lance pruebas de humo contra cada instancia actualizada.",
+      "Despliegue azul/verde que termine las instancias originales en cuanto el balanceador pase el tráfico al grupo nuevo, para no pagar dos flotas."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En un despliegue azul/verde, CodeDeploy crea instancias nuevas, mueve el tráfico del balanceador y puede conservar las originales durante un tiempo; si una alarma de CloudWatch salta, la reversión devuelve el tráfico a las originales en poco tiempo. En el sitio, revertir es desplegar otra vez la versión anterior, instancia a instancia, por rápido que se configure. Las pruebas de humo de AfterInstall no ven el tráfico real. Terminar las originales al instante deja la reversión sin destino rápido.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-groups-create-blue-green.html",
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and-redeploy.html"
+    ]
+  },
+  {
+    "id": "codedeploy-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una API sobre Lambda recibe 3.000 peticiones por segundo. Cada versión nueva debe recibir primero un 10 % del tráfico durante 10 minutos y, si en ese tiempo sube la tasa de errores o la latencia p99, todo el tráfico debe volver a la versión anterior sin intervención. Antes de enviar tráfico real hay que ejecutar pruebas de integración contra la versión nueva. El equipo quiere funciones gestionadas, sin código de orquestación propio. ¿Qué configuración lo cumple?",
+    "opciones": [
+      "Dos funciones distintas detrás de un registro ponderado de Route 53 al 90/10, con una función programada que revise las métricas y ajuste los pesos.",
+      "Un alias con enrutamiento ponderado al 10 % creado a mano en cada versión, y una alarma de CloudWatch que avise al equipo para que lo revierta.",
+      "CodeDeploy con Canary10Percent10Minutes sobre el alias, un enlace BeforeAllowTraffic con las pruebas y alarmas de errores y latencia.",
+      "Concurrencia aprovisionada del 10 % en la versión nueva y del 90 % en la anterior, para repartir el tráfico entre ellas en esa proporción."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "CodeDeploy mueve el peso del alias según la configuración canaria (10 % durante 10 minutos y luego el resto), ejecuta el enlace BeforeAllowTraffic antes de enviar tráfico y revierte solo si salta alguna de las alarmas asociadas al grupo de despliegue. Route 53 y el alias manual funcionan, pero exigen código propio o intervención humana. La concurrencia aprovisionada inicia entornos por adelantado; no decide qué versión recibe cada petición.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html",
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html"
+    ]
+  },
+  {
+    "id": "codedeploy-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Una aplicación con sesiones en memoria corre en 12 instancias EC2 repartidas en tres zonas de disponibilidad y se despliega con CodeDeploy en el sitio. En un despliegue fallido, CodeDeploy actualizó a la vez instancias de las tres zonas y la aplicación perdió capacidad en todas. Se quiere que un despliegue nunca afecte a más de una zona a la vez, que haya un tiempo de observación tras la primera zona y que cada zona conserve siempre un mínimo de instancias sanas, con el menor esfuerzo operativo. ¿Qué configuración lo consigue?",
+    "opciones": [
+      "La configuración predefinida CodeDeployDefault.HalfAtATime, que garantiza que la mitad de las instancias siga sirviendo durante el despliegue.",
+      "Una configuración de despliegue zonal que actualice zona a zona, con tiempo de observación tras la primera y un mínimo de instancias sanas por zona.",
+      "Tres grupos de despliegue, uno por zona, lanzados en secuencia desde CodePipeline con una aprobación manual entre cada uno de ellos.",
+      "Una configuración personalizada con un mínimo del 75 % de instancias sanas en total y reversión automática si falla cualquier instancia."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La configuración zonal de CodeDeploy despliega una zona de disponibilidad cada vez, puede esperar un tiempo de observación (más largo tras la primera zona) antes de seguir y mantiene un mínimo de instancias sanas por zona. HalfAtATime y el mínimo global del 75 % cuentan instancias en total, sin mirar en qué zona están. Tres grupos con aprobaciones manuales consiguen algo parecido, pero con más piezas y trabajo humano.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations-create.html",
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/instances-health.html"
+    ]
+  },
+  {
+    "id": "codedeploy-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
+    "enunciado": "Una empresa despliega 80 servicios de ECS con despliegues azul/verde de CodeDeploy, con ficheros AppSpec que cada equipo mantiene y enlaces de Lambda que llaman a PutLifecycleEventHookExecutionStatus. Quiere menos piezas en la cadena de despliegue, ver el historial de revisiones del servicio en la propia consola de ECS, enlaces que puedan esperar repetidas comprobaciones y un tiempo de observación antes de retirar la versión anterior, sin perder el tráfico de prueba ni pasar a otro orquestador. ¿Qué propone el arquitecto?",
+    "opciones": [
+      "Mantener CodeDeploy y añadir un enlace AfterAllowTraffic que espere el tiempo de observación antes de dar por terminado el despliegue.",
+      "Sustituir CodeDeploy por despliegues continuos (rolling) de ECS con el disyuntor de despliegue y la reversión automática activados.",
+      "Mover los servicios a EKS y usar Argo Rollouts para los despliegues azul/verde, con análisis de métricas y tiempo de observación.",
+      "Pasar a los despliegues azul/verde nativos de ECS, con los enlaces de ciclo de vida en el servicio y un tiempo de observación."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Los despliegues azul/verde nativos de ECS usan revisiones de servicio (con su historial en ECS), definen los enlaces de Lambda en la configuración del servicio, admiten que un enlace responda IN_PROGRESS para volver a comprobar y tienen tiempo de observación, con tráfico de prueba. Con CodeDeploy, cada enlace es una sola llamada que debe responder en una hora y la cadena sigue teniendo una pieza más. El despliegue continuo pierde el tráfico de prueba y la vuelta atrás inmediata, y EKS es otro orquestador.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/migrate-codedeploy-to-ecs-bluegreen.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-blue-green.html"
+    ]
+  },
+  {
+    "id": "codedeploy-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una empresa tiene 300 servidores Linux en su centro de datos, que seguirán allí dos años, y 200 instancias EC2. Quiere desplegar la misma aplicación en ambos con CodeDeploy, con los mismos grupos de despliegue y configuraciones, y sin claves de acceso de larga duración en los servidores locales. Ya tiene una autoridad de certificación interna que emite certificados X.509 a todos sus servidores. ¿Qué solución cumple los requisitos con el menor esfuerzo?",
+    "opciones": [
+      "Registrar cada servidor local con un usuario de IAM propio (--iam-user-arn) y rotar sus claves de acceso cada 90 días con un script central.",
+      "Registrar los servidores locales con un rol de IAM, obtener sus credenciales temporales con IAM Roles Anywhere y la CA interna, y etiquetarlos.",
+      "Instalar el agente de Systems Manager con una activación híbrida y desplegar la aplicación local con Run Command en lugar de CodeDeploy.",
+      "Montar una VPN y añadir los servidores locales al grupo de despliegue como instancias EC2, con el perfil de instancia de un rol compartido."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "CodeDeploy admite instancias locales registradas con un rol, y IAM Roles Anywhere cambia el certificado X.509 que cada servidor ya tiene por credenciales temporales de ese rol; las instancias se añaden a los grupos de despliegue por etiquetas, igual que las de EC2. Los usuarios de IAM con claves son credenciales de larga duración aunque se roten. Run Command no ofrece las configuraciones de despliegue ni la reversión de CodeDeploy. Un servidor local no puede usar un perfil de instancia de EC2.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codedeploy/latest/userguide/instances-on-premises.html",
+      "https://aws.amazon.com/blogs/devops/how-to-deploy-workloads-in-a-multicloud-environment-with-aws-developer-tools/"
+    ]
   }
 ]

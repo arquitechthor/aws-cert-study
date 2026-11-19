@@ -259,10 +259,10 @@
     "dificil": true,
     "enunciado": "Una empresa tendrá 30 equipos de aplicación, cada uno en su propia cuenta de AWS dentro de la misma organización. El equipo de red quiere controlar en exclusiva las rutas, las NACL y la salida a internet, reducir el número de adjuntos de Transit Gateway y no desperdiciar direcciones IP. Ningún equipo debe ver ni modificar los recursos de otro. ¿Qué diseño lo cumple?",
     "opciones": [
-      "Una VPC por cuenta de aplicación, todas unidas entre sí con VPC peering.",
-      "Una VPC por cuenta de aplicación, cada una con su adjunto al Transit Gateway central.",
-      "Una sola cuenta para todos los equipos, con políticas de IAM por equipo basadas en etiquetas.",
-      "VPC en la cuenta de red cuyas subredes se comparten con AWS RAM a las cuentas de aplicación de la OU correspondiente."
+      "Una VPC por cuenta de aplicación, todas unidas con VPC peering y con la salida a internet centralizada en la cuenta de red.",
+      "Una VPC por cuenta de aplicación con su adjunto al Transit Gateway central y SCP que impidan modificar sus rutas.",
+      "Una sola cuenta de red para todos los equipos, con políticas de IAM por equipo basadas en etiquetas de recursos.",
+      "VPC en la cuenta de red cuyas subredes se comparten con AWS RAM a las cuentas de aplicación de cada OU."
     ],
     "correctas": [
       3
@@ -281,12 +281,12 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Tras una adquisición, la VPC de la empresa comprada usa 10.0.0.0/16, el mismo rango que la VPC de la compradora. Las aplicaciones de la empresa comprada deben consumir cuanto antes una API interna de la compradora, publicada detrás de un Network Load Balancer, sin renumerar ninguna red y sin dar acceso a nada más. ¿Qué solución lo cumple?",
+    "enunciado": "Tras una adquisición, la VPC de la empresa comprada usa 10.0.0.0/16, el mismo rango que la VPC de la compradora. Las aplicaciones de la empresa comprada deben consumir cuanto antes una API interna de la compradora, publicada detrás de un Network Load Balancer, sin renumerar ninguna red, sin dar acceso a nada más y con el menor esfuerzo operativo. ¿Qué solución lo cumple?",
     "opciones": [
-      "Unir las dos VPC a un AWS Transit Gateway y separar el tráfico con tablas de rutas distintas.",
-      "Publicar la API como servicio de endpoint de AWS PrivateLink y crear un endpoint de tipo interface en la VPC de la empresa comprada.",
-      "Crear un VPC peering y añadir rutas más específicas hacia las subredes de la API.",
-      "Montar una AWS Site-to-Site VPN entre las dos VPC con enrutamiento estático."
+      "Unir las dos VPC a un AWS Transit Gateway, separar el tráfico con tablas de rutas distintas y anunciar solo la subred de la API.",
+      "Publicar la API como servicio de endpoint de PrivateLink y crear un endpoint de tipo interface en la VPC comprada.",
+      "Crear un VPC peering y añadir rutas más específicas (/24) hacia las subredes de la API en la tabla de la VPC comprada.",
+      "Montar una AWS Site-to-Site VPN entre las dos VPC con enrutamiento estático hacia la IP del Network Load Balancer."
     ],
     "correctas": [
       1
@@ -307,15 +307,15 @@
     "dificil": true,
     "enunciado": "Una empresa tiene 50 VPC en varias cuentas, unidas por Transit Gateway a una VPC de servicios compartidos que recibe la conexión con el centro de datos. Los servidores locales deben resolver las zonas alojadas privadas de Amazon Route 53, y todas las VPC deben resolver el dominio interno corp.example.com, servido por los DNS locales. Se busca el menor coste y esfuerzo operativo. ¿Qué diseño lo cumple?",
     "opciones": [
-      "Endpoints de entrada y de salida de Route 53 Resolver solo en la VPC de servicios compartidos, con las zonas privadas asociadas a ella y la regla de reenvío de corp.example.com compartida con AWS RAM y asociada a las 50 VPC.",
-      "Endpoints de entrada y de salida de Route 53 Resolver en cada una de las 50 VPC, con sus propias reglas de reenvío.",
-      "Servidores DNS en instancias EC2 en cada VPC, configurados con conjuntos de opciones DHCP.",
-      "Convertir las zonas privadas en públicas y publicar corp.example.com en una zona pública de Route 53."
+      "Endpoints de entrada y salida de Resolver solo en la VPC compartida, con sus zonas privadas asociadas y la regla de corp.example.com compartida por RAM con las 50 VPC.",
+      "Endpoints de entrada y de salida de Route 53 Resolver en cada una de las 50 VPC, con sus propias reglas de reenvío y las zonas privadas asociadas a cada VPC.",
+      "Servidores DNS en instancias EC2 en la VPC de servicios compartidos que reenvíen a los DNS locales, y opciones DHCP en las 50 VPC que apunten a ellos.",
+      "Convertir las zonas privadas en públicas para que los DNS locales las resuelvan por internet, y publicar corp.example.com en una zona pública de Route 53."
     ],
     "correctas": [
       0
     ],
-    "explicacion": "Un único juego de endpoints basta: el de entrada responde con las zonas asociadas a su VPC, y las reglas de reenvío del endpoint de salida se comparten con RAM y se asocian a cada VPC sin crear más endpoints. Un juego por VPC multiplica el coste, los servidores propios suman trabajo operativo y hacer públicas las zonas expone nombres internos.",
+    "explicacion": "Un único juego de endpoints basta: el de entrada responde con las zonas asociadas a su VPC, y las reglas de reenvío del endpoint de salida se comparten con RAM y se asocian a cada VPC sin crear más endpoints. Un juego por VPC multiplica el coste. Los servidores DNS en EC2 funcionan, pero hay que operarlos, parchearlos y hacerlos redundantes. Hacer públicas las zonas expone nombres internos.",
     "fuentes": [
       "https://docs.aws.amazon.com/whitepapers/latest/hybrid-cloud-dns-options-for-vpc/route-53-resolver-endpoints-and-forwarding-rules.html",
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-rules-managing.html"

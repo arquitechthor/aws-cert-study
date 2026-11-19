@@ -199,5 +199,131 @@
     "fuentes": [
       "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-purchasing-options.html"
     ]
+  },
+  {
+    "id": "ec2-010",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una empresa gasta 400.000 USD al mes en EC2. El 60 % es una base estable de servidores de aplicaciones que, en los próximos dos años, cambiarán de familia de instancias y en parte pasarán a Fargate; el 25 % son trabajos de análisis por lotes que toleran interrupciones y se pueden reintentar; el resto son entornos de desarrollo que solo se usan en horario laboral. Finanzas quiere el máximo ahorro sin frenar la modernización. ¿Qué TRES medidas recomiendan? (Elige 3.)",
+    "opciones": [
+      "Un Compute Savings Plan dimensionado para la base estable, que se sigue aplicando al cambiar de familia o al pasar a Fargate.",
+      "Instancias reservadas estándar a 3 años de la familia actual para la base estable, revendiendo en el Marketplace las que sobren.",
+      "Instancias de spot para los trabajos por lotes, con varias familias de instancias y la estrategia de asignación price-capacity-optimized.",
+      "Parar los entornos de desarrollo fuera del horario laboral con Instance Scheduler o con automatizaciones programadas.",
+      "Un EC2 Instance Savings Plan para los entornos de desarrollo, que cubre cualquier tamaño dentro de la familia elegida.",
+      "Reservas de capacidad bajo demanda para los trabajos por lotes, para asegurar que siempre haya instancias disponibles."
+    ],
+    "correctas": [
+      0,
+      2,
+      3
+    ],
+    "explicacion": "El Compute Savings Plan cubre EC2 de cualquier familia, región y sistema operativo, además de Fargate y Lambda, así que no frena la migración. Spot con varias familias y price-capacity-optimized da el mayor descuento a cargas interrumpibles con menos interrupciones. Apagar el desarrollo fuera de horario ahorra más de la mitad de sus horas. Las reservadas estándar atan a la familia actual. Un Savings Plan para entornos que funcionan pocas horas al día desperdicia el compromiso, y las reservas de capacidad se pagan a precio bajo demanda se usen o no.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/what-is-savings-plans.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-allocation-strategy.html"
+    ]
+  },
+  {
+    "id": "ec2-011",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Una aplicación crítica corre en 40 instancias c7i.4xlarge en un grupo de Auto Scaling de us-east-1. El plan de recuperación exige un RTO de 1 hora ante la caída de la región y la garantía de que en us-west-2 habrá capacidad para esas 40 instancias aunque otros clientes compitan por ella durante el mismo evento. Mientras no haya desastre, la empresa quiere pagar lo mínimo en us-west-2 que cumpla esa garantía, y ya tiene Compute Savings Plans con margen libre. ¿Qué solución lo consigue?",
+    "opciones": [
+      "Un grupo de Auto Scaling en us-west-2 con capacidad deseada 0 y máximo 40, que ARC Region switch amplía al conmutar.",
+      "Reservas de capacidad bajo demanda para las 40 instancias en us-west-2, cubiertas por el Savings Plan, y un grupo de Auto Scaling que las use.",
+      "Una flota de spot de 40 instancias en us-west-2 con varias familias, que sale más barata que la capacidad bajo demanda.",
+      "Instancias reservadas regionales de 3 años en us-west-2, que dan descuento y prioridad de capacidad en cualquier zona de la región."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Solo las reservas de capacidad bajo demanda (o las reservadas zonales) garantizan capacidad, y los Savings Plans se aplican a ellas, lo que rebaja su coste mientras esperan. Es el patrón de luz piloto con capacidad reservada que propone AWS. Un grupo a cero con Region switch no garantiza capacidad (la propia documentación lo advierte). Spot puede no estar disponible justo en un evento regional. Las reservadas regionales dan descuento, pero no reservan capacidad.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html",
+      "https://docs.aws.amazon.com/r53recovery/latest/dg/working-with-rs-execution-blocks.html"
+    ]
+  },
+  {
+    "id": "ec2-012",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Un servicio web corre en un grupo de Auto Scaling de m5.2xlarge (x86) con un uso medio de CPU del 18 %. El código es Java 21 sin dependencias nativas. La empresa tiene un Compute Savings Plan que cubre el 70 % del gasto actual y que vence dentro de dos años. Quiere reducir el coste en las próximas semanas sin perder rendimiento y sin desaprovechar el compromiso que ya tiene. ¿Qué plan es el más adecuado?",
+    "opciones": [
+      "Vender el Savings Plan en el Marketplace de instancias reservadas y comprar instancias reservadas convertibles de la nueva familia.",
+      "Cambiar a m5.large manteniendo x86, porque el Savings Plan solo cubre la familia y la arquitectura con las que se compró.",
+      "Seguir la recomendación de Compute Optimizer de pasar a Graviton más pequeño, probarla con parte del tráfico y mantener el plan.",
+      "Pasar todo el tráfico a instancias de spot y cancelar el Savings Plan, que deja de ser necesario con el descuento de spot."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Compute Optimizer recomienda tamaños y familias a partir del uso real, incluidas las instancias Graviton, que suelen dar mejor precio por rendimiento para Java sin código nativo. El Compute Savings Plan se aplica a cualquier familia y arquitectura, así que sigue cubriendo las nuevas instancias. Los Savings Plans no se pueden vender ni cancelar. El EC2 Instance Savings Plan sí está atado a una familia, pero no es el caso. Spot para todo el tráfico web arriesga interrupciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/view-ec2-recommendations.html",
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html"
+    ]
+  },
+  {
+    "id": "ec2-013",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
+    "enunciado": "Un equipo de simulación ejecuta trabajos MPI fuertemente acoplados en 64 instancias hpc7a que intercambian mensajes sin parar: la latencia entre nodos decide el tiempo total. Cada trabajo dura 6 horas, se puede repetir si falla y se lanza dos veces por semana en horario conocido. El equipo quiere el máximo rendimiento de red entre nodos y la seguridad de que habrá capacidad cada vez que lance un trabajo. ¿Qué configuración es la más adecuada?",
+    "opciones": [
+      "Un grupo de ubicación distribuido (spread) en tres zonas de disponibilidad para que un fallo de hardware no afecte a todo el trabajo.",
+      "Un grupo de ubicación por particiones con 7 particiones y ENA Express entre las instancias de cada partición.",
+      "Instancias repartidas en tres zonas con ENA Express, y un clúster de ParallelCluster que reintente los nodos que fallen.",
+      "Un grupo de ubicación en clúster en una zona, EFA en las instancias y una reserva de capacidad asociada al grupo."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "El grupo de ubicación en clúster coloca las instancias cerca dentro de una zona, con la menor latencia y el mayor ancho de banda, y EFA permite a MPI saltarse la pila de red del sistema operativo. Una reserva de capacidad en el grupo de ubicación asegura las 64 instancias. El grupo distribuido admite como mucho 7 instancias por zona y busca separar, no acercar. Las particiones están pensadas para sistemas distribuidos como HDFS o Cassandra. Repartir entre zonas añade latencia entre nodos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-cpg.html"
+    ]
+  },
+  {
+    "id": "ec2-014",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una organización con 120 cuentas exige que todas las instancias EC2 arranquen desde una AMI corporativa endurecida, actualizada cada mes con los últimos parches, analizada en busca de vulnerabilidades antes de publicarse y disponible en las cuatro regiones que usa. Los equipos solo deben poder lanzar instancias desde esas AMI, también en las cuentas nuevas. Se busca el menor esfuerzo operativo. ¿Qué combinación lo consigue?",
+    "opciones": [
+      "Una canalización de EC2 Image Builder con análisis de Inspector que distribuya la AMI a las regiones y a la organización, y una política declarativa de AMI permitidas.",
+      "Un script mensual en una instancia que cree la AMI con Packer, la copie a las regiones y la comparta cuenta por cuenta, y una regla de Config que avise de AMI no aprobadas.",
+      "Patch Manager de Systems Manager en todas las instancias con una línea base mensual, sin AMI corporativa, y Amazon Inspector para las vulnerabilidades.",
+      "Una canalización de Image Builder que publique la AMI en AWS Marketplace como producto privado, y que cada equipo se suscriba a ella desde su cuenta."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Image Builder automatiza la construcción mensual, el análisis de vulnerabilidades con Inspector, la copia a varias regiones y la distribución a la organización. La configuración de AMI permitidas de EC2, aplicada con una política declarativa de Organizations, impide lanzar instancias desde otras AMI en todas las cuentas, incluidas las nuevas. El script propio da más trabajo y Config solo avisa después. Patch Manager parchea, pero no obliga a usar una AMI concreta. Marketplace es para distribuir productos y no impide usar otras AMI.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/imagebuilder/latest/userguide/what-is-image-builder.html",
+      "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html",
+      "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_declarative.html"
+    ]
   }
 ]

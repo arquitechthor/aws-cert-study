@@ -137,6 +137,58 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de SAP-C03: coste, interrupciones de Spot, almacenamiento,
+        aislamiento y parches.</p>
+
+      <h3>Coste</h3>
+      <ul>
+        <li>El <a href="savings-plans.html">Compute Savings Plan</a> cubre Fargate (y <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> y <a href="lambda.html">Lambda</a>): es el compromiso que sigue sirviendo si
+          una carga cambia de cómputo. Las instancias reservadas y el EC2 Instance Savings Plan <strong>no</strong> se
+          aplican a Fargate.</li>
+        <li><strong>Graviton (arm64)</strong> cuesta menos por vCPU y GB que x86 si las imágenes son multiarquitectura.</li>
+        <li><strong>FARGATE_SPOT</strong> para cargas interrumpibles, con una <em>base</em> en FARGATE para no quedarse sin
+          capacidad.</li>
+      </ul>
+
+      <h3>Interrupciones de Spot</h3>
+      <ul>
+        <li>Fargate avisa <strong>dos minutos</strong> antes y envía SIGTERM al contenedor. Con
+          <code>stopTimeout</code> (hasta 120 segundos) la aplicación puede dejar de aceptar trabajo y terminar el actual.</li>
+        <li>La <strong>protección de reducción</strong> de una tarea solo evita que el escalado del servicio la retire; no
+          impide las interrupciones de Spot.</li>
+        <li>Los consumidores de colas deben ser idempotentes: un mensaje puede procesarse dos veces.</li>
+      </ul>
+
+      <h3>Almacenamiento</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>Disco temporal grande por tarea</td><td>Almacenamiento efímero ampliado, hasta 200 GiB</td></tr>
+            <tr><td>Volumen de bloque por tarea</td><td>Volumen de <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> asociado a la tarea (uno por tarea, no compartido)</td></tr>
+            <tr><td>Datos compartidos y duraderos entre tareas</td><td>Sistema de archivos de <a href="efs.html"><abbr class="sigla" data-s="EFS" data-en="Elastic File System" tabindex="0">EFS</abbr></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Aislamiento y seguridad en ejecución</h3>
+      <ul>
+        <li>Cada tarea corre en su propio límite de aislamiento, <strong>sin compartir núcleo</strong>, memoria ni disco con
+          otras tareas; no admite contenedores privilegiados.</li>
+        <li><strong><a href="guardduty.html">GuardDuty</a> Runtime Monitoring</strong> para Fargate añade y mantiene el agente como contenedor auxiliar
+          y detecta comportamientos sospechosos en ejecución. <a href="inspector.html">Inspector</a> analiza las imágenes, que es otra cosa.</li>
+      </ul>
+
+      <h3>Parches de la plataforma</h3>
+      <ul>
+        <li>AWS parchea la infraestructura de Fargate y <strong>retira las tareas</strong> que corren en revisiones con
+          parches pendientes, avisando antes en AWS Health.</li>
+        <li>La cuenta puede ajustar el <strong>periodo de espera</strong> antes de la retirada, y lo mejor es adelantarse
+          con un nuevo despliegue del servicio en la ventana propia: respeta los porcentajes mínimo y máximo y no se pierde
+          capacidad.</li>
+      </ul>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga por la vCPU, la memoria y el almacenamiento efímero adicional que solicita cada
         tarea, por segundo (con un mínimo de un minuto), desde que empieza a descargar la imagen hasta
@@ -172,6 +224,8 @@
         <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/fargate.html" target="_blank" rel="noopener">Simplify compute management with AWS Fargate (Amazon EKS)</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-storage.html" target="_blank" rel="noopener">Fargate task ephemeral storage for Amazon ECS</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-capacity-providers.html" target="_blank" rel="noopener">Amazon ECS clusters for Fargate</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-maintenance.html" target="_blank" rel="noopener">Task maintenance on AWS Fargate</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/guardduty/latest/ug/how-runtime-monitoring-works-ecs-fargate.html" target="_blank" rel="noopener">How Runtime Monitoring works with Fargate (Amazon ECS only)</a>, documentación de AWS (consultada el 19/11/2026).</li>
       </ul>
     </article>
   </div>

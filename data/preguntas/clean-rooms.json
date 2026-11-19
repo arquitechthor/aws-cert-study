@@ -6,17 +6,17 @@
       "SAP-C03"
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
-    "enunciado": "Un minorista y una cadena de televisión quieren medir cuántos clientes del minorista vieron un anuncio. Ninguno puede compartir sus datos personales con el otro, los datos deben quedarse en sus cuentas de AWS y solo deben salir resultados agregados. ¿Qué solución lo permite?",
+    "enunciado": "Un minorista y una cadena de televisión, cada uno con su propia organización de AWS, quieren medir cada semana cuántos clientes del minorista vieron una campaña de anuncios. Por contrato y por el RGPD, ninguno puede ver los datos personales del otro, ni siquiera con columnas ocultas o seudonimizadas; los datos deben quedarse en sus cuentas, y solo pueden salir recuentos agregados de al menos 100 personas. No quieren construir ni operar infraestructura propia para ello. ¿Qué solución cumple todos los requisitos?",
     "opciones": [
-      "Un conjunto de datos de AWS Data Exchange que el minorista compra a la cadena.",
-      "Una colaboración de AWS Clean Rooms con tablas configuradas y reglas de análisis de agregación.",
-      "Compartir con Lake Formation las tablas de cada uno con la cuenta del otro.",
-      "Copiar los datos de ambos a un depósito de S3 común y consultarlos con Athena."
+      "Un conjunto de datos de AWS Data Exchange que la cadena publica y el minorista suscribe para cruzarlo en su propia cuenta.",
+      "Una colaboración de AWS Clean Rooms con tablas configuradas y reglas de análisis de agregación con un mínimo por grupo.",
+      "Compartir entre cuentas con Lake Formation las tablas de cada uno, con permisos de columna que oculten los identificadores.",
+      "Copiar ambos conjuntos a un bucket de S3 común cifrado con KMS y consultarlos con Athena desde una cuenta neutral."
     ],
     "correctas": [
       1
     ],
-    "explicacion": "Clean Rooms permite analizar juntos los datos sin que ninguna parte vea los del otro: cada uno deja sus datos en su cuenta y las reglas de agregación solo dejan salir estadísticas. Data Exchange y Lake Formation entregan o comparten los datos, y el depósito común los expone a ambos.",
+    "explicacion": "Clean Rooms permite analizar juntos los datos sin que ninguna parte vea los del otro: cada uno deja sus datos en su cuenta, y las reglas de análisis de agregación solo dejan salir estadísticas y pueden exigir un mínimo de personas por grupo. Data Exchange entrega una copia de los datos a quien los suscribe; Lake Formation, aunque oculte columnas, comparte las filas con la otra cuenta; y el bucket común saca los datos de las cuentas y los expone a quien consulte.",
     "fuentes": [
       "https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html"
     ],

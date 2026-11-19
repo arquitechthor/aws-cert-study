@@ -108,5 +108,57 @@
     "fuentes": [
       "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-applying.html"
     ]
+  },
+  {
+    "id": "savings-plans-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una organización con facturación unificada tiene 30 cuentas. Una unidad de negocio compró un Compute Savings Plan grande en su cuenta y, tras reducir su uso, el compromiso queda infrautilizado, mientras otras cuentas pagan EC2 bajo demanda. Otra unidad exige que sus propios Savings Plans no beneficien a nadie más, porque repercute el ahorro en su cuenta de resultados. ¿Qué configuración cumple los dos requisitos?",
+    "opciones": [
+      "Vender en el Marketplace de instancias reservadas la parte del Savings Plan que no se usa y comprar otro en las cuentas que pagan bajo demanda.",
+      "Activar el uso compartido de descuentos de instancias reservadas y Savings Plans en la organización y desactivarlo solo en la cuenta de la segunda unidad.",
+      "Mover el Savings Plan a la cuenta de administración, para que se aplique a todas, y crear una organización aparte para la segunda unidad.",
+      "Desactivar el uso compartido de descuentos en toda la organización y repartir después el ahorro del Savings Plan con Cost Categories."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Con el uso compartido de descuentos activo, el compromiso sobrante de una cuenta se aplica al uso de las demás cuentas de la organización. Se puede desactivar por cuenta: esa cuenta deja de compartir sus descuentos y de recibir los de otras, justo lo que pide la segunda unidad. Los Savings Plans no se pueden vender ni mover de cuenta. Desactivarlo para todos deja el compromiso sin usar, y Cost Categories reparte costes en los informes, no aplica descuentos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ri-turn-off.html",
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/sp-applying.html"
+    ]
+  },
+  {
+    "id": "savings-plans-007",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una empresa tiene un gasto estable por hora de 60 USD en EC2 (cambia de familia cada pocos meses), 25 USD en Fargate, 20 USD en Aurora y RDS con varios motores y 10 USD en inferencia con SageMaker AI. Quiere cubrir ese gasto estable con compromisos a un año sin pago inicial, maximizando el ahorro y sin limitar los cambios de familia, motor o región. ¿Qué TRES compromisos compra? (Elige 3.)",
+    "opciones": [
+      "Un Compute Savings Plan que cubra el gasto estable de EC2 y de Fargate.",
+      "Un Database Savings Plan que cubra el gasto estable de Aurora y de RDS.",
+      "Instancias reservadas de RDS por motor y familia para el gasto de Aurora y RDS.",
+      "Un SageMaker Savings Plan que cubra el gasto estable de inferencia.",
+      "Un EC2 Instance Savings Plan para EC2 y Fargate, que da más descuento.",
+      "Un Compute Savings Plan que cubra todo, también Aurora, RDS y SageMaker AI."
+    ],
+    "correctas": [
+      0,
+      1,
+      3
+    ],
+    "explicacion": "Cada familia de Savings Plans cubre servicios distintos: Compute (EC2 de cualquier familia y región, Fargate y Lambda), Database (Aurora, RDS, DynamoDB, ElastiCache y otras bases de datos, de cualquier motor y región) y SageMaker. Las reservadas de RDS atan a un motor y una familia. El EC2 Instance Savings Plan no cubre Fargate y ata a una familia, y el Compute Savings Plan no se aplica a bases de datos ni a SageMaker AI.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html",
+      "https://aws.amazon.com/about-aws/whats-new/2025/12/database-savings-plans-savings/"
+    ]
   }
 ]

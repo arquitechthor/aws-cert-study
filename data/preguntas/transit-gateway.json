@@ -77,17 +77,17 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Una empresa centraliza la inspección del tráfico entre VPC en una VPC de inspección con un cortafuegos con estado, conectada a un Transit Gateway. Algunas conexiones se cortan porque la respuesta vuelve por otra AZ. ¿Qué lo corrige?",
+    "enunciado": "Una empresa centraliza la inspección del tráfico entre 20 VPC en una VPC de inspección con cortafuegos con estado en dos zonas de disponibilidad, conectada a un Transit Gateway. Las VPC de aplicación tienen subredes en las mismas dos zonas. Algunas conexiones entre VPC se cortan de forma intermitente y los cortafuegos registran respuestas sin sesión, porque la vuelta entra por la otra zona. Se busca conservar las IP de origen y el menor esfuerzo. ¿Qué lo corrige?",
     "opciones": [
-      "Desactivar la propagación de rutas.",
-      "Usar emparejamiento de VPC en lugar de Transit Gateway.",
-      "Activar el modo dispositivo en el adjunto de la VPC de inspección.",
-      "Añadir una ruta de agujero negro hacia la VPC de inspección."
+      "Desactivar la propagación de rutas y usar rutas estáticas por zona en la tabla de rutas del Transit Gateway.",
+      "Sustituir el Transit Gateway por emparejamientos de cada VPC con la VPC de inspección.",
+      "Activar el modo dispositivo en el adjunto de la VPC de inspección al Transit Gateway.",
+      "Hacer que los cortafuegos apliquen NAT de origen a todo el tráfico que inspeccionan."
     ],
     "correctas": [
       2
     ],
-    "explicacion": "El modo dispositivo hace que el Transit Gateway mantenga los dos sentidos de un flujo en la misma AZ del adjunto, de modo que el cortafuegos con estado ve la conexión completa. Sin él, el tráfico puede volver por otra AZ y el cortafuegos lo descarta.",
+    "explicacion": "El modo dispositivo hace que el Transit Gateway mantenga los dos sentidos de un flujo en la misma zona del adjunto, de modo que el cortafuegos con estado ve la conexión completa. Las tablas de rutas del Transit Gateway no distinguen zonas, el emparejamiento no es transitivo y no permite enrutar entre VPC a través de la de inspección, y el NAT de origen funcionaría pero pierde la IP original.",
     "fuentes": [
       "https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-appliance-scenario.html"
     ]

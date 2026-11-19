@@ -152,5 +152,30 @@
     "fuentes": [
       "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html"
     ]
+  },
+  {
+    "id": "compute-optimizer-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una organización con 200 cuentas quiere detectar de forma centralizada instancias EC2 y volúmenes EBS sobredimensionados, funciones Lambda con memoria de más y tareas de Fargate demasiado grandes. Quiere priorizar por el ahorro estimado teniendo en cuenta sus Savings Plans y descuentos, y que las recomendaciones de EC2 tengan en cuenta la memoria que de verdad usan las instancias. ¿Qué configura?",
+    "opciones": [
+      "Trusted Advisor con soporte Business en todas las cuentas, cuya comprobación de instancias infrautilizadas cubre también Lambda, Fargate y EBS con descuentos.",
+      "Compute Optimizer activado cuenta por cuenta, con las métricas de memoria que las instancias de EC2 publican por defecto en CloudWatch.",
+      "AWS Budgets con alertas de uso por servicio y una revisión trimestral en Cost Explorer filtrada por tipo de instancia.",
+      "Compute Optimizer para la organización desde una administradora delegada, con el modo de estimación que tiene en cuenta los descuentos y el agente de CloudWatch."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Compute Optimizer se activa para toda la organización y se consulta desde una cuenta administradora delegada; cubre EC2, EBS, Lambda y ECS sobre Fargate, y su estimación de ahorro puede tener en cuenta los Savings Plans y descuentos. EC2 no publica la memoria por defecto: hace falta el agente de CloudWatch para que la recomendación la tenga en cuenta. Trusted Advisor no da recomendaciones de tamaño para todos esos recursos, y Budgets y Cost Explorer no recomiendan tamaños.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/what-is-compute-optimizer.html",
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/savings-estimation-mode.html",
+      "https://docs.aws.amazon.com/compute-optimizer/latest/ug/metrics.html"
+    ]
   }
 ]

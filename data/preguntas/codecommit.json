@@ -6,17 +6,17 @@
       "SAP-C03"
     ],
     "dominio": "Excelencia operativa y automatización",
-    "enunciado": "Una empresa regulada quiere repositorios Git privados dentro de sus cuentas de AWS, con acceso por IAM y sin credenciales de larga duración, que arranquen sus canalizaciones de CodePipeline al hacer push a la rama principal y que exijan dos aprobaciones antes de fusionar. ¿Qué solución cumple los requisitos?",
+    "enunciado": "Una empresa regulada quiere repositorios Git privados dentro de sus cuentas de AWS, con acceso por IAM y sin credenciales de larga duración, que arranquen sus canalizaciones de CodePipeline al hacer push a la rama principal y que exijan dos aprobaciones antes de fusionar. La auditoría pide que todo acceso quede registrado en CloudTrail, y no quieren depender de un proveedor externo de Git ni operar servidores propios. ¿Qué solución cumple los requisitos?",
     "opciones": [
-      "Repositorios en S3 con versiones activadas y una función Lambda que compare cambios.",
-      "AWS CodeArtifact con un repositorio por equipo.",
-      "Amazon ECR con políticas de repositorio.",
-      "AWS CodeCommit con acceso mediante roles y credenciales temporales (git-remote-codecommit), un evento de EventBridge que arranca CodePipeline y una plantilla de reglas de aprobación."
+      "Buckets de S3 con control de versiones como origen de CodePipeline y una función Lambda que exija dos aprobaciones.",
+      "AWS CodeArtifact con un repositorio por equipo, acceso con tokens temporales y un disparador de CodePipeline.",
+      "Amazon ECR con políticas de repositorio por rol de IAM y reglas de EventBridge que arranquen CodePipeline al hacer push.",
+      "AWS CodeCommit con git-remote-codecommit y roles, un evento de EventBridge que arranque CodePipeline y reglas de aprobación."
     ],
     "correctas": [
       3
     ],
-    "explicacion": "CodeCommit ofrece repositorios Git privados con IAM, admite credenciales temporales, emite eventos que arrancan CodePipeline y tiene reglas de aprobación para solicitudes de extracción. S3 no es un repositorio Git, CodeArtifact guarda paquetes y ECR imágenes de contenedor.",
+    "explicacion": "CodeCommit ofrece repositorios Git privados con IAM, admite credenciales temporales con git-remote-codecommit, emite eventos que arrancan CodePipeline y tiene reglas de aprobación para solicitudes de extracción. Las otras tres pueden arrancar canalizaciones, pero no son repositorios Git: S3 guarda objetos sin ramas ni solicitudes de extracción, CodeArtifact guarda paquetes y ECR imágenes de contenedor.",
     "fuentes": [
       "https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-create-pull-request-approval-rule.html"
     ],

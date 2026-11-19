@@ -164,6 +164,65 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de SAP-C03: cómo combinar opciones de compra, cómo garantizar
+        capacidad para recuperarse de un desastre, rendimiento de red extremo y gobierno de imágenes en muchas cuentas.</p>
+
+      <h3>Combinar opciones de compra</h3>
+      <ul>
+        <li><strong>Base estable que va a cambiar</strong> (de familia, de región o a contenedores): <a href="savings-plans.html">Compute Savings
+          Plan</a>, que cubre cualquier familia de <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr>, <a href="fargate.html">Fargate</a> y <a href="lambda.html">Lambda</a>. El EC2 Instance Savings Plan da algo más de
+          descuento, pero ata a una familia en una región.</li>
+        <li><strong>Cargas interrumpibles</strong> (lotes, CI, análisis): Spot con <strong>varias familias y tamaños</strong>
+          (o selección por atributos) y la estrategia <code>price-capacity-optimized</code>, que busca el menor precio entre
+          los grupos con más capacidad libre y reduce las interrupciones.</li>
+        <li><strong>Lo que solo se usa unas horas</strong> (desarrollo): apagarlo fuera de horario ahorra más que cualquier
+          compromiso.</li>
+        <li>Los Savings Plans <strong>no se venden ni se cancelan</strong>; las instancias reservadas estándar sí se pueden
+          vender en su Marketplace.</li>
+        <li><a href="compute-optimizer.html">Compute Optimizer</a> recomienda tamaño y familia (incluido Graviton) a partir del uso real; para tener en
+          cuenta la memoria hace falta el agente de <a href="cloudwatch.html">CloudWatch</a>.</li>
+      </ul>
+
+      <h3>Capacidad garantizada</h3>
+      <ul>
+        <li>Solo las <strong>reservas de capacidad bajo demanda</strong> (ODCR) y las <strong>reservadas zonales</strong>
+          aseguran que habrá instancias. Las reservadas regionales y los Savings Plans dan descuento, no capacidad.</li>
+        <li>Una ODCR se paga a precio bajo demanda se use o no, pero los Savings Plans y las reservadas regionales se aplican
+          a ella. Es la base del patrón <strong>luz piloto con capacidad reservada</strong>: la capacidad de la región de
+          recuperación está apartada y su coste, rebajado.</li>
+        <li>Un grupo de <a href="ec2-auto-scaling.html">Auto Scaling</a> a cero en la región de recuperación no garantiza nada: en un evento regional,
+          muchos clientes piden capacidad a la vez.</li>
+        <li><strong>Capacity Blocks for <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr></strong>: <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr> reservadas por días o semanas para entrenamientos con fecha.</li>
+      </ul>
+
+      <h3>Rendimiento de red y grupos de ubicación</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Grupo de ubicación</th><th>Para qué</th><th>Límite que importa</th></tr></thead>
+          <tbody>
+            <tr><td>Clúster</td><td><abbr class="sigla" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC</abbr> y <abbr class="sigla sigla-1" data-s="MPI" data-en="Message Passing Interface" data-es="estándar de paso de mensajes entre nodos de cálculo" tabindex="0">MPI<span class="sigla-exp"> (Message Passing Interface: estándar de paso de mensajes entre nodos de cálculo)</span></abbr>: mínima latencia y máximo ancho de banda</td><td>Una sola zona</td></tr>
+            <tr><td>Particiones</td><td><abbr class="sigla sigla-1" data-s="HDFS" data-en="Hadoop Distributed File System" data-es="sistema de ficheros distribuido de Hadoop" tabindex="0">HDFS<span class="sigla-exp"> (Hadoop Distributed File System: sistema de ficheros distribuido de Hadoop)</span></abbr>, Cassandra, Kafka: fallos aislados por partición</td><td>Hasta 7 particiones por zona</td></tr>
+            <tr><td>Distribuido (spread)</td><td>Pocas instancias críticas en hardware distinto</td><td>7 instancias por zona</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li><strong><abbr class="sigla sigla-1" data-s="EFA" data-en="Elastic Fabric Adapter" data-es="red de baja latencia para cálculo acoplado" tabindex="0">EFA<span class="sigla-exp"> (Elastic Fabric Adapter: red de baja latencia para cálculo acoplado)</span></abbr></strong> permite a <abbr class="sigla" data-s="MPI" data-en="Message Passing Interface" data-es="estándar de paso de mensajes entre nodos de cálculo" tabindex="0">MPI</abbr> y a NCCL saltarse la pila de red del sistema operativo; <strong><abbr class="sigla sigla-1" data-s="ENA" data-en="Elastic Network Adapter" data-es="tarjeta de red de alto rendimiento de EC2" tabindex="0">ENA<span class="sigla-exp"> (Elastic Network Adapter: tarjeta de red de alto rendimiento de EC2)</span></abbr>
+          Express</strong> mejora el ancho de banda de un solo flujo entre instancias de la misma zona.</li>
+        <li>Se puede crear una reserva de capacidad <strong>dentro</strong> de un grupo de ubicación en clúster.</li>
+      </ul>
+
+      <h3>Imágenes en muchas cuentas</h3>
+      <ul>
+        <li><strong>EC2 Image Builder</strong> construye la <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> corporativa, la prueba, la analiza con <a href="inspector.html">Inspector</a>, la copia a
+          varias regiones y la comparte con la organización o con <abbr class="sigla sigla-1" data-s="OU" data-en="Organizational Unit" data-es="unidad organizativa de AWS Organizations" tabindex="0">OU<span class="sigla-exp"> (Organizational Unit: unidad organizativa de AWS Organizations)</span></abbr>.</li>
+        <li>La configuración de <strong><abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> permitidas</strong> limita qué <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr> se pueden descubrir y lanzar en una cuenta;
+          con una <strong>política declarativa</strong> de <a href="organizations.html">Organizations</a> se aplica a todas, también a las nuevas.</li>
+        <li><strong>Desactivar el acceso público a las <abbr class="sigla" data-s="AMI" data-en="Amazon Machine Image" data-es="plantilla con el sistema operativo para arrancar instancias" tabindex="0">AMI</abbr></strong> y a las instantáneas de <a href="ebs.html"><abbr class="sigla" data-s="EBS" data-en="Elastic Block Store" tabindex="0">EBS</abbr></a> también se impone con políticas
+          declarativas, sin depender de cada <abbr class="sigla sigla-1" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API<span class="sigla-exp"> (Application Programming Interface: interfaz para que los programas se comuniquen)</span></abbr>.</li>
+      </ul>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga el tiempo de ejecución de la instancia (por segundo en Linux y en la mayoría de
         sistemas, con un mínimo de 60 segundos), según tipo, región y opción de compra. Aparte se
@@ -205,6 +264,8 @@
         <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-purchasing-options.html" target="_blank" rel="noopener">Amazon EC2 billing and purchasing options</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html" target="_blank" rel="noopener">Placement groups for your Amazon EC2 instances</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html" target="_blank" rel="noopener">Use the Instance Metadata Service to access instance metadata</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html" target="_blank" rel="noopener">On-Demand Capacity Reservations</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html" target="_blank" rel="noopener">Control the discovery and use of AMIs in Amazon EC2 with Allowed AMIs</a>, documentación de AWS (consultada el 19/11/2026).</li>
       </ul>
     </article>
   </div>

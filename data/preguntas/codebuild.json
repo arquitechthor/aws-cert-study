@@ -108,5 +108,125 @@
     "fuentes": [
       "https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html"
     ]
+  },
+  {
+    "id": "codebuild-006",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Un equipo lanza 4.000 compilaciones al día con CodeBuild: el 90 % son pruebas unitarias de Node.js que tardan menos de un minuto y el 10 % construyen imágenes de contenedor con Docker durante 15 minutos, repartidas a lo largo del día. Todo usa EC2 general1.medium bajo demanda y el aprovisionamiento añade unos 40 segundos a cada compilación. Quiere reducir el coste y la espera sin gestionar servidores. ¿Qué combinación aplica?",
+    "opciones": [
+      "Compute de Lambda para todas las compilaciones, incluidas las de imágenes de contenedor, ejecutadas en modo privilegiado.",
+      "Una flota de capacidad reservada dimensionada para el pico de las 4.000 compilaciones diarias, con todas las compilaciones en ella.",
+      "Compute de Lambda para las pruebas unitarias y EC2 bajo demanda, con caché de capas de Docker, para las imágenes de contenedor.",
+      "Compilaciones por lotes que agrupen 50 pruebas unitarias en cada compilación, en instancias general1.2xlarge."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El compute de Lambda de CodeBuild arranca casi al instante y factura por segundos, ideal para compilaciones cortas, pero no admite Docker ni el modo privilegiado, así que las imágenes siguen en EC2, donde la caché de capas acorta cada compilación. Una flota reservada para el pico se paga aunque esté parada buena parte del día. Agrupar pruebas en máquinas grandes cambia el flujo de los equipos y no elimina la espera de aprovisionamiento.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/lambda.html",
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/build-caching.html",
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/fleets.html"
+    ]
+  },
+  {
+    "id": "codebuild-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
+    "enunciado": "Las pruebas de integración de CodeBuild deben conectarse a una base de datos Aurora en subredes privadas, leer su contraseña y un token de un registro npm interno, y descargar dependencias públicas de internet. Seguridad prohíbe credenciales en el buildspec o en variables de entorno de texto plano, exige que el tráfico hacia Aurora no salga de la VPC y quiere que los secretos se puedan rotar sin tocar el proyecto. ¿Qué configuración lo cumple?",
+    "opciones": [
+      "El proyecto fuera de la VPC, con Aurora accesible públicamente limitada por grupo de seguridad a las IP de CodeBuild, y los secretos en variables de texto.",
+      "El proyecto en subredes públicas de la VPC para salir a internet, y los secretos leídos con la CLI en el buildspec con las claves de un usuario de IAM.",
+      "El proyecto en subredes privadas sin NAT, con un punto de enlace de interfaz de Secrets Manager, y las dependencias públicas descargadas por un endpoint de S3.",
+      "El proyecto en subredes privadas con NAT para internet, y variables de entorno de tipo SECRETS_MANAGER con permisos en el rol de servicio del proyecto."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Un proyecto de CodeBuild en subredes privadas llega a Aurora sin salir de la VPC y a internet a través de un NAT gateway. Las variables de tipo SECRETS_MANAGER se resuelven al empezar cada compilación con el rol de servicio, así que no hay credenciales en el buildspec y la rotación no exige cambios. Los proyectos de CodeBuild en una VPC no reciben IP pública, así que las subredes públicas no dan internet, y un usuario de IAM son credenciales de larga duración. Sin NAT no se llega al registro público de npm. Fuera de la VPC, Aurora tendría que ser pública.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/vpc-support.html",
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html"
+    ]
+  },
+  {
+    "id": "codebuild-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una librería debe compilarse y probarse en cada solicitud de extracción con tres versiones de Java y en Linux x86 y arm64. Hoy hay seis proyectos de CodeBuild casi iguales que se mantienen a mano, y los resultados de las pruebas quedan dispersos. Se quiere un único proyecto, la definición en Git junto al código, las seis combinaciones en paralelo y los resultados de las pruebas visibles en CodeBuild. ¿Qué usa el equipo?",
+    "opciones": [
+      "Seis acciones paralelas de CodeBuild en una etapa de CodePipeline, una por combinación, cada una con su propio proyecto.",
+      "Un único proyecto que ejecute en serie las seis combinaciones dentro del mismo contenedor, cambiando de JDK con scripts.",
+      "Una compilación por lotes con build-matrix en el buildspec, que combina versiones e imágenes, e informes de pruebas de CodeBuild.",
+      "Un flujo de GitHub Actions que llame seis veces a StartBuild con variables distintas y suba los resultados a un bucket de S3."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "Las compilaciones por lotes de CodeBuild con build-matrix lanzan en paralelo todas las combinaciones de variables, imágenes o tipos de entorno definidas en el buildspec, desde un único proyecto, y los informes de pruebas recogen los resultados de cada una. Seis acciones con seis proyectos es lo que ya se quiere dejar. En un mismo contenedor no se puede probar arm64 y x86 a la vez, y en serie tarda más. GitHub Actions con StartBuild es orquestación propia y deja los resultados fuera de CodeBuild.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build.html",
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html",
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/test-reporting.html"
+    ]
+  },
+  {
+    "id": "codebuild-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
+    "enunciado": "Una empresa usa GitHub Actions en 300 repositorios. Sus ejecutores autoalojados en EC2 son caros, se quedan sin capacidad en las horas punta y necesitan acceso a recursos de una VPC privada. Quiere seguir escribiendo sus flujos de trabajo en GitHub Actions, sin gestionar servidores ni su escalado, con acceso a la VPC y pagando solo por el tiempo de ejecución. ¿Qué solución lo cumple?",
+    "opciones": [
+      "Proyectos de CodeBuild como ejecutores autoalojados de GitHub Actions, con un webhook de trabajos en cola y el proyecto en la VPC.",
+      "Migrar los flujos de trabajo a CodePipeline y CodeBuild, reescribiendo cada workflow como una canalización con su buildspec.",
+      "Ejecutores en un clúster de EKS con Actions Runner Controller y Karpenter, escalados según los trabajos en cola de GitHub.",
+      "Ejecutores alojados por GitHub, con una VPN de sitio a sitio desde los ejecutores hasta la VPC privada de la empresa."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "CodeBuild puede actuar como ejecutor autoalojado de GitHub Actions: un webhook recibe cada trabajo en cola y CodeBuild lanza un entorno efímero que lo ejecuta, con escalado gestionado, pago por minuto y acceso a la VPC si el proyecto está configurado en ella. Reescribirlo todo en CodePipeline rompe el requisito de seguir con GitHub Actions. EKS con Actions Runner Controller funciona, pero hay que operar el clúster. Los ejecutores alojados por GitHub no pueden montar una VPN propia hacia la VPC.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/action-runner.html"
+    ]
+  },
+  {
+    "id": "codebuild-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Las compilaciones de Maven de CodeBuild tardan 12 minutos, de los que 8 son descargas de dependencias desde un repositorio de CodeArtifact de otra región. Se lanzan 500 al día, repartidas a lo largo de la jornada, en compute EC2 bajo demanda, y las dependencias cambian poco de una compilación a otra. Se quiere reducir los minutos facturados y la transferencia de datos entre regiones con el menor cambio. ¿Qué hace el equipo?",
+    "opciones": [
+      "Activar una caché local de tipo personalizado con la carpeta .m2, que comparten todas las compilaciones del proyecto a lo largo del día.",
+      "Activar la caché de Amazon S3 del proyecto con la carpeta .m2, para que cada compilación descargue solo las dependencias nuevas.",
+      "Pasar a un tipo de compute el doble de grande, para que la descarga de dependencias tarde la mitad de tiempo.",
+      "Poner el proyecto en una VPC con un punto de enlace de CodeArtifact, para que la descarga no pague transferencia entre regiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "La caché de S3 guarda la carpeta indicada al terminar y la recupera al empezar la siguiente compilación, sea en el host que sea, así que solo se descargan de la otra región las dependencias nuevas. La caché local solo se aprovecha si la siguiente compilación cae poco después en el mismo host, algo poco probable con compilaciones repartidas a lo largo del día. Una descarga no va más rápida con más CPU, y los puntos de enlace de VPC son regionales: no evitan la transferencia entre regiones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/codebuild/latest/userguide/build-caching.html"
+    ]
   }
 ]

@@ -174,5 +174,30 @@
     "fuentes": [
       "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html"
     ]
+  },
+  {
+    "id": "config-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una organización con 300 cuentas en 4 regiones debe demostrar el cumplimiento de un marco de buenas prácticas con decenas de reglas, verlo agregado en una cuenta de auditoría y corregir automáticamente algunos incumplimientos, como el cifrado por defecto de EBS desactivado. Las cuentas nuevas deben quedar cubiertas y se busca el menor esfuerzo operativo. ¿Qué configuración aplica?",
+    "opciones": [
+      "Reglas personalizadas de Lambda escritas por el equipo en cada cuenta y región, con los resultados enviados a un bucket de S3 central.",
+      "Paquetes de conformidad de la organización desde una administradora delegada de Config, un agregador y correcciones con Automation.",
+      "Un StackSet que despliegue una a una las reglas en cada cuenta, y una revisión mensual en la consola de Config de cada cuenta.",
+      "Amazon Inspector en todas las cuentas con un administrador delegado, cuyos informes cubren las reglas del marco de cumplimiento."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Los paquetes de conformidad de la organización despliegan un conjunto de reglas (hay plantillas para muchos marcos) en todas las cuentas, también las nuevas, desde una administradora delegada; el agregador reúne el cumplimiento en la cuenta de auditoría, y las acciones de corrección con documentos de Automation arreglan los incumplimientos. Las reglas propias en Lambda y los StackSets con revisión manual son mucho más trabajo. Inspector busca vulnerabilidades de software, no evalúa configuraciones contra un marco.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/config/latest/developerguide/conformance-packs.html",
+      "https://docs.aws.amazon.com/config/latest/developerguide/aggregate-data.html",
+      "https://docs.aws.amazon.com/config/latest/developerguide/remediation.html"
+    ]
   }
 ]

@@ -50,17 +50,17 @@
       "SAP-C03"
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
-    "enunciado": "Una aplicación se reparte entre una cuenta de red, una de aplicación y una de datos de la misma región. El equipo de fiabilidad quiere un único experimento que afecte a recursos de las tres a la vez, con control y registro centralizados. ¿Qué solución lo permite?",
+    "enunciado": "Una aplicación crítica se reparte entre una cuenta de red (Transit Gateway e inspección), una de aplicación (ECS y Lambda) y una de datos (Aurora), todas en la misma región. El equipo de fiabilidad quiere ensayar la caída de una zona de disponibilidad con un único experimento que actúe a la vez sobre recursos de las tres cuentas, con condiciones de parada comunes, un solo registro del experimento y sin dar acceso de administración en las cuentas de destino. ¿Qué solución lo permite?",
     "opciones": [
-      "Un experimento multicuenta desde una cuenta orquestadora, con un rol en cada cuenta de destino que confíe en el rol del orquestador.",
-      "Tres experimentos separados, uno por cuenta, lanzados a la vez con un script.",
-      "Compartir con RAM la plantilla de experimento con las tres cuentas.",
-      "Mover temporalmente todos los recursos a una sola cuenta para la prueba."
+      "Un experimento multicuenta en una cuenta orquestadora, con roles de destino que confíen en el rol del orquestador.",
+      "Tres plantillas de experimento, una por cuenta, lanzadas a la vez por una máquina de estado de Step Functions con alarmas comunes.",
+      "Compartir con AWS RAM una plantilla de experimento de la cuenta de aplicación con las cuentas de red y de datos.",
+      "Un experimento en la cuenta de aplicación cuyas acciones usen un rol con permisos de administración en las tres cuentas."
     ],
     "correctas": [
       0
     ],
-    "explicacion": "Los experimentos multicuenta de FIS se lanzan desde una cuenta orquestadora y actúan en las cuentas de destino mediante encadenamiento de roles, con control centralizado y aviso en el panel de AWS Health de cada cuenta. Tres experimentos sueltos no se coordinan ni se paran juntos, y las plantillas no se comparten con RAM.",
+    "explicacion": "Los experimentos multicuenta de FIS se lanzan desde una cuenta orquestadora y actúan en las cuentas de destino asumiendo en cada una un rol con los permisos justos, con condiciones de parada y registro centralizados y aviso en el panel de AWS Health de cada cuenta. Tres experimentos coordinados por Step Functions se parecen, pero son tres registros y tres paradas que pueden desincronizarse. Las plantillas no se comparten con RAM, y un experimento de una sola cuenta no actúa sobre otras, aunque su rol tenga permisos amplios (que además incumplen el requisito).",
     "fuentes": [
       "https://docs.aws.amazon.com/fis/latest/userguide/multi-account.html"
     ],

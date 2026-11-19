@@ -130,5 +130,54 @@
     "fuentes": [
       "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html"
     ]
+  },
+  {
+    "id": "cloudformation-007",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una plataforma despliega con CloudFormation 300 pilas en 50 cuentas. Algunos equipos cambian recursos a mano en la consola y las siguientes actualizaciones fallan o deshacen cambios críticos. Se quiere impedir de forma preventiva que una plantilla cree recursos que incumplan reglas corporativas (como buckets sin cifrar) y detectar los cambios manuales y avisar de ellos, sin escribir herramientas propias. ¿Qué DOS medidas aplica? (Elige 2.)",
+    "opciones": [
+      "Hooks de CloudFormation, con reglas de Guard o los controles proactivos de Control Tower, que evalúan los recursos antes de crearlos o modificarlos.",
+      "Detección de desviaciones de las pilas con la regla gestionada de Config cloudformation-stack-drift-detection-check y avisos cuando no cumplan.",
+      "Una SCP que deniegue a todos los usuarios cualquier acción hecha desde la consola de administración, para evitar los cambios manuales.",
+      "cfn-lint en el portátil de cada desarrollador, antes de hacer push, para detectar plantillas que incumplan las reglas corporativas.",
+      "Políticas de pila que impidan cualquier actualización de sus recursos, también las que se hagan desde la consola de cada servicio."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Los hooks de CloudFormation se ejecutan antes de crear o modificar recursos y pueden bloquear los que incumplan las reglas; Control Tower ofrece controles proactivos implementados así. La regla gestionada de Config detecta las pilas con desviaciones respecto a su plantilla y puede avisar. Una SCP no distingue si una llamada viene de la consola. cfn-lint en cada portátil se puede saltar. Las políticas de pila solo protegen frente a actualizaciones hechas por CloudFormation, no frente a cambios hechos directamente en cada servicio.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/cloudformation-cli/latest/hooks-userguide/what-is-cloudformation-hooks.html",
+      "https://docs.aws.amazon.com/config/latest/developerguide/cloudformation-stack-drift-detection-check.html"
+    ]
+  },
+  {
+    "id": "cloudformation-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Un StackSet con permisos administrados por el servicio despliega una actualización en 600 cuentas de 4 regiones. Tarda 20 horas porque procesa pocas cuentas a la vez y una región tras otra, y cuando falla en unas pocas cuentas se detiene toda la operación. Se quiere que tarde mucho menos, que siga adelante si falla un porcentaje pequeño de cuentas y no tener que dividir el StackSet. ¿Qué cambia el equipo?",
+    "opciones": [
+      "Dividir el StackSet en cuatro, uno por región, lanzados a la vez desde cuatro canalizaciones distintas con reintentos automáticos.",
+      "Las preferencias de la operación: regiones en paralelo, porcentaje máximo de cuentas simultáneas, tolerancia a fallos y modo de concurrencia flexible.",
+      "Pasar a permisos autoadministrados, que no tienen límites de concurrencia, y lanzar la operación con la CLI desde la cuenta de administración.",
+      "Sustituir el StackSet por una acción de CodeBuild que ejecute aws cloudformation deploy en paralelo en todas las cuentas y regiones."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "Las preferencias de operación de StackSets controlan si las regiones se procesan en paralelo o en secuencia, cuántas cuentas a la vez (en número o porcentaje), cuántos fallos se toleran antes de parar y el modo de concurrencia, que con tolerancia flexible no reduce la concurrencia cuando hay fallos. Dividir el StackSet multiplica la gestión, los permisos autoadministrados no quitan límites y añaden roles, y el despliegue propio con CodeBuild pierde el control de StackSets.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-concepts.html#stackset-ops-options"
+    ]
   }
 ]

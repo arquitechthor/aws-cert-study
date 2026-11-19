@@ -77,17 +77,17 @@
     ],
     "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
     "dificil": true,
-    "enunciado": "Las cargas de trabajo en varias VPC deben resolver nombres de un dominio interno alojado en los servidores DNS de un centro de datos, conectado por Direct Connect. ¿Qué solución es la adecuada?",
+    "enunciado": "Una empresa tiene 30 VPC repartidas en 10 cuentas de su organización, en una región, y un centro de datos conectado por Direct Connect. Las cargas de todas las VPC deben resolver los nombres del dominio interno corp.example.com, que sirven los DNS locales y cambian a diario. No quiere desplegar servidores DNS propios ni crear recursos de red en cada VPC, y busca el menor coste. ¿Qué solución es la adecuada?",
     "opciones": [
-      "Una zona alojada pública con los mismos registros.",
-      "Un endpoint de salida de Route 53 Resolver con reglas de reenvío para ese dominio, compartidas con las VPC mediante AWS RAM.",
-      "Un endpoint de entrada de Route 53 Resolver.",
-      "Modificar el fichero hosts de cada instancia."
+      "Una zona alojada privada corp.example.com asociada a las 30 VPC, con los registros copiados de los DNS locales cada noche.",
+      "Un endpoint de salida de Route 53 Resolver con una regla de reenvío para ese dominio, compartida por RAM con las VPC.",
+      "Un endpoint de entrada de Route 53 Resolver en una VPC central, al que los DNS locales reenvíen ese dominio.",
+      "Un endpoint de salida de Route 53 Resolver en cada VPC, con su propia regla de reenvío hacia los DNS locales."
     ],
     "correctas": [
       1
     ],
-    "explicacion": "Las consultas desde la VPC hacia el DNS local salen por un endpoint de salida con reglas de reenvío, que se pueden compartir entre cuentas y VPC con RAM. El endpoint de entrada sirve para el sentido contrario.",
+    "explicacion": "Las consultas desde las VPC hacia el DNS local salen por un endpoint de salida con reglas de reenvío; un solo endpoint basta, porque la regla se comparte con RAM y se asocia a las VPC de las demás cuentas. Un endpoint por VPC funciona, pero multiplica el coste. La zona privada copiada cada noche queda desfasada con cambios diarios y exige un proceso propio. El endpoint de entrada sirve para el sentido contrario: que la red local resuelva nombres de AWS.",
     "fuentes": [
       "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html"
     ]

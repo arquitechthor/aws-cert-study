@@ -145,6 +145,62 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel de SAP-C03: despliegues que se revierten solos, roles y
+        secretos, comunicación entre servicios, reparto entre zonas y coste.</p>
+
+      <h3>Despliegues que vuelven atrás solos</h3>
+      <ul>
+        <li><strong>Despliegue continuo (rolling)</strong> con el <strong>disyuntor de despliegue</strong>: si las tareas
+          nuevas no llegan a funcionar de forma estable, <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> para y, con la reversión activada, vuelve a la última revisión
+          buena.</li>
+        <li><strong>Alarmas de despliegue</strong>: alarmas de <a href="cloudwatch.html">CloudWatch</a> (5xx, latencia) en la configuración de despliegue
+          del servicio; si saltan durante el despliegue, también revierte. Cubren los fallos que el disyuntor no ve.</li>
+        <li><strong>Azul/verde nativo</strong> (2025): tráfico de prueba, enlaces de <a href="lambda.html">Lambda</a> en cada fase, tiempo de observación y
+          vuelta inmediata. Sustituye en la mayoría de casos a <a href="codedeploy.html">CodeDeploy</a> para <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>. También hay despliegues lineales y
+          canarios nativos.</li>
+      </ul>
+
+      <h3>Roles y secretos</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Rol</th><th>Lo usa</th><th>Para</th></tr></thead>
+          <tbody>
+            <tr><td>Rol de ejecución</td><td>El agente de <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr></td><td>Descargar la imagen de <a href="ecr.html"><abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr></a>, enviar registros, inyectar secretos al arrancar</td></tr>
+            <tr><td>Rol de tarea</td><td>El código de la aplicación</td><td>Llamar a <a href="dynamodb.html">DynamoDB</a>, <a href="s3.html"><abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr></a>, etc.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li>Separarlos permite que el código no pueda leer los secretos ni descargar imágenes. Para <abbr class="sigla" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR</abbr> de otra cuenta, la
+          política del repositorio debe permitir al <strong>rol de ejecución</strong>.</li>
+        <li>Los secretos de <a href="secrets-manager.html">Secrets Manager</a> o de <a href="systems-manager.html">Parameter Store</a> se inyectan como variables de entorno al arrancar: si
+          rotan, hace falta un despliegue nuevo para que la tarea los vea (o leerlos desde el código).</li>
+      </ul>
+
+      <h3>Comunicación entre servicios</h3>
+      <ul>
+        <li><strong>Service Connect</strong>: un proxy gestionado por <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> en cada tarea, con nombres propios, reintentos,
+          detección de destinos fallidos y métricas por llamada; un espacio de nombres de Cloud Map sirve a varios
+          clústeres.</li>
+        <li><a href="vpc-lattice.html">VPC Lattice</a>: conecta servicios entre <a href="vpc.html"><abbr class="sigla sigla-1" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC<span class="sigla-exp"> (Virtual Private Cloud)</span></abbr></a> y cuentas (incluso con rangos solapados) con autorización por <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a>,
+          también hacia <a href="eks.html"><abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr></a>, Lambda o <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a>.</li>
+        <li><strong>App Mesh deja de funcionar el 30/09/2026</strong>: AWS recomienda migrar a Service Connect (<abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr>) o a
+          VPC Lattice.</li>
+      </ul>
+
+      <h3>Reparto entre zonas y capacidad</h3>
+      <ul>
+        <li>Tras la caída de una zona, <abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> recoloca las tareas, pero no las devuelve cuando la zona vuelve. El
+          <strong>reequilibrio entre zonas</strong> del servicio lo hace solo, lanzando tareas en la zona con menos y
+          retirando después las sobrantes. En <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> solo puede usar las instancias que ya existen; no admite
+          <code>maximumPercent</code> al 100 %.</li>
+        <li><strong>Proveedores de capacidad</strong>: una estrategia con <em>base</em> (mínimo de tareas en un proveedor) y
+          <em>peso</em> (reparto del resto). Típico: base en FARGATE, peso en FARGATE_SPOT.</li>
+        <li><strong>ECS Managed Instances</strong>: AWS gestiona las instancias <abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr> (incluidas las de <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr>) con la sencillez de
+          <a href="fargate.html">Fargate</a>.</li>
+      </ul>
+
       <h2 id="precios">Modelo de precios</h2>
       <p><abbr class="sigla" data-s="ECS" data-en="Elastic Container Service" tabindex="0">ECS</abbr> en sí no cobra. Pagas la capacidad: con <strong><a href="fargate.html">Fargate</a></strong>, la vCPU y la memoria
         que pide cada tarea por segundo (Fargate Spot es mucho más barato y puede interrumpirse); con
@@ -185,6 +241,8 @@
         <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html" target="_blank" rel="noopener">Amazon ECS task IAM role</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html" target="_blank" rel="noopener">AWS Fargate for Amazon ECS</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-circuit-breaker.html" target="_blank" rel="noopener">How the Amazon ECS deployment circuit breaker detects failures</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html" target="_blank" rel="noopener">Balancing an Amazon ECS service across Availability Zones</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-connect.html" target="_blank" rel="noopener">Use Service Connect to connect Amazon ECS services with short names</a>, documentación de AWS (consultada el 19/11/2026).</li>
       </ul>
     </article>
   </div>

@@ -132,5 +132,54 @@
     "fuentes": [
       "https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html"
     ]
+  },
+  {
+    "id": "backup-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Tras un ataque de ransomware a otra entidad del sector, un banco quiere que las copias de RDS, EBS y DynamoDB de sus 60 cuentas no se puedan borrar ni acortar su retención aunque un atacante consiga credenciales de administración de la cuenta de origen o de la de copias. También deben poder restaurarse desde una cuenta de recuperación limpia aunque la cuenta propietaria de las copias quede inaccesible, y la restauración debe ensayarse cada mes de forma automática. ¿Qué diseño cumple los requisitos?",
+    "opciones": [
+      "Copias entre cuentas a un almacén estándar de la cuenta de copias con Vault Lock en modo de gobierno, y una SCP que niegue borrar puntos de recuperación.",
+      "Instantáneas manuales de cada servicio exportadas a un bucket de S3 con Object Lock en modo de cumplimiento en otra cuenta.",
+      "Copias a un almacén aislado lógicamente, con Vault Lock de cumplimiento, compartido por RAM con la cuenta de recuperación, aprobación multiparte y pruebas de restauración.",
+      "Copias entre regiones en la misma cuenta, con Vault Lock en modo de cumplimiento y restauración desde la región secundaria."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El almacén aislado lógicamente guarda las copias en una cuenta del servicio, siempre con Vault Lock en modo de cumplimiento, que nadie puede desactivar; se comparte con RAM con la cuenta de recuperación, y la aprobación multiparte permite recuperar las copias aunque la cuenta propietaria sea inaccesible. Los planes de pruebas de restauración ensayan cada mes. El modo de gobierno lo puede saltar quien tenga permisos suficientes, y una SCP no limita a la cuenta de administración. Las exportaciones a S3 no se restauran directamente. En una sola cuenta, quien la controla controla todo.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/logicallyairgappedvault.html",
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/restore-testing.html"
+    ]
+  },
+  {
+    "id": "backup-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Una empresa debe demostrar a su auditor cada trimestre que todos los recursos etiquetados como críticos de sus 40 cuentas tienen copia diaria con retención de 35 días y copia en otra región, y que su restauración se ha probado con éxito. Quiere informes centralizados, que las cuentas nuevas queden cubiertas sin intervención y no recopilar pruebas a mano. ¿Qué combinación lo consigue con el menor esfuerzo?",
+    "opciones": [
+      "Planes de copia en cada cuenta creados con StackSets, y una hoja de cálculo trimestral con exportaciones de la consola de cada cuenta.",
+      "Reglas de AWS Config en cada cuenta que comprueben que los recursos críticos tienen instantáneas, con los resultados agregados en Security Hub.",
+      "AWS Audit Manager con un marco de copias en cada cuenta, y restauraciones manuales documentadas cada trimestre por el equipo de operaciones.",
+      "Políticas de copia de Organizations por etiqueta, Backup Audit Manager con marcos e informes entre cuentas, y planes de pruebas de restauración."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las políticas de copia de Organizations aplican el mismo plan, por etiqueta, a todas las cuentas, también a las nuevas. Backup Audit Manager evalúa controles como la frecuencia, la retención y la copia entre regiones, y genera informes entre cuentas y regiones; las pruebas de restauración dejan constancia de cada ensayo. Los StackSets con hojas de cálculo y las restauraciones manuales son trabajo a mano, y las reglas de Config comprueban instantáneas, pero no la copia entre regiones ni las restauraciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/manage-cross-account.html",
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/aws-backup-audit-manager.html",
+      "https://docs.aws.amazon.com/aws-backup/latest/devguide/restore-testing.html"
+    ]
   }
 ]

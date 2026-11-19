@@ -6,17 +6,17 @@
       "SAP-C03"
     ],
     "dominio": "Seguridad, cumplimiento y gobernanza",
-    "enunciado": "Una empresa quiere retirar su VPN corporativa. Sus 30 aplicaciones web internas, detrás de balanceadores internos, deben ser accesibles solo para empleados autenticados con su proveedor de identidad OIDC y desde portátiles gestionados con un agente de seguridad y riesgo bajo, evaluando cada petición. ¿Qué solución cumple los requisitos?",
+    "enunciado": "Una empresa quiere retirar su VPN corporativa. Sus 30 aplicaciones web internas, detrás de balanceadores internos, deben ser accesibles solo para empleados autenticados con su proveedor de identidad OIDC y desde portátiles gestionados con un agente de seguridad y riesgo bajo, evaluando cada petición. No quiere cambiar el código de las aplicaciones. ¿Qué solución cumple los requisitos?",
     "opciones": [
-      "AWS Client VPN con autenticación federada y reglas de autorización por grupo.",
-      "AWS Verified Access con un proveedor de identidad OIDC, un proveedor de confianza de dispositivo y políticas por grupo de aplicaciones.",
-      "Balanceadores públicos con autenticación OIDC en el agente de escucha.",
-      "Amazon Verified Permissions con un almacén de políticas por aplicación."
+      "AWS Client VPN con autenticación federada SAML, reglas de autorización por grupo y un perfil solo para portátiles gestionados.",
+      "AWS Verified Access con un proveedor de identidad OIDC, un proveedor de confianza de dispositivo y políticas por grupo.",
+      "Balanceadores públicos con autenticación OIDC en el agente de escucha y AWS WAF que solo admita las IP de las oficinas.",
+      "Amazon Verified Permissions con un almacén de políticas por aplicación que evalúe el grupo y el dispositivo del usuario."
     ],
     "correctas": [
       1
     ],
-    "explicacion": "Verified Access sustituye la VPN para aplicaciones y evalúa cada petición combinando identidad y estado del dispositivo. Client VPN sigue siendo VPN y no comprueba el dispositivo de serie, el balanceador público con OIDC no evalúa el dispositivo y Verified Permissions autoriza acciones dentro de una aplicación.",
+    "explicacion": "Verified Access sustituye la VPN para aplicaciones y evalúa cada petición combinando la identidad y el estado del dispositivo, sin cambiar las aplicaciones. Client VPN sigue siendo una VPN y no comprueba el riesgo del dispositivo en cada petición. El balanceador público con OIDC no evalúa el dispositivo y filtrar por IP deja fuera el teletrabajo. Verified Permissions autoriza acciones dentro de una aplicación y exige llamarlo desde su código.",
     "fuentes": [
       "https://docs.aws.amazon.com/verified-access/latest/ug/what-is-verified-access.html"
     ],

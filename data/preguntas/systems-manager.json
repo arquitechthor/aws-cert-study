@@ -130,5 +130,53 @@
     "fuentes": [
       "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager.html"
     ]
+  },
+  {
+    "id": "systems-manager-007",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Una empresa con 3.000 instancias EC2 y 400 servidores locales, en 30 cuentas y 3 regiones, debe aplicar los parches críticos en menos de 7 días, en ventanas distintas por entorno, con informes centralizados de cumplimiento y sin entrar por SSH ni RDP. Se busca el menor esfuerzo operativo y que las cuentas nuevas queden cubiertas. ¿Qué solución cumple los requisitos?",
+    "opciones": [
+      "Un trabajo de Ansible en una instancia central que se conecte por SSH a todos los servidores con una clave compartida y guarde un informe.",
+      "AMI nuevas cada mes con Image Builder y la sustitución de todas las instancias y servidores locales por otros creados desde ellas.",
+      "Run Command lanzado a mano en cada cuenta con el documento AWS-RunPatchBaseline, y los resultados exportados a una hoja de cálculo.",
+      "Patch Manager con una política de parches de Quick Setup para la organización, activaciones híbridas para los locales y ventanas por entorno."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "Las políticas de parches de Quick Setup configuran Patch Manager en todas las cuentas y regiones de la organización, también en las nuevas, con informes de cumplimiento centralizados. Las activaciones híbridas convierten los servidores locales en nodos administrados por Systems Manager, y las ventanas de mantenimiento separan los entornos. Ansible por SSH incumple el requisito. Los servidores locales no se pueden sustituir con AMI. Run Command a mano en cada cuenta es justo el trabajo que se quiere evitar.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager-policies.html",
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/activations.html"
+    ]
+  },
+  {
+    "id": "systems-manager-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Cuando una alarma indica que una base de datos autogestionada en EC2 se queda sin disco, el equipo de guardia tarda 40 minutos en ampliar el volumen a mano. Quiere que el volumen de EBS y el sistema de archivos se amplíen automáticamente, con un registro de cada paso, que en producción una persona apruebe antes de actuar y no mantener servidores de automatización propios. ¿Qué solución cumple los requisitos?",
+    "opciones": [
+      "Un runbook de Systems Manager Automation con un paso aws:approve en producción, lanzado por una regla de EventBridge sobre la alarma.",
+      "Una función Lambda lanzada por la alarma que amplíe el volumen y avise por correo al equipo después de hacerlo.",
+      "La ampliación automática de tamaño de los volúmenes de EBS, que crecen solos cuando el sistema de archivos se llena.",
+      "Un servidor de Jenkins con un trabajo parametrizado que el equipo de guardia lanza desde el móvil al recibir la alarma."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Un runbook de Automation encadena los pasos (ampliar el volumen con la API de EC2 y el sistema de archivos con Run Command), registra cada uno y, con aws:approve, espera la aprobación de las personas indicadas. EventBridge lo lanza cuando la alarma cambia de estado. La función Lambda no pide aprobación. EBS no tiene ampliación automática: el tamaño se cambia con ModifyVolume. Jenkins es un servidor propio y sigue dependiendo de que alguien lo lance.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-action-approve.html",
+      "https://docs.aws.amazon.com/ebs/latest/userguide/requesting-ebs-volume-modifications.html"
+    ]
   }
 ]

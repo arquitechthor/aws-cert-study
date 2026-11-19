@@ -116,17 +116,17 @@
       "SAP-C03"
     ],
     "dominio": "Excelencia operativa y automatización",
-    "enunciado": "Una organización quiere impedir que llegue a producción un cambio que empeore la resiliencia de una aplicación por debajo de su política. ¿Qué diseño lo consigue con menos trabajo?",
+    "enunciado": "Una organización ha definido en AWS Resilience Hub políticas de resiliencia con RTO y RPO objetivo para sus 25 aplicaciones críticas, que despliega con CloudFormation desde AWS CodePipeline. En el último trimestre, dos cambios eliminaron réplicas Multi-AZ sin que nadie lo notara hasta una caída. Quiere impedir que llegue a producción cualquier cambio que deje una aplicación por debajo de su política, sin revisiones manuales y con el menor esfuerzo operativo. ¿Qué diseño lo consigue?",
     "opciones": [
-      "Revisar manualmente cada cambio con la Well-Architected Tool.",
-      "Un paso en CodePipeline que lance una evaluación de Resilience Hub y detenga el despliegue si la aplicación no cumple la política.",
-      "Un experimento de FIS en producción después de cada despliegue.",
-      "Una regla de EventBridge que revierta cualquier cambio de CloudFormation."
+      "Una revisión de cada cambio con la Well-Architected Tool y su pilar de fiabilidad, aprobada por el equipo de arquitectura.",
+      "Un paso en CodePipeline que lance una evaluación de Resilience Hub y detenga el despliegue si no cumple la política.",
+      "Un experimento de AWS FIS en producción después de cada despliegue, con alarmas que reviertan si el servicio se degrada.",
+      "Una regla de AWS Config que detecte las bases de datos sin Multi-AZ y las corrija con una automatización de Systems Manager."
     ],
     "correctas": [
       1
     ],
-    "explicacion": "Resilience Hub se integra en canalizaciones de CI/CD: una evaluación previa al despliegue frena los cambios que incumplen la política. La revisión manual no escala, el experimento llega tarde (ya en producción) y revertir todo bloquea cualquier cambio.",
+    "explicacion": "Resilience Hub se integra en canalizaciones de CI/CD: una evaluación antes del despliegue compara la aplicación con su política de RTO y RPO y frena los cambios que la incumplen. La revisión con la Well-Architected Tool es manual y no escala. El experimento de FIS llega tarde, cuando el cambio ya está en producción. La regla de Config solo cubre un caso concreto (Multi-AZ) y actúa después del despliegue.",
     "fuentes": [
       "https://docs.aws.amazon.com/resilience-hub/latest/userguide/what-is.html"
     ],

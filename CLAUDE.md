@@ -150,7 +150,9 @@ python -m http.server 8765   # or: npx serve .   (fetch() of the JSON files fail
 No build, lint or test tooling (only the helpers `scripts/revisar_texto.py`,
 `scripts/generar_sitemap.py` (rewrites `sitemap.xml` from the published services; run it after
 publishing or changing pages; `robots.txt` lives in the domain root, repo
-`arquitechthor.github.io`), `scripts/revisar_escenarios.py` (Arquitecto scenarios) and `scripts/revisar_frases.py`, which checks every service's `frase` in `servicios.json`: 60–90
+`arquitechthor.github.io`), `scripts/revisar_escenarios.py` (Arquitecto scenarios), `scripts/revisar_preguntas.py` (flags questions whose
+correct option is clearly the longest and hard questions with a stem under 350 characters; `--dominios` compares
+hard questions per domain with what a full "solo difíciles" simulacro needs; run it after writing questions) and `scripts/revisar_frases.py`, which checks every service's `frase` in `servicios.json`: 60–90
 characters, no word of the service's name, acronym or id; run it after adding or editing one). Verify changes in a browser, including at ~375px width (no
 horizontal scroll).
 
@@ -239,6 +241,8 @@ SAP-C03 exam, not just because it is about an advanced service:
 - It needs **two or more services combined**, or a specific limit, quota or behavior (e.g. AWS
   managed KMS keys can't be shared across accounts; MACsec isn't available on 1 Gbps Direct Connect).
 - Multiple answer ("Elige 2/3") is common.
+- Distractors as long and as specific as the correct option (the correct one must not stand out by length),
+  and a stem of at least ~350 characters; `scripts/revisar_preguntas.py` checks both.
 When unsure, leave it unmarked: the owner, who passed SAA and SAP-C02, says real questions are much
 harder than this site's, so the tag must stay meaningful.
 

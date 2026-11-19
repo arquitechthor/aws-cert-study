@@ -6,17 +6,17 @@
       "SAP-C03"
     ],
     "dominio": "Resiliencia, migración y continuidad del negocio",
-    "enunciado": "En 2026, una productora que nunca ha usado AWS tiene 400 TB de material de rodaje en discos propios y su conexión a internet tardaría meses en subirlos. No quiere enviar los discos por mensajería. Tiene soporte Enterprise. ¿Qué opción de AWS encaja?",
+    "enunciado": "En 2026, una productora que nunca ha usado AWS quiere llevar a Amazon S3 400 TB de material de rodaje que tiene en discos propios, para empezar a editar en la nube dentro de tres semanas. Su conexión a internet de 1 Gb/s tardaría más de un mes en subirlos aunque la usara entera, y la aseguradora no permite que los discos salgan de la custodia de su personal ni que viajen por mensajería. Tiene soporte Enterprise y hay una instalación de AWS en su ciudad. ¿Qué opción encaja?",
     "opciones": [
-      "Pedir dispositivos AWS Snowball Edge.",
-      "AWS DataSync por su conexión a internet actual.",
-      "Reservar una sesión en AWS Data Transfer Terminal y subir los datos desde sus discos por las conexiones de 100 Gb/s.",
-      "AWS Transfer Family con SFTP."
+      "Pedir varios dispositivos AWS Snowball Edge y devolverlos a AWS por mensajería en cuanto estén llenos.",
+      "AWS DataSync con un agente local, con compresión y la transferencia programada en horario nocturno.",
+      "Reservar una sesión en AWS Data Transfer Terminal y subir los discos por sus conexiones de alta velocidad.",
+      "AWS Transfer Family con un servidor SFTP y varias sesiones en paralelo por la conexión actual."
     ],
     "correctas": [
       2
     ],
-    "explicacion": "Data Transfer Terminal permite llevar los discos propios a una instalación de AWS y subirlos por fibra de alta velocidad, sin enviarlos. Snowball ya no se ofrece a clientes nuevos, y DataSync o Transfer Family dependen de la conexión lenta.",
+    "explicacion": "Data Transfer Terminal permite que el propio personal lleve los discos a una instalación de AWS y los suba por fibra de alta velocidad, sin enviarlos. Snowball ya no se ofrece a clientes nuevos y además viaja por mensajería. DataSync y Transfer Family dependen de la conexión de 1 Gb/s: 400 TB son unos 37 días con la línea al máximo, más de lo que hay.",
     "fuentes": [
       "https://docs.aws.amazon.com/datatransferterminal/latest/userguide/what-is-dtt.html"
     ],

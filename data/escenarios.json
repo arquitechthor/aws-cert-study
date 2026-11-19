@@ -852,6 +852,210 @@
       ],
       "distractores": ["ec2", "elb", "codedeploy"],
       "distractoresDificil": ["lightsail", "global-accelerator", "sqs", "cloudtrail", "efs"]
+    },
+    {
+      "id": "inspeccion-centralizada",
+      "titulo": "Inspección centralizada del tráfico",
+      "nivel": "avanzado",
+      "certificaciones": ["SAP-C03"],
+      "enunciado": "Una empresa con 40 VPC de aplicación en varias cuentas quiere que todo el tráfico entre VPC y hacia internet pase por un único punto de inspección, sin cortafuegos ni NAT en cada VPC.",
+      "requisitos": [
+        "Unir las 40 VPC con un único eje de red regional, sin emparejamientos en malla.",
+        "Compartir ese eje con las cuentas de aplicación de la organización.",
+        "Inspeccionar con estado, en una VPC de inspección, el tráfico entre VPC y el de salida, con un cortafuegos gestionado.",
+        "Salida a internet centralizada, sin NAT ni IP públicas en las VPC de aplicación.",
+        "Bloquear las consultas DNS a dominios maliciosos desde todas las VPC.",
+        "Mantener las reglas del cortafuegos de todas las cuentas desde la cuenta de seguridad."
+      ],
+      "nodos": [
+        { "id": "apps", "servicio": "vpc", "texto": "VPC de aplicación (40)", "col": 1, "fila": 2 },
+        { "id": "tgw", "col": 2, "fila": 2, "hueco": {
+          "validos": ["transit-gateway", "cloud-wan"],
+          "explicacion": "Transit Gateway une todas las VPC en estrella y envía el tráfico a la VPC de inspección; su adjunto a esa VPC va en modo dispositivo para que ida y vuelta de cada flujo pasen por el mismo cortafuegos.",
+          "noVale": {
+            "vpc-lattice": "VPC Lattice conecta servicios concretos por HTTP, gRPC o TCP; no enruta todo el tráfico de red de las VPC hacia un cortafuegos.",
+            "privatelink": "PrivateLink publica un servicio a otras VPC; no es un eje que enrute el tráfico entre todas ellas."
+          }
+        } },
+        { "id": "ram", "col": 2, "fila": 1, "hueco": {
+          "validos": ["ram"],
+          "explicacion": "RAM comparte el Transit Gateway con las cuentas de la organización, que adjuntan sus VPC sin crear otro.",
+          "noVale": {
+            "organizations": "Organizations agrupa las cuentas y aplica políticas, pero quien comparte el Transit Gateway con ellas es RAM."
+          }
+        } },
+        { "id": "nfw", "col": 3, "fila": 2, "hueco": {
+          "validos": ["network-firewall"],
+          "explicacion": "Network Firewall es un cortafuegos gestionado con estado (con reglas de dominio e IPS) que se despliega en la VPC de inspección y escala solo.",
+          "noVale": {
+            "waf": "WAF filtra peticiones HTTP en CloudFront, ALB o API Gateway; no inspecciona todo el tráfico de red entre VPC.",
+            "shield": "Shield protege frente a ataques DDoS; no aplica reglas a cada flujo entre VPC."
+          }
+        } },
+        { "id": "nat", "servicio": "vpc", "texto": "NAT gateway de la VPC de inspección", "col": 4, "fila": 2 },
+        { "id": "inet", "texto": "Internet", "col": 5, "fila": 2 },
+        { "id": "fms", "col": 3, "fila": 1, "hueco": {
+          "validos": ["firewall-manager"],
+          "explicacion": "Firewall Manager, desde la cuenta de seguridad (administradora delegada), despliega y mantiene las políticas de Network Firewall y de DNS Firewall en todas las cuentas, también en las nuevas.",
+          "noVale": {
+            "config": "Config detecta configuraciones que no cumplen, pero no despliega ni mantiene reglas de cortafuegos."
+          }
+        } },
+        { "id": "dns", "col": 1, "fila": 3, "hueco": {
+          "validos": ["route-53"],
+          "explicacion": "El DNS Firewall de Route 53 Resolver bloquea las consultas a listas de dominios maliciosos desde las VPC asociadas, antes de que se resuelvan.",
+          "noVale": {
+            "guardduty": "GuardDuty detecta consultas DNS a dominios maliciosos y avisa, pero no las bloquea."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "apps", "a": "tgw", "texto": "tráfico" },
+        { "de": "ram", "a": "tgw", "texto": "comparte" },
+        { "de": "tgw", "a": "nfw", "texto": "inspección" },
+        { "de": "nfw", "a": "nat", "texto": "salida" },
+        { "de": "nat", "a": "inet" },
+        { "de": "fms", "a": "nfw", "texto": "reglas" },
+        { "de": "apps", "a": "dns", "texto": "consultas DNS" }
+      ],
+      "distractores": ["waf", "guardduty", "vpc-lattice"],
+      "distractoresDificil": ["shield", "privatelink", "config"]
+    },
+    {
+      "id": "perimetro-datos",
+      "titulo": "Perímetro de datos en una organización",
+      "nivel": "avanzado",
+      "certificaciones": ["SAP-C03"],
+      "enunciado": "Un banco quiere que sus datos de S3 solo los usen identidades de su organización, desde sus redes, y que no puedan copiarse a cuentas ajenas, aunque alguien escriba por error una política demasiado abierta.",
+      "requisitos": [
+        "Ninguna identidad de fuera de la organización accede a los buckets, aunque una política de bucket lo permita (RCP).",
+        "Las identidades de la organización no pueden escribir en buckets de otras organizaciones (SCP).",
+        "Desde las VPC, el tráfico a S3 no sale a internet y solo llega a buckets de la organización.",
+        "Cifrado con claves propias que solo pueden usar las cuentas de la organización.",
+        "Descubrir datos personales guardados en los buckets y avisar."
+      ],
+      "nodos": [
+        { "id": "apps", "texto": "Aplicaciones en las VPC de la organización", "col": 1, "fila": 2 },
+        { "id": "ep", "col": 2, "fila": 2, "hueco": {
+          "validos": ["vpc", "privatelink"],
+          "explicacion": "Un punto de enlace de puerta de enlace de S3 en la VPC lleva el tráfico sin pasar por internet, y su política (con aws:ResourceOrgID) solo deja llegar a buckets de la organización.",
+          "noVale": {
+            "direct-connect": "Direct Connect une el centro de datos con AWS; no controla a qué buckets llega el tráfico desde una VPC.",
+            "global-accelerator": "Global Accelerator acelera el acceso de usuarios por la red de AWS; no limita el acceso de las VPC a S3."
+          }
+        } },
+        { "id": "s3", "servicio": "s3", "texto": "Buckets de la organización", "col": 3, "fila": 2 },
+        { "id": "kms", "col": 3, "fila": 1, "hueco": {
+          "validos": ["kms"],
+          "explicacion": "Claves de KMS gestionadas por el cliente cuya política solo permite usarlas a principales de la organización (aws:PrincipalOrgID).",
+          "noVale": {
+            "secrets-manager": "Secrets Manager guarda secretos como contraseñas; las claves que cifran los objetos de S3 son de KMS.",
+            "cloudhsm": "CloudHSM da HSM dedicados, pero el cifrado de S3 y las políticas de clave por organización se gestionan con KMS."
+          }
+        } },
+        { "id": "org", "col": 4, "fila": 2, "hueco": {
+          "validos": ["organizations"],
+          "explicacion": "Las RCP de Organizations limitan quién puede usar los recursos de la organización (también identidades externas), y las SCP limitan lo que pueden hacer sus propias identidades, como escribir en buckets ajenos.",
+          "noVale": {
+            "iam": "Una política de IAM o un límite de permisos actúa rol a rol en cada cuenta; no impone el perímetro a toda la organización ni frena a identidades externas.",
+            "ram": "RAM comparte recursos entre cuentas; no impide que accedan identidades de fuera."
+          }
+        } },
+        { "id": "ext", "texto": "Cuenta ajena a la organización", "col": 5, "fila": 2 },
+        { "id": "macie", "col": 3, "fila": 3, "hueco": {
+          "validos": ["macie"],
+          "explicacion": "Macie analiza los objetos de S3 con identificadores gestionados y propios, descubre datos personales y publica hallazgos para avisar.",
+          "noVale": {
+            "guardduty": "GuardDuty detecta accesos sospechosos a S3, pero no analiza el contenido de los objetos.",
+            "inspector": "Inspector busca vulnerabilidades en EC2, contenedores y Lambda, no datos personales en S3."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "apps", "a": "ep", "texto": "sin internet" },
+        { "de": "ep", "a": "s3", "texto": "solo la org" },
+        { "de": "kms", "a": "s3", "texto": "cifra" },
+        { "de": "ext", "a": "org", "texto": "denegado" },
+        { "de": "org", "a": "s3", "texto": "RCP y SCP" },
+        { "de": "s3", "a": "macie", "texto": "analiza" }
+      ],
+      "distractores": ["guardduty", "iam", "direct-connect"],
+      "distractoresDificil": ["inspector", "cloudhsm", "ram"]
+    },
+    {
+      "id": "activo-activo",
+      "titulo": "Aplicación activa en dos regiones",
+      "nivel": "avanzado",
+      "certificaciones": ["SAP-C03"],
+      "enunciado": "Una plataforma de pagos debe seguir aceptando operaciones aunque falle una región entera, con las dos regiones sirviendo tráfico a la vez y un RPO de segundos.",
+      "requisitos": [
+        "Los clientes entran por IP estáticas anycast y llegan a la región sana más cercana.",
+        "La API escala sola, sin servidores que gestionar.",
+        "Los datos se pueden escribir en cualquiera de las dos regiones y se replican en segundos.",
+        "Los eventos de pago se publican en un bus que conmuta a la otra región si la principal falla.",
+        "Las credenciales de los proveedores de pago se guardan una vez y se replican a la otra región."
+      ],
+      "nodos": [
+        { "id": "clientes", "texto": "Clientes", "col": 1, "fila": 2 },
+        { "id": "ga", "col": 2, "fila": 2, "hueco": {
+          "validos": ["global-accelerator"],
+          "explicacion": "Global Accelerator da dos IP estáticas anycast, lleva a los clientes por la red de AWS hasta la región sana más cercana y aparta en segundos una región que falla sus comprobaciones de estado.",
+          "noVale": {
+            "cloudfront": "CloudFront es una CDN para HTTP: no da IP estáticas propias y está pensada para cachear contenido, no para elegir región de una API de pagos.",
+            "elb": "Un balanceador vive en una región: no reparte tráfico entre regiones ni sobrevive a la caída de la suya."
+          }
+        } },
+        { "id": "api", "col": 3, "fila": 1, "hueco": {
+          "validos": ["api-gateway"],
+          "explicacion": "API Gateway publica la API en cada región, escala solo y se integra con Lambda.",
+          "noVale": {
+            "elb": "Un ALB también puede enrutar a Lambda, pero no da por sí solo limitación, claves de API ni autorizadores de API Gateway."
+          }
+        } },
+        { "id": "fn", "col": 4, "fila": 1, "hueco": {
+          "validos": ["lambda"],
+          "explicacion": "Lambda ejecuta la lógica de cada operación sin servidores y escala con las peticiones; la misma función se despliega en las dos regiones.",
+          "noVale": {
+            "step-functions": "Step Functions orquesta pasos, pero el código de cada operación tiene que ejecutarse en algún sitio, como Lambda."
+          }
+        } },
+        { "id": "sec", "col": 5, "fila": 1, "hueco": {
+          "validos": ["secrets-manager"],
+          "explicacion": "Secrets Manager replica un secreto a otras regiones y mantiene las réplicas sincronizadas al rotarlo.",
+          "noVale": {
+            "kms": "KMS guarda claves de cifrado, no las credenciales de los proveedores; sus claves multirregión cifran, no almacenan secretos."
+          }
+        } },
+        { "id": "db", "col": 5, "fila": 2, "hueco": {
+          "validos": ["dynamodb"],
+          "explicacion": "Las tablas globales de DynamoDB admiten escrituras en todas sus regiones y replican los cambios, normalmente en menos de un segundo.",
+          "noVale": {
+            "aurora": "Aurora Global Database solo escribe en la región principal (con reenvío de escrituras desde las secundarias) y promover otra región lleva un tiempo.",
+            "rds": "Las réplicas de lectura entre regiones de RDS son de solo lectura hasta que se promueven."
+          }
+        } },
+        { "id": "regb", "texto": "Región B: misma API, funciones y réplica de la tabla", "col": 3, "fila": 3 },
+        { "id": "bus", "col": 4, "fila": 3, "hueco": {
+          "validos": ["eventbridge"],
+          "explicacion": "Los puntos de enlace globales de EventBridge publican en el bus de la región principal y conmutan al de la secundaria si una comprobación de estado de Route 53 falla, con replicación de eventos.",
+          "noVale": {
+            "sqs": "Una cola de SQS vive en una región; no conmuta sola a otra si la región falla.",
+            "sns": "Un tema de SNS también es regional y no tiene conmutación automática entre regiones."
+          }
+        } }
+      ],
+      "flechas": [
+        { "de": "clientes", "a": "ga" },
+        { "de": "ga", "a": "api", "texto": "región A" },
+        { "de": "ga", "a": "regb", "texto": "región B" },
+        { "de": "api", "a": "fn" },
+        { "de": "fn", "a": "sec", "texto": "credenciales" },
+        { "de": "fn", "a": "db", "texto": "escribe" },
+        { "de": "fn", "a": "bus", "texto": "eventos" },
+        { "de": "regb", "a": "bus", "texto": "eventos" }
+      ],
+      "distractores": ["cloudfront", "aurora", "sqs"],
+      "distractoresDificil": ["elb", "rds", "step-functions"]
     }
   ]
 }

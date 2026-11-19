@@ -147,6 +147,77 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>Esta es la parte ampliada de la guía, con el nivel que piden los escenarios de SAP-C03: direcciones <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> que se
+        acaban, permisos entre cuentas, actualizaciones sin sustos, coste del plano de control y recuperación ante el fallo
+        de una región.</p>
+
+      <h3>Direcciones IP: el límite que más diseños decide</h3>
+      <ul>
+        <li>Con el <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> <abbr class="sigla" data-s="CNI" data-en="Container Network Interface" data-es="plugin de red de los contenedores" tabindex="0">CNI</abbr>, <strong>cada pod consume una <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> de la subred</strong>. En redes corporativas con rangos
+          pequeños, el clúster se queda sin direcciones mucho antes que sin <abbr class="sigla sigla-1" data-s="CPU" data-en="Central Processing Unit" data-es="procesador" tabindex="0">CPU<span class="sigla-exp"> (Central Processing Unit: procesador)</span></abbr>: los pods se quedan en
+          <em>Pending</em>.</li>
+        <li><strong>Red personalizada</strong> (<em>custom networking</em>): se añade a la <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> un rango secundario que no se
+          anuncia al resto de la red (lo habitual es 100.64.0.0/10) y los pods van a subredes de ese rango; los nodos y los
+          balanceadores siguen en las subredes enrutables. La interfaz principal del nodo deja de alojar pods, así que caben
+          menos por nodo.</li>
+        <li><strong>Delegación de prefijos</strong>: en lugar de direcciones sueltas, el <abbr class="sigla" data-s="CNI" data-en="Container Network Interface" data-es="plugin de red de los contenedores" tabindex="0">CNI</abbr> asigna prefijos /28 a cada
+          interfaz. Multiplica los pods por nodo (compensa la pérdida de la red personalizada), pero necesita bloques /28
+          contiguos libres en la subred; las reservas de <abbr class="sigla sigla-1" data-s="CIDR" data-en="Classless Inter-Domain Routing" data-es="notación de rangos de IP como 10.0.0.0/16" tabindex="0">CIDR<span class="sigla-exp"> (Classless Inter-Domain Routing: notación de rangos de IP como 10.0.0.0/16)</span></abbr> de subred evitan la fragmentación.</li>
+        <li><strong><abbr class="sigla sigla-1" data-s="IPv6" data-en="Internet Protocol version 6" data-es="direcciones IP de 128 bits" tabindex="0">IPv6<span class="sigla-exp"> (Internet Protocol version 6: direcciones IP de 128 bits)</span></abbr></strong> elimina el problema de raíz, pero la familia <abbr class="sigla" data-s="IP" data-en="Internet Protocol" data-es="dirección de red" tabindex="0">IP</abbr> se elige al crear el clúster: pasar a <abbr class="sigla" data-s="IPv6" data-en="Internet Protocol version 6" data-es="direcciones IP de 128 bits" tabindex="0">IPv6</abbr>
+          es crear un clúster nuevo.</li>
+      </ul>
+
+      <h3>Permisos de los pods en varias cuentas</h3>
+      <ul>
+        <li><strong>EKS Pod Identity</strong> asocia un rol de <a href="iam.html"><abbr class="sigla" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM</abbr></a> a una cuenta de servicio sin proveedor <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr> ni anotaciones.
+          Con un <strong>rol de destino</strong>, <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr> encadena el rol de la cuenta del clúster con otro de la cuenta del
+          equipo y entrega al pod las credenciales de este último: cada equipo gestiona sus permisos en su cuenta.</li>
+        <li>Pod Identity solo funciona en nodos <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> Linux de <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr>: no en <a href="fargate.html">Fargate</a>, ni en Windows, ni en EKS Anywhere u
+          <a href="outposts.html">Outposts</a>. Ahí sigue haciendo falta <strong><abbr class="sigla" data-s="IRSA" data-en="IAM Roles for Service Accounts" data-es="roles de IAM para cuentas de servicio de Kubernetes" tabindex="0">IRSA</abbr></strong>, que exige registrar el proveedor <abbr class="sigla" data-s="OIDC" data-en="OpenID Connect" data-es="estándar de identidad sobre OAuth 2.0" tabindex="0">OIDC</abbr> del clúster en cada
+          cuenta donde viven los roles.</li>
+        <li>Nunca dar al <strong>rol del nodo</strong> permisos de aplicación: cualquier pod del nodo los heredaría.</li>
+      </ul>
+
+      <h3>Actualizaciones y coste del plano de control</h3>
+      <ul>
+        <li>Cada versión de Kubernetes tiene <strong>14 meses de soporte estándar</strong> y 12 de <strong>soporte
+          extendido</strong>, en el que el plano de control cuesta seis veces más por hora. Un clúster olvidado multiplica su
+          factura sin cambiar de carga.</li>
+        <li>La <strong>política de actualización</strong> del clúster decide qué pasa al acabar el soporte estándar:
+          <code>EXTENDED</code> (por defecto) entra en soporte extendido; <code>STANDARD</code> se actualiza solo.</li>
+        <li>El plano de control sube <strong>de una versión menor en una</strong> y <strong>no se puede bajar</strong>.
+          <strong>Cluster Insights</strong> avisa antes de cada salto de las <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> obsoletas que usan las cargas.</li>
+        <li>Para cambios grandes o con poca tolerancia al riesgo: <strong>clúster azul/verde</strong>. Se crea otro clúster
+          con la versión nueva, se despliega lo mismo desde Git (Argo CD o Flux) y se mueve el tráfico con pesos de
+          <a href="route-53.html">Route 53</a> o del balanceador. Volver atrás es devolver el tráfico.</li>
+        <li><strong>Provisioned Control Plane</strong>: niveles de capacidad del plano de control elegidos de antemano para
+          clústeres enormes (entrenamiento de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr>, <abbr class="sigla sigla-1" data-s="HPC" data-en="High Performance Computing" data-es="cómputo de alto rendimiento" tabindex="0">HPC<span class="sigla-exp"> (High Performance Computing: cómputo de alto rendimiento)</span></abbr>), con un <abbr class="sigla sigla-1" data-s="SLA" data-en="Service Level Agreement" data-es="compromiso de disponibilidad" tabindex="0">SLA<span class="sigla-exp"> (Service Level Agreement: compromiso de disponibilidad)</span></abbr> más alto. Para la mayoría basta el plano estándar.</li>
+      </ul>
+
+      <h3>Varias regiones y recuperación</h3>
+      <ul>
+        <li>Un clúster vive en una región: la recuperación ante la caída de la región se diseña fuera de <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr>. Con cargas sin
+          estado y GitOps, un clúster pequeño en la segunda región, sincronizado desde Git, solo tiene que escalar.</li>
+        <li>Los datos marcan el <abbr class="sigla sigla-1" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO<span class="sigla-exp"> (Recovery Point Objective: cuántos datos puedes permitirte perder)</span></abbr>: tablas globales de <a href="dynamodb.html">DynamoDB</a> o <a href="aurora.html">Aurora</a> Global Database replican en segundos; las
+          copias periódicas (Velero, instantáneas) dan <abbr class="sigla" data-s="RPO" data-en="Recovery Point Objective" data-es="cuántos datos puedes permitirte perder" tabindex="0">RPO</abbr> de horas.</li>
+        <li><strong>ARC Region switch</strong> de Route 53 puede orquestar la conmutación, incluido el escalado de los pods
+          de <abbr class="sigla" data-s="EKS" data-en="Elastic Kubernetes Service" tabindex="0">EKS</abbr> en la región que se activa.</li>
+      </ul>
+
+      <h3>Tabla de decisión: dónde corren los pods</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Necesidad</th><th>Opción</th></tr></thead>
+          <tbody>
+            <tr><td>Mínima operación de nodos con Kubernetes</td><td>EKS Auto Mode</td></tr>
+            <tr><td>Control fino de instancias, Spot y consolidación</td><td>Grupos gestionados + Karpenter</td></tr>
+            <tr><td>Aislamiento por pod sin nodos, sin DaemonSets ni <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr></td><td>Fargate</td></tr>
+            <tr><td>Servidores propios en el centro de datos</td><td>EKS Hybrid Nodes o EKS Anywhere</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga una tarifa por hora por cada clúster (más alta si la versión está en soporte
         extendido), más la capacidad donde corren los pods: instancias <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> y volúmenes, vCPU y memoria
@@ -183,6 +254,9 @@
         <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/automode.html" target="_blank" rel="noopener">Automate cluster infrastructure with EKS Auto Mode</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html" target="_blank" rel="noopener">Learn how EKS Pod Identity grants pods access to AWS services</a>, documentación de AWS (consultada el 26/09/2026).</li>
         <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html" target="_blank" rel="noopener">Understand the Kubernetes version lifecycle on EKS</a>, documentación de AWS (consultada el 26/09/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/best-practices/custom-networking.html" target="_blank" rel="noopener">Custom Networking (EKS Best Practices)</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/pod-id-assign-target-role.html" target="_blank" rel="noopener">Access AWS Resources using EKS Pod Identity Target IAM Roles</a>, documentación de AWS (consultada el 19/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/eks/latest/userguide/view-upgrade-policy.html" target="_blank" rel="noopener">View current cluster upgrade policy</a>, documentación de AWS (consultada el 19/11/2026).</li>
       </ul>
     </article>
   </div>

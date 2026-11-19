@@ -152,5 +152,128 @@
     "fuentes": [
       "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"
     ]
+  },
+  {
+    "id": "fargate-008",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una empresa usa Fargate para un servicio web estable 24×7 (60 vCPU de media), trabajos por lotes nocturnos que toleran interrupciones y entornos de pruebas que se crean y destruyen cada día. Otras cuentas de la organización usan Lambda y EC2. Quiere un único compromiso de ahorro que siga cubriendo el uso del servicio web aunque mañana pase parte a Lambda o a EC2, y el máximo ahorro en los lotes, sin pagar por capacidad que no use. ¿Qué plan es el adecuado?",
+    "opciones": [
+      "Un EC2 Instance Savings Plan para el servicio web, compartido en la organización, y FARGATE_SPOT para los lotes y los entornos de pruebas.",
+      "Instancias reservadas convertibles a 3 años para el servicio web, que se pueden cambiar a Fargate o a Lambda si el servicio migra.",
+      "Un Compute Savings Plan dimensionado para el uso estable, compartido en la organización, y FARGATE_SPOT para los lotes nocturnos.",
+      "Un Compute Savings Plan que cubra el uso máximo de las tres cargas, incluidos los picos de los lotes nocturnos y de las pruebas."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "El Compute Savings Plan cubre Fargate, Lambda y EC2 de cualquier familia y región, así que sigue aplicándose si el servicio cambia de cómputo, y con el uso compartido de descuentos se aprovecha en otras cuentas. Dimensionarlo para el uso estable evita pagar compromiso sin usar; los lotes interrumpibles van mejor con FARGATE_SPOT. El EC2 Instance Savings Plan solo cubre una familia de EC2, no Fargate. Las instancias reservadas no se aplican a Fargate ni a Lambda. Comprometer el pico desperdicia dinero el resto del día.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/savingsplans/latest/userguide/plan-types.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-capacity-providers.html"
+    ]
+  },
+  {
+    "id": "fargate-009",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño e implementación de arquitecturas nativas de la nube",
+    "dificil": true,
+    "enunciado": "Una tarea de Fargate procesa vídeos: descarga ficheros de hasta 120 GB, los transcodifica y sube el resultado, y hoy falla por falta de disco. Otro servicio de Fargate necesita que sus 20 tareas compartan una caché de modelos de 30 GB que debe sobrevivir a los reinicios de las tareas. El equipo quiere seguir en Fargate y la solución más sencilla y barata para cada caso. ¿Qué combinación es la adecuada?",
+    "opciones": [
+      "Un volumen de EBS de 150 GB en cada tarea de vídeo, y un volumen de EBS con Multi-Attach compartido por las 20 tareas del otro servicio.",
+      "Ampliar el almacenamiento efímero de la tarea de vídeo a 150 GiB y montar un sistema de archivos de EFS en las 20 tareas del otro servicio.",
+      "El almacenamiento efímero por defecto y Mountpoint for Amazon S3 como disco de trabajo, tanto para los vídeos como para la caché.",
+      "Pasar las dos cargas a ECS sobre EC2 con instancias de almacenamiento NVMe local y la caché en el disco de cada instancia."
+    ],
+    "correctas": [
+      1
+    ],
+    "explicacion": "El almacenamiento efímero de una tarea de Fargate se puede ampliar hasta 200 GiB, suficiente para el trabajo temporal de cada vídeo y sin coste fijo. EFS es un sistema de archivos compartido y duradero que se monta en muchas tareas a la vez. ECS puede asociar un volumen de EBS a cada tarea de Fargate, pero no compartirlo entre tareas. Montar S3 como disco no está pensado para las escrituras de una transcodificación. Pasar a EC2 abandona Fargate y la caché en cada instancia no se comparte.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-storage.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ebs-volumes.html"
+    ]
+  },
+  {
+    "id": "fargate-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dificil": true,
+    "enunciado": "Una entidad financiera ejecutará en Fargate cargas de varios clientes y necesita aislamiento fuerte entre tareas, sin núcleo de sistema operativo compartido, detectar en tiempo de ejecución procesos sospechosos dentro de los contenedores (como minería de criptomonedas o shells inversas) y no instalar ni mantener agentes en ningún host. Un auditor pregunta qué asume AWS y qué hay que activar. ¿Qué respuesta es correcta?",
+    "opciones": [
+      "Cada tarea de Fargate corre en su propio entorno aislado, sin núcleo compartido, y GuardDuty Runtime Monitoring para Fargate gestiona su agente automáticamente.",
+      "Las tareas de un mismo clúster comparten núcleo, así que hace falta un clúster por cliente y desplegar el agente de Amazon Inspector dentro de cada tarea.",
+      "Fargate aísla las tareas con espacios de nombres de Linux en hosts compartidos, y la detección exige añadir a cada tarea un contenedor privilegiado con Falco.",
+      "Cada tarea tiene su propio núcleo, y la detección en tiempo de ejecución la cubre Amazon Inspector al analizar las imágenes de ECR antes de cada despliegue."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "En Fargate cada tarea se ejecuta en su propio límite de aislamiento, sin compartir núcleo, memoria ni disco con otras tareas. GuardDuty Runtime Monitoring para Fargate añade y mantiene el agente de seguridad como contenedor auxiliar sin que el cliente gestione hosts. Separar clústeres no cambia el aislamiento, que ya es por tarea. Fargate no admite contenedores privilegiados. Inspector analiza vulnerabilidades de imágenes, no comportamiento en ejecución.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-security-considerations.html",
+      "https://docs.aws.amazon.com/guardduty/latest/ug/how-runtime-monitoring-works-ecs-fargate.html"
+    ]
+  },
+  {
+    "id": "fargate-011",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dificil": true,
+    "enunciado": "Un servicio de Fargate con tareas de larga duración recibe avisos de AWS Health: las tareas con una revisión antigua de la plataforma se retirarán para aplicar parches de seguridad. El equipo quiere que las sustituciones ocurran en su ventana del sábado por la noche y nunca en horario comercial, sin perder capacidad durante el cambio y sin dejar de recibir los parches. ¿Qué hace?",
+    "opciones": [
+      "Fijar en la definición de tarea la versión de plataforma antigua, para que AWS no retire sus tareas hasta que el equipo la cambie.",
+      "Abrir un caso de soporte para excluir el servicio de las retiradas programadas y aplicar los parches dentro de los contenedores.",
+      "Pasar el servicio a FARGATE_SPOT, cuyas tareas no se retiran por mantenimiento, sino solo cuando AWS necesita recuperar la capacidad.",
+      "Ajustar el periodo de espera de retirada de tareas de Fargate y forzar un nuevo despliegue del servicio el sábado, antes de la fecha."
+    ],
+    "correctas": [
+      3
+    ],
+    "explicacion": "La cuenta puede fijar cuántos días espera Fargate antes de retirar tareas con parches pendientes, y el equipo puede adelantarse forzando un nuevo despliegue en su ventana: las tareas nuevas arrancan en la revisión parcheada y el despliegue respeta los porcentajes mínimo y máximo del servicio, sin perder capacidad. Fijar la versión de plataforma no evita la retirada de una revisión con vulnerabilidades, el soporte no exime del parcheo y las tareas de Spot también se retiran.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-maintenance.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform-fargate.html"
+    ]
+  },
+  {
+    "id": "fargate-012",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Resiliencia, migración y continuidad del negocio",
+    "dificil": true,
+    "enunciado": "Un servicio de ECS sobre FARGATE_SPOT consume mensajes de una cola de SQS; cada mensaje tarda hasta 90 segundos en procesarse. Tras las interrupciones de Spot aparecen trabajos a medias y mensajes duplicados, y en una ocasión el servicio se quedó sin ninguna tarea durante varios minutos. Se quiere que una interrupción no deje trabajo a medias, mantener siempre un mínimo de capacidad y seguir ahorrando con Spot. ¿Qué DOS cambios lo consiguen? (Elige 2.)",
+    "opciones": [
+      "Capturar SIGTERM para dejar de leer mensajes y terminar el actual, con un stopTimeout de 120 segundos en el contenedor.",
+      "Una estrategia de proveedores de capacidad con una base de tareas en FARGATE y el resto del peso en FARGATE_SPOT.",
+      "Subir el tiempo de visibilidad de la cola a 12 horas para que los mensajes de las tareas interrumpidas no vuelvan a aparecer.",
+      "Activar la protección de reducción de las tareas (scale-in protection), que impide que Spot interrumpa las tareas protegidas.",
+      "Usar FARGATE_SPOT con arquitectura arm64, que sufre menos interrupciones que x86 porque tiene menos demanda."
+    ],
+    "correctas": [
+      0,
+      1
+    ],
+    "explicacion": "Fargate avisa de la interrupción de Spot con dos minutos de antelación y envía SIGTERM: si la aplicación deja de leer mensajes y termina el actual, y stopTimeout (como mucho 120 segundos) le da tiempo, no quedan trabajos a medias. Una base en FARGATE mantiene capacidad aunque Spot se quede sin ella. Un tiempo de visibilidad enorme retrasa el reproceso de los mensajes perdidos. La protección de reducción solo evita que el escalado del servicio retire la tarea, no las interrupciones de Spot, y la arquitectura no garantiza menos interrupciones.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-capacity-providers.html",
+      "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-scale-in-protection.html"
+    ]
   }
 ]
