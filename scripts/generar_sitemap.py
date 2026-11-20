@@ -17,7 +17,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = 'https://arquitechthor.github.io/aws-cert-study/'
 FIJAS = [('index.html', ''), ('simulacro.html', 'simulacro.html'), ('memoria.html', 'memoria.html'),
          ('empareja.html', 'empareja.html'), ('arquitecto.html', 'arquitecto.html'),
-         ('aviso-legal.html', 'aviso-legal.html')]
+         ('conceptos-aif-c01.html', 'conceptos-aif-c01.html'), ('aviso-legal.html', 'aviso-legal.html')]
 
 
 def git(*args):

@@ -62,8 +62,8 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   that loads `datos.js` loads `cuenta.js` right after it (all pages do, including `aviso-legal.html` and
   `clasificacion.html`): `cuenta.js` adds the nav link to `cuenta.html` ("Guardar progreso" / "Mi
   cuenta") at the end of the "Mi estudio" submenu (the one marked `data-cuenta-destino`). Since
-  2026-11-16 the nav is: Inicio · Catálogo · Juegos ▾ · Mi estudio ▾ (Simulacro, Mi progreso, Guardar
-  progreso) · Arquitechthor; there is no "Certificaciones" link. The nav stays compact (13px, smaller
+  2026-11-20 the nav is: Inicio · Catálogo · Conceptos ▾ (AIF-C01) · Juegos ▾ · Mi estudio ▾ (Simulacro, Mi
+  progreso, Guardar progreso) · Arquitechthor; there is no "Certificaciones" link. The nav stays compact (13px, smaller
   gaps, `nowrap`) between 761 and 1040px in `styles.css`. Disabled while `CONFIG.dominio`/`clientId`
   are empty.
 - `assets/preguntas.js` (`window.AwsPreguntas`): the shared question component (render, read,
@@ -81,6 +81,11 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   brings them) and their correction links to the Tech Spider ficha. When Tech Spider tags a new topic for a
   certification, add it to `data/spider.json`. Locally, serving only this repo, those fetches fail and the
   simulacro just has fewer questions; to test them, serve the parent folder and open `/aws-cert-study/`.
+  `conceptos-aif-c01.html` ("Conceptos › AIF-C01" in the nav) lists those Tech Spider fichas in the blocks of
+  `guias` in `data/spider.json`, with each ficha's name, `frase` and AIF-C01 question count taken from
+  `../arquitechthor-spider`: never edit the cards by hand, run `python scripts/generar_conceptos.py --escribir`
+  after changing `data/spider.json` or when Tech Spider publishes, renames or tags a topic (it fails if a
+  topic is unpublished, untagged, or missing from either list, and marks the acronyms of the page).
   `progreso.html` + `assets/progreso.js`: "Mi progreso" summary (noindex),
   including **Mi telaraña de AWS** (`#mi-telarana`, `?cat=<categoria>`): every published service by
   category drawn with `assets/telarana.js` (`AwsTelarana`, a **copy** of Tech Spider's drawer: fix the

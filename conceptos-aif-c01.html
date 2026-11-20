@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conceptos de la AIF-C01 — Apuntes AWS</title>
+<meta name="description" content="Los conceptos de IA que pide la certificación AWS Certified AI Practitioner (AIF-C01): fichas de teoría y preguntas originales de Tech Spider, organizadas según el temario oficial.">
+<link rel="canonical" href="https://arquitechthor.github.io/aws-cert-study/conceptos-aif-c01.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apuntes AWS">
+<meta property="og:title" content="Conceptos de la AIF-C01 — Apuntes AWS">
+<meta property="og:description" content="Fichas de conceptos de IA para la AWS Certified AI Practitioner, con preguntas originales. Proyecto personal y educativo.">
+<meta property="og:url" content="https://arquitechthor.github.io/aws-cert-study/conceptos-aif-c01.html">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="assets/logo.png" alt="" width="32" height="32">
+      Apuntes AWS
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="index.html#catalogo">Catálogo</a>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Conceptos</button>
+        <div class="nav-submenu">
+          <a href="conceptos-aif-c01.html" aria-current="page">AIF-C01</a>
+        </div>
+      </div>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Juegos</button>
+        <div class="nav-submenu">
+          <a href="memoria.html">Memoria</a>
+          <a href="empareja.html">Empareja</a>
+          <a href="arquitecto.html">Arquitecto</a>
+          <a href="clasificacion.html">Clasificación</a>
+        </div>
+      </div>
+      <div class="nav-menu">
+        <button class="nav-menu-btn" type="button" aria-expanded="false">Mi estudio</button>
+        <div class="nav-submenu" data-cuenta-destino>
+          <a href="simulacro.html">Simulacro</a>
+          <a href="progreso.html">Mi progreso</a>
+        </div>
+      </div>
+      <a href="https://arquitechthor.github.io/">Arquitechthor</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </div>
+</nav>
+
+<main>
+<section class="page-section" style="padding-top:32px">
+  <div class="container">
+    <div class="section-head">
+      <h1>Conceptos de la <span class="gradient-text" style="white-space:nowrap">AIF-C01</span></h1>
+      <p>La AWS Certified AI Practitioner pregunta por servicios de AWS, pero sobre todo por conceptos
+        generales de <abbr class="sigla sigla-1" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA<span class="sigla-exp"> (inteligencia artificial)</span></abbr>: cómo aprende un modelo, qué es un <abbr class="sigla" data-s="LLM" data-en="Large Language Model" data-es="modelo de lenguaje grande, entrenado con enormes cantidades de texto" tabindex="0">LLM</abbr>, cuándo usar <abbr class="sigla sigla-1" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG<span class="sigla-exp"> (Retrieval-Augmented Generation: el modelo responde apoyándose en información recuperada de tus documentos)</span></abbr> o fine-tuning, cómo se mide un
+        modelo o qué es la <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> responsable. Esos conceptos no son de AWS, así que viven en
+        <a href="../arquitechthor-spider/">Tech Spider</a>, la otra web de estudio del autor. Aquí tienes sus
+        fichas ordenadas según el temario oficial.</p>
+    </div>
+
+    <div class="conceptos-acciones">
+      <a class="btn btn-primary btn-sm" href="simulacro.html?cert=AIF-C01">Simulacro de AIF-C01</a>
+      <a class="btn btn-secondary btn-sm" href="index.html?cert=AIF-C01#catalogo">Servicios de AWS de la AIF-C01</a>
+      <a class="btn btn-secondary btn-sm" href="https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01.html" target="_blank" rel="noopener">Guía oficial del examen</a>
+    </div>
+
+    <div class="doc">
+      <h2 id="como-funciona">Cómo encaja con el resto del sitio</h2>
+      <ul>
+        <li><strong>La teoría y sus preguntas están en Tech Spider.</strong> Cada ficha termina con su propia
+          evaluación. Las preguntas están escritas para el concepto, no para AWS, y las útiles para el examen
+          están etiquetadas con su dominio de la AIF-C01.</li>
+        <li><strong>Esas preguntas también cuentan en el <a href="simulacro.html?cert=AIF-C01">simulacro de
+          AIF-C01</a></strong>, repartidas por dominio junto a las de los servicios. Tus respuestas a ellas no se
+          guardan en Mi progreso de este sitio; en la corrección tienes el enlace a su ficha para repasarlas.</li>
+        <li><strong>La parte de AWS sigue aquí:</strong> sobre todo
+          <a href="servicios/bedrock.html">Amazon Bedrock</a> (modelos, Knowledge Bases, Guardrails,
+          evaluación, personalización), <a href="servicios/sagemaker-ai.html">Amazon SageMaker AI</a> y
+          <a href="servicios/bedrock-agentcore.html">Amazon Bedrock AgentCore</a>, y los servicios de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> ya
+          entrenados como <a href="servicios/comprehend.html">Amazon Comprehend</a>. El dominio de seguridad y
+          gobernanza se apoya en <abbr class="sigla sigla-1" data-s="IAM" data-en="Identity and Access Management" tabindex="0">IAM<span class="sigla-exp"> (Identity and Access Management)</span></abbr>, cifrado, Macie, CloudTrail o Config: están en el
+          <a href="index.html?cert=AIF-C01#catalogo">catálogo filtrado por la AIF-C01</a>.</li>
+      </ul>
+    </div>
+
+<!-- TEMAS:INICIO -->
+    <div class="conceptos-grupo">
+      <h2 id="bloque-fundamentos">Fundamentos de IA y ML</h2>
+      <p>Qué es la <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr>, cómo aprende un modelo a partir de datos y cómo se mide si acierta.</p>
+      <div class="service-grid">
+        <a class="service-card" href="../arquitechthor-spider/temas/artificial-intelligence.html">
+          <h3>Inteligencia artificial</h3>
+          <p class="service-resumen">Máquinas que aprenden, razonan y deciden: el paraguas de <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr>, deep learning y modelos.</p>
+          <p class="service-cat">5 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/machine-learning.html">
+          <h3>Aprendizaje automático</h3>
+          <p class="service-resumen">Sistemas que descubren patrones en datos de ejemplo en vez de seguir reglas escritas.</p>
+          <p class="service-cat">13 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/deep-learning.html">
+          <h3>Aprendizaje profundo</h3>
+          <p class="service-resumen">Redes neuronales de muchas capas que extraen solas los rasgos de imagen, voz o texto.</p>
+          <p class="service-cat">5 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/model-evaluation-metrics.html">
+          <h3>Métricas de evaluación de modelos</h3>
+          <p class="service-resumen">Exactitud, precisión, F1, <abbr class="sigla sigla-1" data-s="ROUGE" data-en="Recall-Oriented Understudy for Gisting Evaluation" data-es="métrica que mide cuánto de un resumen de referencia aparece en el generado" tabindex="0">ROUGE<span class="sigla-exp"> (Recall-Oriented Understudy for Gisting Evaluation: métrica que mide cuánto de un resumen de referencia aparece en el generado)</span></abbr> o <abbr class="sigla sigla-1" data-s="BLEU" data-en="Bilingual Evaluation Understudy" data-es="métrica que compara una traducción automática con traducciones de referencia" tabindex="0">BLEU<span class="sigla-exp"> (Bilingual Evaluation Understudy: métrica que compara una traducción automática con traducciones de referencia)</span></abbr>: números para saber si un sistema de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> acierta.</p>
+          <p class="service-cat">11 preguntas de AIF-C01</p>
+        </a>
+      </div>
+    </div>
+    <div class="conceptos-grupo">
+      <h2 id="bloque-generativa">IA generativa y modelos de lenguaje</h2>
+      <p>Cómo funcionan los <abbr class="sigla" data-s="LLM" data-en="Large Language Model" data-es="modelo de lenguaje grande, entrenado con enormes cantidades de texto" tabindex="0">LLM</abbr> por dentro, qué pueden hacer y cuáles son sus límites.</p>
+      <div class="service-grid">
+        <a class="service-card" href="../arquitechthor-spider/temas/generative-ai.html">
+          <h3>IA generativa</h3>
+          <p class="service-resumen">Modelos que crean contenido nuevo (texto, imagen, audio o código) a partir de un prompt.</p>
+          <p class="service-cat">9 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/llms.html">
+          <h3>Large Language Models (LLMs)</h3>
+          <p class="service-resumen">Redes Transformer que predicen el siguiente token tras leer enormes cantidades de texto.</p>
+          <p class="service-cat">12 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/tokens-context-window.html">
+          <h3>Tokens y ventana de contexto</h3>
+          <p class="service-resumen">Las piezas en que se parte el texto y el límite de lo que el modelo lee de una vez.</p>
+          <p class="service-cat">10 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/sampling-parameters.html">
+          <h3>Parámetros de muestreo</h3>
+          <p class="service-resumen">Deciden cuánto se arriesga el modelo al escoger cada palabra: previsible o variado.</p>
+          <p class="service-cat">6 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/hallucinations.html">
+          <h3>Alucinaciones</h3>
+          <p class="service-resumen">Respuestas que suenan seguras pero son falsas, y cómo anclar el modelo a sus fuentes.</p>
+          <p class="service-cat">10 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/reasoning-models.html">
+          <h3>Modelos de razonamiento</h3>
+          <p class="service-resumen">Piensan paso a paso antes de contestar: más acierto a cambio de tiempo y coste.</p>
+          <p class="service-cat">3 preguntas de AIF-C01</p>
+        </a>
+      </div>
+    </div>
+    <div class="conceptos-grupo">
+      <h2 id="bloque-aplicaciones">Aplicaciones de los modelos fundacionales</h2>
+      <p>Cómo se construye con ellos: prompts, <abbr class="sigla" data-s="RAG" data-en="Retrieval-Augmented Generation" data-es="el modelo responde apoyándose en información recuperada de tus documentos" tabindex="0">RAG</abbr>, fine-tuning, elección del modelo y agentes.</p>
+      <div class="service-grid">
+        <a class="service-card" href="../arquitechthor-spider/temas/prompt-engineering.html">
+          <h3>Ingeniería de prompts</h3>
+          <p class="service-resumen">Escribir las instrucciones de un <abbr class="sigla" data-s="LLM" data-en="Large Language Model" data-es="modelo de lenguaje grande, entrenado con enormes cantidades de texto" tabindex="0">LLM</abbr> para lograr respuestas útiles y repetibles.</p>
+          <p class="service-cat">11 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/rag.html">
+          <h3>Generación aumentada por recuperación</h3>
+          <p class="service-resumen">Buscar los documentos relevantes y dárselos al modelo para que responda con ellos.</p>
+          <p class="service-cat">11 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/fine-tuning.html">
+          <h3>Ajuste fino</h3>
+          <p class="service-resumen">Seguir entrenando un modelo con ejemplos propios para especializarlo en una tarea.</p>
+          <p class="service-cat">10 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/model-selection.html">
+          <h3>Selección de modelo</h3>
+          <p class="service-resumen">Elegir el <abbr class="sigla" data-s="LLM" data-en="Large Language Model" data-es="modelo de lenguaje grande, entrenado con enormes cantidades de texto" tabindex="0">LLM</abbr> más barato y rápido que hace bien cada tarea, midiendo con casos propios.</p>
+          <p class="service-cat">10 preguntas de AIF-C01</p>
+        </a>
+        <a class="service-card" href="../arquitechthor-spider/temas/ai-agents.html">
+          <h3>Agentes de IA</h3>
+          <p class="service-resumen">Un <abbr class="sigla" data-s="LLM" data-en="Large Language Model" data-es="modelo de lenguaje grande, entrenado con enormes cantidades de texto" tabindex="0">LLM</abbr> que decide en bucle qué herramienta usar hasta cumplir el objetivo que le dan.</p>
+          <p class="service-cat">10 preguntas de AIF-C01</p>
+        </a>
+      </div>
+    </div>
+    <div class="conceptos-grupo">
+      <h2 id="bloque-responsable">IA responsable</h2>
+      <p>Sesgos, explicabilidad, transparencia y riesgos legales de la <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr>.</p>
+      <div class="service-grid">
+        <a class="service-card" href="../arquitechthor-spider/temas/responsible-ai.html">
+          <h3>IA responsable</h3>
+          <p class="service-resumen">Sistemas de <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> justos, veraces, seguros y explicables, con personas que los supervisan.</p>
+          <p class="service-cat">10 preguntas de AIF-C01</p>
+        </a>
+      </div>
+    </div>
+<!-- TEMAS:FIN -->
+
+    <div class="doc">
+      <h2 id="por-donde-empezar">Por dónde empezar</h2>
+      <p>Si partes de cero, sigue el orden de los bloques: primero los fundamentos (<abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr>, <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr> y cómo se mide un
+        modelo), después cómo funcionan los <abbr class="sigla" data-s="LLM" data-en="Large Language Model" data-es="modelo de lenguaje grande, entrenado con enormes cantidades de texto" tabindex="0">LLM</abbr> y sus límites, y por último cómo se construye con ellos. Lee cada
+        ficha, haz su evaluación y, cuando tengas los cuatro bloques, prueba un simulacro rápido de AIF-C01 para
+        ver qué dominios flojean.</p>
+      <p class="text-faint">Las fichas de Tech Spider son contenido original del mismo autor, con la misma
+        licencia que este sitio. Sus preguntas no son preguntas reales de ningún examen.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="assets/logo.png" alt="" width="24" height="24" style="width:24px;height:24px;">
+        © 2026 Héctor Guzmán · Proyecto personal
+      </div>
+      <div class="footer-links">
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="https://github.com/arquitechthor/aws-cert-study">Código fuente</a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      Sitio personal, educativo y sin fines comerciales: sin publicidad, sin cookies y sin
+      seguimiento. No está afiliado, patrocinado ni respaldado por Amazon Web Services, Inc. ni
+      por Amazon.com, Inc., no es material oficial de AWS Training and Certification y no
+      contiene preguntas reales de examen. Amazon Web Services, AWS, los nombres de sus
+      servicios y sus iconos son marcas de Amazon.com, Inc. o sus filiales. Contenido original bajo
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" rel="license">CC BY-SA 4.0</a>
+      · <a href="aviso-legal.html">Aviso legal y privacidad</a>.
+    </p>
+    <nav class="footer-sitios" aria-label="Webs de Héctor Guzmán">
+      <a href="https://kopitools.link">Kopi Tools</a>
+      <a href="https://arquitechthor.github.io/aws-cert-study/" aria-current="true">Apuntes AWS</a>
+      <a href="https://arquitechthor.github.io/arquitechthor-spider/">Tech Spider</a>
+      <a href="https://arquitechthor.github.io/#kopi-chess">Kopi Chess</a>
+      <a href="https://arquitechthor.github.io/#prompt-quest">Prompt Quest</a>
+      <a href="https://arquitechthor.github.io/">Arquitechthor</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/nav.js" defer></script>
+<script src="assets/datos.js" defer></script>
+<script src="assets/cuenta.js" defer></script>
+<script src="assets/siglas.js" defer></script>
+</body>
+</html>

@@ -19,5 +19,33 @@
       "ai-agents",
       "responsible-ai"
     ]
+  },
+  "guias": {
+    "AIF-C01": [
+      {
+        "id": "fundamentos",
+        "titulo": "Fundamentos de IA y ML",
+        "texto": "Qué es la IA, cómo aprende un modelo a partir de datos y cómo se mide si acierta.",
+        "temas": ["artificial-intelligence", "machine-learning", "deep-learning", "model-evaluation-metrics"]
+      },
+      {
+        "id": "generativa",
+        "titulo": "IA generativa y modelos de lenguaje",
+        "texto": "Cómo funcionan los LLM por dentro, qué pueden hacer y cuáles son sus límites.",
+        "temas": ["generative-ai", "llms", "tokens-context-window", "sampling-parameters", "hallucinations", "reasoning-models"]
+      },
+      {
+        "id": "aplicaciones",
+        "titulo": "Aplicaciones de los modelos fundacionales",
+        "texto": "Cómo se construye con ellos: prompts, RAG, fine-tuning, elección del modelo y agentes.",
+        "temas": ["prompt-engineering", "rag", "fine-tuning", "model-selection", "ai-agents"]
+      },
+      {
+        "id": "responsable",
+        "titulo": "IA responsable",
+        "texto": "Sesgos, explicabilidad, transparencia y riesgos legales de la IA.",
+        "temas": ["responsible-ai"]
+      }
+    ]
   }
 }
