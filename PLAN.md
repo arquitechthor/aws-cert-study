@@ -33,9 +33,11 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   `arquitechthor.github.io`); allí cada pregunta útil para AIF lleva además `"certificaciones":
   ["AIF-C01"]` y `"dominio"`, y el simulacro de este sitio las lee en solo lectura de
   `../arquitechthor-spider/data/preguntas/<tema>.json` (lista de temas en un JSON de aquí). Así no se
-  duplican preguntas y cuentan para el simulacro. Faltan en Tech Spider temas clave de AIF, hoy
-  `pendiente`: `prompt-engineering`, `rag`, `fine-tuning`, `tokens-context-window`, `hallucinations`,
-  `model-selection`, y no hay temas de métricas de evaluación ni de IA responsable.
+  duplican preguntas y cuentan para el simulacro. **Paso (1) hecho el 20/11/2026:** Tech Spider publica
+  `prompt-engineering`, `rag`, `fine-tuning`, `tokens-context-window`, `hallucinations`, `model-selection` y
+  los nodos nuevos `model-evaluation-metrics` y `responsible-ai`, con 83 preguntas etiquetadas
+  `"certificaciones": ["AIF-C01"]` y `"dominio"` (mismos nombres de dominio que `data/certificaciones.json`),
+  alineadas con la guía del examen v1.2 (29/10/2026).
 - **Idiomas: inglés e italiano (16/11/2026, petición del usuario), solo planificado:** el español sigue
   siendo el idioma por defecto. Plan completo en [`PLAN-IDIOMAS.md`](PLAN-IDIOMAS.md): traducción de
   interfaz, catálogo, siglas, guías, preguntas y escenarios, y voces por idioma (lectura y audios de
@@ -135,11 +137,9 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 - **Bedrock, servicio clave (12/11/2026, pedido por el usuario):** sección "A fondo" (cuotas y
   `max_tokens`, inferencia entre regiones y SCP, gobierno multicuenta con guardrails obligatorios, acceso
   privado, diseño de RAG y opciones de consumo) y 5 preguntas difíciles de SAP-C03, una por dominio.
-- **Próximo paso (siguiente sesión):** implementar el enfoque de AIF-C01 ya confirmado (ver "AIF-C01,
-  conceptos en Tech Spider" arriba), en este orden: (1) en Tech Spider, escribir los temas que faltan
-  (`prompt-engineering`, `rag`, `fine-tuning`, `tokens-context-window`, `hallucinations`,
-  `model-selection`, más métricas de evaluación e IA responsable) con preguntas marcadas
-  `"certificaciones": ["AIF-C01"]` y `"dominio"`, y marcar también las útiles de los temas ya publicados;
+- **Próximo paso (siguiente sesión):** seguir con el enfoque de AIF-C01 ya confirmado (ver "AIF-C01,
+  conceptos en Tech Spider" arriba): (1) ~~escribir en Tech Spider los temas que faltaban~~ (hecho el
+  20/11/2026); falta marcar con AIF-C01 las preguntas útiles de las fichas de IA que ya estaban publicadas;
   (2) aquí, un JSON con la lista de temas de Tech Spider para AIF y el cambio en `simulacro.js` para leer
   sus preguntas en solo lectura; (3) el menú "Conceptos" › "AIF-C01" con la ficha de enlaces a la teoría
   y a `evaluacion.html` de Tech Spider (también en `CLAUDE.md` y `aviso-legal.html` si hace falta).
@@ -174,7 +174,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   "Servicios clave" y `CLAUDE.md`.
 - **Cómo se publica una guía:** flujo de `CLAUDE.md`; siglas con tooltip y enlaces con
   `python scripts/revisar_texto.py --escribir <id>` y `--publicado <id>`.
-- **Última actualización:** 2026-11-19
+- **Última actualización:** 2026-11-20
 
 ---
 
