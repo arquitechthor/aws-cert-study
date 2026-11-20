@@ -1,0 +1,23 @@
+{
+  "raiz": "../arquitechthor-spider/",
+  "certificaciones": {
+    "AIF-C01": [
+      "artificial-intelligence",
+      "machine-learning",
+      "deep-learning",
+      "generative-ai",
+      "llms",
+      "tokens-context-window",
+      "sampling-parameters",
+      "hallucinations",
+      "model-selection",
+      "reasoning-models",
+      "prompt-engineering",
+      "rag",
+      "fine-tuning",
+      "model-evaluation-metrics",
+      "ai-agents",
+      "responsible-ai"
+    ]
+  }
+}

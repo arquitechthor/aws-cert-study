@@ -74,7 +74,14 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
 - `simulacro.html` + `assets/simulacro.js`: practice exam per certification (questions spread by
   domain weight, full/half/quick length with the real exam's time, flag for review, grading by
   domain, history in `localStorage` `apuntes-aws.simulacros`) and the review of failed questions
-  (`?repaso=1[&cert=]`). `progreso.html` + `assets/progreso.js`: "Mi progreso" summary (noindex),
+  (`?repaso=1[&cert=]`). The simulacro also loads, **read-only**, Tech Spider questions tagged with the
+  certification (`"certificaciones"` + `"dominio"`, same format) from the topics listed per certification in
+  `data/spider.json` (`raiz` is `../arquitechthor-spider/`, same origin; first used for AIF-C01's concepts):
+  they carry `externo`, are never written to `apuntes-aws.progreso` (so the failed-questions review never
+  brings them) and their correction links to the Tech Spider ficha. When Tech Spider tags a new topic for a
+  certification, add it to `data/spider.json`. Locally, serving only this repo, those fetches fail and the
+  simulacro just has fewer questions; to test them, serve the parent folder and open `/aws-cert-study/`.
+  `progreso.html` + `assets/progreso.js`: "Mi progreso" summary (noindex),
   including **Mi telaraña de AWS** (`#mi-telarana`, `?cat=<categoria>`): every published service by
   category drawn with `assets/telarana.js` (`AwsTelarana`, a **copy** of Tech Spider's drawer: fix the
   drawing in both repos) and colored by progress. Tech Spider (same origin) has the 177 services as

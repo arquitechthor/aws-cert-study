@@ -100,6 +100,10 @@
    "en": "Business Intelligence",
    "es": "análisis de datos para el negocio"
   },
+  "BLEU": {
+   "en": "Bilingual Evaluation Understudy",
+   "es": "métrica que compara una traducción automática con traducciones de referencia"
+  },
   "BTEQ": {
    "en": "Basic Teradata Query",
    "es": "herramienta de scripts de Teradata"
@@ -179,6 +183,10 @@
   "CNI": {
    "en": "Container Network Interface",
    "es": "plugin de red de los contenedores"
+  },
+  "CNN": {
+   "en": "Convolutional Neural Network",
+   "es": "red neuronal especializada en imágenes"
   },
   "COBOL": {
    "en": "Common Business-Oriented Language",
@@ -636,6 +644,10 @@
    "en": "Lightweight Directory Access Protocol",
    "es": "protocolo de directorios de usuarios"
   },
+  "LLM": {
+   "en": "Large Language Model",
+   "es": "modelo de lenguaje grande, entrenado con enormes cantidades de texto"
+  },
   "LSI": {
    "en": "Local Secondary Index",
    "es": "índice secundario local"
@@ -911,6 +923,22 @@
   "RGPD": {
    "en": "Reglamento General de Protección de Datos",
    "es": "ley europea de protección de datos personales"
+  },
+  "RLHF": {
+   "en": "Reinforcement Learning from Human Feedback",
+   "es": "ajuste de un modelo con las preferencias de personas entre respuestas"
+  },
+  "RMSE": {
+   "en": "Root Mean Square Error",
+   "es": "error medio de una predicción numérica que castiga más los errores grandes"
+  },
+  "RNN": {
+   "en": "Recurrent Neural Network",
+   "es": "red neuronal que procesa secuencias paso a paso"
+  },
+  "ROUGE": {
+   "en": "Recall-Oriented Understudy for Gisting Evaluation",
+   "es": "métrica que mide cuánto de un resumen de referencia aparece en el generado"
   },
   "RPO": {
    "en": "Recovery Point Objective",

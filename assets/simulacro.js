@@ -5,6 +5,8 @@
  * Simulacro: preguntas de todos los servicios publicados de una certificación que llevan esa
  * certificación en "certificaciones", repartidas por dominio según su peso en la guía oficial
  * (cuota por mayor resto; si un dominio no tiene bastantes, se completa con los demás y se avisa).
+ * Además, las preguntas de conceptos de Tech Spider (mismo origen) etiquetadas con la certificación,
+ * de los temas que lista data/spider.json; se leen sin modificarlas y no se guardan en el progreso.
  * Una pregunta cada vez, tiempo límite proporcional al examen real, "marcar para revisar" y
  * corrección al final, con resultado por dominio. Configuración en la URL
  * (?cert=SAP-C03&longitud=completo&dificiles=1).
@@ -35,7 +37,8 @@
 
   let datos = null;
   let glosario = null;
-  const cache = new Map(); // servicio -> preguntas
+  let spider = null; // data/spider.json: raíz de Tech Spider y sus temas por certificación
+  const cache = new Map(); // servicio (o "spider:<tema>") -> preguntas
   const params = new URLSearchParams(location.search);
   const repaso = params.get('repaso') === '1';
   const config = { cert: params.get('cert') || '', longitud: params.get('longitud') || 'completo', dificiles: params.get('dificiles') === '1' };
@@ -91,6 +94,25 @@
     await Promise.all(faltan.map((s) => json(`data/preguntas/${encodeURIComponent(s)}.json`)
       .then((l) => cache.set(s, l)).catch(() => cache.set(s, []))));
     return sids.flatMap((s) => cache.get(s) || []);
+  }
+
+  /**
+   * Preguntas de Tech Spider para una certificación, en solo lectura. Cada una lleva `externo`
+   * (su tema) para no guardarla en el progreso de este sitio y enlazar a su ficha. Si Tech Spider no
+   * responde (por ejemplo, en local sirviendo solo este repo), simplemente no hay preguntas suyas.
+   */
+  async function preguntasSpider(cert) {
+    const temas = (spider && spider.certificaciones && spider.certificaciones[cert]) || [];
+    await Promise.all(temas.filter((t) => !cache.has(`spider:${t}`)).map((t) =>
+      json(`${spider.raiz}data/preguntas/${encodeURIComponent(t)}.json`)
+        .then((l) => cache.set(`spider:${t}`, (Array.isArray(l) ? l : []).map((p) => ({ ...p, externo: { tema: t } }))))
+        .catch(() => cache.set(`spider:${t}`, []))));
+    return temas.flatMap((t) => cache.get(`spider:${t}`) || [])
+      .filter((p) => Array.isArray(p.certificaciones) && p.certificaciones.includes(cert));
+  }
+
+  function urlFichaSpider(p) {
+    return url(`${spider.raiz}temas/${encodeURIComponent(p.externo.tema)}.html#evaluacion`);
   }
 
   function fallosPendientes() {
@@ -186,7 +208,11 @@
     }
     const c = certActual();
     const sids = datos.servicios.filter((s) => s.estado === 'publicado' && s.certificaciones.includes(c.codigo)).map((s) => s.id);
-    const todas = (await preguntasDe(sids)).filter((p) => p.certificaciones.includes(c.codigo));
+    const [propias, deSpider] = await Promise.all([
+      preguntasDe(sids).then((l) => l.filter((p) => p.certificaciones.includes(c.codigo))),
+      preguntasSpider(c.codigo),
+    ]);
+    const todas = propias.concat(deSpider);
     if (config.cert !== c.codigo) return; // cambió mientras cargaba
     const nDificiles = todas.filter((p) => p.dificil).length;
     el.dificiles.disabled = !nDificiles;
@@ -195,7 +221,9 @@
     el.dificiles.textContent = nDificiles ? `⚠ Solo preguntas difíciles (${nDificiles})` : '⚠ Solo preguntas difíciles (aún no hay)';
     pool = config.dificiles ? todas.filter((p) => p.dificil) : todas;
     const l = longitudes(c)[config.longitud];
-    el.disponibles.textContent = `${pool.length} preguntas disponibles para ${c.codigo}.`;
+    const nSpider = pool.filter((p) => p.externo).length;
+    el.disponibles.textContent = `${pool.length} preguntas disponibles para ${c.codigo}.`
+      + (nSpider ? ` ${nSpider} son de las fichas de conceptos de Tech Spider.` : '');
     const extra = config.longitud === 'completo'
       ? ` Como el examen real, que tiene ${c.examen.preguntasPuntuadas} preguntas puntuables y ${c.examen.preguntasSinPuntuar} sin puntuar (aquí cuentan todas).`
       : '';
@@ -405,7 +433,7 @@
 
     // Progreso local: solo las respondidas.
     preguntas.forEach((p, i) => {
-      if (respuestas[i] === null) return;
+      if (respuestas[i] === null || p.externo) return; // las de Tech Spider no se guardan aquí
       const sid = P.servicioDe(p.id);
       P.registrar(sid, (cache.get(sid) || [p]).map((q) => q.id), p.id, aciertos[i]);
     });
@@ -453,6 +481,8 @@
     const ref = repaso ? null : cert.examen.puntuacionMinima / 10;
     const sin = respuestas.filter((r) => r === null).length;
     const falladas = aciertos.filter((a) => !a).length;
+    // El repaso solo puede traer las de este sitio (las de Tech Spider no se guardan en el progreso).
+    const falladasRepasables = aciertos.filter((a, i) => !a && !preguntas[i].externo).length;
     const filas = [...grupos].filter(([, v]) => v.total).map(([nombre, v]) => `
       <tr>
         <th scope="row">${esc(nombre)}${v.peso ? ` <span class="text-faint">(${v.peso} %)</span>` : ''}</th>
@@ -475,7 +505,7 @@
           <tbody>${filas}</tbody>
         </table>
         <div class="quiz-acciones">
-          ${falladas ? `<a class="btn btn-primary btn-sm" href="${esc(enlaceRepaso)}">Repasar las falladas</a>` : ''}
+          ${falladasRepasables ? `<a class="btn btn-primary btn-sm" href="${esc(enlaceRepaso)}">Repasar las falladas</a>` : ''}
           <a class="btn btn-secondary btn-sm" href="${esc(url(`simulacro.html${repaso ? '?repaso=1' : `?cert=${encodeURIComponent(cert.codigo)}`}`))}">${repaso ? 'Otro repaso' : 'Nuevo simulacro'}</a>
           <a class="btn btn-secondary btn-sm" href="${esc(url('progreso.html'))}">Ver mi progreso</a>
         </div>
@@ -512,7 +542,7 @@
 
   function revision(p, i, acierto) {
     const t = textoPara(p);
-    const s = datos.servicioPorId.get(P.servicioDe(p.id));
+    const s = p.externo ? null : datos.servicioPorId.get(P.servicioDe(p.id));
     const sinResponder = examen.respuestas[i] === null;
     return `
       <fieldset class="quiz-question${p.dificil ? ' is-dificil' : ''}">
@@ -520,11 +550,12 @@
           <span class="quiz-num">Pregunta ${i + 1}${examen.marcadas.has(i) ? ' · ⚑ marcada' : ''}</span>
           ${P.enunciado(p, t)}
         </legend>
-        <div class="quiz-tags">${P.etiquetas(p, { cert: repaso ? '' : examen.cert.codigo })}</div>
+        <div class="quiz-tags">${P.etiquetas(p, { cert: repaso ? '' : examen.cert.codigo })}${p.externo ? '<span class="chip">Tech Spider</span>' : ''}</div>
         ${P.respuestas(p, `rev-${i}`, t)}
         <div class="quiz-feedback">
           ${sinResponder ? `<p class="ko">✘ Sin responder.</p><div class="quiz-solucion-zona">${P.solucion(p, t)}</div><p>${t(p.explicacion)}</p>` : P.correccion(p, acierto, t)}
           ${s ? `<p><a href="${esc(urlServicio(s))}#preguntas">Repasar en la guía de ${esc(s.nombre)} →</a></p>` : ''}
+          ${p.externo ? `<p><a href="${esc(urlFichaSpider(p))}">Repasar en su ficha de Tech Spider →</a></p>` : ''}
         </div>
       </fieldset>`;
   }
@@ -555,6 +586,7 @@
     try {
       datos = await cargar();
       if (window.AwsSiglas) glosario = await window.AwsSiglas.cargarGlosario().catch(() => null);
+      spider = await json('data/spider.json').catch(() => null);
       renderConfig();
       if (!repaso) renderLongitudes();
       renderCertInfo();
