@@ -139,7 +139,8 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
   privado, diseño de RAG y opciones de consumo) y 5 preguntas difíciles de SAP-C03, una por dominio.
 - **Próximo paso (siguiente sesión):** seguir con el enfoque de AIF-C01 ya confirmado (ver "AIF-C01,
   conceptos en Tech Spider" arriba): (1) ~~escribir en Tech Spider los temas que faltaban~~ (hecho el
-  20/11/2026); falta marcar con AIF-C01 las preguntas útiles de las fichas de IA que ya estaban publicadas;
+  20/11/2026) y ~~marcar las útiles de las fichas que ya estaban publicadas~~ (63, hecho el 20/11/2026: Tech
+  Spider tiene 146 de AIF-C01, con 39 de "Fundamentos de IA generativa", que aquí solo tiene 5);
   (2) aquí, un JSON con la lista de temas de Tech Spider para AIF y el cambio en `simulacro.js` para leer
   sus preguntas en solo lectura; (3) el menú "Conceptos" › "AIF-C01" con la ficha de enlaces a la teoría
   y a `evaluacion.html` de Tech Spider (también en `CLAUDE.md` y `aviso-legal.html` si hace falta).
