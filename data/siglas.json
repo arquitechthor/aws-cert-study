@@ -4,6 +4,10 @@
    "en": null,
    "es": "quinta generación de redes móviles"
   },
+  "A2I": {
+   "en": "Amazon Augmented AI",
+   "es": "revisión humana de las predicciones de un modelo"
+  },
   "ABAC": {
    "en": "Attribute-Based Access Control",
    "es": "permisos según etiquetas o atributos"
@@ -1015,6 +1019,10 @@
   "SFTP": {
    "en": "SSH File Transfer Protocol",
    "es": "transferencia de ficheros sobre SSH"
+  },
+  "SHAP": {
+   "en": "SHapley Additive exPlanations",
+   "es": "método que mide cuánto pesa cada característica en una predicción"
   },
   "SIEM": {
    "en": "Security Information and Event Management",

@@ -320,6 +320,8 @@ G = {
     'SPICE': ('Super-fast, Parallel, In-memory Calculation Engine', 'motor en memoria de QuickSight'),
     'SaaS': ('Software as a Service', 'software que se usa como servicio'),
     'MLOps': ('Machine Learning Operations', 'prácticas para llevar y mantener modelos en producción'),
+    'A2I': ('Amazon Augmented AI', 'revisión humana de las predicciones de un modelo'),
+    'SHAP': ('SHapley Additive exPlanations', 'método que mide cuánto pesa cada característica en una predicción'),
     'GraphRAG': (None, 'generación aumentada por recuperación apoyada en un grafo de conocimiento'),
     'E/S': (None, 'entrada y salida: lecturas y escrituras'),
     'SCIM': ('System for Cross-domain Identity Management', 'protocolo para sincronizar usuarios y grupos'),

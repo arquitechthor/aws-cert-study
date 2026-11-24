@@ -62,6 +62,7 @@
 
     <div class="service-head">
       <h1 class="service-title"><img class="service-icon-lg" src="../assets/iconos/servicios/sagemaker-ai.svg" alt="" width="56" height="56"><span>Amazon SageMaker AI</span></h1>
+      <p class="clave-aviso"><span class="chip chip-clave">★ Servicio clave</span> <span>Guía ampliada con <a href="#a-fondo">temas avanzados</a> y preguntas difíciles en el cuestionario.</span></p>
       <div class="meta-row meta-frase"><strong>En una frase:</strong> <span>Plataforma para preparar datos, entrenar, ajustar y desplegar tus propios modelos de <abbr class="sigla sigla-1" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML<span class="sigla-exp"> (Machine Learning: aprendizaje automático)</span></abbr></span></div>
       <div class="meta-row">
         <span><strong>Categoría:</strong> <a class="cat-link" href="../index.html?cat=machine-learning#catalogo"><img class="cat-icon" src="../assets/iconos/categorias/machine-learning.svg" alt="" width="18" height="18">Machine learning <span class="cat-en">(Machine Learning)</span></a></span>
@@ -82,6 +83,19 @@
     </div>
 
     <article class="doc">
+      <div class="callout callout-warn"><strong>Aviso:</strong> desde el <strong>30/07/2026</strong> varias piezas de
+        SageMaker AI <strong>no admiten clientes nuevos</strong>: Ground Truth, Augmented AI (<abbr class="sigla" data-s="A2I" data-en="Amazon Augmented AI" data-es="revisión humana de las predicciones de un modelo" tabindex="0">A2I</abbr>), Model Monitor, Clarify,
+        Debugger, Profiler, Role Manager, Geospatial y Studio Lab. Quien ya las usaba puede seguir, pero no tendrán
+        funciones nuevas. Ground Truth Plus cerró el 30/06/2026. El resto de la plataforma (entrenamiento, inferencia,
+        Pipelines, Model Registry, Model Cards, Canvas, JumpStart) sigue igual. La guía del AIF-C01 vigente (v1.2) ya no
+        las pone como ejemplo. Qué usar en su lugar: ver "A fondo".</div>
+
+      <figure class="audio-recurso" data-kopi="6d1eeddd-3dc2-4b61-a3d4-b3c7a200f188">
+        <figcaption><span aria-hidden="true">🎧</span> <strong>Escucha el resumen en audio</strong> <span class="audio-nota">(conversación generada con NotebookLM; se carga desde Kopi al pulsar)</span></figcaption>
+        <button class="btn btn-secondary btn-sm" type="button" data-kopi-cargar>▶ Escuchar</button>
+        <p class="audio-aviso" role="status"></p>
+      </figure>
+
       <h2 id="que-es">Qué es</h2>
       <p>Amazon SageMaker AI (antes Amazon SageMaker) es la plataforma de AWS para <strong>construir, entrenar y
         desplegar modelos de aprendizaje automático propios</strong>. Cubre todo el ciclo de vida: preparar los datos,
@@ -94,7 +108,8 @@
         <li><strong>SageMaker Studio:</strong> el entorno web de trabajo, con cuadernos y acceso a todas las
           herramientas.</li>
         <li><strong>Preparación de datos:</strong> <strong>Data Wrangler</strong> (limpiar y transformar de forma
-          visual), <strong>Ground Truth</strong> (etiquetar datos, con personas y con ayuda automática) y
+          visual), <strong>Ground Truth</strong> (etiquetar datos, con personas y con ayuda automática; sin clientes nuevos desde julio de
+          2026) y
           <strong>Feature Store</strong> (almacén de características para que entrenamiento e inferencia usen los
           mismos datos).</li>
         <li><strong>Entrenamiento:</strong> trabajos en instancias gestionadas que se crean, entrenan y se apagan. Con
@@ -114,10 +129,12 @@
           </ul>
         </li>
         <li><strong><abbr class="sigla sigla-1" data-s="MLOps" data-en="Machine Learning Operations" data-es="prácticas para llevar y mantener modelos en producción" tabindex="0">MLOps<span class="sigla-exp"> (Machine Learning Operations: prácticas para llevar y mantener modelos en producción)</span></abbr>:</strong> <strong>Pipelines</strong> (flujos automatizados), <strong>Model Registry</strong>
-          (catálogo y aprobación de versiones) y <strong>Model Monitor</strong> (detecta la deriva de los datos y de la
-          calidad del modelo en producción).</li>
-        <li><strong><abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> responsable:</strong> <strong>Clarify</strong> (detecta sesgos y explica las predicciones) y
-          <strong>Model Cards</strong> (documentación del modelo).</li>
+          (catálogo y aprobación de versiones) y <strong>Model Monitor</strong> (detectaba la deriva de los datos y de la
+          calidad del modelo en producción; sin clientes nuevos desde julio de 2026). Para los experimentos y su linaje,
+          <strong>MLflow gestionado</strong>.</li>
+        <li><strong><abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> responsable:</strong> <strong>Model Cards</strong> (ficha del modelo: uso previsto, riesgo,
+          datos de entrenamiento y resultados de la evaluación) y <strong>Clarify</strong> (sesgos y explicabilidad; sin
+          clientes nuevos desde julio de 2026).</li>
       </ul>
 
       <h2 id="casos-de-uso">Casos de uso típicos</h2>
@@ -151,6 +168,116 @@
         </table>
       </div>
 
+      <h2 id="a-fondo">A fondo: temas avanzados</h2>
+      <p>La parte ampliada de la guía, pensada sobre todo para el AIF-C01 y para los escenarios de SAP-C03: qué límites
+        deciden la opción de inferencia, cuándo elegir SageMaker AI frente a <a href="bedrock.html">Bedrock</a>, cómo se gobiernan los modelos, qué
+        hacer con las piezas que ya no admiten clientes nuevos y cómo se ahorra.</p>
+
+      <h3>Los límites que deciden la opción de inferencia</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Límites que importan</th><th>¿Escala a cero?</th><th>Elígela si…</th></tr></thead>
+          <tbody>
+            <tr><td>Tiempo real</td><td>Petición de hasta 6 MB y respuesta en menos de 60 s. Admite <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr>, <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> y varias
+              variantes</td><td>No: pagas las instancias mientras exista el punto de enlace</td><td>Hace falta baja latencia
+              constante</td></tr>
+            <tr><td>Sin servidor</td><td>Memoria de 1 a 6 GB y hasta 200 peticiones simultáneas por punto de enlace.
+              <strong>Sin <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr>, sin configuración de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, sin aislamiento de red</strong> ni captura de datos. Arranque en frío
+              (se suaviza con concurrencia aprovisionada)</td><td>Sí</td><td>El tráfico es intermitente, el modelo es pequeño y no
+              hay requisitos de red</td></tr>
+            <tr><td>Asíncrona</td><td>Peticiones de hasta 1 GB (en <a href="s3.html"><abbr class="sigla sigla-1" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3<span class="sigla-exp"> (Simple Storage Service)</span></abbr></a>) y hasta una hora de proceso, en cola. Avisa por <a href="sns.html"><abbr class="sigla sigla-1" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS<span class="sigla-exp"> (Simple Notification Service)</span></abbr></a> al
+              terminar</td><td>Sí, si se configura el escalado</td><td>Las peticiones son grandes o lentas y basta con una
+              respuesta en minutos</td></tr>
+            <tr><td>Transformación por lotes</td><td>Procesa un conjunto de datos completo en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> y se apaga</td><td>No hay
+              punto de enlace</td><td>Nadie espera la respuesta: predicciones programadas</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li>Un punto de enlace sin servidor se puede convertir en uno en tiempo real, pero <strong>no al revés</strong>, y
+          tampoco se puede deshacer el cambio.</li>
+        <li>La trampa típica: "tráfico intermitente" apunta a sin servidor, pero si además se exige <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>, aislamiento de red
+          o <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr>, la respuesta es asíncrona (si se tolera esperar) o tiempo real.</li>
+      </ul>
+
+      <h3>SageMaker AI, Bedrock o un servicio ya entrenado</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Situación</th><th>Elige</th></tr></thead>
+          <tbody>
+            <tr><td>Una tarea común de visión, texto o voz (detectar caras, extraer texto, transcribir)</td><td>Un servicio
+              ya entrenado: <a href="rekognition.html">Rekognition</a>, <a href="textract.html">Textract</a>, <a href="transcribe.html">Transcribe</a>…</td></tr>
+            <tr><td><abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> generativa con un modelo fundacional, pagando por tokens y sin gestionar servidores</td><td><a href="bedrock.html">Bedrock</a></td></tr>
+            <tr><td>Un modelo predictivo con tus datos tabulares (abandono, fraude, demanda)</td><td>SageMaker AI (o Canvas si
+              lo hace un analista sin programar)</td></tr>
+            <tr><td>Un modelo fundacional abierto que quieres desplegar en tu cuenta, con tu instancia y tu red</td><td>SageMaker
+              JumpStart</td></tr>
+            <tr><td>Control total del entrenamiento, del contenedor o del hardware</td><td>SageMaker AI</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Gobernanza: del experimento a producción</h3>
+      <ul>
+        <li><strong>Pipelines</strong> automatiza el flujo (preparar, entrenar, evaluar, registrar) y <strong>Model
+          Registry</strong> guarda cada versión con su <strong>estado de aprobación</strong>: el despliegue solo arranca cuando
+          alguien aprueba la versión.</li>
+        <li><strong>Model Cards</strong> reúne en una ficha el propietario, el uso previsto, las suposiciones, la
+          <strong>calificación de riesgo</strong>, los detalles del entrenamiento y los resultados de la evaluación. La guía del
+          AIF-C01 la cita dos veces: como herramienta de <strong>transparencia</strong> y para <strong>documentar el origen de
+          los datos</strong>.</li>
+        <li><strong>MLflow gestionado</strong> registra experimentos, parámetros y métricas, y deja el linaje de cada modelo.</li>
+        <li>Las <strong>pruebas en sombra</strong> validan una versión nueva (modelo, contenedor o instancia) con tráfico real
+          sin afectar a nadie: la variante en sombra recibe una copia de las peticiones, pero sus respuestas no se devuelven.
+          En una prueba A/B, en cambio, parte de los usuarios sí recibe la versión nueva.</li>
+      </ul>
+
+      <h3>Qué usar en lugar de las piezas cerradas a clientes nuevos</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pieza</th><th>Qué hacía</th><th>Qué propone AWS ahora</th></tr></thead>
+          <tbody>
+            <tr><td>Model Monitor</td><td>Deriva de datos, de calidad, de sesgo y de atribución de características</td><td>Las
+              soluciones de monitorización de SageMaker AI publicadas por AWS como código abierto (MLflow y Evidently AI
+              sobre <a href="athena.html">Athena</a>, <a href="eventbridge.html">EventBridge</a>, <a href="lambda.html">Lambda</a> y <a href="sns.html"><abbr class="sigla" data-s="SNS" data-en="Simple Notification Service" tabindex="0">SNS</abbr></a>), con alarmas de <a href="cloudwatch.html">CloudWatch</a> y paneles en <a href="quick.html">Quick</a></td></tr>
+            <tr><td>Clarify</td><td>Métricas de sesgo antes y después de entrenar, y explicabilidad con <abbr class="sigla sigla-1" data-s="SHAP" data-en="SHapley Additive exPlanations" data-es="método que mide cuánto pesa cada característica en una predicción" tabindex="0">SHAP<span class="sigla-exp"> (SHapley Additive exPlanations: método que mide cuánto pesa cada característica en una predicción)</span></abbr></td><td>Calcular
+              esas mismas métricas en tu propio código, usar la librería <abbr class="sigla" data-s="SHAP" data-en="SHapley Additive exPlanations" data-es="método que mide cuánto pesa cada característica en una predicción" tabindex="0">SHAP</abbr> (la que Clarify usaba por dentro) y, para modelos
+              fundacionales, las evaluaciones de <a href="bedrock.html">Bedrock</a> y sus guardrails</td></tr>
+            <tr><td>Ground Truth, <abbr class="sigla" data-s="A2I" data-en="Amazon Augmented AI" data-es="revisión humana de las predicciones de un modelo" tabindex="0">A2I</abbr>, Debugger, Role Manager</td><td>Etiquetado, revisión humana, depuración del entrenamiento,
+              roles de <abbr class="sigla" data-s="ML" data-en="Machine Learning" data-es="aprendizaje automático" tabindex="0">ML</abbr></td><td>Sin sustituto único: cada una tiene su guía de migración en la documentación</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Para el examen, las preguntas sobre <abbr class="sigla" data-s="IA" data-es="inteligencia artificial" tabindex="0">IA</abbr> responsable de la guía v1.2 del AIF-C01 se apoyan en Model Cards, los
+        guardrails y las evaluaciones de Bedrock, las auditorías humanas y el análisis por subgrupos.</p>
+
+      <h3>Seguridad en entornos regulados</h3>
+      <ul>
+        <li><strong>Rol de ejecución</strong> por trabajo o modelo: SageMaker AI lo usa para leer de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> y de <a href="ecr.html"><abbr class="sigla sigla-1" data-s="ECR" data-en="Elastic Container Registry" tabindex="0">ECR<span class="sigla-exp"> (Elastic Container Registry)</span></abbr></a>, separado
+          del contenedor.</li>
+        <li><strong>Configuración de <abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr>:</strong> el trabajo o el punto de enlace crea interfaces de red en tus subredes y
+          llega a tus recursos privados. Con <a href="privatelink.html">PrivateLink</a> (puntos de enlace de interfaz), las llamadas a la <abbr class="sigla" data-s="API" data-en="Application Programming Interface" data-es="interfaz para que los programas se comuniquen" tabindex="0">API</abbr> y a la
+          inferencia no salen a internet.</li>
+        <li><strong>Aislamiento de red</strong> (<code>EnableNetworkIsolation</code>): el contenedor no puede hacer
+          ninguna conexión saliente, ni siquiera a otros servicios de AWS. SageMaker AI mueve los datos de <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr> por su cuenta.
+          Es obligatorio para los modelos de <a href="marketplace.html">AWS Marketplace</a>.</li>
+        <li>Cifrado con <a href="kms.html"><abbr class="sigla" data-s="KMS" data-en="Key Management Service" tabindex="0">KMS</abbr></a> de los volúmenes, los artefactos del modelo y los datos de salida.</li>
+      </ul>
+
+      <h3>Cómo se ahorra</h3>
+      <ul>
+        <li><strong>Entrenamiento con Spot gestionado:</strong> hasta un 90 % menos que bajo demanda. SageMaker AI gestiona
+          las interrupciones. Con <strong>puntos de control</strong> en <abbr class="sigla" data-s="S3" data-en="Simple Storage Service" tabindex="0">S3</abbr>, el trabajo sigue donde lo dejó en vez de empezar
+          de cero.</li>
+        <li><strong><a href="savings-plans.html">Savings Plans</a> de SageMaker AI:</strong> hasta un 64 % menos con un compromiso de gasto por hora a 1 o 3
+          años. Cubren cuadernos, procesamiento, entrenamiento, inferencia en tiempo real y por lotes. Los Compute Savings
+          Plans de <a href="ec2.html"><abbr class="sigla" data-s="EC2" data-en="Elastic Compute Cloud" tabindex="0">EC2</abbr></a> <strong>no</strong> se aplican a las instancias de SageMaker AI.</li>
+        <li><strong>Puntos de enlace multimodelo:</strong> muchos modelos del mismo marco en un solo punto de enlace y un solo
+          contenedor. SageMaker AI carga en memoria los que se piden. Ideal para un modelo por cliente con poco tráfico cada
+          uno.</li>
+        <li>Asíncrona o sin servidor cuando el tráfico tiene huecos, y borrar los puntos de enlace que nadie usa.</li>
+      </ul>
+
       <h2 id="precios">Modelo de precios</h2>
       <p>Se paga <strong>por uso de cada componente</strong>: las instancias de los cuadernos, las de entrenamiento
         (por segundo), las de inferencia (por hora mientras el punto de enlace existe, o por uso en la opción sin
@@ -173,11 +300,18 @@
           grandes o de larga duración"</strong>: asíncrona. <strong>"Predicciones sobre todo un conjunto de datos, sin
           necesidad de respuesta inmediata"</strong>: transformación por lotes. <strong>"Baja latencia
           constante"</strong>: tiempo real.</li>
-        <li><strong>"Detectar sesgos" o "explicar predicciones"</strong>: Clarify.</li>
-        <li><strong>"El modelo empeora con el tiempo en producción"</strong>: Model Monitor.</li>
-        <li><strong>"Etiquetar datos"</strong>: Ground Truth. <strong>"Sin código"</strong>: Canvas.</li>
+        <li><strong>"Detectar sesgos" o "explicar predicciones"</strong>: en preguntas antiguas, Clarify. Ya no admite
+          clientes nuevos, y la guía v1.2 del AIF-C01 habla de Model Cards, evaluaciones de <a href="bedrock.html">Bedrock</a> y análisis por
+          subgrupos.</li>
+        <li><strong>"Documentar el uso previsto, el riesgo y la evaluación del modelo para auditoría"</strong>: Model Cards.</li>
+        <li><strong>"El modelo empeora con el tiempo en producción"</strong>: vigilar la deriva. En preguntas antiguas, Model
+          Monitor, que ya no admite clientes nuevos.</li>
+        <li><strong>"Probar una versión con tráfico real sin que la vean los usuarios"</strong>: prueba en sombra.</li>
+        <li><strong>"Sin servidor + <a href="vpc.html"><abbr class="sigla" data-s="VPC" data-en="Virtual Private Cloud" tabindex="0">VPC</abbr></a> o aislamiento de red o <abbr class="sigla" data-s="GPU" data-en="Graphics Processing Unit" data-es="procesador gráfico, muy usado en ML" tabindex="0">GPU</abbr>"</strong>: imposible. Tiempo real o asíncrona.</li>
+        <li><strong>"Etiquetar datos"</strong>: Ground Truth (sin clientes nuevos). <strong>"Sin código"</strong>: Canvas.</li>
         <li><strong>"Modelos preentrenados y fundacionales listos para desplegar"</strong>: JumpStart.</li>
-        <li><strong>"Reducir el coste del entrenamiento"</strong>: entrenamiento con Spot gestionado.</li>
+        <li><strong>"Reducir el coste del entrenamiento"</strong>: entrenamiento con Spot gestionado y puntos de control.</li>
+        <li><strong>"Muchos modelos pequeños con poco tráfico cada uno"</strong>: punto de enlace multimodelo.</li>
       </ul>
 
       <h2 id="preguntas">Preguntas de práctica</h2>
@@ -191,6 +325,16 @@
         <li><a href="https://aws.amazon.com/sagemaker/ai/deploy/" target="_blank" rel="noopener">Amazon SageMaker AI model deployment</a>, documentación de AWS (consultada el 02/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/wellarchitected/latest/machine-learning-lens/mlrel03-bp02.html" target="_blank" rel="noopener">MLREL03-BP02 Verify feature consistency across training and inference</a>, documentación de AWS (consultada el 02/10/2026).</li>
         <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/studio-jumpstart.html" target="_blank" rel="noopener">SageMaker JumpStart</a>, documentación de AWS (consultada el 02/10/2026).</li>
+        <li><a href="https://aws.amazon.com/sagemaker/ai/features/" target="_blank" rel="noopener">Amazon SageMaker AI features</a> (aviso de fin de soporte), AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-availability-change.html" target="_blank" rel="noopener">Amazon SageMaker Model Monitor availability change</a>, documentación de AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-availability-change.html" target="_blank" rel="noopener">Clarify availability change</a>, documentación de AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01-domain4.html" target="_blank" rel="noopener">AIF-C01 exam guide: Domain 4</a>, AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html" target="_blank" rel="noopener">Deploy models with Amazon SageMaker Serverless Inference</a>, documentación de AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/async-inference.html" target="_blank" rel="noopener">Asynchronous inference</a>, documentación de AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests.html" target="_blank" rel="noopener">Shadow tests</a>, documentación de AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/mkt-algo-model-internet-free.html" target="_blank" rel="noopener">Network isolation</a>, documentación de AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html" target="_blank" rel="noopener">Managed Spot Training in Amazon SageMaker AI</a>, documentación de AWS (consultada el 24/11/2026).</li>
+        <li><a href="https://docs.aws.amazon.com/sagemaker/latest/dg/inference-cost-optimization.html" target="_blank" rel="noopener">Inference cost optimization best practices</a>, documentación de AWS (consultada el 24/11/2026).</li>
       </ul>
     </article>
   </div>
@@ -234,6 +378,7 @@
 <script src="../assets/cuenta.js" defer></script>
 <script src="../assets/siglas.js" defer></script>
 <script src="../assets/lectura.js" defer></script>
+<script src="../assets/audio-kopi.js" defer></script>
 <script src="../assets/preguntas.js" defer></script>
 <script src="../assets/quiz.js" defer></script>
 </body>

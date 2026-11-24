@@ -94,19 +94,20 @@
       "SAP-C03"
     ],
     "dominio": "Excelencia operativa y automatización",
-    "enunciado": "Un modelo de riesgo desplegado hace un año en Amazon SageMaker AI acierta cada vez menos porque el comportamiento de los clientes ha cambiado. ¿Qué capacidad habría detectado el problema a tiempo?",
+    "enunciado": "Una empresa que empezó a usar Amazon SageMaker AI en septiembre de 2026 tiene un modelo de riesgo que acierta cada vez menos porque el comportamiento de los clientes ha cambiado. Quiere detectar a tiempo la deriva de los datos y de la calidad del modelo y recibir un aviso. ¿Qué enfoque recomienda AWS?",
     "opciones": [
-      "SageMaker Ground Truth.",
-      "SageMaker Model Monitor.",
-      "SageMaker Canvas.",
-      "SageMaker JumpStart."
+      "Activar SageMaker Model Monitor en el punto de enlace con una programación diaria de calidad de datos y de modelo.",
+      "Desplegar las soluciones de monitorización de SageMaker AI que AWS publica como código abierto (MLflow y Evidently AI) con alarmas de CloudWatch.",
+      "Reetiquetar cada semana una muestra de las predicciones con SageMaker Ground Truth y comparar los resultados a mano.",
+      "Reentrenar el modelo cada noche con SageMaker Pipelines aunque no haya indicios de que haya empeorado."
     ],
     "correctas": [
       1
     ],
-    "explicacion": "Model Monitor compara de forma continua los datos y las predicciones de producción con una referencia y avisa de la deriva de los datos o de la calidad del modelo. Ground Truth etiqueta datos, Canvas es la interfaz sin código y JumpStart un catálogo de modelos.",
+    "explicacion": "Model Monitor, Ground Truth y Clarify no admiten clientes nuevos desde el 30/07/2026, así que una cuenta que empezó en septiembre no puede activarlos. AWS propone como sustituto sus soluciones de monitorización de código abierto (MLflow y Evidently AI sobre Athena, EventBridge, Lambda y SNS) con CloudWatch y paneles en Quick. Reentrenar a ciegas cada noche gasta sin medir nada y no avisa de la deriva.",
     "fuentes": [
-      "https://aws.amazon.com/sagemaker/ai/deploy/"
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-availability-change.html",
+      "https://aws.amazon.com/sagemaker/ai/features/"
     ]
   },
   {
@@ -138,19 +139,20 @@
       "AIF-C01"
     ],
     "dominio": "Directrices para una IA responsable",
-    "enunciado": "Antes de poner en producción un modelo de concesión de créditos, una entidad debe comprobar que no discrimina por género y poder explicar cada decisión. ¿Qué herramienta de Amazon SageMaker AI lo permite?",
+    "enunciado": "Antes de poner en producción un modelo de concesión de créditos, el equipo de auditoría pide un documento único y estandarizado con el uso previsto del modelo, su calificación de riesgo, los datos con los que se entrenó y los resultados de su evaluación. ¿Qué herramienta de Amazon SageMaker AI está pensada para eso?",
     "opciones": [
       "SageMaker Feature Store.",
       "SageMaker Autopilot.",
       "SageMaker Data Wrangler.",
-      "SageMaker Clarify."
+      "SageMaker Model Cards."
     ],
     "correctas": [
       3
     ],
-    "explicacion": "Clarify detecta sesgos en los datos y en las predicciones y aporta explicabilidad, indicando qué características pesan más en cada resultado. Feature Store almacena características, Autopilot automatiza la creación de modelos y Data Wrangler prepara datos.",
+    "explicacion": "Model Cards documenta en una sola ficha el propietario, el uso previsto, las suposiciones, la calificación de riesgo, los detalles del entrenamiento y los resultados de la evaluación, para la gobernanza y la auditoría. La guía del AIF-C01 la cita como herramienta de transparencia y para documentar el origen de los datos. Feature Store almacena características, Autopilot automatiza la creación de modelos y Data Wrangler prepara datos.",
     "fuentes": [
-      "https://aws.amazon.com/sagemaker/ai/deploy/"
+      "https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01-domain4.html",
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/model-cards.html"
     ]
   },
   {
@@ -202,6 +204,120 @@
     "explicacion": "Primero se fija el objetivo de negocio y se traduce a un problema de ML (qué etiqueta se predice y con qué métrica). Después vienen los datos (recogida, limpieza e ingeniería de características), el desarrollo del modelo (entrenamiento, ajuste y evaluación), el despliegue para inferencia y la monitorización, que puede devolver el ciclo a fases anteriores si el modelo se degrada.",
     "fuentes": [
       "https://docs.aws.amazon.com/wellarchitected/latest/machine-learning-lens/machine-learning-lifecycle.html"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-010",
+    "tipo": "unica",
+    "certificaciones": [
+      "AIF-C01"
+    ],
+    "dominio": "Fundamentos de IA y ML",
+    "enunciado": "Un analista de negocio sin conocimientos de programación quiere predecir qué clientes abandonarán el servicio a partir de una tabla con su historial. Quiere preparar los datos, entrenar el modelo y obtener predicciones desde una interfaz visual. ¿Qué debería usar?",
+    "opciones": [
+      "Amazon SageMaker Canvas.",
+      "Amazon SageMaker JumpStart.",
+      "Amazon Comprehend.",
+      "Amazon Bedrock con un modelo fundacional."
+    ],
+    "correctas": [
+      0
+    ],
+    "explicacion": "Canvas es la interfaz visual de SageMaker AI para crear modelos de ML sin escribir código, incluida la preparación de datos (Data Wrangler está integrado en Canvas). JumpStart es un catálogo de modelos para quien programa, Comprehend analiza texto y no predice el abandono a partir de datos tabulares, y un modelo fundacional de Bedrock no es la herramienta adecuada para un modelo predictivo tabular.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/canvas.html",
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-migrate-ui.html"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-011",
+    "tipo": "unica",
+    "certificaciones": [
+      "SAP-C03",
+      "AIF-C01"
+    ],
+    "dominio": "Seguridad, cumplimiento y gobernanza",
+    "dominios": {
+      "AIF-C01": "Seguridad, cumplimiento y gobernanza de soluciones de IA"
+    },
+    "dificil": true,
+    "enunciado": "Un hospital ha entrenado en Amazon SageMaker AI un modelo que clasifica radiografías de unos 20 MB cada una. Llegan en tandas pocas veces al día y el resultado puede tardar varios minutos. La normativa exige que el contenedor del modelo no pueda abrir ninguna conexión saliente y que el tráfico no pase por internet. Dirección quiere no pagar nada mientras no haya radiografías que procesar. ¿Qué despliegue cumple todos los requisitos?",
+    "opciones": [
+      "Un punto de enlace sin servidor con 6 GB de memoria, concurrencia aprovisionada y configuración de VPC, invocado mediante un punto de enlace de interfaz de PrivateLink.",
+      "Un punto de enlace en tiempo real con aislamiento de red en subredes privadas y escalado automático entre una y cuatro instancias según las invocaciones.",
+      "Un punto de enlace de inferencia asíncrona con aislamiento de red en la VPC, entrada y salida en S3 por puntos de enlace de VPC y escalado a cero instancias.",
+      "Un trabajo de transformación por lotes programado cada hora con EventBridge, con aislamiento de red, que procesa las radiografías acumuladas en S3."
+    ],
+    "correctas": [
+      2
+    ],
+    "explicacion": "La inferencia asíncrona admite peticiones de hasta 1 GB y respuestas en minutos, funciona con VPC y aislamiento de red, y puede escalar a cero instancias cuando no hay peticiones, así que no se paga en reposo. Sin servidor no admite configuración de VPC ni aislamiento de red, y su petición está limitada a pocos MB. El punto de enlace en tiempo real mantiene al menos una instancia encendida (y su petición está limitada a 6 MB). El lote cada hora sí cumple la red y el coste, pero no procesa las radiografías al llegar: puede retrasar el resultado hasta una hora.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/async-inference.html",
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html",
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/mkt-algo-model-internet-free.html"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-012",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03",
+      "AIF-C01"
+    ],
+    "dominio": "Excelencia operativa y automatización",
+    "dominios": {
+      "AIF-C01": "Directrices para una IA responsable"
+    },
+    "dificil": true,
+    "enunciado": "Un banco tiene treinta modelos de riesgo en Amazon SageMaker AI. El regulador exige tres cosas: que ninguna versión llegue a producción sin la aprobación explícita de un responsable de riesgos, que cada modelo tenga un documento estandarizado con su uso previsto, su calificación de riesgo y los resultados de su evaluación, y que cada versión nueva se valide con tráfico real antes de que ningún cliente reciba sus respuestas. Se quiere el menor desarrollo propio posible. ¿Qué tres medidas lo cumplen? (Elige 3)",
+    "opciones": [
+      "Registrar cada versión en SageMaker Model Registry y que el despliegue solo se dispare cuando su estado de aprobación pase a «Approved».",
+      "Etiquetar cada punto de enlace con el uso previsto y el nivel de riesgo y revisar las etiquetas con reglas de AWS Config.",
+      "Mantener una SageMaker Model Card por modelo con su uso previsto, su calificación de riesgo y los resultados de la evaluación.",
+      "Desplegar cada versión nueva como segunda variante de producción y enviarle el 10 % del tráfico durante una semana.",
+      "Lanzar una prueba en sombra en la que la versión nueva recibe una copia de las peticiones reales sin devolver respuestas.",
+      "Versionar los modelos en SageMaker Feature Store y comparar sus métricas con un panel de CloudWatch antes de cada despliegue."
+    ],
+    "correctas": [
+      0,
+      2,
+      4
+    ],
+    "explicacion": "Model Registry guarda cada versión con su estado de aprobación y permite que el despliegue dependa de él. Model Cards es el documento estandarizado con uso previsto, riesgo y evaluación. La prueba en sombra valida con tráfico real sin que ningún cliente reciba las respuestas de la versión nueva. La variante con el 10 % del tráfico es una prueba A/B: parte de los clientes sí recibe la versión nueva. Las etiquetas con Config no son un documento de gobernanza del modelo y exigen montar la revisión. Feature Store guarda características, no versiones de modelos.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry.html",
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/model-cards.html",
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests.html"
+    ]
+  },
+  {
+    "id": "sagemaker-ai-013",
+    "tipo": "multiple",
+    "certificaciones": [
+      "SAP-C03"
+    ],
+    "dominio": "Diseño de arquitecturas con costos optimizados",
+    "dificil": true,
+    "enunciado": "Una empresa SaaS usa Amazon SageMaker AI de tres formas: un entrenamiento nocturno de unas 20 horas que puede interrumpirse y reanudarse sin problema; 40 modelos pequeños, uno por cliente, del mismo marco y con poco tráfico cada uno, que hoy ocupan 40 puntos de enlace en tiempo real casi siempre ociosos; y un uso estable durante todo el año de cuadernos y trabajos de procesamiento. Quiere reducir el coste lo máximo posible sin cambiar de servicio. ¿Qué tres medidas debe tomar? (Elige 3)",
+    "opciones": [
+      "Usar entrenamiento con Spot gestionado y guardar puntos de control en S3 para que un trabajo interrumpido continúe donde lo dejó.",
+      "Comprar instancias reservadas de EC2 del mismo tipo que usa el entrenamiento nocturno para cubrir esas 20 horas diarias.",
+      "Agrupar los 40 modelos en un punto de enlace multimodelo que cargue en memoria solo los modelos que se piden.",
+      "Pasar los 40 modelos a puntos de enlace sin servidor con concurrencia aprovisionada para evitar los arranques en frío.",
+      "Contratar un Compute Savings Plan de tres años que cubra el gasto estable de los cuadernos y del procesamiento.",
+      "Contratar un Savings Plan de SageMaker AI de un año que cubra el gasto estable de los cuadernos y del procesamiento."
+    ],
+    "correctas": [
+      0,
+      2,
+      5
+    ],
+    "explicacion": "El entrenamiento con Spot gestionado ahorra hasta un 90 % y, con puntos de control, las interrupciones no hacen perder el trabajo. Un punto de enlace multimodelo comparte instancias y contenedor entre muchos modelos del mismo marco con poco tráfico. El Savings Plan de SageMaker AI (hasta un 64 %) cubre cuadernos, procesamiento, entrenamiento e inferencia. Los Compute Savings Plans y las instancias reservadas de EC2 no se aplican a las instancias de SageMaker AI. La concurrencia aprovisionada se paga aunque no haya tráfico, así que en 40 puntos de enlace ociosos no ahorra.",
+    "fuentes": [
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html",
+      "https://docs.aws.amazon.com/sagemaker/latest/dg/inference-cost-optimization.html",
+      "https://aws.amazon.com/savingsplans/ml-pricing/"
     ]
   }
 ]

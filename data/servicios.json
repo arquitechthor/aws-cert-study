@@ -2047,6 +2047,8 @@
     "nombre": "Amazon SageMaker AI",
     "categoria": "machine-learning",
     "icono": true,
+    "clave": true,
+    "audio": true,
     "certificaciones": [
       "SAA-C03",
       "SAP-C03",

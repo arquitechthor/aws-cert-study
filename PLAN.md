@@ -10,6 +10,15 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
+- **SageMaker AI, servicio clave (24/11/2026, pedido por el usuario), sin probar en el navegador:** sección "A
+  fondo" centrada en el AIF-C01 (límites de cada opción de inferencia, SageMaker AI frente a Bedrock, gobernanza con
+  Model Registry, Model Cards, MLflow y pruebas en sombra, seguridad y costes) y 3 difíciles nuevas (011–013). Al
+  investigar salió que **desde el 30/07/2026 Ground Truth, A2I, Model Monitor, Clarify, Debugger, Profiler, Role
+  Manager, Geospatial y Studio Lab no admiten clientes nuevos**, y que la guía v1.2 del AIF-C01 ya no los cita: aviso
+  en la guía y preguntas 005 y 007 reescritas. **Pendiente:** otras guías y preguntas siguen dando A2I como respuesta
+  (`textract`, `rekognition`, pregunta `textract-005`) o citan Clarify y Model Monitor en las explicaciones de sus
+  distractores (`artifact`, `cloudtrail`, `config`, `cost-explorer`, `inspector`, `lake-formation`, `macie`,
+  `trusted-advisor`, `data-exchange`, `bedrock-agentcore`); revisarlas cuando el usuario lo decida.
 - **SAP-C03, propuestas 1–4 (19/11/2026, pedido por el usuario), hechas:**
   (1) `scripts/revisar_preguntas.py` avisa cuando la respuesta correcta es claramente la opción más
   larga y cuando una difícil tiene un enunciado corto (menos de 350 caracteres), y con `--dominios`
@@ -45,7 +54,7 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 - **Audios desde Kopi (11/11/2026, decisión del usuario):** los resúmenes en audio nuevos **no se suben
   al repo** (con 177 servicios se superaría el límite de GitHub). Son recursos públicos de un tema de
   Conocimiento de Kopi y se leen de su API pública al pulsar "▶ Escuchar" (`assets/audio-kopi.js`,
-  enlace temporal de S3 que se renueva si caduca). El primero es **CodeArtifact** (luego **Bedrock**); S3 conserva su
+  enlace temporal de S3 que se renueva si caduca). El primero es **CodeArtifact** (luego **Bedrock** y **SageMaker AI**); S3 conserva su
   fichero local. Los demás audios del tema AWS de Kopi tratan la SAP-C02, ya retirada, y no se usan.
   Para añadir otro: subirlo a un tema de Conocimiento en Kopi Media Admin, copiar el id del recurso al
   `data-kopi` de la guía, poner `"audio": true` en `servicios.json` y ejecutar
@@ -1003,6 +1012,8 @@ guía donde aparece. Coste muy bajo.
 
 | Fecha | Qué se hizo |
 |---|---|
+| 2026-11-24 | **Audio de SageMaker AI desde Kopi** (pedido por el usuario): recurso `6d1eeddd-3dc2-4b61-a3d4-b3c7a200f188` (AUDIO, «Amazon SageMaker AI», comprobado en la API pública) antes de "Qué es", `audio-kopi.js` y `"audio": true`. |
+| 2026-11-24 | **SageMaker AI pasa a servicio clave** (pedido por el usuario): "A fondo", aviso de las piezas sin clientes nuevos desde el 30/07/2026, preguntas 005 y 007 reescritas, 010–013 nuevas (3 difíciles), siglas A2I y SHAP. |
 | 2026-11-11 | **Audio de CodeArtifact desde Kopi** (decisión del usuario: leer los audios de la API pública de Kopi en vez de subirlos): `assets/audio-kopi.js`, guía de CodeArtifact, `"audio": true`, estilos y aviso legal. Probado con la API simulada (desde localhost no hay CORS), también el caso de error. |
 | 2026-11-11 | **Mi telaraña de AWS** en Mi progreso (decisión del usuario): `assets/telarana.js` copiado de Tech Spider, árbol AWS → categorías → servicios coloreado por progreso, `?cat=`, teclado (flechas, Esc), enlace desde el catálogo, estilos en `styles.css`, aviso legal (Tech Spider lee el progreso). Probado en Chrome sin ventana a 1300 y 520 px. |
 | 2026-11-06 | **Cuenta Kopi opcional** (decisión del usuario, misma estrategia que Tech Spider: login gestionado de Cognito con PKCE, App Client y authorizer propios en Kopi). `assets/cuenta.js`, `cuenta.html`, `pagina-cuenta.js`; `AwsDatos.avisarGuardado()` desde `guardarProgreso`, `simulacro.js` y el borrado de Mi progreso; catálogo y Mi progreso se repintan al sincronizar; unión de simulacros por intentos; aviso legal. Pendiente del bootstrap en AWS y de rellenar `CONFIG`. |
