@@ -22,6 +22,7 @@
     claves: {                           // claves sincronizadas -> clave de localStorage
       progreso: 'apuntes-aws.progreso',
       simulacros: 'apuntes-aws.simulacros',
+      cola: 'apuntes-aws.cola',
     },
     unir: {
       // { ultima, intentos: [...] }: se juntan los intentos de los dos lados, sin repetidos, del más

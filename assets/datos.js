@@ -103,7 +103,7 @@
   }
 
   /**
-   * Aviso para assets/cuenta.js (cuenta Kopi opcional): quien escribe "progreso" o "simulacros"
+   * Aviso para assets/cuenta.js (cuenta Kopi opcional): quien escribe "progreso", "simulacros" o "cola"
    * en localStorage lo llama después, y cuenta.js sube el cambio a la cuenta si hay sesión.
    */
   function avisarGuardado(clave) {
@@ -112,6 +112,45 @@
 
   function estaFinalizado(id, progreso = leerProgreso()) {
     return Boolean(progreso[id] && progreso[id].finalizado);
+  }
+
+  /**
+   * Cola de estudio (apuntes-aws.cola): { "<idServicio>": "<fecha y hora ISO en que se añadió>" }.
+   * La escribe assets/cola-boton.js (botón de cada guía) y la lee cola.html (Mi estudio › Cola), de la
+   * primera añadida a la última. Un objeto (y no una lista) para que la primera sincronización con la
+   * cuenta Kopi una lo de los dos lados sin perder nada (assets/cuenta.js).
+   */
+  const CLAVE_COLA = 'apuntes-aws.cola';
+
+  function leerCola() {
+    try {
+      const cola = JSON.parse(localStorage.getItem(CLAVE_COLA) || '{}');
+      return cola && typeof cola === 'object' && !Array.isArray(cola) ? cola : {};
+    } catch {
+      return {};
+    }
+  }
+
+  /** Ids de la cola en orden: primero el que lleva más tiempo. */
+  function ordenCola(cola = leerCola()) {
+    return Object.keys(cola).sort((a, b) => String(cola[a]).localeCompare(String(cola[b])) || a.localeCompare(b));
+  }
+
+  /** Posición (1, 2…) de un servicio en la cola, o 0 si no está. */
+  function posicionEnCola(id, cola = leerCola()) {
+    return ordenCola(cola).indexOf(id) + 1;
+  }
+
+  /** Añade un servicio al final de la cola (si no estaba) o lo quita. */
+  function ponerEnCola(id, si) {
+    const cola = leerCola();
+    if (si && !cola[id]) cola[id] = new Date().toISOString();
+    else if (!si) delete cola[id];
+    try {
+      if (Object.keys(cola).length) localStorage.setItem(CLAVE_COLA, JSON.stringify(cola));
+      else localStorage.removeItem(CLAVE_COLA);
+    } catch { /* sin almacenamiento: no se guarda */ }
+    avisarGuardado('cola');
   }
 
   function urlCatalogo(params) {
@@ -125,5 +164,6 @@
   }
 
   window.AwsDatos = { url, json, cargar, esc, urlServicio, iconoServicio, iconoCategoria, categoriaHtml, urlCatalogo, urlDocumentacion,
-    leerProgreso, guardarProgreso, estaFinalizado, formatoFecha, avisarGuardado };
+    leerProgreso, guardarProgreso, estaFinalizado, formatoFecha, avisarGuardado,
+    leerCola, ordenCola, posicionEnCola, ponerEnCola, claveCola: CLAVE_COLA };
 })();

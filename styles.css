@@ -910,3 +910,33 @@ svg.resaltando .enlace:not(.resalta) { opacity: 0.25; }
 .tela-entra { animation: tela-entra .35s ease-out; }
 @keyframes tela-entra { from { opacity: 0; transform: scale(0.88) rotate(-8deg); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .tela-entra { animation: none; } }
+
+/* ── Cola de estudio (apuntes-aws.cola: cola-boton.js y cola.html) ───── */
+.btn-cola.en-cola { border-color: color-mix(in srgb, var(--cyan) 60%, transparent); color: var(--cyan-strong); }
+.cola-resumen { margin: 8px 0 16px; color: var(--text-muted); font-size: 14.5px; }
+.cola-lista { list-style: none; counter-reset: cola; margin: 0; padding: 0; display: grid; gap: 12px; }
+.cola-item {
+  counter-increment: cola;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px;
+  padding: 14px 16px 14px 56px; position: relative;
+  background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--cyan);
+  border-radius: var(--radius-sm);
+}
+.cola-item::before {
+  content: counter(cola); position: absolute; left: 16px; top: 14px;
+  width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 13px; font-weight: 700; color: var(--text-muted); background: var(--surface-2);
+}
+.cola-siguiente { box-shadow: var(--shadow-glow); }
+.cola-siguiente::before { color: var(--bg); background: var(--cyan); }
+.cola-item-perdida { border-left-color: var(--border-strong); }
+.cola-cuerpo { flex: 1 1 260px; min-width: 0; display: grid; gap: 4px; }
+.cola-cuerpo p { margin: 0; }
+.cola-etiqueta { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--cyan); }
+.cola-nombre { display: flex; align-items: center; gap: 10px; font-size: 16.5px; font-weight: 600; overflow-wrap: anywhere; }
+.cola-nombre .service-icon, .cola-nombre .cat-icon { width: 28px; height: 28px; flex: none; }
+.cola-frase { font-size: 14px; color: var(--text-muted); }
+.cola-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 13px; color: var(--text-faint); }
+.cola-acciones { flex: none; }
+.cola-vacia p { margin: 0 0 10px; }
+.cola-vacia p:last-child { margin: 0; }

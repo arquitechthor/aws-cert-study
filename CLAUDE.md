@@ -55,17 +55,22 @@ Plain HTML/CSS/JS, **no framework, no build, no package.json** (same approach as
   differs, keep the rest identical), `cuenta.html` (OAuth redirect URI and account page) and
   `assets/pagina-cuenta.js`. Login with Cognito's managed login page (Authorization Code + PKCE, no
   library); backend `/study/aws-cert-study/progress` in `../../kopi/kopi-media-admin`, whose App Client
-  and authorizer are **only** for these routes. Synced keys: `apuntes-aws.progreso` and
-  `apuntes-aws.simulacros` (intentos are merged on the first sync); whoever writes them must call
-  `AwsDatos.avisarGuardado('progreso'|'simulacros')` afterwards; `aws:sincronizado` repaints the catalog
+  and authorizer are **only** for these routes. Synced keys: `apuntes-aws.progreso`,
+  `apuntes-aws.simulacros` (intentos are merged on the first sync) and `apuntes-aws.cola`; whoever writes them must call
+  `AwsDatos.avisarGuardado('progreso'|'simulacros'|'cola')` afterwards; `aws:sincronizado` repaints the catalog
   and Mi progreso. Session in `kopi.estudio.sesion`, shared with Tech Spider (same origin). Every page
   that loads `datos.js` loads `cuenta.js` right after it (all pages do, including `aviso-legal.html` and
   `clasificacion.html`): `cuenta.js` adds the nav link to `cuenta.html` ("Guardar progreso" / "Mi
   cuenta") at the end of the "Mi estudio" submenu (the one marked `data-cuenta-destino`). Since
   2026-11-20 the nav is: Inicio · Catálogo · Conceptos ▾ (AIF-C01) · Juegos ▾ · Mi estudio ▾ (Simulacro, Mi
-  progreso, Guardar progreso) · Arquitechthor; there is no "Certificaciones" link. The nav stays compact (13px, smaller
+  progreso, Cola, Guardar progreso) · Arquitechthor; there is no "Certificaciones" link. The nav stays compact (13px, smaller
   gaps, `nowrap`) between 761 and 1040px in `styles.css`. Disabled while `CONFIG.dominio`/`clientId`
   are empty.
+- **Study queue** (same as Tech Spider): `apuntes-aws.cola` (`{ id: "<ISO date-time added>" }`), helpers
+  `AwsDatos.leerCola/ordenCola/posicionEnCola/ponerEnCola`. `assets/cola-boton.js` (loaded right after `lectura.js` in
+  every guide and the template) adds "＋ Añadir a la cola" to the "Escuchar la guía" row (shows the position once
+  queued; clicking again removes it); `cola.html` + `assets/cola.js` (Mi estudio › Cola, noindex, not in the sitemap)
+  lists them oldest first with date added, quiz state and "Quitar".
 - `assets/preguntas.js` (`window.AwsPreguntas`): the shared question component (render, read,
   grade, mark, solution, Noria text, progress) for the four types `unica`, `multiple`, `ordenar`
   and `emparejar`, plus the ⚠ "Pregunta difícil" tag (`"dificil": true`) and per-certification

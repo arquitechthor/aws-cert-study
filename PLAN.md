@@ -10,6 +10,12 @@ sesión, lee "Estado actual"; al terminar, marca las tareas hechas y actualiza "
 
 ## Estado actual
 
+- **Cola de estudio (27/11/2026, pedido por el usuario), sin probar en el navegador:** botón «＋ Añadir a la
+  cola» en cada guía (`assets/cola-boton.js`, en la fila de "Escuchar la guía"; ya en la cola dice su posición y
+  pulsarlo la quita) y página `cola.html` (Mi estudio › Cola, noindex) con los servicios del primero añadido al
+  último, la fecha en que se añadió cada uno, cómo va su cuestionario y "Quitar". Clave `apuntes-aws.cola`
+  (`{ id: fecha ISO }`), sincronizada con la cuenta Kopi (el backend acepta claves nuevas sin cambios). Igual en
+  Tech Spider (`spider.cola`); las dos colas son independientes.
 - **SageMaker AI, servicio clave (24/11/2026, pedido por el usuario), sin probar en el navegador:** sección "A
   fondo" centrada en el AIF-C01 (límites de cada opción de inferencia, SageMaker AI frente a Bedrock, gobernanza con
   Model Registry, Model Cards, MLflow y pruebas en sombra, seguridad y costes) y 3 difíciles nuevas (011–013). Al
@@ -1012,6 +1018,8 @@ guía donde aparece. Coste muy bajo.
 
 | Fecha | Qué se hizo |
 |---|---|
+| 2026-11-27 | **Cola de estudio** (pedida por el usuario, a la vez que en Tech Spider): `assets/cola-boton.js` en las 177 guías y la plantilla, `cola.html` + `assets/cola.js`, enlace «Cola» en Mi estudio en las 190 páginas, helpers `leerCola/ordenCola/posicionEnCola/ponerEnCola` en `datos.js`, clave `cola` sincronizada en `cuenta.js`, aviso legal, `cuenta.html` y `CLAUDE.md`. Lógica probada en Node; sin probar en navegador. |
+| 2026-11-27 | **SageMaker AI con dos audios** (pedido por el usuario): el recurso `cbb9ef18-…` («(1/2)») pasa a ser el principal y el anterior («(2/2)») va bajo "A fondo". |
 | 2026-11-24 | **Audio de SageMaker AI desde Kopi** (pedido por el usuario): recurso `6d1eeddd-3dc2-4b61-a3d4-b3c7a200f188` (AUDIO, «Amazon SageMaker AI», comprobado en la API pública) antes de "Qué es", `audio-kopi.js` y `"audio": true`. |
 | 2026-11-24 | **SageMaker AI pasa a servicio clave** (pedido por el usuario): "A fondo", aviso de las piezas sin clientes nuevos desde el 30/07/2026, preguntas 005 y 007 reescritas, 010–013 nuevas (3 difíciles), siglas A2I y SHAP. |
 | 2026-11-11 | **Audio de CodeArtifact desde Kopi** (decisión del usuario: leer los audios de la API pública de Kopi en vez de subirlos): `assets/audio-kopi.js`, guía de CodeArtifact, `"audio": true`, estilos y aviso legal. Probado con la API simulada (desde localhost no hay CORS), también el caso de error. |

@@ -2,8 +2,8 @@
 Genera sitemap.xml (tarea 3.3 de PLAN.md) con las páginas indexables del sitio:
   - la portada, el simulacro, los juegos Memoria, Empareja y Arquitecto y el aviso legal;
   - servicios/<id>.html de cada servicio con estado "publicado" en data/servicios.json.
-Se excluyen las páginas con noindex: servicio.html ("Próximamente"), progreso.html y
-clasificacion.html (datos locales de cada visitante) y plantillas/.
+Se excluyen las páginas con noindex: servicio.html ("Próximamente"), progreso.html,
+cola.html y clasificacion.html (datos locales de cada visitante) y plantillas/.
 <lastmod> es la fecha del último commit que tocó cada fichero, o la de hoy si tiene cambios sin
 confirmar. El robots.txt que lo anuncia vive en la raíz del dominio (repo arquitechthor.github.io),
 porque los buscadores solo leen /robots.txt.
